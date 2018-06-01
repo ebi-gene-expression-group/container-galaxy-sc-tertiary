@@ -1,0 +1,40 @@
+FROM pcm32/galaxy-init:v18.01
+
+MAINTAINER PhenoMeNal-H2020 Project <phenomenal-h2020-users@googlegroups.com>
+
+LABEL Description="Galaxy 18.01 - SC Tertiary Analysis"
+LABEL software="Galaxy Init"
+LABEL software.version="18.01"
+LABEL version="1.7"
+
+# RUN wget -O ephemeris.tar https://api.github.com/repos/galaxyproject/ephemeris/tarball/eeee87a57379b8b639b06c2a50038ef449c28d73 && \
+#     tar -xf ephemeris.tar && rm ephemeris.tar && \
+#     virtualenv venv-workflow && \
+#     /bin/bash -c "source venv-workflow/bin/activate && \
+#                   pip install 'pip>=8.1' && \
+#                   pip install ./galaxyproject-ephemeris-eeee87a \
+#                       --index-url https://pypi.python.org/simple && \
+#                   pip install urllib3[secure] && \
+#                   deactivate && \
+#                   virtualenv --relocatable venv-workflow"
+
+COPY config/job_conf.xml config/job_conf.xml
+COPY config/tool_conf.xml config/tool_conf.xml
+COPY config/sanitize_whitelist.txt config/sanitize_whitelist.txt
+COPY tools/phenomenal tools/phenomenal
+
+# Reqs/limits
+COPY config/job_resource_params_conf.xml config/job_resource_params_conf.xml
+COPY config/phenomenal_tools2container.yaml config/phenomenal_tools2container.yaml
+COPY rules/k8s_destinations.py /galaxy-central/lib/galaxy/jobs/rules/k8s_destination.py
+
+# Galaxy tours which guide users through the subsequent steps in an analysis
+# COPY config/plugins/tours/*.yaml config/plugins/tours/
+
+#COPY html/partners.png welcome/welcome_partners.png
+#COPY html/PhenoMeNal_logo.png welcome/welcome_PhenoMeNal_logo.png
+#COPY html/welcome.html welcome/welcome.html
+
+# COPY workflows workflows_to_load
+# COPY post-start-actions.sh post-start-actions.sh
+# RUN chmod u+x post-start-actions.sh

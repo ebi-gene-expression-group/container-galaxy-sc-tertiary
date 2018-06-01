@@ -1,0 +1,418 @@
+<?xml version="1.0"?>
+<!-- A sample job config for sketching the k8s use case with shared fs -->
+<job_conf>
+  <plugins>
+    <plugin id="local" type="runner" load="galaxy.jobs.runners.local:LocalJobRunner" workers="4"/>
+    <plugin id="k8s" type="runner" load="galaxy.jobs.runners.kubernetes:KubernetesJobRunner">
+      <param id="k8s_use_service_account" from_environ="GALAXY_RUNNERS_K8S_USE_SERVICE_ACCOUNT">true</param>
+      <param id="k8s_persistent_volume_claim_name" from_environ="GALAXY_RUNNERS_K8S_PERSISTENT_VOLUME_CLAIM_NAME">galaxy-pvc</param>
+      <!-- The following mount path needs to be the initial part of the "file_path" and "new_file_path" paths
+            set in universe_wsgi.ini (or equivalent general galaxy config file).  -->
+      <param id="k8s_persistent_volume_claim_mount_path" from_environ="GALAXY_RUNNERS_K8S_PERSISTENT_VOLUME_CLAIM_MOUNT_PATH">/opt/galaxy_data</param>
+      <param id="k8s_namespace" from_environ="GALAXY_RUNNERS_K8S_NAMESPACE">default</param>
+      <param id="k8s_supplemental_group_id" from_environ="GALAXY_RUNNERS_K8S_SUPPLEMENTAL_GROUP_ID">0</param>
+      <param id="k8s_fs_group_id" from_environ="GALAXY_RUNNERS_K8S_FS_GROUP_ID">0</param>
+      <param id="k8s_pull_policy" from_environ="GALAXY_RUNNERS_K8S_PULL_POLICY">IfNotPresent</param>
+      <!-- Allows pods to retry up to this number of times, before marking the Job as failed -->
+      <param id="k8s_pod_retrials" from_environ="GALAXY_RUNNERS_K8S_POD_RETRIALS">1</param>
+    </plugin>
+  </plugins>
+  <handlers default="handlers">
+    <!--         HANDLERS -->
+    <handler id="main" tags="handlers"/>
+    <!-- HANDLERS  -->
+    <!-- HANDLERS 
+    <handler id="handler0" tags="handlers"/>
+    <handler id="handler1" tags="handlers"/>
+         HANDLERS -->
+  </handlers>
+  <destinations default="local">
+    <destination id="local" runner="local"/>
+    <destination id="dynamic-k8s" runner="dynamic">
+      <param id="type">python</param>
+      <param id="function">k8s_wrapper</param>
+      <param id="docker_enabled">true</param>
+    </destination>
+    <destination id="dynamic-k8s-tiny" runner="dynamic">
+      <param id="type">python</param>
+      <param id="function">k8s_wrapper_tiny</param>
+      <resubmit condition="memory_limit_reached" destination="dynamic-k8s-small"/>
+    </destination>
+    <destination id="dynamic-k8s-small" runner="dynamic">
+      <param id="type">python</param>
+      <param id="function">k8s_wrapper_small</param>
+      <resubmit condition="memory_limit_reached" destination="dynamic-k8s-medium"/>
+    </destination>
+    <destination id="dynamic-k8s-medium" runner="dynamic">
+      <param id="type">python</param>
+      <param id="function">k8s_wrapper_medium</param>
+      <resubmit condition="memory_limit_reached" destination="dynamic-k8s-large"/>
+    </destination>
+    <destination id="dynamic-k8s-large" runner="dynamic">
+      <param id="type">python</param>
+      <param id="function">k8s_wrapper_large</param>
+      <resubmit condition="memory_limit_reached" destination="dynamic-k8s-xlarge"/>
+    </destination>
+    <destination id="dynamic-k8s-xlarge" runner="dynamic">
+      <param id="type">python</param>
+      <param id="function">k8s_wrapper_xlarge</param>
+    </destination>
+    
+    <destination id="biosigner-container" runner="k8s">
+      <param id="docker_repo_override">container-registry.phenomenal-h2020.eu</param>
+      <param id="docker_owner_override">phnmnl</param>
+      <param id="docker_image_override">biosigner</param>
+      <param id="docker_tag_override">v2.2.7_cv1.3.15</param>
+      <param id="max_pod_retrials">3</param>
+      <param id="docker_enabled">true</param>
+    </destination>
+    <destination id="batman-container" runner="k8s">
+      <param id="docker_repo_override">container-registry.phenomenal-h2020.eu</param>
+      <param id="docker_owner_override">phnmnl</param>
+      <param id="docker_image_override">batman</param>
+      <param id="docker_tag_override">v1.2.12.0_cv1.1.72</param>
+      <param id="max_pod_retrials">3</param>
+      <param id="docker_enabled">true</param>
+    </destination>
+	<destination id="bruker2batman-container" runner="k8s">
+      <param id="docker_repo_override">container-registry.phenomenal-h2020.eu</param>
+      <param id="docker_owner_override">phnmnl</param>
+      <param id="docker_image_override">bruker2batman</param>
+      <param id="docker_tag_override">v1.0_cv1.0.14</param>
+      <param id="max_pod_retrials">3</param>
+      <param id="docker_enabled">true</param>
+    </destination>
+    <destination id="isodyn-container" runner="k8s">
+      <param id="docker_repo_override">container-registry.phenomenal-h2020.eu</param>
+      <param id="docker_owner_override">phnmnl</param>
+      <param id="docker_image_override">isodyn</param>
+      <param id="docker_tag_override">v1.0_cv0.2.30</param>
+      <param id="max_pod_retrials">3</param>
+      <param id="docker_enabled">true</param>
+    </destination>
+    <destination id="metabolab-container" runner="k8s">
+      <param id="docker_repo_override">container-registry.phenomenal-h2020.eu</param>
+      <param id="docker_owner_override">phnmnl</param>
+      <param id="docker_image_override">metabolab</param>
+      <param id="docker_tag_override">v0.99.8.8_cv0.6.65</param>
+      <param id="max_pod_retrials">3</param>
+      <param id="docker_enabled">true</param>
+    </destination>
+    <destination id="papy-container" runner="k8s">
+      <param id="docker_enabled">true</param>
+    </destination>     
+    <!-- 
+    <destination id="msconvert2-container" runner="k8s">
+      <param id="docker_repo_override">container-registry.phenomenal-h2020.eu</param>
+      <param id="docker_owner_override">phnmnl</param>
+      <param id="docker_image_override">pwiz</param>
+      <param id="docker_tag_override">latest</param>
+      <param id="max_pod_retrials">3</param>
+      <param id="docker_enabled">true</param>
+    </destination>
+   -->
+    <destination id="nmrmlconv-container" runner="k8s">
+      <param id="docker_repo_override">container-registry.phenomenal-h2020.eu</param>
+      <param id="docker_owner_override">phnmnl</param>
+      <param id="docker_image_override">nmrmlconv</param>
+      <param id="docker_tag_override">v1.1b_cv0.4.46</param>
+      <param id="max_pod_retrials">3</param>
+      <param id="docker_enabled">true</param>
+    </destination>
+    <!-- 
+    <destination id="nmrglue-container" runner="k8s">
+      <param id="docker_repo_override">container-registry.phenomenal-h2020.eu</param>
+      <param id="docker_owner_override">phnmnl</param>
+      <param id="docker_image_override">nmrglue</param>
+      <param id="docker_tag_override">latest</param>
+      <param id="max_pod_retrials">3</param>
+      <param id="docker_enabled">true</param>
+    </destination>
+   -->
+    <destination id="soap-nmr-container" runner="k8s">
+      <param id="docker_repo_override">container-registry.phenomenal-h2020.eu</param>
+      <param id="docker_owner_override">phnmnl</param>
+      <param id="docker_image_override">soap-nmr</param>
+      <param id="docker_tag_override">v1.0_cv0.4.1016</param>
+      <param id="max_pod_retrials">3</param>
+      <param id="docker_enabled">true</param>
+    </destination>
+    <destination id="metfrag-cli-container" runner="k8s">
+      <param id="docker_repo_override">container-registry.phenomenal-h2020.eu</param>
+      <param id="docker_owner_override">phnmnl</param>
+      <param id="docker_image_override">metfrag-cli</param>
+      <param id="docker_tag_override">v2.4.2_cv0.3.24</param>
+      <param id="max_pod_retrials">3</param>
+      <param id="docker_enabled">true</param>
+    </destination>
+    <destination id="mtbls-downloader-container" runner="k8s">
+      <param id="docker_repo_override">container-registry.phenomenal-h2020.eu</param>
+      <param id="docker_owner_override">phnmnl</param>
+      <param id="docker_image_override">scp-aspera</param>
+      <param id="docker_tag_override">v3.5.4.102989-linux-64_cv0.2.9</param>
+      <param id="max_pod_retrials">1</param>
+      <param id="docker_enabled">true</param>
+    </destination>
+    <destination id="mtbls-labs-uploader-container" runner="k8s">
+      <param id="docker_repo_override">container-registry.phenomenal-h2020.eu</param>
+      <param id="docker_owner_override">phnmnl</param>
+      <param id="docker_image_override">mtbl-labs-uploader</param>
+      <param id="docker_tag_override">v0.1.0_cv0.3.11</param>
+      <param id="max_pod_retrials">3</param>
+      <param id="docker_enabled">true</param>
+    </destination>
+    <destination id="container-metaboliteidconverter" runner="k8s">
+      <param id="docker_repo_override">container-registry.phenomenal-h2020.eu</param>
+      <param id="docker_owner_override">phnmnl</param>
+      <param id="docker_image_override">metaboliteidconverter</param>
+      <param id="docker_tag_override">v0.5.1_cv1.1.28</param>
+      <param id="max_pod_retrials">3</param>
+      <param id="docker_enabled">true</param>
+    </destination>
+    <destination id="leidenuniv-ms-vfetc-container" runner="k8s">
+      <param id="docker_repo_override">container-registry.phenomenal-h2020.eu</param>
+      <param id="docker_owner_override">phnmnl</param>
+      <param id="docker_image_override">ms-vfetc</param>
+      <param id="docker_tag_override">v0.4_cv1.3.10</param>
+      <param id="max_pod_retrials">3</param>
+      <param id="docker_enabled">true</param>
+    </destination>
+    <destination id="metfrag-vis-container" runner="k8s">
+      <param id="docker_repo_override">container-registry.phenomenal-h2020.eu</param>
+      <param id="docker_owner_override">phnmnl</param>
+      <param id="docker_image_override">metfrag-vis</param>
+      <param id="docker_tag_override">v0.1_cv0.1.12</param>
+      <param id="max_pod_retrials">3</param>
+      <param id="docker_enabled">true</param>
+    </destination>
+    <destination id="container-escher-fluxomics" runner="k8s">
+      <param id="docker_repo_override">container-registry.phenomenal-h2020.eu</param>
+      <param id="docker_owner_override">phnmnl</param>
+      <param id="docker_image_override">escher-fluxomics</param>
+      <param id="docker_tag_override">v1.6.0-beta.4_cv1.0.9</param>
+      <param id="max_pod_retrials">3</param>
+      <param id="docker_enabled">true</param>
+    </destination>
+    <destination id="container-isatab-create" runner="k8s">
+      <param id="docker_repo_override">container-registry.phenomenal-h2020.eu</param>
+      <param id="docker_owner_override">phnmnl</param>
+      <param id="docker_image_override">isatab-create</param>
+      <param id="docker_tag_override">v0.9.5_cv0.3.14.60</param>
+      <param id="max_pod_retrials">3</param>
+      <param id="docker_enabled">true</param>
+    </destination>
+  </destinations>
+  <tools>
+    <!-- Tools can be configured to use specific destinations or handlers,
+         identified by either the "id" or "tags" attribute.  If assigned to
+         a tag, a handler or destination that matches that tag will be
+         chosen at random.  -->
+    <tool id="pathway_enrichment" destination="dynamic-k8s-large" resources="all"/>
+    
+    <!-- Fluxomics -->
+    <tool id="iso2flux" destination="dynamic-k8s-small" resources="all"/>     
+    <tool id="midcor" destination="dynamic-k8s-small" resources="all"/>
+    <tool id="ramid" destination="dynamic-k8s-tiny" resources="all"/>
+    <tool id="cdf2mid" destination="dynamic-k8s-tiny" resources="all"/>
+    <tool id="isodyn" destination="isodyn-container"/>
+    <tool id="escher-fluxomics" destination="dynamic-k8s-tiny" resources="all"/>
+    <!-- ICL -->
+    <tool id="batman-nmr" destination="batman-container"/>
+    <tool id="nmrml2batman" destination="dynamic-k8s-small" resources="all"/>
+    <tool id="power-analysis" destination="papy-container"/>
+    <tool id="bruker2batman" destination="dynamic-k8s-medium" resources="all"/>
+    <!-- W4M Sacurine -->
+    <tool id="mtbls-dwnld" destination="dynamic-k8s-tiny" resources="all"/>
+    <tool id="isa2w4m" destination="dynamic-k8s-tiny" resources="all"/>
+    <tool id="Univariate" destination="dynamic-k8s-small" resources="all"/>
+    <tool id="Multivariate" destination="dynamic-k8s-small" resources="all"/>
+    <tool id="biosigner" destination="dynamic-k8s-large" resources="all"/>
+    <tool id="lcmsmatching" destination="dynamic-k8s-small" resources="all"/>
+    <tool id="Transformation" destination="dynamic-k8s-small" resources="all"/>
+    <tool id="quality_metrics" destination="dynamic-k8s-small" resources="all"/>
+    <tool id="generic_filter" destination="dynamic-k8s-small" resources="all"/>
+    <tool id="Batch_correction" destination="dynamic-k8s-small" resources="all"/>
+    <tool id="normalization" destination="dynamic-k8s-small" resources="all"/>
+    <!-- <tool id="msconvert2" destination="msconvert2-container"/> -->
+    <!-- new NMR -->
+    <tool id="metabolab" destination="dynamic-k8s-large" resources="all"/>
+    <tool id="mtbls_nmr_raw_dummy_importer" destination="nmrmlconv-container"/>
+    <tool id="nmrmlconv" destination="dynamic-k8s-small" resources="all"/>
+    <tool id="zip-nmrml-collection" destination="dynamic-k8s-small" resources="all"/>
+    <tool id="rnmr1d" destination="dynamic-k8s-xlarge" resources="all"/>
+    <tool id="rnmr1d-stacked-plot" destination="dynamic-k8s-tiny" resources="all"/>
+    <tool id="rnmr1d-prepare-output" destination="dynamic-k8s-small" resources="all"/>
+    <!-- old NMR -->
+    <!-- <tool id="mtbls2nmrglue" destination="nmrglue-container"/> -->
+    <tool id="soap_process" destination="soap-nmr-container"/>
+    <tool id="soap_opls" destination="soap-nmr-container"/>
+    <!-- other NMR -->
+    <tool id="mzml2isa" destination="dynamic-k8s-small" resources="all"/>
+    <tool id="nmrml2isa" destination="dynamic-k8s-small" resources="all"/>
+    <tool id="mtbls-downloader" destination="mtbls-downloader-container"/>
+    <tool id="mtbls-labs-uploader" destination="mtbls-labs-uploader-container"/>
+    <tool id="metfragcli" destination="metfrag-cli-container"/>
+    <tool id="Metabolite_ID_Converter" destination="container-metaboliteidconverter" />
+    <tool id="metabomatching" destination="dynamic-k8s-small" resources="all"/>
+    <tool id="ms-vfetc" destination="leidenuniv-ms-vfetc-container"/>
+    <!-- new XCMS -->
+    <tool id="xcms-find-peaks" destination="dynamic-k8s-large" resources="all"/>
+    <tool id="xcms-collect-peaks" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="xcms-group-peaks" destination="dynamic-k8s-large" resources="all"/>
+    <tool id="xcms-correct-rt" destination="dynamic-k8s-large" resources="all"/>
+    <tool id="xcms-fill-peaks" destination="dynamic-k8s-large" resources="all"/>
+    <tool id="xcms-dilutionfilter" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="xcms-blankfilter" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="save_chromatogram" destination="dynamic-k8s-small" resources="all" />
+    <tool id="show_chromatogram" destination="dynamic-k8s-small" resources="all" />
+    <!-- CAMERA -->
+    <tool id="consensusXMLToXcms" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="cameraToFeatureXML" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="featureXMLToCAMERA" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="featureXMLToXcms" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="zip-collection" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="camera-annotate-peaks" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="camera-group-fwhm" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="camera-group-corr" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="camera-find-isotopes" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="camera-find-adducts" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="unzip-collection" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="camera-prepareoutput" destination="dynamic-k8s-medium" resources="all"/>
+    <!-- OpenMS -->
+    <tool id="xcmssplit" destination="dynamic-k8s-large" resources="all"/>
+    <tool id="AdditiveSeries" destination="dynamic-k8s-small" resources="all"/> 
+    <tool id="BaselineFilter" destination="dynamic-k8s-large" resources="all"/> 
+    <tool id="CompNovo" destination="dynamic-k8s-large" resources="all"/> 
+    <tool id="CompNovoCID" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="ConsensusID" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="ConsensusMapNormalizer" destination="dynamic-k8s-xlarge" resources="all"/> 
+    <tool id="Decharger" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="DTAExtractor" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="EICExtractor" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="ExternalCalibration" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="FalseDiscoveryRate" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="FeatureFinderCentroided" destination="dynamic-k8s-xlarge" resources="all"/> 
+    <tool id="FeatureFinderIdentification" destination="dynamic-k8s-large" resources="all"/> 
+    <tool id="FeatureFinderIsotopeWavelet" destination="dynamic-k8s-xlarge" resources="all"/> 
+    <tool id="FeatureFinderMetabo" destination="dynamic-k8s-large" resources="all"/> 
+    <tool id="FeatureFinderMRM" destination="dynamic-k8s-large" resources="all"/> 
+    <tool id="FeatureFinderMultiplex" destination="dynamic-k8s-xlarge" resources="all"/> 
+    <tool id="FeatureLinkerLabeled" destination="dynamic-k8s-large" resources="all"/> 
+    <tool id="FeatureLinkerUnlabeled" destination="dynamic-k8s-large" resources="all"/> 
+    <tool id="FeatureLinkerUnlabeledQT" destination="dynamic-k8s-large" resources="all"/> 
+    <tool id="FidoAdapter" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="FileConverter" destination="dynamic-k8s-large" resources="all"/> 
+    <tool id="FileFilter" destination="dynamic-k8s-large" resources="all"/> 
+    <tool id="FileInfo" destination="dynamic-k8s-small" resources="all"/> 
+    <tool id="FileMerger" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="HighResPrecursorMassCorrector" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="IDConflictResolver" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="IDFileConverter" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="IDFilter" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="IDMapper" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="IDMerger" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="IDPosteriorErrorProbability" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="IDRipper" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="IDRTCalibration" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="InclusionExclusionListCreator" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="InspectAdapter" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="InternalCalibration" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="IsobaricAnalyzer" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="ITRAQAnalyzer" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="LuciphorAdapter" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="MapAlignerIdentification" destination="dynamic-k8s-xlarge" resources="all"/> 
+    <tool id="MapAlignerPoseClustering" destination="dynamic-k8s-xlarge" resources="all"/> 
+    <tool id="MapAlignerSpectrum" destination="dynamic-k8s-xlarge" resources="all"/> 
+    <tool id="MapNormalizer" destination="dynamic-k8s-large" resources="all"/> 
+    <tool id="MapRTTransformer" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="MapStatistics" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="MascotAdapter" destination="dynamic-k8s-small" resources="all"/> 
+    <tool id="MascotAdapterOnline" destination="dynamic-k8s-small" resources="all"/> 
+    <tool id="MassTraceExtractor" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="MRMMapper" destination="dynamic-k8s-small" resources="all"/> 
+    <tool id="MSGFPlusAdapter" destination="dynamic-k8s-large" resources="all"/> 
+    <tool id="MyriMatchAdapter" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="MzTabExporter" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="NoiseFilterGaussian" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="NoiseFilterSGolay" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="OMSSAAdapter" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="OpenSwathAnalyzer" destination="dynamic-k8s-large" resources="all"/> 
+    <tool id="OpenSwathAssayGenerator" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="OpenSwathChromatogramExtractor" destination="dynamic-k8s-large" resources="all"/> 
+    <tool id="OpenSwathConfidenceScoring" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="OpenSwathDecoyGenerator" destination="dynamic-k8s-large" resources="all"/> 
+    <tool id="OpenSwathFeatureXMLToTSV" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="OpenSwathRTNormalizer" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="PeakPickerHiRes" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="PeakPickerWavelet" destination="dynamic-k8s-xlarge" resources="all"/> 
+    <tool id="PepNovoAdapter" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="PeptideIndexer" destination="dynamic-k8s-small" resources="all"/> 
+    <tool id="PhosphoScoring" destination="dynamic-k8s-small" resources="all"/> 
+    <tool id="PrecursorIonSelector" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="PrecursorMassCorrector" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="ProteinInference" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="ProteinQuantifier" destination="dynamic-k8s-small" resources="all"/> 
+    <tool id="ProteinResolver" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="PTModel" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="PTPredict" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="RTModel" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="RTPredict" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="SeedListGenerator" destination="dynamic-k8s-small" resources="all"/> 
+    <tool id="SpecLibSearcher" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="SpectraFilterBernNorm" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="SpectraFilterMarkerMower" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="SpectraFilterNLargest" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="SpectraFilterNormalizer" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="SpectraFilterParentPeakMower" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="SpectraFilterScaler" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="SpectraFilterSqrtMower" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="SpectraFilterThresholdMower" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="SpectraFilterWindowMower" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="SpectraMerger" destination="dynamic-k8s-small" resources="all"/> 
+    <tool id="TextExporter" destination="dynamic-k8s-small" resources="all"/> 
+    <tool id="TMTAnalyzer" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="TOFCalibration" destination="dynamic-k8s-medium" resources="all"/> 
+    <tool id="XTandemAdapter" destination="dynamic-k8s-medium" resources="all"/> 
+    <!-- MetFrag -->
+    <tool id="metfrag-cli-batch" destination="dynamic-k8s-large" resources="all"/>
+    <tool id="msnbase-read-msms" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="map-msms2camera" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="msms2metfrag" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="metfrag-vis" destination="dynamic-k8s-small" resources="all"/>
+    <tool id="metfrag-cli-batch-multiple" destination="dynamic-k8s-large" resources="all"/>
+    <tool id="msnbase-filter-merge-msms" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="msms2metfrag-multiple" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="aggregatemetfrag" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="passatutto" destination="dynamic-k8s-medium" resources="all"/>
+    <!-- ISA related tools -->
+    <tool id="isa_create_metabo" destination="container-isatab-create" resources="all"/>
+    <tool id="isa_get_data_files_list" destination="dynamic-k8s-tiny" resources="all"/>
+    <tool id="isa_get_data_files_collection" destination="dynamic-k8s-tiny" resources="all"/>
+    <tool id="isa_get_factors_summary" destination="dynamic-k8s-tiny" resources="all"/>
+    <tool id="isa_get_study_factor_values" destination="dynamic-k8s-tiny" resources="all"/>
+    <tool id="isa_get_study_factors" destination="dynamic-k8s-tiny" resources="all"/>
+    <tool id="isatab2json" destination="dynamic-k8s-tiny" resources="all"/>
+    <tool id="isatab_validator" destination="dynamic-k8s-tiny" resources="all"/>
+    <tool id="mtbls-factors-viz" destination="dynamic-k8s-small" resources="all"/>
+    <tool id="mw2isa" destination="dynamic-k8s-small" resources="all"/>
+    <!-- DIMSpy tools -->
+    <tool id="dimspy_process_scans" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="dimspy_replicate_filter" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="dimspy_align_samples" destination="dynamic-k8s-large" resources="all"/>
+    <tool id="dimspy_blank_filter" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="dimspy_sample_filter" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="dimspy_hdf5_to_txt" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="dimspy_merge_peaklists" destination="dynamic-k8s-medium" resources="all"/>
+    <tool id="dimspy_get_peaklists" destination="dynamic-k8s-medium" resources="all"/>
+  </tools>
+  <resources default="default">
+    <!-- Group different parameters defined in job_resource_params_conf.xml
+         together and assign these groups ids. Tool section below can map
+         tools to different groups. This is experimental functionality!  -->
+    <group id="cpu">requests_cpu,limits_cpu</group>
+    <group id="memory">requests_memory,limits_memory</group>
+    <group id="all">requests_cpu,limits_cpu,requests_memory,limits_memory</group>
+  </resources>
+</job_conf>
+
+<!-- vim: set et sw=2 ts=2 -->
