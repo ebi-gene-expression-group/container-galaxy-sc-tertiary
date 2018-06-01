@@ -1,6 +1,6 @@
 FROM pcm32/galaxy-init:v18.01
 
-MAINTAINER PhenoMeNal-H2020 Project <phenomenal-h2020-users@googlegroups.com>
+MAINTAINER EBI Expression Atlas Team <expression-atlas-team@ebi.ac.uk>
 
 LABEL Description="Galaxy 18.01 - SC Tertiary Analysis"
 LABEL software="Galaxy Init"
@@ -21,7 +21,7 @@ LABEL version="1.7"
 COPY config/job_conf.xml config/job_conf.xml
 COPY config/tool_conf.xml config/tool_conf.xml
 COPY config/sanitize_whitelist.txt config/sanitize_whitelist.txt
-COPY tools/phenomenal tools/phenomenal
+COPY tools/tertiary-analysis tools/tertiary-analysis
 
 # Reqs/limits
 COPY config/job_resource_params_conf.xml config/job_resource_params_conf.xml
@@ -31,9 +31,8 @@ COPY rules/k8s_destinations.py /galaxy-central/lib/galaxy/jobs/rules/k8s_destina
 # Galaxy tours which guide users through the subsequent steps in an analysis
 # COPY config/plugins/tours/*.yaml config/plugins/tours/
 
-#COPY html/partners.png welcome/welcome_partners.png
-#COPY html/PhenoMeNal_logo.png welcome/welcome_PhenoMeNal_logo.png
-#COPY html/welcome.html welcome/welcome.html
+COPY html/Atlas_logo.png welcome/welcome_Atlas_logo.png
+COPY html/welcome.html welcome/welcome.html
 
 # COPY workflows workflows_to_load
 # COPY post-start-actions.sh post-start-actions.sh
