@@ -7,17 +7,6 @@ LABEL software="Galaxy Init"
 LABEL software.version="18.01"
 LABEL version="1.7"
 
-# RUN wget -O ephemeris.tar https://api.github.com/repos/galaxyproject/ephemeris/tarball/eeee87a57379b8b639b06c2a50038ef449c28d73 && \
-#     tar -xf ephemeris.tar && rm ephemeris.tar && \
-#     virtualenv venv-workflow && \
-#     /bin/bash -c "source venv-workflow/bin/activate && \
-#                   pip install 'pip>=8.1' && \
-#                   pip install ./galaxyproject-ephemeris-eeee87a \
-#                       --index-url https://pypi.python.org/simple && \
-#                   pip install urllib3[secure] && \
-#                   deactivate && \
-#                   virtualenv --relocatable venv-workflow"
-
 COPY config/job_conf.xml config/job_conf.xml
 COPY config/tool_conf.xml config/tool_conf.xml
 COPY config/sanitize_whitelist.txt config/sanitize_whitelist.txt
