@@ -18,13 +18,8 @@
     </plugin>
   </plugins>
   <handlers default="handlers">
-    <!--         HANDLERS -->
-    <handler id="main" tags="handlers"/>
-    <!-- HANDLERS  -->
-    <!-- HANDLERS
     <handler id="handler0" tags="handlers"/>
     <handler id="handler1" tags="handlers"/>
-         HANDLERS -->
   </handlers>
   <destinations default="local">
     <destination id="local" runner="local"/>
@@ -65,7 +60,7 @@
          chosen at random.  -->
     <!-- <tool id="pathway_enrichment" destination="dynamic-k8s-large" resources="all"/> -->
 
-    
+
   </tools>
   <resources default="default">
     <!-- Group different parameters defined in job_resource_params_conf.xml
