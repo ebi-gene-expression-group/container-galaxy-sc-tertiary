@@ -58,7 +58,7 @@
          identified by either the "id" or "tags" attribute.  If assigned to
          a tag, a handler or destination that matches that tag will be
          chosen at random.  -->
-    <!-- <tool id="pathway_enrichment" destination="dynamic-k8s-large" resources="all"/> -->
+    <tool id="seurat-read10x" destination="dynamic-k8s-tiny" resources="all"/> -->
 
 
   </tools>
