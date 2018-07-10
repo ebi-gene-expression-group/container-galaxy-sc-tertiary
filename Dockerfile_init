@@ -1,11 +1,11 @@
-FROM pcm32/galaxy-init:v18.01
+FROM pcm32/galaxy-init:v18.05
 
 MAINTAINER EBI Expression Atlas Team <expression-atlas-team@ebi.ac.uk>
 
-LABEL Description="Galaxy 18.01 - SC Tertiary Analysis"
+LABEL Description="Galaxy 18.05 - SC Tertiary Analysis"
 LABEL software="Galaxy Init"
-LABEL software.version="18.01"
-LABEL version="1.7"
+LABEL software.version="18.05"
+LABEL version="1.8"
 
 COPY config/job_conf.xml config/job_conf.xml
 COPY config/tool_conf.xml config/tool_conf.xml

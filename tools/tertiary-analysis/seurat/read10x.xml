@@ -4,7 +4,6 @@
 </stdio>
 <description>Loads 10x data into a serialized seurat R object</description>
 <command><![CDATA[
-  # Directory containing the matrix.mtx, genes.tsv, and barcodes.tsv files provided by 10X
 ln -s "$matrix" matrix.mtx;
 ln -s "$genes" genes.tsv;
 ln -s "$barcodes" barcodes.tsv;

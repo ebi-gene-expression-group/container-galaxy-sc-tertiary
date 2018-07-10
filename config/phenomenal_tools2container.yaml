@@ -6,7 +6,7 @@ assignment:
 - tools_id:
    - seurat-read10x
   docker_repo_override: quay.io
-  docker_owner_override: ebigxea
+  docker_owner_override: ebigxa
   docker_image_override: r-seurat-scripts
   docker_tag_override: 0.0.1--0
   max_pod_retrials: 3

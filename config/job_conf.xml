@@ -21,8 +21,30 @@
     <handler id="handler0" tags="handlers"/>
     <handler id="handler1" tags="handlers"/>
   </handlers>
-  <destinations default="local">
+  <destinations default_from_environ="GALAXY_DESTINATIONS_DEFAULT" default="local">
     <destination id="local" runner="local"/>
+    <destination id="local_no_container" runner="local">
+        <env file="/export/venv/bin/activate"/>
+        <param id="enabled" from_environ="GALAXY_RUNNERS_ENABLE_LOCAL">true</param>
+    </destination>
+    <destination id="docker_dispatch" runner="dynamic">
+      <!-- Allow different default destinations based on whether the tool
+               supports Docker or not. -->
+      <param id="type">docker_dispatch</param>
+      <param id="docker_destination_id" from_environ="GALAXY_DESTINATIONS_DOCKER_DEFAULT">slurm_cluster</param>
+      <param id="default_destination_id" from_environ="GALAXY_DESTINATIONS_NO_DOCKER_DEFAULT">slurm_cluster</param>
+    </destination>
+    <destination id="k8s_default" runner="k8s">
+      <env file="/export/venv/bin/activate"/>
+      <param id="enabled" from_environ="GALAXY_RUNNERS_ENABLE_K8S">true</param>
+      <param id="docker_enabled">true</param>
+      <param id="docker_sudo" from_environ="GALAXY_DOCKER_SUDO">False</param>
+      <!-- The empty volumes from shouldn't affect Galaxy, set GALAXY_DOCKER_VOLUMES_FROM to use. -->
+      <param id="docker_volumes_from" from_environ="GALAXY_DOCKER_VOLUMES_FROM"></param>
+      <!-- For a stock Galaxy instance and traditional job runner $defaults will expand out as: $galaxy_root:ro,$tool_directory:ro,$working_directory:rw,$default_file_path:rw -->
+      <param id="docker_volumes" from_environ="GALAXY_DOCKER_VOLUMES">$defaults</param>
+      <param id="docker_default_container_id" from_environ="GALAXY_DOCKER_DEFAULT_CONTAINER">busybox:ubuntu-14.04</param>
+    </destination>
     <destination id="dynamic-k8s" runner="dynamic">
       <param id="type">python</param>
       <param id="function">k8s_wrapper</param>
