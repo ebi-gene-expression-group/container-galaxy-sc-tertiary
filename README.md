@@ -18,7 +18,7 @@ Then push your container to docker registry with `docker push`.
 ## Using this container
 
 Follow these [instructions](https://tertiary-workflows-docs.readthedocs.io/en/latest/running_galaxy_sc_locally.html) 
-to setup your environment if you haven't (only follow until before "Normal Run". In that setup, the 
+to setup your environment if you haven't (only follow until before "Normal Run"). In that setup, the 
 helm configuration for the galaxy-stable chart, available on this repo at `helm-configs/`, is used.
 To make use of the container that you just built, in your local copy of the helm config file, set the
 init part to:
