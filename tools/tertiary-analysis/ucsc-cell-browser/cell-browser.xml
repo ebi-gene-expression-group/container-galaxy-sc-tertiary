@@ -1,0 +1,25 @@
+<tool id="ucsc-cell-browser" name="UCSC Cell Browser" version="0.1">
+<stdio>
+<exit_code range="1:" />
+</stdio>
+<description>Runs the UCSC Cell Browser interactively</description>
+<command><![CDATA[
+echo "coords = [ {'file':'$tsneCoordinates', 'shortLabel':'t-SNE on WGCNA'} ]" > ./config-file;
+echo "meta = '$cellMetadata'" >> ./config-file;
+echo "name = 'sample'" >> ./config-file;
+echo "exprMatrix = '$expressionMatrix'" >> ./config-file;
+echo "geneIdType = 'symbol'" >> ./config-file;
+
+cbBuild -i ./config-file -o "$html_file.extra_files_path"
+]]></command>
+<inputs>
+    <param type="data" name="expressionMatrix" label="" help="" format="tsv"/>
+    <param type="data" name="cellMetadata" label="" help="" format="tsv"/>
+    <param type="data" name="tsneCoordinates" label="" help="" format="tsv"/>
+</inputs>
+<outputs>
+    <data format="html" name="html_file" label="Interactive UCSC Cell Browser"/>
+</outputs>
+<help><![CDATA[
+]]></help>
+</tool>
