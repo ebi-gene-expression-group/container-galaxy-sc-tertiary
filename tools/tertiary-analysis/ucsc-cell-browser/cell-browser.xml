@@ -10,7 +10,8 @@ echo "name = 'sample'" >> ./config-file;
 echo "exprMatrix = '$expressionMatrix'" >> ./config-file;
 echo "geneIdType = 'symbol'" >> ./config-file;
 
-cbBuild -i ./config-file -o "$html_file.extra_files_path"
+cbBuild -i ./config-file -o "$html_file.extra_files_path";
+mv "$html_file.extra_files_path"/index.html "$html_file"
 ]]></command>
 <inputs>
     <param type="data" name="expressionMatrix" label="" help="" format="tsv"/>
