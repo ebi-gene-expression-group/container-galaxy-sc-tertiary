@@ -46,6 +46,9 @@
   <section name="Seurat" id="seurat-tools">
     <tool file="tertiary-analysis/seurat/read10x.xml"  labels="I/O"/>
   </section>
+  <section name="UCSC Cell Browser" id="cell-browser">
+    <tool file="tertiary-analysis/ucsc-cell-browser/cell-browser.xml"  labels="Viz"/>
+  </section>
 
 
 </toolbox>

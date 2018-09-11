@@ -82,6 +82,7 @@
          a tag, a handler or destination that matches that tag will be
          chosen at random.  -->
     <tool id="seurat-read10x" destination="dynamic-k8s-tiny" resources="all"/> -->
+    <tool id="ucsc-cell-browser" destination="dynamic-k8s-tiny" resources="all"/> -->
 
 
   </tools>
