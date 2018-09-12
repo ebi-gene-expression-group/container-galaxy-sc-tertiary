@@ -26,6 +26,7 @@ galaxy_conf:
   allow_user_deletion: true
   filter-with: /galaxy
   cleanup_job: never
+  enable_beta_mulled_containers: true
 
 
 job_conf:
