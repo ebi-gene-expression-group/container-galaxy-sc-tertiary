@@ -44,7 +44,16 @@
   <label id="ebi-tertiary" text="EBI scRNA-Seq Tertiary Analysis" />
 
   <section name="Seurat" id="seurat-tools">
-    <tool file="tertiary-analysis/seurat/read10x.xml"  labels="I/O"/>
+    <tool file="tertiary-analysis/seurat/seurat_read10x.xml"  labels="I/O"/>
+    <tool file="tertiary-analysis/seurat/seurat_create_object.xml"/>
+    <tool file="tertiary-analysis/seurat/seurat_filter_cells.xml"/>
+    <tool file="tertiary-analysis/seurat/seurat_find_clusters.xml"/>
+    <tool file="tertiary-analysis/seurat/seurat_find_markers.xml"/>
+    <tool file="tertiary-analysis/seurat/seurat_find_variable_genes.xml"/>
+    <tool file="tertiary-analysis/seurat/seurat_normalise_data.xml"/>
+    <tool file="tertiary-analysis/seurat/seurat_run_pca.xml"/>
+    <tool file="tertiary-analysis/seurat/seurat_run_tsne.xml"/>
+    <tool file="tertiary-analysis/seurat/seurat_scale_data.xml"/>
   </section>
   <section name="UCSC Cell Browser" id="cell-browser">
     <tool file="tertiary-analysis/ucsc-cell-browser/cell-browser.xml"  labels="Viz"/>
