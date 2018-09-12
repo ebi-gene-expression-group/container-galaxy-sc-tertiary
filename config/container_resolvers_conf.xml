@@ -1,0 +1,9 @@
+<containers_resolvers>
+  <explicit />
+  <!-- the default configuration, first look for dependencies installed from the toolshed -->
+  <!-- <cached_mulled /> -->
+  <!-- <cached_mulled_singularity /> -->
+  <mulled />
+  <!-- <build_mulled /> -->
+  <!-- <build_mulled_singularity /> -->
+</containers_resolvers>
