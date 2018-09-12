@@ -40,6 +40,7 @@ job_conf:
 
 
 persistence:
+  storageClass: "-"
   minikube:
     hostPath: "/data/galaxy-18.05-tertiary"
 
@@ -59,3 +60,6 @@ postgresql:
 proftpd:
   service:
     type: NodePort
+
+rbac:
+  enabled: true
