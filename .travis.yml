@@ -35,7 +35,7 @@ before_script:
 
 script:
 - kubectl cluster-info
-- docker build -t test/galaxy-sc-tertiary:v18.05 -f Docker_init .
+- sudo docker build -t test/galaxy-sc-tertiary:v18.05 -f Docker_init .
 - helm install -f helm-configs/.travis-tertiary-portals-galaxy-18.05-minukube.yaml --version $HELM_REPO_VERSION galaxy-helm-repo/galaxy-stable
 - ./util/wait-for-deployment -n default -t 360 $(kubectl get deployment | awk '{ print $1 }' | grep 'galaxy-stable$')
 - planemo lint -r --report_level error tools

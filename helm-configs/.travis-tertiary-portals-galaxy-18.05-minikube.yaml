@@ -3,9 +3,9 @@
 # Settings for the init image
 init:
   image:
-    repository: pcm32/galaxy-sc-tertiary-init
+    repository: test/galaxy-sc-tertiary
     tag: v18.05
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   force_copy: "__venv__,__config__,__galaxy-central__,__tools__"
 
 image:
