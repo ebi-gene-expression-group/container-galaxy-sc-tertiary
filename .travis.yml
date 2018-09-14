@@ -29,8 +29,11 @@ before_script:
 # Wait for Kubernetes to be up and ready.
 - JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
 # Set up helm
-- helm init --wait --service-account default
+- helm init --wait
 - helm repo add galaxy-helm-repo https://pcm32.github.io/galaxy-helm-charts
+- kubectl create serviceaccount --namespace kube-system tiller
+- kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+- kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
 
 
 script:
