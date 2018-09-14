@@ -17,6 +17,8 @@ before_script:
 # TODO: remove the --bootstrapper flag once this issue is solved: https://github.com/kubernetes/minikube/issues/2704
 - sudo minikube config set WantReportErrorPrompt false
 - sudo -E minikube start --vm-driver=none --bootstrapper=localkube --kubernetes-version=${K8S_VERSION} --extra-config=apiserver.Authorization.Mode=RBAC
+# Add nsenter binary
+- sudo docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter
 # Fix the kubectl context, as it's often stale.
 # - minikube update-context
 - curl -Lo helm.tar.gz https://kubernetes-helm.storage.googleapis.com/helm-${HELM_VERSION}.tar.gz
