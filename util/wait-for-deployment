@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/bin/bash
 # Waits for a deployment to complete.
 #
 # Includes a two-step approach:
