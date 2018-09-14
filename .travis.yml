@@ -19,9 +19,9 @@ before_script:
 - sudo -E minikube start --vm-driver=none --bootstrapper=localkube --kubernetes-version=${K8S_VERSION} --extra-config=apiserver.Authorization.Mode=RBAC
 # Fix the kubectl context, as it's often stale.
 # - minikube update-context
-- curl https://kubernetes-helm.storage.googleapis.com/helm-${HELM_VERSION}.tar.gz
-- tar -xf helm-${HELM_VERSION}.tar.gz
-- mv linux-amd64/helm /usr/bin/
+- curl -Lo helm.tar.gz https://kubernetes-helm.storage.googleapis.com/helm-${HELM_VERSION}.tar.gz
+- tar -xf helm.tar.gz
+- mv linux-amd64/helm /usr/local/bin/
 - rm -rf linux-amd64
 # Wait for Kubernetes to be up and ready.
 - JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
