@@ -95,7 +95,6 @@ if [ "$#" -ne 1 ] ; then
   display_usage_and_exit
 fi
 readonly deployment="$1"
-pod=
 
 if [[ ${timeout} -le 0 ]]; then
   display_usage_and_exit
