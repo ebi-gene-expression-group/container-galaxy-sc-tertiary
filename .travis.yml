@@ -42,6 +42,7 @@ script:
 - helm install -f helm-configs/.travis-galaxy-sc-deployment.yaml --name travis --version $HELM_REPO_VERSION galaxy-helm-repo/galaxy-stable
 - planemo lint -r --report_level error tools
 # - ./util/wait-for-deployment -n default -t 360 $(kubectl get deployment | awk '{ print $1 }' | grep 'galaxy-stable$')
+- kubectl get pods | awk '{ print $1 }' 
 - kubectl get pods | awk '{ print $1 }' | egrep '.*-galaxy-stable-\d.*'
 - sleep 150
 - kubectl logs $(kubectl get pods | awk '{ print $1 }' | egrep '.*-galaxy-stable-\d.*')
