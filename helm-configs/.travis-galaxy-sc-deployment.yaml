@@ -40,9 +40,10 @@ job_conf:
 
 
 persistence:
-  storageClass: "-"
+  # storageClass: "-"
   minikube:
-    hostPath: "/data/galaxy-18.05-tertiary"
+    enabled: false
+    # hostPath: "/data/galaxy-18.05-tertiary"
 
 service:
   type: NodePort
