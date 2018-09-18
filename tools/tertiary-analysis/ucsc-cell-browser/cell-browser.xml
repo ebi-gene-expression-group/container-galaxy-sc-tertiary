@@ -1,4 +1,4 @@
-<tool id="ucsc-cell-browser" name="UCSC Cell Browser" version="0.1">
+<tool id="ucsc-cell-browser" name="UCSC Cell Browser" version="0.1.1">
 <stdio>
 <exit_code range="1:" />
 </stdio>
@@ -14,9 +14,9 @@ cbBuild -i cellbrowser.conf -o "$html_file.extra_files_path";
 mv "$html_file.extra_files_path"/index.html "$html_file"
 ]]></command>
 <inputs>
-    <param type="data" name="expressionMatrix" label="" help="" format="tsv"/>
-    <param type="data" name="cellMetadata" label="" help="" format="tsv"/>
-    <param type="data" name="tsneCoordinates" label="" help="" format="tsv"/>
+    <param type="data" name="expressionMatrix" label="" help="" format="tabular"/>
+    <param type="data" name="cellMetadata" label="" help="" format="tabular"/>
+    <param type="data" name="tsneCoordinates" label="" help="" format="tabular"/>
 </inputs>
 <outputs>
     <data format="html" name="html_file" label="Interactive UCSC Cell Browser"/>
