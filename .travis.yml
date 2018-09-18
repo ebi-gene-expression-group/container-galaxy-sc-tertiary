@@ -43,8 +43,8 @@ script:
 - planemo lint -r --report_level error tools
 # - ./util/wait-for-deployment -n default -t 360 $(kubectl get deployment | awk '{ print $1 }' | grep 'galaxy-stable$')
 - sleep 300
-- kubectl logs $(kubectl get deployment | awk '{ print $1 }' | grep 'galaxy-stable$')
-- kubectl describe pods/$(kubectl get deployment | awk '{ print $1 }' | grep 'galaxy-stable$')
+- kubectl logs $(kubectl get pods | awk '{ print $1 }' | egrep '.*-galaxy-stable-\d.*')
+- kubectl describe pods/$(kubectl get pods | awk '{ print $1 }' | egrep '.*-galaxy-stable-\d.*')
 
 notifications:
   email: false
