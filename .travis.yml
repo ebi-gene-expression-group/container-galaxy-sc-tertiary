@@ -28,7 +28,7 @@ before_script:
 - tar -xf helm.tar.gz
 - sudo mv linux-amd64/helm /usr/local/bin/
 - rm -rf linux-amd64
-- sudo pip install planemo
+- sudo -H pip install planemo
 # Wait for Kubernetes to be up and ready.
 - JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
 # Set up helm
