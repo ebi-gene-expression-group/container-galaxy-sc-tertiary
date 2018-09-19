@@ -124,7 +124,7 @@ updated_replicas=$(get_updated_replicas)
 available_replicas=$(get_available_replicas)
 
 while [[ ${updated_replicas} -lt ${specified_replicas} || ${current_replicas} -gt ${updated_replicas} || ${available_replicas} -lt ${updated_replicas} ]]; do
-  sleep .5
+  sleep 20
   echo "current/updated/available replicas: ${current_replicas}/${updated_replicas}/${available_replicas}, waiting"
   current_replicas=$(get_replicas)
   updated_replicas=$(get_updated_replicas)
