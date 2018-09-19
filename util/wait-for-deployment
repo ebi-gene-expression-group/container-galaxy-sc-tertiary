@@ -34,8 +34,6 @@ monitor_timeout() {
   local -r wait_pid="$1"
   sleep "${timeout}"
   echo "Timeout ${timeout} exceeded" >&2
-  kubectl describe pods
-  get_all_pods_logs
   kill "${wait_pid}"
 }
 
