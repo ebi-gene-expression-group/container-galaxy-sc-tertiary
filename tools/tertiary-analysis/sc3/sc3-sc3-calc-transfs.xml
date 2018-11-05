@@ -1,0 +1,40 @@
+<tool id="sc3-sc3-calc-transfs" name="SC3 calculate transformations" version="0.1.0">
+    <description>Calculate CPM from serialized scater R object</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        sc3-sc3-calc-transfs.R -i R_scater_serialized.rds -o R_scater_cpm.rds
+    ]]></command>
+    <inputs>
+        <param type="data" name="input1" format="rds" />
+    </inputs>
+    <outputs>
+        <data name="output1" format="rds" from_work_dir="R_sc3_transformed.rds" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="input1" value="R_sc3_object.rds"/>
+            <output name="output1" file="R_sc3_transformed.rds"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+        Usage: /Users/ct5/anaconda3/envs/galaxy/bin/sc3-sc3-calc-transfs.R [options]
+
+
+Options:
+	-i INPUT-OBJECT-FILE, --input-object-file=INPUT-OBJECT-FILE
+		File name in which a processed SC3 'SingleCellExperiment' object has been stored
+
+	-o OUTPUT-OBJECT-FILE, --output-object-file=OUTPUT-OBJECT-FILE
+		File name in which to store a transformed R object of type 'SingleCellExperiment' from SC3.
+
+	-h, --help
+		Show this help message and exit
+
+
+
+    ]]></help>
+    <expand macro="citations" />
+</tool>
