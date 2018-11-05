@@ -63,6 +63,20 @@
     <tool file="tertiary-analysis/scater/scater-normalize.xml"/>
     <tool file="tertiary-analysis/scater/scater-is-outlier.xml"/>
   </section>
+  <section name="Scanpy" id="scanpy-tools">
+    <tool file="tertiary-analysis/scanpy/scanpy-read-10x.xml" labels="I/O"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-filter-cells.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-filter-genes.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-normalise-data.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-find-variable-genes.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-scale-data.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-run-pca.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-neighbours.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-find-cluster.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-run-umap.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-run-tsne.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-find-markers.xml"/>
+  </section>
   <section name="UCSC Cell Browser" id="cell-browser">
     <tool file="tertiary-analysis/ucsc-cell-browser/cell-browser.xml"  labels="Viz"/>
   </section>
