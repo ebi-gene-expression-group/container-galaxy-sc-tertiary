@@ -1,0 +1,48 @@
+<tool id="sc3-sc3-calc-consens" name="SC3 calculate consensus" version="0.1.0">
+    <description>Calculate consensus K-means clustering</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        sc3-sc3-calc-consens.R -i "$input1" -d "$input2" -o "$output1"
+    ]]></command>
+    <inputs>
+        <param type="data" name="input1" format="rds" />
+        <param type="data" name="input2" format="" />
+    </inputs>
+    <outputs>
+        <data name="output1" format="rds" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="input1" value="R_sc3_kmeans.rds"/>
+            <param name="input2" value="directory_store_data"/>
+            <output name="output1" file="R_sc3_consensus.rds"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+        Usage: /Users/ct5/anaconda3/envs/galaxy/bin/sc3-sc3-calc-consens.R [options]
+
+
+Options:
+	-i INPUT-OBJECT-FILE, --input-object-file=INPUT-OBJECT-FILE
+		File name in which a SC3 'SingleCellExperiment' object has been stored after kmeans clustering.
+
+	-d OUTPUT-CLUSTER-DIR, --output-cluster-dir=OUTPUT-CLUSTER-DIR
+		An output directory in which to write clusters and marker genes.
+
+	-o OUTPUT-OBJECT-FILE, --output-object-file=OUTPUT-OBJECT-FILE
+		File name for R object of type 'SingleCellExperiment' from SC3 in which to store the consensus matrix.
+
+	-h, --help
+		Show this help message and exit
+
+
+Error in wsc_parse_args(option_list, mandatory = c("input_object_file",  : 
+  Mandatory argment 'input_object_file' not supplied
+Execution halted
+
+    ]]></help>
+    <expand macro="citations" />
+</tool>
