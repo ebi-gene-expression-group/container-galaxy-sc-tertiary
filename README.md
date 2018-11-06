@@ -1,3 +1,5 @@
+[![Docker Repository on Quay](https://quay.io/repository/ebigxa/galaxy-sc-tertiary/status "Docker Repository on Quay")](https://quay.io/repository/ebigxa/galaxy-sc-tertiary)
+
 # Galaxy HCA Single Cell Tertiary Analysis
 
 This is a Galaxy init container for single cell RNA-Seq tertiary analysis tools,
