@@ -1,11 +1,11 @@
-FROM pcm32/galaxy-init:v18.05
+FROM pcm32/galaxy-init:18.09_kubernetes_integration_test
 
 MAINTAINER EBI Expression Atlas Team <expression-atlas-team@ebi.ac.uk>
 
-LABEL Description="Galaxy 18.05 - SC Tertiary Analysis"
+LABEL Description="Galaxy 18.09 - SC Tertiary Analysis"
 LABEL software="Galaxy Init"
-LABEL software.version="18.05"
-LABEL version="1.8"
+LABEL software.version="18.09"
+LABEL version="1.9"
 
 COPY config/job_conf.xml config/job_conf.xml
 COPY config/tool_conf.xml config/tool_conf.xml
