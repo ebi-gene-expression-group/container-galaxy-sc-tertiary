@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="retrieve-sca" name="Retrieve Data" version="@VERSION@+galaxy0">
+  <description>from single cell atlas</description>
+  <macros>
+    <import>scanpy_macros.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+wget -O exp_quant.zip
+    'https://www.ebi.ac.uk/gxa/sc/experiment/${accession}/download/zip?fileType=quantification-filtered&accessKey=' &&
+unzip exp_quant.zip &&
+
+wget -O exp_design.tsv
+    'https://www.ebi.ac.uk/gxa/sc/experiment/${accession}/download?fileType=experiment-design&accessKey=' &&
+
+mv ${accession}.expression_tpm.mtx matrix.mtx &&
+awk '{OFS="\t"; print \$2,\$2}' ${accession}.expression_tpm.mtx_rows > genes.tsv &&
+cut -f2 ${accession}.expression_tpm.mtx_cols > barcodes.tsv
+]]></command>
+
+  <inputs>
+    <param name="accession" type="text" value="E-GEOD-100058" label="SC-Atlas experiment accession"/>
+  </inputs>
+
+  <outputs>
+    <data name="matrix_mtx" format="txt" from_work_dir="matrix.mtx" label="${tool.name} on ${on_string} ${accession} matrix.mtx"/>
+    <data name="genes_tsv" format="tsv" from_work_dir="genes.tsv" label="${tool.name} on ${on_string} ${accession} genes.tsv"/>
+    <data name="barcode_tsv" format="tsv" from_work_dir="barcodes.tsv" label="${tool.name} on ${on_string} ${accession} barcodes.tsv"/>
+    <data name="design_tsv" format="tsv" from_work_dir="exp_design.tsv" label="${tool.name} on ${on_string} ${accession} exp_design.tsv"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="accession" value="E-GEOD-100058"/>
+      <output name="matrix_mtx" file="E-GEOD-100058.expression_tpm.mtx" ftype="txt"/>
+      <output name="genes_tsv" file="E-GEOD-100058.genes.tsv" ftype="tsv"/>
+      <output name="barcode_tsv" file="E-GEOD-100058.barcodes.tsv" ftype="tsv"/>
+      <output name="design_tsv" file="E-GEOD-100058.exp_design.tsv" ftype="tsv"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+]]></help>
+  <!-- <expand macro="citations"/> -->
+</tool>
