@@ -36,5 +36,9 @@ cut -f2 ${accession}.expression_tpm.mtx_cols > barcodes.tsv
   </tests>
 
   <help><![CDATA[
+For more information check https://www.ebi.ac.uk/gxa/sc/home
 ]]></help>
+  <citations>
+    <citation type="doi">10.1093/nar/gkv1045</citation>
+  </citations>
 </tool>
