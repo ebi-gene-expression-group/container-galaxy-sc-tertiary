@@ -15,7 +15,6 @@ scanpy-run-umap.py
     #if $embeddings
         --output-embeddings-file embeddings.csv
     #end if
-
     #if $settings.default == "false"
         -n '${settings.n_comp}'
         --min-dist '${settings.min_dist}'

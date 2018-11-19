@@ -15,7 +15,6 @@ scanpy-run-tsne.py
     #if $embeddings
         --output-embeddings-file embeddings.csv
     #end if
-
     #if $settings.default == "false"
         --perplexity '${settings.perplexity}'
         --early-exaggeration '${settings.early_exag}'
