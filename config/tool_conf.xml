@@ -43,6 +43,9 @@
   </section>
   <label id="ebi-tertiary" text="EBI scRNA-Seq Tertiary Analysis" />
 
+  <section id="get-scrna" name="Get scRNAseq data">
+    <tool file="tertiary-analysis/data/retrieve-scxa.xml"/>
+  </section>
   <section name="Seurat" id="seurat-tools">
     <tool file="tertiary-analysis/seurat/seurat_read10x.xml"  labels="I/O"/>
     <tool file="tertiary-analysis/seurat/seurat_create_object.xml"/>
@@ -71,7 +74,20 @@
     <tool file="tertiary-analysis/sc3/sc3-sc3-estimate-k.xml"/>
     <tool file="tertiary-analysis/sc3/sc3-sc3-kmeans.xml"/>
   </section>
-
+  <section name="Scanpy" id="scanpy-tools">
+    <tool file="tertiary-analysis/scanpy/scanpy-read-10x.xml" labels="I/O"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-filter-cells.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-filter-genes.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-normalise-data.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-find-variable-genes.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-scale-data.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-run-pca.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-neighbours.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-find-cluster.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-run-umap.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-run-tsne.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-find-markers.xml"/>
+  </section>
   <section name="UCSC Cell Browser" id="cell-browser">
     <tool file="tertiary-analysis/ucsc-cell-browser/cell-browser.xml"  labels="Viz"/>
   </section>

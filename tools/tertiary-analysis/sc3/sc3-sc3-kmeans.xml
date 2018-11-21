@@ -1,0 +1,48 @@
+<tool id="sc3-sc3-kmeans" name="SC3 kmeans" version="0.1.0">
+    <description>Perform k-Means clustering on cells</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        sc3-sc3-kmeans.R -i $input1.rds -k "$input2" -o "$output1" 
+    ]]></command>
+    <inputs>
+        <param type="data" name="input1" format="" />
+        <param type="data" name="input2" format="" />
+    </inputs>
+    <outputs>
+        <data name="output1" format="rds" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="input1" value="R_sc3_distance"/>
+            <param name="input2" value="K_size"/>
+            <output name="output1" file="R_sc3_kmeans.rds"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+        Usage: /Users/ct5/anaconda3/envs/galaxy/bin/sc3-sc3-kmeans.R [options]
+
+
+Options:
+	-i INPUT-OBJECT-FILE, --input-object-file=INPUT-OBJECT-FILE
+		File name in which a transformed SC3 'SingleCellExperiment' object has been stored after processed with sc3_calc_transfs()
+
+	-k KS, --ks=KS
+		A comma-separated string or single value representing the number of clusters k to be used for SC3 clustering.
+
+	-o OUTPUT-OBJECT-FILE, --output-object-file=OUTPUT-OBJECT-FILE
+		File name for R object of type 'SingleCellExperiment' from SC3 in which to store the kmeans clustering as metadata.
+
+	-h, --help
+		Show this help message and exit
+
+
+Error in wsc_parse_args(option_list, mandatory = c("input_object_file",  : 
+  Mandatory argment 'input_object_file' not supplied
+Execution halted
+
+    ]]></help>
+    <expand macro="citations" />
+</tool>
