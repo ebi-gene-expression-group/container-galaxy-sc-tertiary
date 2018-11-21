@@ -24,7 +24,6 @@ galaxy_conf:
   admin_users: admin@email.co.uk
   allow_user_creation: true
   allow_user_deletion: true
-  filter-with: /galaxy
   cleanup_job: never
   enable_beta_mulled_containers: true
 
@@ -50,7 +49,6 @@ service:
 
 ingress:
   enabled: false
-  path: /galaxy
 
 
 postgresql:
