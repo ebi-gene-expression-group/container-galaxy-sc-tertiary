@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="retrieve-scxa" name="Retrieve Data" version="v0.0.1+galaxy0">
+<tool id="retrieve-scxa" name="EBI Expression Atlas Single Cell Data Retrieval" version="v0.0.1+galaxy0">
+  <requirements>
+    <requirement type="package" version="1.18">gnu-wget</requirement>
+  </requirements>
   <description>from single cell expression atlas</description>
   <command detect_errors="exit_code"><![CDATA[
 wget -O exp_quant.zip
