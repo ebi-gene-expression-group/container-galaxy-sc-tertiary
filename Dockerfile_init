@@ -9,6 +9,7 @@ LABEL version="1.8"
 
 COPY config/job_conf.xml config/job_conf.xml
 COPY config/tool_conf.xml config/tool_conf.xml
+COPY config/job_metrics_conf.xml config/job_metrics_conf.xml
 COPY config/container_resolvers_conf.xml config/container_resolvers_conf.xml
 COPY config/sanitize_whitelist.txt config/sanitize_whitelist.txt
 COPY tools/tertiary-analysis tools/tertiary-analysis
