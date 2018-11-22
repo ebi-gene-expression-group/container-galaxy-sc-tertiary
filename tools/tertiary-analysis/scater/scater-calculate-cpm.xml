@@ -1,4 +1,4 @@
-<tool id="scater-calculate-cpm" name="Scater calculate cpm" version="0.0.3">
+<tool id="scater-calculate-cpm" name="Scater calculate cpm" version="1.6.0+galaxy1">
     <description>Calculate CPM from serialized scater R object</description>
     <macros>
         <import>scater_macros.xml</import>
@@ -6,10 +6,10 @@
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         ln -s '$R_scater_serialized' R_scater_serialized.rds;
-        
-        scater-calculate-cpm.R -i '$R_scater_serialized' 
+
+        scater-calculate-cpm.R -i '$R_scater_serialized'
                   				-s '$size_factors'
-        						-o '$R_scater_cpm' 
+        						-o '$R_scater_cpm'
         						-t '$cpm_matrix'
     ]]></command>
     <inputs>
@@ -34,16 +34,16 @@
 
 Options:
 	-i INPUT-OBJECT-FILE, --input-object-file=INPUT-OBJECT-FILE
-	   
+
 
 	-s SIZE-FACTORS, --size-factors=SIZE-FACTORS
-		
+
 
 	-o OUTPUT-OBJECT-FILE, --output-object-file=OUTPUT-OBJECT-FILE
-		
+
 
 	-t OUTPUT-TEXT-FILE, --output-text-file=OUTPUT-TEXT-FILE
-		
+
 
 
     ]]></help>

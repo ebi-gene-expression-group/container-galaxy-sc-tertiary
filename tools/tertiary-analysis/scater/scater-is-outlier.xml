@@ -1,4 +1,4 @@
-<tool id="scater-is-outlier" name="Scater outlier detection" version="0.0.3">
+<tool id="scater-is-outlier" name="Scater outlier detection" version="1.6.0+galaxy1">
     <description>Detect outliers from total counts file</description>
     <macros>
         <import>scater_macros.xml</import>
@@ -7,18 +7,18 @@
     <command detect_errors="exit_code"><![CDATA[
        ln -s '$extracted_metrics_file' extracted_metrics_file.txt;
 
-        scater-is-outlier.R -m '$extracted_metrics_file' 
+        scater-is-outlier.R -m '$extracted_metrics_file'
         					#if $nmads:
         						-n '$nmads'
-        					#end if 
+        					#end if
         					#if $outlier_type:
-        						-t '$outlier_type' 
-        					#end if	
+        						-t '$outlier_type'
+        					#end if
         					#if $outlier_log:
-        						-l '$outlier_log' 
-        					#end if	
-        					#if $outlier_min_diff:	
-        						-d '$outlier_min_diff' 
+        						-l '$outlier_log'
+        					#end if
+        					#if $outlier_min_diff:
+        						-d '$outlier_min_diff'
         					#end if
         					-o '$outliers_file'
     ]]></command>
@@ -44,23 +44,23 @@
 
 Options:
 	-m METRIC-FILE, --metric-file=METRIC-FILE
-        
+
 
 	-n NMADS, --nmads=NMADS
-		
+
 
 	-t TYPE, --type=TYPE
-		
+
 
 	-l LOG, --log=LOG
-		
+
 
 	-d MIN-DIFF, --min-diff=MIN-DIFF
-		
+
 
 	-o OUTPUT-FILE, --output-file=OUTPUT-FILE
 		File name in which to store the output vector of outliers (one value per line)
-		
+
 	-h, --help
 		Show this help message and exit
 

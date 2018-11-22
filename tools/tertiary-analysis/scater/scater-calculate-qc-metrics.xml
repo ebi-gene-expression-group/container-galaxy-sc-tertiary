@@ -1,4 +1,4 @@
-<tool id="scater-calculate-qc-metrics" name="Scater calculate qc metrics" version="0.0.3">
+<tool id="scater-calculate-qc-metrics" name="Scater calculate qc metrics" version="1.6.0+galaxy1">
     <description>The QC metrics are calculated from serialized scater R object</description>
     <macros>
         <import>scater_macros.xml</import>
@@ -10,20 +10,20 @@
         scater-calculate-qc-metrics.R -i '$R_scater_serialized'
         								#if $exprs_values:
         									-e '$exprs_values'
-        								#end if 
+        								#end if
         								#if $feature_controls:
         									-f '$feature_controls'
         								#end if
         								#if $cell_controls:
-        									-c '$cell_controls' 
+        									-c '$cell_controls'
         								#end if
         								#if $nmads:
-        									-n '$nmads' 
+        									-n '$nmads'
         								#end if
         								#if $pct_feature_controls_threshold:
         									-p 'pct_feature_controls_threshold'
         								#end if
-        								-o '$R_scater_qc' 
+        								-o '$R_scater_qc'
     ]]></command>
     <inputs>
         <param type="data" name="R_scater_serialized" format="rdata" help="singleCellExperiment object containing expression values and experimental information. Must have been appropriately prepared."/>
@@ -48,22 +48,22 @@
 
 Options:
 	-i INPUT-OBJECT-FILE, --input-object-file=INPUT-OBJECT-FILE
-	   
+
 
 	-e EXPRS-VALUES, --exprs-values=EXPRS-VALUES
-		
+
 
 	-f FEATURE-CONTROLS, --feature-controls=FEATURE-CONTROLS
-		
+
 
 	-c CELL-CONTROLS, --cell-controls=CELL-CONTROLS
-		
+
 
 	-n NMADS, --nmads=NMADS
-		
+
 
 	-p PCT-FEATURE-CONTROLS-THRESHOLD, --pct-feature-controls-threshold=PCT-FEATURE-CONTROLS-THRESHOLD
-		
+
 
 	-o OUTPUT-OBJECT-FILE, --output-object-file=OUTPUT-OBJECT-FILE
 	   file name in which to store serialized R object of type SingleCellExperiment
