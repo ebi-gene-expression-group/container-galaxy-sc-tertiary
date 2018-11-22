@@ -1,0 +1,79 @@
+<tool id="sc3-prepare" name="SC3 read scater object" version="0.1.0">
+    <description>Loads normalised Scater object into a SC3 object</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        ln -s '$scater_log' 'scater_log.rds'; 
+
+        sc3-sc3-prepare.R -i $scater_log -o '$R_sc3_prepared'
+    
+	]]></command>
+    <inputs>
+        <param type="data" name="scater_log" format="rdata" />
+    </inputs>
+    <outputs>
+        <data name="R_sc3_prepared" format="rdata" from_work_dir="R_sc3_prepared.rds" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="scater_log" value="scater_log.rds"/>
+            <output name="R_sc3_prepared" file="R_sc3_prepared.rds"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+        Usage: sc3-sc3-prepare.R [options]
+
+
+Options:
+	-i INPUT-OBJECT-FILE, --input-object-file=INPUT-OBJECT-FILE
+		File name in which a serialized R SingleCellExperiment object where object matrix found
+
+	-f GENE-FILTER, --gene-filter=GENE-FILTER
+		A boolean variable which defines whether to perform gene filtering before SC3 clustering.
+
+	-p PCT-DROPOUT-MIN, --pct-dropout-min=PCT-DROPOUT-MIN
+		If gene_filter = TRUE, then genes with percent of dropouts smaller than pct_dropout_min are filtered out before clustering.
+
+	-q PCT-DROPOUT-MAX, --pct-dropout-max=PCT-DROPOUT-MAX
+		If gene_filter = TRUE, then genes with percent of dropouts larger than pct_dropout_max are filtered out before clustering.
+
+	-d D-REGION-MIN, --d-region-min=D-REGION-MIN
+		Defines the minimum number of eigenvectors used for kmeans clustering as a fraction of the total number of cells. Default is 0.04. See SC3 paper for more details.
+
+	-e D-REGION-MAX, --d-region-max=D-REGION-MAX
+		Defines the maximum number of eigenvectors used for kmeans clustering as a fraction of the total number of cells. Default is 0.07. See SC3 paper for more details.
+
+	-n SVM-NUM-CELLS, --svm-num-cells=SVM-NUM-CELLS
+		Number of randomly selected training cells to be used for SVM prediction. Default is NULL.
+
+	-r SVM-TRAIN-INDS, --svm-train-inds=SVM-TRAIN-INDS
+		Text file with one integer per line. Will be used to create a numeric vector defining indices of training cells that should be used for SVM training. The default is NULL.
+
+	-m SVM-MAX, --svm-max=SVM-MAX
+		Define the maximum number of cells below which SVM are not run.
+
+	-t N-CORES, --n-cores=N-CORES
+		Number of threads/cores to be used in the user's machine.
+
+	-s RAND-SEED, --rand-seed=RAND-SEED
+		sets the seed of the random number generator. SC3 is a stochastic method, so setting the rand_seed to a fixed values can be used for reproducibility purposes.
+
+	-k KMEANS-NSTART, --kmeans-nstart=KMEANS-NSTART
+		nstart parameter passed to kmeans function. Default is 1000 for up to 2000 cells and 50 for more than 2000 cells.
+
+	-a KMEANS-ITER-MAX, --kmeans-iter-max=KMEANS-ITER-MAX
+		iter.max parameter passed to kmeans function. Default is 1e+09.
+
+	-o OUTPUT-OBJECT-FILE, --output-object-file=OUTPUT-OBJECT-FILE
+		File name in which to store serialized R object of type 'SingleCellExperiment'.'
+
+	-h, --help
+		Show this help message and exit
+
+
+
+    ]]></help>
+    <expand macro="citations" />
+</tool>

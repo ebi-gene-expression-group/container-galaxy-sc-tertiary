@@ -33,11 +33,6 @@ Options:
 	-h, --help
 		Show this help message and exit
 
-
-Error in wsc_parse_args(option_list, mandatory = c("input_object_file",  : 
-  Mandatory argment 'input_object_file' not supplied
-Execution halted
-
     ]]></help>
     <expand macro="citations" />
 </tool>
