@@ -17,9 +17,9 @@ scanpy-read-10x.py
 ]]></command>
 
   <inputs>
-    <param name="matrix" type="data" format="txt"/>
-    <param name="genes" type="data" format="tsv"/>
-    <param name="barcodes" type="data" format="tsv"/>
+    <param name="matrix" type="data" format="txt" label="Expression matrix in sparse matrix format (.mtx)"/>
+    <param name="genes" type="data" format="tsv" label="Gene table"/>
+    <param name="barcodes" type="data" format="tsv" label="Barcode/cell table"/>
     <expand macro="output_object_params"/>
     <param name="var_names" type="select" label="Attribute used as annotation index">
       <option value="gene_ids" selected="true">Gene ID</option>
