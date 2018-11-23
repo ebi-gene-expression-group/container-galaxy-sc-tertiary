@@ -24,7 +24,7 @@ cut -f2 ${accession}.expression_tpm.mtx_cols > barcodes.tsv
   <outputs>
     <data name="matrix_mtx" format="txt" from_work_dir="matrix.mtx" label="${tool.name} on ${on_string} ${accession} matrix.mtx"/>
     <data name="genes_tsv" format="tsv" from_work_dir="genes.tsv" label="${tool.name} on ${on_string} ${accession} genes.tsv"/>
-    <data name="barcode_tsv" format="tsv" from_work_dir="barcodes.tsv" label="${tool.name} on ${on_string} ${accession} barcodes.tsv"/>
+    <data name="barcode_tsv" format="tsv" from_work_dir="barcodes.tsv" label="${tool.name} on ${on_string} ${accession} cell_barcodes.tsv"/>
     <data name="design_tsv" format="tsv" from_work_dir="exp_design.tsv" label="${tool.name} on ${on_string} ${accession} exp_design.tsv"/>
   </outputs>
 
