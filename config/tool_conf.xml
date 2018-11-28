@@ -45,6 +45,7 @@
 
   <section id="get-scrna" name="Get scRNAseq data">
     <tool file="tertiary-analysis/data/retrieve-scxa.xml"/>
+    <tool file="tertiary-analysis/data/convert-ftype.xml"/>
   </section>
   <section name="Seurat" id="seurat-tools">
     <tool file="tertiary-analysis/seurat/seurat_read10x.xml"  labels="I/O"/>
