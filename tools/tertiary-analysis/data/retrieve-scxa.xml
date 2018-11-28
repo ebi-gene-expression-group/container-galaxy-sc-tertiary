@@ -31,9 +31,9 @@ wget -O exp_design.tsv
 
   <inputs>
     <param name="accession" type="text" value="E-GEOD-100058" label="SC-Atlas experiment accession" help="EBI Single Cell Atlas accession for the experiment that you want to retrieve."/>
-    <param name="matrix_type" type="select" label="Choose the type of matrix to download" help="Raw filtered counts or filtered TPMs">
+    <param name="matrix_type" type="select" label="Choose the type of matrix to download" help="Raw filtered counts or (non-filtered) TPMs">
       <option value="raw" selected="true">Raw filtered counts</option>
-      <option value="tpm">Filtered TPMs</option>
+      <option value="tpm">TPMs</option>
     </param>
   </inputs>
 
@@ -81,12 +81,13 @@ matrix that you want to download:
 :Raw filtered counts:
   This should be the default choice for running clustering and another analysis
   methods where you will introduce scaling and normalization of the data. The filtering
-  is baed on the quality control applied by iRAP prior to pseud-alignment and quantification.
+  is based on the quality control applied by iRAP prior to pseudo-alignment and quantification.
 
-:Filtered TPMs:
+:TPMs:
   TPM stands for Transcripts Per Kilobase Million, and as the name implies, this has been
-  already normalized/scaled. You should keep this into account when using this data
-  on methods that will try to normalise data as part of their procedure.
+  already normalized/scaled. You should keep this in mind when using this data
+  on methods that will try to normalise data as part of their procedure. Due to technical
+  particularities in the current Atlas SC pipeline, TPMs available here are not filtered.
 
 Outputs will be:
 
@@ -101,15 +102,14 @@ Outputs will be:
   in the same order as the matrix rows.
 
 :Barcodes (tsv):
-  Identfiers for the cells, samples or runs of the data matrix. They file is ordered
+  Identifiers for the cells, samples or runs of the data matrix. The file is ordered
   to match the columns of the matrix.
 
 :Experiment Design file (tsv):
-  A tab separate valud file containing metadata for the different cells/samples/runs of
-  the experiment. Please note that this file is generated before the filtering step,
-  and while not often, it might be the case that it contains more cells/samples/runs than
-  the matrix.
-  
+  Contains metadata for the different cells/samples/runs of the experiment.
+  Please note that this file is generated before the filtering step, and while not
+  often, it might be the case that it contains more cells/samples/runs than the matrix.
+
 ]]></help>
   <citations>
     <citation type="doi">10.1093/nar/gkv1045</citation>
