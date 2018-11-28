@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="convert-ftype" name="RDS to AnnData converstion" version="v0.0.1+galaxy0">
+<tool id="convert-ftype" name="Rdata to Anndata conversion" version="v0.0.1+galaxy0">
   <requirements>
     <requirement type="package" version="2.3.1">r-seurat</requirement>
   </requirements>
-  <description>using seurat</description>
+  <description>Convert Seurat object in Rdata format to Scanpy object in Anndata HDF5 format</description>
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_rds}' input.rds &&
-cp ${script_file} rds2anndata.R &&
-Rscript rds2anndata.R
+Rscript ${script_file}
 ]]></command>
 
   <configfiles>
@@ -19,7 +18,7 @@ Convert(from=rds, to='anndata', filename='output.h5')
   </configfiles>
 
   <inputs>
-    <param name="input_rds" type="data" format="rdata" label="Seurat object in RDS format"/>
+    <param name="input_rds" type="data" format="rdata" label="Seurat object in Rdata format" help=""/>
   </inputs>
 
   <outputs>
@@ -34,5 +33,13 @@ Convert(from=rds, to='anndata', filename='output.h5')
   </tests>
 
   <help><![CDATA[
+Rdata to Anndata Conversion
+---------------------------
+
+Convert Seurat producted object in Rdata format to Anndata HDF5 format.
+
+To use it, choose in the history the Seurat-generated Rdata object and click "Execute".
+
+For more information, check https://satijalab.org/seurat/new-features and https://anndata.readthedocs.io/en/latest/
 ]]></help>
 </tool>
