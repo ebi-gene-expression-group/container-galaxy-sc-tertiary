@@ -11,9 +11,9 @@
 wget -O exp_quant.zip
     'https://www.ebi.ac.uk/gxa/sc/experiment/${accession}/download/zip?fileType=quantification-filtered&accessKey=' &&
 unzip exp_quant.zip;
-mv ${accession}.expression_tpm.mtx ${matrix_mtx} &&
-awk '{OFS="\t"; print \$2,\$2}' ${accession}.expression_tpm.mtx_rows > ${genes_tsv} &&
-cut -f2 ${accession}.expression_tpm.mtx_cols > ${barcode_tsv};
+mv '${accession}'.expression_tpm.mtx ${matrix_mtx} &&
+awk '{OFS="\t"; print \$2,\$2}' '${accession}'.expression_tpm.mtx_rows > ${genes_tsv} &&
+cut -f2 '${accession}'.expression_tpm.mtx_cols > ${barcode_tsv};
 
 #else if str($matrix_type) == "raw":
 
