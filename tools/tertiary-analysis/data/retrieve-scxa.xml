@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="retrieve-scxa" name="EBI Expression Atlas Single Cell Data Retrieval" version="v0.0.1+galaxy1">
-  <description>from single cell expression atlas</description>
+<tool id="retrieve-scxa" name="EBI SCXA Data Retrieval" version="v0.0.1+galaxy1">
+  <description>Retrieves expression matrixes and metadata from EBI Single Cell Expression Atlas (SCXA)</description>
   <requirements>
     <requirement type="package" version="1.18">gnu-wget</requirement>
   </requirements>
@@ -30,8 +30,8 @@ wget -O exp_design.tsv
 ]]></command>
 
   <inputs>
-    <param name="accession" type="text" value="E-GEOD-100058" label="SC-Atlas experiment accession"/>
-    <param name="matrix_type" type="select" label="Choose the type of matrix to download">
+    <param name="accession" type="text" value="E-GEOD-100058" label="SC-Atlas experiment accession" help="EBI Single Cell Atlas accession for the experiment that you want to retrieve."/>
+    <param name="matrix_type" type="select" label="Choose the type of matrix to download" help="Raw filtered counts or filtered TPMs">
       <option value="raw" selected="true">Raw filtered counts</option>
       <option value="tpm">Filtered TPMs</option>
     </param>
@@ -47,6 +47,7 @@ wget -O exp_design.tsv
   <tests>
     <test>
       <param name="accession" value="E-GEOD-100058"/>
+      <param name="matrix_type" value="tpm"/>
       <output name="matrix_mtx" file="E-GEOD-100058.expression_tpm.mtx" ftype="txt"/>
       <output name="genes_tsv" file="E-GEOD-100058.genes.tsv" ftype="tsv"/>
       <output name="barcode_tsv" file="E-GEOD-100058.barcodes.tsv" ftype="tsv"/>
@@ -55,7 +56,60 @@ wget -O exp_design.tsv
   </tests>
 
   <help><![CDATA[
+=================================================================================
+Gene expression analysis in single cells across species and biological conditions
+=================================================================================
+
+Single Cell Expression Atlas supports research in single cell transcriptomics.
+The Atlas annotates publicly available single cell RNA-Seq experiments with
+ontology identifiers and re-analyses them using standardised pipelines available
+through iRAP, our RNA-Seq analysis toolkit. The browser enables visualisation of
+clusters of cells, their annotations and supports searches for gene expression
+within and across studies.
+
 For more information check https://www.ebi.ac.uk/gxa/sc/home
+
+EBI SCXA Data Retrieval
+-----------------------
+
+The data retrieval tool presented here allows the user to retrieve expression matrices
+and metadata for any public experiment available at EBI Single Cell Expression Atlas.
+
+To use it, simply set the accession for the desired experiment and choose the type of
+matrix that you want to download:
+
+:Raw filtered counts:
+  This should be the default choice for running clustering and another analysis
+  methods where you will introduce scaling and normalization of the data. The filtering
+  is baed on the quality control applied by iRAP prior to pseud-alignment and quantification.
+
+:Filtered TPMs:
+  TPM stands for Transcripts Per Kilobase Million, and as the name implies, this has been
+  already normalized/scaled. You should keep this into account when using this data
+  on methods that will try to normalise data as part of their procedure.
+
+Outputs will be:
+
+:Matrix (txt):
+  Contains the expression values for genes (rows) and samples/runs/cells (columns),
+  in either raw filtered counts or filtered tpms depending on the choice made. This
+  text file is formatted as a Matrix Market file, and as such it is accompanied by
+  separate files for the gene identifiers and the samples/runs/cells identifiers.
+
+:Genes (tsv):
+  Identifiers (column repeated) for the genes present in the matrix of expression,
+  in the same order as the matrix rows.
+
+:Barcodes (tsv):
+  Identfiers for the cells, samples or runs of the data matrix. They file is ordered
+  to match the columns of the matrix.
+
+:Experiment Design file (tsv):
+  A tab separate valud file containing metadata for the different cells/samples/runs of
+  the experiment. Please note that this file is generated before the filtering step,
+  and while not often, it might be the case that it contains more cells/samples/runs than
+  the matrix.
+  
 ]]></help>
   <citations>
     <citation type="doi">10.1093/nar/gkv1045</citation>
