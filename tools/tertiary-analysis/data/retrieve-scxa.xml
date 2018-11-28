@@ -1,36 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="retrieve-scxa" name="EBI Expression Atlas Single Cell Data Retrieval" version="v0.0.1+galaxy0">
+<tool id="retrieve-scxa" name="EBI SCXA Data Retrieval" version="v0.0.1+galaxy1">
+  <description>Retrieves expression matrixes and metadata from EBI Single Cell Expression Atlas (SCXA)</description>
   <requirements>
     <requirement type="package" version="1.18">gnu-wget</requirement>
   </requirements>
-  <description>from single cell expression atlas</description>
   <command detect_errors="exit_code"><![CDATA[
+
+#if str($matrix_type) == "tpm":
+
 wget -O exp_quant.zip
     'https://www.ebi.ac.uk/gxa/sc/experiment/${accession}/download/zip?fileType=quantification-filtered&accessKey=' &&
-unzip exp_quant.zip &&
+unzip exp_quant.zip;
+mv '${accession}'.expression_tpm.mtx ${matrix_mtx} &&
+awk '{OFS="\t"; print \$2,\$2}' '${accession}'.expression_tpm.mtx_rows > ${genes_tsv} &&
+cut -f2 '${accession}'.expression_tpm.mtx_cols > ${barcode_tsv};
+
+#else if str($matrix_type) == "raw":
+
+wget -O ${matrix_mtx} 'ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/sc_experiments/${accession}/${accession}.aggregated_filtered_counts.mtx';
+wget -qO - 'ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/sc_experiments/${accession}/${accession}.aggregated_filtered_counts.mtx_cols' | cut -f2 > ${barcode_tsv};
+wget -qO - 'ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/sc_experiments/${accession}/${accession}.aggregated_filtered_counts.mtx_rows'
+ | awk '{OFS="\t"; print \$2,\$2}' > ${genes_tsv};
+
+#end if
 
 wget -O exp_design.tsv
-    'https://www.ebi.ac.uk/gxa/sc/experiment/${accession}/download?fileType=experiment-design&accessKey=' &&
+    'https://www.ebi.ac.uk/gxa/sc/experiment/${accession}/download?fileType=experiment-design&accessKey=';
 
-mv ${accession}.expression_tpm.mtx matrix.mtx &&
-awk '{OFS="\t"; print \$2,\$2}' ${accession}.expression_tpm.mtx_rows > genes.tsv &&
-cut -f2 ${accession}.expression_tpm.mtx_cols > barcodes.tsv
 ]]></command>
 
   <inputs>
-    <param name="accession" type="text" value="E-GEOD-100058" label="SC-Atlas experiment accession"/>
+    <param name="accession" type="text" value="E-GEOD-100058" label="SC-Atlas experiment accession" help="EBI Single Cell Atlas accession for the experiment that you want to retrieve."/>
+    <param name="matrix_type" type="select" label="Choose the type of matrix to download" help="Raw filtered counts or (non-filtered) TPMs">
+      <option value="raw" selected="true">Raw filtered counts</option>
+      <option value="tpm">TPMs</option>
+    </param>
   </inputs>
 
   <outputs>
-    <data name="matrix_mtx" format="txt" from_work_dir="matrix.mtx" label="${tool.name} on ${on_string} ${accession} matrix.mtx"/>
-    <data name="genes_tsv" format="tsv" from_work_dir="genes.tsv" label="${tool.name} on ${on_string} ${accession} genes.tsv"/>
-    <data name="barcode_tsv" format="tsv" from_work_dir="barcodes.tsv" label="${tool.name} on ${on_string} ${accession} barcodes.tsv"/>
+    <data name="matrix_mtx" format="txt" label="${tool.name} on ${on_string} ${accession} matrix.mtx (${matrix_type.value_label})"/>
+    <data name="genes_tsv" format="tsv" label="${tool.name} on ${on_string} ${accession} genes.tsv (${matrix_type.value_label})"/>
+    <data name="barcode_tsv" format="tsv" label="${tool.name} on ${on_string} ${accession} barcodes.tsv (${matrix_type.value_label})"/>
     <data name="design_tsv" format="tsv" from_work_dir="exp_design.tsv" label="${tool.name} on ${on_string} ${accession} exp_design.tsv"/>
   </outputs>
 
   <tests>
     <test>
       <param name="accession" value="E-GEOD-100058"/>
+      <param name="matrix_type" value="tpm"/>
       <output name="matrix_mtx" file="E-GEOD-100058.expression_tpm.mtx" ftype="txt"/>
       <output name="genes_tsv" file="E-GEOD-100058.genes.tsv" ftype="tsv"/>
       <output name="barcode_tsv" file="E-GEOD-100058.barcodes.tsv" ftype="tsv"/>
@@ -39,7 +56,60 @@ cut -f2 ${accession}.expression_tpm.mtx_cols > barcodes.tsv
   </tests>
 
   <help><![CDATA[
+=================================================================================
+Gene expression analysis in single cells across species and biological conditions
+=================================================================================
+
+Single Cell Expression Atlas supports research in single cell transcriptomics.
+The Atlas annotates publicly available single cell RNA-Seq experiments with
+ontology identifiers and re-analyses them using standardised pipelines available
+through iRAP, our RNA-Seq analysis toolkit. The browser enables visualisation of
+clusters of cells, their annotations and supports searches for gene expression
+within and across studies.
+
 For more information check https://www.ebi.ac.uk/gxa/sc/home
+
+EBI SCXA Data Retrieval
+-----------------------
+
+The data retrieval tool presented here allows the user to retrieve expression matrices
+and metadata for any public experiment available at EBI Single Cell Expression Atlas.
+
+To use it, simply set the accession for the desired experiment and choose the type of
+matrix that you want to download:
+
+:Raw filtered counts:
+  This should be the default choice for running clustering and another analysis
+  methods where you will introduce scaling and normalization of the data. The filtering
+  is based on the quality control applied by iRAP prior to pseudo-alignment and quantification.
+
+:TPMs:
+  TPM stands for Transcripts Per Kilobase Million, and as the name implies, this has been
+  already normalized/scaled. You should keep this in mind when using this data
+  on methods that will try to normalise data as part of their procedure. Due to technical
+  particularities in the current Atlas SC pipeline, TPMs available here are not filtered.
+
+Outputs will be:
+
+:Matrix (txt):
+  Contains the expression values for genes (rows) and samples/runs/cells (columns),
+  in either raw filtered counts or filtered tpms depending on the choice made. This
+  text file is formatted as a Matrix Market file, and as such it is accompanied by
+  separate files for the gene identifiers and the samples/runs/cells identifiers.
+
+:Genes (tsv):
+  Identifiers (column repeated) for the genes present in the matrix of expression,
+  in the same order as the matrix rows.
+
+:Barcodes (tsv):
+  Identifiers for the cells, samples or runs of the data matrix. The file is ordered
+  to match the columns of the matrix.
+
+:Experiment Design file (tsv):
+  Contains metadata for the different cells/samples/runs of the experiment.
+  Please note that this file is generated before the filtering step, and while not
+  often, it might be the case that it contains more cells/samples/runs than the matrix.
+
 ]]></help>
   <citations>
     <citation type="doi">10.1093/nar/gkv1045</citation>
