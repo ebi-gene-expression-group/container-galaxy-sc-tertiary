@@ -1,14 +1,15 @@
-<tool id="sc3-sc3-estimate-k" name="SC3 estimate k" version="0.1.0">
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="sc3-sc3-estimate-k" name="SC3 estimate k" version="@TOOL_VERSION@+galaxy0">
     <description>Estimate the best K for clustering</description>
     <macros>
-        <import>macros.xml</import>
+        <import>sc3-macros.xml</import>
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         sc3-sc3-estimate-k.R -i "$input1" -t "$output1" -o R_scater_qc.rds 
     ]]></command>
     <inputs>
-        <param type="data" name="input1" format="rds" />
+        <param type="data" name="input1" format="rds" label="File name in which a processed SC3 object can be found"/>
     </inputs>
     <outputs>
         <data name="output1" format="txt" />
@@ -20,24 +21,6 @@
         </test>
     </tests>
     <help><![CDATA[
-        Usage: /Users/ct5/anaconda3/envs/galaxy/bin/sc3-sc3-estimate-k.R [options]
-
-
-Options:
-	-i INPUT-OBJECT-FILE, --input-object-file=INPUT-OBJECT-FILE
-		File name in which a processed SC3 object can be found.
-
-	-o OUTPUT-OBJECT-FILE, --output-object-file=OUTPUT-OBJECT-FILE
-		File name in which to store the SingleCellExperiment object with estimated k'.
-
-	-t OUTPUT-TEXT-FILE, --output-text-file=OUTPUT-TEXT-FILE
-		Text file name in which to store the estimated k'.
-
-	-h, --help
-		Show this help message and exit
-
-
-
     ]]></help>
     <expand macro="citations" />
 </tool>
