@@ -11,7 +11,7 @@
     
 	]]></command>
     <inputs>
-        <param type="data" name="scater_log" format="rdata", label='File name for a serialized SingleCellExperiment object'/>
+        <param type="data" name="scater_log" format="rdata", label="File name for a serialized SingleCellExperiment object" />
     </inputs>
     <outputs>
         <data name="R_sc3_prepared" format="rdata" from_work_dir="R_sc3_prepared.rds" />
