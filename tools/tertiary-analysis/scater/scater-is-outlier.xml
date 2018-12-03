@@ -30,7 +30,7 @@
         <param type="integer" argument="--min-diff" name="outlier_min_diff" value="5" optional="True" help="numeric scalar indicating the minimum difference from the median to consider as an outlier. The outlier threshold is defined from the larger of nmads MADs and min.diff, to avoid calling many outliers when the MAD is very small. If NA, it is ignored."/>
     </inputs>
     <outputs>
-        <data name="outliers_file" format="txt"/>
+        <data name="outliers_file" format="txt" label="File where to store outliers"/>
     </outputs>
     <tests>
         <test>
