@@ -1,4 +1,4 @@
-<tool id="scater-read-10x-results" name="Scater read 10x data" version="0.1.0">
+<tool id="scater-read-10x-results" name="Scater read 10x data" version="@TOOL_VERSION@+galaxy0">
     <description>Loads 10x data into a serialized scater R object</description>
     <macros>
         <import>scater_macros.xml</import>
@@ -12,8 +12,8 @@
         scater-read-10x-results.R -d ./ -o '$R_scater_serialized'
     ]]></command>
     <inputs>
-        <param type="data" name="matrix" format="txt" />
-        <param type="data" name="genes" format="tsv" />
+        <param type="data" name="matrix" format="txt" label="" />
+        <param type="data" name="genes" format="tsv" label=""/>
         <param type="data" name="barcodes" format="tsv" />
     </inputs>
     <outputs>
@@ -28,20 +28,6 @@
         </test>
     </tests>
     <help><![CDATA[
-        Usage: scater-read-10x-results.R [options]
-
-
-Options:
-	-d DATA-DIR, --data-dir=DATA-DIR
-		Directory containing the matrix.mtx, genes.tsv, and barcodes.tsv files provided by 10X. A vector or named vector can be given in order to load several data directories. If a named vector is given, the cell barcode names will be prefixed with the name.
-
-	-o OUTPUT-OBJECT-FILE, --output-object-file=OUTPUT-OBJECT-FILE
-		File name in which to store serialized R matrix object.
-
-	-h, --help
-		Show this help message and exit
-
-
 
     ]]></help>
     <expand macro="citations" />
