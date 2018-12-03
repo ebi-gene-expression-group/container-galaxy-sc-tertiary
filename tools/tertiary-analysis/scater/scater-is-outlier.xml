@@ -30,7 +30,7 @@
         <param type="integer" argument="--min-diff" name="outlier_min_diff" value="5" optional="True" />
     </inputs>
     <outputs>
-        <data name="outliers_file" format="txt" />
+        <data name="outliers_file" format="txt" label="File where to store outliers"/>
     </outputs>
     <tests>
         <test>
