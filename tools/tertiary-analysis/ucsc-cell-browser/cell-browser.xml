@@ -1,9 +1,15 @@
-<tool id="ucsc-cell-browser" name="UCSC Cell Browser" version="0.1.1">
+<tool id="ucsc-cell-browser" name="UCSC Cell Browser" version="0.4.23+galaxy0">
+  <requirements>
+    <requirement type="package" version="0.4.23">ucsc-cell-browser</requirement>
+    <yield/>
+  </requirements>
 <stdio>
 <exit_code range="1:" />
 </stdio>
 <description>Runs the UCSC Cell Browser interactively</description>
 <command><![CDATA[
+#if $input_type.expression_source == "native-cell-browser":
+
 echo "coords = [ {'file':'$tsneCoordinates', 'shortLabel':'t-SNE on WGCNA'} ]" > ./cellbrowser.conf;
 echo "meta = '$cellMetadata'" >> ./cellbrowser.conf;
 echo "name = 'sample'" >> ./cellbrowser.conf;
@@ -11,12 +17,47 @@ echo "exprMatrix = '$expressionMatrix'" >> ./cellbrowser.conf;
 echo "geneIdType = 'symbol'" >> ./cellbrowser.conf;
 
 cbBuild -i cellbrowser.conf -o "$html_file.extra_files_path";
-mv "$html_file.extra_files_path"/index.html "$html_file"
+mv "$html_file.extra_files_path"/index.html "$html_file";
+
+#else if $input_type.expression_source == "scanpy":
+
+ln -s '$input_anndata_file' scanpy_ann_data.h5ad;
+cbImportScanpy scanpy_ann_data.h5ad '$html_file.extra_files_path' sample --htmlDir "$html_file.extra_files_path";
+mv "$html_file.extra_files_path"/index.html "$html_file";
+
+#else if $input_type.expression_source == "seurat":
+
+ln -s '$input_rds_file' seurat.rds;
+cbImportSeurat --outDir '$html_file.extra_files_path' --name 'sample' seurat.rds --meta "$metadata_fields";
+echo "coords = [ {'file': '$html_file.extra_files_path'/tsne.coords.tsv, 'shortLabel': 't-SNE Seurat Processed' }]" > ./cellbrowser.conf;
+echo "meta = '$html_file.extra_files_path'/meta.tsv" >> ./cellbrowser.conf;
+echo "exprMatrix = '$html_file.extra_files_path'/exprMatrix.tsv" >> ./cellbrowser.conf;
+echo "geneIdType = 'symbol'" >> ./cellbrowser.conf;
+cbBuild -i ./cellbrowser.conf -o "$html_file.extra_files_path";
+mv "$html_file.extra_files_path"/index.html "$html_file";
+
+#end if
 ]]></command>
 <inputs>
-    <param type="data" name="expressionMatrix" label="" help="" format="tabular"/>
-    <param type="data" name="cellMetadata" label="" help="" format="tabular"/>
-    <param type="data" name="tsneCoordinates" label="" help="" format="tabular"/>
+  <conditional name="input_type">
+    <param type="select" name="expression_source" label="Choose the format of the expression data" help="Use compressed txt, Scanpy or Seurat objects">
+      <option value="native-cell-browser" selected="true">CellBrowser tar.gz expression matrix</option>
+      <option value="scanpy">Scanpy AnnData HDF5 serialized object</option>
+      <option value="seurat">Seurat R-serialized object</option>
+    </param>
+    <when value="native-cell-browser">
+      <param type="data" name="expressionMatrix" label="" help="" format="tabular"/>
+      <param type="data" name="cellMetadata" label="" help="" format="tabular"/>
+      <param type="data" name="tsneCoordinates" label="" help="" format="tabular"/>
+    </when>
+    <when value="scanpy">
+      <param name="input_anndata_file" type="data" format="h5" label="Input object in AnnData hdf5 format"/>
+    </when>
+    <when value="seurat">
+      <param name="input_rds_file" type="data" format="rdata" label="RDS object from Seurat 2"/>
+      <param name="metadata_fields" type="text" value="nGene" label="Metadata fields to extract from Seurat 2 RDS" help="Space separated list of fields."/>
+    </when>
+  </conditional>
 </inputs>
 <outputs>
     <data format="html" name="html_file" label="Interactive UCSC Cell Browser"/>
