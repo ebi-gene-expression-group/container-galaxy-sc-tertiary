@@ -28,10 +28,14 @@ mv "$html_file.extra_files_path"/index.html "$html_file";
 #else if $input_type.expression_source == "seurat":
 
 ln -s '$input_rds_file' seurat.rds;
-cbImportSeurat --outDir '$html_file.extra_files_path' --name 'sample' seurat.rds --meta "$metadata_fields";
-echo "coords = [ {'file': '$html_file.extra_files_path'/tsne.coords.tsv, 'shortLabel': 't-SNE Seurat Processed' }]" > ./cellbrowser.conf;
-echo "meta = '$html_file.extra_files_path'/meta.tsv" >> ./cellbrowser.conf;
-echo "exprMatrix = '$html_file.extra_files_path'/exprMatrix.tsv" >> ./cellbrowser.conf;
+ls -l seurat.rds;
+mkdir -p '$html_file.extra_files_path';
+cbImportSeurat --outDir '$html_file.extra_files_path' --name 'sample' seurat.rds --meta $input_type.metadata_fields;
+ls -l '$html_file.extra_files_path';
+echo "coords = [ {'file': '$html_file.extra_files_path/tsne.coords.tsv', 'shortLabel': 't-SNE Seurat Processed' }]" > ./cellbrowser.conf;
+echo "name = 'sample'" >> ./cellbrowser.conf;
+echo "meta = '$html_file.extra_files_path/meta.tsv'" >> ./cellbrowser.conf;
+echo "exprMatrix = '$html_file.extra_files_path/exprMatrix.tsv'" >> ./cellbrowser.conf;
 echo "geneIdType = 'symbol'" >> ./cellbrowser.conf;
 cbBuild -i ./cellbrowser.conf -o "$html_file.extra_files_path";
 mv "$html_file.extra_files_path"/index.html "$html_file";
