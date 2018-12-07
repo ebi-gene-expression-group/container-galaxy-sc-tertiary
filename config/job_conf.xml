@@ -82,11 +82,11 @@
          a tag, a handler or destination that matches that tag will be
          chosen at random.  -->
     <!-- <tool id="seurat-read10x" destination="dynamic-k8s-tiny" resources="all"/> -->
-    <tool id="ucsc-cell-browser" destination="dynamic-k8s-tiny" resources="all"/> -->
+    <!-- <tool id="ucsc-cell-browser" destination="dynamic-k8s-tiny" resources="all"/> -->
 
 
   </tools>
-  <resources default="default">
+  <resources default="all">
     <!-- Group different parameters defined in job_resource_params_conf.xml
          together and assign these groups ids. Tool section below can map
          tools to different groups. This is experimental functionality!  -->
