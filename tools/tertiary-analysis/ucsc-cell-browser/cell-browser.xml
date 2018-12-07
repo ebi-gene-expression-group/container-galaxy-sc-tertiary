@@ -1,7 +1,6 @@
 <tool id="ucsc-cell-browser" name="UCSC Cell Browser" version="0.4.23+galaxy0">
   <requirements>
     <requirement type="package" version="0.4.23">ucsc-cell-browser</requirement>
-    <yield/>
   </requirements>
 <stdio>
 <exit_code range="1:" />
