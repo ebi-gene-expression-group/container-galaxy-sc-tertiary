@@ -13,14 +13,19 @@ echo $(R --version | grep version | grep -v GNU)", scater version" $(R --vanilla
     <xml name="citations">
         <citations>
             <citation type="bibtex">
-@misc{githubbioconductor-scater-scripts,
-  author = {LastTODO, FirstTODO},
-  year = {TODO},
-  title = {bioconductor-scater-scripts},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  url = {https://github.com/ebi-gene-expression-group/bioconductor-scater-scripts},
-}</citation>
+              @article{doi:10.1093/bioinformatics/btw777,
+              author = {McCarthy, Davis J and Campbell, Kieran R and Lun, Aaron T L and Wills, Quin F},
+              title = {Scater: pre-processing, quality control, normalization and visualization of single-cell RNA-seq data in R},
+              journal = {Bioinformatics},
+              volume = {33},
+              number = {8},
+              pages = {1179-1186},
+              year = {2017},
+              doi = {10.1093/bioinformatics/btw777},
+              URL = {http://dx.doi.org/10.1093/bioinformatics/btw777},
+              eprint = {/oup/backfile/content_public/journal/bioinformatics/33/8/10.1093_bioinformatics_btw777/2/btw777.pdf}
+              }
+            </citation>
             <yield />
         </citations>
     </xml>
