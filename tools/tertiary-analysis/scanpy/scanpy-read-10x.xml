@@ -42,6 +42,10 @@ scanpy-read-10x.py
   </tests>
 
   <help><![CDATA[
+=========================================
+Read 10x-Genomics-formatted mtx directory
+=========================================
+
 @HELP@
 ]]></help>
   <expand macro="citations"/>

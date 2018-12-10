@@ -54,6 +54,14 @@ scanpy-scale-data.py
   </tests>
 
   <help><![CDATA[
+============================================================
+Scale data to unit variance and zero mean (`pp.scale`)
+Regress out unwanted sources of variation (`pp.regress_out`)
+============================================================
+
+Regress out unwanted sources of variation, using simple linear regression. This is 
+inspired by Seurat's `regressOut` function in R.
+
 @HELP@
 ]]></help>
   <expand macro="citations"/>

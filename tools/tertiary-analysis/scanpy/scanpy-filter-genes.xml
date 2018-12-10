@@ -63,13 +63,17 @@ scanpy-filter-genes.py
   </tests>
 
   <help><![CDATA[
-**What it does**
+===================================================================
+Filter genes based on number of cells or counts (`pp.filter_genes`)
+===================================================================
 
-Filter genes based on number of cells or counts.
+Keep genes that have at least `min_counts` counts or are expressed in at
+least `min_cells` cells or have at most `max_counts` counts or are expressed
+in at most `max_cells` cells.
 
-Keep genes that have at least ``min_counts`` counts or are
-expressed in at least ``min_cells`` cells or have at most
-``max_counts`` counts or are expressed in at most ``max_cells`` cells.
+Only provide one of the optional parameters `min_counts`, `min_cells`,
+`max_counts`, `max_cells` per call.
+
 
 @HELP@
 ]]></help>

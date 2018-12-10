@@ -75,12 +75,17 @@ scanpy-find-cluster.py
   </tests>
 
   <help><![CDATA[
-**What it does**
-Cluster cells into subgroups.
+===========================================
+Cluster cells into subgroups (`tl.louvain`)
+===========================================
 
-Cluster cells using the Louvain algorithm of Blondel et al. in the
-implementation of Traag et al. The Louvain algorithm has been proposed
-for single-cell analysis by Levine et al.
+Cluster cells using the Louvain algorithm (Blondel et al, 2008) in the implementation
+of Traag et al,2017. The Louvain algorithm has been proposed for single-cell
+analysis by Levine et al, 2015.
+
+This requires to run `pp.neighbors`, first.
+
+It yields `louvain`, generated cluster label.
 
 @HELP@
 ]]></help>
