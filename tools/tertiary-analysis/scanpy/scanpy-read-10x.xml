@@ -42,9 +42,9 @@ scanpy-read-10x.py
   </tests>
 
   <help><![CDATA[
-=========================================
-Read 10x-Genomics-formatted mtx directory
-=========================================
+==========================================================
+Read 10x-Genomics-formatted mtx directory (`read_10x_mtx`)
+==========================================================
 
 @HELP@
 ]]></help>
