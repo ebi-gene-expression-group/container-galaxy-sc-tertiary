@@ -48,7 +48,8 @@ Read 10x-Genomics-formatted mtx directory (`read_10x_mtx`)
 
 The mtx directory should contain:
 
-1) Raw expression quantification as a sparse matrix in Matrix Market format.
+1) Raw expression quantification as a sparse matrix in Matrix Market format,
+where the each column is a gene and each row is a barcode/cell.
 2) A gene table of at least two columns where the first column gives the gene IDs.
 3) A barcode/cell table of at least one column giving the barcode/cell IDs.
 
