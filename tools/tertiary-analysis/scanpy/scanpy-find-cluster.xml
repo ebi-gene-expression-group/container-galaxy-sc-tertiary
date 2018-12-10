@@ -83,7 +83,7 @@ Cluster cells using the Louvain algorithm (Blondel et al, 2008) in the implement
 of Traag et al,2017. The Louvain algorithm has been proposed for single-cell
 analysis by Levine et al, 2015.
 
-This requires to run `pp.neighbors`, first.
+This requires to run `Scanpy ComputeGraph`, first.
 
 It yields `louvain`, generated cluster label.
 
