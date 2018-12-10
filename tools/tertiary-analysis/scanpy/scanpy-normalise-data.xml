@@ -41,6 +41,15 @@ scanpy-normalise-data.py
   </tests>
 
   <help><![CDATA[
+=========================================================
+Normalize total counts per cell (`pp.normalize_per_cell`)
+=========================================================
+
+Normalize each cell by total counts over all genes, so that every cell has
+the same total count after normalization.
+
+Similar functions are used, for example, by Seurat, Cell Ranger or SPRING.
+
 @HELP@
 ]]></help>
   <expand macro="citations"/>
