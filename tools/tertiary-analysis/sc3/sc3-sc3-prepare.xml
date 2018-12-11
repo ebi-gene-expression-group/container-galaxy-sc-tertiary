@@ -14,15 +14,30 @@
     <param type="data" name="scater_log" format="rdata" label="Scater object" />
   </inputs>
   <outputs>
-    <data name="R_sc3_prepared" format="rdata" from_work_dir="R_sc3_prepared.rds" label="SC3 object with input data" />
+    <data name="R_sc3_prepared" format="rdata" from_work_dir="R_sc3_prepared.rdata" label="SC3 object with input data" />
   </outputs>
   <tests>
     <test>
-      <param name="scater_log" value="scater_log.rds"/>
-      <output name="R_sc3_prepared" file="R_sc3_prepared.rds"/>
+      <param name="scater_log" value="scater_log.rdata"/>
+      <output name="R_sc3_prepared" file="R_sc3_prepared.rdata"/>
     </test>
   </tests>
   <help><![CDATA[
-  ]]></help>
-  <expand macro="citations" />
+
+============================================================
+This function prepares an object of SingleCellExperiment class for SC3 clustering. 
+============================================================
+It creates and populates the following items of the sc3 slot of the metadata(object):
+
+kmeans_iter_max - the same as the kmeans_iter_max argument.
+kmeans_nstart - the same as the kmeans_nstart argument.
+n_dim - contains numbers of the number of eigenvectors to be used in kmeans clustering.
+rand_seed - the same as the rand_seed argument.
+svm_train_inds - if SVM is used this item contains indexes of the training cells to be used for SC3 clustering and further SVM prediction.
+svm_study_inds - if SVM is used this item contains indexes of the cells to be predicted by SVM.
+n_cores - the same as the n_cores argument.
+
+@HELP@
+]]></help>
+   <expand macro="citations" />
 </tool>
