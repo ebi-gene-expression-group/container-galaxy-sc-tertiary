@@ -12,10 +12,10 @@
         				 	-s '$subset_cell_variables'
         				#end if
         				#if $low_cell_thresholds:
-        				 	-l '$low_cell_thresholds' 
+        				 	-l '$low_cell_thresholds'
         				#end if
         				#if $n_cells_counts:
-        					 -t '$n_cells_counts' 
+        					 -t '$n_cells_counts'
         				#end if
         				#if $min_feature_n_cells_counts:
         				 	-m '$min_feature_n_cells_counts'
@@ -24,18 +24,17 @@
         				#if $cell_filter_matrix:
         				 	-u '$cell_filter_matrix'
         				#end if
-        				#if $feature_filter_matrix: 
+        				#if $feature_filter_matrix:
         				 	-v '$feature_filter_matrix'
         				#end if
 
     ]]></command>
     <inputs>
-        <param type="data" name="R_scater_qc" format="rdata"  />
-        <param type="data" name="subset_cell_variables" format="csv" optional="True" />
-        <param type="data" name="low_cell_thresholds" format="csv" optional="True" />
-        <param type="data" name="n_cells_counts" format="csv" optional="True" />
-        <param type="data" name="min_feature_n_cells_counts" format="csv" optional="True" />
-        <param type="data" name="min_feature_n_cells_counts" format="csv" optional="True" />
+        <param type="data" name="R_scater_qc" format="rdata" help="A serialized SingleCellExperiment object file in RDS format."/>
+        <param type="data" name="subset_cell_variables" format="csv" optional="True" help="Comma-separated parameters to subset on. Any variable available in the colData of the supplied object."/>
+        <param type="data" name="low_cell_thresholds" format="csv" optional="True" help="Comma-separated low cutoffs for the parameters (default is -Inf)."/>
+        <param type="data" name="n_cells_counts" format="csv" optional="True" help="Comma-separated parameters to subset on. Any variable available in the colData of the supplied object."/>
+        <param type="data" name="min_feature_n_cells_counts" format="csv" optional="True" help="Comma-separated low cutoffs for the parameters (default is -Inf)."/>
          <conditional name="options">
     		<param label="Use advanced options" name="selection_mode" type="select">
       			<option selected="true" value="defaults">Use default options</option>
@@ -52,10 +51,10 @@
     </inputs>
     <outputs>
         <data name="R_scater_filtered" format="rdata" />
-        <data name="cell_filter_matrix" format="txt">
+        <data name="cell_filter_matrix" format="txt" >
         <filter>options['selection_mode'] == 'advanced' and options['cell_filter_output']</filter>
         </data>
-        <data name="feature_filter_matrix" format="txt">
+        <data name="feature_filter_matrix" format="txt" >
         <filter>options['selection_mode'] == 'advanced' and options['feature_output']</filter>
         </data>
     </outputs>

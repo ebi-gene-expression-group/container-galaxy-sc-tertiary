@@ -104,6 +104,16 @@ scanpy-run-tsne.py
   </tests>
 
   <help><![CDATA[
+==================================================================
+t-distributed stochastic neighborhood embedding (tSNE) (`tl.tsne`)
+==================================================================
+
+t-distributed stochastic neighborhood embedding (tSNE) (Maaten et al, 2008) has been
+proposed for visualizating single-cell data by (Amir et al, 2013). Here, by default,
+we use the implementation of *scikit-learn* (Pedregosa et al, 2011). 
+
+It yields `X_tsne`, tSNE coordinates of data.
+
 @HELP@
 ]]></help>
   <expand macro="citations"/>
