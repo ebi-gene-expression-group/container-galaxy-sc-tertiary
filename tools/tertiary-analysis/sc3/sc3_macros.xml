@@ -22,11 +22,4 @@
             <yield />
         </citations>
     </xml>
-  <xml name="input_object_params">
-    <param name="input_obj_file" argument="--input-object-file" type="data" format="rdata" label="Input scatter object in rdata format"/>
-    <param name="input_format" argument="--input-format" type="select" label="Format of input object">
-      <option value="rdata" selected="true">Scatter rdata format</option>
-      <option value="loom">Loom format hdf5, current support is incomplete</option>
-    </param> 
-  </xml>
 </macros>
