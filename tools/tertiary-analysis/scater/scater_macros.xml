@@ -1,4 +1,6 @@
 <macros>
+  <token name="@TOOL_VERSION@">1.8.4</token>
+  <token name="@HELP@">More information can be found at https://bioconductor.org/packages/release/bioc/vignettes/scater/inst/doc/vignette-intro.html</token>
     <xml name="requirements">
         <requirements>
         <requirement type="package" version="0.0.3">bioconductor-scater-scripts</requirement>
