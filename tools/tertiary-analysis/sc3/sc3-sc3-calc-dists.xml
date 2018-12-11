@@ -1,15 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<tool id="sc3-sc3-calc-dists" name="SC3 calculate distances" version="@TOOL_VERSION@+galaxy0">
+<tool id="sc3-sc3-calc-dists" name="SC3 calculate distances" version="0.1.0">
     <description>Calculate distances between cells</description>
     <macros>
-        <import>sc3-macros.xml</import>
+        <import>macros.xml</import>
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         sc3-sc3-calc-dists.R -i "$input1" -o "$output1"
     ]]></command>
     <inputs>
-        <param type="data" name="input1" format="rds" label="File name in which a serialized R SingleCellExperiment object where object matrix found"/>
+        <param type="data" name="input1" format="rds" />
     </inputs>
     <outputs>
         <data name="output1" format="rds" />
@@ -21,6 +20,24 @@
         </test>
     </tests>
     <help><![CDATA[
+        Usage: /Users/ct5/anaconda3/envs/galaxy/bin/sc3-sc3-calc-dists.R [options]
+
+
+Options:
+	-i INPUT-OBJECT-FILE, --input-object-file=INPUT-OBJECT-FILE
+		File name in which a serialized R SingleCellExperiment object where object matrix found
+
+	-o OUTPUT-OBJECT-FILE, --output-object-file=OUTPUT-OBJECT-FILE
+		File name in which to store serialized R object of type 'SingleCellExperiment'.'
+
+	-h, --help
+		Show this help message and exit
+
+
+Error in wsc_parse_args(option_list, mandatory = c("input_object_file",  : 
+  Mandatory argment 'input_object_file' not supplied
+Execution halted
+
     ]]></help>
     <expand macro="citations" />
 </tool>
