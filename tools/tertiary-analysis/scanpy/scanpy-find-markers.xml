@@ -80,7 +80,9 @@ scanpy-find-markers.py
   </tests>
 
   <help><![CDATA[
-**What it does**
+=============================================================
+Rank genes for characterizing groups (`tl.rank_genes_groups`)
+=============================================================
 
 Rank genes for characterizing groups.
 

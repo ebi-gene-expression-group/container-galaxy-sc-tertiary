@@ -1,4 +1,4 @@
-<tool id="scater-calculate-cpm" name="Scater calculate cpm" version="0.1.0">
+<tool id="scater-calculate-cpm" name="Scater calculate cpm" version="1.6.0+galaxy1">
     <description>Calculate CPM from serialized scater R object</description>
     <macros>
         <import>scater_macros.xml</import>
@@ -6,19 +6,19 @@
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         ln -s '$R_scater_serialized' R_scater_serialized.rds;
-        
-        scater-calculate-cpm.R -i '$R_scater_serialized' 
+
+        scater-calculate-cpm.R -i '$R_scater_serialized'
                   				-s '$size_factors'
-        						-o '$R_scater_cpm' 
+        						-o '$R_scater_cpm'
         						-t '$cpm_matrix'
     ]]></command>
     <inputs>
-        <param type="data" name="R_scater_serialized" format="rdata" />
-		<param name="size_factors" argument="--size-factors" type="boolean" label= "use size factors"
-       			help="(-s)" />
+        <param type="data" name="R_scater_serialized" format="rdata" help="File name in which a serialized R SingleCellExperiment object where object matrix found"/>
+		<param name="size_factors" argument="--size-factors" type="boolean" label= "use size factors"/>
+
     </inputs>
     <outputs>
-        <data name="R_scater_cpm" format="rdata" label="" />
+        <data name="R_scater_cpm" format="rdata" label=""/>
         <data name="cpm_matrix" format="txt" />
     </outputs>
     <tests>
@@ -34,16 +34,16 @@
 
 Options:
 	-i INPUT-OBJECT-FILE, --input-object-file=INPUT-OBJECT-FILE
-		File name in which a serialized R SingleCellExperiment object where object matrix found  
+
 
 	-s SIZE-FACTORS, --size-factors=SIZE-FACTORS
-		A  logical  scalar  indicating  whether  size  factors  in object should  be  used  to compute effective library sizes.  If not, all size factors are deleted and librarysize-based factors are used instead (seelibrarySizeFactors.  Alternatively, anumeric vector containing a size factor for each cell, which is used in place ofsizeFactor(object).
+
 
 	-o OUTPUT-OBJECT-FILE, --output-object-file=OUTPUT-OBJECT-FILE
-		File name in which to store serialized R object of type 'Scater'.'
+
 
 	-t OUTPUT-TEXT-FILE, --output-text-file=OUTPUT-TEXT-FILE
-		File name in which to store CPM values.
+
 
 
     ]]></help>
