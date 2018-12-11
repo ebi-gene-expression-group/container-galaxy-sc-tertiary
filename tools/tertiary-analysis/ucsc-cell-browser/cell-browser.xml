@@ -67,16 +67,16 @@ cat(colnames(seurat_object@meta.data))
       <option value="seurat">Seurat R-serialized object</option>
     </param>
     <when value="native-cell-browser">
-      <param type="data" name="expressionMatrix" label="" help="" format="tabular"/>
-      <param type="data" name="cellMetadata" label="" help="" format="tabular"/>
-      <param type="data" name="tsneCoordinates" label="" help="" format="tabular"/>
+      <param type="data" name="expressionMatrix" label="Expression matrix" help="Tabular expression matrix (see https://github.com/maximilianh/cellBrowser/tree/master/sampleData)" format="tabular"/>
+      <param type="data" name="cellMetadata" label="Cell metadata" help="Tabular file with metadata fields (columns) for each cell (rows)." format="tabular"/>
+      <param type="data" name="tsneCoordinates" label="tSNE coordinates" help="Tabular file with tSNE coordinates for each cell." format="tabular"/>
     </when>
     <when value="scanpy">
-      <param name="input_anndata_file" type="data" format="h5" label="Input object in AnnData hdf5 format"/>
+      <param name="input_anndata_file" type="data" format="h5" label="Input object in AnnData hdf5 format" help="Scanpy serialized output is by default produced as an AnnData hdf5 file."/>
     </when>
     <when value="seurat">
       <param name="input_rds_file" type="data" format="rdata" label="RDS object from Seurat 2"/>
-      <param name="metadata_fields" type="text" value="nGene" label="Metadata fields to extract from Seurat 2 RDS" help="Space separated list of fields."/>
+      <param name="metadata_fields" type="text" value="" label="Metadata fields to extract from Seurat 2 RDS" help="Space separated list of fields, if blank all metadata fields available in the Seurat object are used."/>
     </when>
   </conditional>
 </inputs>
@@ -84,5 +84,36 @@ cat(colnames(seurat_object@meta.data))
     <data format="html" name="html_file" label="Interactive UCSC Cell Browser"/>
 </outputs>
 <help><![CDATA[
+UCSC Single Cell Browser
+========================
+
+Funded by the California Institute of Regenerative Medicine and the Chan-Zuckerberg
+Initiative https://www.chanzuckerberg.com/.
+
+The UCSC Cell Browser is a viewer for single cell data. You can click on and hover
+over cells to get meta information, search for genes to color on and click clusters
+to show cluster-specific marker genes, which in turn are clickable again.
+
+For a demo of the browser, see http://cells.ucsc.edu
+
+Usage
+-----
+
+After choosing the inputs and executing the tool, once the history item becomes
+green, press the View data (eye icon) button, which will open the generated UCSC Cell Browser
+interactive site. Press the white on blue "Open Dataset" button.
+
+Troubleshooting
+---------------
+
+Depending on the window size when pressing the "View data" button, you might see a black canvas and a diminished panel to the upper left
+with the text "Choose cell...". If that is the case, close that panel (click on the cross)
+and then choose File -> Open Dataset... and then press the Open Dataset white button.
+
+Version history
+---------------
+
+0.4.3+galaxy0: Initial contribution by the Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
+EMBL-EBI https://www.ebi.ac.uk/
 ]]></help>
 </tool>
