@@ -1,4 +1,4 @@
-<tool id="seurat_dim_plot" name="Plot dimension reduction" version="2.3.1">
+<tool id="seurat_dim_plot" name="Plot dimension reduction" version="2.3.1+galaxy0">
     <description>Graphs the output of a dimensional reduction technique (PCA by default). Cells are colored by their identity class.</description>
     <macros>
         <import>seurat_macros.xml</import>
@@ -54,7 +54,7 @@
         <param type="integer" name="png_height" value='1000' label='Height of png (px)'/>
     </inputs>
     <outputs>
-        <data name="output_image_file" format="png" from_work_dir="pca.png" />
+        <data name="output_image_file" format="png" from_work_dir="pca.png" label="${tool.name} on ${on_string}"/>
     </outputs>
     <help><![CDATA[
 .. class:: infomark
