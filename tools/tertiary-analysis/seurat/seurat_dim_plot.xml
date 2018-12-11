@@ -33,7 +33,7 @@
         --group-by $group_by
         #end if
         #if $plot_title
-        --plot-title $plot_title
+        --plot-title '$plot_title'
         #end if
         --png-width $png_width
         --png-height $png_height
