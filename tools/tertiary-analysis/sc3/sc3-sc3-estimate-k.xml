@@ -6,21 +6,29 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        sc3-sc3-estimate-k.R -i "$input1" -t "$output1" -o R_scater_qc.rds 
+        sc3-sc3-estimate-k.R -i "$input1" -t "$output1" -o R_scater_qc.rdata 
     ]]></command>
     <inputs>
-        <param type="data" name="input1" format="rds" label="File name in which a processed SC3 object can be found"/>
+        <param type="data" name="input1" format="rdata" label="File name in which a processed SC3 object can be found"/>
     </inputs>
     <outputs>
         <data name="output1" format="txt" />
     </outputs>
     <tests>
         <test>
-            <param name="input1" value="R_sc3_transformed.rds"/>
+            <param name="input1" value="R_sc3_transformed.rdata"/>
             <output name="output1" file="sc3-estimated-k.txt"/>
         </test>
     </tests>
     <help><![CDATA[
+
+============================================================
+Uses Tracy-Widom theory on random matrices to estimate the optimal number of clusters k. 
+============================================================
+It creates and populates the k_estimation item of the sc3 slot of the metadata(object).
+
+@HELP@
+
     ]]></help>
     <expand macro="citations" />
 </tool>

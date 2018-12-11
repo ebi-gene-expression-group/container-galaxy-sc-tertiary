@@ -6,21 +6,30 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        sc3-sc3-calc-transfs.R -i R_scater_serialized.rds -o R_scater_cpm.rds
+        sc3-sc3-calc-transfs.R -i R_scater_serialized.rdata -o R_scater_cpm.rdata
     ]]></command>
     <inputs>
-        <param type="data" name="input1" format="rds" label="File name in which a processed SC3 'SingleCellExperiment' object has been stored"/>
+        <param type="data" name="input1" format="rdata" label="File name in which a processed SC3 'SingleCellExperiment' object has been stored"/>
     </inputs>
     <outputs>
-        <data name="output1" format="rds" from_work_dir="R_sc3_transformed.rds" />
+        <data name="output1" format="rdata" from_work_dir="R_sc3_transformed.rdata" />
     </outputs>
     <tests>
         <test>
-            <param name="input1" value="R_sc3_object.rds"/>
-            <output name="output1" file="R_sc3_transformed.rds"/>
+            <param name="input1" value="R_sc3_object.rdata"/>
+            <output name="output1" file="R_sc3_transformed.rdata"/>
         </test>
     </tests>
     <help><![CDATA[
+    ============================================================
+    This function transforms all distances items of the sc3 slot of the metadata(object) using either principal component analysis (PCA) or 
+    by calculating the eigenvectors of the associated graph Laplacian. 
+    ============================================================
+    The columns of the resulting matrices are then sorted in descending order by their corresponding eigenvalues. 
+    The first d columns (where d = max(metadata(object)$sc3$n_dim)) of each transformation are then written to 
+    the transformations item of the sc3 slot. Additionally, this function also removes the previously calculated 
+    distances from the sc3 slot, as they are not needed for further analysis. 
+
     ]]></help>
     <expand macro="citations" />
 </tool>

@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <tool id="sc3-sc3-kmeans" name="SC3 kmeans" version="@TOOL_VERSION@+galaxy0">
-    <description>Perform k-Means clustering on cells</description>
+    <description>Perform k-means clustering on single cell datasets</description>
     <macros>
         <import>sc3-macros.xml</import>
     </macros>
@@ -9,11 +8,11 @@
         sc3-sc3-kmeans.R -i $input1.rds -k "$input2" -o "$output1" 
     ]]></command>
     <inputs>
-        <param type="data" name="input1" format="rds" label="SC3 processed object"/>
+        <param type="data" name="input1" format="rdata" label="SC3 processed object"/>
         <param type="data" name="input2" format="text" label="K selected for k-means clustering"/>
     </inputs>
     <outputs>
-        <data name="output1" format="rds" label="SC3 object to store the K-means clusters"/>
+        <data name="output1" format="rdata" label="SC3 object to store the k-means clusters"/>
     </outputs>
     <tests>
         <test>
@@ -23,6 +22,16 @@
         </test>
     </tests>
     <help><![CDATA[
+
+============================================================
+This function performs kmeans clustering of the matrices contained in the transformations item of the sc3 slot of the metadata(object). 
+============================================================
+It then creates and populates the following items of the sc3 slot:
+
+kmeans - contains a list of kmeans clusterings.
+
+@HELP@
+
     ]]></help>
     <expand macro="citations" />
 </tool>
