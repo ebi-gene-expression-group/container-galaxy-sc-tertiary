@@ -14,7 +14,7 @@
     <param type="data" name="scater_log" format="rdata" label="Scater object" />
   </inputs>
   <outputs>
-    <data name="R_sc3_prepared" format="rdata" from_work_dir="R_sc3_prepared.rdata" label="SC3 object with input data" />
+    <data name="R_sc3_prepared" format="rdata" from_work_dir="R_sc3_prepared.rdata"/>
   </outputs>
   <tests>
     <test>
