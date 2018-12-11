@@ -9,18 +9,24 @@
         sc3-sc3-calc-dists.R -i "$input1" -o "$output1"
     ]]></command>
     <inputs>
-        <param type="data" name="input1" format="rds" label="File name in which a serialized R SingleCellExperiment object where object matrix found"/>
+        <param type="data" name="input1" format="rdata" label="File name in which a serialized R SingleCellExperiment object where object matrix found"/>
     </inputs>
     <outputs>
-        <data name="output1" format="rds" />
+        <data name="output1" format="rdata" />
     </outputs>
     <tests>
         <test>
-            <param name="input1" value="R_sc3_transformed.rds"/>
-            <output name="output1" file="R_sc3_distance.rds"/>
+            <param name="input1" value="R_sc3_transformed.rdata"/>
+            <output name="output1" file="R_sc3_distance.rdata"/>
         </test>
     </tests>
     <help><![CDATA[
+    ============================================================
+    This function calculates distances between the cells. 
+    ============================================================
+    It creates and populates the following items of the sc3 slot of the metadata(object):
+    distances - contains a list of distance matrices corresponding to Euclidean, Pearson and Spearman distances.
+
     ]]></help>
     <expand macro="citations" />
 </tool>

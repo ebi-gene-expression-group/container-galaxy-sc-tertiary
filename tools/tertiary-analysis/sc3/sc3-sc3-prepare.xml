@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <tool id="sc3-prepare" name="SC3 read scater object" version="@TOOL_VERSION@+galaxy0">
   <description>Loads normalised Scater object into a SC3 object</description>
   <macros>

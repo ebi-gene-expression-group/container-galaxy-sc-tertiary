@@ -9,18 +9,22 @@
         sc3-sc3-calc-biology.R -i "$input1" -o "$output1"
     ]]></command>
     <inputs>
-        <param type="data" name="input1" format="rds" label="File name in which a SC3 'SingleCellExperiment' object has been stored after kmeans clustering"/>
+        <param type="data" name="input1" format="rdata" label="File name in which a SC3 'SingleCellExperiment' object has been stored after kmeans clustering"/>
     </inputs>
     <outputs>
-        <data name="output1" format="rds" label="File name for R object of type 'SingleCellExperiment' from SC3 in which to store the consensus matrix"/>
+        <data name="output1" format="rdata" label="File name for R object of type 'SingleCellExperiment' from SC3 in which to store the consensus matrix"/>
     </outputs>
     <tests>
         <test>
-            <param name="input1" value="R_sc3_kmeans.rds"/>
-            <output name="output1" file="R_sc3_kmeans_biology.rds"/>
+            <param name="input1" value="R_sc3_kmeans.rdata"/>
+            <output name="output1" file="R_sc3_kmeans_biology.rdata"/>
         </test>
     </tests>
     <help><![CDATA[
+    ============================================================
+    This function calculates differentially expressed (DE) genes, marker genes and cell outliers based on the consensus SC3 clusterings. 
+    ============================================================
+    
     ]]></help>
     <expand macro="citations" />
 </tool>
