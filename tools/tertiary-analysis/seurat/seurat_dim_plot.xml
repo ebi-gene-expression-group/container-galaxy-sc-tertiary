@@ -35,6 +35,27 @@
         #if $plot_title
         --plot-title '$plot_title'
         #end if
+        #if $do_bare
+        --do-bare '$do_bare'
+        #end if
+        #if $cols_use
+        --cols-use '$cols_use'
+        #end if
+        #if $pt_shape
+        --pt-shape '$pt_shape'
+        #end if
+        #if $coord_fixed
+        --coord-fixed '$coord_fixed'
+        #end if
+        #if $no_axes
+        --no-axes '$no_axes'
+        #end if
+        #if $dark_theme
+        --dark-theme '$dark_theme'
+        #end if
+        #if $plot_order
+        --plot-order '$plot_order'
+        #end if
         --png-width $png_width
         --png-height $png_height
         --output-image-file $output_image_file
@@ -49,7 +70,14 @@
         <param type="float" name="label_size" value='4' label="Label size" help='Sets size of labels'/>
         <param type="boolean" name="do_label" checked="false" label='Whether to label the clusters' truevalue="TRUE" falsevalue="FALSE" />
         <param type="text" name="group_by" value='ident' label='Group by' help='Group (color) cells in different ways' />
-        <param type="text" name="plot_title" format="text" label='Plot title' value='NULL' />
+        <param type="text" name="plot_title" format="text" label='Plot title' missing='NULL' />
+        <param type="boolean" name="do_bare" checked="false" label='Do only minimal formatting' truevalue="TRUE" falsevalue="FALSE" />
+        <param type="text" name="cols_use" format="text" label='Comma-separated list of colors, each color corresponds to an identity class. By default, ggplot assigns colors.' missing='NULL' />
+        <param type="text" name="pt_shape" format="text" label='If NULL, all points are circles (default). You can specify any cell attribute (that can be pulled with FetchData) allowing for both different colors and different shapes on cells.' />
+        <param type="boolean" name="coord_fixed" checked="false" label='Use a fixed scale coordinate system (for spatial coordinates). Default is FALSE.' truevalue="TRUE" falsevalue="FALSE" />
+        <param type="boolean" name="no_axes" checked="false" label='Setting to TRUE will remove the axes.' truevalue="TRUE" falsevalue="FALSE" />
+        <param type="boolean" name="dark_theme" checked="false" label='Use a dark theme for the plot..' truevalue="TRUE" falsevalue="FALSE" />
+        <param type="text" name="plot_order" format="text" label='Comma-separated string specifying the order of plotting for the idents (clusters). This can be useful for crowded plots if points of interest are being buried. Provide either a full list of valid idents or a subset to be plotted last (on top).' missing='NULL' />
         <param type="integer" name="png_width" value='1000' label='Width of png (px)' />
         <param type="integer" name="png_height" value='1000' label='Height of png (px)'/>
     </inputs>
