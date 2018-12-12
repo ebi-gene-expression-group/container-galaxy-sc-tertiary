@@ -26,33 +26,23 @@
         #if $label_size
         --label-size $label_size
         #end if
-        #if $do_label
         --do-label $do_label
-        #end if
         #if $group_by
         --group-by $group_by
         #end if
         #if $plot_title
         --plot-title '$plot_title'
         #end if
-        #if $do_bare
         --do-bare '$do_bare'
-        #end if
         #if $cols_use
         --cols-use '$cols_use'
         #end if
         #if $pt_shape
         --pt-shape '$pt_shape'
         #end if
-        #if $coord_fixed
         --coord-fixed '$coord_fixed'
-        #end if
-        #if $no_axes
         --no-axes '$no_axes'
-        #end if
-        #if $dark_theme
         --dark-theme '$dark_theme'
-        #end if
         #if $plot_order
         --plot-order '$plot_order'
         #end if
