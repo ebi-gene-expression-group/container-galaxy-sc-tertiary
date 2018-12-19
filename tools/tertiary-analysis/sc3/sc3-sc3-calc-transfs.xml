@@ -6,7 +6,10 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
+
+
         sc3-sc3-calc-transfs.R -i R_scater_serialized.rdata -o R_scater_cpm.rdata
+   
     ]]></command>
     <inputs>
         <param type="data" name="input1" format="rdata" label="File name in which a processed SC3 'SingleCellExperiment' object has been stored"/>
