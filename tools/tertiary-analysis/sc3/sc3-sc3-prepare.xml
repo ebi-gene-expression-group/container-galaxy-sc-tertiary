@@ -6,7 +6,7 @@
   </macros>
   <expand macro="requirements" />
   <command detect_errors="exit_code"><![CDATA[
-  ln -s '$scater_log' 'scater_log.rds'; 
+  ln -s '$scater_log' 'scater_log.rdata'; 
 
   sc3-sc3-prepare.R -i $scater_log -o '$R_sc3_prepared'
   
