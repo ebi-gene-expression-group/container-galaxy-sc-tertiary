@@ -14,7 +14,7 @@
     <param type="data" name="scater_log" format="rdata" label="Scater object" />
   </inputs>
   <outputs>
-    <data name="sc3_prepared" format="rdata" from_work_dir="sc3_prepared.rdata"/>
+    <data name="sc3_prepared" format="rdata" from_work_dir="sc3_prepared.rdata" label="${tool.name} on ${on_string}: SC3 preparing scater object" />
   </outputs>
   <tests>
     <test>

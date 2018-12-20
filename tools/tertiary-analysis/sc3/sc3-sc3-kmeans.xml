@@ -6,21 +6,21 @@
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
 
-        sc3-sc3-kmeans.R -i $input1.rdata -k "$input2" -o "$output1" 
+        sc3-sc3-kmeans.R -i sc3_transformed.rdata -k sc3-estimated-k.txt -o sc3_kmeans.rdata 
    
     ]]></command>
     <inputs>
-        <param type="data" name="input1" format="rdata" label="SC3 processed object"/>
-        <param type="data" name="input2" format="text" label="K selected for k-means clustering"/>
+        <param type="data" name="sc3_transformed" format="rdata" label="SC3 object with transformed distances"/>
+        <param type="data" name="sc3-estimated-k" format="text" label="K selected or estimated for k-means clustering"/>
     </inputs>
     <outputs>
-        <data name="output1" format="rdata" label="SC3 object to store the k-means clusters"/>
+        <data name="sc3_kmeans" format="rdata" label="${tool.name} on ${on_string}: SC3 object to store the k-means clusters"/>
     </outputs>
     <tests>
         <test>
-            <param name="input1" value="R_sc3_distance"/>
-            <param name="input2" value="K_size"/>
-            <output name="output1" file="R_sc3_kmeans.rds"/>
+            <param name="sc3_transformed" value="sc3_transformed"/>
+            <param name="sc3-estimated-k" value="K_size"/>
+            <output name="sc3_kmeans" file="sc3_kmeans.rdata"/>
         </test>
     </tests>
     <help><![CDATA[
