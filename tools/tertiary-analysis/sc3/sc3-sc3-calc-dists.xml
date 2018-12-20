@@ -6,18 +6,20 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        sc3-sc3-calc-dists.R -i "$input1" -o "$output1"
+
+        sc3-sc3-calc-dists.R -i sc3_prepared.rdata -o sc3_distances.rdata
+    
     ]]></command>
     <inputs>
-        <param type="data" name="input1" format="rdata" label="File name in which a serialized R SingleCellExperiment object where object matrix found"/>
+        <param type="data" name="sc3_prepared" format="rdata" label="File name in which a serialized R SingleCellExperiment object where object matrix found"/>
     </inputs>
     <outputs>
-        <data name="output1" format="rdata" />
+        <data name="sc3_distances" format="rdata" label="${tool.name} on ${on_string}: SC3 calculating distances"/>
     </outputs>
     <tests>
         <test>
-            <param name="input1" value="R_sc3_transformed.rdata"/>
-            <output name="output1" file="R_sc3_distance.rdata"/>
+            <param name="sc3_prepared" value="sc3_prepared.rdata"/>
+            <output name="sc3_distances" file="sc3_distances.rdata"/>
         </test>
     </tests>
     <help><![CDATA[
