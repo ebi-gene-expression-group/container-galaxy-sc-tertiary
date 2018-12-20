@@ -5,7 +5,9 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        sc3-sc3-kmeans.R -i $input1.rds -k "$input2" -o "$output1" 
+
+        sc3-sc3-kmeans.R -i $input1.rdata -k "$input2" -o "$output1" 
+   
     ]]></command>
     <inputs>
         <param type="data" name="input1" format="rdata" label="SC3 processed object"/>

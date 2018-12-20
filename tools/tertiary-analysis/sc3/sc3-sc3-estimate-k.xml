@@ -6,17 +6,19 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        sc3-sc3-estimate-k.R -i "$input1" -t "$output1" -o R_scater_qc.rdata 
+
+        sc3-sc3-estimate-k.R -i sc3_prepared.rdata -t "$output1" -o R_scater_qc.rdata 
+    
     ]]></command>
     <inputs>
-        <param type="data" name="input1" format="rdata" label="File name in which a processed SC3 object can be found"/>
+        <param type="data" name="sc3_prepared" format="rdata" label="File name of a prepared SC3 object"/>
     </inputs>
     <outputs>
         <data name="output1" format="txt" />
     </outputs>
     <tests>
         <test>
-            <param name="input1" value="R_sc3_transformed.rdata"/>
+            <param name="sc3_prepared" value="sc3_prepared.rdata"/>
             <output name="output1" file="sc3-estimated-k.txt"/>
         </test>
     </tests>
