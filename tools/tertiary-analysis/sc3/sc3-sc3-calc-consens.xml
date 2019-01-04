@@ -7,7 +7,7 @@
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
 
-ln -rs '${sc3_kmeans}' && 
+ln -s '${sc3_kmeans}' sc3_kmeans.rdata && 
         sc3-sc3-calc-consens.R -i sc3_kmeans.rdata -d "$input1" -o '${sc3_consensus}'
    
     ]]></command>

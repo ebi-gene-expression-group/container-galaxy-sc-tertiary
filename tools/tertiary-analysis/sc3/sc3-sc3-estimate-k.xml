@@ -7,7 +7,7 @@
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
 
-ln -rs '${sc3_transformed}' && 
+ln -s '${sc3_prepared}' sc3_prepared.rdata && 
         sc3-sc3-estimate-k.R -i sc3_prepared.rdata -t "$output1" -o '${sc3_prepared}' 
     
     ]]></command>

@@ -5,7 +5,7 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-ln -rs '${sc3_transformed}' && 
+ln -s '${sc3_transformed}' sc3_transformed.rdata && 
         sc3-sc3-kmeans.R -i sc3_transformed.rdata -k sc3-estimated-k.txt -o '${sc3_kmeans}' 
    
     ]]></command>
