@@ -7,7 +7,8 @@
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
 
-        sc3-sc3-calc-biology.R -i sc3_consensus.rdata -o sc3_biology_markers.rdata
+ln -rs '${sc3_consensus}' && 
+        sc3-sc3-calc-biology.R -i sc3_consensus.rdata -o '${sc3_biology_markers}'s
     
     ]]></command>
     <inputs>

@@ -7,7 +7,8 @@
   <expand macro="requirements" />
   <command detect_errors="exit_code"><![CDATA[
 
-  sc3-sc3-prepare.R -i scater_log.rdata -o '$sc3_prepared'
+ln -rs '${scater_log}' && 
+  sc3-sc3-prepare.R -i scater_log.rdata -o '${sc3_prepared}'
   
   ]]></command>
   <inputs>
