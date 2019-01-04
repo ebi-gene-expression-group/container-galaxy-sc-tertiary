@@ -6,8 +6,8 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-
-        sc3-sc3-calc-dists.R -i sc3_prepared.rdata -o sc3_distances.rdata
+ln -rs '${sc3_prepared}' && 
+        sc3-sc3-calc-dists.R -i sc3_prepared.rdata -o '${sc3_distances}'
     
     ]]></command>
     <inputs>

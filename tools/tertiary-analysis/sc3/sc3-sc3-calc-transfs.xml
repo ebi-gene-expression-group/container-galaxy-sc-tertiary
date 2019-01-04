@@ -7,8 +7,8 @@
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
 
-
-        sc3-sc3-calc-transfs.R -i sc3_distances.rdata -o sc3_transformed.rdata
+ln -rs '${sc3_transformed}' && 
+        sc3-sc3-calc-transfs.R -i sc3_distances.rdata -o '${sc3_transformed}'
    
     ]]></command>
     <inputs>
