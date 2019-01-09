@@ -41,6 +41,12 @@ clusterField=\$(echo \$all_metadata_fields | awk '{for (i=1;i<=NF;i++){if (\$i ~
 echo "coords = [ {'file': '$html_file.extra_files_path/tsne.coords.tsv', 'shortLabel': 't-SNE Seurat Processed' }]" > ./cellbrowser.conf;
 echo "name = 'sample'" >> ./cellbrowser.conf;
 echo "clusterField = '"\$clusterField"'" >> ./cellbrowser.conf;
+for field in \$all_metadata_fields; do
+  if [[ \$field == res.* ]] ;
+  then
+    echo "forceEnum = ['"\$field"']" >> ./cellbrowser.conf;
+  fi
+done;
 echo "meta = '$html_file.extra_files_path/meta.tsv'" >> ./cellbrowser.conf;
 echo "exprMatrix = '$html_file.extra_files_path/exprMatrix.tsv'" >> ./cellbrowser.conf;
 echo "geneIdType = 'symbol'" >> ./cellbrowser.conf;
