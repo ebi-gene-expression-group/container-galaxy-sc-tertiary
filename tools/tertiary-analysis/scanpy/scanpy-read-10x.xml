@@ -9,7 +9,7 @@
 ln -s '${matrix}' matrix.mtx &&
 ln -s '${genes}' genes.tsv &&
 ln -s '${barcodes}' barcodes.tsv &&
-scanpy-read-10x.py
+PYTHONIOENCODING=utf-8 scanpy-read-10x.py
     -d ./
     -o read_10x.h5
     -F '${output_format}'
