@@ -1,4 +1,4 @@
-<tool id="scater-filter" name="Scater Filter QC metrics" version="1.6.0+galaxy1">
+<tool id="scater-filter" name="Scater Filter QC metrics" version="@TOOL_VERSION@+galaxy0">
     <description>Filter based on QC metrics from serialized scater R object</description>
     <macros>
         <import>scater_macros.xml</import>
@@ -65,49 +65,7 @@
         </test>
     </tests>
     <help><![CDATA[
-        Usage: scater-filter.R [options]
-
-
-Options:
-	-i INPUT-OBJECT-FILE, --input-object-file=INPUT-OBJECT-FILE
-
-
-	-s SUBSET-CELL-VARIABLES, --subset-cell-variables=SUBSET-CELL-VARIABLES
-
-
-	-l LOW-CELL-THRESHOLDS, --low-cell-thresholds=LOW-CELL-THRESHOLDS
-
-
-	-j HIGH-CELL-THRESHOLDS, --high-cell-thresholds=HIGH-CELL-THRESHOLDS
-
-
-	-c CELLS-USE, --cells-use=CELLS-USE
-        Comma-separated list of cell names to use as a subset. Alternatively, text file with one cell per line providing cell names to use as a subset.
-
-	-t SUBSET-FEATURE-VARIABLES, --subset-feature-variables=SUBSET-FEATURE-VARIABLES
-
-
-	-m LOW-FEATURE-THRESHOLDS, --low-feature-thresholds=LOW-FEATURE-THRESHOLDS
-
-
-	-n HIGH-FEATURE-THRESHOLDS, --high-feature-thresholds=HIGH-FEATURE-THRESHOLDS
-		Comma-separated high cutoffs for the parameters (default is Inf).
-
-	-f FEATURES--USE, --features--use=FEATURES--USE
-		Comma-separated list of cell names to use as a subset. Alternatively, text file with one cell per line providing cell names to use as a subset.
-
-	-o OUTPUT-OBJECT-FILE, --output-object-file=OUTPUT-OBJECT-FILE
-		File name in which to store serialized R object of type Seurat
-
-	-u OUTPUT-CELLSELECT-FILE, --output-cellselect-file=OUTPUT-CELLSELECT-FILE
-        File name in which to store a matrix showing results of applying individual cell selection criteria.
-
-	-v OUTPUT-FEATURESELECT-FILE, --output-featureselect-file=OUTPUT-FEATURESELECT-FILE
-		File name in which to store a matrix showing results of applying individual feature selection criteria
-
-	-h, --help
-		Show this help message and exit
-
+@HELP@
     ]]></help>
     <expand macro="citations" />
 </tool>

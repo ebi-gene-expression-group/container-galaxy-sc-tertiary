@@ -1,4 +1,4 @@
-<tool id="scater-calculate-qc-metrics" name="Scater calculate qc metrics" version="1.6.0+galaxy1">
+<tool id="scater-calculate-qc-metrics" name="Scater calculate qc metrics" version="@TOOL_VERSION@+galaxy0">
     <description>The QC metrics are calculated from serialized scater R object</description>
     <macros>
         <import>scater_macros.xml</import>
@@ -43,35 +43,7 @@
         </test>
     </tests>
     <help><![CDATA[
-        Usage: scater-calculate-qc-metrics.R [options]
-
-
-Options:
-	-i INPUT-OBJECT-FILE, --input-object-file=INPUT-OBJECT-FILE
-
-
-	-e EXPRS-VALUES, --exprs-values=EXPRS-VALUES
-
-
-	-f FEATURE-CONTROLS, --feature-controls=FEATURE-CONTROLS
-
-
-	-c CELL-CONTROLS, --cell-controls=CELL-CONTROLS
-
-
-	-n NMADS, --nmads=NMADS
-
-
-	-p PCT-FEATURE-CONTROLS-THRESHOLD, --pct-feature-controls-threshold=PCT-FEATURE-CONTROLS-THRESHOLD
-
-
-	-o OUTPUT-OBJECT-FILE, --output-object-file=OUTPUT-OBJECT-FILE
-	   file name in which to store serialized R object of type SingleCellExperiment
-
-	-h, --help
-	   Show this help message and exit
-
-
+@HELP@
     ]]></help>
     <expand macro="citations" />
 </tool>

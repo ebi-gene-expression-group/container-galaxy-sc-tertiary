@@ -1,4 +1,4 @@
-<tool id="scater-calculate-cpm" name="Scater calculate cpm" version="1.6.0+galaxy1">
+<tool id="scater-calculate-cpm" name="Scater calculate cpm" version="@TOOL_VERSION@+galaxy0">
     <description>Calculate CPM from serialized scater R object</description>
     <macros>
         <import>scater_macros.xml</import>
@@ -29,23 +29,7 @@
         </test>
     </tests>
     <help><![CDATA[
-        Usage: scater-calculate-cpm.R [options]
-
-
-Options:
-	-i INPUT-OBJECT-FILE, --input-object-file=INPUT-OBJECT-FILE
-
-
-	-s SIZE-FACTORS, --size-factors=SIZE-FACTORS
-
-
-	-o OUTPUT-OBJECT-FILE, --output-object-file=OUTPUT-OBJECT-FILE
-
-
-	-t OUTPUT-TEXT-FILE, --output-text-file=OUTPUT-TEXT-FILE
-
-
-
+@HELP@
     ]]></help>
     <expand macro="citations" />
 </tool>

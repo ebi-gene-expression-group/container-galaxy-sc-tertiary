@@ -1,4 +1,4 @@
-<tool id="scater-normalize" name="Scater normalise" version="1.6.0+galaxy1">
+<tool id="scater-normalize" name="Scater normalise" version="@TOOL_VERSION@+galaxy0">
     <description>Normalise from serialized scater R object</description>
     <macros>
         <import>scater_macros.xml</import>
@@ -44,33 +44,7 @@
         </test>
     </tests>
     <help><![CDATA[
-	Usage: scater-normalize.R [options]
-
-
-Options:
-	-i INPUT-OBJECT-FILE, --input-object-file=INPUT-OBJECT-FILE
-
-
-	-e EXPRS-VALUES, --exprs-values=EXPRS-VALUES
-
-
-	-l RETURN-LOG, --return-log=RETURN-LOG
-
-	-f LOG-EXPRS-OFFSET, --log-exprs-offset=LOG-EXPRS-OFFSET
-
-
-	-c CENTRE-SIZE-FACTORS, --centre-size-factors=CENTRE-SIZE-FACTORS
-
-
-	-r RETURN-NORM-AS-EXPRS, --return-norm-as-exprs=RETURN-NORM-AS-EXPRS
-
-
-	-o OUTPUT-OBJECT-FILE, --output-object-file=OUTPUT-OBJECT-FILE
-        File name in which to store serialized R object of type 'SingleCellExperiment.
-
-	-h, --help
-        Show this help message and exit
-
+@HELP@
     ]]></help>
     <expand macro="citations" />
 </tool>

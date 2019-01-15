@@ -1,4 +1,4 @@
-<tool id="scater-is-outlier" name="Scater outlier detection" version="1.6.0+galaxy1">
+<tool id="scater-is-outlier" name="Scater outlier detection" version="@TOOL_VERSION@+galaxy0">
     <description>Detect outliers from total counts file</description>
     <macros>
         <import>scater_macros.xml</import>
@@ -39,31 +39,7 @@
         </test>
     </tests>
     <help><![CDATA[
-        Usage: scater-is-outlier.R [options]
-
-
-Options:
-	-m METRIC-FILE, --metric-file=METRIC-FILE
-
-
-	-n NMADS, --nmads=NMADS
-
-
-	-t TYPE, --type=TYPE
-
-
-	-l LOG, --log=LOG
-
-
-	-d MIN-DIFF, --min-diff=MIN-DIFF
-
-
-	-o OUTPUT-FILE, --output-file=OUTPUT-FILE
-		File name in which to store the output vector of outliers (one value per line)
-
-	-h, --help
-		Show this help message and exit
-
+@HELP@
     ]]></help>
     <expand macro="citations" />
 </tool>
