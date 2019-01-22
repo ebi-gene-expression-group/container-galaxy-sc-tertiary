@@ -29,7 +29,10 @@ scater-filter.R -i R_scater_qc.rds -o '$R_scater_filtered'
 #if $cells_use:
     -c '$cells_use'
 #end if
-#if $cells_use:
+#if $cells_discard:
+    -C '$cells_discard'
+#end if
+#if $features_use:
     -f '$features_use'
 #end if
 #if $output_selected_cells:
@@ -78,6 +81,10 @@ scater-filter.R -i R_scater_qc.rds -o '$R_scater_filtered'
     <param name="cells_use" argument="--cells-use" type="data" format="txt" optional="true"
            label="List of cells to include"
            help="Text file with one cell per line providing cell names to use as a subset."/>
+
+    <param name="cells_discard" argument="--cells-discard" type="data" format="txt" optional="true"
+           label="List of cells to exclude"
+           help="Text file with one cell per line providing cell names to discard as a subset."/>
 
     <param name="features_use" argument="--features-use" type="data" format="txt" optional="true"
            label="List of features to include"
