@@ -1,71 +1,114 @@
-<tool id="scater-filter" name="Scater Filter QC metrics" version="@TOOL_VERSION@+galaxy0">
-    <description>Filter based on QC metrics from serialized scater R object</description>
-    <macros>
-        <import>scater_macros.xml</import>
-    </macros>
-    <expand macro="requirements" />
-    <command detect_errors="exit_code"><![CDATA[
-    	ln -s '$R_scater_qc' R_scater_qc.rds;
+<tool id="scater-filter" name="Scater Filter" version="@TOOL_VERSION@+galaxy0">
+  <description>cells and genes based on pre-calculated stats and QC metrics</description>
+  <macros>
+    <import>scater_macros.xml</import>
+  </macros>
+  <expand macro="requirements" />
+  <command detect_errors="exit_code"><![CDATA[
+ln -s '$R_scater_qc' R_scater_qc.rds &&
 
-        scater-filter.R -i '$R_scater_qc'
-        				#if $subset_cell_variables:
-        				 	-s '$subset_cell_variables'
-        				#end if
-        				#if $low_cell_thresholds:
-        				 	-l '$low_cell_thresholds'
-        				#end if
-        				#if $n_cells_counts:
-        					 -t '$n_cells_counts'
-        				#end if
-        				#if $min_feature_n_cells_counts:
-        				 	-m '$min_feature_n_cells_counts'
-        				#end if
-        				 	-o '$R_scater_filtered'
-        				#if $cell_filter_matrix:
-        				 	-u '$cell_filter_matrix'
-        				#end if
-        				#if $feature_filter_matrix:
-        				 	-v '$feature_filter_matrix'
-        				#end if
+scater-filter.R -i R_scater_qc.rds -o '$R_scater_filtered'
+#if $subset_cell_variables:
+    -s '$subset_cell_variables'
+#end if
+#if $low_cell_thresholds:
+    -l '$low_cell_thresholds'
+#end if
+#if $high_cell_thresholds:
+    -j '$high_cell_thresholds'
+#end if
+#if $subset_feature_variables:
+    -t '$subset_feature_variables'
+#end if
+#if $low_feature_thresholds:
+    -m '$low_feature_thresholds'
+#end if
+#if $high_feature_thresholds:
+    -n '$high_feature_thresholds'
+#end if
+#if $cells_use:
+    -c '$cells_use'
+#end if
+#if $cells_use:
+    -f '$features_use'
+#end if
+#if $output_selected_cells:
+    -v '$selected_cells'
+#end if
+#if $output_selected_features:
+    -v '$selected_featuers'
+#end if
 
-    ]]></command>
-    <inputs>
-        <param type="data" name="R_scater_qc" format="rdata" help="A serialized SingleCellExperiment object file in RDS format."/>
-        <param type="data" name="subset_cell_variables" format="csv" optional="True" help="Comma-separated parameters to subset on. Any variable available in the colData of the supplied object."/>
-        <param type="data" name="low_cell_thresholds" format="csv" optional="True" help="Comma-separated low cutoffs for the parameters (default is -Inf)."/>
-        <param type="data" name="n_cells_counts" format="csv" optional="True" help="Comma-separated parameters to subset on. Any variable available in the colData of the supplied object."/>
-        <param type="data" name="min_feature_n_cells_counts" format="csv" optional="True" help="Comma-separated low cutoffs for the parameters (default is -Inf)."/>
-         <conditional name="options">
-    		<param label="Use advanced options" name="selection_mode" type="select">
-      			<option selected="true" value="defaults">Use default options</option>
-     			 <option value="advanced">Use advanced options</option>
-   			 </param>
-    		<when value="defaults"> </when>
-    		<when value="advanced">
-      			<param name="cell_filter_output" type="boolean" checked="false" label="cell filter matrix output"
-        		truevalue="--output-cellselect-file" falsevalue="" />
-        		<param name="feature_output" type="boolean" checked="false" label="feature matrix output"
-        		truevalue="--output-featureselect-file" falsevalue="" />
-   			 </when>
-  		</conditional>
-    </inputs>
-    <outputs>
-        <data name="R_scater_filtered" format="rdata" />
-        <data name="cell_filter_matrix" format="txt" >
-        <filter>options['selection_mode'] == 'advanced' and options['cell_filter_output']</filter>
-        </data>
-        <data name="feature_filter_matrix" format="txt" >
-        <filter>options['selection_mode'] == 'advanced' and options['feature_output']</filter>
-        </data>
-    </outputs>
-    <tests>
-        <test>
-            <param name="R_scater_qc" value="R_scater_qc.rds" />
-            <output name="R_scater_filtered" file="R_scater_filtered.rds" />
-        </test>
-    </tests>
-    <help><![CDATA[
+  ]]></command>
+
+  <inputs>
+    <param name="R_scater_qc" type="data" format="rdata"
+           help="A serialized SingleCellExperiment object file in RDS format."/>
+
+    <param name="subset_cell_variables" argument="--subset-cell-variables" type="text" optional="true"
+           label="Name of cell variables to filter (e.g. 'total_counts,total_features_by_counts')"
+           help="Comma-separated parameters to subset on. Any variable available in the colData of the supplied object.">
+      <option value="total_counts">total_counts</option>
+      <option value="total_features_by_counts">total_features_by_counts</option>
+    </param>
+
+    <param name="low_cell_thresholds" argument="--low-cell-thresholds" type="text" optional="true"
+           label="Lower limits for the cell variable (e.g. '1000,200')"
+           help="Comma-separated low cutoffs for the parameters (default is -Inf)."/>
+
+    <param name="high_cell_thresholds" argument="--high-cell-thresholds" type="text" optional="true"
+           label="Upper limits for the cell variable (e.g. 'Inf,Inf)"
+           help="Comma-separated high cutoffs for the parameters (default is Inf)."/>
+
+    <param name="subset_feature_variables" argument="--subset-feature-variables" type="text" optional="true"
+           label="Name of feature variable to filter (e.g. 'total_counts,n_cells_by_counts')"
+           help="Comma-separated parameters to subset on. Any variable available in the rowData of the supplied object.">
+      <option value="total_counts">total_counts</option>
+      <option value="n_cells_by_counts">n_cells_by_counts</option>
+    </param>
+
+    <param name="low_feature_thresholds" argument="--low-feature-thresholds" type="text" optional="true"
+           label="Lower limits for the feature variable (e.g. '0,3')"
+           help="Comma-separated low cutoffs for the parameters (default is -Inf)."/>
+
+    <param name="high_feature_thresholds" argument="--high-feature-thresholds" type="text" optional="true"
+           label="Upper limits for the feature variable (e.g. 'Inf,Inf')"
+           help="Comma-separated high cutoffs for the parameters (default is Inf)."/>
+
+    <param name="cells_use" argument="--cells-use" type="data" format="txt" optional="true"
+           label="List of cells to include"
+           help="Text file with one cell per line providing cell names to use as a subset."/>
+
+    <param name="features_use" argument="--features-use" type="data" format="txt" optional="true"
+           label="List of features to include"
+           help="Text file with one features per line providing feature names to use as a subset."/>
+
+    <param name="output_selected_cells" label="Output lists of pass-filter cells" type="boolean" checked="false"/>
+
+    <param name="output_selected_features" label="Output lists of pass-filter features" type="boolean" checked="false"/>
+
+  </inputs>
+
+  <outputs>
+    <data name="R_scater_filtered" format="rdata" label="${tool.name} on ${on_string}: serialized SingleCellExperiment object"/>
+
+    <data name="selected_cells" format="tsv" label="${tool.name} on ${on_string}: pass-filter cells">
+      <filter>output_selected_cells</filter>
+    </data>
+    <data name="selected_featuers" format="tsv" label="${tool.name} on ${on_string}: pass-filter features">
+      <filter>output_selected_features</filter>
+    </data>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="R_scater_qc" value="R_scater_qc.rds"/>
+      <output name="R_scater_filtered" file="R_scater_filtered.rds"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
 @HELP@
-    ]]></help>
-    <expand macro="citations" />
+  ]]></help>
+  <expand macro="citations" />
 </tool>
