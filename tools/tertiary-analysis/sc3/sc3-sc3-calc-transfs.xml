@@ -1,39 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="sc3-sc3-calc-transfs" name="SC3 calculate transformations" version="@TOOL_VERSION@+galaxy0">
-    <description>Calculate CPM from serialized scater R object</description>
-    <macros>
-        <import>sc3-macros.xml</import>
-    </macros>
-    <expand macro="requirements" />
-    <command detect_errors="exit_code"><![CDATA[
+<tool id="sc3-sc3-calc-transfs" name="SC3 Calculate Transformations" version="@TOOL_VERSION@+galaxy0">
+  <description>of distances using PCA and graph Laplacian</description>
+  <macros>
+    <import>sc3-macros.xml</import>
+  </macros>
+  <expand macro="requirements" />
+  <command detect_errors="exit_code"><![CDATA[
+ln -s '${sc3_distances}' sc3_distances.rds &&
 
-ln -s '${sc3_distances}' sc3_distances.rdata && 
-        sc3-sc3-calc-transfs.R -i sc3_distances.rdata -o '${sc3_transformed}'
-   
-    ]]></command>
-    <inputs>
-        <param type="data" name="sc3_distances" format="rdata" label="SC3 object with cluster distances calculated"/>
-    </inputs>
-    <outputs>
-        <data name="sc3_transformed" format="rdata" from_work_dir="sc3_transformed.rdata" label="${tool.name} on ${on_string}: SC3 transforming distances"/>
-    </outputs>
-    <tests>
-        <test>
-            <param name="sc3_distances" value="sc3_distances.rdata"/>
-            <output name="sc3_transformed" file="sc3_transformed.rdata"/>
-        </test>
-    </tests>
-    <help><![CDATA[
-    
-    ============================================================
-    This function transforms all distances items of the sc3 slot of the metadata(object) using either principal component analysis (PCA) or 
-    by calculating the eigenvectors of the associated graph Laplacian. 
-    ============================================================
-    The columns of the resulting matrices are then sorted in descending order by their corresponding eigenvalues. 
-    The first d columns (where d = max(metadata(object)$sc3$n_dim)) of each transformation are then written to 
-    the transformations item of the sc3 slot. Additionally, this function also removes the previously calculated 
-    distances from the sc3 slot, as they are not needed for further analysis. 
+sc3-sc3-calc-transfs.R -i sc3_distances.rds -o '${sc3_transformed}'
+  ]]></command>
 
+  <inputs>
+    <param name="sc3_distances" type="data" format="rdata" label="Serialised sc3 SingleCellExperiment object with distances calculated"/>
+  </inputs>
+
+  <outputs>
+    <data name="sc3_transformed" format="rdata" label="${tool.name} on ${on_string}: serialised sc3 SingleCellExperiment object with transformed distances"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="sc3_distances" value="sc3_distances.rdata"/>
+      <output name="sc3_transformed" file="sc3_transformed.rdata"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+==============================================
+This function calculate transformed distances.
+==============================================
+
+All items of the sc3 slot of the metadata(object) are transformed using either
+principal component analysis (PCA) or by calculating the eigenvectors of the
+associated graph Laplacian. The columns of the resulting matrices are then
+sorted in descending order by their corresponding eigenvalues. The first d
+columns (where d = max(metadata(object)$sc3$n_dim)) of each transformation are
+then written to the transformations item of the sc3 slot. Additionally, this
+function also removes the previously calculated distances from the sc3 slot, as
+they are not needed for further analysis.
+
+@HELP@
     ]]></help>
     <expand macro="citations" />
 </tool>
