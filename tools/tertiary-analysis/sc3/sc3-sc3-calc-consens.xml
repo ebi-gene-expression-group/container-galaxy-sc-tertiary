@@ -1,38 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="sc3-sc3-calc-consens" name="SC3 calculate consensus" version="@TOOL_VERSION@+galaxy0">
-    <description>Calculate consensus K-means clustering</description>
-    <macros>
-        <import>sc3-macros.xml</import>
-    </macros>
-    <expand macro="requirements" />
-    <command detect_errors="exit_code"><![CDATA[
+<tool id="sc3-sc3-calc-consens" name="SC3 Calculate Consensus" version="@TOOL_VERSION@+galaxy0">
+  <description>from multiple runs of k-means clustering</description>
+  <macros>
+    <import>sc3-macros.xml</import>
+  </macros>
+  <expand macro="requirements" />
+  <command detect_errors="exit_code"><![CDATA[
+ln -s '${sc3_kmeans}' sc3_kmeans.rds &&
 
-ln -s '${sc3_kmeans}' sc3_kmeans.rdata && 
-        sc3-sc3-calc-consens.R -i sc3_kmeans.rdata -d "$input1" -o '${sc3_consensus}'
-   
-    ]]></command>
-    <inputs>
-        <param type="data" name="sc3_kmeans" format="rdata" label="SC3 object with stored kmeans clustering"/>
-        <param type="data" name="input1" format="txt" label="An output directory in which to write clusters and marker genes"/>
-    </inputs>
-    <outputs>
-        <data name="sc3_consensus" format="rdata" label="${tool.name} on ${on_string}: SC3 storing consensus matrix."/>
-    </outputs>
-    <tests>
-        <test>
-            <param name="sc3_kmeans" value="sc3_kmeans.rdata"/>
-            <param name="input1" value="directory_store_data"/>
-            <output name="sc3_consensus" file="sc3_consensus.rdata"/>
-        </test>
-    </tests>
-    <help><![CDATA[
-    
-    ============================================================
-    This function calculates consensus matrices based on the clustering solutions contained in the kmeans item of the sc3 slot of the metadata(object). 
-    ============================================================
-    It then creates and populates the consensus item of the sc3 slot with consensus matrices, their hierarchical clusterings in hclust objects, and Silhouette 
-    indeces of the clusters. It also removes the previously calculated kmeans clusterings from the sc3 slot, as they are not needed for further analysis.
-    
-    ]]></help>
-    <expand macro="citations" />
+sc3-sc3-calc-consens.R -i sc3_kmeans.rds -t '${clusters}' -o '${sc3_consensus}'
+]]></command>
+
+  <inputs>
+    <param name="sc3_kmeans" type="data" format="rdata" label="Serialised sc3 SingleCellExperiment object with stored kmeans clustering"/>
+  </inputs>
+
+  <outputs>
+    <data name="clusters" format="csv" label="${tool.name} on ${on_string}: text table storing consensus clustering"/>
+    <data name="sc3_consensus" format="rdata" label="${tool.name} on ${on_string}: serialised sc3 SingleCellExperiment with consensus matrix."/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="sc3_kmeans" value="sc3_kmeans.rds"/>
+      <output name="clusters" value="consensus_clusters.txt"/>
+      <output name="sc3_consensus" file="sc3_consensus.rds"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+==============================================
+This function calculates consensus clustering.
+==============================================
+
+Calculate consensus matrices based on the clustering solutions contained in the
+kmeans item of the sc3 slot of the metadata(object). It then creates and
+populates the consensus item of the sc3 slot with consensus matrices, their
+hierarchical clusterings in hclust objects, and Silhouette indeces of the
+clusters. It also removes the previously calculated kmeans clusterings from the
+sc3 slot, as they are not needed for further analysis.
+
+@HELP@
+]]></help>
+  <expand macro="citations"/>
 </tool>
