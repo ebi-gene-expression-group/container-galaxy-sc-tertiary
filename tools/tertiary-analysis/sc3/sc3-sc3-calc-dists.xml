@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="sc3-sc3-calc-dists" name="SC3 calculate distances" version="@TOOL_VERSION@+galaxy0">
-    <description>Calculate distances between cells</description>
-    <macros>
-        <import>sc3-macros.xml</import>
-    </macros>
-    <expand macro="requirements" />
-    <command detect_errors="exit_code"><![CDATA[
-ln -s '${sc3_prepared}' sc3_prepared.rdata && 
-        sc3-sc3-calc-dists.R -i sc3_prepared.rdata -o '${sc3_distances}'
-    
-    ]]></command>
-    <inputs>
-        <param type="data" name="sc3_prepared" format="rdata" label="File name in which a serialized R SingleCellExperiment object where object matrix found"/>
-    </inputs>
-    <outputs>
-        <data name="sc3_distances" format="rdata" label="${tool.name} on ${on_string}: SC3 calculating distances"/>
-    </outputs>
-    <tests>
-        <test>
-            <param name="sc3_prepared" value="sc3_prepared.rdata"/>
-            <output name="sc3_distances" file="sc3_distances.rdata"/>
-        </test>
-    </tests>
-    <help><![CDATA[
-    ============================================================
-    This function calculates distances between the cells. 
-    ============================================================
-    It creates and populates the following items of the sc3 slot of the metadata(object):
-    distances - contains a list of distance matrices corresponding to Euclidean, Pearson and Spearman distances.
+<tool id="sc3-sc3-calc-dists" name="SC3 Calculate Distances" version="@TOOL_VERSION@+galaxy0">
+  <description>between cells</description>
+  <macros>
+    <import>sc3-macros.xml</import>
+  </macros>
+  <expand macro="requirements" />
+  <command detect_errors="exit_code"><![CDATA[
+ln -s '${sc3_prepared}' sc3_prepared.rds &&
 
-    ]]></help>
-    <expand macro="citations" />
+sc3-sc3-calc-dists.R -i sc3_prepared.rds -o '${sc3_distances}'
+  ]]></command>
+
+  <inputs>
+    <param name="sc3_prepared" type="data" format="rdata" label="Serialised sc3 SingleCellExperiment object"/>
+  </inputs>
+
+  <outputs>
+    <data name="sc3_distances" format="rdata" label="${tool.name} on ${on_string}: serialised sc3 SingleCellExperiment with calculated distances"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="sc3_prepared" value="sc3_prepared.rdata"/>
+      <output name="sc3_distances" file="sc3_distances.rdata"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+=====================================================
+This function calculates distances between the cells.
+=====================================================
+
+It creates and populates the following items of the sc3 slot of the metadata(object):
+- distances: contains a list of distance matrices corresponding to Euclidean, Pearson and Spearman distances.
+
+@HELP@
+  ]]></help>
+  <expand macro="citations" />
 </tool>
