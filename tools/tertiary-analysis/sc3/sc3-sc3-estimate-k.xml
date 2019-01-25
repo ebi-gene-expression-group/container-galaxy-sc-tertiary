@@ -1,37 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="sc3-sc3-estimate-k" name="SC3 estimate k" version="@TOOL_VERSION@+galaxy0">
-    <description>Estimate the best K for clustering</description>
-    <macros>
-        <import>sc3-macros.xml</import>
-    </macros>
-    <expand macro="requirements" />
-    <command detect_errors="exit_code"><![CDATA[
+<tool id="sc3-sc3-estimate-k" name="SC3 Estimate" version="@TOOL_VERSION@+galaxy0">
+  <description>the number of clusters for k-means clustering</description>
+  <macros>
+    <import>sc3-macros.xml</import>
+  </macros>
+  <expand macro="requirements" />
+  <command detect_errors="exit_code"><![CDATA[
+ln -s '${sc3_prepared}' sc3_prepared.rds &&
 
-ln -s '${sc3_prepared}' sc3_prepared.rdata && 
-        sc3-sc3-estimate-k.R -i sc3_prepared.rdata -t "$output1" -o '${sc3_prepared}' 
-    
-    ]]></command>
-    <inputs>
-        <param type="data" name="sc3_prepared" format="rdata" label="File name of a prepared SC3 object"/>
-    </inputs>
-    <outputs>
-        <data name="output1" format="txt" label="${tool.name} on ${on_string}: Storing K value"/>
-    </outputs>
-    <tests>
-        <test>
-            <param name="sc3_prepared" value="sc3_prepared.rdata"/>
-            <output name="output1" file="sc3-estimated-k.txt"/>
-        </test>
-    </tests>
-    <help><![CDATA[
+sc3-sc3-estimate-k.R -i sc3_prepared.rds -t '${sc3_estimated_k}' -o sc3_estimated.rds &&
 
-============================================================
-Uses Tracy-Widom theory on random matrices to estimate the optimal number of clusters k. 
-============================================================
+echo -n "estimated k = " && cat ${sc3_estimated_k}
+  ]]></command>
+
+  <inputs>
+    <param type="data" name="sc3_prepared" format="rdata" label="Serialised sc3 SingleCellExperiment object"/>
+  </inputs>
+
+  <outputs>
+    <data name="sc3_estimated_k" format="txt" label="${tool.name} on ${on_string}: txt file containting estimated K value"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="sc3_prepared" value="sc3_prepared.rds"/>
+      <output name="sc3_estimated_k" file="sc3-estimated-k.txt"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+========================================================================================
+Uses Tracy-Widom theory on random matrices to estimate the optimal number of clusters k.
+========================================================================================
+
 It creates and populates the k_estimation item of the sc3 slot of the metadata(object).
 
 @HELP@
-
-    ]]></help>
-    <expand macro="citations" />
+  ]]></help>
+  <expand macro="citations" />
 </tool>
