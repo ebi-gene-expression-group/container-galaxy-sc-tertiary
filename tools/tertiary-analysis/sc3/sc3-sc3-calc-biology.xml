@@ -1,33 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="sc3-sc3-calc-biology" name="SC3 calculate biology" version="@TOOL_VERSION@+galaxy0">
-    <description>SC3 calculates biologically relevant clusters</description>
-    <macros>
-        <import>sc3-macros.xml</import>
-    </macros>
-    <expand macro="requirements" />
-    <command detect_errors="exit_code"><![CDATA[
+<tool id="sc3-sc3-calc-biology" name="SC3 DiffExp" version="@TOOL_VERSION@+galaxy0">
+  <description>calculates DE genes, marker genes and cell outliers</description>
+  <macros>
+    <import>sc3-macros.xml</import>
+  </macros>
+  <expand macro="requirements" />
+  <command detect_errors="exit_code"><![CDATA[
+ln -s '${sc3_consensus}' sc3_consensus.rds &&
 
-ln -s '${sc3_consensus}' sc3_consensus.rdata && 
-        sc3-sc3-calc-biology.R -i sc3_consensus.rdata -o '${sc3_biology_markers}'s
-    
-    ]]></command>
-    <inputs>
-        <param type="data" name="sc3_consensus" format="rdata" label="SC3 object with stored consensus kmeans clustering"/>
-    </inputs>
-    <outputs>
-        <data name="sc3_biology_markers" format="rdata" label="${tool.name} on ${on_string}:  SC3 storing the DE markers"/>
-    </outputs>
-    <tests>
-        <test>
-            <param name="sc3_consensus" value="sc3_consensus.rdata"/>
-            <output name="sc3_biology_markers" file="sc3_biology_markers.rdata"/>
-        </test>
-    </tests>
-    <help><![CDATA[
-    ============================================================
-    This function calculates differentially expressed (DE) genes, marker genes and cell outliers based on the consensus SC3 clusterings. 
-    ============================================================
-    
-    ]]></help>
-    <expand macro="citations" />
+sc3-sc3-calc-biology.R -i sc3_consensus.rds -o '${sc3_biology_markers}'
+]]></command>
+
+  <inputs>
+    <param name="sc3_consensus" type="data" format="rdata" label="Serialised sc3 SingleCellExperiment object with stored consensus kmeans clustering"/>
+  </inputs>
+
+  <outputs>
+    <data name="sc3_biology_markers" format="rdata" label="${tool.name} on ${on_string}: serialised sc3 SingleCellExperiment storing the DE markers"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="sc3_consensus" value="sc3_consensus.rds"/>
+      <output name="sc3_biology_markers" file="sc3_biology_markers.rds"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+========================================================
+This function performs differential expression analysis.
+========================================================
+
+Calculate differentially expressed (DE) genes, marker genes and cell outliers
+based on the consensus SC3 clusterings.
+
+@HELP@
+  ]]></help>
+  <expand macro="citations" />
 </tool>
