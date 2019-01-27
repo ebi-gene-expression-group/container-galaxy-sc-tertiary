@@ -8,23 +8,21 @@
 ln -s '$R_scater_qc' R_scater_qc.rds &&
 
 scater-filter.R -i R_scater_qc.rds -o '$R_scater_filtered'
-#if $subset_cell_variables:
-    -s '$subset_cell_variables'
+#if $cell_parameters
+    #set cell_pars = ','.join([str($p['name']) for $p in $cell_parameters])
+    -s '${cell_pars}'
+    #set cell_mins = ','.join([str($p['min']) for $p in $cell_parameters])
+    -l '${cell_mins}'
+    #set maxs = ','.join([str($p['max']) for $p in $cell_parameters])
+    -j '${cell_maxs}'
 #end if
-#if $low_cell_thresholds:
-    -l '$low_cell_thresholds'
-#end if
-#if $high_cell_thresholds:
-    -j '$high_cell_thresholds'
-#end if
-#if $subset_feature_variables:
-    -t '$subset_feature_variables'
-#end if
-#if $low_feature_thresholds:
-    -m '$low_feature_thresholds'
-#end if
-#if $high_feature_thresholds:
-    -n '$high_feature_thresholds'
+#if $feature_parameters
+    #set ft_pars = ','.join([str($p['name']) for $p in $feature_parameters])
+    -t '${ft_pars}'
+    #set ft_mins = ','.join([str($p['min']) for $p in $feature_parameters])
+    -m '${ft_mins}'
+    #set ft_maxs = ','.join([str($p['max']) for $p in $feature_parameters])
+    -n '${ft_maxs}'
 #end if
 #if $cells_use:
     -c '$cells_use'
@@ -48,46 +46,34 @@ scater-filter.R -i R_scater_qc.rds -o '$R_scater_filtered'
     <param name="R_scater_qc" type="data" format="rdata"
            help="A serialized SingleCellExperiment object file in RDS format."/>
 
-    <param name="subset_cell_variables" argument="--subset-cell-variables" type="text" optional="true"
-           label="Name of cell variables to filter (e.g. 'total_counts,total_features_by_counts')"
-           help="Comma-separated parameters to subset on. Any variable available in the colData of the supplied object.">
-      <option value="total_counts">total_counts</option>
-      <option value="total_features_by_counts">total_features_by_counts</option>
-    </param>
+    <repeat name="cell_parameters" title="Parameters used to filter cells" min="0">
+      <param name="name" type="text" value="total_features_by_counts" label="Name of the parameter to filter on" help="for example: total_features_by_counts, total_counts">
+        <option value="total_features_by_counts">total_features_by_counts</option>
+        <option value="total_counts">total_counts</option>
+      </param>
+      <param name="min" type="float" value="-1e9" label="Min value"/>
+      <param name="max" type="float" value="1e9" label="Max value"/>
+    </repeat>
 
-    <param name="low_cell_thresholds" argument="--low-cell-thresholds" type="text" optional="true"
-           label="Lower limits for the cell variable (e.g. '1000,200')"
-           help="Comma-separated low cutoffs for the parameters (default is -Inf)."/>
-
-    <param name="high_cell_thresholds" argument="--high-cell-thresholds" type="text" optional="true"
-           label="Upper limits for the cell variable (e.g. 'Inf,Inf)"
-           help="Comma-separated high cutoffs for the parameters (default is Inf)."/>
-
-    <param name="subset_feature_variables" argument="--subset-feature-variables" type="text" optional="true"
-           label="Name of feature variable to filter (e.g. 'total_counts,n_cells_by_counts')"
-           help="Comma-separated parameters to subset on. Any variable available in the rowData of the supplied object.">
-      <option value="total_counts">total_counts</option>
-      <option value="n_cells_by_counts">n_cells_by_counts</option>
-    </param>
-
-    <param name="low_feature_thresholds" argument="--low-feature-thresholds" type="text" optional="true"
-           label="Lower limits for the feature variable (e.g. '0,3')"
-           help="Comma-separated low cutoffs for the parameters (default is -Inf)."/>
-
-    <param name="high_feature_thresholds" argument="--high-feature-thresholds" type="text" optional="true"
-           label="Upper limits for the feature variable (e.g. 'Inf,Inf')"
-           help="Comma-separated high cutoffs for the parameters (default is Inf)."/>
+    <repeat name="feature_parameters" title="Parameters used to filter features" min="0">
+      <param name="name" type="text" value="n_cells_by_counts" label="Name of the parameter to filter on" help="for example: n_cells_by_counts, total_counts">
+        <option value="n_cells_by_counts">n_cells_by_counts</option>
+        <option value="total_counts">total_counts</option>
+      </param>
+      <param name="min" type="float" value="-1e9" label="Min value"/>
+      <param name="max" type="float" value="1e9" label="Max value"/>
+    </repeat>
 
     <param name="cells_use" argument="--cells-use" type="data" format="txt" optional="true"
-           label="List of cells to include"
+           label="List of cells to include (optional)"
            help="Text file with one cell per line providing cell names to use as a subset."/>
 
     <param name="cells_discard" argument="--cells-discard" type="data" format="txt" optional="true"
-           label="List of cells to exclude"
+           label="List of cells to exclude (optional)"
            help="Text file with one cell per line providing cell names to discard as a subset."/>
 
     <param name="features_use" argument="--features-use" type="data" format="txt" optional="true"
-           label="List of features to include"
+           label="List of features to include (optional)"
            help="Text file with one features per line providing feature names to use as a subset."/>
 
     <param name="output_selected_cells" label="Output lists of pass-filter cells" type="boolean" checked="false"/>
