@@ -6,10 +6,8 @@
   </macros>
   <expand macro="requirements" />
   <command detect_errors="exit_code"><![CDATA[
-ln -s '${sc3_consensus}' sc3_consensus.rds &&
-
-sc3-sc3-calc-biology.R -i sc3_consensus.rds -o '${sc3_biology_markers}'
-]]></command>
+sc3-sc3-calc-biology.R -i '${sc3_consensus}' -o '${sc3_biology_markers}'
+  ]]></command>
 
   <inputs>
     <param name="sc3_consensus" type="data" format="rdata" label="Serialised sc3 SingleCellExperiment object with stored consensus kmeans clustering"/>

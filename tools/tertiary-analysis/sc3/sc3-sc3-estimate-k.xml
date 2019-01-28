@@ -6,9 +6,7 @@
   </macros>
   <expand macro="requirements" />
   <command detect_errors="exit_code"><![CDATA[
-ln -s '${sc3_prepared}' sc3_prepared.rds &&
-
-sc3-sc3-estimate-k.R -i sc3_prepared.rds -t '${sc3_estimated_k}' -o sc3_estimated.rds &&
+sc3-sc3-estimate-k.R -i '${sc3_prepared}' -t '${sc3_estimated_k}' -o sc3_estimated.rds &&
 
 echo -n "estimated k = " && cat ${sc3_estimated_k}
   ]]></command>
