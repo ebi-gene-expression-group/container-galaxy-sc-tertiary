@@ -5,9 +5,7 @@
   </macros>
   <expand macro="requirements" />
   <command detect_errors="exit_code"><![CDATA[
-ln -s '$R_scater_qc' input.rds &&
-
-scater-extract-qc-metric.R -i input.rds -m '$metrics' -o metrics.csv &&
+scater-extract-qc-metric.R -i '${R_scater_qc}' -m '$metrics' -o metrics.csv &&
 
 scater-is-outlier.R -m metrics.csv
 #if $nmads:

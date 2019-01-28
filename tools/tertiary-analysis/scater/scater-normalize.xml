@@ -5,9 +5,7 @@
   </macros>
   <expand macro="requirements" />
   <command detect_errors="exit_code"><![CDATA[
-ln -s '$R_scater_qc' R_scater_qc.rds &&
-
-scater-normalize.R -i R_scater_qc.rds
+scater-normalize.R -i '${R_scater_qc}'
 #if $exprs_value:
     --exprs-values '$exprs_value'
 #end if

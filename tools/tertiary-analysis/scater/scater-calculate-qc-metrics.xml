@@ -5,7 +5,6 @@
   </macros>
   <expand macro="requirements" />
   <command detect_errors="exit_code"><![CDATA[
-ln -s '$R_scater_serialized' R_scater_serialized.rds &&
 scater-calculate-qc-metrics.R -i '$R_scater_serialized'
 #if $exprs_values:
     -e '$exprs_values'

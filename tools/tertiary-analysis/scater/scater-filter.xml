@@ -5,9 +5,7 @@
   </macros>
   <expand macro="requirements" />
   <command detect_errors="exit_code"><![CDATA[
-ln -s '$R_scater_qc' R_scater_qc.rds &&
-
-scater-filter.R -i R_scater_qc.rds -o '$R_scater_filtered'
+scater-filter.R -i '${R_scater_qc}' -o '$R_scater_filtered'
 #if $cell_parameters
     #set cell_pars = ','.join([str($p['name']) for $p in $cell_parameters])
     -s '${cell_pars}'
