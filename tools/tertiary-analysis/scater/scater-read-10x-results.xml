@@ -1,4 +1,4 @@
-<tool id="scater-read-10x-results" name="Scater read 10x data" version="1.6.0+galaxy1">
+<tool id="scater-read-10x-results" name="Scater read 10x data" version="@TOOL_VERSION@+galaxy0">
     <description>Loads 10x data into a serialized scater R object</description>
     <macros>
         <import>scater_macros.xml</import>
@@ -28,20 +28,7 @@
         </test>
     </tests>
     <help><![CDATA[
-        Usage: scater-read-10x-results.R [options]
-
-
-Options:
-	-d DATA-DIR, --data-dir=DATA-DIR
-
-
-	-o OUTPUT-OBJECT-FILE, --output-object-file=OUTPUT-OBJECT-FILE
-		File name in which to store serialized R matrix object.
-
-	-h, --help
-		Show this help message and exit
-
-
+@HELP@
     ]]></help>
     <expand macro="citations" />
 </tool>

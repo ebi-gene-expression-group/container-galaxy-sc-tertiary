@@ -59,12 +59,11 @@
     <tool file="tertiary-analysis/seurat/seurat_scale_data.xml"/>
   </section>
   <section name="Scater" id="scater-tools">
-    <tool file="tertiary-analysis/scater/scater-read-10x-results.xml"  labels="I/O"/>
     <tool file="tertiary-analysis/scater/scater-calculate-cpm.xml"/>
-    <tool file="tertiary-analysis/scater/scater-calculate-qc-metrics.xml"/>
-    <tool file="tertiary-analysis/scater/scater-filter.xml"/>
     <tool file="tertiary-analysis/scater/scater-normalize.xml"/>
+    <tool file="tertiary-analysis/scater/scater-calculate-qc-metrics.xml"/>
     <tool file="tertiary-analysis/scater/scater-is-outlier.xml"/>
+    <tool file="tertiary-analysis/scater/scater-filter.xml"/>
   </section>
    <section name="SC3" id="SC3-tools">
     <tool file="tertiary-analysis/sc3/sc3-sc3-calc-biology.xml"  labels="I/O"/>
