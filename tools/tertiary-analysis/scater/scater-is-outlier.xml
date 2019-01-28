@@ -1,5 +1,5 @@
-<tool id="scater-is-outlier" name="Scater outlier detection" version="@TOOL_VERSION@+galaxy0">
-  <description>from expression quantification</description>
+<tool id="scater-is-outlier" name="Scater DetectOutlier" version="@TOOL_VERSION@+galaxy0">
+  <description>cells based on expression metrics</description>
   <macros>
     <import>scater_macros.xml</import>
   </macros>
