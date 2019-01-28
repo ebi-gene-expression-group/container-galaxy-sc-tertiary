@@ -6,19 +6,13 @@
   </macros>
   <expand macro="requirements" />
   <command detect_errors="exit_code"><![CDATA[
-ln -s '${sc3_transformed}' sc3_transformed.rds &&
-
+sc3-sc3-kmeans.R -i '${sc3_transformed}'
 #if $choose.method == "file":
-ln -s '${sc3_estimated_k}' sc3_estimated_k.txt &&
-#end if
-
-sc3-sc3-kmeans.R -i sc3_transformed.rds
-#if $choose.method == "file":
--k sc3_estimated_k.txt
+    -k '${choose.sc3_estimated_k}'
 #else
--k ${choose.input_k}
+    -k '${choose.input_k}'
 #end if
--o '${sc3_kmeans}'
+    -o '${sc3_kmeans}'
 ]]></command>
 
   <inputs>
