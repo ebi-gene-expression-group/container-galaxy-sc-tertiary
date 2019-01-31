@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="sc3-prepare" name="SC3 Prepare" version="@TOOL_VERSION@+galaxy0">
+  <description>a sc3 SingleCellExperiment object</description>
+  <macros>
+    <import>sc3-macros.xml</import>
+  </macros>
+  <expand macro="requirements" />
+  <command detect_errors="exit_code"><![CDATA[
+sc3-sc3-prepare.R -i '${scater_log}' -o '${sc3_prepared}'
+  ]]></command>
+
+  <inputs>
+    <param name="scater_log" type="data" format="rdata" label="Serialised SingleCellExperiment object normalised by scater"/>
+  </inputs>
+
+  <outputs>
+    <data name="sc3_prepared" format="rdata" label="${tool.name} on ${on_string}: serialised sc3 SingleCellExperiment object"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="scater_log" value="scater_log.rdata"/>
+      <output name="sc3_prepared" file="sc3_prepared.rdata"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+
+==================================================================================
+This function prepares an object of SingleCellExperiment class for SC3 clustering.
+==================================================================================
+It creates and populates the following items of the sc3 slot of the metadata(object):
+
+- kmeans_iter_max: the same as the kmeans_iter_max argument.
+- kmeans_nstart: the same as the kmeans_nstart argument.
+- n_dim: contains numbers of the number of eigenvectors to be used in kmeans clustering.
+- rand_seed: the same as the rand_seed argument.
+- svm_train_inds: if SVM is used this item contains indexes of the training cells to be used for SC3 clustering and further SVM prediction.
+- svm_study_inds: if SVM is used this item contains indexes of the cells to be predicted by SVM.
+- n_cores: the same as the n_cores argument.
+
+@HELP@
+]]></help>
+   <expand macro="citations" />
+</tool>

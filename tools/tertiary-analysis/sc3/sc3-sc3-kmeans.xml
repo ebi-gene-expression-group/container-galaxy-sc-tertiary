@@ -1,48 +1,61 @@
-<tool id="sc3-sc3-kmeans" name="SC3 kmeans" version="0.1.0">
-    <description>Perform k-Means clustering on cells</description>
-    <macros>
-        <import>macros.xml</import>
-    </macros>
-    <expand macro="requirements" />
-    <command detect_errors="exit_code"><![CDATA[
-        sc3-sc3-kmeans.R -i $input1.rds -k "$input2" -o "$output1" 
-    ]]></command>
-    <inputs>
-        <param type="data" name="input1" format="" />
-        <param type="data" name="input2" format="" />
-    </inputs>
-    <outputs>
-        <data name="output1" format="rds" />
-    </outputs>
-    <tests>
-        <test>
-            <param name="input1" value="R_sc3_distance"/>
-            <param name="input2" value="K_size"/>
-            <output name="output1" file="R_sc3_kmeans.rds"/>
-        </test>
-    </tests>
-    <help><![CDATA[
-        Usage: /Users/ct5/anaconda3/envs/galaxy/bin/sc3-sc3-kmeans.R [options]
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="sc3-sc3-kmeans" name="SC3 K-Means" version="@TOOL_VERSION@+galaxy0">
+  <description>perform k-means clustering</description>
+  <macros>
+    <import>sc3-macros.xml</import>
+  </macros>
+  <expand macro="requirements" />
+  <command detect_errors="exit_code"><![CDATA[
+sc3-sc3-kmeans.R -i '${sc3_transformed}'
+#if $choose.method == "file":
+    -k '${choose.sc3_estimated_k}'
+#else
+    -k '${choose.input_k}'
+#end if
+    -o '${sc3_kmeans}'
+]]></command>
 
+  <inputs>
+    <param name="sc3_transformed" type="data" format="rdata" label="Serialised sc3 SingleCellExperiment object with transformed distances"/>
 
-Options:
-	-i INPUT-OBJECT-FILE, --input-object-file=INPUT-OBJECT-FILE
-		File name in which a transformed SC3 'SingleCellExperiment' object has been stored after processed with sc3_calc_transfs()
+    <conditional name="choose">
+      <param name="method" type="select" label="Method to supply K">
+        <option value="input">Enter K as an integer</option>
+        <option value="file">Provide a text file containing K</option>
+      </param>
+      <when value="input">
+        <param name="input_k" type="integer" value="0" label="Integer K as the number of clusters for kmeans"/>
+      </when>
+      <when value="file">
+        <param name="sc3_estimated_k" type="data" format="txt" label="Text file containing estimated K"/>
+      </when>
+    </conditional>
+  </inputs>
 
-	-k KS, --ks=KS
-		A comma-separated string or single value representing the number of clusters k to be used for SC3 clustering.
+  <outputs>
+    <data name="sc3_kmeans" format="rdata" label="${tool.name} on ${on_string}: serialised sc3 SingleCellExperiment object storing the k-means clusters"/>
+  </outputs>
 
-	-o OUTPUT-OBJECT-FILE, --output-object-file=OUTPUT-OBJECT-FILE
-		File name for R object of type 'SingleCellExperiment' from SC3 in which to store the kmeans clustering as metadata.
+  <tests>
+    <test>
+      <param name="sc3_transformed" value="sc3_transformed.rds"/>
+      <param name="sc3_estimated_k" value="K_size"/>
+      <output name="sc3_kmeans" file="sc3_kmeans.rds"/>
+    </test>
+  </tests>
 
-	-h, --help
-		Show this help message and exit
+  <help><![CDATA[
+=========================================
+This function performs kmeans clustering.
+=========================================
 
+It uses transformed distance matrix contained in the transformations item of the
+sc3 slot of the metadata(object).  It then creates and populates the following
+items of the sc3 slot:
 
-Error in wsc_parse_args(option_list, mandatory = c("input_object_file",  : 
-  Mandatory argment 'input_object_file' not supplied
-Execution halted
+- kmeans: contains a list of kmeans clusterings.
 
-    ]]></help>
-    <expand macro="citations" />
+@HELP@
+]]></help>
+  <expand macro="citations" />
 </tool>
