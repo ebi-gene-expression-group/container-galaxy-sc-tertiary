@@ -59,6 +59,9 @@
     <tool file="tertiary-analysis/seurat/seurat_run_tsne.xml"/>
     <tool file="tertiary-analysis/seurat/seurat_find_markers.xml"/>
   </section>
+  <section name="DropletUtils" id="droputil-tools">
+    <tool file="tertiary-analysis/dropletutils/dropletutils-read-10x.xml"/>
+  </section>
   <section name="Scater" id="scater-tools">
     <tool file="tertiary-analysis/scater/scater-calculate-cpm.xml"/>
     <tool file="tertiary-analysis/scater/scater-normalize.xml"/>
