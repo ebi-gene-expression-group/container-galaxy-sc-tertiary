@@ -1,11 +1,11 @@
-FROM pcm32/galaxy-init:v18.05
+FROM pcm32/galaxy-init:v18.09
 
 MAINTAINER EBI Expression Atlas Team <expression-atlas-team@ebi.ac.uk>
 
-LABEL Description="Galaxy 18.05 - SC Tertiary Analysis"
+LABEL Description="Galaxy 18.09 - SC Tertiary Analysis"
 LABEL software="Galaxy Init"
-LABEL software.version="18.05"
-LABEL version="1.8"
+LABEL software.version="18.09"
+LABEL version="1.9"
 
 RUN virtualenv venv-workflow && \
     /bin/bash -c "source venv-workflow/bin/activate && \

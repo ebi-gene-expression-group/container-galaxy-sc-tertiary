@@ -4,13 +4,13 @@
 init:
   image:
     repository: test/galaxy-sc-tertiary
-    tag: v18.05
+    tag: v18.09
     pullPolicy: IfNotPresent
   force_copy: "__venv__,__config__,__galaxy-central__,__tools__"
 
 image:
   repository: pcm32/galaxy-web-k8s
-  tag: v18.05
+  tag: v18.09
   pullPolicy: Always
 
 admin:

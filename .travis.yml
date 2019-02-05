@@ -40,7 +40,7 @@ before_script:
 
 
 script:
-- sudo docker build -t test/galaxy-sc-tertiary:v18.05 -f Dockerfile_init .
+- sudo docker build -t test/galaxy-sc-tertiary:v18.09 -f Dockerfile_init .
 - kubectl cluster-info
 # for kube-dns
 - kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
