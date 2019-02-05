@@ -1,6 +1,6 @@
 <tool id="ucsc-cell-browser" name="UCSC Cell Browser" version="0.4.23+galaxy0">
   <requirements>
-    <requirement type="package" version="0.4.23">ucsc-cell-browser</requirement>
+    <requirement type="package" version="0.8.0">ucsc-cell-browser</requirement>
   </requirements>
 <stdio>
 <exit_code range="1:" />
@@ -29,28 +29,33 @@ mv "$html_file.extra_files_path"/index.html "$html_file";
 ln -s '$input_rds_file' seurat.rds;
 ls -l seurat.rds;
 mkdir -p '$html_file.extra_files_path';
-#if $input_type.metadata_fields:
-  cbImportSeurat --outDir '$html_file.extra_files_path' --name 'sample' seurat.rds --meta $input_type.metadata_fields;
-  all_metadata_fields='$input_type.metadata_fields';
-#else:
-  all_metadata_fields=\$(Rscript $get_seurat_metadata_fields seurat.rds);
-  cbImportSeurat --outDir '$html_file.extra_files_path' --name 'sample' seurat.rds --meta \$all_metadata_fields;
-#end if
-ls -l '$html_file.extra_files_path';
-clusterField=\$(echo \$all_metadata_fields | awk '{for (i=1;i<=NF;i++){if (\$i ~/res/) {print \$i}}}');
-echo "coords = [ {'file': '$html_file.extra_files_path/tsne.coords.tsv', 'shortLabel': 't-SNE Seurat Processed' }]" > ./cellbrowser.conf;
-echo "name = 'sample'" >> ./cellbrowser.conf;
-echo "clusterField = '"\$clusterField"'" >> ./cellbrowser.conf;
-for field in \$all_metadata_fields; do
-  if [[ \$field == res.* ]] ;
-  then
-    echo "forceEnum = ['"\$field"']" >> ./cellbrowser.conf;
-  fi
-done;
-echo "meta = '$html_file.extra_files_path/meta.tsv'" >> ./cellbrowser.conf;
-echo "exprMatrix = '$html_file.extra_files_path/exprMatrix.tsv'" >> ./cellbrowser.conf;
-echo "geneIdType = 'symbol'" >> ./cellbrowser.conf;
-cbBuild -i ./cellbrowser.conf -o "$html_file.extra_files_path";
+mkdir -p output;
+cbImportSeurat2 -i seurat.rds -o output;
+# For cellbrowser pre 0.4.35
+# #if $input_type.metadata_fields:
+#   cbImportSeurat --outDir '$html_file.extra_files_path' --name 'sample' seurat.rds --meta $input_type.metadata_fields;
+#   all_metadata_fields='$input_type.metadata_fields';
+# #else:
+#   all_metadata_fields=\$(Rscript $get_seurat_metadata_fields seurat.rds);
+#   cbImportSeurat --outDir '$html_file.extra_files_path' --name 'sample' seurat.rds --meta \$all_metadata_fields;
+# #end if
+# ls -l '$html_file.extra_files_path';
+# clusterField=\$(echo \$all_metadata_fields | awk '{for (i=1;i<=NF;i++){if (\$i ~/res/) {print \$i}}}');
+# echo "coords = [ {'file': '$html_file.extra_files_path/tsne.coords.tsv', 'shortLabel': 't-SNE Seurat Processed' }]" > ./cellbrowser.conf;
+# echo "name = 'sample'" >> ./cellbrowser.conf;
+# echo "clusterField = '"\$clusterField"'" >> ./cellbrowser.conf;
+# for field in \$all_metadata_fields; do
+#   if [[ \$field == res.* ]] ;
+#   then
+#     echo "forceEnum = ['"\$field"']" >> ./cellbrowser.conf;
+#   fi
+# done;
+# echo "meta = '$html_file.extra_files_path/meta.tsv'" >> ./cellbrowser.conf;
+# echo "exprMatrix = '$html_file.extra_files_path/exprMatrix.tsv'" >> ./cellbrowser.conf;
+# echo "geneIdType = 'symbol'" >> ./cellbrowser.conf;
+# cbBuild -i ./cellbrowser.conf -o "$html_file.extra_files_path";
+cd output;
+cbBuild -o "$html_file.extra_files_path";
 mv "$html_file.extra_files_path"/index.html "$html_file";
 
 #end if
