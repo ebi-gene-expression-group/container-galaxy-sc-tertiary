@@ -52,7 +52,7 @@ ingress:
 
 
 postgresql:
-  imageTag: "9.6.5_for_18.05"
+  imageTag: "9.6.5_for_18.09"
   persistence:
     subPath: "postgres-tertiary"
 
