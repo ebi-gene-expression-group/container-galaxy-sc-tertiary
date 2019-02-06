@@ -9,7 +9,7 @@ init:
   force_copy: "__venv__,__config__,__galaxy-central__,__tools__"
 
 image:
-  repository: pcm32/galaxy-web-k8s
+  repository: pcm32/galaxy-web
   tag: v18.09
   pullPolicy: Always
 
