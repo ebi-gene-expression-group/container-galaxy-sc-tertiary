@@ -57,6 +57,9 @@ postgresql:
     subPath: "postgres-tertiary"
 
 proftpd:
+  image:
+    tag: for_galaxy_v18.09
+    repository: pcm32/galaxy-proftpd
   service:
     type: NodePort
 
