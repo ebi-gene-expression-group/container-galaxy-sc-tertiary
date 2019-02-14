@@ -1,86 +1,51 @@
-<tool id="ucsc-cell-browser" name="UCSC Cell Browser" version="0.4.23+galaxy0">
+<tool id="ucsc-cell-browser" name="UCSC Cell Browser" version="0.4.38+galaxy0">
   <requirements>
-    <requirement type="package" version="0.8.0">ucsc-cell-browser</requirement>
+    <requirement type="package" version="0.4.38">ucsc-cell-browser</requirement>
   </requirements>
 <stdio>
 <exit_code range="1:" />
 </stdio>
-<description>Runs the UCSC Cell Browser interactively</description>
+<description>displays single-cell clusterized data in an interactive web application.</description>
 <command><![CDATA[
 #if $input_type.expression_source == "native-cell-browser":
 
-echo "coords = [ {'file':'$tsneCoordinates', 'shortLabel':'t-SNE on WGCNA'} ]" > ./cellbrowser.conf;
-echo "meta = '$cellMetadata'" >> ./cellbrowser.conf;
-echo "name = 'sample'" >> ./cellbrowser.conf;
-echo "exprMatrix = '$expressionMatrix'" >> ./cellbrowser.conf;
-echo "geneIdType = 'symbol'" >> ./cellbrowser.conf;
+   echo "coords = [ {'file':'$tsneCoordinates', 'shortLabel':'t-SNE on WGCNA'} ]" > ./cellbrowser.conf;
+   echo "meta = '$cellMetadata'" >> ./cellbrowser.conf;
+   echo "name = 'sample'" >> ./cellbrowser.conf;
+   echo "exprMatrix = '$expressionMatrix'" >> ./cellbrowser.conf;
+   echo "geneIdType = 'symbol'" >> ./cellbrowser.conf;
 
-cbBuild -i cellbrowser.conf -o "$html_file.extra_files_path";
-mv "$html_file.extra_files_path"/index.html "$html_file";
+   cbBuild -i cellbrowser.conf -o "$html_file.extra_files_path";
+   mv "$html_file.extra_files_path"/index.html "$html_file";
+
+#else if $input_type.expression_source == "cell-browser-tar":
+
+   tar -xf '$tarred_sources';
+   cbBuild -i cellbrowser.conf -o "$html_file.extra_files_path";
+   mv "$html_file.extra_files_path"/index.html "$html_file";
 
 #else if $input_type.expression_source == "scanpy":
 
-ln -s '$input_anndata_file' scanpy_ann_data.h5ad;
-cbImportScanpy scanpy_ann_data.h5ad '$html_file.extra_files_path' sample --htmlDir "$html_file.extra_files_path";
-mv "$html_file.extra_files_path"/index.html "$html_file";
-
-#else if $input_type.expression_source == "seurat":
-
-ln -s '$input_rds_file' seurat.rds;
-ls -l seurat.rds;
-mkdir -p '$html_file.extra_files_path';
-mkdir -p output;
-cbImportSeurat2 -i seurat.rds -o output;
-# For cellbrowser pre 0.4.35
-# #if $input_type.metadata_fields:
-#   cbImportSeurat --outDir '$html_file.extra_files_path' --name 'sample' seurat.rds --meta $input_type.metadata_fields;
-#   all_metadata_fields='$input_type.metadata_fields';
-# #else:
-#   all_metadata_fields=\$(Rscript $get_seurat_metadata_fields seurat.rds);
-#   cbImportSeurat --outDir '$html_file.extra_files_path' --name 'sample' seurat.rds --meta \$all_metadata_fields;
-# #end if
-# ls -l '$html_file.extra_files_path';
-# clusterField=\$(echo \$all_metadata_fields | awk '{for (i=1;i<=NF;i++){if (\$i ~/res/) {print \$i}}}');
-# echo "coords = [ {'file': '$html_file.extra_files_path/tsne.coords.tsv', 'shortLabel': 't-SNE Seurat Processed' }]" > ./cellbrowser.conf;
-# echo "name = 'sample'" >> ./cellbrowser.conf;
-# echo "clusterField = '"\$clusterField"'" >> ./cellbrowser.conf;
-# for field in \$all_metadata_fields; do
-#   if [[ \$field == res.* ]] ;
-#   then
-#     echo "forceEnum = ['"\$field"']" >> ./cellbrowser.conf;
-#   fi
-# done;
-# echo "meta = '$html_file.extra_files_path/meta.tsv'" >> ./cellbrowser.conf;
-# echo "exprMatrix = '$html_file.extra_files_path/exprMatrix.tsv'" >> ./cellbrowser.conf;
-# echo "geneIdType = 'symbol'" >> ./cellbrowser.conf;
-# cbBuild -i ./cellbrowser.conf -o "$html_file.extra_files_path";
-cd output;
-cbBuild -o "$html_file.extra_files_path";
-mv "$html_file.extra_files_path"/index.html "$html_file";
+   ln -s '$input_anndata_file' scanpy_ann_data.h5ad;
+   cbImportScanpy -i scanpy_ann_data.h5ad -o outdir -n sample --htmlDir "$html_file.extra_files_path";
+   mv "$html_file.extra_files_path"/index.html "$html_file";
 
 #end if
 ]]></command>
-<configfiles>
-        <configfile name="get_seurat_metadata_fields"><![CDATA[
-#!/usr/bin/env Rscript
-suppressPackageStartupMessages(require(data.table))
-args = commandArgs(trailingOnly=TRUE)
-# Input from serialized R object
-seurat_object <- readRDS(args[1])
-cat(colnames(seurat_object@meta.data))
-]]></configfile>
-    </configfiles>
 <inputs>
   <conditional name="input_type">
     <param type="select" name="expression_source" label="Choose the format of the expression data" help="Use compressed txt, Scanpy or Seurat objects">
       <option value="native-cell-browser" selected="true">CellBrowser tar.gz expression matrix</option>
       <option value="scanpy">Scanpy AnnData HDF5 serialized object</option>
-      <option value="seurat">Seurat R-serialized object</option>
+      <option value="cell-browser-tar">Tar file with CellBrowser files to execute cbBuild</option>
     </param>
     <when value="native-cell-browser">
       <param type="data" name="expressionMatrix" label="Expression matrix" help="Tabular expression matrix (see https://github.com/maximilianh/cellBrowser/tree/master/sampleData)" format="tabular"/>
       <param type="data" name="cellMetadata" label="Cell metadata" help="Tabular file with metadata fields (columns) for each cell (rows)." format="tabular"/>
       <param type="data" name="tsneCoordinates" label="tSNE coordinates" help="Tabular file with tSNE coordinates for each cell." format="tabular"/>
+    </when>
+    <when value="cell-browser-tar">
+      <param name="tarred_sources" type="data" format="tar" label="CellBrowser source files tarred" help="Tar containing CellBrowser config, tsne, umap and other source files for running cbBuild"/>
     </when>
     <when value="scanpy">
       <param name="input_anndata_file" type="data" format="h5" label="Input object in AnnData hdf5 format" help="Scanpy serialized output is by default produced as an AnnData hdf5 file."/>
@@ -126,5 +91,7 @@ Version history
 
 0.4.3+galaxy0: Initial contribution by the Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
 EMBL-EBI https://www.ebi.ac.uk/
+
+0.4.38+galaxy0: Supports Seurat (through a converter) and Scanpy input.
 ]]></help>
 </tool>
