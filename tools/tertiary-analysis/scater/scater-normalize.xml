@@ -14,7 +14,6 @@ scater-normalize.R -i '${R_scater_qc}'
 #end if
     --return-log '$return_log'
     --centre-size-factors '$centre_size_factors'
-    --return-norm-as-exprs '$return_norm_as_exprs'
     -o '$R_scater_normalize'
   ]]></command>
 
@@ -33,9 +32,6 @@ scater-normalize.R -i '${R_scater_qc}'
 
     <param name="centre_size_factors" argument="--centre-size-factors" type="boolean" checked="true" label="Save centred size factors"
            help="logical, should size factors centred at unity be stored in the returned object if exprs_values=counts, Defaults to TRUE. Regardless, centred size factors will always be used to calculate exprs from count data. This argument is ignored for other exprs_values, where no size factors are used or modified"/>
-
-    <param type="boolean" argument="--return-norm-as-exprs" name="return_norm_as_exprs" checked="true" label="Save normalised expression values in the 'exprs' slot"
-           help="logical, should the normalised expression values be returned to the exprs slot of the object. Default is TRUE. If FALSE, values in the exprs slot will be left untouched. Regardless, normalised expression values will be returned in the norm_exprs object slot"/>
   </inputs>
 
   <outputs>
