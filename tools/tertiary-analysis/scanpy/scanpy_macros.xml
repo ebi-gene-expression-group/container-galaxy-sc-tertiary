@@ -34,7 +34,7 @@
   </token>
   <xml name="requirements">
     <requirements>
-      <requirement type="package" version="0.0.3">scanpy-scripts</requirement>
+      <requirement type="package" version="0.0.4">scanpy-scripts</requirement>
       <yield/>
     </requirements>
   </xml>

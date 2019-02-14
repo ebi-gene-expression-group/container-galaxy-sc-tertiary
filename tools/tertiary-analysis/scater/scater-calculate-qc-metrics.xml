@@ -1,77 +1,57 @@
-<tool id="scater-calculate-qc-metrics" name="Scater calculate qc metrics" version="1.6.0+galaxy1">
-    <description>The QC metrics are calculated from serialized scater R object</description>
-    <macros>
-        <import>scater_macros.xml</import>
-    </macros>
-    <expand macro="requirements" />
-    <command detect_errors="exit_code"><![CDATA[
-        ln -s '$R_scater_serialized' R_scater_serialized.rds;
-
-        scater-calculate-qc-metrics.R -i '$R_scater_serialized'
-        								#if $exprs_values:
-        									-e '$exprs_values'
-        								#end if
-        								#if $feature_controls:
-        									-f '$feature_controls'
-        								#end if
-        								#if $cell_controls:
-        									-c '$cell_controls'
-        								#end if
-        								#if $nmads:
-        									-n '$nmads'
-        								#end if
-        								#if $pct_feature_controls_threshold:
-        									-p 'pct_feature_controls_threshold'
-        								#end if
-        								-o '$R_scater_qc'
+<tool id="scater-calculate-qc-metrics" name="Scater CalculateQcMetrics" version="@TOOL_VERSION@+galaxy0">
+  <description>based on expression values and experiment information</description>
+  <macros>
+    <import>scater_macros.xml</import>
+  </macros>
+  <expand macro="requirements" />
+  <command detect_errors="exit_code"><![CDATA[
+scater-calculate-qc-metrics.R -i '$R_scater_serialized'
+#if $exprs_values:
+    -e '$exprs_values'
+#end if
+## #if $feature_controls:
+##     -f '$feature_controls'
+## #end if
+#if $cell_controls:
+    -c '$cell_controls'
+#end if
+#if $nmads:
+    -n '$nmads'
+#end if
+## #if $pct_feature_controls_threshold:
+##     -p '$pct_feature_controls_threshold'
+## #end if
+    -o '$R_scater_qc'
     ]]></command>
-    <inputs>
-        <param type="data" name="R_scater_serialized" format="rdata" help="singleCellExperiment object containing expression values and experimental information. Must have been appropriately prepared."/>
-        <param type="text" argument="--exprs-values" name="exprs_values" optional="True" value='counts' label="expression counts values from RDS object" help="character, indicating slot of the assays of the object that should be used to define expression. Valid options are counts as default. tpm, fpkm and logcounts, or anything else in the object added manually by the user." />
-        <param type="text" argument="--feature-controls" name="feature_controls" optional="True"  label="feature controls" help="file containing a list of the control files with one file per line. Each control file should have one feature (e.g. gene) per line. A named list is created (names derived from control file names) containing one or more vectors to identify feature controls (for example, ERCC spike-in genes, mitochondrial genes, etc)"/>
-        <param type="text" argument="--cell-controls" name="cell_controls" optional="True" label="cell controls" help="file (one cell per line) to be used to derive a vector of cell (sample) names used to identify cell controls (for example, blank wells or bulk controls)."/>
-        <param type="integer" argument="--nmads" name="nmads" optional="True" label="number of median absolute deviations" help="numeric scalar giving the number of median absolute deviations to be used to flag potentially problematic cells based on total counts (total number of counts for the cell, or library size) and total_features (number of features with non-zero expression). For total_features, cells are flagged for filtering only if total_features is nmads below the median."/>
-        <param type="integer" argument="--pct-feature-controls-threshold" name="pct_feature_controls_threshold"  optional="True"  label="threshold for percentage of expression values" help="numeric scalar giving a threshold for percentage of expression values accounted for by feature controls. Used as to flag cells that may be filtered based on high percentage of expression from feature controls."/>
-    </inputs>
-    <outputs>
-        <data name="R_scater_qc" format="rdata" label="" />
-    </outputs>
-    <tests>
-        <test>
-            <param name="R_scater_serialized" value="R_scater_serialized.rds"/>
-            <output name="R_scater_qc"  file="R_scater_qc.rds" />
-        </test>
-    </tests>
-    <help><![CDATA[
-        Usage: scater-calculate-qc-metrics.R [options]
 
+  <inputs>
+    <param name="R_scater_serialized" type="data" format="rdata" label="SingleCellExperiment object"
+           help="singleCellExperiment object containing expression values and experimental information. Must have been appropriately prepared."/>
+    <param name="exprs_values" type="text" argument="--exprs-values" optional="true" value='counts' label="name of the variable that defines expression values in RDS object"
+           help="character, indicating slot of the assays of the object that should be used to define expression. Valid options are counts as default. tpm, fpkm and logcounts, or anything else in the object added manually by the user."/>
+    <!-- <param name="feature_controls" type="text" argument="-\-feature-controls" optional="true" label="feature controls" -->
+    <!--        help="file containing a list of the control files with one file per line. Each control file should have one feature (e.g. gene) per line. A named list is created (names derived from control file names) containing one or more vectors to identify feature controls (for example, ERCC spike-in genes, mitochondrial genes, etc)"/> -->
+    <param name="cell_controls" type="data" format="tabula" argument="--cell-controls" optional="true" label="cell controls"
+           help="file (one cell per line) to be used to derive a vector of cell (sample) names used to identify cell controls (for example, blank wells or bulk controls)."/>
+    <param name="nmads" type="integer" argument="--nmads" optional="true" label="number of median absolute deviations"
+           help="numeric scalar giving the number of median absolute deviations to be used to flag potentially problematic cells based on total counts (total number of counts for the cell, or library size) and total_features (number of features with non-zero expression). For total_features, cells are flagged for filtering only if total_features is nmads below the median."/>
+    <!-- <param name="pct_feature_controls_threshold" type="integer" argument="-\-pct-feature-controls-threshold" optional="true" -->
+    <!--        label="threshold for percentage of expression values" help="numeric scalar giving a threshold for percentage of expression values accounted for by feature controls. Used as to flag cells that may be filtered based on high percentage of expression from feature controls."/> -->
+  </inputs>
 
-Options:
-	-i INPUT-OBJECT-FILE, --input-object-file=INPUT-OBJECT-FILE
+  <outputs>
+    <data name="R_scater_qc" format="rdata" label="${tool.name} on ${on_string}: serialized SingleCellExperiment object containing calculated QC metrics"/>
+  </outputs>
 
+  <tests>
+    <test>
+      <param name="R_scater_serialized" value="R_scater_serialized.rds"/>
+      <output name="R_scater_qc"  file="R_scater_qc.rds"/>
+    </test>
+  </tests>
 
-	-e EXPRS-VALUES, --exprs-values=EXPRS-VALUES
-
-
-	-f FEATURE-CONTROLS, --feature-controls=FEATURE-CONTROLS
-
-
-	-c CELL-CONTROLS, --cell-controls=CELL-CONTROLS
-
-
-	-n NMADS, --nmads=NMADS
-
-
-	-p PCT-FEATURE-CONTROLS-THRESHOLD, --pct-feature-controls-threshold=PCT-FEATURE-CONTROLS-THRESHOLD
-
-
-	-o OUTPUT-OBJECT-FILE, --output-object-file=OUTPUT-OBJECT-FILE
-	   file name in which to store serialized R object of type SingleCellExperiment
-
-	-h, --help
-	   Show this help message and exit
-
-
-    ]]></help>
-    <expand macro="citations" />
+  <help><![CDATA[
+  @HELP@
+  ]]></help>
+  <expand macro="citations" />
 </tool>

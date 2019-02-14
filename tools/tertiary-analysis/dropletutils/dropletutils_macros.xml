@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<macros>
+
+  <token name="@TOOL_VERSION@">1.0.3</token>
+
+  <xml name="requirements">
+    <requirements>
+      <requirement type="package" version="0.0.1">dropletutils-scripts</requirement>
+    </requirements>
+  </xml>
+
+  <xml name="version">
+    <version_command><![CDATA[
+    echo $(R --version | grep version | grep -v GNU)", dropletutils version" $(R --vanilla --slave -e "library(DropletUtils); cat(sessionInfo()\$otherPkgs\$DropletUtils\$Version)" 2> /dev/null | grep -v -i "WARNING: ")
+    ]]></version_command>
+  </xml>
+
+  <xml name="citations">
+    <citations>
+      <citation type="doi">10.1101/234872</citation>
+    </citations>
+  </xml>
+</macros>

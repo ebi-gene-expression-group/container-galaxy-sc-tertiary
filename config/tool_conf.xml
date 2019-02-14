@@ -59,21 +59,23 @@
     <tool file="tertiary-analysis/seurat/seurat_run_tsne.xml"/>
     <tool file="tertiary-analysis/seurat/seurat_find_markers.xml"/>
   </section>
+  <section name="DropletUtils" id="droputil-tools">
+    <tool file="tertiary-analysis/dropletutils/dropletutils-read-10x.xml"/>
+  </section>
   <section name="Scater" id="scater-tools">
-    <tool file="tertiary-analysis/scater/scater-read-10x-results.xml"  labels="I/O"/>
     <tool file="tertiary-analysis/scater/scater-calculate-cpm.xml"/>
-    <tool file="tertiary-analysis/scater/scater-calculate-qc-metrics.xml"/>
-    <tool file="tertiary-analysis/scater/scater-filter.xml"/>
     <tool file="tertiary-analysis/scater/scater-normalize.xml"/>
+    <tool file="tertiary-analysis/scater/scater-calculate-qc-metrics.xml"/>
     <tool file="tertiary-analysis/scater/scater-is-outlier.xml"/>
+    <tool file="tertiary-analysis/scater/scater-filter.xml"/>
   </section>
    <section name="SC3" id="SC3-tools">
-    <tool file="tertiary-analysis/sc3/sc3-sc3-calc-biology.xml"  labels="I/O"/>
-    <tool file="tertiary-analysis/sc3/sc3-sc3-calc-consens.xml"/>
     <tool file="tertiary-analysis/sc3/sc3-sc3-calc-dists.xml"/>
     <tool file="tertiary-analysis/sc3/sc3-sc3-calc-transfs.xml"/>
     <tool file="tertiary-analysis/sc3/sc3-sc3-estimate-k.xml"/>
     <tool file="tertiary-analysis/sc3/sc3-sc3-kmeans.xml"/>
+    <tool file="tertiary-analysis/sc3/sc3-sc3-calc-consens.xml"/>
+    <tool file="tertiary-analysis/sc3/sc3-sc3-calc-biology.xml"/>
   </section>
   <section name="Scanpy" id="scanpy-tools">
     <tool file="tertiary-analysis/scanpy/scanpy-read-10x.xml" labels="I/O"/>

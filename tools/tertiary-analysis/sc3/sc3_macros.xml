@@ -1,0 +1,25 @@
+<macros>
+  <token name="@TOOL_VERSION@">1.8.0</token>
+  <token name="@HELP@">Documentation can be found at http://bioconductor.org/packages/release/bioc/vignettes/SC3/inst/doc/SC3.html</token>
+    <xml name="requirements">
+        <requirements>
+        <requirement type="package" version="0.0.1">bioconductor-sc3-scripts</requirement>
+            <yield/>
+        </requirements>
+    </xml>
+    <xml name="citations">
+        <citations>
+            <citation type="doi">10.1038/nmeth.4236</citation>
+            <citation type="bibtex">
+@misc{githubbioconductor-sc3-scripts.git,
+  author = {LastTODO, FirstTODO},
+  year = {2018},
+  title = {bioconductor-sc3-scripts.git},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  url = {https://github.com/ebi-gene-expression-group/bioconductor-sc3-scripts.git},
+}</citation>
+            <yield />
+        </citations>
+    </xml>
+</macros>
