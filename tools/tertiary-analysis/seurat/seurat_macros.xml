@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <macros>
 
-    <token name="@VERSION@">0.0.4</token>
+    <token name="@VERSION@">0.0.5</token>
 
     <xml name="requirements">
         <requirements>
-            <requirement type="package" version="@VERSION@">r-seurat-scripts</requirement>
+            <requirement type="package" version="@VERSION@">seurat-scripts</requirement>
         </requirements>
     </xml>
 
