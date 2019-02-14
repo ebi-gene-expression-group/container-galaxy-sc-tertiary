@@ -58,6 +58,7 @@
     <tool file="tertiary-analysis/seurat/seurat_find_clusters.xml"/>
     <tool file="tertiary-analysis/seurat/seurat_run_tsne.xml"/>
     <tool file="tertiary-analysis/seurat/seurat_find_markers.xml"/>
+    <tool file="tertiary-analysis/seurat/seurat_export_cellbrowser.xml"/>
   </section>
   <section name="DropletUtils" id="droputil-tools">
     <tool file="tertiary-analysis/dropletutils/dropletutils-read-10x.xml"/>
