@@ -1,4 +1,4 @@
-<tool id="seurat_create_seurat_object" name="Seurat CreateSeuratObject" version="0.0.1">
+<tool id="seurat_create_seurat_object" name="Seurat CreateSeuratObject" version="2.3.1+galaxy0">
     <description>create a Seurat object</description>
     <macros>
         <import>seurat_macros.xml</import>
@@ -34,7 +34,7 @@ seurat-create-seurat-object.R
 Seurat_ is a toolkit for quality control, analysis, and exploration of single cell RNA sequencing data.
 It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enable users to identify and
 interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse
-types of single cell data. 
+types of single cell data.
 
 This tool creates a Seurat object from an RDS object.
 

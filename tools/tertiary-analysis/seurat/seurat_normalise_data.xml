@@ -1,4 +1,4 @@
-<tool id="seurat_normalise_data" name="Seurat NormaliseData" version="0.0.1">
+<tool id="seurat_normalise_data" name="Seurat NormaliseData" version="2.3.1+galaxy0">
     <description>normalise data</description>
     <macros>
         <import>seurat_macros.xml</import>
@@ -11,7 +11,7 @@ seurat-normalise-data.R
 --input-object-file '$input'
 #if $norm:
     --normalization-method $norm
-#end if 
+#end if
 #if $assay:
     --assay-type '$assay'
 #end if
@@ -48,7 +48,7 @@ seurat-normalise-data.R
 Seurat_ is a toolkit for quality control, analysis, and exploration of single cell RNA sequencing data.
 It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enable users to identify and
 interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse
-types of single cell data. 
+types of single cell data.
 
 This tool normalises a Seurat RDS object.
 
