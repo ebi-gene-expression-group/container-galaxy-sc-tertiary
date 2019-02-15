@@ -32,7 +32,7 @@ scater-filter.R -i '${R_scater_qc}' -o '$R_scater_filtered'
     -f '$features_use'
 #end if
 #if $output_selected_cells:
-    -v '$selected_cells'
+    -u '$selected_cells'
 #end if
 #if $output_selected_features:
     -v '$selected_featuers'
