@@ -11,7 +11,7 @@ scater-filter.R -i '${R_scater_qc}' -o '$R_scater_filtered'
     -s '${cell_pars}'
     #set cell_mins = ','.join([str($p['min']) for $p in $cell_parameters])
     -l '${cell_mins}'
-    #set maxs = ','.join([str($p['max']) for $p in $cell_parameters])
+    #set cell_maxs = ','.join([str($p['max']) for $p in $cell_parameters])
     -j '${cell_maxs}'
 #end if
 #if $feature_parameters
