@@ -15,12 +15,13 @@ scater-calculate-qc-metrics.R -i '$R_scater_serialized'
 #if $cell_controls:
     -c '$cell_controls'
 #end if
-#if $nmads:
-    -n '$nmads'
+#if $pct_top:
+    -p '$pct_top'
 #end if
-## #if $pct_feature_controls_threshold:
-##     -p '$pct_feature_controls_threshold'
-## #end if
+#if $detection_limit:
+    -p '$detection_limit'
+#end if
+    -s $use_spikes
     -o '$R_scater_qc'
     ]]></command>
 
@@ -33,10 +34,12 @@ scater-calculate-qc-metrics.R -i '$R_scater_serialized'
     <!--        help="file containing a list of the control files with one file per line. Each control file should have one feature (e.g. gene) per line. A named list is created (names derived from control file names) containing one or more vectors to identify feature controls (for example, ERCC spike-in genes, mitochondrial genes, etc)"/> -->
     <param name="cell_controls" type="data" format="tabula" argument="--cell-controls" optional="true" label="cell controls"
            help="file (one cell per line) to be used to derive a vector of cell (sample) names used to identify cell controls (for example, blank wells or bulk controls)."/>
-    <param name="nmads" type="integer" argument="--nmads" optional="true" label="number of median absolute deviations"
-           help="numeric scalar giving the number of median absolute deviations to be used to flag potentially problematic cells based on total counts (total number of counts for the cell, or library size) and total_features (number of features with non-zero expression). For total_features, cells are flagged for filtering only if total_features is nmads below the median."/>
-    <!-- <param name="pct_feature_controls_threshold" type="integer" argument="-\-pct-feature-controls-threshold" optional="true" -->
-    <!--        label="threshold for percentage of expression values" help="numeric scalar giving a threshold for percentage of expression values accounted for by feature controls. Used as to flag cells that may be filtered based on high percentage of expression from feature controls."/> -->
+    <param name="pct_top" type="text" argument="--percent-top" value="50,100,200,500" optional="true"
+           label="Number of top genes" help="Each element is treated as a number of top genes to compute the percentage of library size occupied by the most highly expressed genes in each cell."/>
+    <param name="detection_limit" type="float" argument="--detection-limit" value="0" optional="true"
+           label="lower detection limit for expression" help="A numeric scalar to be passed to 'nexprs', specifying the lower detection limit for expression."/>
+    <param name="use_spikes" type="boolean" argument="--use-spikes" checked="true" optional="true"
+           label="lower detection limit for expression" help="A numeric scalar to be passed to 'nexprs', specifying the lower detection limit for expression."/>
   </inputs>
 
   <outputs>
