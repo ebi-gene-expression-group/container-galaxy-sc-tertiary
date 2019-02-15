@@ -71,6 +71,7 @@
     <tool file="tertiary-analysis/scater/scater-filter.xml"/>
   </section>
    <section name="SC3" id="SC3-tools">
+    <tool file="tertiary-analysis/sc3/sc3-sc3-prepare.xml"/>
     <tool file="tertiary-analysis/sc3/sc3-sc3-calc-dists.xml"/>
     <tool file="tertiary-analysis/sc3/sc3-sc3-calc-transfs.xml"/>
     <tool file="tertiary-analysis/sc3/sc3-sc3-estimate-k.xml"/>
