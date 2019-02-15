@@ -39,7 +39,7 @@ scater-calculate-qc-metrics.R -i '$R_scater_serialized'
     <param name="detection_limit" type="float" argument="--detection-limit" value="0" optional="true"
            label="lower detection limit for expression" help="A numeric scalar to be passed to 'nexprs', specifying the lower detection limit for expression."/>
     <param name="use_spikes" type="boolean" argument="--use-spikes" checked="true" optional="true"
-           label="lower detection limit for expression" help="A numeric scalar to be passed to 'nexprs', specifying the lower detection limit for expression."/>
+           label="Set spike-in as control features?" help="A logical scalar indicating whether existing spike-in sets in 'object' should be automatically added to 'feature_controls'"/>
   </inputs>
 
   <outputs>
