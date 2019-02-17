@@ -6,7 +6,7 @@
   </macros>
   <expand macro="requirements" />
   <command detect_errors="exit_code"><![CDATA[
-sc3-sc3-prepare.R -i '${scater_log}' -o '${sc3_prepared}'
+sc3-sc3-prepare.R -i '${scater_log}' -o '${sc3_prepared}' -n 1
 #if $gene_filter.use:
     -f TRUE
     -p '${gene_filter.pct_dropout_min}'
