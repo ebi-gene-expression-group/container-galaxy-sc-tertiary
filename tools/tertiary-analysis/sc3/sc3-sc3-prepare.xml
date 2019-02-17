@@ -7,10 +7,76 @@
   <expand macro="requirements" />
   <command detect_errors="exit_code"><![CDATA[
 sc3-sc3-prepare.R -i '${scater_log}' -o '${sc3_prepared}'
+#if $gene_filter.use:
+    -f TRUE
+    -p '${gene_filter.pct_dropout_min}'
+    -q '${gene_filter.pct_dropout_max}'
+#end if
+#if $d_region_min:
+    -d '${d_region_min}'
+#end if
+#if $d_region_max:
+    -d '${d_region_max}'
+#end if
+#if $svm_num_cells:
+    -n '${svm_num_cells}'
+#end if
+#if $svm_train_inds:
+    -r '${svm_train_inds}'
+#end if
+#if $svm_max:
+    -m '${svm_max}'
+#end if
+#if $seed:
+    -s '${seed}'
+#end if
+#if $kmeans_nstart:
+    -k '${kmeans_nstart}'
+#end if
+#if $kmeans_iter_max:
+    -a '${kmeans_iter_max}'
+#end if
+
   ]]></command>
 
   <inputs>
     <param name="scater_log" type="data" format="rdata" label="Serialised SingleCellExperiment object normalised by scater"/>
+
+    <condition name="gene_filter">
+      <param name="use" argument="--gene-filter" type="boolean" label="Perform gene filtering?"
+             help="A boolean variable which defines whether to perform gene filtering before SC3 clustering."/>
+      <when value="true">
+        <param name="pct_dropout_min" argument="--pct-dropout-min" type="integer" default="10" label="Minimum percent of dropouts"
+               help="An integer value. Genes with percent of dropouts smaller than this value are filtered out before clustering."/>
+        <param name="pct_dropout_max" argument="--pct-dropout-max" type="integer" default="90" label="Maximum percent of dropouts"
+               help="An integer value. Genes with percent of dropouts larger than this value are filtered out before clustering."/>
+      </when>
+      <when value="false"/>
+    </condition>
+
+    <param name="d_region_min" argument="--d-region-min" type="float" default="0.04" optional="true"
+           label="Minimum number of eigenvectors used for kmeans clustering as a fraction of the total number of cells"/>
+
+    <param name="d_region_max" argument="--d-region-max" type="float" default="0.07" optional="true"
+           label="Maximum number of eigenvectors used for kmeans clustering as a fraction of the total number of cells"/>
+
+    <param name="svm_num_cells" argument="--svm-num-cells" type="integer" optional="true"
+           label="Number of randomly selected training cells to be used for SVM prediction."/>
+
+    <param name="svm_train_inds" argument="--svm-train-inds" type="data" format="txt" optional="true"
+           label="Text file with one integer per line defining indices of training cells that should be used for SVM training"/>
+
+    <param name="svm_max" argument="--svm-max" type="integer" default="5000"
+           label="The number of cells below which SVM are not run"/>
+
+    <param name="seed" argument="--rand-seed" type="integer" default="1" optional="true" label="Seed of the random number generator"
+           help="SC3 is a stochastic method, so setting the rand_seed to a fixed values can be used for reproducibility purposes."/>
+
+    <param name="kmeans_nstart" argument="--kmeans-nstart" type="integer" optinal="true" label="Number of random starts for kmeans"
+           help="When unspecified, default to 1000 for up to 2000 cells and 50 for more than 2000 cells."/>
+
+    <param name="kmeans_iter_max" argument="--kmeans-iter-max" type="integer" optional="true" label="Maximum number of iterations for kmeans"
+           help="When unspecified, default to 1e+9."/>
   </inputs>
 
   <outputs>
