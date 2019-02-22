@@ -35,8 +35,7 @@
       <param id="docker_destination_id" from_environ="GALAXY_DESTINATIONS_DOCKER_DEFAULT">slurm_cluster</param>
       <param id="default_destination_id" from_environ="GALAXY_DESTINATIONS_NO_DOCKER_DEFAULT">slurm_cluster</param>
     </destination>
-    <destination id="k8s_default" runner="k8s">
-      <env file="/export/venv/bin/activate"/>
+    <destination id="k8s_default" runner="dynamic-k8s">
       <param id="enabled" from_environ="GALAXY_RUNNERS_ENABLE_K8S">true</param>
       <param id="docker_enabled">true</param>
       <param id="docker_sudo" from_environ="GALAXY_DOCKER_SUDO">False</param>
