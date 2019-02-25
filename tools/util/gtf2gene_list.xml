@@ -2,7 +2,6 @@
     <description>extracts gene ids from Ensembl GTF using rtracklayer</description>
     <requirements>
       <requirement type="package" version="1.42.1">bioconductor-rtracklayer</requirement>
-      <yield/>
     </requirements> 
     <command detect_errors="exit_code"><![CDATA[
        ln -s '$gtf_input' input.gtf;
