@@ -1,0 +1,35 @@
+<tool id="_ensembl_gtf2gene_list" name="E! GTF2GeneList" version="1.42.1+galaxy0">
+    <description>extracts gene ids from Ensembl GTF using rtracklayer</description>
+    <requirements>
+      <requirement type="package" version="1.42.1">bioconductor-rtracklayer</requirement>
+      <yield/>
+    </requirements> 
+    <command detect_errors="exit_code"><![CDATA[
+       ln -s '$gtf_input' input.gtf;
+       Rscript $__tool_directory__/gtf2gene.R input.gtf 
+	    ]]></command>
+
+    <inputs>
+        <param name="gtf_input" type="data" format="gff" label="E! GTF file" />
+    </inputs>
+
+    <outputs>
+        <data name="gene_list" format="txt" from_work_dir="genes.txt" label="${tool.name} on ${on_string}"/>
+    </outputs>
+
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+
+**Inputs**
+
+    * Ensembl GTF file 
+
+-----
+
+**Outputs**
+
+    * Gene identifier list 
+]]></help>
+</tool>
