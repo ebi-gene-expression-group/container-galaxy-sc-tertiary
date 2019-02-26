@@ -34,6 +34,9 @@ Given an Ensembl GTF file, it will extract the list of all gene identifiers in t
     * Ensembl GTF file 
 -----
 **Outputs**
-    * Gene identifier list in tsv.
+* Gene identifier list in tsv.
+
+<string>:7: (SEVERE/4) Missing matching underline for section title overline.
+
 ]]></help>
 </tool>
