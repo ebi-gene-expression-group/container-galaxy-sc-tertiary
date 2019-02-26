@@ -1,0 +1,39 @@
+<tool id="_scanpy_parameter_iterator" name="ParameterIterator" version="0.0.1+galaxy0">
+    <description>produce an iteration over a defined parameter</description>
+    <requirements>
+      <requirement type="package" version="1.42.1">bioconductor-rtracklayer</requirement>
+    </requirements> 
+    <command detect_errors="exit_code"><![CDATA[
+	 mkdir outputs;
+	 for param in \$(seq '$start_value' '$step' '$end_value'); do
+	    echo \$param > outputs/'$parameter_name'_\$param\.txt;
+	 done
+	    ]]></command>
+
+    <inputs>
+      <param type="select" name="parameter_name" label="Choose the format of the expression data" help="Use compressed txt, Scanpy or Seurat objects">
+        <option value="resolution" selected="true">Resolution</option>
+        <option value="perplexity">Perplexity</option>
+      </param>
+      <param type="float" value="0" name="start_value" label="Starting value" help="Initial value for the parameter"/>
+      <param type="float" value="1" name="step" label="Step" help="Increment to use from first to last value"/>
+      <param type="float" value="10" name="end_value" label="Ending value" help="Final value for the parameter. The final value is not included if increments of step don't match the last value."/>
+    </inputs>
+
+    <outputs>
+      <collection name="parameter_iteration" type="list" label="Parameter iterated">
+        <discover_datasets pattern="__name_and_ext__" directory="outputs" />
+      </collection>	
+    </outputs>
+
+    <help><![CDATA[
+.. class:: infomark
+**What it does**
+Given an Ensembl GTF file, it will extract the list of all gene identifiers in the GTF to a simple tsv file.
+**Inputs**
+    * Ensembl GTF file 
+-----
+**Outputs**
+    * Gene identifier list in tsv.
+]]></help>
+</tool>

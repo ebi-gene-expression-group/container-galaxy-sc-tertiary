@@ -92,6 +92,7 @@
     <tool file="tertiary-analysis/scanpy/scanpy-run-umap.xml"/>
     <tool file="tertiary-analysis/scanpy/scanpy-run-tsne.xml"/>
     <tool file="tertiary-analysis/scanpy/scanpy-find-markers.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-parameter-iterator.xml"/>
   </section>
   <section name="UCSC Cell Browser" id="cell-browser">
     <tool file="tertiary-analysis/ucsc-cell-browser/cell-browser.xml"  labels="Viz"/>
