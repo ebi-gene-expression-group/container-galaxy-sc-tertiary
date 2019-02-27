@@ -17,6 +17,7 @@ sc3-sc3-calc-biology.R -i '${sc3_consensus}' -o '${sc3_biology_markers}' -t '${s
     <param name="regime" argument="--regime" type="select" label="Biological analysis to perform">
       <option value="marker" selected="true">Marker gene identification</option>
       <option value="de">Differential expression</option>
+      <option value="outl">Outlier identification</option>
     </param>
   </inputs>
 
@@ -28,7 +29,10 @@ sc3-sc3-calc-biology.R -i '${sc3_consensus}' -o '${sc3_biology_markers}' -t '${s
   <tests>
     <test>
       <param name="sc3_consensus" value="sc3_consensus.rds"/>
-      <output name="sc3_biology_markers" file="sc3_biology_markers.rds"/>
+      <param name="ks" value="7,8"/>
+      <param name="regime" value="marker"/>
+      <output name="sc3_biology_markers" file="sc3_bio_sce.rds"/>
+      <output name="sc3_biology_markers_tsv" file="sc3_biology_markers.tsv"/>
     </test>
   </tests>
 
