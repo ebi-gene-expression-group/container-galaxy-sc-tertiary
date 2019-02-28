@@ -12,7 +12,9 @@ sc3-sc3-calc-biology.R -i '${sc3_consensus}' -o '${sc3_biology_markers}' -t '${s
   <inputs>
     <param name="sc3_consensus" type="data" format="rdata" label="Serialised sc3 SingleCellExperiment object with stored consensus kmeans clustering"/>
 
-    <param name="ks" argument="--ks" type="text" label="An integer or comma-separated list of integers"/>
+    <param name="ks" argument="--ks" type="text" label="An integer or comma-separated list of integers">
+      <validator type="regex" message="Please only enter integers or comma-separated list of integers">^[0-9]+(,[0-9]+)*$</validator>
+    </param>
 
     <param name="regime" argument="--regime" type="select" label="Biological analysis to perform">
       <option value="marker" selected="true">Marker gene identification</option>
