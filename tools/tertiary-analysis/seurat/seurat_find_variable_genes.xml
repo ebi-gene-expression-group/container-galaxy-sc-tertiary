@@ -32,13 +32,13 @@ seurat-find-variable-genes.R
 ]]></command>
 
     <inputs>
-        <param name="input" type="data" format="rdata" label="RDS object" />
-        <param name="mean" type="text" optional="True" label="Mean function" />
-        <param name="disp" type="text" optional="True" label="Dispersion function" />
-        <param name="xlow" type="float" optional="True" label="X-axis low cutoff" />
-        <param name="xhigh" type="float" optional="True" label="X-axis high cutoff" />
-        <param name="ylow" type="float" optional="True" label="Y-axis low cutoff" />
-        <param name="yhigh" type="float" optional="True" label="Y-axis high cutoff" />
+        <param name="input" argument="--input-object-file" type="data" format="rdata" label="Seurat RDS object" help="R serialized object for Seurat, normally the one produced by Seurat FindVariableGenes" />
+        <param name="mean" argument="--mean-function" type="text" optional="True" label="Mean function" help="Function to compute x-axis value (average expression). Default is to take the mean of the detected (i.e. non-zero) values."/>
+        <param name="disp" argument="--dispersion-function" type="text" optional="True" label="Dispersion function" help="Function to compute y-axis value (dispersion). Default is to take the standard deviation of all values." />
+        <param name="xlow" argument="--x-low-cutoff" type="float" optional="True" label="X-axis low cutoff" help="Bottom cutoff on x-axis for identifying variable genes."/>
+        <param name="xhigh" argument="--x-high-cutoff" type="float" optional="True" label="X-axis high cutoff" help="Top cutoff on x-axis for identifying variable genes."/>
+        <param name="ylow" argument="--y-low-cutoff" type="float" optional="True" label="Y-axis low cutoff" help="Bottom cutoff on y-axis for identifying variable genes."/>
+        <param name="yhigh" argument="--y-high-cutoff" type="float" optional="True" label="Y-axis high cutoff" help="Top cutoff on y-axis for identifying variable genes."/>
     </inputs>
 
     <outputs>
@@ -62,19 +62,39 @@ It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enab
 interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse
 types of single cell data.
 
-This tool finds variable genes.
+This tool identifies genes that are outliers on a 'mean variability plot'. First, uses
+a function to calculate average expression (mean.function) and dispersion (dispersion.function)
+for each gene. Next, divides genes into num.bin (deafult 20) bins based on
+their average expression, and calculates z-scores for dispersion within each
+bin. The purpose of this is to identify variable genes while controlling for
+the strong relationship between variability and average expression.
+
+Exact parameter settings may vary empirically from dataset to dataset, and
+based on visual inspection of the plot.
+
+Setting the y.cutoff parameter to 2 identifies genes that are more than two standard
+deviations away from the average dispersion within a bin. The default X-axis function
+is the mean expression level, and for Y-axis it is the log(Variance/mean). All mean/variance
+calculations are not performed in log-space, but the results are reported in log-space -
+see relevant functions for exact details.
 
 -----
 
 **Inputs**
 
     * Seurat RDS object
+    * Mean function. Function to compute x-axis value (average expression). Default is to take the mean of the detected (i.e. non-zero) values.
+    * Dispersion function. Function to compute y-axis value (dispersion). Default is to take the standard deviation of all values.
+    * Bottom cutoff on x-axis for identifying variable genes.
+    * Top cutoff on x-axis for identifying variable genes.
+    * Bottom cutoff on y-axis for identifying variable genes.
+    * Top cutoff on y-axis for identifying variable genes.
 
 -----
 
 **Outputs**
 
-    * Seurat RDS object
+    * Seurat RDS object. Places variable genes in object@var.genes. The result of all analysis is stored in object@hvg.info
     * Tabular file of variable genes
 
 .. _Seurat: https://www.nature.com/articles/nbt.4096
