@@ -11,15 +11,58 @@ seurat-find-clusters.R
 --input-object-file '$input'
 --output-object-file '$output'
 --output-text-file output_tab
+
+#if $genes_use:
+  --genes-use '$genes_use'
+#end if
+
+#if $reduction_type:
+  --reduction-type '$reduction_type'
+#end if
+
+#if $dims_use:
+  --dims-use '$dims_use'
+#end if
+
+#if $k_num_clusters:
+  --k-param '$k_num_clusters'
+#end if
+
+#if $prune_snn:
+  --prune-snn '$prune_snn'
+#end if
+
+#if $resolution:
+  --resolution '$resolution'
+#end if
+
+#if $algorithm:
+  --algorithm '$algorithm'
+#end if
+
 ]]></command>
 
     <inputs>
-        <param name="input" type="data" format="rdata" label="RDS object" />
+        <param name="input" argument="--input-object-file" type="data" format="rdata" label="Seurat RDS object" help="Seurat object produced by Seurat run PCA or other." />
+        <param name="genes_use" argument="--genes-use" optional="true" type="data" format="tsv, txt" label="Genes to use" help="A file with gene names to use in construction of SNN graph if building directly based on expression data rather than a dimensionally reduced representation (i.e. PCs)."/>
+        <param name="reduction_type" argument="--reduction-type" optional="true" type="select" label="Dimensional reduction type" help="dimensional reduction technique to use in construction of SNN graph. (e.g. 'pca', 'ica'). PCA by default.">
+          <option value="pca" selected="true">PCA</option>
+          <option value="ica">ICA</option>
+        </param>
+        <param name="dims_use" argument="--dims-use" optional="true" type="text" label="PCA Dimensions to use" help="A comma-separated list of the dimensions to use in construction of the SNN graph (e.g. To use the first 5 PCs, pass 1,2,3,4,5)."/>
+        <param name="k_num_clusters" argument="--k-param" optional="true" type="integer" label="Number of clusters (k) to compute" help="Defines k for the k-nearest neighbor algorithm."/>
+        <param name="prune_snn" argument="--prune-snn" optional="true" type="float" label="Prune SNN cutoff" help="Sets the cutoff for acceptable Jaccard distances when computing the neighborhood overlap for the SNN construction. Any edges with values less than or equal to this will be set to 0 and removed from the SNN graph. Essentially sets the strigency of pruning (0 — no pruning, 1 — prune everything). Defaults to 1/15."/>
+        <param name="resolution" argument="--resolution" optional="true" type="float" label="Resolution" help="Value of the resolution parameter, use a value above (below) 1.0 if you want to obtain a larger (smaller) number of communities. Defaults to 0.8."/>
+        <param name="algorithm" argument="--algorithm" optional="true" type="select" label="Modularity organization algorithm">
+          <option value="1" selected="true">Louvain</option>
+          <option value="2">Louvain algorithm with multilevel refinement</option>
+          <option value="3">SLM algorithm</option>
+        </param>
     </inputs>
 
     <outputs>
         <data name="output" format="rdata" from_work_dir="*.rds" label="${tool.name} on ${on_string}: Seurat RDS"/>
-        <data name="output_tab" format="tabular" from_work_dir="output_tab" label="${tool.name} on ${on_string}: Seurat RDS"/>
+        <data name="output_tab" format="csv" from_work_dir="output_tab" label="${tool.name} on ${on_string}: CSV Seurat Clusters"/>
     </outputs>
 
     <tests>
@@ -39,7 +82,11 @@ It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enab
 interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse
 types of single cell data.
 
-This tool find clusters in a Seurat object.
+Seurat clustering use SNN method to determine different clusters in your dataset. In order to construct a
+SNN graph, you must have perform a PCA before launch this tool (you can use Seurat dimensional reduction).
+It will search k (30) nearest neighbors for each cells and link cells to each other if they shared the
+same neighbors. You can modulate the resolution in order to get larger (resolution superior to 1) or smaller
+(inferior to 1) clusters.
 
 -----
 
