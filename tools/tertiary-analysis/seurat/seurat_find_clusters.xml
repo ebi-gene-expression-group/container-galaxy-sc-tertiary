@@ -1,4 +1,4 @@
-<tool id="seurat_find_clusters" name="Seurat FindClusters" version="2.3.1+galaxy0">
+<tool id="seurat_find_clusters" name="Seurat FindClusters" version="2.3.1+galaxy1">
     <description>find clusters of cells</description>
     <macros>
         <import>seurat_macros.xml</import>
@@ -6,64 +6,67 @@
     <expand macro="requirements" />
     <expand macro="version" />
     <command detect_errors="exit_code"><![CDATA[
-seurat-find-clusters.R
+        seurat-find-clusters.R
 
---input-object-file '$input'
---output-object-file '$output'
---output-text-file output_tab
+        --input-object-file '$input'
+        --output-object-file '$output'
+        --output-text-file output_tab
 
-#if $genes_use:
-  --genes-use '$genes_use'
-#end if
+        #if $genes_use:
+          --genes-use '$genes_use'
+        #end if
 
-#if $reduction_type:
-  --reduction-type '$reduction_type'
-#end if
+        #if str($adv.reduction_type):
+          --reduction-type '$adv.reduction_type'
+        #end if
 
-#if $dims_use:
-  --dims-use '$dims_use'
-#end if
+        #if str($adv.dims_use):
+          --dims-use \$(seq -s , 1 '$adv.dims_use')
+        #end if
 
-#if $k_num_clusters:
-  --k-param '$k_num_clusters'
-#end if
+        #if str($adv.k_num_clusters):
+          --k-param '$adv.k_num_clusters'
+        #end if
 
-#if $prune_snn:
-  --prune-snn '$prune_snn'
-#end if
+        #if str($adv.prune_snn):
+          --prune-snn '$adv.prune_snn'
+        #end if
 
-#if $resolution:
-  --resolution '$resolution'
-#end if
+        #if str($adv.resolution):
+          --resolution '$adv.resolution'
+        #end if
 
-#if $algorithm:
-  --algorithm '$algorithm'
-#end if
+        #if str($adv.algorithm):
+          --algorithm '$adv.algorithm'
+        #end if
 
-]]></command>
+  ## TODO add pdf support as optional
+  ]]></command>
 
-    <inputs>
+      <inputs>
         <param name="input" argument="--input-object-file" type="data" format="rdata" label="Seurat RDS object" help="Seurat object produced by Seurat run PCA or other." />
         <param name="genes_use" argument="--genes-use" optional="true" type="data" format="tsv, txt" label="Genes to use" help="A file with gene names to use in construction of SNN graph if building directly based on expression data rather than a dimensionally reduced representation (i.e. PCs)."/>
-        <param name="reduction_type" argument="--reduction-type" optional="true" type="select" label="Dimensional reduction type" help="dimensional reduction technique to use in construction of SNN graph. (e.g. 'pca', 'ica'). PCA by default.">
-          <option value="pca" selected="true">PCA</option>
-          <option value="ica">ICA</option>
-        </param>
-        <param name="dims_use" argument="--dims-use" optional="true" type="text" label="PCA Dimensions to use" help="A comma-separated list of the dimensions to use in construction of the SNN graph (e.g. To use the first 5 PCs, pass 1,2,3,4,5)."/>
-        <param name="k_num_clusters" argument="--k-param" optional="true" type="integer" label="Number of clusters (k) to compute" help="Defines k for the k-nearest neighbor algorithm."/>
-        <param name="prune_snn" argument="--prune-snn" optional="true" type="float" label="Prune SNN cutoff" help="Sets the cutoff for acceptable Jaccard distances when computing the neighborhood overlap for the SNN construction. Any edges with values less than or equal to this will be set to 0 and removed from the SNN graph. Essentially sets the strigency of pruning (0 — no pruning, 1 — prune everything). Defaults to 1/15."/>
-        <param name="resolution" argument="--resolution" optional="true" type="float" label="Resolution" help="Value of the resolution parameter, use a value above (below) 1.0 if you want to obtain a larger (smaller) number of communities. Defaults to 0.8."/>
-        <param name="algorithm" argument="--algorithm" optional="true" type="select" label="Modularity organization algorithm">
-          <option value="1" selected="true">Louvain</option>
-          <option value="2">Louvain algorithm with multilevel refinement</option>
-          <option value="3">SLM algorithm</option>
-        </param>
-    </inputs>
-
-    <outputs>
-        <data name="output" format="rdata" from_work_dir="*.rds" label="${tool.name} on ${on_string}: Seurat RDS"/>
-        <data name="output_tab" format="csv" from_work_dir="output_tab" label="${tool.name} on ${on_string}: CSV Seurat Clusters"/>
-    </outputs>
+          <section name="adv" title="Advanced Options">
+            <param name="reduction_type" argument="--reduction-type" optional="true" type="select" label="Dimensional reduction type" help="dimensional reduction technique to use in construction of SNN graph. (e.g. 'pca', 'ica'). PCA by default.">
+              <option value="pca" selected="true">PCA</option>
+              <option value="ica">ICA</option>
+            </param>
+            <param name="dims_use" argument="--dims-use" min="1" optional="true" type="integer" label="PCA Dimensions to use" help="Number of PCs (dimensions) to use in construction of the SNN graph."/>
+            <param name="k_num_clusters" argument="--k-param" optional="true" type="integer" label="Number of clusters (k) to compute" help="Defines k for the k-nearest neighbor algorithm."/>
+            <param name="prune_snn" argument="--prune-snn" optional="true" type="float" label="Prune SNN cutoff" help="Sets the cutoff for acceptable Jaccard distances when computing the neighborhood overlap for the SNN construction. Any edges with values less than or equal to this will be set to 0 and removed from the SNN graph. Essentially sets the strigency of pruning (0 — no pruning, 1 — prune everything). Defaults to 1/15."/>
+            <param name="resolution" argument="--resolution" optional="true" type="float" label="Resolution" help="Value of the resolution parameter, use a value above (below) 1.0 if you want to obtain a larger (smaller) number of communities. Defaults to 0.8."/>
+            <param name="algorithm" argument="--algorithm" optional="true" type="select" label="Modularity organization algorithm">
+              <option value="1" selected="true">Louvain</option>
+              <option value="2">Louvain algorithm with multilevel refinement</option>
+              <option value="3">SLM algorithm</option>
+            </param>
+          </section>
+      </inputs>
+      <outputs>
+          <!-- <data name="out_pdf" format="pdf" from_work_dir="out.pdf" label="${tool.name} on ${on_string}: Plots" /> -->
+          <data name="output" format="rdata" from_work_dir="*.rds" label="${tool.name} on ${on_string}: Seurat RDS"/>
+          <data name="output_tab" format="csv" from_work_dir="output_tab" label="${tool.name} on ${on_string}: CSV Seurat Clusters"/>
+      </outputs>
 
     <tests>
         <!-- Ensure count matrix input works -->
