@@ -1,4 +1,4 @@
-<tool id="seurat_run_pca" name="Seurat RunPCA" version="2.3.1+galaxy0">
+<tool id="seurat_run_pca" name="Seurat RunPCA" version="2.3.1+galaxy1">
     <description>run a PCA dimensionality reduction</description>
     <macros>
         <import>seurat_macros.xml</import>
@@ -16,11 +16,20 @@ seurat-run-pca.R
 --output-embeddings-file output_embed
 --output-loadings-file output_load
 --output-stdev-file output_sdev
+#if $pcs_compute:
+    --pcs-compute '$pcs_compute'
+#end if
+#if $use_imputed:
+'$use_imputed'
+#end if
+
 ]]></command>
 
     <inputs>
         <param name="input" type="data" format="rdata" label="RDS object" />
         <param name="pc_genes" type="data" format="tabular, txt" optional="True" label="Genes to scale" help="File of gene names to scale/center. Default is all genes in object." />
+        <param name="pcs_compute" type="integer" optional="True" label="Principal components" help="Total Number of PCs to compute and store (20 by default). Less PCs might be faster, but will explain less variance."/>
+        <param name="use_imputed" type="boolean" truevalue="--use-imputed TRUE" falsevalue="" checked="false" label="Use imputed" help="Run PCA on imputed values."/>
     </inputs>
 
     <outputs>
@@ -52,13 +61,19 @@ This tool runs a PCA dimensionality reduction
 
 **Inputs**
 
-    * RDS object
+    * Seurat RDS object, normalised and scaled potentially.
+    * Genes used to scale. File of gene names to scale/center. Default is all genes in object.
+    * Principal components to compute. Total Number of PCs to compute and store (20 by default). Less PCs might be faster, but will explain less variance.
+    * Use imputed. Boolean indicating whether to run PCA on imputed values or not.
 
 -----
 
 **Outputs**
 
-    * Seurat RDS object
+    * Seurat RDS object with PCA calculations and embeddings.
+    * Embeddings on CSV file. File with a csv-format embeddings table with principal components by cell.
+    * Loadings on CSV file. File with a csv-format loadings table with principal components by gene.
+    * Standard deviation on CSV file. Contains principal components std. deviations.
 
 .. _Seurat: https://www.nature.com/articles/nbt.4096
 .. _Satija Lab: https://satijalab.org/seurat/
