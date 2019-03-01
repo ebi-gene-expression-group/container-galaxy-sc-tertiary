@@ -45,13 +45,13 @@
 
       <inputs>
         <param name="input" argument="--input-object-file" type="data" format="rdata" label="Seurat RDS object" help="Seurat object produced by Seurat run PCA or other." />
-        <param name="genes_use" argument="--genes-use" optional="true" type="data" format="tsv, txt" label="Genes to use" help="A file with gene names to use in construction of SNN graph if building directly based on expression data rather than a dimensionally reduced representation (i.e. PCs)."/>
+        <expand macro="genes-use-input"/>
           <section name="adv" title="Advanced Options">
             <param name="reduction_type" argument="--reduction-type" optional="true" type="select" label="Dimensional reduction type" help="dimensional reduction technique to use in construction of SNN graph. (e.g. 'pca', 'ica'). PCA by default.">
               <option value="pca" selected="true">PCA</option>
               <option value="ica">ICA</option>
             </param>
-            <param name="dims_use" argument="--dims-use" min="1" optional="true" type="integer" label="PCA Dimensions to use" help="Number of PCs (dimensions) to use in construction of the SNN graph."/>
+            <expand macro="dims-use-input"/>
             <param name="k_num_clusters" argument="--k-param" optional="true" type="integer" label="Number of clusters (k) to compute" help="Defines k for the k-nearest neighbor algorithm."/>
             <param name="prune_snn" argument="--prune-snn" optional="true" type="float" label="Prune SNN cutoff" help="Sets the cutoff for acceptable Jaccard distances when computing the neighborhood overlap for the SNN construction. Any edges with values less than or equal to this will be set to 0 and removed from the SNN graph. Essentially sets the strigency of pruning (0 — no pruning, 1 — prune everything). Defaults to 1/15."/>
             <param name="resolution" argument="--resolution" optional="true" type="float" label="Resolution" help="Value of the resolution parameter, use a value above (below) 1.0 if you want to obtain a larger (smaller) number of communities. Defaults to 0.8."/>
