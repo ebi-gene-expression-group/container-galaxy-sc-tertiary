@@ -1,4 +1,4 @@
-<tool id="seurat_find_variable_genes" name="Seurat FindVariableGenes" version="2.3.1+galaxy0">
+<tool id="seurat_find_variable_genes" name="Seurat FindVariableGenes" version="2.3.1+galaxy1">
     <description>identify variable genes</description>
     <macros>
         <import>seurat_macros.xml</import>

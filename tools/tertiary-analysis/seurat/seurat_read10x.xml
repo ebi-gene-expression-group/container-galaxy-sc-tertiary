@@ -1,4 +1,4 @@
-<tool id="seurat-read10x" name="Seurat Read10x" version="2.3.1+galaxy0">
+<tool id="seurat-read10x" name="Seurat Read10x" version="2.3.1+galaxy1">
   <macros>
       <import>seurat_macros.xml</import>
   </macros>

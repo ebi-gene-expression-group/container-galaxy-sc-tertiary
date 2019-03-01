@@ -1,4 +1,4 @@
-<tool id="seurat_normalise_data" name="Seurat NormaliseData" version="2.3.1+galaxy0">
+<tool id="seurat_normalise_data" name="Seurat NormaliseData" version="2.3.1+galaxy1">
     <description>normalise data</description>
     <macros>
         <import>seurat_macros.xml</import>

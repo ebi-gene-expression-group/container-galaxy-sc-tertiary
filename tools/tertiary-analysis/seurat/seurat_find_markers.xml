@@ -1,4 +1,4 @@
-<tool id="seurat_find_markers" name="Seurat FindMarkers" version="2.3.1+galaxy0">
+<tool id="seurat_find_markers" name="Seurat FindMarkers" version="2.3.1+galaxy1">
     <description>find markers (differentially expressed genes)</description>
     <macros>
         <import>seurat_macros.xml</import>
