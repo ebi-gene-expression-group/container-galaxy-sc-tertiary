@@ -1,4 +1,4 @@
-<tool id="seurat_normalise_data" name="Seurat NormaliseData" version="2.3.1+galaxy0">
+<tool id="seurat_normalise_data" name="Seurat NormaliseData" version="2.3.1+galaxy1">
     <description>normalise data</description>
     <macros>
         <import>seurat_macros.xml</import>
@@ -22,12 +22,12 @@ seurat-normalise-data.R
 ]]></command>
 
     <inputs>
-        <param name="input" type="data" format="rdata" label="Seurat object" />
-        <param name="norm" type="text" optional="True" label="Normalisation method" />
-        <param name="assay" type="text" optional="True" label="Assay type" help="Default: RNA">
+        <param name="input" argument="--input-object-file" type="data" format="rdata" label="Seurat RDS object" help="Possibly the output of Seurat filter cells or Seurat create object." />
+        <param name="norm" argument="--normalization-method" type="text" optional="True" label="Normalisation method" help = "Method for normalization. Default is log-normalization (LogNormalize)."/>
+        <param name="assay" argument="--assay-type" type="text" optional="True" label="Assay type" help = "Type of assay to normalize for (default is RNA), but can be changed for multimodal analyses.">
             <validator type="regex" message="Please only use letters">^[\(\w\)]+$</validator>
         </param>
-        <param name="scale" type="integer" optional="True" label="Scale factor" help="Sets the scale factor for cell-level normalization"/>
+        <param name="scale" argument="--scale-factor" type="integer" optional="True" label="Scale factor" help="Sets the scale factor for cell-level normalization"/>
     </inputs>
 
     <outputs>
@@ -56,13 +56,16 @@ This tool normalises a Seurat RDS object.
 
 **Inputs**
 
-    * Seurat RDS object
+    * Seurat RDS object. Possibly the output of Seurat filter cells or Seurat create object.
+    * Normalisation method. Method for normalization. Default is log-normalization (LogNormalize).
+    * Assay type. Type of assay to normalize for (default is RNA), but can be changed for multimodal analyses.
+    * Scale factor. Sets the scale factor for cell-level normalization. Default: 1000
 
 -----
 
 **Outputs**
 
-    * Seurat RDS object
+    * Seurat RDS object with normalised matrix.
 
 .. _Seurat: https://www.nature.com/articles/nbt.4096
 .. _Satija Lab: https://satijalab.org/seurat/

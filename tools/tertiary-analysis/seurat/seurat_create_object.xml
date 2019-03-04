@@ -13,7 +13,7 @@ seurat-create-seurat-object.R
 ]]></command>
 
     <inputs>
-        <param name="input" type="data" format="rdata" label="RDS object" />
+        <param name="input" type="data" format="rdata" label="Seurat object" help="RDS file from Seurat read10x module." />
     </inputs>
 
     <outputs>
@@ -42,7 +42,7 @@ This tool creates a Seurat object from an RDS object.
 
 **Inputs**
 
-    * RDS object
+    * RDS object from Seurat read_10x module.
 
 -----
 

@@ -31,9 +31,10 @@
 **What it does**
 Given an Ensembl GTF file, it will extract the list of all gene identifiers in the GTF to a simple tsv file.
 **Inputs**
-    * Ensembl GTF file 
+    * Ensembl GTF file
 -----
 **Outputs**
     * Gene identifier list in tsv.
+
 ]]></help>
 </tool>

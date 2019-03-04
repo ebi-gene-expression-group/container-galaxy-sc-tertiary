@@ -15,6 +15,13 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
     ]]></version_command>
     </xml>
 
+    <xml name="genes-use-input">
+      <param name="genes_use" argument="--genes-use" optional="true" type="data" format="tsv, txt" label="Genes to use" help="A file with gene names to use in construction of SNN graph if building directly based on expression data rather than a dimensionally reduced representation (i.e. PCs)."/>
+    </xml>
+    <xml name="dims-use-input">
+      <param name="dims_use" argument="--dims-use" min="1" optional="true" type="integer" label="PCA Dimensions to use" help="Number of PCs (dimensions) to use in construction of the SNN graph."/>
+    </xml>
+
     <xml name="citations">
         <citations>
             <citation type="doi">10.1038/nbt.4096</citation>
