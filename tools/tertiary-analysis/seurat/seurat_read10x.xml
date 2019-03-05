@@ -22,6 +22,17 @@ seurat-read-10x.R -d ./ -o "$R_seurat_serialized"
 <outputs>
     <data name="R_seurat_serialized" format="rdata" label="${tool.name} on ${on_string}: RData file" />
 </outputs>
+
+<tests>
+    <test>
+       <param name="matrix" ftype="txt" value="test_matrix.txt"/>
+       <param name="genes" ftype="txt" value="test_genes.txt"/>
+       <param name="barcodes" ftype="txt" value="test_barcodes.txt"/>
+       <output name="R_seurat_serialized" ftype="rdata" value="out_scale.rds" compare="sim_size"/>
+    </test>
+</tests>
+
+
 <help><![CDATA[
   .. class:: infomark
 
