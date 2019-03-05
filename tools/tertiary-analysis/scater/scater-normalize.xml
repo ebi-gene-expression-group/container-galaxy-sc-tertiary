@@ -1,4 +1,4 @@
-<tool id="scater-normalize" name="Scater Normalise" version="@TOOL_VERSION@+galaxy0">
+<tool id="scater_normalize" name="Scater Normalise" version="@TOOL_VERSION@+galaxy0">
   <description>expression values by library size in log2 scale</description>
   <macros>
     <import>scater_macros.xml</import>

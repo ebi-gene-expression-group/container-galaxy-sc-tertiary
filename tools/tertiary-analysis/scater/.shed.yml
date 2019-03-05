@@ -1,0 +1,20 @@
+categories:
+ - Transcriptomics
+ - RNA
+ - Statistics
+ - Sequence Analysis
+description: "De-composed Scater functionality tools, based on https://github.com/ebi-gene-expression-group/bioconductor-scater-scripts and Scater 1.8.4."
+long_description: |
+        Scater: Single-Cell Analysis Toolkit for Gene Expression Data in R
+name: suite_scater
+owner: ebi-gxa
+remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for the Scater tool suite: {{ tool_name }}"
+suite:
+  name: "suite_scater"
+  description: "De-composed Scater functionality tools, based on https://github.com/ebi-gene-expression-group/bioconductor-scater-scripts and Scater 1.8.4."
+  long_description: |
+    Scater: Single-Cell Analysis Toolkit for Gene Expression Data in R

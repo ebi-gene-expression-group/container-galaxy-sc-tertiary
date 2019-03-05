@@ -1,4 +1,4 @@
-<tool id="scater-filter" name="Scater Filter" version="@TOOL_VERSION@+galaxy0">
+<tool id="scater_filter" name="Scater Filter" version="@TOOL_VERSION@+galaxy0">
   <description>cells and genes based on pre-calculated stats and QC metrics</description>
   <macros>
     <import>scater_macros.xml</import>
