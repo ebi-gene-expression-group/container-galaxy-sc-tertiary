@@ -46,7 +46,7 @@ PYTHONIOENCODING=utf-8 scanpy-find-cluster.py
           <option value="igraph">igraph</option>
         </param>
         <param name="resolution" argument="--resolution" type="float" value="1.0" label="Resolution, high value for more and smaller clusters"/>
-        <param name="resolution_file" argument="--resolution" type="data" optional="true" label="File with resolution, use with parameter iterator. Overrides the resolution setting"/>
+        <param name="resolution_file" argument="--resolution" type="data" format="txt,tsv" optional="true" label="File with resolution, use with parameter iterator. Overrides the resolution setting"/>
         <param name="restrict" argument="--restrict-to" type="text" optional="true" label="Restrict clustering to certain sample categories"/>
         <param name="key" argument="--key-added" type="text" value="louvain" label="Key under which to add the cluster labels (do not change unless you know what you are doing)"/>
         <param name="use_weights" argument="--use-weights" type="boolean" checked="false" label="Use weights from knn graph"/>
