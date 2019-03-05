@@ -25,6 +25,16 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
     <xml name="citations">
         <citations>
             <citation type="doi">10.1038/nbt.4096</citation>
+            <citation type="bibtex">
+              @misc{r-seurat-scripts.git,
+              author = {Jonathan Manning, Pablo Moreno, EBI Gene Expression Team},
+              year = {2018},
+              title = {Seurat-scripts: command line interface for Seurat},
+              publisher = {GitHub},
+              journal = {GitHub repository},
+              url = {https://github.com/ebi-gene-expression-group/r-seurat-scripts.git},
+            }
+            </citation>
         </citations>
     </xml>
 </macros>
