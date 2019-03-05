@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="sc3-sc3-kmeans" name="SC3 K-Means" version="@TOOL_VERSION@+galaxy0">
+<tool id="sc3_kmeans" name="SC3 K-Means" version="@TOOL_VERSION@+galaxy0">
   <description>perform k-means clustering</description>
   <macros>
     <import>sc3-macros.xml</import>

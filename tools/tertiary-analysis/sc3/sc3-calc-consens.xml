@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="sc3-sc3-calc-consens" name="SC3 Calculate Consensus" version="@TOOL_VERSION@+galaxy0">
+<tool id="sc3_calc_consens" name="SC3 Calculate Consensus" version="@TOOL_VERSION@+galaxy0">
   <description>from multiple runs of k-means clustering</description>
   <macros>
     <import>sc3-macros.xml</import>

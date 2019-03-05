@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="sc3-sc3-calc-dists" name="SC3 Calculate Distances" version="@TOOL_VERSION@+galaxy0">
+<tool id="sc3_calc_dists" name="SC3 Calculate Distances" version="@TOOL_VERSION@+galaxy0">
   <description>between cells</description>
   <macros>
     <import>sc3-macros.xml</import>

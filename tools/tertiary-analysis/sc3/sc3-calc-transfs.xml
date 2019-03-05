@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="sc3-sc3-calc-transfs" name="SC3 Calculate Transformations" version="@TOOL_VERSION@+galaxy0">
+<tool id="sc3_calc_transfs" name="SC3 Calculate Transformations" version="@TOOL_VERSION@+galaxy0">
   <description>of distances using PCA and graph Laplacian</description>
   <macros>
     <import>sc3-macros.xml</import>

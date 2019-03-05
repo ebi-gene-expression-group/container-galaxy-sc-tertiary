@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="sc3-sc3-calc-biology" name="SC3 DiffExp" version="@TOOL_VERSION@+galaxy1">
+<tool id="sc3_calc_biology" name="SC3 DiffExp" version="@TOOL_VERSION@+galaxy1">
   <description>calculates DE genes, marker genes and cell outliers</description>
   <macros>
     <import>sc3-macros.xml</import>
