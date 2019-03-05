@@ -43,9 +43,9 @@
       <citation type="doi">10.1186/s13059-017-1382-0</citation>
       <citation type="bibtex">
 	@misc{githubscanpy-scripts,
-	author = {LastTODO, FirstTODO},
+	author = {Ni Huang, EBI Gene Expression Team},
 	year = {2018},
-	title = {scanpy-scripts},
+	title = {Scanpy-scripts: command line interface for Scanpy},
 	publisher = {GitHub},
 	journal = {GitHub repository},
 	url = {https://github.com/ebi-gene-expression-group/scanpy-scripts},
@@ -58,13 +58,13 @@
     <param name="input_format" argument="--input-format" type="select" label="Format of input object">
       <option value="anndata" selected="true">AnnData format hdf5</option>
       <option value="loom">Loom format hdf5, current support is incomplete</option>
-    </param> 
+    </param>
   </xml>
   <xml name="output_object_params">
     <param name="output_format" argument="--output-format" type="select" label="Format of output object">
       <option value="anndata" selected="true">AnnData format hdf5</option>
       <option value="loom">Loom format hdf5, current support is defective</option>
-    </param> 
+    </param>
   </xml>
   <xml name="output_plot_params">
     <param name="color_by" argument="--color-by" type="text" value="n_genes" label="Color by attributes, comma separated strings"/>
