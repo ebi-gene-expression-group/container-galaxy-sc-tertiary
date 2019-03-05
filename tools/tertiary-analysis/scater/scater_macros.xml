@@ -28,6 +28,16 @@
         eprint = {/oup/backfile/content_public/journal/bioinformatics/33/8/10.1093_bioinformatics_btw777/2/btw777.pdf}
         }
       </citation>
+      <citation type="bibtex">
+        @misc{githubbioconductor-scater-scripts.git,
+        author = {Jonathan Manning, Ni Huang, Suhaib Mohammed, EBI Gene Expression Team},
+        year = {2018},
+        title = {Scater-scripts: command line interface for Scater},
+        publisher = {GitHub},
+        journal = {GitHub repository},
+        url = {https://github.com/ebi-gene-expression-group/bioconductor-scater-scripts.git},
+      }
+      </citation>
       <yield />
     </citations>
   </xml>
