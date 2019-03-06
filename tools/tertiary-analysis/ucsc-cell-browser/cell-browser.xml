@@ -1,4 +1,4 @@
-<tool id="ucsc-cell-browser" name="UCSC Cell Browser" version="0.4.38+galaxy0">
+<tool id="ucsc_cell_browser" name="UCSC Cell Browser" version="0.4.38+galaxy0">
   <requirements>
     <requirement type="package" version="0.4.38">ucsc-cell-browser</requirement>
   </requirements>
