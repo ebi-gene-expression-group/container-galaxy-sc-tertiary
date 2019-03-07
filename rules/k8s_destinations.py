@@ -40,8 +40,11 @@ __xlarge = {'requests_cpu': 4,
 
 __path_tool2container = "config/phenomenal_tools2container.yaml"
 
-def k8s_wrapper(resource_params):
+def k8s_dispatcher(resource_params, rule_helper, no_docker_default_destination_id, tool):
     # Allocate extra time
+    if not rule_helper.supports_docker(tool):
+        #return JobDestination(id=no_docker_default_destination_id, params=resource_params)
+        return no_docker_default_destination_id
     resource_params['docker_enabled'] = True
     return JobDestination(runner="k8s", params=resource_params)
 

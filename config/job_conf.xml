@@ -46,9 +46,11 @@
       <param id="docker_volumes" from_environ="GALAXY_DOCKER_VOLUMES">$defaults</param>
       <param id="docker_default_container_id" from_environ="GALAXY_DOCKER_DEFAULT_CONTAINER">busybox:ubuntu-14.04</param>
     </destination>
-    <destination id="dynamic-k8s" runner="dynamic">
+    <destination id="dynamic-k8s-dispatcher" runner="dynamic">
       <param id="type">python</param>
-      <param id="function">k8s_wrapper</param>
+      <param id="function">k8s_dispatcher</param>
+      <param id="no_docker_default_destination_id" from_environ="GALAXY_DESTINATIONS_NO_DOCKER_DEFAULT">slurm_cluster</param>
+      <param id="docker_default_container_id" from_environ="GALAXY_DOCKER_DEFAULT_CONTAINER">busybox:ubuntu-14.04</param>
       <param id="docker_enabled">true</param>
     </destination>
     <destination id="dynamic-k8s-tiny" runner="dynamic">
