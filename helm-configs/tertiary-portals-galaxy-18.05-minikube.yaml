@@ -55,6 +55,7 @@ postgresql:
     subPath: "postgres-tertiary"
 
 proftpd:
+  enabled: false
   service:
     type: NodePort
 
