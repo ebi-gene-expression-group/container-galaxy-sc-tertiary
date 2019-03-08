@@ -47,6 +47,8 @@ Calculate differentially expressed (DE) genes, marker genes and cell outliers
 based on the consensus SC3 clusterings.
 
 @HELP@
+
+@VERSION_HISTORY@
   ]]></help>
   <expand macro="citations" />
 </tool>

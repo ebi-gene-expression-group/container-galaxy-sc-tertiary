@@ -39,6 +39,8 @@ clusters. It also removes the previously calculated kmeans clusterings from the
 sc3 slot, as they are not needed for further analysis.
 
 @HELP@
+
+@VERSION_HISTORY@
 ]]></help>
   <expand macro="citations"/>
 </tool>

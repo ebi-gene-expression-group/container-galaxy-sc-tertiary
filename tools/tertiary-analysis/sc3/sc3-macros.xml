@@ -7,6 +7,12 @@
       <yield/>
     </requirements>
   </xml>
+  <token name="@VERSION_HISTORY@"><![CDATA[
+**Version history**
+
+1.8.0+galaxy0: Initial contribution. Ni Huang and Carlos Talavera-Lopez Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
+EMBL-EBI https://www.ebi.ac.uk/ and Teichman Group at Wellcome Trust Sanger Institute.
+    ]]></token>
   <xml name="citations">
     <citations>
       <citation type="doi">10.1038/nmeth.4236</citation>

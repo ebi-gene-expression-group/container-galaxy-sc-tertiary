@@ -34,6 +34,8 @@ Uses Tracy-Widom theory on random matrices to estimate the optimal number of clu
 It creates and populates the k_estimation item of the sc3 slot of the metadata(object).
 
 @HELP@
+
+@VERSION_HISTORY@
   ]]></help>
   <expand macro="citations" />
 </tool>

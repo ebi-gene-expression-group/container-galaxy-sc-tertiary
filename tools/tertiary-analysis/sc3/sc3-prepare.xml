@@ -107,6 +107,8 @@ It creates and populates the following items of the sc3 slot of the metadata(obj
 - n_cores: the same as the n_cores argument.
 
 @HELP@
+
+@VERSION_HISTORY@
 ]]></help>
    <expand macro="citations" />
 </tool>

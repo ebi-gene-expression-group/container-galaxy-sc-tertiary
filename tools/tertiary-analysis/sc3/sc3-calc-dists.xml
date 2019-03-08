@@ -33,6 +33,8 @@ It creates and populates the following items of the sc3 slot of the metadata(obj
 - distances: contains a list of distance matrices corresponding to Euclidean, Pearson and Spearman distances.
 
 @HELP@
+
+@VERSION_HISTORY@
   ]]></help>
   <expand macro="citations" />
 </tool>
