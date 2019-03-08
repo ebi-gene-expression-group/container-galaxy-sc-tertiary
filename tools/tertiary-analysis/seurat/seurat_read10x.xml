@@ -16,8 +16,8 @@ seurat-read-10x.R -d ./ -o "$R_seurat_serialized"
 ]]></command>
 <inputs>
     <param type="data" name="matrix" help="Raw expression quantification as a sparse matrix in Matrix Market format, where each column is a gene and each row is a barcode/cell." format="txt" label="Expression matrix in sparse matrix format (.mtx)" />
-    <param type="data" name="genes" help="Matrix market column file for genes" label="Gene table" format="tsv"/>
-    <param type="data" name="barcodes" help="Matrix market row file for genes" label="Barcode/cell table" format="tsv"/>
+    <param type="data" name="genes" help="Matrix market column file for genes" label="Gene table" format="tsv,tabular"/>
+    <param type="data" name="barcodes" help="Matrix market row file for genes" label="Barcode/cell table" format="tsv,tabular"/>
 </inputs>
 <outputs>
     <data name="R_seurat_serialized" format="rdata" label="${tool.name} on ${on_string}: RData file" />
