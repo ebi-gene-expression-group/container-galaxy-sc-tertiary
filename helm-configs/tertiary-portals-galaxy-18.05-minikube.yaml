@@ -33,8 +33,7 @@ job_conf:
     enable_local: "true"
     enable_k8: "true"
   destinations:
-    default: "docker_dispatch"
-    docker_default: "k8s_default"
+    default: "dynamic-k8s-dispatcher"
     no_docker_default: "local_no_container"
 
 
