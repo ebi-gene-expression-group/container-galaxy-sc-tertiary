@@ -62,6 +62,8 @@ cut -f1 -d',' outliers.txt > '$outliers_file'
 
   <help><![CDATA[
 @HELP@
+
+@VERSION_HISTORY@
   ]]></help>
   <expand macro="citations"/>
 </tool>

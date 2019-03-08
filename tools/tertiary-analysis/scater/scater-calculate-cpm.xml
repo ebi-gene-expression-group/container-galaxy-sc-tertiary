@@ -33,6 +33,8 @@ scater-calculate-cpm.R -i '${R_scater_serialized}'
 
   <help><![CDATA[
 @HELP@
+
+@VERSION_HISTORY@
   ]]></help>
   <expand macro="citations" />
 </tool>

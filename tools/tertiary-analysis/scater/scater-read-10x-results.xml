@@ -29,6 +29,8 @@
     </tests>
     <help><![CDATA[
 @HELP@
+
+@VERSION_HISTORY@
     ]]></help>
     <expand macro="citations" />
 </tool>

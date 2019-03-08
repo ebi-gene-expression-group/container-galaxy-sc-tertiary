@@ -12,6 +12,12 @@
     echo $(R --version | grep version | grep -v GNU)", scater version" $(R --vanilla --slave -e "library(scater); cat(sessionInfo()\$otherPkgs\$scater\$Version)" 2> /dev/null | grep -v -i "WARNING: ")
     ]]></version_command>
   </xml>
+  <token name="@VERSION_HISTORY@"><![CDATA[
+**Version history**
+
+1.8.4+galaxy0: Initial contribution. Suhaib Mohammed, Ni Huang and Pablo Moreno, Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
+EMBL-EBI https://www.ebi.ac.uk/.
+    ]]></token>
   <xml name="citations">
     <citations>
       <citation type="bibtex">

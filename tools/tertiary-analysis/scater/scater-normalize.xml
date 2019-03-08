@@ -46,6 +46,8 @@ scater-normalize.R -i '${R_scater_qc}'
   </tests>
   <help><![CDATA[
   @HELP@
+
+  @VERSION_HISTORY@
   ]]></help>
   <expand macro="citations"/>
 </tool>

@@ -100,6 +100,8 @@ scater-filter.R -i '${R_scater_qc}' -o '$R_scater_filtered'
 
   <help><![CDATA[
 @HELP@
+
+@VERSION_HISTORY@
   ]]></help>
   <expand macro="citations" />
 </tool>
