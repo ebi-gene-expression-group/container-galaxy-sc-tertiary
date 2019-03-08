@@ -1,0 +1,9 @@
+categories: [Transcriptomics]
+description: Python pipeline and Javascript scatter plot library for single-cell datasets
+homepage_url: https://cells.ucsc.edu/
+long_description: The UCSC Cell Browser is a viewer for single cell data. You can
+  click on and hover over cells to get meta information, search for genes to color
+  on and click clusters to show cluster-specific marker genes.
+name: ucsc_cell_browser
+owner: ebi-gxa
+remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/tools/tertiary-analysis/ucsc-cell-browser/.shed.yml

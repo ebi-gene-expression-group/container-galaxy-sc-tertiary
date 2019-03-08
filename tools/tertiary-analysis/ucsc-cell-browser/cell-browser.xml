@@ -1,11 +1,11 @@
 <tool id="ucsc_cell_browser" name="UCSC Cell Browser" version="0.4.38+galaxy0">
+  <description>displays single-cell clusterized data in an interactive web application.</description>
   <requirements>
     <requirement type="package" version="0.4.38">ucsc-cell-browser</requirement>
   </requirements>
 <stdio>
 <exit_code range="1:" />
 </stdio>
-<description>displays single-cell clusterized data in an interactive web application.</description>
 <command><![CDATA[
 #if $input_type.expression_source == "native-cell-browser":
 
@@ -50,15 +50,19 @@
     <when value="scanpy">
       <param name="input_anndata_file" type="data" format="h5" label="Input object in AnnData hdf5 format" help="Scanpy serialized output is by default produced as an AnnData hdf5 file."/>
     </when>
-    <when value="seurat">
-      <param name="input_rds_file" type="data" format="rdata" label="RDS object from Seurat 2"/>
-      <param name="metadata_fields" type="text" value="" label="Metadata fields to extract from Seurat 2 RDS" help="Space separated list of fields, if blank all metadata fields available in the Seurat object are used."/>
-    </when>
   </conditional>
 </inputs>
 <outputs>
     <data format="html" name="html_file" label="Interactive UCSC Cell Browser"/>
 </outputs>
+
+<tests>
+  <test>
+    <param name="input_anndata_file" ftype="data" value="anndata.h5"/>
+    <output name="html_file" ftype="data" value="cellbrowser.html" compare="sim_size"/>
+  </test>
+</tests>
+
 <help><![CDATA[
 UCSC Single Cell Browser
 ========================
@@ -89,9 +93,22 @@ and then choose File -> Open Dataset... and then press the Open Dataset white bu
 Version history
 ---------------
 
-0.4.3+galaxy0: Initial contribution by the Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
-EMBL-EBI https://www.ebi.ac.uk/
+0.4.3+galaxy0: Initial contribution. Pablo Moreno, Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
+EMBL-EBI https://www.ebi.ac.uk/.
 
-0.4.38+galaxy0: Supports Seurat (through a converter) and Scanpy input.
+0.4.38+galaxy0: Supports Seurat (through a converter) and Scanpy input. Pablo Moreno, Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
+EMBL-EBI https://www.ebi.ac.uk/.
 ]]></help>
+<citations>
+ <citation type="bibtex">
+  @misc{ucsc-cell-browser-gitrepo,
+  author = {Maximilian Haeussler and collaborators},
+  year = {2018},
+  title = {UCSC Single Cell Browser: Python pipeline and Javascript scatter plot library for single-cell datasets},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  url = {https://github.com/maximilianh/cellBrowser},
+ }
+ </citation>
+</citations>
 </tool>
