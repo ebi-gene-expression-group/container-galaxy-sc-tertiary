@@ -10,7 +10,7 @@
   <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
 
-1.8.0+galaxy0: Initial contribution. Ni Huang and Carlos Talavera-Lopez Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
+1.8.0+galaxy0: Initial contribution. Ni Huang and Carlos Talavera-Lopez, Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
 EMBL-EBI https://www.ebi.ac.uk/ and Teichman Group at Wellcome Trust Sanger Institute.
     ]]></token>
   <xml name="citations">

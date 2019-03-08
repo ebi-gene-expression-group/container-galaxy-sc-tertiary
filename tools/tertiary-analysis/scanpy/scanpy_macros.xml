@@ -41,8 +41,8 @@
   <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
 
-1.8.4+galaxy0: Initial contribution. Suhaib Mohammed, Ni Huang and Pablo Moreno, Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
-EMBL-EBI https://www.ebi.ac.uk/.
+1.3.2+galaxy0: Initial contribution. Ni Huang and Pablo Moreno, Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
+EMBL-EBI https://www.ebi.ac.uk/ and Teichman/Kerstin Group at Wellcome Trust Sanger Institute..
     ]]></token>
   <xml name="citations">
     <citations>
