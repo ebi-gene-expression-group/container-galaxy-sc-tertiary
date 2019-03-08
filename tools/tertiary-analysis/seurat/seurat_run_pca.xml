@@ -78,6 +78,7 @@ This tool runs a PCA dimensionality reduction
 .. _Seurat: https://www.nature.com/articles/nbt.4096
 .. _Satija Lab: https://satijalab.org/seurat/
 
+@VERSION_HISTORY@
 ]]></help>
       <expand macro="citations" />
 </tool>

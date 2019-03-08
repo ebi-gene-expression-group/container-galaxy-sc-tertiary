@@ -22,6 +22,16 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
       <param name="dims_use" argument="--dims-use" min="1" optional="true" type="integer" label="PCA Dimensions to use" help="Number of PCs (dimensions) to use in construction of the SNN graph."/>
     </xml>
 
+    <token name="@VERSION_HISTORY@"><![CDATA[
+**Version history**
+
+0.0.1: Initial contribution. Maria Doyle, https://github.com/mblue9.
+
+2.3.1+galaxy0: Improved documentation and further exposition of all script's options. Pablo Moreno, Jonathan Manning and Ni Huang, Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
+EMBL-EBI https://www.ebi.ac.uk/. Parts obtained from wrappers from Christophe Antoniewski(https://github.com/drosofff) and Lea Bellenger(https://github.com/bellenger-l).
+      ]]></token>
+
+
     <xml name="citations">
         <citations>
             <citation type="doi">10.1038/nbt.4096</citation>

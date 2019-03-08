@@ -68,6 +68,8 @@ seurat-read-10x.R -d ./ -o "$R_seurat_serialized"
   .. _Seurat: https://www.nature.com/articles/nbt.4096
   .. _Satija Lab: https://satijalab.org/seurat/
   .. _Seurat Guided Clustering tutorial: https://satijalab.org/seurat/pbmc3k_tutorial.html
+
+@VERSION_HISTORY@
 ]]></help>
 <expand macro="citations"/>
 </tool>
