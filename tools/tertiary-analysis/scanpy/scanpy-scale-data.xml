@@ -65,6 +65,8 @@ PYTHONIOENCODING=utf-8 scanpy-scale-data.py
     inspired by Seurat's `regressOut` function in R.
 
     @HELP@
+
+    @VERSION_HISTORY@
 ]]></help>
   <expand macro="citations"/>
 </tool>

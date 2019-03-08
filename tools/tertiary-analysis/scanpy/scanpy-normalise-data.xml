@@ -51,6 +51,8 @@ the same total count after normalization.
 Similar functions are used, for example, by Seurat, Cell Ranger or SPRING.
 
 @HELP@
+
+@VERSION_HISTORY@
 ]]></help>
   <expand macro="citations"/>
 </tool>

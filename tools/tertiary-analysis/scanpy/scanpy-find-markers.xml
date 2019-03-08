@@ -87,6 +87,8 @@ Rank genes for characterizing groups (`tl.rank_genes_groups`)
 Rank genes for characterizing groups.
 
 @HELP@
+
+@VERSION_HISTORY@
 ]]></help>
   <expand macro="citations"/>
 </tool>

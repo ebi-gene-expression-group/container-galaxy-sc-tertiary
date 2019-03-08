@@ -76,6 +76,8 @@ Only provide one of the optional parameters `min_counts`, `min_cells`,
 
 
 @HELP@
+
+@VERSION_HISTORY@
 ]]></help>
   <expand macro="citations"/>
 </tool>

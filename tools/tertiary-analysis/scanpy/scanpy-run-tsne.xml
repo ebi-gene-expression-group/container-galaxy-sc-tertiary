@@ -120,6 +120,8 @@ we use the implementation of *scikit-learn* (Pedregosa et al, 2011).
 It yields `X_tsne`, tSNE coordinates of data.
 
 @HELP@
+
+@VERSION_HISTORY@
 ]]></help>
   <expand macro="citations"/>
 </tool>

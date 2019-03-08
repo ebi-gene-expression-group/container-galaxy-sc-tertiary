@@ -83,6 +83,8 @@ expression of genes. This means that for each bin of mean expression, highly
 variable genes are selected.
 
 @HELP@
+
+@VERSION_HISTORY@
 ]]></help>
   <expand macro="citations">
     <citation type="doi">10.1038/nbt.3192</citation>

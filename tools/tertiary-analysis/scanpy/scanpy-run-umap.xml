@@ -126,6 +126,8 @@ implementation of `umap-learn <https://github.com/lmcinnes/umap>`__
 It yields `X_umap`, UMAP coordinates of data.
 
 @HELP@
+
+@VERSION_HISTORY@
 ]]></help>
   <expand macro="citations"/>
 </tool>

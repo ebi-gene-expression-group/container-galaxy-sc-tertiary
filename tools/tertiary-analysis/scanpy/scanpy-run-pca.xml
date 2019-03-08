@@ -122,6 +122,8 @@ Computes PCA (principal component analysis) coordinates, loadings and variance d
 It uses the implementation of *scikit-learn*.
 
 @HELP@
+
+@VERSION_HISTORY@
 ]]></help>
   <expand macro="citations"/>
 </tool>

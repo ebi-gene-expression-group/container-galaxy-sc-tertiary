@@ -38,6 +38,12 @@
       <yield/>
     </requirements>
   </xml>
+  <token name="@VERSION_HISTORY@"><![CDATA[
+**Version history**
+
+1.8.4+galaxy0: Initial contribution. Suhaib Mohammed, Ni Huang and Pablo Moreno, Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
+EMBL-EBI https://www.ebi.ac.uk/.
+    ]]></token>
   <xml name="citations">
     <citations>
       <citation type="doi">10.1186/s13059-017-1382-0</citation>

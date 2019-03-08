@@ -72,6 +72,8 @@ For instance, only keep cells with at least `min_counts` counts or
 "unreliable" observations.
 
 @HELP@
+
+@VERSION_HISTORY@
 ]]></help>
   <expand macro="citations"/>
 </tool>

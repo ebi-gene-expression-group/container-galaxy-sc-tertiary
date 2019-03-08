@@ -59,6 +59,8 @@ with a dataset accession.
 
 
 @HELP@
+
+@VERSION_HISTORY@
 ]]></help>
   <expand macro="citations"/>
 </tool>
