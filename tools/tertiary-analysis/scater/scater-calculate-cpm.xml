@@ -1,4 +1,4 @@
-<tool id="scater-calculate-cpm" name="Scater CalculateCPM" version="@TOOL_VERSION@+galaxy0">
+<tool id="scater_calculate_cpm" name="Scater CalculateCPM" version="@TOOL_VERSION@+galaxy0">
   <description>from raw counts</description>
   <macros>
     <import>scater_macros.xml</import>
@@ -33,6 +33,8 @@ scater-calculate-cpm.R -i '${R_scater_serialized}'
 
   <help><![CDATA[
 @HELP@
+
+@VERSION_HISTORY@
   ]]></help>
   <expand macro="citations" />
 </tool>

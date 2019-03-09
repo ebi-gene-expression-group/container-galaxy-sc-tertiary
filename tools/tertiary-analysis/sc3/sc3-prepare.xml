@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="sc3-prepare" name="SC3 Prepare" version="@TOOL_VERSION@+galaxy0">
+<tool id="sc3_prepare" name="SC3 Prepare" version="@TOOL_VERSION@+galaxy0">
   <description>a sc3 SingleCellExperiment object</description>
   <macros>
     <import>sc3-macros.xml</import>
@@ -107,6 +107,8 @@ It creates and populates the following items of the sc3 slot of the metadata(obj
 - n_cores: the same as the n_cores argument.
 
 @HELP@
+
+@VERSION_HISTORY@
 ]]></help>
    <expand macro="citations" />
 </tool>

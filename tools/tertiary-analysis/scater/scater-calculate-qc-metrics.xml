@@ -1,4 +1,4 @@
-<tool id="scater-calculate-qc-metrics" name="Scater CalculateQcMetrics" version="@TOOL_VERSION@+galaxy0">
+<tool id="scater_calculate_qc_metrics" name="Scater CalculateQcMetrics" version="@TOOL_VERSION@+galaxy0">
   <description>based on expression values and experiment information</description>
   <macros>
     <import>scater_macros.xml</import>
@@ -55,6 +55,8 @@ scater-calculate-qc-metrics.R -i '$R_scater_serialized'
 
   <help><![CDATA[
   @HELP@
+
+  @VERSION_HISTORY@
   ]]></help>
   <expand macro="citations" />
 </tool>

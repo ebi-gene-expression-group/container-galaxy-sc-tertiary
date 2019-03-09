@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="retrieve-scxa" name="EBI SCXA Data Retrieval" version="v0.0.1+galaxy1">
+<tool id="retrieve_scxa" name="EBI SCXA Data Retrieval" version="v0.0.1+galaxy1">
   <description>Retrieves expression matrixes and metadata from EBI Single Cell Expression Atlas (SCXA)</description>
   <requirements>
     <requirement type="package" version="1.18">gnu-wget</requirement>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy-find-cluster" name="Scanpy FindCluster" version="@TOOL_VERSION@+galaxy0">
+<tool id="scanpy_find_cluster" name="Scanpy FindCluster" version="@TOOL_VERSION@+galaxy0">
   <description>based on community detection on KNN graph</description>
   <macros>
     <import>scanpy_macros.xml</import>
@@ -46,7 +46,7 @@ PYTHONIOENCODING=utf-8 scanpy-find-cluster.py
           <option value="igraph">igraph</option>
         </param>
         <param name="resolution" argument="--resolution" type="float" value="1.0" label="Resolution, high value for more and smaller clusters"/>
-        <param name="resolution_file" argument="--resolution" type="data" optional="true" label="File with resolution, use with parameter iterator. Overrides the resolution setting"/>
+        <param name="resolution_file" argument="--resolution" type="data" format="txt,tsv" optional="true" label="File with resolution, use with parameter iterator. Overrides the resolution setting"/>
         <param name="restrict" argument="--restrict-to" type="text" optional="true" label="Restrict clustering to certain sample categories"/>
         <param name="key" argument="--key-added" type="text" value="louvain" label="Key under which to add the cluster labels (do not change unless you know what you are doing)"/>
         <param name="use_weights" argument="--use-weights" type="boolean" checked="false" label="Use weights from knn graph"/>
@@ -91,6 +91,8 @@ This requires to run `Scanpy ComputeGraph`, first.
 It yields `louvain`, generated cluster label.
 
 @HELP@
+
+@VERSION_HISTORY@
 ]]></help>
   <expand macro="citations">
     <citation type="doi">10.1088/1742-5468/2008/10/P10008</citation>

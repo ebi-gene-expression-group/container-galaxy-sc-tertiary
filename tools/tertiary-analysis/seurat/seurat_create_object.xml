@@ -53,6 +53,8 @@ This tool creates a Seurat object from an RDS object.
 .. _Seurat: https://www.nature.com/articles/nbt.4096
 .. _Satija Lab: https://satijalab.org/seurat/
 
+@VERSION_HISTORY@
+
 ]]></help>
       <expand macro="citations" />
 </tool>

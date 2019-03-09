@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy-compute-graph" name="Scanpy ComputeGraph" version="@TOOL_VERSION@+galaxy0">
+<tool id="scanpy_compute_graph" name="Scanpy ComputeGraph" version="@TOOL_VERSION@+galaxy0">
   <description>to derive kNN graph</description>
   <macros>
     <import>scanpy_macros.xml</import>
@@ -88,6 +88,8 @@ connectivities are computed according to Coifman et al (2005), in the adaption o
 Haghverdi et al (2016).
 
 @HELP@
+
+@VERSION_HISTORY@
 ]]></help>
   <expand macro="citations"/>
 </tool>

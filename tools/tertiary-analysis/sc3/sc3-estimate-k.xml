@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="sc3-sc3-estimate-k" name="SC3 Estimate" version="@TOOL_VERSION@+galaxy0">
+<tool id="sc3_estimate_k" name="SC3 Estimate" version="@TOOL_VERSION@+galaxy0">
   <description>the number of clusters for k-means clustering</description>
   <macros>
     <import>sc3-macros.xml</import>
@@ -34,6 +34,8 @@ Uses Tracy-Widom theory on random matrices to estimate the optimal number of clu
 It creates and populates the k_estimation item of the sc3 slot of the metadata(object).
 
 @HELP@
+
+@VERSION_HISTORY@
   ]]></help>
   <expand macro="citations" />
 </tool>

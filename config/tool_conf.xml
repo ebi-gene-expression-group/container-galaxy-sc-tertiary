@@ -71,13 +71,13 @@
     <tool file="tertiary-analysis/scater/scater-filter.xml"/>
   </section>
    <section name="SC3" id="SC3-tools">
-    <tool file="tertiary-analysis/sc3/sc3-sc3-prepare.xml"/>
-    <tool file="tertiary-analysis/sc3/sc3-sc3-calc-dists.xml"/>
-    <tool file="tertiary-analysis/sc3/sc3-sc3-calc-transfs.xml"/>
-    <tool file="tertiary-analysis/sc3/sc3-sc3-estimate-k.xml"/>
-    <tool file="tertiary-analysis/sc3/sc3-sc3-kmeans.xml"/>
-    <tool file="tertiary-analysis/sc3/sc3-sc3-calc-consens.xml"/>
-    <tool file="tertiary-analysis/sc3/sc3-sc3-calc-biology.xml"/>
+    <tool file="tertiary-analysis/sc3/sc3-prepare.xml"/>
+    <tool file="tertiary-analysis/sc3/sc3-calc-dists.xml"/>
+    <tool file="tertiary-analysis/sc3/sc3-calc-transfs.xml"/>
+    <tool file="tertiary-analysis/sc3/sc3-estimate-k.xml"/>
+    <tool file="tertiary-analysis/sc3/sc3-kmeans.xml"/>
+    <tool file="tertiary-analysis/sc3/sc3-calc-consens.xml"/>
+    <tool file="tertiary-analysis/sc3/sc3-calc-biology.xml"/>
   </section>
   <section name="Scanpy" id="scanpy-tools">
     <tool file="tertiary-analysis/scanpy/scanpy-read-10x.xml" labels="I/O"/>

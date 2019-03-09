@@ -7,6 +7,14 @@ LABEL software="Galaxy Init"
 LABEL software.version="18.05"
 LABEL version="1.8"
 
+RUN virtualenv venv-workflow && \
+    /bin/bash -c "source venv-workflow/bin/activate && \
+                  pip install 'pip>=8.1' && \
+                  pip install urllib3[secure] && \
+                  pip install ephemeris==0.9.0 && \
+                  deactivate && \
+                  virtualenv --relocatable venv-workflow"
+
 COPY config/job_conf.xml config/job_conf.xml
 COPY config/tool_conf.xml config/tool_conf.xml
 COPY config/container_resolvers_conf.xml config/container_resolvers_conf.xml
@@ -24,6 +32,6 @@ COPY rules/k8s_destinations.py /galaxy-central/lib/galaxy/jobs/rules/k8s_destina
 COPY html/Atlas_logo.png welcome/welcome_Atlas_logo.png
 COPY html/welcome.html welcome/welcome.html
 
-# COPY workflows workflows_to_load
-# COPY post-start-actions.sh post-start-actions.sh
-# RUN chmod u+x post-start-actions.sh
+COPY workflows workflows_to_load
+COPY post-start-actions.sh post-start-actions.sh
+RUN chmod u+x post-start-actions.sh

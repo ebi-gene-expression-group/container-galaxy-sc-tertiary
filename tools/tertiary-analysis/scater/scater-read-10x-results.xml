@@ -1,4 +1,4 @@
-<tool id="scater-read-10x-results" name="Scater read 10x data" version="@TOOL_VERSION@+galaxy0">
+<tool id="scater_read_10x_results" name="Scater read 10x data" version="@TOOL_VERSION@+galaxy0">
     <description>Loads 10x data into a serialized scater R object</description>
     <macros>
         <import>scater_macros.xml</import>
@@ -29,6 +29,8 @@
     </tests>
     <help><![CDATA[
 @HELP@
+
+@VERSION_HISTORY@
     ]]></help>
     <expand macro="citations" />
 </tool>
