@@ -29,7 +29,8 @@ COPY rules/k8s_destinations.py /galaxy-central/lib/galaxy/jobs/rules/k8s_destina
 # Galaxy tours which guide users through the subsequent steps in an analysis
 # COPY config/plugins/tours/*.yaml config/plugins/tours/
 
-COPY html/Atlas_logo.png welcome/welcome_Atlas_logo.png
+COPY html/welcome_embl_ebi_rgb_2018.png welcome/welcome_embl_ebi_rgb_2018.png
+COPY html/welcome_sanger_RGB_Full_Colour_landscape.png welcome/welcome_sanger_RGB_Full_Colour_landscape.png
 COPY html/welcome.html welcome/welcome.html
 
 COPY workflows workflows_to_load
