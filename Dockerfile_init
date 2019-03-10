@@ -1,4 +1,4 @@
-FROM bgruening/galaxy-init:19.01
+FROM quay.io/bgruening/galaxy-init:19.01
 
 MAINTAINER EBI Expression Atlas Team <gene-expression@ebi.ac.uk>
 
