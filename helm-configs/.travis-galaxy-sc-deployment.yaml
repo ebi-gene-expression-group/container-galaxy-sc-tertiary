@@ -58,8 +58,9 @@ postgresql:
     subPath: "postgres-tertiary-19.01"
 
 proftpd:
-  image: "quay.io/bgruening/galaxy-proftpd"
-  imageTag: "for_19.01"
+  image:
+    repository: "quay.io/bgruening/galaxy-proftpd"
+    tag: "for_19.01"
   service:
     type: NodePort
 
