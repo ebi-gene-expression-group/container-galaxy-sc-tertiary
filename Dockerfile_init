@@ -1,11 +1,11 @@
-FROM quay.io/ebigxa/galaxy-init:v18.05
+FROM bgruening/galaxy-init:19.01
 
 MAINTAINER EBI Expression Atlas Team <gene-expression@ebi.ac.uk>
 
 LABEL Description="Hinxton Single Cell Interactive Analysis Environment"
 LABEL software="Galaxy Init"
-LABEL software.version="18.05"
-LABEL version="1.0.0"
+LABEL software.version="19.01"
+LABEL version="1.1.0"
 
 RUN virtualenv venv-workflow && \
     /bin/bash -c "source venv-workflow/bin/activate && \

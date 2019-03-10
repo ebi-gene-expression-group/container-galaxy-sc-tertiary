@@ -4,13 +4,13 @@
 init:
   image:
     repository: test/galaxy-sc-tertiary
-    tag: v18.05
+    tag: "19.01"
     pullPolicy: IfNotPresent
   force_copy: "__venv__,__config__,__galaxy-central__,__tools__"
 
 image:
-  repository: pcm32/galaxy-web-k8s
-  tag: v18.05
+  repository: bgruening/galaxy-web
+  tag: "19.01"
   pullPolicy: Always
 
 admin:
@@ -52,11 +52,14 @@ ingress:
 
 
 postgresql:
-  imageTag: "9.6.5_for_18.05"
+  image: "bgruening/galaxy-postgres"
+  imageTag: "9.6.5_for_19.01"
   persistence:
-    subPath: "postgres-tertiary"
+    subPath: "postgres-tertiary-19.01"
 
 proftpd:
+  image: "bgruening/galaxy-proftpd"
+  imageTag: "for_19.01"
   service:
     type: NodePort
 
