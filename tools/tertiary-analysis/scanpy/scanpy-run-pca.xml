@@ -12,12 +12,12 @@ PYTHONIOENCODING=utf-8 scanpy-run-pca.py
     -f '${input_format}'
     -o output.h5
     -F '${output_format}'
-    -n '${n_pc}'
+    -n '${n_pcs}'
     #if $run_mode.chunked
         -c
         --chunk-size '${run_mode.chunk_size}'
     #else
-        #if $run_mode.zero_center
+        #if $run_mode.zero_centre
             -z
         #else
             -Z
@@ -25,8 +25,8 @@ PYTHONIOENCODING=utf-8 scanpy-run-pca.py
         #if $run_mode.svd_solver
             --svd-solver '${run_mode.svd_solver}'
         #end if
-        #if $run_mode.seed is not None
-            -s '${run_mode.seed}'
+        #if $run_mode.random_seed is not None
+            -s '${run_mode.random_seed}'
         #end if
     #end if
     #if $extra_outputs:
@@ -40,19 +40,19 @@ PYTHONIOENCODING=utf-8 scanpy-run-pca.py
   <inputs>
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
-    <param name="n_pc" argument="--n-pcs" type="integer" value="50" label="Number of PCs to produce"/>
+    <param name="n_pcs" argument="--n-pcs" type="integer" value="50" label="Number of PCs to produce"/>
     <conditional name="run_mode">
       <param name="chunked" argument="--chunked" type="boolean" checked="false" label="Perform incremental PCA by chunks"/>
       <when value="true">
         <param name="chunk_size" argument="--chunk-size" type="integer" value="0" label="Chunk size"/>
       </when>
       <when value="false">
-        <param name="zero_center" argument="--zero-center" type="boolean" checked="true" label="Zero center data before scaling"/>
+        <param name="zero_centre" argument="--zero-center" type="boolean" checked="true" label="Zero center data before scaling"/>
         <param name="svd_solver" argument="--svd-solver" type="select" optional="true" label="SVD solver">
           <option value="arpack">ARPACK</option>
           <option value="randomised">Randomised</option>
         </param>
-        <param name="seed" argument="--random-seed" type="integer" value="0" label="Seed for numpy random number generator"/>
+        <param name="random_seed" argument="--random-random_seed" type="integer" value="0" label="random_seed for numpy random number generator"/>
       </when>
     </conditional>
 
@@ -97,10 +97,10 @@ PYTHONIOENCODING=utf-8 scanpy-run-pca.py
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
       <param name="extra_outputs" value="embeddings"/>
-      <param name="n_pc" value="50"/>
-      <param name="zero_center" value="true"/>
+      <param name="n_pcs" value="50"/>
+      <param name="zero_centre" value="true"/>
       <param name="svd_solver" value="arpack"/>
-      <param name="seed" value="0"/>
+      <param name="random_seed" value="0"/>
       <param name="chunked" value="false"/>
       <param name="plot" value="true"/>
       <param name="color_by" value="n_genes"/>
