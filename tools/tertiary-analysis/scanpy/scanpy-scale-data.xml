@@ -21,7 +21,7 @@ PYTHONIOENCODING=utf-8 scanpy-scale-data.py
     #if $do_log
         --do-log
     #end if
-    #if $zero_centre
+    #if $zero_center
         --zero-center
     #end if
 ]]></command>
@@ -30,7 +30,7 @@ PYTHONIOENCODING=utf-8 scanpy-scale-data.py
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
     <param name="do_log" argument="--do-log" type="boolean" checked="true" label="Do log(x+1) transformation"/>
-    <param name="zero_centre" argument="--zero-center" type="boolean" checked="true" label="Zero center data before scaling"/>
+    <param name="zero_center" argument="--zero-center" type="boolean" checked="true" label="Zero center data before scaling"/>
     <param name="vars_to_regress" argument="--var-to-regress" type="text" optional="true" label="Variable(s) to regress out">
       <option value="n_counts">n_counts</option>
     </param>
@@ -47,7 +47,7 @@ PYTHONIOENCODING=utf-8 scanpy-scale-data.py
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
       <param name="do_log" value="true"/>
-      <param name="zero_centre" value="true"/>
+      <param name="zero_center" value="true"/>
       <param name="scale_max" value="10"/>
       <output name="output_h5" file="scale_data.h5" ftype="h5" compare="sim_size"/>
     </test>
