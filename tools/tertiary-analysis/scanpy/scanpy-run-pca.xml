@@ -17,7 +17,7 @@ PYTHONIOENCODING=utf-8 scanpy-run-pca.py
         -c
         --chunk-size '${run_mode.chunk_size}'
     #else
-        #if $run_mode.zero_centre
+        #if $run_mode.zero_center
             -z
         #else
             -Z
@@ -47,7 +47,7 @@ PYTHONIOENCODING=utf-8 scanpy-run-pca.py
         <param name="chunk_size" argument="--chunk-size" type="integer" value="0" label="Chunk size"/>
       </when>
       <when value="false">
-        <param name="zero_centre" argument="--zero-center" type="boolean" checked="true" label="Zero center data before scaling"/>
+        <param name="zero_center" argument="--zero-center" type="boolean" checked="true" label="Zero center data before scaling"/>
         <param name="svd_solver" argument="--svd-solver" type="select" optional="true" label="SVD solver">
           <option value="arpack">ARPACK</option>
           <option value="randomised">Randomised</option>
@@ -98,7 +98,7 @@ PYTHONIOENCODING=utf-8 scanpy-run-pca.py
       <param name="output_format" value="anndata"/>
       <param name="extra_outputs" value="embeddings"/>
       <param name="n_pcs" value="50"/>
-      <param name="zero_centre" value="true"/>
+      <param name="zero_center" value="true"/>
       <param name="svd_solver" value="arpack"/>
       <param name="random_seed" value="0"/>
       <param name="chunked" value="false"/>
