@@ -1,1 +1,887 @@
-{"uuid": "612564bb-8019-4d0f-bb43-7090ece21ade", "tags": [], "format-version": "0.1", "name": "Scanpy_iterate_on_params", "steps": {"0": {"tool_id": null, "tool_version": null, "outputs": [], "workflow_outputs": [{"output_name": "output", "uuid": "6c9a2f93-677c-4e0b-b574-24cb5b21eb5c", "label": null}], "input_connections": {}, "tool_state": "{}", "id": 0, "uuid": "40e0489e-6915-4775-9af4-73eb63d44872", "errors": null, "name": "Input dataset", "label": "matrix", "inputs": [], "position": {"top": 177.953125, "left": 200}, "annotation": "", "content_id": null, "type": "data_input"}, "1": {"tool_id": null, "tool_version": null, "outputs": [], "workflow_outputs": [{"output_name": "output", "uuid": "592c7a15-b721-455d-a158-ed30a8dceca3", "label": null}], "input_connections": {}, "tool_state": "{}", "id": 1, "uuid": "2bcc7704-a3dc-4d97-9809-444a7677c077", "errors": null, "name": "Input dataset", "label": "genes", "inputs": [], "position": {"top": 262.953125, "left": 204}, "annotation": "", "content_id": null, "type": "data_input"}, "2": {"tool_id": null, "tool_version": null, "outputs": [], "workflow_outputs": [{"output_name": "output", "uuid": "0cc4b7f9-6b54-4fd4-a5ce-43420f53c416", "label": null}], "input_connections": {}, "tool_state": "{}", "id": 2, "uuid": "0b905f8b-8fc2-493e-bc17-b45463c14b25", "errors": null, "name": "Input dataset", "label": "barcodes", "inputs": [], "position": {"top": 349.953125, "left": 208}, "annotation": "", "content_id": null, "type": "data_input"}, "3": {"tool_id": null, "tool_version": null, "outputs": [], "workflow_outputs": [{"output_name": "output", "uuid": "aa5c4369-5fcc-4ecb-8f08-ea5bb4504182", "label": null}], "input_connections": {}, "tool_state": "{}", "id": 3, "uuid": "8f9eeeec-557c-4095-9b8e-bd70ed7402c4", "errors": null, "name": "Input dataset", "label": "gtf", "inputs": [], "position": {"top": 441.953125, "left": 199}, "annotation": "", "content_id": null, "type": "data_input"}, "4": {"tool_id": "scanpy_parameter_iterator", "tool_version": "0.0.1+galaxy0", "outputs": [{"type": "input", "name": "parameter_iteration"}], "workflow_outputs": [], "input_connections": {}, "tool_state": "{\"__page__\": null, \"__rerun_remap_job_id__\": null, \"end_value\": \"\\\"10.0\\\"\", \"parameter_name\": \"\\\"resolution\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"step\": \"\\\"1.0\\\"\", \"start_value\": \"\\\"0.0\\\"\"}", "id": 4, "uuid": "d68d8b61-07d8-4b2b-b1ca-048967a102d4", "errors": null, "name": "ParameterIterator", "post_job_actions": {"HideDatasetActionparameter_iteration": {"output_name": "parameter_iteration", "action_type": "HideDatasetAction", "action_arguments": {}}}, "label": "perplexity", "inputs": [], "position": {"top": 132.34375, "left": 943}, "annotation": "", "content_id": "scanpy_parameter_iterator", "type": "tool"}, "5": {"tool_id": "scanpy_parameter_iterator", "tool_version": "0.0.1+galaxy0", "outputs": [{"type": "input", "name": "parameter_iteration"}], "workflow_outputs": [], "input_connections": {}, "tool_state": "{\"__page__\": null, \"__rerun_remap_job_id__\": null, \"end_value\": \"\\\"10.0\\\"\", \"parameter_name\": \"\\\"resolution\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"step\": \"\\\"1.0\\\"\", \"start_value\": \"\\\"0.0\\\"\"}", "id": 5, "uuid": "98c2a570-6550-4f1c-a1f3-9b62c5fdc9f7", "errors": null, "name": "ParameterIterator", "post_job_actions": {"HideDatasetActionparameter_iteration": {"output_name": "parameter_iteration", "action_type": "HideDatasetAction", "action_arguments": {}}}, "label": "resolution", "inputs": [], "position": {"top": 751.34375, "left": 813}, "annotation": "", "content_id": "scanpy_parameter_iterator", "type": "tool"}, "6": {"tool_id": "scanpy_read_10x", "tool_version": "1.3.2+galaxy0", "outputs": [{"type": "h5", "name": "output_h5"}], "workflow_outputs": [], "input_connections": {"genes": {"output_name": "output", "id": 1}, "matrix": {"output_name": "output", "id": 0}, "barcodes": {"output_name": "output", "id": 2}}, "tool_state": "{\"__page__\": null, \"genes\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"matrix\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"var_names\": \"\\\"gene_ids\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null, \"barcodes\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\"}", "id": 6, "uuid": "7d712663-6db6-4986-83a6-14f5711682b6", "errors": null, "name": "Scanpy Read10x", "post_job_actions": {"HideDatasetActionoutput_h5": {"output_name": "output_h5", "action_type": "HideDatasetAction", "action_arguments": {}}}, "label": null, "inputs": [{"name": "genes", "description": "runtime parameter for tool Scanpy Read10x"}, {"name": "matrix", "description": "runtime parameter for tool Scanpy Read10x"}, {"name": "barcodes", "description": "runtime parameter for tool Scanpy Read10x"}], "position": {"top": 225.484375, "left": 460.765625}, "annotation": "", "content_id": "scanpy_read_10x", "type": "tool"}, "7": {"tool_id": "_ensembl_gtf2gene_list", "tool_version": "1.42.1+galaxy0", "outputs": [{"type": "tsv", "name": "gene_list"}], "workflow_outputs": [], "input_connections": {"gtf_input": {"output_name": "output", "id": 3}}, "tool_state": "{\"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__page__\": null, \"__rerun_remap_job_id__\": null, \"gtf_input\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\"}", "id": 7, "uuid": "dd2bdbd5-bfed-4e4b-800f-e3780814ab69", "errors": null, "name": "GTF2GeneList", "post_job_actions": {"HideDatasetActiongene_list": {"output_name": "gene_list", "action_type": "HideDatasetAction", "action_arguments": {}}}, "label": null, "inputs": [{"name": "gtf_input", "description": "runtime parameter for tool GTF2GeneList"}], "position": {"top": 559.953125, "left": 233}, "annotation": "", "content_id": "_ensembl_gtf2gene_list", "type": "tool"}, "8": {"tool_id": "scanpy_filter_cells", "tool_version": "1.3.2+galaxy0", "outputs": [{"type": "h5", "name": "output_h5"}], "workflow_outputs": [], "input_connections": {"input_obj_file": {"output_name": "output_h5", "id": 6}}, "tool_state": "{\"subset\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"__page__\": null, \"parameters\": \"[{\\\"__index__\\\": 0, \\\"max\\\": \\\"1000000000.0\\\", \\\"name\\\": \\\"n_genes\\\", \\\"min\\\": \\\"-1000000000.0\\\"}]\", \"input_format\": \"\\\"anndata\\\"\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null}", "id": 8, "uuid": "6515f034-9ba6-4ccc-954e-4c3eff3d952d", "errors": null, "name": "Scanpy FilterCells", "post_job_actions": {"HideDatasetActionoutput_h5": {"output_name": "output_h5", "action_type": "HideDatasetAction", "action_arguments": {}}}, "label": "filter_cells", "inputs": [{"name": "subset", "description": "runtime parameter for tool Scanpy FilterCells"}, {"name": "input_obj_file", "description": "runtime parameter for tool Scanpy FilterCells"}], "position": {"top": 413.484375, "left": 479.765625}, "annotation": "", "content_id": "scanpy_filter_cells", "type": "tool"}, "9": {"tool_id": "scanpy_filter_genes", "tool_version": "1.3.2+galaxy0", "outputs": [{"type": "h5", "name": "output_h5"}], "workflow_outputs": [], "input_connections": {"subset": {"output_name": "gene_list", "id": 7}, "input_obj_file": {"output_name": "output_h5", "id": 8}}, "tool_state": "{\"subset\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"__page__\": null, \"parameters\": \"[{\\\"__index__\\\": 0, \\\"max\\\": \\\"1000000000.0\\\", \\\"name\\\": \\\"n_cells\\\", \\\"min\\\": \\\"-1000000000.0\\\"}]\", \"input_format\": \"\\\"anndata\\\"\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null}", "id": 9, "uuid": "e0154ebb-3881-411c-8744-c2449b35ab63", "errors": null, "name": "Scanpy FilterGenes", "post_job_actions": {"HideDatasetActionoutput_h5": {"output_name": "output_h5", "action_type": "HideDatasetAction", "action_arguments": {}}}, "label": "filter_genes", "inputs": [{"name": "subset", "description": "runtime parameter for tool Scanpy FilterGenes"}, {"name": "input_obj_file", "description": "runtime parameter for tool Scanpy FilterGenes"}], "position": {"top": 579.484375, "left": 469.765625}, "annotation": "", "content_id": "scanpy_filter_genes", "type": "tool"}, "10": {"tool_id": "scanpy_normalise_data", "tool_version": "1.3.2+galaxy0", "outputs": [{"type": "h5", "name": "output_h5"}], "workflow_outputs": [], "input_connections": {"input_obj_file": {"output_name": "output_h5", "id": 9}}, "tool_state": "{\"__page__\": null, \"scale_factor\": \"\\\"10000.0\\\"\", \"input_format\": \"\\\"anndata\\\"\", \"save_raw\": \"\\\"true\\\"\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null}", "id": 10, "uuid": "39040aaa-0d3d-4454-9a05-cf4e51349d80", "errors": null, "name": "Scanpy NormaliseData", "post_job_actions": {"HideDatasetActionoutput_h5": {"output_name": "output_h5", "action_type": "HideDatasetAction", "action_arguments": {}}}, "label": "normalise_data", "inputs": [{"name": "input_obj_file", "description": "runtime parameter for tool Scanpy NormaliseData"}], "position": {"top": 734.484375, "left": 462.765625}, "annotation": "", "content_id": "scanpy_normalise_data", "type": "tool"}, "11": {"tool_id": "scanpy_find_variable_genes", "tool_version": "1.3.2+galaxy0", "outputs": [{"type": "h5", "name": "output_h5"}], "workflow_outputs": [], "input_connections": {"input_obj_file": {"output_name": "output_h5", "id": 10}}, "tool_state": "{\"n_top_gene\": \"\\\"\\\"\", \"__page__\": null, \"parameters\": \"[{\\\"__index__\\\": 0, \\\"max\\\": \\\"1000000000.0\\\", \\\"name\\\": \\\"mean\\\", \\\"min\\\": \\\"0.0\\\"}]\", \"input_format\": \"\\\"anndata\\\"\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"n_bin\": \"\\\"20\\\"\", \"flavor\": \"\\\"seurat\\\"\", \"__rerun_remap_job_id__\": null}", "id": 11, "uuid": "c9c4f98a-4b16-458b-ac07-37ca2567bee3", "errors": null, "name": "Scanpy FindVariableGenes", "post_job_actions": {"HideDatasetActionoutput_h5": {"output_name": "output_h5", "action_type": "HideDatasetAction", "action_arguments": {}}}, "label": "find_variable_genes", "inputs": [{"name": "input_obj_file", "description": "runtime parameter for tool Scanpy FindVariableGenes"}], "position": {"top": 853.484375, "left": 458.765625}, "annotation": "", "content_id": "scanpy_find_variable_genes", "type": "tool"}, "12": {"tool_id": "scanpy_scale_data", "tool_version": "1.3.2+galaxy0", "outputs": [{"type": "h5", "name": "output_h5"}], "workflow_outputs": [], "input_connections": {"input_obj_file": {"output_name": "output_h5", "id": 11}}, "tool_state": "{\"__page__\": null, \"var_regress\": \"\\\"\\\"\", \"input_format\": \"\\\"anndata\\\"\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"scale_max\": \"\\\"\\\"\", \"do_log\": \"\\\"true\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null, \"zero_center\": \"\\\"true\\\"\"}", "id": 12, "uuid": "f3bee38c-da2c-4a3b-b183-46c03c066744", "errors": null, "name": "Scanpy ScaleData", "post_job_actions": {"HideDatasetActionoutput_h5": {"output_name": "output_h5", "action_type": "HideDatasetAction", "action_arguments": {}}}, "label": "scale_data", "inputs": [{"name": "input_obj_file", "description": "runtime parameter for tool Scanpy ScaleData"}], "position": {"top": 968.484375, "left": 458.765625}, "annotation": "", "content_id": "scanpy_scale_data", "type": "tool"}, "13": {"tool_id": "scanpy_run_pca", "tool_version": "1.3.2+galaxy0", "outputs": [{"type": "h5", "name": "output_h5"}, {"type": "png", "name": "output_png"}, {"type": "csv", "name": "output_embed"}, {"type": "csv", "name": "output_load"}, {"type": "csv", "name": "output_stdev"}, {"type": "csv", "name": "output_vprop"}], "workflow_outputs": [], "input_connections": {"input_obj_file": {"output_name": "output_h5", "id": 12}}, "tool_state": "{\"__page__\": null, \"input_format\": \"\\\"anndata\\\"\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"n_pc\": \"\\\"50\\\"\", \"do_plotting\": \"{\\\"plot\\\": \\\"false\\\", \\\"__current_case__\\\": 1}\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null, \"extra_outputs\": \"null\", \"output_format\": \"\\\"anndata\\\"\", \"run_mode\": \"{\\\"chunked\\\": \\\"false\\\", \\\"seed\\\": \\\"0\\\", \\\"zero_center\\\": \\\"true\\\", \\\"__current_case__\\\": 1, \\\"svd_solver\\\": null}\"}", "id": 13, "uuid": "6e8455b7-e1d7-4077-ae6c-fbaf81f0c2af", "errors": null, "name": "Scanpy RunPCA", "post_job_actions": {"HideDatasetActionoutput_vprop": {"output_name": "output_vprop", "action_type": "HideDatasetAction", "action_arguments": {}}, "HideDatasetActionoutput_h5": {"output_name": "output_h5", "action_type": "HideDatasetAction", "action_arguments": {}}, "HideDatasetActionoutput_png": {"output_name": "output_png", "action_type": "HideDatasetAction", "action_arguments": {}}, "HideDatasetActionoutput_stdev": {"output_name": "output_stdev", "action_type": "HideDatasetAction", "action_arguments": {}}, "HideDatasetActionoutput_embed": {"output_name": "output_embed", "action_type": "HideDatasetAction", "action_arguments": {}}, "HideDatasetActionoutput_load": {"output_name": "output_load", "action_type": "HideDatasetAction", "action_arguments": {}}}, "label": "pca", "inputs": [{"name": "input_obj_file", "description": "runtime parameter for tool Scanpy RunPCA"}], "position": {"top": 230.5625, "left": 812.125}, "annotation": "", "content_id": "scanpy_run_pca", "type": "tool"}, "14": {"tool_id": "scanpy_compute_graph", "tool_version": "1.3.2+galaxy0", "outputs": [{"type": "h5", "name": "output_h5"}], "workflow_outputs": [], "input_connections": {"input_obj_file": {"output_name": "output_h5", "id": 13}}, "tool_state": "{\"__page__\": null, \"input_format\": \"\\\"anndata\\\"\", \"settings\": \"{\\\"default\\\": \\\"true\\\", \\\"__current_case__\\\": 0}\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null}", "id": 14, "uuid": "1fa993d6-5549-4fe5-ada9-5fcac4ed0686", "errors": null, "name": "Scanpy ComputeGraph", "post_job_actions": {"HideDatasetActionoutput_h5": {"output_name": "output_h5", "action_type": "HideDatasetAction", "action_arguments": {}}}, "label": "neighbours", "inputs": [{"name": "input_obj_file", "description": "runtime parameter for tool Scanpy ComputeGraph"}], "position": {"top": 556.5625, "left": 821.625}, "annotation": "", "content_id": "scanpy_compute_graph", "type": "tool"}, "15": {"tool_id": "scanpy_run_tsne", "tool_version": "1.3.2+galaxy0", "outputs": [{"type": "h5", "name": "output_h5"}, {"type": "png", "name": "output_png"}, {"type": "csv", "name": "output_embed"}], "workflow_outputs": [{"output_name": "output_embed", "uuid": "20a7c7e2-c50f-4535-88ad-ff8deb99a08a", "label": null}, {"output_name": "output_h5", "uuid": "0decd03d-8ad1-4cb0-aa2e-b0506bbfce51", "label": null}], "input_connections": {"settings|perplexity_file": {"output_name": "parameter_iteration", "id": 4}, "input_obj_file": {"output_name": "output_h5", "id": 14}}, "tool_state": "{\"__page__\": null, \"embeddings\": \"\\\"true\\\"\", \"input_format\": \"\\\"anndata\\\"\", \"settings\": \"{\\\"early_exag\\\": \\\"12.0\\\", \\\"default\\\": \\\"false\\\", \\\"learning_rate\\\": \\\"1000.0\\\", \\\"perplexity_file\\\": {\\\"__class__\\\": \\\"RuntimeValue\\\"}, \\\"use_rep\\\": \\\"auto\\\", \\\"seed\\\": \\\"0\\\", \\\"__current_case__\\\": 1, \\\"n_job\\\": \\\"\\\", \\\"perplexity\\\": \\\"30.0\\\", \\\"n_pc\\\": \\\"\\\", \\\"fast_tsne\\\": \\\"true\\\"}\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"do_plotting\": \"{\\\"plot\\\": \\\"false\\\", \\\"__current_case__\\\": 1}\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null}", "id": 15, "uuid": "175dcf28-02f4-4a53-9955-e197f033852e", "errors": null, "name": "Scanpy RunTSNE", "post_job_actions": {"HideDatasetActionoutput_png": {"output_name": "output_png", "action_type": "HideDatasetAction", "action_arguments": {}}}, "label": "run_tsne", "inputs": [{"name": "settings", "description": "runtime parameter for tool Scanpy RunTSNE"}, {"name": "input_obj_file", "description": "runtime parameter for tool Scanpy RunTSNE"}], "position": {"top": 208.5625, "left": 1235.125}, "annotation": "", "content_id": "scanpy_run_tsne", "type": "tool"}, "16": {"tool_id": "scanpy_find_cluster", "tool_version": "1.3.2+galaxy0", "outputs": [{"type": "h5", "name": "output_h5"}, {"type": "tsv", "name": "output_txt"}], "workflow_outputs": [], "input_connections": {"input_obj_file": {"output_name": "output_h5", "id": 14}, "settings|resolution_file": {"output_name": "parameter_iteration", "id": 5}}, "tool_state": "{\"__page__\": null, \"input_format\": \"\\\"anndata\\\"\", \"settings\": \"{\\\"flavour\\\": \\\"vtraag\\\", \\\"key\\\": \\\"louvain\\\", \\\"default\\\": \\\"false\\\", \\\"use_weights\\\": \\\"false\\\", \\\"resolution_file\\\": {\\\"__class__\\\": \\\"RuntimeValue\\\"}, \\\"restrict\\\": \\\"\\\", \\\"seed\\\": \\\"0\\\", \\\"__current_case__\\\": 1, \\\"resolution\\\": \\\"1.0\\\"}\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"output_cluster\": \"\\\"true\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null}", "id": 16, "uuid": "ef63233c-8f22-4c5b-8569-55de88121b4c", "errors": null, "name": "Scanpy FindCluster", "post_job_actions": {"HideDatasetActionoutput_h5": {"output_name": "output_h5", "action_type": "HideDatasetAction", "action_arguments": {}}, "HideDatasetActionoutput_txt": {"output_name": "output_txt", "action_type": "HideDatasetAction", "action_arguments": {}}}, "label": "find_clusters", "inputs": [{"name": "settings", "description": "runtime parameter for tool Scanpy FindCluster"}, {"name": "input_obj_file", "description": "runtime parameter for tool Scanpy FindCluster"}], "position": {"top": 625.34375, "left": 1196.5}, "annotation": "", "content_id": "scanpy_find_cluster", "type": "tool"}, "17": {"tool_id": "scanpy_run_umap", "tool_version": "1.3.2+galaxy0", "outputs": [{"type": "h5", "name": "output_h5"}, {"type": "png", "name": "output_png"}, {"type": "csv", "name": "output_embed"}], "workflow_outputs": [], "input_connections": {"input_obj_file": {"output_name": "output_h5", "id": 14}}, "tool_state": "{\"__page__\": null, \"embeddings\": \"\\\"true\\\"\", \"input_format\": \"\\\"anndata\\\"\", \"settings\": \"{\\\"default\\\": \\\"true\\\", \\\"__current_case__\\\": 0}\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"do_plotting\": \"{\\\"plot\\\": \\\"false\\\", \\\"__current_case__\\\": 1}\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null}", "id": 17, "uuid": "077c4f34-a473-4b65-8350-35435ef5ba64", "errors": null, "name": "Scanpy RunUMAP", "post_job_actions": {"HideDatasetActionoutput_png": {"output_name": "output_png", "action_type": "HideDatasetAction", "action_arguments": {}}, "HideDatasetActionoutput_h5": {"output_name": "output_h5", "action_type": "HideDatasetAction", "action_arguments": {}}, "HideDatasetActionoutput_embed": {"output_name": "output_embed", "action_type": "HideDatasetAction", "action_arguments": {}}}, "label": null, "inputs": [{"name": "input_obj_file", "description": "runtime parameter for tool Scanpy RunUMAP"}], "position": {"top": 1001.34375, "left": 1051}, "annotation": "", "content_id": "scanpy_run_umap", "type": "tool"}, "18": {"tool_id": "scanpy_find_markers", "tool_version": "1.3.2+galaxy0", "outputs": [{"type": "h5", "name": "output_h5"}, {"type": "csv", "name": "output_csv"}], "workflow_outputs": [], "input_connections": {"input_obj_file": {"output_name": "output_h5", "id": 16}}, "tool_state": "{\"__page__\": null, \"input_format\": \"\\\"anndata\\\"\", \"settings\": \"{\\\"default\\\": \\\"true\\\", \\\"__current_case__\\\": 0}\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"n_genes\": \"\\\"50\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"output_markers\": \"\\\"true\\\"\", \"__rerun_remap_job_id__\": null}", "id": 18, "uuid": "9c76d67f-0efb-4df6-b315-1be049fe027d", "errors": null, "name": "Scanpy FindMarkers", "post_job_actions": {"HideDatasetActionoutput_h5": {"output_name": "output_h5", "action_type": "HideDatasetAction", "action_arguments": {}}, "HideDatasetActionoutput_csv": {"output_name": "output_csv", "action_type": "HideDatasetAction", "action_arguments": {}}}, "label": "find_markers", "inputs": [{"name": "input_obj_file", "description": "runtime parameter for tool Scanpy FindMarkers"}], "position": {"top": 495.78125, "left": 1436.6875}, "annotation": "", "content_id": "scanpy_find_markers", "type": "tool"}}, "annotation": "", "a_galaxy_workflow": "true"}
+{
+    "a_galaxy_workflow": "true", 
+    "annotation": "", 
+    "format-version": "0.1", 
+    "name": "Scanpy_iterate_on_params", 
+    "steps": {
+        "0": {
+            "annotation": "", 
+            "content_id": null, 
+            "errors": null, 
+            "id": 0, 
+            "input_connections": {}, 
+            "inputs": [], 
+            "label": "matrix", 
+            "name": "Input dataset", 
+            "outputs": [], 
+            "position": {
+                "left": 189, 
+                "top": 161.953125
+            }, 
+            "tool_id": null, 
+            "tool_state": "{}", 
+            "tool_version": null, 
+            "type": "data_input", 
+            "uuid": "40e0489e-6915-4775-9af4-73eb63d44872", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output", 
+                    "uuid": "6c9a2f93-677c-4e0b-b574-24cb5b21eb5c"
+                }
+            ]
+        }, 
+        "1": {
+            "annotation": "", 
+            "content_id": null, 
+            "errors": null, 
+            "id": 1, 
+            "input_connections": {}, 
+            "inputs": [], 
+            "label": "genes", 
+            "name": "Input dataset", 
+            "outputs": [], 
+            "position": {
+                "left": 204, 
+                "top": 262.953125
+            }, 
+            "tool_id": null, 
+            "tool_state": "{}", 
+            "tool_version": null, 
+            "type": "data_input", 
+            "uuid": "2bcc7704-a3dc-4d97-9809-444a7677c077", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output", 
+                    "uuid": "592c7a15-b721-455d-a158-ed30a8dceca3"
+                }
+            ]
+        }, 
+        "2": {
+            "annotation": "", 
+            "content_id": null, 
+            "errors": null, 
+            "id": 2, 
+            "input_connections": {}, 
+            "inputs": [], 
+            "label": "barcodes", 
+            "name": "Input dataset", 
+            "outputs": [], 
+            "position": {
+                "left": 208, 
+                "top": 349.953125
+            }, 
+            "tool_id": null, 
+            "tool_state": "{}", 
+            "tool_version": null, 
+            "type": "data_input", 
+            "uuid": "0b905f8b-8fc2-493e-bc17-b45463c14b25", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output", 
+                    "uuid": "0cc4b7f9-6b54-4fd4-a5ce-43420f53c416"
+                }
+            ]
+        }, 
+        "3": {
+            "annotation": "", 
+            "content_id": null, 
+            "errors": null, 
+            "id": 3, 
+            "input_connections": {}, 
+            "inputs": [], 
+            "label": "gtf", 
+            "name": "Input dataset", 
+            "outputs": [], 
+            "position": {
+                "left": 199, 
+                "top": 441.953125
+            }, 
+            "tool_id": null, 
+            "tool_state": "{}", 
+            "tool_version": null, 
+            "type": "data_input", 
+            "uuid": "8f9eeeec-557c-4095-9b8e-bd70ed7402c4", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output", 
+                    "uuid": "aa5c4369-5fcc-4ecb-8f08-ea5bb4504182"
+                }
+            ]
+        }, 
+        "4": {
+            "annotation": "", 
+            "content_id": "scanpy_parameter_iterator", 
+            "errors": null, 
+            "id": 4, 
+            "input_connections": {}, 
+            "inputs": [], 
+            "label": "perplexity", 
+            "name": "Scanpy ParameterIterator", 
+            "outputs": [
+                {
+                    "name": "parameter_iteration", 
+                    "type": "input"
+                }
+            ], 
+            "position": {
+                "left": 943, 
+                "top": 132.34375
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionparameter_iteration": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "parameter_iteration"
+                }
+            }, 
+            "tool_id": "scanpy_parameter_iterator", 
+            "tool_state": "{\"__page__\": null, \"__rerun_remap_job_id__\": null, \"end_value\": \"\\\"10.0\\\"\", \"parameter_name\": \"\\\"resolution\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"step\": \"\\\"1.0\\\"\", \"start_value\": \"\\\"0.0\\\"\"}", 
+            "tool_version": "0.0.1+galaxy0", 
+            "type": "tool", 
+            "uuid": "d68d8b61-07d8-4b2b-b1ca-048967a102d4", 
+            "workflow_outputs": []
+        }, 
+        "5": {
+            "annotation": "", 
+            "content_id": "scanpy_parameter_iterator", 
+            "errors": null, 
+            "id": 5, 
+            "input_connections": {}, 
+            "inputs": [], 
+            "label": "resolution", 
+            "name": "Scanpy ParameterIterator", 
+            "outputs": [
+                {
+                    "name": "parameter_iteration", 
+                    "type": "input"
+                }
+            ], 
+            "position": {
+                "left": 813, 
+                "top": 751.34375
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionparameter_iteration": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "parameter_iteration"
+                }
+            }, 
+            "tool_id": "scanpy_parameter_iterator", 
+            "tool_state": "{\"__page__\": null, \"__rerun_remap_job_id__\": null, \"end_value\": \"\\\"10.0\\\"\", \"parameter_name\": \"\\\"resolution\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"step\": \"\\\"1.0\\\"\", \"start_value\": \"\\\"0.0\\\"\"}", 
+            "tool_version": "0.0.1+galaxy0", 
+            "type": "tool", 
+            "uuid": "98c2a570-6550-4f1c-a1f3-9b62c5fdc9f7", 
+            "workflow_outputs": []
+        }, 
+        "6": {
+            "annotation": "", 
+            "content_id": "scanpy_read_10x", 
+            "errors": null, 
+            "id": 6, 
+            "input_connections": {
+                "barcodes": {
+                    "id": 2, 
+                    "output_name": "output"
+                }, 
+                "genes": {
+                    "id": 1, 
+                    "output_name": "output"
+                }, 
+                "matrix": {
+                    "id": 0, 
+                    "output_name": "output"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy Read10x", 
+                    "name": "genes"
+                }, 
+                {
+                    "description": "runtime parameter for tool Scanpy Read10x", 
+                    "name": "matrix"
+                }, 
+                {
+                    "description": "runtime parameter for tool Scanpy Read10x", 
+                    "name": "barcodes"
+                }
+            ], 
+            "label": null, 
+            "name": "Scanpy Read10x", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }
+            ], 
+            "position": {
+                "left": 460.765625, 
+                "top": 225.484375
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_h5": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "tool_id": "scanpy_read_10x", 
+            "tool_state": "{\"__page__\": null, \"genes\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"matrix\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"var_names\": \"\\\"gene_ids\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null, \"barcodes\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\"}", 
+            "tool_version": "1.3.2+galaxy0", 
+            "type": "tool", 
+            "uuid": "7d712663-6db6-4986-83a6-14f5711682b6", 
+            "workflow_outputs": []
+        }, 
+        "7": {
+            "annotation": "", 
+            "content_id": "_ensembl_gtf2gene_list", 
+            "errors": null, 
+            "id": 7, 
+            "input_connections": {
+                "gtf_input": {
+                    "id": 3, 
+                    "output_name": "output"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool GTF2GeneList", 
+                    "name": "gtf_input"
+                }
+            ], 
+            "label": null, 
+            "name": "GTF2GeneList", 
+            "outputs": [
+                {
+                    "name": "gene_list", 
+                    "type": "tsv"
+                }
+            ], 
+            "position": {
+                "left": 233, 
+                "top": 559.953125
+            }, 
+            "post_job_actions": {
+                "HideDatasetActiongene_list": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "gene_list"
+                }
+            }, 
+            "tool_id": "_ensembl_gtf2gene_list", 
+            "tool_state": "{\"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__page__\": null, \"__rerun_remap_job_id__\": null, \"gtf_input\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\"}", 
+            "tool_version": "1.42.1+galaxy0", 
+            "type": "tool", 
+            "uuid": "dd2bdbd5-bfed-4e4b-800f-e3780814ab69", 
+            "workflow_outputs": []
+        }, 
+        "8": {
+            "annotation": "", 
+            "content_id": "scanpy_filter_cells", 
+            "errors": null, 
+            "id": 8, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 6, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy FilterCells", 
+                    "name": "subset"
+                }, 
+                {
+                    "description": "runtime parameter for tool Scanpy FilterCells", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": "filter_cells", 
+            "name": "Scanpy FilterCells", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }
+            ], 
+            "position": {
+                "left": 479.765625, 
+                "top": 413.484375
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_h5": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "tool_id": "scanpy_filter_cells", 
+            "tool_state": "{\"subset\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"__page__\": null, \"parameters\": \"[{\\\"__index__\\\": 0, \\\"max\\\": \\\"1000000000.0\\\", \\\"name\\\": \\\"n_genes\\\", \\\"min\\\": \\\"0.0\\\"}]\", \"input_format\": \"\\\"anndata\\\"\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "1.3.2+galaxy0", 
+            "type": "tool", 
+            "uuid": "6515f034-9ba6-4ccc-954e-4c3eff3d952d", 
+            "workflow_outputs": []
+        }, 
+        "9": {
+            "annotation": "", 
+            "content_id": "scanpy_filter_genes", 
+            "errors": null, 
+            "id": 9, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 8, 
+                    "output_name": "output_h5"
+                }, 
+                "subset": {
+                    "id": 7, 
+                    "output_name": "gene_list"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy FilterGenes", 
+                    "name": "subset"
+                }, 
+                {
+                    "description": "runtime parameter for tool Scanpy FilterGenes", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": "filter_genes", 
+            "name": "Scanpy FilterGenes", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }
+            ], 
+            "position": {
+                "left": 469.765625, 
+                "top": 579.484375
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_h5": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "tool_id": "scanpy_filter_genes", 
+            "tool_state": "{\"subset\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"__page__\": null, \"parameters\": \"[{\\\"__index__\\\": 0, \\\"max\\\": \\\"1000000000.0\\\", \\\"name\\\": \\\"n_cells\\\", \\\"min\\\": \\\"0.0\\\"}]\", \"input_format\": \"\\\"anndata\\\"\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "1.3.2+galaxy0", 
+            "type": "tool", 
+            "uuid": "e0154ebb-3881-411c-8744-c2449b35ab63", 
+            "workflow_outputs": []
+        }, 
+        "10": {
+            "annotation": "", 
+            "content_id": "scanpy_normalise_data", 
+            "errors": null, 
+            "id": 10, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 9, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy NormaliseData", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": "normalise_data", 
+            "name": "Scanpy NormaliseData", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }
+            ], 
+            "position": {
+                "left": 462.765625, 
+                "top": 734.484375
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_h5": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "tool_id": "scanpy_normalise_data", 
+            "tool_state": "{\"__page__\": null, \"scale_factor\": \"\\\"10000.0\\\"\", \"input_format\": \"\\\"anndata\\\"\", \"save_raw\": \"\\\"true\\\"\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "1.3.2+galaxy0", 
+            "type": "tool", 
+            "uuid": "39040aaa-0d3d-4454-9a05-cf4e51349d80", 
+            "workflow_outputs": []
+        }, 
+        "11": {
+            "annotation": "", 
+            "content_id": "scanpy_find_variable_genes", 
+            "errors": null, 
+            "id": 11, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 10, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy FindVariableGenes", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": "find_variable_genes", 
+            "name": "Scanpy FindVariableGenes", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }
+            ], 
+            "position": {
+                "left": 458.765625, 
+                "top": 853.484375
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_h5": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "tool_id": "scanpy_find_variable_genes", 
+            "tool_state": "{\"n_top_gene\": \"\\\"\\\"\", \"__page__\": null, \"parameters\": \"[{\\\"__index__\\\": 0, \\\"max\\\": \\\"1000000000.0\\\", \\\"name\\\": \\\"mean\\\", \\\"min\\\": \\\"0.0\\\"}]\", \"input_format\": \"\\\"anndata\\\"\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"n_bin\": \"\\\"20\\\"\", \"flavor\": \"\\\"seurat\\\"\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "1.3.2+galaxy0", 
+            "type": "tool", 
+            "uuid": "c9c4f98a-4b16-458b-ac07-37ca2567bee3", 
+            "workflow_outputs": []
+        }, 
+        "12": {
+            "annotation": "", 
+            "content_id": "scanpy_scale_data", 
+            "errors": null, 
+            "id": 12, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 11, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy ScaleData", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": "scale_data", 
+            "name": "Scanpy ScaleData", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }
+            ], 
+            "position": {
+                "left": 458.765625, 
+                "top": 968.484375
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_h5": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "tool_id": "scanpy_scale_data", 
+            "tool_state": "{\"__page__\": null, \"var_regress\": \"\\\"\\\"\", \"input_format\": \"\\\"anndata\\\"\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"scale_max\": \"\\\"\\\"\", \"do_log\": \"\\\"true\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"var_to_regress\": \"\\\"\\\"\", \"__rerun_remap_job_id__\": null, \"zero_center\": \"\\\"true\\\"\"}", 
+            "tool_version": "1.3.2+galaxy1", 
+            "type": "tool", 
+            "uuid": "f3bee38c-da2c-4a3b-b183-46c03c066744", 
+            "workflow_outputs": []
+        }, 
+        "13": {
+            "annotation": "", 
+            "content_id": "scanpy_run_pca", 
+            "errors": null, 
+            "id": 13, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 12, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy RunPCA", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": "pca", 
+            "name": "Scanpy RunPCA", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }, 
+                {
+                    "name": "output_png", 
+                    "type": "png"
+                }, 
+                {
+                    "name": "output_embed", 
+                    "type": "csv"
+                }, 
+                {
+                    "name": "output_load", 
+                    "type": "csv"
+                }, 
+                {
+                    "name": "output_stdev", 
+                    "type": "csv"
+                }, 
+                {
+                    "name": "output_vprop", 
+                    "type": "csv"
+                }
+            ], 
+            "position": {
+                "left": 812.125, 
+                "top": 230.5625
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_embed": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_embed"
+                }, 
+                "HideDatasetActionoutput_h5": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_h5"
+                }, 
+                "HideDatasetActionoutput_load": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_load"
+                }, 
+                "HideDatasetActionoutput_png": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_png"
+                }, 
+                "HideDatasetActionoutput_stdev": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_stdev"
+                }, 
+                "HideDatasetActionoutput_vprop": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_vprop"
+                }
+            }, 
+            "tool_id": "scanpy_run_pca", 
+            "tool_state": "{\"__page__\": null, \"input_format\": \"\\\"anndata\\\"\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"n_pc\": \"\\\"50\\\"\", \"do_plotting\": \"{\\\"plot\\\": \\\"false\\\", \\\"__current_case__\\\": 1}\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null, \"extra_outputs\": \"null\", \"n_pcs\": \"\\\"50\\\"\", \"output_format\": \"\\\"anndata\\\"\", \"run_mode\": \"{\\\"chunked\\\": \\\"false\\\", \\\"random_seed\\\": \\\"0\\\", \\\"zero_center\\\": \\\"true\\\", \\\"__current_case__\\\": 1, \\\"svd_solver\\\": null}\"}", 
+            "tool_version": "1.3.2+galaxy1", 
+            "type": "tool", 
+            "uuid": "6e8455b7-e1d7-4077-ae6c-fbaf81f0c2af", 
+            "workflow_outputs": []
+        }, 
+        "14": {
+            "annotation": "", 
+            "content_id": "scanpy_compute_graph", 
+            "errors": null, 
+            "id": 14, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 13, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy ComputeGraph", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": "neighbours", 
+            "name": "Scanpy ComputeGraph", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }
+            ], 
+            "position": {
+                "left": 821.625, 
+                "top": 556.5625
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_h5": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "tool_id": "scanpy_compute_graph", 
+            "tool_state": "{\"__page__\": null, \"input_format\": \"\\\"anndata\\\"\", \"settings\": \"{\\\"default\\\": \\\"true\\\", \\\"__current_case__\\\": 0}\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "1.3.2+galaxy1", 
+            "type": "tool", 
+            "uuid": "1fa993d6-5549-4fe5-ada9-5fcac4ed0686", 
+            "workflow_outputs": []
+        }, 
+        "15": {
+            "annotation": "", 
+            "content_id": "scanpy_run_tsne", 
+            "errors": null, 
+            "id": 15, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 14, 
+                    "output_name": "output_h5"
+                }, 
+                "settings|perplexity_file": {
+                    "id": 4, 
+                    "output_name": "parameter_iteration"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy RunTSNE", 
+                    "name": "settings"
+                }, 
+                {
+                    "description": "runtime parameter for tool Scanpy RunTSNE", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": "run_tsne", 
+            "name": "Scanpy RunTSNE", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }, 
+                {
+                    "name": "output_png", 
+                    "type": "png"
+                }, 
+                {
+                    "name": "output_embed", 
+                    "type": "csv"
+                }
+            ], 
+            "position": {
+                "left": 1235.125, 
+                "top": 208.5625
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_png": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_png"
+                }
+            }, 
+            "tool_id": "scanpy_run_tsne", 
+            "tool_state": "{\"__page__\": null, \"embeddings\": \"\\\"true\\\"\", \"input_format\": \"\\\"anndata\\\"\", \"settings\": \"{\\\"random_seed\\\": \\\"0\\\", \\\"default\\\": \\\"false\\\", \\\"learning_rate\\\": \\\"1000.0\\\", \\\"early_exaggeration\\\": \\\"12.0\\\", \\\"perplexity_file\\\": {\\\"__class__\\\": \\\"RuntimeValue\\\"}, \\\"use_rep\\\": \\\"auto\\\", \\\"__current_case__\\\": 1, \\\"n_job\\\": \\\"\\\", \\\"perplexity\\\": \\\"30.0\\\", \\\"n_pc\\\": \\\"\\\", \\\"fast_tsne\\\": \\\"true\\\"}\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"do_plotting\": \"{\\\"plot\\\": \\\"false\\\", \\\"__current_case__\\\": 1}\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "1.3.2+galaxy1", 
+            "type": "tool", 
+            "uuid": "175dcf28-02f4-4a53-9955-e197f033852e", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output_embed", 
+                    "uuid": "20a7c7e2-c50f-4535-88ad-ff8deb99a08a"
+                }, 
+                {
+                    "label": null, 
+                    "output_name": "output_h5", 
+                    "uuid": "0decd03d-8ad1-4cb0-aa2e-b0506bbfce51"
+                }
+            ]
+        }, 
+        "16": {
+            "annotation": "", 
+            "content_id": "scanpy_find_cluster", 
+            "errors": null, 
+            "id": 16, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 14, 
+                    "output_name": "output_h5"
+                }, 
+                "settings|resolution_file": {
+                    "id": 5, 
+                    "output_name": "parameter_iteration"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy FindCluster", 
+                    "name": "settings"
+                }, 
+                {
+                    "description": "runtime parameter for tool Scanpy FindCluster", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": "find_clusters", 
+            "name": "Scanpy FindCluster", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }, 
+                {
+                    "name": "output_txt", 
+                    "type": "tsv"
+                }
+            ], 
+            "position": {
+                "left": 1196.5, 
+                "top": 625.34375
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_h5": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_h5"
+                }, 
+                "HideDatasetActionoutput_txt": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_txt"
+                }
+            }, 
+            "tool_id": "scanpy_find_cluster", 
+            "tool_state": "{\"__page__\": null, \"input_format\": \"\\\"anndata\\\"\", \"settings\": \"{\\\"random_seed\\\": \\\"0\\\", \\\"default\\\": \\\"false\\\", \\\"use_weights\\\": \\\"false\\\", \\\"resolution_file\\\": {\\\"__class__\\\": \\\"RuntimeValue\\\"}, \\\"key_added\\\": \\\"louvain\\\", \\\"__current_case__\\\": 1, \\\"restrict_to\\\": \\\"\\\", \\\"flavor\\\": \\\"vtraag\\\", \\\"resolution\\\": \\\"1.0\\\"}\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"output_cluster\": \"\\\"true\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "1.3.2+galaxy1", 
+            "type": "tool", 
+            "uuid": "ef63233c-8f22-4c5b-8569-55de88121b4c", 
+            "workflow_outputs": []
+        }, 
+        "17": {
+            "annotation": "", 
+            "content_id": "scanpy_run_umap", 
+            "errors": null, 
+            "id": 17, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 14, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy RunUMAP", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": null, 
+            "name": "Scanpy RunUMAP", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }, 
+                {
+                    "name": "output_png", 
+                    "type": "png"
+                }, 
+                {
+                    "name": "output_embed", 
+                    "type": "csv"
+                }
+            ], 
+            "position": {
+                "left": 1051, 
+                "top": 1001.34375
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_embed": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_embed"
+                }, 
+                "HideDatasetActionoutput_h5": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_h5"
+                }, 
+                "HideDatasetActionoutput_png": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_png"
+                }
+            }, 
+            "tool_id": "scanpy_run_umap", 
+            "tool_state": "{\"__page__\": null, \"embeddings\": \"\\\"true\\\"\", \"input_format\": \"\\\"anndata\\\"\", \"settings\": \"{\\\"default\\\": \\\"true\\\", \\\"__current_case__\\\": 0}\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"do_plotting\": \"{\\\"plot\\\": \\\"false\\\", \\\"__current_case__\\\": 1}\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "1.3.2+galaxy1", 
+            "type": "tool", 
+            "uuid": "077c4f34-a473-4b65-8350-35435ef5ba64", 
+            "workflow_outputs": []
+        }, 
+        "18": {
+            "annotation": "", 
+            "content_id": "scanpy_find_markers", 
+            "errors": null, 
+            "id": 18, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 16, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy FindMarkers", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": "find_markers", 
+            "name": "Scanpy FindMarkers", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }, 
+                {
+                    "name": "output_csv", 
+                    "type": "csv"
+                }
+            ], 
+            "position": {
+                "left": 1436.6875, 
+                "top": 495.78125
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_csv": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_csv"
+                }, 
+                "HideDatasetActionoutput_h5": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "tool_id": "scanpy_find_markers", 
+            "tool_state": "{\"__page__\": null, \"input_format\": \"\\\"anndata\\\"\", \"settings\": \"{\\\"default\\\": \\\"true\\\", \\\"__current_case__\\\": 0}\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"n_genes\": \"\\\"50\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"output_markers\": \"\\\"true\\\"\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "1.3.2+galaxy1", 
+            "type": "tool", 
+            "uuid": "9c76d67f-0efb-4df6-b315-1be049fe027d", 
+            "workflow_outputs": []
+        }
+    }, 
+    "tags": [], 
+    "uuid": "fd291c82-5645-4f56-bd3e-1354170240e3"
+}
