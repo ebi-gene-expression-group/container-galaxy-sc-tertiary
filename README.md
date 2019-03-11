@@ -42,7 +42,7 @@ To run on a cloud provider you need:
 
 For more details see these [instructions](https://tertiary-workflows-docs.readthedocs.io/en/v1.0.0/running_hx_single_cell_cloud_provider.html).
 
-## Advanced: used your own flavour of the container
+## Advanced: use your own flavour of the container
 
 ### Building this container
 
@@ -56,7 +56,7 @@ Then push your container to docker registry with `docker push`.
 
 ### Running in minikube
 
-Follow these [instructions](https://tertiary-workflows-docs.readthedocs.io/en/latest/running_galaxy_sc_locally.html)
+Follow these [instructions](https://tertiary-workflows-docs.readthedocs.io/en/v1.0.0/running_galaxy_sc_locally.html)
 to setup your environment if you haven't (only follow until before "Normal Run"). In that setup, the
 helm configuration for the galaxy-stable chart, available on this repo at `helm-configs/`, is used.
 To make use of the container that you just built, in your local copy of the helm config file, set the
@@ -72,7 +72,7 @@ init:
 ```
 
 Then proceed with the instructions for the
-[normal run](https://tertiary-workflows-docs.readthedocs.io/en/latest/running_galaxy_sc_locally.html#normal-run)
+[normal run](https://tertiary-workflows-docs.readthedocs.io/en/v1.0.0/running_galaxy_sc_locally.html#normal-run)
 in the previously mentioned page.
 
 # Building community images
