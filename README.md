@@ -4,11 +4,28 @@
 
 This is a Galaxy init container for the Hinxton Single Cell Interactive Analysis Environment,
 to be used as part of a larger orchestration of containers within Kubernetes. The init
-container includes tools, workflows and defined settings on how to give certains resources
+container includes tools, workflows and defined settings on how to give resources
 for the different tools.
 
 This Galaxy flavour aims to support computational scRNA-Seq data analysis in the
 context of the Human Cell Atlas (HCA) Project.
+
+Currently you can use the different components of Seurat, Scanpy, SC3 and Scater
+to make workflows in a user friendly manner. We also provision an embedded version
+of UCSC CellBrowser, for interactive visualisation of Seurat and Scanpy results.
+
+![](img/seurat-workflow.png)
+Figure 1: Seurat, processing data from Atlas and redirecting it to UCSC CellBrowser
+
+![](img/cell-browser.png)
+Figure 2: Embedded visualisation with Seurat.
+
+In upcoming releases we expect to have:
+- Major interoperability between the different
+tools components through the Loom interexchange format. This will enable workflows
+using different components of Seurat, Scater/Sc3 and Scanpy.
+- Additional visualisers, such as cellxgene.
+- Trajectories tools.
 
 ## Simple run
 
