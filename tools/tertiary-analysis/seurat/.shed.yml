@@ -1,0 +1,21 @@
+categories: 
+ - Transcriptomics
+ - RNA
+ - Statistics
+ - Sequence Analysis
+description: De-composed Seurat functionality tools, based on https://github.com/ebi-gene-expression-group/r-seurat-scripts and Seurat 2.3.1
+long_description: |
+        Seurat is an R package designed for QC, analysis, and exploration of single cell RNA-seq data. Seurat aims to enable users to identify and interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse types of single cell data.
+name: suite_seurat
+owner: ebi-gxa
+remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for the seurat tool suite: {{ tool_name }}"
+suite:
+  name: "suite_seurat"
+  description: "Seurat – R toolkit for single cell genomics"
+  long_description: |
+    Seurat is an R package designed for QC, analysis, and exploration of single cell RNA-seq data. Seurat aims to enable users to identify and interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse types of single cell data.
+

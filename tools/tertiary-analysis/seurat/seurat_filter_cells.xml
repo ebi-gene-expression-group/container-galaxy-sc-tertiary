@@ -1,0 +1,84 @@
+<tool id="seurat_filter_cells" name="Seurat FilterCells" version="2.3.1+galaxy1">
+    <description>filter cells in a Seurat object</description>
+    <macros>
+        <import>seurat_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <expand macro="version" />
+    <command detect_errors="exit_code"><![CDATA[
+seurat-filter-cells.R
+
+--input-object-file '$input'
+#if $subset:
+    --subset-names '$subset'
+#else
+    --subset-names nUMI
+#end if
+#if $low:
+--low-thresholds $low
+#end if
+#if $high:
+--high-thresholds $high
+#end if
+#if $cells:
+    --cells-use $cells
+#end if
+--output-object-file '$output'
+]]></command>
+
+    <inputs>
+        <param name="input" argument="--input-object-file" type="data" format="rdata" label="Seurat RDS object" help="Output from Seurat create object." />
+        <param name="subset" argument="--subset-names" type="text" label="Subset names" optional="True" help="Parameters to subset on. Eg, the name of a gene, PC1, a column name in object@meta.data, etc. Any argument that can be retreived using FetchData. Multiple values can be separated by colons (:).">
+            <validator type="regex" message="Please only use letters or numbers">^[\(\w\)]+$</validator>
+        </param>
+        <param name="low" argument="--low-thresholds" type="float" optional="True" label="Low threshold for filtering cells" help="Multiple values can be separated by colons (:) and should have same length as provided for `Subset names`." />
+        <param name="high" argument="--high-thresholds" type="float" optional="True" label="High threshold for filtering cells" help="Multiple values can be separated by colons (:) and should have same length as provided for `Subset names`." />
+        <param name="cells" argument="--cells-use" type="text" min="0" optional="True" help="Comma-separated list of cell names to use as a subset." label="Cells to use" />
+    </inputs>
+
+    <outputs>
+        <data name="output" format="rdata" from_work_dir="*.rds" label="${tool.name} on ${on_string}: Seurat RDS"/>
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="input" ftype="rdata" value="seurat.rds"/>
+            <output name="output" ftype="rdata" value="out_filter.rds" compare="sim_size"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+
+Seurat_ is a toolkit for quality control, analysis, and exploration of single cell RNA sequencing data.
+It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enable users to identify and
+interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse
+types of single cell data.
+
+This tool filters a Seurat RDS object.
+
+-----
+
+**Inputs**
+
+    * Seurat RDS object. Probably the one produced by Seurat create object.
+    * Subset names. A list of attributes to subset on, colon separated (:).
+    * Low thresholds. A minimum value for each of the attributes set in subset names, again, colon separated (:). Optional.
+    * High thresholds. A maximum value for each of the attributes set in subset names, again, colon separated (:). Optional.
+    * Cells to use. A list of cell names/idenfifiers to filter positively by.
+
+-----
+
+**Outputs**
+
+    * Seurat RDS object filtered according to the inputs.
+
+.. _Seurat: https://www.nature.com/articles/nbt.4096
+.. _Satija Lab: https://satijalab.org/seurat/
+
+@VERSION_HISTORY@
+
+]]></help>
+      <expand macro="citations" />
+</tool>

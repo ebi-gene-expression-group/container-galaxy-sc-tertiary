@@ -1,0 +1,60 @@
+<tool id="seurat_create_seurat_object" name="Seurat CreateSeuratObject" version="2.3.1+galaxy0">
+    <description>create a Seurat object</description>
+    <macros>
+        <import>seurat_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <expand macro="version" />
+    <command detect_errors="exit_code"><![CDATA[
+seurat-create-seurat-object.R
+
+--input-object-file '$input'
+--output-object-file '$output'
+]]></command>
+
+    <inputs>
+        <param name="input" type="data" format="rdata" label="Seurat object" help="RDS file from Seurat read10x module." />
+    </inputs>
+
+    <outputs>
+        <data name="output" format="rdata" from_work_dir="*.rds" label="${tool.name} on ${on_string}: Seurat RDS"/>
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="input" ftype="rdata" value="deng.rds"/>
+            <output name="output" ftype="rdata" value="seurat.rds" compare="sim_size"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+
+Seurat_ is a toolkit for quality control, analysis, and exploration of single cell RNA sequencing data.
+It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enable users to identify and
+interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse
+types of single cell data.
+
+This tool creates a Seurat object from an RDS object.
+
+-----
+
+**Inputs**
+
+    * RDS object from Seurat read_10x module.
+
+-----
+
+**Outputs**
+
+    * Seurat RDS object
+
+.. _Seurat: https://www.nature.com/articles/nbt.4096
+.. _Satija Lab: https://satijalab.org/seurat/
+
+@VERSION_HISTORY@
+
+]]></help>
+      <expand macro="citations" />
+</tool>

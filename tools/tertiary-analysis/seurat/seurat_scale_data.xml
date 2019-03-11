@@ -1,0 +1,113 @@
+<tool id="seurat_scale_data" name="Seurat ScaleData" version="2.3.1+galaxy1">
+    <description>scale and center genes</description>
+    <macros>
+        <import>seurat_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <expand macro="version" />
+    <command detect_errors="exit_code"><![CDATA[
+seurat-scale-data.R
+
+--input-object-file '$input'
+#if $vars:
+    --vars-to-regress '$vars'
+#else
+    --vars-to-regress nUMI
+#end if
+
+#if $genes:
+    --genes-use '$genes'
+#end if
+
+--model-use '$model'
+
+$use_umi
+$do_center
+
+#if $scale_max:
+    --scale-max '$scale_max'
+#end if
+
+#if $block_size:
+    --block-size '$block_size'
+#end if
+
+#if $min_cells_to_block:
+    --min-cells-to-block '$min_cells_to_block'
+#end if
+
+$check_for_norm
+
+
+
+--output-object-file '$output'
+]]></command>
+
+    <inputs>
+        <param name="input" argument="--input-object-file" type='data' format='rdata' help="File name in where a serialized R matrix object can be found." label="Seurat RDS object"/>
+        <param name="genes" argument="--genes-use" type='data' format='txt' optional='true' help="File to be used to derive a vector of gene names to scale/center (one gene per line). Default is all genes in object@data."/>
+        <param name="vars" argument="--vars-to-regress" type='text' optional='True' label="Vars to regress" help="Comma-separated list of variables to regress out (previously latent.vars in RegressOut). For example, nUMI, or percent.mito."/>
+        <param name="model" argument="--model-use" type="select" label="Statistical model" help="Use a linear model or generalized linear model (poisson, negative binomial) for the regression.">
+          <option value="linear" selected="true">Linear model</option>
+          <option value="poisson">Poisson model</option>
+          <option value="negbinom">Negative binomial model</option>
+        </param>
+        <param name="use_umi" argument="--use-umi" type="boolean" truevalue="--use-umi TRUE" falsevalue="" checked="false" label="Use UMIs." help="Regress on UMI count data. Default is FALSE for linear modeling, but automatically set to TRUE if model.use is 'negbinom' or 'poisson'."/>
+        <param name="do_center" argument="--do-center" type="boolean" falsevalue="--do-center FALSE" truevalue="" checked="true" label="Perform centering" help="Whether to center the data."/>
+        <param name="scale_max" argument="--scale-max" optional="true" type="float" label="Scale maximum" help = "Max value to return for scaled data. The default is 10. Setting this can help reduce the effects of genes that are only expressed in a very small number of cells. If regressing out latent variables and using a non-linear model, the default is 50."/>
+        <param name="block_size" argument="--block-size" optional="true" type="integer" label="Block size" help = "Default size for number of genes to scale at in a single computation. Increasing block.size may speed up calculations but at an additional memory cost. Defaults to 1000 if not specified."/>
+        <param name="min_cells_to_block" argument="--min-cells-to-block" optional="true" type="integer" label="Minimum number of cells to block" help="If object contains fewer than this number of cells, don't block for scaling calculations. Defaults to 1000."/>
+        <param name="check_for_norm" argument="--check-for-norm" optional="true" type="boolean" falsevalue="--check-for-norm FALSE" truevalue="" label="Check that data is normalized" help="Check to see if data has been normalized, if not, output a warning (TRUE by default). Data can be normalised by Seurat normalise module."/>
+    </inputs>
+
+    <outputs>
+        <data name="output" format="rdata" from_work_dir="*.rds" label="${tool.name} on ${on_string}: Seurat RDS"/>
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="input" ftype="rdata" value="out_findvar.rds"/>
+            <output name="output" ftype="rdata" value="out_scale.rds" compare="sim_size"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+
+Seurat_ is a toolkit for quality control, analysis, and exploration of single cell RNA sequencing data.
+It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enable users to identify and
+interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse
+types of single cell data.
+
+This tool regresses out variables in a Seurat object to mitigate the effect of confounding factors.
+
+
+-----
+
+**Inputs**
+
+    * Seurat RDS object, probably normalised.
+    * Genes to use. A file with a vector of gene names to scale/center (one gene per line). Default is all genes in object@data.
+    * Variables to regress
+    * Statistical model to use.
+    * Use UMIs (boolean)
+    * Do centering (boolean)
+    * Scale maximum
+    * Block size
+    * Minimum number of cells to block
+    * Check that data is normalised
+
+-----
+
+**Outputs**
+
+    * Seurat RDS object, scaled.
+
+.. _Seurat: https://www.nature.com/articles/nbt.4096
+.. _Satija Lab: https://satijalab.org/seurat/
+
+@VERSION_HISTORY@
+]]></help>
+      <expand macro="citations" />
+</tool>

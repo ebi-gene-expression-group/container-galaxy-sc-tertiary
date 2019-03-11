@@ -1,0 +1,53 @@
+<tool id="scater_normalize" name="Scater Normalise" version="@TOOL_VERSION@+galaxy0">
+  <description>expression values by library size in log2 scale</description>
+  <macros>
+    <import>scater_macros.xml</import>
+  </macros>
+  <expand macro="requirements" />
+  <command detect_errors="exit_code"><![CDATA[
+scater-normalize.R -i '${R_scater_qc}'
+#if $exprs_value:
+    --exprs-values '$exprs_value'
+#end if
+#if $log_exprs_offset:
+    --log-exprs-offset '$log_exprs_offset'
+#end if
+    --return-log '$return_log'
+    --centre-size-factors '$centre_size_factors'
+    -o '$R_scater_normalize'
+  ]]></command>
+
+  <inputs>
+    <param name="R_scater_qc" type="data" format="rdata" label="SingleCellExperiment object"
+           help="File name in which a serialized R SingleCellExperiment object where object matrix found."/>
+
+    <param name="exprs_value" argument="--exprs-values" type="text" optional="True" value="counts" label="Name of expression values"
+           help="character string indicating which slot of the assayData from the SingleCellExperiment object should be used to compute log-transformed expression values. Valid options are counts, tpm, cpm and fpkm. Defaults to the first available value of the options in the order shown"/>
+
+    <param name="return_log" argument="--return-log" type="boolean" checked="true" label="Save normalized values in log scale"
+           help="logical, should normalized values be returned on the log scale? Default is TRUE. If TRUE, output is stored as logcounts in the returned object; if FALSE output is stored as normcounts"/>
+
+    <param name="log_exprs_offset" argument="--log-exprs-offset" type="integer" optional="True" value="1" label="Pseudo counts to add when doing log transformation"
+           help="scalar numeric value giving the offset to add when taking log2 of normalised values to return as expression values. If NULL, value is taken from log.exprs.offset if defined, otherwise 1."/>
+
+    <param name="centre_size_factors" argument="--centre-size-factors" type="boolean" checked="true" label="Save centred size factors"
+           help="logical, should size factors centred at unity be stored in the returned object if exprs_values=counts, Defaults to TRUE. Regardless, centred size factors will always be used to calculate exprs from count data. This argument is ignored for other exprs_values, where no size factors are used or modified"/>
+  </inputs>
+
+  <outputs>
+    <data name="R_scater_normalize" format="rdata" label="${tool.name} on ${on_string}: serialized SingleCellExperiment object containing normalised expression values"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="R_scater_qc" value="R_scater_qc.rds"/>
+      <output name="R_scater_normalize" file="R_scater_normalize.rds"/>
+    </test>
+  </tests>
+  <help><![CDATA[
+  @HELP@
+
+  @VERSION_HISTORY@
+  ]]></help>
+  <expand macro="citations"/>
+</tool>

@@ -1,0 +1,107 @@
+<tool id="scater_filter" name="Scater Filter" version="@TOOL_VERSION@+galaxy0">
+  <description>cells and genes based on pre-calculated stats and QC metrics</description>
+  <macros>
+    <import>scater_macros.xml</import>
+  </macros>
+  <expand macro="requirements" />
+  <command detect_errors="exit_code"><![CDATA[
+scater-filter.R -i '${R_scater_qc}' -o '$R_scater_filtered'
+#if $cell_parameters
+    #set cell_pars = ','.join([str($p['name']) for $p in $cell_parameters])
+    -s '${cell_pars}'
+    #set cell_mins = ','.join([str($p['min']) for $p in $cell_parameters])
+    -l '${cell_mins}'
+    #set cell_maxs = ','.join([str($p['max']) for $p in $cell_parameters])
+    -j '${cell_maxs}'
+#end if
+#if $feature_parameters
+    #set ft_pars = ','.join([str($p['name']) for $p in $feature_parameters])
+    -t '${ft_pars}'
+    #set ft_mins = ','.join([str($p['min']) for $p in $feature_parameters])
+    -m '${ft_mins}'
+    #set ft_maxs = ','.join([str($p['max']) for $p in $feature_parameters])
+    -n '${ft_maxs}'
+#end if
+#if $cells_use:
+    -c '$cells_use'
+#end if
+#if $cells_discard:
+    -C '$cells_discard'
+#end if
+#if $features_use:
+    -f '$features_use'
+#end if
+#if $output_selected_cells:
+    -u '$selected_cells'
+#end if
+#if $output_selected_features:
+    -v '$selected_featuers'
+#end if
+
+  ]]></command>
+
+  <inputs>
+    <param name="R_scater_qc" type="data" format="rdata"
+           help="A serialized SingleCellExperiment object file in RDS format."/>
+
+    <repeat name="cell_parameters" title="Parameters used to filter cells" min="0">
+      <param name="name" type="text" value="total_features_by_counts" label="Name of the parameter to filter on" help="for example: total_features_by_counts, total_counts">
+        <option value="total_features_by_counts">total_features_by_counts</option>
+        <option value="total_counts">total_counts</option>
+      </param>
+      <param name="min" type="float" value="-1e9" label="Min value"/>
+      <param name="max" type="float" value="1e9" label="Max value"/>
+    </repeat>
+
+    <repeat name="feature_parameters" title="Parameters used to filter features" min="0">
+      <param name="name" type="text" value="n_cells_by_counts" label="Name of the parameter to filter on" help="for example: n_cells_by_counts, total_counts">
+        <option value="n_cells_by_counts">n_cells_by_counts</option>
+        <option value="total_counts">total_counts</option>
+      </param>
+      <param name="min" type="float" value="-1e9" label="Min value"/>
+      <param name="max" type="float" value="1e9" label="Max value"/>
+    </repeat>
+
+    <param name="cells_use" argument="--cells-use" type="data" format="txt" optional="true"
+           label="List of cells to include (optional)"
+           help="Text file with one cell per line providing cell names to use as a subset."/>
+
+    <param name="cells_discard" argument="--cells-discard" type="data" format="txt" optional="true"
+           label="List of cells to exclude (optional)"
+           help="Text file with one cell per line providing cell names to discard as a subset."/>
+
+    <param name="features_use" argument="--features-use" type="data" format="txt" optional="true"
+           label="List of features to include (optional)"
+           help="Text file with one features per line providing feature names to use as a subset."/>
+
+    <param name="output_selected_cells" label="Output lists of pass-filter cells" type="boolean" checked="false"/>
+
+    <param name="output_selected_features" label="Output lists of pass-filter features" type="boolean" checked="false"/>
+
+  </inputs>
+
+  <outputs>
+    <data name="R_scater_filtered" format="rdata" label="${tool.name} on ${on_string}: serialized SingleCellExperiment object"/>
+
+    <data name="selected_cells" format="tsv" label="${tool.name} on ${on_string}: pass-filter cells">
+      <filter>output_selected_cells</filter>
+    </data>
+    <data name="selected_featuers" format="tsv" label="${tool.name} on ${on_string}: pass-filter features">
+      <filter>output_selected_features</filter>
+    </data>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="R_scater_qc" value="R_scater_qc.rds"/>
+      <output name="R_scater_filtered" file="R_scater_filtered.rds"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+@HELP@
+
+@VERSION_HISTORY@
+  ]]></help>
+  <expand macro="citations" />
+</tool>

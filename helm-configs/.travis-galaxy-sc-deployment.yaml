@@ -1,0 +1,64 @@
+
+
+# Settings for the init image
+init:
+  image:
+    repository: test/galaxy-sc-tertiary
+    tag: v18.05
+    pullPolicy: IfNotPresent
+  force_copy: "__venv__,__config__,__galaxy-central__,__tools__"
+
+image:
+  repository: pcm32/galaxy-web-k8s
+  tag: v18.05
+  pullPolicy: Always
+
+admin:
+  email: admin@email.co.uk
+  password: "change-me"
+  api_key: askdhaskjdhqwkdnqdq
+  username: admin
+
+galaxy_conf:
+  brand: "scRNA-Seq Tertiary A."
+  admin_users: admin@email.co.uk
+  allow_user_creation: true
+  allow_user_deletion: true
+  cleanup_job: never
+  enable_beta_mulled_containers: true
+
+
+job_conf:
+  runners:
+    enable_local: "true"
+    enable_k8: "true"
+  destinations:
+    default: "docker_dispatch"
+    docker_default: "k8s_default"
+    no_docker_default: "local_no_container"
+
+
+persistence:
+  # storageClass: "-"
+  minikube:
+    enabled: false
+    # hostPath: "/data/galaxy-18.05-tertiary"
+
+service:
+  type: NodePort
+
+ingress:
+  enabled: false
+
+
+postgresql:
+  imageTag: "9.6.5_for_18.05"
+  persistence:
+    subPath: "postgres-tertiary"
+
+proftpd:
+  service:
+    type: NodePort
+
+rbac:
+  enabled: true

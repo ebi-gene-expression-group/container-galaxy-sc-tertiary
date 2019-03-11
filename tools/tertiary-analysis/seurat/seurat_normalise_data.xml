@@ -1,0 +1,76 @@
+<tool id="seurat_normalise_data" name="Seurat NormaliseData" version="2.3.1+galaxy1">
+    <description>normalise data</description>
+    <macros>
+        <import>seurat_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <expand macro="version" />
+    <command detect_errors="exit_code"><![CDATA[
+seurat-normalise-data.R
+
+--input-object-file '$input'
+#if $norm:
+    --normalization-method $norm
+#end if
+#if $assay:
+    --assay-type '$assay'
+#end if
+#if $scale:
+    --scale-factor $scale
+#end if
+--output-object-file '$output'
+]]></command>
+
+    <inputs>
+        <param name="input" argument="--input-object-file" type="data" format="rdata" label="Seurat RDS object" help="Possibly the output of Seurat filter cells or Seurat create object." />
+        <param name="norm" argument="--normalization-method" type="text" optional="True" label="Normalisation method" help = "Method for normalization. Default is log-normalization (LogNormalize)."/>
+        <param name="assay" argument="--assay-type" type="text" optional="True" label="Assay type" help = "Type of assay to normalize for (default is RNA), but can be changed for multimodal analyses.">
+            <validator type="regex" message="Please only use letters">^[\(\w\)]+$</validator>
+        </param>
+        <param name="scale" argument="--scale-factor" type="integer" optional="True" label="Scale factor" help="Sets the scale factor for cell-level normalization"/>
+    </inputs>
+
+    <outputs>
+        <data name="output" format="rdata" from_work_dir="*.rds" label="${tool.name} on ${on_string}: RDS file"/>
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="input" ftype="rdata" value="seurat.rds"/>
+            <output name="output" ftype="rdata" value="out_norm.rds" compare="sim_size"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+
+Seurat_ is a toolkit for quality control, analysis, and exploration of single cell RNA sequencing data.
+It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enable users to identify and
+interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse
+types of single cell data.
+
+This tool normalises a Seurat RDS object.
+
+-----
+
+**Inputs**
+
+    * Seurat RDS object. Possibly the output of Seurat filter cells or Seurat create object.
+    * Normalisation method. Method for normalization. Default is log-normalization (LogNormalize).
+    * Assay type. Type of assay to normalize for (default is RNA), but can be changed for multimodal analyses.
+    * Scale factor. Sets the scale factor for cell-level normalization. Default: 1000
+
+-----
+
+**Outputs**
+
+    * Seurat RDS object with normalised matrix.
+
+.. _Seurat: https://www.nature.com/articles/nbt.4096
+.. _Satija Lab: https://satijalab.org/seurat/
+
+@VERSION_HISTORY@
+]]></help>
+      <expand macro="citations" />
+</tool>

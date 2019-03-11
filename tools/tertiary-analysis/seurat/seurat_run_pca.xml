@@ -1,0 +1,84 @@
+<tool id="seurat_run_pca" name="Seurat RunPCA" version="2.3.1+galaxy1">
+    <description>run a PCA dimensionality reduction</description>
+    <macros>
+        <import>seurat_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <expand macro="version" />
+    <command detect_errors="exit_code"><![CDATA[
+seurat-run-pca.R
+
+--input-object-file '$input'
+#if $pc_genes:
+    --pc-genes '$pc-genes'
+#end if
+--output-object-file '$output'
+--output-embeddings-file output_embed
+--output-loadings-file output_load
+--output-stdev-file output_sdev
+#if $pcs_compute:
+    --pcs-compute '$pcs_compute'
+#end if
+#if $use_imputed:
+'$use_imputed'
+#end if
+
+]]></command>
+
+    <inputs>
+        <param name="input" type="data" format="rdata" label="RDS object" />
+        <param name="pc_genes" type="data" format="tabular, txt" optional="True" label="Genes to scale" help="File of gene names to scale/center. Default is all genes in object." />
+        <param name="pcs_compute" type="integer" optional="True" label="Principal components" help="Total Number of PCs to compute and store (20 by default). Less PCs might be faster, but will explain less variance."/>
+        <param name="use_imputed" type="boolean" truevalue="--use-imputed TRUE" falsevalue="" checked="false" label="Use imputed" help="Run PCA on imputed values."/>
+    </inputs>
+
+    <outputs>
+        <data name="output" format="rdata" from_work_dir="*.rds" label="${tool.name} on ${on_string}: Seurat RDS"/>
+        <data name="output_embed" format="csv" from_work_dir="output_embed" label="${tool.name} on ${on_string}: Seurat Embeddings"/>
+        <data name="output_load" format="csv" from_work_dir="output_load" label="${tool.name} on ${on_string}: Seurat Loadings"/>
+        <data name="output_sdev" format="csv" from_work_dir="output_sdev" label="${tool.name} on ${on_string}: Seurat Std dev"/>
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="input" ftype="rdata" value="out_scale.rds"/>
+            <output name="output" ftype="rdata" value="out_runpca.rds" compare="sim_size"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+
+Seurat_ is a toolkit for quality control, analysis, and exploration of single cell RNA sequencing data.
+It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enable users to identify and
+interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse
+types of single cell data.
+
+This tool runs a PCA dimensionality reduction
+
+-----
+
+**Inputs**
+
+    * Seurat RDS object, normalised and scaled potentially.
+    * Genes used to scale. File of gene names to scale/center. Default is all genes in object.
+    * Principal components to compute. Total Number of PCs to compute and store (20 by default). Less PCs might be faster, but will explain less variance.
+    * Use imputed. Boolean indicating whether to run PCA on imputed values or not.
+
+-----
+
+**Outputs**
+
+    * Seurat RDS object with PCA calculations and embeddings.
+    * Embeddings on CSV file. File with a csv-format embeddings table with principal components by cell.
+    * Loadings on CSV file. File with a csv-format loadings table with principal components by gene.
+    * Standard deviation on CSV file. Contains principal components std. deviations.
+
+.. _Seurat: https://www.nature.com/articles/nbt.4096
+.. _Satija Lab: https://satijalab.org/seurat/
+
+@VERSION_HISTORY@
+]]></help>
+      <expand macro="citations" />
+</tool>

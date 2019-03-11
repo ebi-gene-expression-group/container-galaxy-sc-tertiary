@@ -1,0 +1,20 @@
+categories:
+ - Transcriptomics
+ - RNA
+ - Statistics
+ - Sequence Analysis
+description: "De-composed DropletUtils functionality tools, based on https://github.com/ebi-gene-expression-group/dropletutils-scripts and DropletUtils 1.0.3"
+long_description: |
+        DropletUtils provides a number of utility functions for handling single-cell (RNA-seq) data from droplet technologies such as 10X Genomics. This includes data loading, identification of cells from empty droplets, removal of barcode-swapped pseudo-cells, and downsampling of the count matrix.
+name: suite_dropletutils
+owner: ebi-gxa
+remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for the DropletUtils tool suite: {{ tool_name }}"
+suite:
+  name: "suite_dropletutils"
+  description: "De-composed DropletUtils functionality tools, based on https://github.com/ebi-gene-expression-group/dropletutils-scripts and DropletUtils 1.0.3"
+  long_description: |
+    DropletUtils provides a number of utility functions for handling single-cell (RNA-seq) data from droplet technologies such as 10X Genomics. This includes data loading, identification of cells from empty droplets, removal of barcode-swapped pseudo-cells, and downsampling of the count matrix.

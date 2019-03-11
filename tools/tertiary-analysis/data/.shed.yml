@@ -1,0 +1,18 @@
+categories:
+ - Transcriptomics
+ - Sequence Analysis
+description: "Tools for interacting with the EMBL-EBI Expression Atlas resource https://www.ebi.ac.uk/gxa/home https://www.ebi.ac.uk/gxa/sc/home"
+long_description: |
+        The EMBL-EBI Expression Atlas is an open science resource that gives users a powerful way to find information about gene and protein expression across species and biological conditions such as different tissues, cell types, developmental stages and diseases among others. Expression Atlas aims to help answering questions such as ‘where is a certain gene expressed?’ or ‘how does its expression change in a disease?’.
+name: "suite_ebi_expression_atlas"
+owner: ebi-gxa
+remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for the SC3 tool suite: {{ tool_name }}"
+suite:
+  name: "suite_ebi_expression_atlas"
+  description: "Tools for interacting with the EMBL-EBI Expression Atlas resource https://www.ebi.ac.uk/gxa/home https://www.ebi.ac.uk/gxa/sc/home"
+  long_description: |
+        The EMBL-EBI Expression Atlas is an open science resource that gives users a powerful way to find information about gene and protein expression across species and biological conditions such as different tissues, cell types, developmental stages and diseases among others. Expression Atlas aims to help answering questions such as ‘where is a certain gene expressed?’ or ‘how does its expression change in a disease?’.

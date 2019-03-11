@@ -1,0 +1,75 @@
+<tool id="seurat_read10x" name="Seurat Read10x" version="2.3.1+galaxy1">
+<description>Loads 10x data into a serialized seurat R object</description>
+  <macros>
+      <import>seurat_macros.xml</import>
+  </macros>
+  <expand macro="requirements" />
+<stdio>
+<exit_code range="1:" />
+</stdio>
+<command><![CDATA[
+ln -s "$matrix" matrix.mtx;
+ln -s "$genes" genes.tsv;
+ln -s "$barcodes" barcodes.tsv;
+
+seurat-read-10x.R -d ./ -o "$R_seurat_serialized"
+]]></command>
+<inputs>
+    <param type="data" name="matrix" help="Raw expression quantification as a sparse matrix in Matrix Market format, where each column is a gene and each row is a barcode/cell." format="txt" label="Expression matrix in sparse matrix format (.mtx)" />
+    <param type="data" name="genes" help="Matrix market column file for genes" label="Gene table" format="tsv,tabular"/>
+    <param type="data" name="barcodes" help="Matrix market row file for genes" label="Barcode/cell table" format="tsv,tabular"/>
+</inputs>
+<outputs>
+    <data name="R_seurat_serialized" format="rdata" label="${tool.name} on ${on_string}: RData file" />
+</outputs>
+
+<tests>
+    <test>
+       <param name="matrix" ftype="txt" value="test_matrix.txt"/>
+       <param name="genes" ftype="txt" value="test_genes.txt"/>
+       <param name="barcodes" ftype="txt" value="test_barcodes.txt"/>
+       <output name="R_seurat_serialized" ftype="rdata" value="out_scale.rds" compare="sim_size"/>
+    </test>
+</tests>
+
+
+<help><![CDATA[
+  .. class:: infomark
+
+  **What it does**
+
+  Seurat_ is a toolkit for quality control, analysis, and exploration of single cell RNA sequencing data.
+  It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enable users to identify and
+  interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse
+  types of single cell data. See the `Seurat Guided Clustering tutorial`_ for more information.
+
+  **Read 10x-Genomics-formatted mtx directory (`read_10x_mtx`)**
+
+  The mtx directory should contain:
+
+  1) Raw expression quantification as a sparse matrix in Matrix Market format, where the each column is a gene and each row is a barcode/cell.
+
+  2) A gene table of at least two columns where the first column gives the gene IDs.
+
+  3) A barcode/cell table of at least one column giving the barcode/cell IDs.
+
+  The above-mentioned files can be obtained by running `EBI SCXA Data Retrieval`
+  with a dataset accession. Otherwise, they need to be provided as separate Galaxy
+  datasets.
+
+  **Inputs**
+      * Raw expression quantification as a sparse matrix in Matrix Market format, where the each column is a gene and each row is a barcode/cell.
+      * A gene table of at least two columns where the first column gives the gene IDs.
+      * A barcode/cell table of at least one column giving the barcode/cell IDs.
+
+  **Outputs**
+      * R object for Seurat
+
+  .. _Seurat: https://www.nature.com/articles/nbt.4096
+  .. _Satija Lab: https://satijalab.org/seurat/
+  .. _Seurat Guided Clustering tutorial: https://satijalab.org/seurat/pbmc3k_tutorial.html
+
+@VERSION_HISTORY@
+]]></help>
+<expand macro="citations"/>
+</tool>

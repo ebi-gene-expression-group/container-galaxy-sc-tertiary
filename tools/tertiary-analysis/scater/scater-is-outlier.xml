@@ -1,0 +1,69 @@
+<tool id="scater_is_outlier" name="Scater DetectOutlier" version="@TOOL_VERSION@+galaxy0">
+  <description>cells based on expression metrics</description>
+  <macros>
+    <import>scater_macros.xml</import>
+  </macros>
+  <expand macro="requirements" />
+  <command detect_errors="exit_code"><![CDATA[
+scater-extract-qc-metric.R -i '${R_scater_qc}' -m '$metrics' -o metrics.csv &&
+
+scater-is-outlier.R -m metrics.csv
+#if $nmads:
+    -n '$nmads'
+#end if
+#if $outlier_type:
+    -t '$outlier_type'
+#end if
+#if $outlier_log:
+    -l '$outlier_log'
+#end if
+#if $outlier_min_diff:
+    -d '$outlier_min_diff'
+#end if
+    -o outliers.txt &&
+
+cut -f1 -d',' outliers.txt > '$outliers_file'
+  ]]></command>
+
+  <inputs>
+    <param name="R_scater_qc" type="data" format="rdata" label="Input serialized SingleCellExperiment RDS object"
+           help="A serialized SingleCellExperiment RDS object with pre-calculated QC metrics"/>
+
+    <param name="metrics" type="text" label="Name of the QC metric used to detected outlier"
+           help ="character scalar, name of a numeric QC metric available in the input SingleCellExperiment object."/>
+
+    <param name="outlier_type" argument="--type" type="select" value="both" label="Detect outlier from lower/higher/both ends of the distribution"
+           help="character scalar, choice indicate whether outliers should be looked for at both tails (default: both) or only at the lower end (lower) or the higher end (higher).">
+      <option value="both">Both</option>
+      <option value="lower">Lower</option>
+      <option value="higher">Higher</option>
+    </param>
+
+    <param name="outlier_log" argument="--log" type="boolean" checked="false" label="Transform to log10 scale"
+           help="logical, should the values of the metric be transformed to the log10 scale before computing median-absolute-deviation for outlier detection"/>
+
+    <param name="nmads" argument="--nmads" type="integer" optional="true" value="5" label="Threshold in number of MAD away from the median"
+           help="scalar, number of median-absolute-deviations away from median required for a value to be called an outlier."/>
+
+    <param name="outlier_min_diff" argument="--min-diff" type="integer" optional="true" label="Threshold in value difference from the median"
+           help="numeric scalar indicating the minimum difference from the median to consider as an outlier. The outlier threshold is defined from the larger of nmads MADs and min.diff, to avoid calling many outliers when the MAD is very small. If NA, it is ignored."/>
+  </inputs>
+
+  <outputs>
+    <data name="outliers_file" format="csv" label="${tool.name} on ${on_string}: a one column csv of outliers"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="extracted_metrics_file" value="extracted_metrics_file.txt"/>
+      <output name="outliers_file" file="outliers_file.txt"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+@HELP@
+
+@VERSION_HISTORY@
+  ]]></help>
+  <expand macro="citations"/>
+</tool>

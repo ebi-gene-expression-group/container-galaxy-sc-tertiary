@@ -1,0 +1,20 @@
+categories:
+ - Transcriptomics
+ - RNA
+ - Statistics
+ - Sequence Analysis
+description: "De-composed SC3 functionality tools, based on https://github.com/ebi-gene-expression-group/bioconductor-sc3-scripts and SC3 1.8.0."
+long_description: |
+        SC3 is a tool for unsupervised clustering and analysis of single cell RNA-Seq data.
+name: suite_sc3
+owner: ebi-gxa
+remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for the SC3 tool suite: {{ tool_name }}"
+suite:
+  name: "suite_sc3"
+  description: "De-composed SC3 functionality tools, based on https://github.com/ebi-gene-expression-group/bioconductor-sc3-scripts and SC3 1.8.0."
+  long_description: |
+    SC3 is a tool for unsupervised clustering and analysis of single cell RNA-Seq data.

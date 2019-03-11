@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<!-- A sample job config for sketching the k8s use case with shared fs -->
+<job_conf>
+  <plugins>
+    <plugin id="local" type="runner" load="galaxy.jobs.runners.local:LocalJobRunner" workers="4"/>
+    <plugin id="k8s" type="runner" load="galaxy.jobs.runners.kubernetes:KubernetesJobRunner">
+      <param id="k8s_use_service_account" from_environ="GALAXY_RUNNERS_K8S_USE_SERVICE_ACCOUNT">true</param>
+      <param id="k8s_persistent_volume_claim_name" from_environ="GALAXY_RUNNERS_K8S_PERSISTENT_VOLUME_CLAIM_NAME">galaxy-pvc</param>
+      <!-- The following mount path needs to be the initial part of the "file_path" and "new_file_path" paths
+            set in universe_wsgi.ini (or equivalent general galaxy config file).  -->
+      <param id="k8s_persistent_volume_claim_mount_path" from_environ="GALAXY_RUNNERS_K8S_PERSISTENT_VOLUME_CLAIM_MOUNT_PATH">/opt/galaxy_data</param>
+      <param id="k8s_namespace" from_environ="GALAXY_RUNNERS_K8S_NAMESPACE">default</param>
+      <param id="k8s_supplemental_group_id" from_environ="GALAXY_RUNNERS_K8S_SUPPLEMENTAL_GROUP_ID">0</param>
+      <param id="k8s_fs_group_id" from_environ="GALAXY_RUNNERS_K8S_FS_GROUP_ID">0</param>
+      <param id="k8s_pull_policy" from_environ="GALAXY_RUNNERS_K8S_PULL_POLICY">IfNotPresent</param>
+      <!-- Allows pods to retry up to this number of times, before marking the Job as failed -->
+      <param id="k8s_pod_retrials" from_environ="GALAXY_RUNNERS_K8S_POD_RETRIALS">1</param>
+      <param id="k8s_galaxy_instance_id" from_environ="GALAXY_RUNNERS_K8S_INSTANCE_ID">my-instance</param>
+    </plugin>
+  </plugins>
+  <handlers default="handlers">
+    <handler id="handler0" tags="handlers"/>
+    <handler id="handler1" tags="handlers"/>
+  </handlers>
+  <destinations default_from_environ="GALAXY_DESTINATIONS_DEFAULT" default="local">
+    <destination id="local" runner="local"/>
+    <destination id="local_no_container" runner="local">
+        <env file="/export/venv/bin/activate"/>
+        <param id="enabled" from_environ="GALAXY_RUNNERS_ENABLE_LOCAL">true</param>
+    </destination>
+    <destination id="docker_dispatch" runner="dynamic">
+      <!-- Allow different default destinations based on whether the tool
+               supports Docker or not. -->
+      <param id="type">docker_dispatch</param>
+      <param id="docker_destination_id" from_environ="GALAXY_DESTINATIONS_DOCKER_DEFAULT">slurm_cluster</param>
+      <param id="default_destination_id" from_environ="GALAXY_DESTINATIONS_NO_DOCKER_DEFAULT">slurm_cluster</param>
+    </destination>
+    <destination id="k8s_default" runner="k8s">
+      <env file="/export/venv/bin/activate"/>
+      <param id="enabled" from_environ="GALAXY_RUNNERS_ENABLE_K8S">true</param>
+      <param id="docker_enabled">true</param>
+      <param id="docker_sudo" from_environ="GALAXY_DOCKER_SUDO">False</param>
+      <!-- The empty volumes from shouldn't affect Galaxy, set GALAXY_DOCKER_VOLUMES_FROM to use. -->
+      <param id="docker_volumes_from" from_environ="GALAXY_DOCKER_VOLUMES_FROM"></param>
+      <!-- For a stock Galaxy instance and traditional job runner $defaults will expand out as: $galaxy_root:ro,$tool_directory:ro,$working_directory:rw,$default_file_path:rw -->
+      <param id="docker_volumes" from_environ="GALAXY_DOCKER_VOLUMES">$defaults</param>
+      <param id="docker_default_container_id" from_environ="GALAXY_DOCKER_DEFAULT_CONTAINER">busybox:ubuntu-14.04</param>
+    </destination>
+    <destination id="dynamic-k8s-dispatcher" runner="dynamic">
+      <param id="type">python</param>
+      <param id="function">k8s_dispatcher</param>
+      <param id="no_docker_default_destination_id" from_environ="GALAXY_DESTINATIONS_NO_DOCKER_DEFAULT">slurm_cluster</param>
+      <param id="docker_default_container_id" from_environ="GALAXY_DOCKER_DEFAULT_CONTAINER">busybox:ubuntu-14.04</param>
+      <param id="docker_enabled">true</param>
+    </destination>
+    <destination id="dynamic-k8s-tiny" runner="dynamic">
+      <param id="type">python</param>
+      <param id="function">k8s_wrapper_tiny</param>
+      <resubmit condition="memory_limit_reached" destination="dynamic-k8s-small"/>
+    </destination>
+    <destination id="dynamic-k8s-small" runner="dynamic">
+      <param id="type">python</param>
+      <param id="function">k8s_wrapper_small</param>
+      <resubmit condition="memory_limit_reached" destination="dynamic-k8s-medium"/>
+    </destination>
+    <destination id="dynamic-k8s-medium" runner="dynamic">
+      <param id="type">python</param>
+      <param id="function">k8s_wrapper_medium</param>
+      <resubmit condition="memory_limit_reached" destination="dynamic-k8s-large"/>
+    </destination>
+    <destination id="dynamic-k8s-large" runner="dynamic">
+      <param id="type">python</param>
+      <param id="function">k8s_wrapper_large</param>
+      <resubmit condition="memory_limit_reached" destination="dynamic-k8s-xlarge"/>
+    </destination>
+    <destination id="dynamic-k8s-xlarge" runner="dynamic">
+      <param id="type">python</param>
+      <param id="function">k8s_wrapper_xlarge</param>
+    </destination>
+  </destinations>
+  <tools>
+    <!-- Tools can be configured to use specific destinations or handlers,
+         identified by either the "id" or "tags" attribute.  If assigned to
+         a tag, a handler or destination that matches that tag will be
+         chosen at random.  -->
+    <!-- <tool id="seurat-read10x" destination="dynamic-k8s-tiny" resources="all"/> -->
+    <!-- <tool id="ucsc-cell-browser" destination="dynamic-k8s-tiny" resources="all"/> -->
+
+
+  </tools>
+  <resources default="all">
+    <!-- Group different parameters defined in job_resource_params_conf.xml
+         together and assign these groups ids. Tool section below can map
+         tools to different groups. This is experimental functionality!  -->
+    <group id="cpu">requests_cpu,limits_cpu</group>
+    <group id="memory">requests_memory,limits_memory</group>
+    <group id="all">requests_cpu,limits_cpu,requests_memory,limits_memory</group>
+  </resources>
+</job_conf>
+
+<!-- vim: set et sw=2 ts=2 -->

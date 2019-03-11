@@ -1,0 +1,62 @@
+<tool id="scater_calculate_qc_metrics" name="Scater CalculateQcMetrics" version="@TOOL_VERSION@+galaxy0">
+  <description>based on expression values and experiment information</description>
+  <macros>
+    <import>scater_macros.xml</import>
+  </macros>
+  <expand macro="requirements" />
+  <command detect_errors="exit_code"><![CDATA[
+scater-calculate-qc-metrics.R -i '$R_scater_serialized'
+#if $exprs_values:
+    -e '$exprs_values'
+#end if
+## #if $feature_controls:
+##     -f '$feature_controls'
+## #end if
+#if $cell_controls:
+    -c '$cell_controls'
+#end if
+#if $pct_top:
+    -p '$pct_top'
+#end if
+#if $detection_limit:
+    -d '$detection_limit'
+#end if
+    -s $use_spikes
+    -o '$R_scater_qc'
+    ]]></command>
+
+  <inputs>
+    <param name="R_scater_serialized" type="data" format="rdata" label="SingleCellExperiment object"
+           help="singleCellExperiment object containing expression values and experimental information. Must have been appropriately prepared."/>
+    <param name="exprs_values" type="text" argument="--exprs-values" optional="true" value='counts' label="name of the variable that defines expression values in RDS object"
+           help="character, indicating slot of the assays of the object that should be used to define expression. Valid options are counts as default. tpm, fpkm and logcounts, or anything else in the object added manually by the user."/>
+    <!-- <param name="feature_controls" type="text" argument="-\-feature-controls" optional="true" label="feature controls" -->
+    <!--        help="file containing a list of the control files with one file per line. Each control file should have one feature (e.g. gene) per line. A named list is created (names derived from control file names) containing one or more vectors to identify feature controls (for example, ERCC spike-in genes, mitochondrial genes, etc)"/> -->
+    <param name="cell_controls" type="data" format="tabula" argument="--cell-controls" optional="true" label="cell controls"
+           help="file (one cell per line) to be used to derive a vector of cell (sample) names used to identify cell controls (for example, blank wells or bulk controls)."/>
+    <param name="pct_top" type="text" argument="--percent-top" value="50,100,200,500" optional="true"
+           label="Number of top genes" help="Each element is treated as a number of top genes to compute the percentage of library size occupied by the most highly expressed genes in each cell."/>
+    <param name="detection_limit" type="float" argument="--detection-limit" value="0" optional="true"
+           label="lower detection limit for expression" help="A numeric scalar to be passed to 'nexprs', specifying the lower detection limit for expression."/>
+    <param name="use_spikes" type="boolean" argument="--use-spikes" checked="true" optional="true"
+           label="Set spike-in as control features?" help="A logical scalar indicating whether existing spike-in sets in 'object' should be automatically added to 'feature_controls'"/>
+  </inputs>
+
+  <outputs>
+    <data name="R_scater_qc" format="rdata" label="${tool.name} on ${on_string}: serialized SingleCellExperiment object containing calculated QC metrics"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="R_scater_serialized" value="R_scater_serialized.rds"/>
+      <output name="R_scater_qc"  file="R_scater_qc.rds"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+  @HELP@
+
+  @VERSION_HISTORY@
+  ]]></help>
+  <expand macro="citations" />
+</tool>

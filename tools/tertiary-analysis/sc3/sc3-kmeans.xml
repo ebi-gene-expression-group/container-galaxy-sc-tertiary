@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="sc3_kmeans" name="SC3 K-Means" version="@TOOL_VERSION@+galaxy0">
+  <description>perform k-means clustering</description>
+  <macros>
+    <import>sc3-macros.xml</import>
+  </macros>
+  <expand macro="requirements" />
+  <command detect_errors="exit_code"><![CDATA[
+sc3-sc3-kmeans.R -i '${sc3_transformed}'
+#if $choose.method == "file":
+    -k '${choose.sc3_estimated_k}'
+#else
+    -k '${choose.input_k}'
+#end if
+    -o '${sc3_kmeans}'
+]]></command>
+
+  <inputs>
+    <param name="sc3_transformed" type="data" format="rdata" label="Serialised sc3 SingleCellExperiment object with transformed distances"/>
+
+    <conditional name="choose">
+      <param name="method" type="select" label="Method to supply K">
+        <option value="input">Enter K as an integer</option>
+        <option value="file">Provide a text file containing K</option>
+      </param>
+      <when value="input">
+        <param name="input_k" type="integer" value="0" label="Integer K as the number of clusters for kmeans"/>
+      </when>
+      <when value="file">
+        <param name="sc3_estimated_k" type="data" format="txt" label="Text file containing estimated K"/>
+      </when>
+    </conditional>
+  </inputs>
+
+  <outputs>
+    <data name="sc3_kmeans" format="rdata" label="${tool.name} on ${on_string}: serialised sc3 SingleCellExperiment object storing the k-means clusters"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="sc3_transformed" value="sc3_transformed.rds"/>
+      <param name="sc3_estimated_k" value="K_size"/>
+      <output name="sc3_kmeans" file="sc3_kmeans.rds"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+=========================================
+This function performs kmeans clustering.
+=========================================
+
+It uses transformed distance matrix contained in the transformations item of the
+sc3 slot of the metadata(object).  It then creates and populates the following
+items of the sc3 slot:
+
+- kmeans: contains a list of kmeans clusterings.
+
+@HELP@
+
+@VERSION_HISTORY@
+]]></help>
+  <expand macro="citations" />
+</tool>

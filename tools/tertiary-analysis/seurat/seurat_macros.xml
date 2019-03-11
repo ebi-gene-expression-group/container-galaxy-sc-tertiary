@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<macros>
+
+    <token name="@VERSION@">0.0.5</token>
+
+    <xml name="requirements">
+        <requirements>
+            <requirement type="package" version="@VERSION@">seurat-scripts</requirement>
+        </requirements>
+    </xml>
+
+    <xml name="version">
+    	<version_command><![CDATA[
+echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla --slave -e "library(seurat); cat(sessionInfo()\$otherPkgs\$seurat\$Version)" 2> /dev/null | grep -v -i "WARNING: ")
+    ]]></version_command>
+    </xml>
+
+    <xml name="genes-use-input">
+      <param name="genes_use" argument="--genes-use" optional="true" type="data" format="tsv, txt" label="Genes to use" help="A file with gene names to use in construction of SNN graph if building directly based on expression data rather than a dimensionally reduced representation (i.e. PCs)."/>
+    </xml>
+    <xml name="dims-use-input">
+      <param name="dims_use" argument="--dims-use" min="1" optional="true" type="integer" label="PCA Dimensions to use" help="Number of PCs (dimensions) to use in construction of the SNN graph."/>
+    </xml>
+
+    <token name="@VERSION_HISTORY@"><![CDATA[
+**Version history**
+
+0.0.1: Initial contribution. Maria Doyle, https://github.com/mblue9.
+
+2.3.1+galaxy0: Improved documentation and further exposition of all script's options. Pablo Moreno, Jonathan Manning and Ni Huang, Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
+EMBL-EBI https://www.ebi.ac.uk/. Parts obtained from wrappers from Christophe Antoniewski(https://github.com/drosofff) and Lea Bellenger(https://github.com/bellenger-l).
+      ]]></token>
+
+
+    <xml name="citations">
+        <citations>
+            <citation type="doi">10.1038/nbt.4096</citation>
+            <citation type="bibtex">
+              @misc{r-seurat-scripts.git,
+              author = {Jonathan Manning, Pablo Moreno, EBI Gene Expression Team},
+              year = {2018},
+              title = {Seurat-scripts: command line interface for Seurat},
+              publisher = {GitHub},
+              journal = {GitHub repository},
+              url = {https://github.com/ebi-gene-expression-group/r-seurat-scripts.git},
+            }
+            </citation>
+        </citations>
+    </xml>
+</macros>
