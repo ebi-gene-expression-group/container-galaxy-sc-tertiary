@@ -52,7 +52,7 @@ PYTHONIOENCODING=utf-8 scanpy-run-pca.py
           <option value="arpack">ARPACK</option>
           <option value="randomised">Randomised</option>
         </param>
-        <param name="random_seed" argument="--random-random_seed" type="integer" value="0" label="random_seed for numpy random number generator"/>
+        <param name="random_seed" argument="--random-seed" type="integer" value="0" label="random_seed for numpy random number generator"/>
       </when>
     </conditional>
 
