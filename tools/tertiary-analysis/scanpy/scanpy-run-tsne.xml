@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_run_tsne" name="Scanpy RunTSNE" version="@TOOL_VERSION@+galaxy0">
+<tool id="scanpy_run_tsne" name="Scanpy RunTSNE" version="@TOOL_VERSION@+galaxy1">
   <description>visualise cell clusters using tSNE</description>
   <macros>
     <import>scanpy_macros.xml</import>
@@ -21,7 +21,7 @@ PYTHONIOENCODING=utf-8 scanpy-run-tsne.py
         #else
           --perplexity '${settings.perplexity}'
         #end if
-        --early-exaggeration '${settings.early_exag}'
+        --early-exaggeration '${settings.early_exaggeration}'
         --learning-rate '${settings.learning_rate}'
         #if $settings.use_rep != "auto"
             -r '${settings.use_rep}'
@@ -35,8 +35,8 @@ PYTHONIOENCODING=utf-8 scanpy-run-tsne.py
         #if $settings.n_job
             --n-jobs '${settings.n_job}'
         #end if
-        #if $settings.seed is not None
-            -s '${settings.seed}'
+        #if $settings.random_seed is not None
+            -s '${settings.random_seed}'
         #end if
     #end if
 
@@ -59,12 +59,12 @@ PYTHONIOENCODING=utf-8 scanpy-run-tsne.py
         </param>
         <param name="perplexity" argument="--perplexity" type="float" value="30" label="The perplexity is related to the number of nearest neighbours, select a value between 5 and 50"/>
         <param name="perplexity_file" argument="--perplexity" type="data" format="txt,tsv" label="The perplexity is related to the number of nearest neighbours" help="For use with the parameter iterator. Overrides the persplexity option above" optional="true"/>
-        <param name="early_exag" argument="--early-exaggeration" type="float" value="12" label="Controls the tightness within and between clusters"/>
+        <param name="early_exaggeration" argument="--early-exaggeration" type="float" value="12" label="Controls the tightness within and between clusters"/>
         <param name="learning_rate" argument="--learning-rate" type="float" value="1000" label="Learning rate, should be between 100 and 1000"/>
         <param name="fast_tsne" type="boolean" checked="true" label="Use multicoreTSNE"/>
         <param name="n_job" argument="--n-jobs" type="integer" optional="true" label="The number of jobs"/>
         <param name="n_pc" argument="--n-pcs" type="integer" optional="true" label="The number of PCs to use"/>
-        <param name="seed" argument="--random-seed" type="integer" value="0" label="Seed for random number generator"/>
+        <param name="random_seed" argument="--random-seed" type="integer" value="0" label="Seed for random number generator"/>
       </when>
     </conditional>
 
@@ -95,7 +95,7 @@ PYTHONIOENCODING=utf-8 scanpy-run-tsne.py
       <param name="output_format" value="anndata"/>
       <param name="default" value="false"/>
       <param name="embeddings" value="true"/>
-      <param name="seed" value="0"/>
+      <param name="random_seed" value="0"/>
       <param name="plot" value="true"/>
       <param name="color_by" value="louvain"/>
       <output name="output_h5" file="run_tsne.h5" ftype="h5" compare="sim_size"/>

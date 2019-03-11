@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_find_cluster" name="Scanpy FindCluster" version="@TOOL_VERSION@+galaxy0">
+<tool id="scanpy_find_cluster" name="Scanpy FindCluster" version="@TOOL_VERSION@+galaxy1">
   <description>based on community detection on KNN graph</description>
   <macros>
     <import>scanpy_macros.xml</import>
@@ -16,16 +16,16 @@ PYTHONIOENCODING=utf-8 scanpy-find-cluster.py
         --output-text-file output.tsv
     #end if
     #if $settings.default == "false"
-        --flavor '${settings.flavour}'
-        --key-added '${settings.key}'
-        -s '${settings.seed}'
-        #if $settings.flavour == "vtraag" and $settings.resolution_file
+        --flavor '${settings.flavor}'
+        --key-added '${settings.key_added}'
+        -s '${settings.random_seed}'
+        #if $settings.flavor == "vtraag" and $settings.resolution_file
             --resolution \$( cat $settings.resolution_file )
-        #elif $settings.flavour == "vtraag"
+        #elif $settings.flavor == "vtraag"
             --resolution '${settings.resolution}'
         #end if
-        #if $settings.restrict
-            --restrict-to '${settings.restrict}'
+        #if $settings.restrict_to
+            --restrict-to '${settings.restrict_to}'
         #end if
         #if $settings.use_weights
             --use-weights
@@ -41,16 +41,16 @@ PYTHONIOENCODING=utf-8 scanpy-find-cluster.py
       <param name="default" type="boolean" checked="true" label="Use programme defaults"/>
       <when value="true"/>
       <when value="false">
-        <param name="flavour" argument="--flavor" type="select" label="Use the indicated representation">
+        <param name="flavor" argument="--flavor" type="select" label="Use the indicated representation">
           <option value="vtraag" selected="true">vtraag</option>
           <option value="igraph">igraph</option>
         </param>
         <param name="resolution" argument="--resolution" type="float" value="1.0" label="Resolution, high value for more and smaller clusters"/>
         <param name="resolution_file" argument="--resolution" type="data" format="txt,tsv" optional="true" label="File with resolution, use with parameter iterator. Overrides the resolution setting"/>
-        <param name="restrict" argument="--restrict-to" type="text" optional="true" label="Restrict clustering to certain sample categories"/>
-        <param name="key" argument="--key-added" type="text" value="louvain" label="Key under which to add the cluster labels (do not change unless you know what you are doing)"/>
+        <param name="restrict_to" argument="--restrict-to" type="text" optional="true" label="Restrict clustering to certain sample categories"/>
+        <param name="key_added" argument="--key-added" type="text" value="louvain" label="Key under which to add the cluster labels (do not change unless you know what you are doing)"/>
         <param name="use_weights" argument="--use-weights" type="boolean" checked="false" label="Use weights from knn graph"/>
-        <param name="seed" argument="--random-seed" type="integer" value="0" label="Seed for random number generator"/>
+        <param name="random_seed" argument="--random-seed" type="integer" value="0" label="Seed for random number generator"/>
       </when>
     </conditional>
   </inputs>
@@ -69,9 +69,9 @@ PYTHONIOENCODING=utf-8 scanpy-find-cluster.py
       <param name="output_format" value="anndata"/>
       <param name="output_txt" value="true"/>
       <param name="default" value="false"/>
-      <param name="flavour" value="vtraag"/>
+      <param name="flavor" value="vtraag"/>
       <param name="resolution" value="1.0"/>
-      <param name="seed" value="0"/>
+      <param name="random_seed" value="0"/>
       <output name="output_h5" file="find_cluster.h5" ftype="h5" compare="sim_size"/>
       <output name="output_txt" file="find_cluster.tsv" ftype="tsv"/>
     </test>

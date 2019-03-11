@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_run_umap" name="Scanpy RunUMAP" version="@TOOL_VERSION@+galaxy0">
+<tool id="scanpy_run_umap" name="Scanpy RunUMAP" version="@TOOL_VERSION@+galaxy1">
   <description>visualise cell clusters using UMAP</description>
   <macros>
     <import>scanpy_macros.xml</import>
@@ -16,26 +16,26 @@ PYTHONIOENCODING=utf-8 scanpy-run-umap.py
         --output-embeddings-file embeddings.csv
     #end if
     #if $settings.default == "false"
-        -n '${settings.n_comp}'
+        -n '${settings.n_components}'
         --min-dist '${settings.min_dist}'
         --spread '${settings.spread}'
         --alpha '${settings.alpha}'
         --gamma '${settings.gamma}'
-        --negative-sample-rate '${settings.neg_sample_rate}'
+        --negative-sample-rate '${settings.negative_sample_rate}'
         #if $settings.init_pos
             --init-pos '${settings.init_pos}'
         #end if
         #if $settings.maxiter
             --maxiter '${settings.maxiter}'
         #end if
-        #if $settings.A
-            -a '${settings.A}'
+        #if $settings.a
+            -a '${settings.a}'
         #end if
-        #if $settings.B
-            -b '${settings.B}'
+        #if $settings.b
+            -b '${settings.b}'
         #end if
-        #if $settings.seed is not None
-            -s '${settings.seed}'
+        #if $settings.random_seed is not None
+            -s '${settings.random_seed}'
         #end if
    #end if
 
@@ -50,21 +50,21 @@ PYTHONIOENCODING=utf-8 scanpy-run-umap.py
       <param name="default" type="boolean" checked="true" label="Use programme defaults"/>
       <when value="true"/>
       <when value="false">
-        <param name="n_comp" argument="--n-components" type="integer" value="2" label="The number of dimensions of the embedding"/>
+        <param name="n_components" argument="--n-components" type="integer" value="2" label="The number of dimensions of the embedding"/>
         <param name="min_dist" argument="--min-dist" type="float" value="0.5" label="The effective minimum distance between embedded points"/>
         <param name="spread" argument="--spread" type="float" value="1.0" label="The effective spread of embedded points"/>
         <param name="alpha" argument="--alpha" type="float" value="1.0" label="Initial learning rate"/>
         <param name="gamma" argument="--gamma" type="float" value="1.0" label="Weighting applied to negative samples"/>
-        <param name="neg_sample_rate" argument="--negative-sample-rate" type="integer" value="5" label="The ratio of negative to positive edge in optimisation"/>
+        <param name="negative_sample_rate" argument="--negative-sample-rate" type="integer" value="5" label="The ratio of negative to positive edge in optimisation"/>
         <param name="init_pos" argument="--init-pos" type="text" label="Method to initialise embedding, any key for adata.obsm or choose from the preset methods">
           <option value="spectral" selected="true">spectral</option>
           <option value="paga">paga</option>
           <option value="random">random</option>
         </param>
         <param name="maxiter" argument="--maxiter" type="integer" optional="true" label="Number of iterations of optimisation"/>
-        <param name="A" argument="-a" type="float" optional="true" label="More specific parameter controlling embedding, automatically determined from --min-dist and --spread if unset"/>
-        <param name="B" argument="-b" type="float" optional="true" label="More specific parameter controlling embedding, automatically determined from --min-dist and --spread if unset"/>
-        <param name="seed" argument="--random-seed" type="integer" value="0" label="Seed for numpy random number generator"/>
+        <param name="a" argument="-a" type="float" optional="true" label="More specific parameter controlling embedding, automatically determined from --min-dist and --spread if unset"/>
+        <param name="b" argument="-b" type="float" optional="true" label="More specific parameter controlling embedding, automatically determined from --min-dist and --spread if unset"/>
+        <param name="random_seed" argument="--random-seed" type="integer" value="0" label="Seed for numpy random number generator"/>
       </when>
     </conditional>
     <conditional name="do_plotting">
@@ -94,7 +94,7 @@ PYTHONIOENCODING=utf-8 scanpy-run-umap.py
       <param name="output_format" value="anndata"/>
       <param name="default" value="false"/>
       <param name="embeddings" value="true"/>
-      <param name="seed" value="0"/>
+      <param name="random_seed" value="0"/>
       <param name="plot" value="true"/>
       <param name="color_by" value="louvain"/>
       <output name="output_h5" file="run_umap.h5" ftype="h5" compare="sim_size"/>
