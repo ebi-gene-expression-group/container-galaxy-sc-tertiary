@@ -4,7 +4,7 @@
   "format-version": "0.1",
   "name": "Scanpy with Loom input, Cellbrowser",
   "annotation": "This was tested with HCA Loom file from here: https:/drive.google.com/drive/u/0/folders/1oSuXktHX1WaI8Q1s_mybIK9sg4Q3J_O6",
-  "a_galaxy_workflow": "true"
+  "a_galaxy_workflow": "true",
   "steps": {
     "0": {
       "tool_id": null,
