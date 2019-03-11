@@ -19,7 +19,7 @@ PYTHONIOENCODING=utf-8 scanpy-run-tsne.py
         #if $settings.perplexity_file
           --perplexity \$( cat $settings.perplexity_file )
         #else
-          --perplexity '${settings.perplexity_file}'
+          --perplexity '${settings.perplexity}'
         #end if
         --early-exaggeration '${settings.early_exaggeration}'
         --learning-rate '${settings.learning_rate}'
