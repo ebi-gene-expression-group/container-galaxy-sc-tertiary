@@ -15,8 +15,8 @@ PYTHONIOENCODING=utf-8 scanpy-scale-data.py
     #if $scale_max
         -x '${scale_max}'
     #end if
-    #if $vars_to_regress
-        -V '${vars_to_regress}'
+    #if $var_to_regress
+        -V '${var_to_regress}'
     #end if
     #if $do_log
         --do-log
@@ -31,7 +31,7 @@ PYTHONIOENCODING=utf-8 scanpy-scale-data.py
     <expand macro="output_object_params"/>
     <param name="do_log" argument="--do-log" type="boolean" checked="true" label="Do log(x+1) transformation"/>
     <param name="zero_center" argument="--zero-center" type="boolean" checked="true" label="Zero center data before scaling"/>
-    <param name="vars_to_regress" argument="--var-to-regress" type="text" optional="true" label="Variable(s) to regress out">
+    <param name="var_to_regress" argument="--var-to-regress" type="text" optional="true" label="Variable(s) to regress out">
       <option value="n_counts">n_counts</option>
     </param>
     <param name="scale_max" argument="--scale-max" type="float" optional="true" label="Truncate to this value after scaling"/>
