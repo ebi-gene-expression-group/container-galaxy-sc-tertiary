@@ -50,7 +50,7 @@ PYTHONIOENCODING=utf-8 scanpy-find-markers.py
           <option value="wilcoxon">wilcoxon test, currently broken don't use</option>
           <option value="logreg">logistic regression</option>
         </param>
-        <param name="rankby_abs" argument="--use-abs" type="boolean" checked="false" label="Rank by absolute value of the scores instead of the scores"/>
+        <param name="rankby_abs" argument="--rankby_abs" type="boolean" checked="false" label="Rank by absolute value of the scores instead of the scores"/>
         <param name="groups" argument="--groups" optional="true" type="text" label="Subset of groups/clusters to which comparisons shell be restricted."/>
       </when>
     </conditional>
