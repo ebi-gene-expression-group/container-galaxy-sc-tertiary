@@ -1,17 +1,19 @@
-
+# To be used with galaxy-helm-repo/galaxy-stable version 2.0.x
+# helm install -f <this-file> --version 2.0.2 galaxy-helm-repo/galaxy-stable
 
 # Settings for the init image
 init:
   image:
     repository: quay.io/ebigxa/galaxy-sc-tertiary
-    tag: develop
-    pullPolicy: Always
-  force_copy: "__venv__,__config__,__galaxy-central__,__tools__,__welcome__"
+    tag: 1.0.0
+    pullPolicy: IfNotPresent
+  force_copy: "__config__,__galaxy-central__,__tools__,__welcome__"
 
 image:
-  repository: pcm32/galaxy-web-k8s
+  repository: quay.io/ebigxa/galaxy-web-k8s
+  # repository: pcm32/galaxy-web-k8s
   tag: v18.05
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
 admin:
   email: admin@email.co.uk
@@ -20,7 +22,7 @@ admin:
   username: admin
 
 galaxy_conf:
-  brand: "scRNA-Seq Tertiary A."
+  brand: "HX Single Cell"
   admin_users: admin@email.co.uk
   allow_user_creation: true
   allow_user_deletion: true
@@ -40,7 +42,7 @@ job_conf:
 persistence:
   storageClass: "-"
   minikube:
-    hostPath: "/data/galaxy-18.05-tertiary"
+    hostPath: "/data/hinxton-singlecell-1.0_18.05"
 
 service:
   type: NodePort
@@ -55,6 +57,7 @@ postgresql:
     subPath: "postgres-tertiary"
 
 proftpd:
+  enabled: false
   service:
     type: NodePort
 
