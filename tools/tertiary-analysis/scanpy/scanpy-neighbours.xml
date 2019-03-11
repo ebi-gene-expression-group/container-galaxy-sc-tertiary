@@ -13,14 +13,14 @@ PYTHONIOENCODING=utf-8 scanpy-neighbours.py
     -o output.h5
     -F '${output_format}'
     #if $settings.default == "false"
-        -N '${settings.n_neighbour}'
+        -N '${settings.n_neighbours}'
         -m '${settings.method}'
         -s '${settings.seed}'
         #if $settings.use_rep != "auto"
             -r '${settings.use_rep}'
         #end if
-        #if $settings.n_pc
-            -n '${settings.n_pc}'
+        #if $settings.n_pcs
+            -n '${settings.n_pcs}'
         #end if
         #if $settings.knn
             --knn
@@ -38,13 +38,13 @@ PYTHONIOENCODING=utf-8 scanpy-neighbours.py
       <param name="default" type="boolean" checked="true" label="Use programme defaults"/>
       <when value="true"/>
       <when value="false">
-        <param name="n_neighbour" argument="--n-neighbors" type="integer" value="15" label="Maximum number of neighbours used"/>
+        <param name="n_neighbours" argument="--n-neighbors" type="integer" value="15" label="Maximum number of neighbours used"/>
         <param name="use_rep" type="select" label="Use the indicated representation">
           <option value="X_pca">X_pca, use PCs</option>
           <option value="X">X, use normalised expression values</option>
           <option value="auto" selected="true">Automatically chosen based on problem size</option>
         </param>
-        <param name="n_pc" argument="--n-pcs" type="integer" value="50" optional="true" label="Number of PCs to use"/>
+        <param name="n_pcs" argument="--n-pcs" type="integer" value="50" optional="true" label="Number of PCs to use"/>
         <param name="knn" argument="--knn/--no-knn" type="boolean" checked="true" label="Use hard threshold to restrict neighbourhood size (otherwise use a Gaussian kernel to down weight distant neighbours)"/>
         <param name="method" argument="--method" type="select" label="Method for calculating connectivity">
           <option value="umap" selected="true">UMAP</option>
@@ -66,8 +66,8 @@ PYTHONIOENCODING=utf-8 scanpy-neighbours.py
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
       <param name="default" value="false"/>
-      <param name="n_neighbour" value="15"/>
-      <param name="n_pc" value="50"/>
+      <param name="n_neighbours" value="15"/>
+      <param name="n_pcs" value="50"/>
       <param name="knn" value="true"/>
       <param name="seed" value="0"/>
       <param name="method" value="umap"/>
