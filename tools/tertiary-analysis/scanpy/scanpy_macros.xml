@@ -27,7 +27,7 @@
     #if not $do_plotting.sort_order
                   --no-sort-order
     #end if
-    #if $do_plotting.frame
+    #if $do_plotting.frameoff
                   --frameoff
     #end if
 #end if
@@ -85,6 +85,6 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
     <param name="edges" argument="--edges" type="boolean" checked="false" label="Show edges"/>
     <param name="arrows" argument="--arrows" type="boolean" checked="false" label="Show arrows"/>
     <param name="sort_order" argument="--no-sort-order" type="boolean" checked="true" label="Element with high color-by value plot on top"/>
-    <param name="frame" argument="--frameoff" type="boolean" checked="false" label="Show frame"/>
+    <param name="frameoff" argument="--frameoff" type="boolean" checked="false" label="Omit frame"/>
   </xml>
 </macros>
