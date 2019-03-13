@@ -1,5 +1,5 @@
 name: scanpy_scripts
-owner: iuc
+owner: ebi-gxa 
 description: "scanpy-scripts, command-line wrapper scripts around Scanpy."
 long_description: |
     Scanpy is a scalable toolkit for analyzing single-cell gene expression data.  It includes
