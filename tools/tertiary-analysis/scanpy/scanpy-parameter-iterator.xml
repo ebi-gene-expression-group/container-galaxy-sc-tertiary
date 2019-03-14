@@ -8,9 +8,15 @@
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
 	 mkdir outputs;
-	 for param in \$(seq '$start_value' '$step' '$end_value'); do
-	    echo \$param > outputs/'$parameter_name'_\$param\.txt;
-	 done
+    #if '$input_values':
+        for param in \$(echo '$input_values' | sed 's/,//g'); do
+          echo \$param > outputs/'$parameter_name'_\$param\.txt;
+         done
+    #else:
+	     for param in \$(seq '$start_value' '$step' '$end_value'); do
+	       echo \$param > outputs/'$parameter_name'_\$param\.txt;
+	     done
+    #end if   
 	    ]]></command>
 
     <inputs>
@@ -21,6 +27,7 @@
       <param type="float" value="0" name="start_value" label="Starting value" help="Initial value for the parameter"/>
       <param type="float" value="1" name="step" label="Step" help="Increment to use from first to last value"/>
       <param type="float" value="10" name="end_value" label="Ending value" help="Final value for the parameter. The final value is not included if increments of step don't match the last value."/>
+      <param type="text" value="0.1, 0.3, 0.5, 0.7, 1.0, 2.0, 3.0, 4.0, 5.0" name="input_values" label="User input values" help="Defined input values for the parameter"/>
     </inputs>
 
     <outputs>
@@ -35,14 +42,20 @@
         <param name="start_value" value="1"/>
         <param name="step" value="1"/>
         <param name="end_value" value="2"/>
-        <output_collection name="parameter_iteration">
+      <param name="input_values" value="1, 5, 10"/> 
+        <output_collection name="parameter_iteration" count="3"/>
           <element name="perplexity_1"/>
-          <element name="perplexity_2">
             <assert_contents>
-              <has_line line="2" />
+              <has_text_matching expression="^perplexity_1.txt$"/>
             </assert_contents>
-          </element>
-        </output_collection>
+          <element name="perplexity_5"/>
+            <assert_contents>
+              <has_text_matching expression="^perplexity_5.txt$"/>
+            </assert_contents>
+          <element name="perplexity_10"/>
+            <assert_contents>
+              <has_text_matching expression="^perplexity_10.txt$"/>
+            </assert_contents>
       </test>
     </tests>
 
