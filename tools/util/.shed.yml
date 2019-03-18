@@ -1,6 +1,6 @@
 categories: [Sequence Analysis]
 description: Utility to extract gene identifier lists from Ensembl GTF files.
-homepage_url: https://cells.ucsc.edu/
+homepage_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary 
 long_description: Given a GTF file from Ensembl, this utility will generate a simple text file with one column with all gene identifiers, through the rtracklayer R package.
 name: gtf2gene_list
 owner: ebi-gxa
