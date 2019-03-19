@@ -1,4 +1,4 @@
-<tool id="scanpy_parameter_iterator" name="Scanpy ParameterIterator" version="0.0.1+galaxy0">
+<tool id="scanpy_parameter_iterator" name="Scanpy ParameterIterator" version="0.0.1+galaxy1">
     <description>produce an iteration over a defined parameter</description>
     <macros>
       <import>scanpy_macros.xml</import>
@@ -8,40 +8,55 @@
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
 	 mkdir outputs;
-	 for param in \$(seq '$start_value' '$step' '$end_value'); do
-	    echo \$param > outputs/'$parameter_name'_\$param\.txt;
-	 done
+    #if str( $input_type.parameter_values ) == "list_comma_separated_values":
+        for param in \$(echo '$input_type.input_values' | sed 's/,/ /g'); do
+          echo \$param > outputs/'$parameter_name'_\$param\.txt;
+         done
+    #else if str( $input_type.parameter_values ) == "step_increase_values":
+	     for param in \$(seq '$input_type.start_value' '$input_type.step' '$input_type.end_value'); do
+	       echo \$param > outputs/'$parameter_name'_\$param\.txt;
+	     done
+    #end if   
 	    ]]></command>
 
     <inputs>
       <param type="select" name="parameter_name" label="Choose the format of the expression data" help="Use compressed txt, Scanpy or Seurat objects">
-        <option value="resolution" selected="true">Resolution</option>
-        <option value="perplexity">Perplexity</option>
-      </param>
-      <param type="float" value="0" name="start_value" label="Starting value" help="Initial value for the parameter"/>
-      <param type="float" value="1" name="step" label="Step" help="Increment to use from first to last value"/>
-      <param type="float" value="10" name="end_value" label="Ending value" help="Final value for the parameter. The final value is not included if increments of step don't match the last value."/>
+        <option value="perplexity" selected="True">Perplexity</option>
+        <option value="resolution">Resolution</option>
+      </param> 
+      <conditional name="input_type">    
+        <param type="select" name="parameter_values" label="Choose the format of the input values" help="step increase values or list of all the parameter values">
+          <option value="list_comma_separated_values" selected="True">List of all parameter values to be iterated</option>
+          <option value="step_increase_values">Step increase values to be iterated</option>
+        </param>
+        <when value="list_comma_separated_values">
+          <param type="text" value="0.1, 0.3, 0.5, 0.7, 1.0, 2.0, 3.0, 4.0, 5.0" name="input_values" label="User input values" help="List of all comma separated values for the parameter"/>
+        </when>
+        <when value="step_increase_values">
+          <param type="float" value="1" name="start_value" label="Starting value" help="Initial value for the parameter"/>
+          <param type="float" value="2" name="step" label="Step" help="Increment to use from first to last value"/>
+          <param type="float" value="10" name="end_value" label="Ending value" help="Final value for the parameter. The final value is not included if increments of step don't match the last value."/>
+        </when>
+      </conditional> 
     </inputs>
 
     <outputs>
       <collection name="parameter_iteration" type="list" label="Parameter iterated">
-        <discover_datasets pattern="__name_and_ext__" directory="outputs" />
+        <discover_datasets pattern="__name_and_ext__" directory="outputs"/>
       </collection>
     </outputs>
 
     <tests>
       <test>
         <param name="parameter_name" value="perplexity"/>
-        <param name="start_value" value="1"/>
-        <param name="step" value="1"/>
-        <param name="end_value" value="2"/>
-        <output_collection name="parameter_iteration">
-          <element name="perplexity_1"/>
-          <element name="perplexity_2">
-            <assert_contents>
-              <has_line line="2" />
-            </assert_contents>
-          </element>
+         <conditional name="input_type">
+          <param name="parameter_values" value="list_comma_separated_values"/>
+          <param name="input_values" value="1, 5, 10"/>
+        </conditional>
+        <output_collection name="parameter_iteration" count="3">
+          <element name="perplexity_1" file="perplexity_1.txt" ftype="txt" compare="sim_size"/>
+          <element name="perplexity_5" file="perplexity_5.txt" ftype="txt" compare="sim_size"/>
+          <element name="perplexity_10" file="perplexity_10.txt" ftype="txt" compare="sim_size"/>
         </output_collection>
       </test>
     </tests>
