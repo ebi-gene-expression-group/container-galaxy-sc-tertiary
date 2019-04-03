@@ -16,9 +16,7 @@ PYTHONIOENCODING=utf-8 scanpy-normalise-data.py
     #if $save_raw
         '${save_raw}'
     #end if
-    #if $export_mtx
-        '${export_mtx}' ./
-    #end if
+    @EXPORT_MTX_OPTS@
 ]]></command>
 
   <inputs>
@@ -26,20 +24,12 @@ PYTHONIOENCODING=utf-8 scanpy-normalise-data.py
     <expand macro="output_object_params"/>
     <param name="scale_factor" argument="--scale-factor" type="float" value="1e4" label="Target number to normalise to" help="Aimed counts per cell after normalisation, default: 1e4"/>
     <param name="save_raw" argument="--save-raw" type="boolean" truevalue="--save-raw" falsevalue="" checked="true" label="Save pre-normalised data" help="Save raw quantification in log scale before normalisation."/>
-    <param name="export_mtx" argument="--export-mtx" type="boolean" truevalue="--export-mtx" falsevalue="" checked="false" label="Save normalised data to 10x format" help="If enabled, it will generate in addition to the main output in Loom or AnnData an export in 10x format of the normalised data."/>
+    <expand macro="export_mtx_params"/>
   </inputs>
 
   <outputs>
     <data name="output_h5" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string}: Normalized data" />
-    <data name="matrix_10x" format="txt" from_work_dir="matrix.mtx" label="${tool.name} on ${on_string}: 10x matrix">
-      <filter>export_mtx</filter>
-    </data>
-    <data name="genes_10x" format="tsv" from_work_dir="genes.tsv" label="${tool.name} on ${on_string}: 10x genes">
-      <filter>export_mtx</filter>
-    </data>
-    <data name="barcodes_10x" format="tsv" from_work_dir="barcodes.tsv" label="${tool.name} on ${on_string}: 10x barcodes">
-      <filter>export_mtx</filter>
-    </data>
+    <expand macro="export_mtx_outputs"/>
   </outputs>
 
   <tests>
