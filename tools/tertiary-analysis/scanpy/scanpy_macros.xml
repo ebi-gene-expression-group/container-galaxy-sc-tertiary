@@ -41,6 +41,8 @@
   <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
 
+1.3.2+galaxy1: Normalise-data: Exposes ability to output 10x files.
+
 1.3.2+galaxy0: Initial contribution. Ni Huang and Pablo Moreno, Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
 EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
     ]]></token>
