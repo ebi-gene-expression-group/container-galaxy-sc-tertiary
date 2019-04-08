@@ -7,6 +7,10 @@ LABEL software="Galaxy Init"
 LABEL software.version="18.05"
 LABEL version="1.0.0"
 
+# Patch for up to 18.05-dev only
+# Avoids failure due to missing errored job in k8s (line 499)
+COPY patches/kubernetes.py /galaxy-export/galaxy-central/lib/galaxy/jobs/runners/kubernetes.py
+
 RUN virtualenv venv-workflow && \
     /bin/bash -c "source venv-workflow/bin/activate && \
                   pip install 'pip>=8.1' && \
