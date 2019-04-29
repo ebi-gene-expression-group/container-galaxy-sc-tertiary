@@ -18,10 +18,6 @@
       <param id="k8s_galaxy_instance_id" from_environ="GALAXY_RUNNERS_K8S_INSTANCE_ID">my-instance</param>
     </plugin>
   </plugins>
-  <handlers default="handlers">
-    <handler id="handler0" tags="handlers"/>
-    <handler id="handler1" tags="handlers"/>
-  </handlers>
   <destinations default_from_environ="GALAXY_DESTINATIONS_DEFAULT" default="local">
     <destination id="local" runner="local"/>
     <destination id="local_no_container" runner="local">
