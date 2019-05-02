@@ -1,6 +1,6 @@
 [![Docker Repository on Quay](https://quay.io/repository/ebigxa/galaxy-sc-tertiary/status "Docker Repository on Quay")](https://quay.io/repository/ebigxa/galaxy-sc-tertiary)
 
-# Hinxton Single Cell Interactive Analysis Environment v1.0.0
+# Hinxton Single Cell Interactive Analysis Environment v1.0.1
 
 This is a Galaxy init container for the Hinxton Single Cell Interactive Analysis Environment,
 to be used as part of a larger orchestration of containers within Kubernetes. The init
