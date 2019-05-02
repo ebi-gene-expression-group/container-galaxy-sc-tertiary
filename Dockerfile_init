@@ -5,7 +5,7 @@ MAINTAINER EBI Expression Atlas Team <gene-expression@ebi.ac.uk>
 LABEL Description="Hinxton Single Cell Interactive Analysis Environment"
 LABEL software="Galaxy Init"
 LABEL software.version="18.05"
-LABEL version="1.0.0"
+LABEL version="1.0.1"
 
 # Patch for up to 18.05-dev only
 # Avoids failure due to missing errored job in k8s (line 499)
