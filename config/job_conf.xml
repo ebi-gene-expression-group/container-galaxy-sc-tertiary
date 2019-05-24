@@ -5,10 +5,9 @@
     <plugin id="local" type="runner" load="galaxy.jobs.runners.local:LocalJobRunner" workers="4"/>
     <plugin id="k8s" type="runner" load="galaxy.jobs.runners.kubernetes:KubernetesJobRunner">
       <param id="k8s_use_service_account" from_environ="GALAXY_RUNNERS_K8S_USE_SERVICE_ACCOUNT">true</param>
-      <param id="k8s_persistent_volume_claim_name" from_environ="GALAXY_RUNNERS_K8S_PERSISTENT_VOLUME_CLAIM_NAME">galaxy-pvc</param>
       <!-- The following mount path needs to be the initial part of the "file_path" and "new_file_path" paths
             set in universe_wsgi.ini (or equivalent general galaxy config file).  -->
-      <param id="k8s_persistent_volume_claim_mount_path" from_environ="GALAXY_RUNNERS_K8S_PERSISTENT_VOLUME_CLAIM_MOUNT_PATH">/opt/galaxy_data</param>
+      <param id="k8s_persistent_volume_claims" from_environ="GALAXY_RUNNERS_K8S_PERSISTENT_VOLUME_CLAIMS">galaxy-pvc:/export</param>
       <param id="k8s_namespace" from_environ="GALAXY_RUNNERS_K8S_NAMESPACE">default</param>
       <param id="k8s_supplemental_group_id" from_environ="GALAXY_RUNNERS_K8S_SUPPLEMENTAL_GROUP_ID">0</param>
       <param id="k8s_fs_group_id" from_environ="GALAXY_RUNNERS_K8S_FS_GROUP_ID">0</param>
@@ -18,10 +17,6 @@
       <param id="k8s_galaxy_instance_id" from_environ="GALAXY_RUNNERS_K8S_INSTANCE_ID">my-instance</param>
     </plugin>
   </plugins>
-  <handlers default="handlers">
-    <handler id="handler0" tags="handlers"/>
-    <handler id="handler1" tags="handlers"/>
-  </handlers>
   <destinations default_from_environ="GALAXY_DESTINATIONS_DEFAULT" default="local">
     <destination id="local" runner="local"/>
     <destination id="local_no_container" runner="local">

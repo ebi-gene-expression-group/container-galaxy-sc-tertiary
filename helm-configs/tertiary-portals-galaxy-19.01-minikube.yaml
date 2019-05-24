@@ -3,15 +3,15 @@
 # Settings for the init image
 init:
   image:
-    repository: test/galaxy-sc-tertiary
-    tag: "19.05-dev"
+    repository: quay.io/ebigxa/galaxy-sc-tertiary
+    tag: feature_galaxy_19.01
     pullPolicy: IfNotPresent
-  force_copy: "__venv__,__config__,__galaxy-central__,__tools__"
+  force_copy: "__venv__,__config__,__galaxy-central__,__tools__,__welcome__"
 
 image:
   repository: quay.io/bgruening/galaxy-web
-  tag: "dev"
-  pullPolicy: Always
+  tag: "19.01"
+  pullPolicy: IfNotPresent
 
 admin:
   email: admin@email.co.uk
@@ -20,30 +20,32 @@ admin:
   username: admin
 
 galaxy_conf:
-  brand: "scRNA-Seq Tertiary A."
+  # file: "/export/config/galaxy.yml.sample"
+  brand: "HX SingleCell"
   admin_users: admin@email.co.uk
   allow_user_creation: true
   allow_user_deletion: true
   cleanup_job: never
   enable_beta_mulled_containers: true
+  # nginx_upload_path: ""
+  database_auto_migrate: true
 
 
 job_conf:
   runners:
     enable_local: "true"
     enable_k8: "true"
-    k8s_persistent_volume_claims: "galaxy-pvc:/export"
   destinations:
-    default: "docker_dispatch"
-    docker_default: "k8s_default"
+    #default: "docker_dispatch"
+    default: "dynamic-k8s-dispatcher"
+    #docker_default: "k8s_default"
     no_docker_default: "local_no_container"
 
 
 persistence:
-  # storageClass: "-"
+  storageClass: "-"
   minikube:
-    enabled: false
-    # hostPath: "/data/galaxy-18.05-tertiary"
+    hostPath: "/data/galaxy-19.01-tertiary"
 
 service:
   type: NodePort
@@ -54,14 +56,15 @@ ingress:
 
 postgresql:
   image: "quay.io/bgruening/galaxy-postgres"
-  imageTag: "dev"
+  imageTag: "9.6.5_for_19.01"
   persistence:
-    subPath: "postgres-tertiary-19.05-dev"
+    subPath: "postgres-tertiary-19.01"
 
 proftpd:
   image:
     repository: "quay.io/bgruening/galaxy-proftpd"
-    tag: "dev"
+    tag: "for_19.01"
+  enabled: false
   service:
     type: NodePort
 

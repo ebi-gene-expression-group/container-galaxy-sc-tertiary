@@ -1,15 +1,12 @@
-FROM quay.io/ebigxa/galaxy-init:v18.05
+FROM quay.io/bgruening/galaxy-init:dev
 
 MAINTAINER EBI Expression Atlas Team <gene-expression@ebi.ac.uk>
 
 LABEL Description="Hinxton Single Cell Interactive Analysis Environment"
 LABEL software="Galaxy Init"
-LABEL software.version="18.05"
-LABEL version="1.0.1"
+LABEL software.version="19.05-dev"
+LABEL version="1.1.0"
 
-# Patch for up to 18.05-dev only
-# Avoids failure due to missing errored job in k8s (line 499)
-COPY patches/kubernetes.py /galaxy-export/galaxy-central/lib/galaxy/jobs/runners/kubernetes.py
 
 RUN virtualenv venv-workflow && \
     /bin/bash -c "source venv-workflow/bin/activate && \
