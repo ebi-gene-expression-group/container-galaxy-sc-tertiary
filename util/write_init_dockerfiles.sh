@@ -3,7 +3,7 @@
 docker_file_dev=Dockerfile_init_dev
 docker_file_prod=Dockerfile_init_prod
 
-from=quay.io/bgruening/galaxy-init:dev
+from=quay.io/ebigxa/galaxy-init:19.05-dev
 version=1.1.0
 software_version=19.05-dev
 
