@@ -75,7 +75,6 @@ tools:
   owner: ebi-gxa
   revisions:
   - 040d4b3a19d5
-  - f97b7ba180b4
   tool_panel_section_id: util
   tool_panel_section_label: Util
   tool_shed_url: https://toolshed.g2.bx.psu.edu/
