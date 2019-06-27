@@ -1,0 +1,755 @@
+{
+    "a_galaxy_workflow": "true", 
+    "annotation": "", 
+    "format-version": "0.1", 
+    "name": "Atlas-Scanpy-CellBrowser", 
+    "steps": {
+        "0": {
+            "annotation": "", 
+            "content_id": "retrieve_scxa", 
+            "errors": null, 
+            "id": 0, 
+            "input_connections": {}, 
+            "inputs": [], 
+            "label": null, 
+            "name": "EBI SCXA Data Retrieval", 
+            "outputs": [
+                {
+                    "name": "matrix_mtx", 
+                    "type": "txt"
+                }, 
+                {
+                    "name": "genes_tsv", 
+                    "type": "tsv"
+                }, 
+                {
+                    "name": "barcode_tsv", 
+                    "type": "tsv"
+                }, 
+                {
+                    "name": "design_tsv", 
+                    "type": "tsv"
+                }
+            ], 
+            "position": {
+                "left": 258, 
+                "top": 237.84375
+            }, 
+            "post_job_actions": {}, 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/ebi-gxa/retrieve_scxa/retrieve_scxa", 
+            "tool_state": "{\"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__page__\": null, \"__rerun_remap_job_id__\": null, \"accession\": \"\\\"E-GEOD-100058\\\"\", \"matrix_type\": \"\\\"raw\\\"\"}", 
+            "tool_version": "v0.0.1+galaxy1", 
+            "type": "tool", 
+            "uuid": "80eadb21-1d22-4f3f-a727-07240003993e", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "matrix_mtx", 
+                    "uuid": "9753b090-f599-43c3-88af-4761731e2b22"
+                }, 
+                {
+                    "label": null, 
+                    "output_name": "barcode_tsv", 
+                    "uuid": "2a565cad-aaeb-4979-a8da-fdbab29623a1"
+                }, 
+                {
+                    "label": null, 
+                    "output_name": "design_tsv", 
+                    "uuid": "1c647b04-d3a5-4c84-9f4c-96370db8f4a8"
+                }, 
+                {
+                    "label": null, 
+                    "output_name": "genes_tsv", 
+                    "uuid": "80019e7b-5189-41c6-9401-15b33e7ae1e0"
+                }
+            ]
+        }, 
+        "1": {
+            "annotation": "", 
+            "content_id": "scanpy_read_10x", 
+            "errors": null, 
+            "id": 1, 
+            "input_connections": {
+                "barcodes": {
+                    "id": 0, 
+                    "output_name": "barcode_tsv"
+                }, 
+                "genes": {
+                    "id": 0, 
+                    "output_name": "genes_tsv"
+                }, 
+                "matrix": {
+                    "id": 0, 
+                    "output_name": "matrix_mtx"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy Read10x", 
+                    "name": "genes"
+                }, 
+                {
+                    "description": "runtime parameter for tool Scanpy Read10x", 
+                    "name": "matrix"
+                }, 
+                {
+                    "description": "runtime parameter for tool Scanpy Read10x", 
+                    "name": "barcodes"
+                }
+            ], 
+            "label": null, 
+            "name": "Scanpy Read10x", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }
+            ], 
+            "position": {
+                "left": 552.796875, 
+                "top": 256.390625
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_h5": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/ebi-gxa/scanpy_read_10x/scanpy_read_10x", 
+            "tool_state": "{\"__page__\": null, \"genes\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"matrix\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"var_names\": \"\\\"gene_ids\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null, \"barcodes\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\"}", 
+            "tool_version": "1.3.2+galaxy0", 
+            "type": "tool", 
+            "uuid": "bea7ecc8-2419-4924-ba2e-2eb66266b854", 
+            "workflow_outputs": []
+        }, 
+        "2": {
+            "annotation": "", 
+            "content_id": "scanpy_filter_cells", 
+            "errors": null, 
+            "id": 2, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 1, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy FilterCells", 
+                    "name": "subset"
+                }, 
+                {
+                    "description": "runtime parameter for tool Scanpy FilterCells", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": null, 
+            "name": "Scanpy FilterCells", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }
+            ], 
+            "position": {
+                "left": 562.796875, 
+                "top": 458.390625
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_h5": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/ebi-gxa/scanpy_filter_cells/scanpy_filter_cells", 
+            "tool_state": "{\"subset\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"__page__\": null, \"parameters\": \"[{\\\"__index__\\\": 0, \\\"max\\\": \\\"1000000000.0\\\", \\\"name\\\": \\\"n_genes\\\", \\\"min\\\": \\\"0.0\\\"}]\", \"input_format\": \"\\\"anndata\\\"\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "1.3.2+galaxy0", 
+            "type": "tool", 
+            "uuid": "9edd2682-06ef-430b-9d5f-89221ede30c7", 
+            "workflow_outputs": []
+        }, 
+        "3": {
+            "annotation": "", 
+            "content_id": "scanpy_filter_genes", 
+            "errors": null, 
+            "id": 3, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 2, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy FilterGenes", 
+                    "name": "subset"
+                }, 
+                {
+                    "description": "runtime parameter for tool Scanpy FilterGenes", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": null, 
+            "name": "Scanpy FilterGenes", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }
+            ], 
+            "position": {
+                "left": 556.796875, 
+                "top": 631.390625
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_h5": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/ebi-gxa/scanpy_filter_genes/scanpy_filter_genes", 
+            "tool_state": "{\"subset\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"__page__\": null, \"parameters\": \"[{\\\"__index__\\\": 0, \\\"max\\\": \\\"1000000000.0\\\", \\\"name\\\": \\\"n_cells\\\", \\\"min\\\": \\\"0.0\\\"}]\", \"input_format\": \"\\\"anndata\\\"\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "1.3.2+galaxy0", 
+            "type": "tool", 
+            "uuid": "6596b788-cef4-40d3-83a7-8d5851d02da0", 
+            "workflow_outputs": []
+        }, 
+        "4": {
+            "annotation": "", 
+            "content_id": "scanpy_normalise_data", 
+            "errors": null, 
+            "id": 4, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 3, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy NormaliseData", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": null, 
+            "name": "Scanpy NormaliseData", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }
+            ], 
+            "position": {
+                "left": 568.796875, 
+                "top": 781.390625
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_h5": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/ebi-gxa/scanpy_normalise_data/scanpy_normalise_data", 
+            "tool_state": "{\"__page__\": null, \"scale_factor\": \"\\\"10000.0\\\"\", \"input_format\": \"\\\"anndata\\\"\", \"save_raw\": \"\\\"true\\\"\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "1.3.2+galaxy0", 
+            "type": "tool", 
+            "uuid": "f45c7aff-95d2-4ce2-94a0-703eececfedc", 
+            "workflow_outputs": []
+        }, 
+        "5": {
+            "annotation": "", 
+            "content_id": "scanpy_find_variable_genes", 
+            "errors": null, 
+            "id": 5, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 4, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy FindVariableGenes", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": null, 
+            "name": "Scanpy FindVariableGenes", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }
+            ], 
+            "position": {
+                "left": 566.796875, 
+                "top": 905.390625
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_h5": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/ebi-gxa/scanpy_find_variable_genes/scanpy_find_variable_genes", 
+            "tool_state": "{\"n_top_gene\": \"\\\"\\\"\", \"__page__\": null, \"parameters\": \"[{\\\"__index__\\\": 0, \\\"max\\\": \\\"1000000000.0\\\", \\\"name\\\": \\\"mean\\\", \\\"min\\\": \\\"0.0\\\"}]\", \"input_format\": \"\\\"anndata\\\"\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"n_bin\": \"\\\"20\\\"\", \"flavor\": \"\\\"seurat\\\"\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "1.3.2+galaxy0", 
+            "type": "tool", 
+            "uuid": "80456347-f947-4837-8674-c9c138a11985", 
+            "workflow_outputs": []
+        }, 
+        "6": {
+            "annotation": "", 
+            "content_id": "scanpy_scale_data", 
+            "errors": null, 
+            "id": 6, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 5, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy ScaleData", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": null, 
+            "name": "Scanpy ScaleData", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }
+            ], 
+            "position": {
+                "left": 567.796875, 
+                "top": 1041.390625
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_h5": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/ebi-gxa/scanpy_scale_data/scanpy_scale_data", 
+            "tool_state": "{\"__page__\": null, \"var_regress\": \"\\\"\\\"\", \"input_format\": \"\\\"anndata\\\"\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"scale_max\": \"\\\"\\\"\", \"do_log\": \"\\\"true\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"var_to_regress\": \"\\\"\\\"\", \"__rerun_remap_job_id__\": null, \"zero_center\": \"\\\"true\\\"\"}", 
+            "tool_version": "1.3.2+galaxy1", 
+            "type": "tool", 
+            "uuid": "5a50ff37-2b67-4763-845a-39d9438c93a7", 
+            "workflow_outputs": []
+        }, 
+        "7": {
+            "annotation": "", 
+            "content_id": "scanpy_run_pca", 
+            "errors": null, 
+            "id": 7, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 6, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy RunPCA", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": null, 
+            "name": "Scanpy RunPCA", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }, 
+                {
+                    "name": "output_png", 
+                    "type": "png"
+                }, 
+                {
+                    "name": "output_embed", 
+                    "type": "csv"
+                }, 
+                {
+                    "name": "output_load", 
+                    "type": "csv"
+                }, 
+                {
+                    "name": "output_stdev", 
+                    "type": "csv"
+                }, 
+                {
+                    "name": "output_vprop", 
+                    "type": "csv"
+                }
+            ], 
+            "position": {
+                "left": 883.796875, 
+                "top": 285.390625
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_embed": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_embed"
+                }, 
+                "HideDatasetActionoutput_h5": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_h5"
+                }, 
+                "HideDatasetActionoutput_load": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_load"
+                }, 
+                "HideDatasetActionoutput_stdev": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_stdev"
+                }, 
+                "HideDatasetActionoutput_vprop": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_vprop"
+                }
+            }, 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/ebi-gxa/scanpy_run_pca/scanpy_run_pca", 
+            "tool_state": "{\"__page__\": null, \"input_format\": \"\\\"anndata\\\"\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"n_pc\": \"\\\"50\\\"\", \"do_plotting\": \"{\\\"plot\\\": \\\"false\\\", \\\"__current_case__\\\": 1}\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null, \"extra_outputs\": \"null\", \"n_pcs\": \"\\\"50\\\"\", \"output_format\": \"\\\"anndata\\\"\", \"run_mode\": \"{\\\"chunked\\\": \\\"false\\\", \\\"random_seed\\\": \\\"0\\\", \\\"zero_center\\\": \\\"true\\\", \\\"__current_case__\\\": 1, \\\"svd_solver\\\": null}\"}", 
+            "tool_version": "1.3.2+galaxy1", 
+            "type": "tool", 
+            "uuid": "1e9d9ecc-ba79-46ad-bd7b-080d7ba9a102", 
+            "workflow_outputs": [
+                {
+                    "label": "pca_figure", 
+                    "output_name": "output_png", 
+                    "uuid": "138f25d2-0fe2-4639-8cc9-1465a1c74388"
+                }
+            ]
+        }, 
+        "8": {
+            "annotation": "", 
+            "content_id": "scanpy_compute_graph", 
+            "errors": null, 
+            "id": 8, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 7, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy ComputeGraph", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": null, 
+            "name": "Scanpy ComputeGraph", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }
+            ], 
+            "position": {
+                "left": 896.296875, 
+                "top": 636.390625
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_h5": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/ebi-gxa/scanpy_compute_graph/scanpy_compute_graph", 
+            "tool_state": "{\"__page__\": null, \"input_format\": \"\\\"anndata\\\"\", \"settings\": \"{\\\"default\\\": \\\"true\\\", \\\"__current_case__\\\": 0}\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "1.3.2+galaxy1", 
+            "type": "tool", 
+            "uuid": "0ddea02c-282e-4130-b7d3-c13c46d6097a", 
+            "workflow_outputs": []
+        }, 
+        "9": {
+            "annotation": "", 
+            "content_id": "scanpy_find_cluster", 
+            "errors": null, 
+            "id": 9, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 8, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy FindCluster", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": null, 
+            "name": "Scanpy FindCluster", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }, 
+                {
+                    "name": "output_txt", 
+                    "type": "tsv"
+                }
+            ], 
+            "position": {
+                "left": 907.296875, 
+                "top": 768.390625
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_h5": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_h5"
+                }, 
+                "HideDatasetActionoutput_txt": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_txt"
+                }
+            }, 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/ebi-gxa/scanpy_find_cluster/scanpy_find_cluster", 
+            "tool_state": "{\"__page__\": null, \"input_format\": \"\\\"anndata\\\"\", \"settings\": \"{\\\"default\\\": \\\"true\\\", \\\"__current_case__\\\": 0}\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"output_cluster\": \"\\\"true\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "1.3.2+galaxy1", 
+            "type": "tool", 
+            "uuid": "d9227205-9d85-4f73-9410-afae007fcc12", 
+            "workflow_outputs": []
+        }, 
+        "10": {
+            "annotation": "", 
+            "content_id": "scanpy_run_tsne", 
+            "errors": null, 
+            "id": 10, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 9, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy RunTSNE", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": null, 
+            "name": "Scanpy RunTSNE", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }, 
+                {
+                    "name": "output_png", 
+                    "type": "png"
+                }, 
+                {
+                    "name": "output_embed", 
+                    "type": "csv"
+                }
+            ], 
+            "position": {
+                "left": 1187.796875, 
+                "top": 497.390625
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_embed": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_embed"
+                }
+            }, 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/ebi-gxa/scanpy_run_tsne/scanpy_run_tsne", 
+            "tool_state": "{\"__page__\": null, \"embeddings\": \"\\\"true\\\"\", \"input_format\": \"\\\"anndata\\\"\", \"settings\": \"{\\\"default\\\": \\\"true\\\", \\\"__current_case__\\\": 0}\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"do_plotting\": \"{\\\"plot\\\": \\\"false\\\", \\\"__current_case__\\\": 1}\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "1.3.2+galaxy1", 
+            "type": "tool", 
+            "uuid": "9aba409f-7922-4de0-b5ee-d2b8809cbe22", 
+            "workflow_outputs": [
+                {
+                    "label": "tsne_figure", 
+                    "output_name": "output_png", 
+                    "uuid": "176ffd16-6c74-4927-9de0-054024bc7bf3"
+                }, 
+                {
+                    "label": null, 
+                    "output_name": "output_h5", 
+                    "uuid": "8da0c1a3-33bc-4d96-8dd3-a8e6ae4e0e5e"
+                }
+            ]
+        }, 
+        "11": {
+            "annotation": "", 
+            "content_id": "scanpy_find_markers", 
+            "errors": null, 
+            "id": 11, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 10, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy FindMarkers", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": null, 
+            "name": "Scanpy FindMarkers", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }, 
+                {
+                    "name": "output_csv", 
+                    "type": "csv"
+                }
+            ], 
+            "position": {
+                "left": 1213.890625, 
+                "top": 693.953125
+            }, 
+            "post_job_actions": {}, 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/ebi-gxa/scanpy_find_markers/scanpy_find_markers", 
+            "tool_state": "{\"__page__\": null, \"input_format\": \"\\\"anndata\\\"\", \"settings\": \"{\\\"default\\\": \\\"true\\\", \\\"__current_case__\\\": 0}\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"n_genes\": \"\\\"50\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"output_markers\": \"\\\"true\\\"\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "1.3.2+galaxy1", 
+            "type": "tool", 
+            "uuid": "519a2853-8a17-41cd-b7c1-f7bfce653881", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output_csv", 
+                    "uuid": "97e33e5e-3507-4fb4-b61e-d192a0159b1b"
+                }, 
+                {
+                    "label": null, 
+                    "output_name": "output_h5", 
+                    "uuid": "3501591b-c9b7-476b-b455-2ab34269af8e"
+                }
+            ]
+        }, 
+        "12": {
+            "annotation": "", 
+            "content_id": "scanpy_run_umap", 
+            "errors": null, 
+            "id": 12, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 11, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy RunUMAP", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": null, 
+            "name": "Scanpy RunUMAP", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }, 
+                {
+                    "name": "output_png", 
+                    "type": "png"
+                }, 
+                {
+                    "name": "output_embed", 
+                    "type": "csv"
+                }
+            ], 
+            "position": {
+                "left": 1215.796875, 
+                "top": 846.390625
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_embed": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_embed"
+                }
+            }, 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/ebi-gxa/scanpy_run_umap/scanpy_run_umap", 
+            "tool_state": "{\"__page__\": null, \"embeddings\": \"\\\"true\\\"\", \"input_format\": \"\\\"anndata\\\"\", \"settings\": \"{\\\"default\\\": \\\"true\\\", \\\"__current_case__\\\": 0}\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"do_plotting\": \"{\\\"plot\\\": \\\"false\\\", \\\"__current_case__\\\": 1}\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "1.3.2+galaxy1", 
+            "type": "tool", 
+            "uuid": "558ba771-7ecd-4d66-96f8-a57f8cb395c2", 
+            "workflow_outputs": [
+                {
+                    "label": "umap_figure", 
+                    "output_name": "output_png", 
+                    "uuid": "b4d0ccf1-86ff-4570-b925-b0766d0d7ea6"
+                }, 
+                {
+                    "label": "andata_umap", 
+                    "output_name": "output_h5", 
+                    "uuid": "e9d1a816-b777-43c8-9b60-cfcb977781b2"
+                }
+            ]
+        }, 
+        "13": {
+            "annotation": "", 
+            "content_id": "ucsc_cell_browser", 
+            "errors": null, 
+            "id": 13, 
+            "input_connections": {
+                "input_type|input_anndata_file": {
+                    "id": 12, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool UCSC Cell Browser", 
+                    "name": "input_type"
+                }
+            ], 
+            "label": null, 
+            "name": "UCSC Cell Browser", 
+            "outputs": [
+                {
+                    "name": "html_file", 
+                    "type": "html"
+                }
+            ], 
+            "position": {
+                "left": 1468.390625, 
+                "top": 690.953125
+            }, 
+            "post_job_actions": {}, 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/ebi-gxa/ucsc_cell_browser/ucsc_cell_browser", 
+            "tool_state": "{\"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"input_type\": \"{\\\"input_anndata_file\\\": {\\\"__class__\\\": \\\"RuntimeValue\\\"}, \\\"__current_case__\\\": 2, \\\"expression_source\\\": \\\"scanpy\\\"}\", \"__rerun_remap_job_id__\": null, \"__page__\": null}", 
+            "tool_version": "0.4.38+galaxy0", 
+            "type": "tool", 
+            "uuid": "6b468b6e-365a-4b38-aa81-177578b09e9d", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "html_file", 
+                    "uuid": "41a95283-1fd9-4cbb-b9de-6c15536ccac8"
+                }
+            ]
+        }
+    }, 
+    "tags": [], 
+    "uuid": "6fe12eb0-1a78-4233-84aa-a4c04cab855a"
+}
