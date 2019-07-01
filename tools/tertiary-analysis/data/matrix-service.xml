@@ -15,7 +15,7 @@ gunzip -c out.mtx/cells.tsv.gz > exp_design.tsv
 ]]></command>
 
   <inputs>
-    <param name="project" type="text" value="Single cell transcriptome analysis of human pancreas" label="Human Cell Atlas project name/feature/UUID" help="HCA project identifier, can be project title, project label or project UUID."/>
+    <param name="project" type="text" value="Single cell transcriptome analysis of human pancreas" label="Human Cell Atlas project name/label/UUID" help="HCA project identifier, can be project title, project label or project UUID."/>
   </inputs>
 
   <outputs>
