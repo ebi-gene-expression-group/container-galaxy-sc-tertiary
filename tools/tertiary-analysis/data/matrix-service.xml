@@ -6,28 +6,45 @@
   </requirements>
   <command detect_errors="exit_code"><![CDATA[
 
-hca-matrix-downloader -p '${project}' -f mtx -o out
-&&
-hca-mtx-to-10x out.mtx .
-&&
-gunzip -c out.mtx/cells.tsv.gz > exp_design.tsv
+hca-matrix-downloader -p '${project}' -f mtx -o out -f '${matrix_format}'
+
+#if $matrix_format == "mtx":
+  && hca-mtx-to-10x out.mtx .
+  && gunzip -c out.mtx/cells.tsv.gz > exp_design.tsv
+#end if
 
 ]]></command>
 
   <inputs>
     <param name="project" type="text" value="Single cell transcriptome analysis of human pancreas" label="Human Cell Atlas project name/label/UUID" help="HCA project identifier, can be project title, project label or project UUID."/>
+    <param name="matrix_format" type="select" label="Choose the format of matrix to download" help="Matrix Market or Loom">
+      <option value="mtx" selected="true">Matrix Market</option>
+      <option value="loom">Loom</option>
+    </param>
   </inputs>
 
   <outputs>
-    <data name="matrix_mtx" format="txt" from_work_dir="matrix.mtx" label="${tool.name} on ${on_string} matrix.mtx"/>
-    <data name="genes_tsv" format="tsv" from_work_dir="genes.tsv" label="${tool.name} on ${on_string} genes.tsv"/>
-    <data name="barcode_tsv" format="tsv" from_work_dir="barcodes.tsv" label="${tool.name} on ${on_string} barcodes.tsv"/>
-    <data name="cells_meta_tsv" format="tsv" from_work_dir="exp_design.tsv" label="${tool.name} on ${on_string} exp_design.tsv"/>
+    <data name="matrix_mtx" format="txt" from_work_dir="matrix.mtx" label="${tool.name} on ${on_string} matrix.mtx">
+      <filter>matrix_format=="mtx"</filter>
+    </data>
+    <data name="genes_tsv" format="tsv" from_work_dir="genes.tsv" label="${tool.name} on ${on_string} genes.tsv">
+      <filter>matrix_format=="mtx"</filter>
+    </data>
+    <data name="barcode_tsv" format="tsv" from_work_dir="barcodes.tsv" label="${tool.name} on ${on_string} barcodes.tsv">
+      <filter>matrix_format=="mtx"</filter>
+    </data>
+    <data name="cells_meta_tsv" format="tsv" from_work_dir="exp_design.tsv" label="${tool.name} on ${on_string} exp_design.tsv">
+      <filter>matrix_format=="mtx"</filter>
+    </data>
+    <data name="matrix_loom" format="h5" from_work_dir="out.loom" label="${tool.name} on ${on_string} matrix.loom">
+      <filter>matrix_format=="loom"</filter>
+    </data>
   </outputs>
 
   <tests>
     <test>
       <param name="project" value="Single cell transcriptome analysis of human pancreas"/>
+      <param name="matrix_format" value="mtx"/>
       <output name="matrix_mtx" file="matrix.mtx" ftype="txt"/>
       <output name="genes_tsv" file="genes.tsv" ftype="tsv"/>
       <output name="barcode_tsv" file="barcodes.tsv" ftype="tsv"/>
@@ -36,32 +53,48 @@ gunzip -c out.mtx/cells.tsv.gz > exp_design.tsv
   </tests>
 
   <help><![CDATA[
+===========================================================================
 Down expression matrix from HCA projects using HCA DCP's matrix service API
----------------------------------------------------------------------------
+===========================================================================
 
 The data retrieval tool presented here allows the user to retrieve expression matrices
 and metadata for any public experiment available at Human Cell Atlas data portal.
 
 To use it, simply set the name, or label, or ID for the desired project, which can be
-found at the HCA data browser (https://prod.data.humancellatlas.org/explore/projects).
+found at the HCA data browser (https://prod.data.humancellatlas.org/explore/projects),
+and select the desired matrix format (Matrix Market or Loom).
 
 Outputs will be:
 
-:Matrix (txt):
-  Contains the expression values for genes (rows) and cells (columns) in raw counts.
-  This text file is formatted as a Matrix Market file, and as such it is accompanied by
-  separate files for the gene identifiers and the cells identifiers.
+- *When "Matrix Market" is seleted, outputs are in 10X-compatible Matrix Market format:*
 
-:Genes (tsv):
-  Identifiers (column repeated) for the genes present in the matrix of expression,
-  in the same order as the matrix rows.
+  1. **Matrix (txt):**
 
-:Barcodes (tsv):
-  Identifiers for the cells of the data matrix. The file is ordered to match the columns
-  of the matrix.
+     Contains the expression values for genes (rows) and cells (columns) in raw counts. This
+     text file is formatted as a Matrix Market file, and as such it is accompanied by separate
+     files for the gene identifiers and the cells identifiers.
 
-:Experiment Design file (tsv):
-  Contains metadata for the different cells of the experiment.
+  2. **Genes (tsv):**
+
+     Identifiers (column repeated) for the genes present in the matrix of expression,
+     in the same order as the matrix rows.
+
+  3. **Barcodes (tsv):**
+
+     Identifiers for the cells of the data matrix. The file is ordered to match the columns
+     of the matrix.
+
+  4. **Experiment Design file (tsv):**
+
+     Contains metadata for the different cells of the experiment.
+
+- *When "Loom" is selected, output is a single Loom HDF5 file:*
+
+  1. **Loom (h5):**
+
+     Contains expression values for genes (rows) and cells (columns) in raw counts, cell
+     metadata table and gene metadata table, in a single HDF5 file with specification defined
+     in http://linnarssonlab.org/loompy/format/index.html.
 
 ]]></help>
   <citations>
