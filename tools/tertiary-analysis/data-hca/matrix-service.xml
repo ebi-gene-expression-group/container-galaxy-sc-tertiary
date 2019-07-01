@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="dcp-matrix-service-retrieve" name="HCA DCP Matrix Service Data Retrieval" version="v0.0.1+galaxy0">
-  <description>Retrieves expression matrices and metadata.</description>
+<tool id="_hca-matrix-downloader" name="Human Cell Atlas Matrix Downloader" version="v0.0.2+galaxy0">
+  <description>retrieves expression matrices and metadata from the Human Cell Atlas.</description>
   <requirements>
     <requirement type="package" version="0.0.2">hca-matrix-downloader</requirement>
   </requirements>
@@ -95,6 +95,11 @@ Outputs will be:
      Contains expression values for genes (rows) and cells (columns) in raw counts, cell
      metadata table and gene metadata table, in a single HDF5 file with specification defined
      in http://linnarssonlab.org/loompy/format/index.html.
+
+**Version history**
+
+     0.0.2+galaxy0: Initial contribution. Ni Huang and Pablo Moreno, Teichmann Lab at Wellcome Sanger Institute and
+     Expression Atlas team https://www.ebi.ac.uk/gxa/home  at EMBL-EBI https://www.ebi.ac.uk/.
 
 ]]></help>
   <citations>

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <toolbox>
-<!-- Galaxy 18.05 standard tools --> 
+<!-- Galaxy 18.05 standard tools -->
 <section id="getext" name="Get Data">
     <tool file="data_source/upload.xml" />
     <tool file="data_source/ucsc_tablebrowser.xml" />
@@ -134,12 +134,13 @@
   <!--   <label id="roche_454" text="Roche-454" /> -->
   <!--   <label id="ab_solid" text="AB-SOLiD" /> -->
   <!-- </section> -->
-  <!-- Galaxy 18.05 standard tools --> 
+  <!-- Galaxy 18.05 standard tools -->
 
   <label id="ebi-tertiary" text="Single Cell Analysis" />
 
   <section id="get-scrna" name="Get scRNAseq data">
-    <tool file="tertiary-analysis/data/retrieve-scxa.xml"/>
+    <tool file="tertiary-analysis/data-scxa/retrieve-scxa.xml"/>
+    <tool file="tertiary-analysis/data-hca/matrix-service.xml"/>
   </section>
   <section name="Seurat" id="seurat-tools">
     <tool file="tertiary-analysis/seurat/seurat_read10x.xml"  labels="I/O"/>

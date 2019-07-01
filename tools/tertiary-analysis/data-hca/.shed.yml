@@ -1,0 +1,18 @@
+categories:
+ - Transcriptomics
+ - Sequence Analysis
+description: "Tools for interacting with the Human Cell Atlas resource https://prod.data.humancellatlas.org/explore/projects"
+long_description: |
+        The Human Cell Atlas is an open science resource that gives users a powerful way to find information about gene expression across human tissues and cell types, and biological conditions such as different tissues, cell types, developmental stages and diseases among others.’.
+name: "suite_ebi_expression_atlas"
+owner: ebi-gxa
+remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for the HCA tool: {{ tool_name }}"
+suite:
+  name: "suite_human_cell_atlas_tools"
+  description: "Tools for interacting with the Human Cell Atlas resource https://prod.data.humancellatlas.org/explore/projects"
+  long_description: |
+        The Human Cell Atlas is an open science resource that gives users a powerful way to find information about gene expression across human tissues and cell types, and biological conditions such as different tissues, cell types, developmental stages and diseases among others.’.
