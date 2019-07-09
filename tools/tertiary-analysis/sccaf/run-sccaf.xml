@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="run-sccaf" name="Run SCCAF" version="@VERSION@+galaxy0">
+  <description>to access clustering</description>
+  <macros>
+    <import>sccaf_macros.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+ln -s ${sccaf_lib} SCCAF.py &&
+ln -s ${input_obj_file} input.h5 &&
+#if $cluster_source.use_tsv
+ln -s $cluster_source.input_tsv input.tsv &&
+#end if
+cp ${script_file} script.py &&
+python script.py
+
+]]></command>
+
+  <configfiles>
+    <configfile name="script_file"><![CDATA[
+import pandas as pd
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import scanpy.api as sc
+import SCCAF as sf
+
+ad = sc.read('input.h5')
+
+#if $cluster_source.use_tsv
+cluster = pd.read_table('input.tsv', usecols=[0,1], index_col=0, header=0)
+cluster.columns = ['CLUSTER']
+y = (pd.merge(ad.obs, cluster, how='left', left_index=True, right_index=True))['CLUSTER']
+#else
+attr = "$cluster_source.obj_attr"
+y = ad.obs[attr]
+#end if
+
+raw = getattr(ad, 'raw')
+if raw:
+    X = raw.X
+else:
+    X = ad.X
+y_prob, y_pred, y_test, clf, cvsm, acc = sf.SCCAF_assessment(X, y)
+aucs = sf.plot_roc(y_prob, y_test, clf, cvsm=cvsm, acc=acc)
+plt.savefig('self-projection.png')
+plt.close()
+
+#if $mode.optimise
+  #if $mode.init.from_input
+ad.obs['L1_Round0'] = y
+  #else
+sc.tl.louvain(ad, resolution=${mode.init.resolution}, key_added='L1_Round0')
+  #end if
+sf.SCCAF_optimize_all(min_acc=0.96, ad=ad, use='pca', plot=False, plot_tsne=False)
+y_prob, y_pred, y_test, clf, cvsm, acc = sf.SCCAF_assessment(X, ad.obs['L1_result'])
+aucs = sf.plot_roc(y_prob, y_test, clf, cvsm=cvsm, acc=acc)
+plt.savefig('optim.png')
+ad.write('output.h5')
+#end if
+
+
+]]></configfile>
+  </configfiles>
+
+  <inputs>
+    <param name="sccaf_lib" type="data" format="txt" label="SCCAF library"/>
+    <expand macro="input_object_params"/>
+
+    <conditional name="cluster_source">
+      <param name="use_tsv" type="boolean" checked="true" label="Use external cluster information"/>
+      <when value="true">
+        <param name="input_tsv" type="data" format="tsv" label="Cluster table for assessment in tsv format"/>
+      </when>
+      <when value="false">
+        <param name="obj_attr" type="text" value="louvain" label="Attribute in input object that contains cluster information"/>
+      </when>
+    </conditional>
+
+    <conditional name="mode">
+      <param name="optimise" type="boolean" checked="false" label="Run clustering optimisation"/>
+      <when value="true">
+        <conditional name="init">
+          <param name="from_input" type="boolean" checked="true" label="Use input clustering to initialise optimisation"/>
+          <when value="true">
+          </when>
+          <when value="false">
+            <param name="resolution" type="float" value="1.5" label="Resolution for initialising louvain clustering"/>
+          </when>
+        </conditional>
+      </when>
+      <when value="false">
+      </when>
+    </conditional>
+  </inputs>
+
+  <outputs>
+    <data name="output_png" format="png" from_work_dir="self-projection.png" label="${tool.name} on ${on_string} self-projection.png"/>
+    <data name="output_h5" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string} output.h5">
+      <filter>mode['optimise']</filter>
+    </data>
+    <data name="optim_png" format="png" from_work_dir="optim.png" label="${tool.name} on ${on_string} optim.png">
+      <filter>mode['optimise']</filter>
+    </data>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="sccaf_lib" value="SCCAF.py"/>
+      <param name="input_obj_file" value="find_cluster.h5"/>
+      <param name="use_tsv" value="true"/>
+      <param name="input_tsv" value="find_cluster.tsv"/>
+      <output name="output_png" file="run_sccaf.png" ftype="png"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+]]></help>
+  <!-- <expand macro="citations"/> -->
+</tool>
