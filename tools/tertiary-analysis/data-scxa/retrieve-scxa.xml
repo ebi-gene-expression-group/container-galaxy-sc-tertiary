@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="retrieve_scxa" name="EBI SCXA Data Retrieval" version="v0.0.1+galaxy2">
+<tool id="retrieve_scxa" name="EBI SCXA Data Retrieval" version="v0.0.2+galaxy2">
   <description>Retrieves expression matrixes and metadata from EBI Single Cell Expression Atlas (SCXA)</description>
   <requirements>
     <requirement type="package" version="1.20.1">wget</requirement>
@@ -19,8 +19,7 @@ cut -f2 '${accession}'.expression_tpm.mtx_cols > ${barcode_tsv};
 
 wget -O ${matrix_mtx} 'ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/sc_experiments/${accession}/${accession}.aggregated_filtered_counts.mtx';
 wget -qO - 'ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/sc_experiments/${accession}/${accession}.aggregated_filtered_counts.mtx_cols' | cut -f2 > ${barcode_tsv};
-wget -qO - 'ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/sc_experiments/${accession}/${accession}.aggregated_filtered_counts.mtx_rows'
- | awk '{OFS="\t"; print \$2,\$2}' > ${genes_tsv};
+wget -qO - 'ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/sc_experiments/${accession}/${accession}.aggregated_filtered_counts.decorated.mtx_rows' > ${genes_tsv};
 
 #end if
 
@@ -88,6 +87,7 @@ matrix that you want to download:
   already normalized/scaled. You should keep this in mind when using this data
   on methods that will try to normalise data as part of their procedure. Due to technical
   particularities in the current Atlas SC pipeline, TPMs available here are not filtered.
+  **Note: droplet databases won't have TPM data**
 
 Outputs will be:
 
