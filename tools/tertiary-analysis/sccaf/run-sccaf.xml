@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="run-sccaf" name="Run SCCAF" version="@VERSION@+galaxy0">
+<tool id="run-sccaf" name="Run SCCAF" version="@TOOL_VERSION@+galaxy0">
   <description>to access clustering</description>
+  <requirements>
+    <requirement type="package" version="@TOOL_VERSION@">sccaf</requirement>
+  </requirements>
   <macros>
     <import>sccaf_macros.xml</import>
   </macros>
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
-ln -s ${sccaf_lib} SCCAF.py &&
 ln -s ${input_obj_file} input.h5 &&
 #if $cluster_source.use_tsv
 ln -s $cluster_source.input_tsv input.tsv &&
