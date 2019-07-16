@@ -52,9 +52,9 @@ PYTHONIOENCODING=utf-8 scanpy-read-10x
   </tests>
 
   <help><![CDATA[
-==========================================================
-Read 10x-Genomics-formatted mtx directory (`read_10x_mtx`)
-==========================================================
+=================================================================
+Read 10x-Genomics-formatted mtx directory (`scanpy.read_10x_mtx`)
+=================================================================
 
 The mtx directory should contain:
 

@@ -79,13 +79,14 @@ PYTHONIOENCODING=utf-8 scanpy-filter-cells
   </tests>
 
   <help><![CDATA[
-========================================================================================
-Filter cells outliers based on counts and numbers of genes expressed (`pp.filter_cells`)
-========================================================================================
+===================================================================
+Filter cells based on various QC metrics (`scanpy.pp.filter_cells`)
+===================================================================
 
-For instance, only keep cells with at least `min_counts` counts or
-`min_genes` genes expressed. This is to filter measurement outliers, i.e.,
-"unreliable" observations.
+For instance, only keep cells with at least `min_counts` and at most
+`max_counts` UMI and/or at least `min_genes` expressed genes and/or at most
+`max_mito_percent` mitocondria expression. This is to filter measurement
+outliers, i.e., "unreliable" observations.
 
 @HELP@
 
