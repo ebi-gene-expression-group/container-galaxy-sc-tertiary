@@ -2,41 +2,57 @@
 <tool id="scanpy_filter_cells" name="Scanpy FilterCells" version="@TOOL_VERSION@+galaxy0">
   <description>based on counts and numbers of genes expressed</description>
   <macros>
-    <import>scanpy_macros.xml</import>
+    <import>scanpy_macros2.xml</import>
   </macros>
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_obj_file}' input.h5 &&
-PYTHONIOENCODING=utf-8 scanpy-filter-cells.py
-    -i input.h5
-    -f '${input_format}'
-    -o output.h5
-    -F '${output_format}'
-    #if $parameters
-        #set pars = ','.join([str($p['name']) for $p in $parameters])
-        -p '${pars}'
-        #set mins = ','.join([str($p['min']) for $p in $parameters])
-        -l '${mins}'
-        #set maxs = ','.join([str($p['max']) for $p in $parameters])
-        -j '${maxs}'
-    #end if
-    #if $subset
-        -s '${subset}'
-    #end if
+PYTHONIOENCODING=utf-8 scanpy-filter-cells
+#if $gene_name
+    --gene-name '${gene_name}'
+#end if
+#if $parameters
+    #set pars = ' '.join(['--param {name} {min} {max}'.format(**$p) for $p in $parameters])
+    ${pars}
+#end if
+#if $categories
+    #set cats = ' '.join(['--category {name} {values}'.format(**$c) for $c in $categories])
+    ${cats}
+#end if
+#if $subsets
+    #set subs = ' '.join(['--subsets {name} {subset}'.format(**$s) for $c in $subsets])
+    ${subs}
+#end if
+    @INPUT_OPTS@
+    @OUTPUT_OPTS@
     ]]></command>
 
   <inputs>
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
+
+    <param name="gene_name" type="text" value="index" label="Name of the column in `anndata.var` that contains gene name"
+           help="This is used for flagging mitochondria genes"/>
+
     <repeat name="parameters" title="Parameters used to filter cells" min="1">
       <param name="name" type="text" value="n_genes" label="Name of parameter to filter on" help="for example n_genes or n_counts">
         <option value="n_genes">n_genes</option>
-        <option value="n_counts">n_counts</option>
+        <option value="cell:n_counts">n_counts</option>
+        <option value="pct_counts_mito">pct_counts_mito</option>
       </param>
       <param name="min" type="float" value="0" min="0" label="Min value"/>
       <param name="max" type="float" value="1e9" label="Max value"/>
     </repeat>
-    <param name="subset" argument="--subset-list" type="data" format="tsv" optional="true" label="List of barcodes"/>
+
+    <repeat name="categories" title="Categories used to filter cells" min="0">
+      <param name="name" type="text" value="" label="Name of the categorical variable to filter on"/>
+      <param name="values" type="text" value="" label="Comma-separated values"/>
+    </repeat>
+
+    <repeat name="subsets" title="Subsets used to filter cells" min="0">
+      <param name="name" type="text" value="" label="Name of the categorical variable to filter on"/>
+      <param name="subset" type="data" format="tabular" label="List of values"/>
+    </repeat>
   </inputs>
 
   <outputs>
@@ -58,7 +74,7 @@ PYTHONIOENCODING=utf-8 scanpy-filter-cells.py
         <param name="min" value="0"/>
         <param name="max" value="1e9"/>
       </repeat>
-      <output name="output_h5" file="filter_cells.h5" ftype="h5" compare="sim_size"/>
+      <output name="output_h5" file="output.h5" ftype="h5" compare="sim_size"/>
     </test>
   </tests>
 
