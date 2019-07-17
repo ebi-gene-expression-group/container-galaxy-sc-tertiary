@@ -8,7 +8,12 @@
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-cli dpt
-    --groups '${groups}'
+    --n-dcs $n_dcs
+    --root '${root_attr},${root_value}
+#if $n_branchings > 0
+    --n-branchings ${n_branchings}
+    --min-group-size ${min_group_size}
+#end if
 #if $use_graph
     --use-graph '${use_graph}'
 #end if
@@ -23,9 +28,9 @@ PYTHONIOENCODING=utf-8 scanpy-cli dpt
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
 
-    <param name="n_dcs" argument="--n-dcs" type="integer" value="10"
+    <param name="n_dcs" argument="--n-dcs" type="integer" min="2" value="10"
            label="Number of diffusion components to use"/>
-    <param name="n_branchings" argument="--n-branchings" type="integer" value="0"
+    <param name="n_branchings" argument="--n-branchings" min="0" type="integer" value="0"
            label="Number of branchings to detect"/>
     <param name="min_group_size" argument="--min-group-size" type="float" min="0" max="1" value="0"
            label="The fraction of total cells under which further splitting is skipped during recursive splitting of branches"
