@@ -31,15 +31,12 @@ PYTHONIOENCODING=utf-8 scanpy-cli plot embed
   </tests>
 
   <help><![CDATA[
-==================================================================
-t-distributed stochastic neighborhood embedding (tSNE) (`tl.tsne`)
-==================================================================
+=============================================================
+Plot embeddings of a given method of dimensionality reduction
+=============================================================
 
-t-distributed stochastic neighborhood embedding (tSNE) (Maaten et al, 2008) has been
-proposed for visualizating single-cell data by (Amir et al, 2013). Here, by default,
-we use the implementation of *scikit-learn* (Pedregosa et al, 2011).
-
-It yields `X_tsne`, tSNE coordinates of data.
+It yields a scatter plot in png format, wherein cells are placed in space of
+reduced dimensionality and coloured by attribute of choice.
 
 @HELP@
 
