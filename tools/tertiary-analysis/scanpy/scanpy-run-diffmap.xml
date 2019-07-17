@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="scanpy_run_diffmap" name="Scanpy DiffusionMap" version="@TOOL_VERSION@+galaxy0">
+  <description>calculate diffusion components</description>
+  <macros>
+    <import>scanpy_macros2.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+ln -s '${input_obj_file}' input.h5 &&
+PYTHONIOENCODING=utf-8 scanpy-cli embed diffmap
+    --n-comps ${n_comps}
+#if $use_graph
+    --use-graph '${use_graph}'
+#end if
+#if $key_added
+    --key-added '${key_added}'
+#end if
+    $export_embed
+    @INPUT_OPTS@
+    @OUTPUT_OPTS@
+]]></command>
+
+  <inputs>
+    <expand macro="input_object_params"/>
+    <expand macro="output_object_params"/>
+
+    <param name="n_comps" argument="--n-comps" type="integer" min="2" value="10"
+           label="Number of diffusion components to calculate"/>
+    <param name="export_embed" argument="--export-embedding" type="boolean" checked="false"
+           truevalue="--export-embedding embed.tsv" falsevalue=""
+           label="Export embeddings as a tab-separated text table"/>
+    <param name="use_graph" argument="--use-graph" value="neighbors" type="text"
+           label="Name of the slot that holds the KNN graph"/>
+    <param name="key_added" argument="--key-added" type="text" optional="true"
+           label="Additional suffix to the name of the slot to save the calculated trajectory"/>
+  </inputs>
+
+  <outputs>
+    <data name="output_h5" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string}: diffmap object"/>
+    <data name="output_embed" format="tsv" from_work_dir="embed.tsv" label="${tool.name} on ${on_string}: diffmap embedding">
+      <filter>export_embed</filter>
+    </data>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="input_obj_file" value="diffmap.h5"/>
+      <param name="input_format" value="anndata"/>
+      <param name="output_format" value="anndata"/>
+      <param name="n_dcs" value="10"/>
+      <param name="root_attr" value="leiden"/>
+      <param name="root_value" value="1"/>
+      <param name="use_graph" value="neighbors"/>
+      <output name="output_h5" file="paga.h5" ftype="h5" compare="sim_size"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+====================================================
+Calculate Diffusion Components (`scanpy.tl.diffmap`)
+====================================================
+
+Calculate diffusion components from single cell KNN graphs.
+
+This requires to run `Scanpy ComputeGraph`, first.
+
+It yields `X_diffmap`, the dimension-reduced representation in diffusion
+components space.
+
+@HELP@
+
+@VERSION_HISTORY@
+]]></help>
+  <expand macro="citations">
+    <citation type="doi">10.1186/s13059-019-1663-x</citation>
+  </expand>
+</tool>
