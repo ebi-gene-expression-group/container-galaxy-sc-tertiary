@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tool id="scanpy_run_paga" name="Scanpy PAGA" version="@TOOL_VERSION@+galaxy0">
-  <description>based on community detection on KNN graph</description>
+  <description>trajectory inference</description>
   <macros>
     <import>scanpy_macros2.xml</import>
   </macros>
