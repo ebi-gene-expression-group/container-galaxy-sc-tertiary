@@ -77,7 +77,7 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
       <option value="on data">On data</option>
     </param>
     <param name="legend_fontsize" argument="--legend-fontsize" type="integer" value="15" label="Legend font size"/>
-    <param name="fig_size" argument="--fig-size" type="text" value="7,7" label="Figure size as 'width,height', e.g, '7,7'"/>
+    <param name="fig_size" argument="--fig-size" type="text" value="4,4" label="Figure size as 'width,height', e.g, '7,7'"/>
     <param name="fig_dpi" argument="--fig-dpi" type="integer" value="80" label="Figure dpi"/>
     <param name="fig_fontsize" argument="--fig-fontsize" type="integer" value="10" label="Figure font size"/>
   </xml>
