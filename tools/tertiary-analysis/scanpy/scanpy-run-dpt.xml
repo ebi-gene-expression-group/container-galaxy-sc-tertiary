@@ -9,7 +9,7 @@
 ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-cli dpt
     --n-dcs $n_dcs
-    --root '${root_attr},${root_value}
+    --root '${root_attr} ${root_value}'
 #if $n_branchings > 0
     --n-branchings ${n_branchings}
     --min-group-size ${min_group_size}
@@ -35,9 +35,9 @@ PYTHONIOENCODING=utf-8 scanpy-cli dpt
     <param name="min_group_size" argument="--min-group-size" type="float" min="0" max="1" value="0"
            label="The fraction of total cells under which further splitting is skipped during recursive splitting of branches"
            help="Ignored when `Number of branchings to detect` is 0"/>
-    <param name="root_attr" argument="--root {attr},value" type="text"
+    <param name="root_attr" argument="--root {attr} value" type="text"
            label="Name of attribute that defines clustering"/>
-    <param name="root_value" argument="--root attr,{value}" type="text"
+    <param name="root_value" argument="--root attr {value}" type="text"
            label="Name of the clustering that defines the root cell type"/>
     <param name="use_graph" argument="--use-graph" value="neighbors" type="text"
            label="Name of the slot that holds the KNN graph"/>
