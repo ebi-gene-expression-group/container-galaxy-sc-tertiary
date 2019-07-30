@@ -7,11 +7,27 @@
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
 ln -s ${input_obj_file} input.h5 &&
-#if $cluster_source.use_tsv
-ln -s $cluster_source.input_tsv input.tsv &&
-#end if
 cp ${script_file} script.py &&
-python script.py
+python script.py -i input.h5
+
+#if $cluster_source.use_tsv
+  --external-clustering-tsv ${cluster_source.input_tsv}
+#else
+  --slot-for-existing-clustering ${cluster_source.obj_attr}
+#end if
+
+#if $mode.skip_init_assessment
+  --skip-assessment
+#end if
+
+#if $mode.optimise
+  #if not $mode.init.from_input
+  --resolution ${mode.init.resolution}
+  #end if
+  --optimise
+  --accuracy ${mode.accuracy}
+#end if
+
 
 ]]></command>
 
@@ -19,46 +35,77 @@ python script.py
     <configfile name="script_file"><![CDATA[
 import pandas as pd
 import matplotlib
+
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import scanpy.api as sc
 import SCCAF as sf
+import logging
+
+import argparse
+from sys import exit
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-i", "--input-file",
+                    help="Path to input in AnnData or Loom")
+parser.add_argument("-o", "--output-file", default='output.h5',
+                    help="Path for output file")
+parser.add_argument("-e", "--external-clustering-tsv",
+                    help="Path to external clustering in TSV")
+parser.add_argument("--optimise",
+                    help="Not only run assessment, but also optimise the clustering",
+                    action="store_true")
+parser.add_argument("--skip-assessment", action="store_true",
+                    help="If --optimise given, then this allows to optionally skip the original "
+                         "assessment of the clustering")
+parser.add_argument("-s", "--slot-for-existing-clustering",
+                    help="Use clustering pre-computed in the input object, available in this slot of the object.")
+parser.add_argument("-r", "--resolution", default=1.5, type=float,
+                    help="Resolution for running clustering when no internal or external clustering is given.")
+parser.add_argument("-a", "--accuracy", type=float,
+                    help="Accuracy threshold for convergence of the optimisation procedure.")
+
+args = parser.parse_args()
+
+if not args.skip_assessment or (args.external_clustering_tsv or args.slot_for_existing_clustering):
+    logging.error("Either --external-clustering-tsv or --slot-for-existing-clustering needs to be set "
+                  "if the assessment is to be done.")
+    exit(1)
 
 ad = sc.read('input.h5')
 
-#if $cluster_source.use_tsv
-cluster = pd.read_table('input.tsv', usecols=[0,1], index_col=0, header=0)
-cluster.columns = ['CLUSTER']
-y = (pd.merge(ad.obs, cluster, how='left', left_index=True, right_index=True))['CLUSTER']
-#else
-attr = "$cluster_source.obj_attr"
-y = ad.obs[attr]
-#end if
+if args.external_clustering_tsv:
+    cluster = pd.read_table(args.external_clustering_tsv, usecols=[0, 1], index_col=0, header=0)
+    cluster.columns = ['CLUSTER']
+    y = (pd.merge(ad.obs, cluster, how='left', left_index=True, right_index=True))['CLUSTER']
+else:
+    y = ad.obs[args.slot_for_existing_clustering]
 
 raw = getattr(ad, 'raw')
 if raw:
     X = raw.X
 else:
     X = ad.X
-#if not $mode.skip_init_assessment
-y_prob, y_pred, y_test, clf, cvsm, acc = sf.SCCAF_assessment(X, y)
-aucs = sf.plot_roc(y_prob, y_test, clf, cvsm=cvsm, acc=acc)
-plt.savefig('self-projection.png')
-plt.close()
-#end if
 
-#if $mode.optimise
-  #if $mode.init.from_input
-ad.obs['L1_Round0'] = y
-  #else
-sc.tl.louvain(ad, resolution=${mode.init.resolution}, key_added='L1_Round0')
-  #end if
-sf.SCCAF_optimize_all(min_acc=0.90, ad=ad, plot=False)
-y_prob, y_pred, y_test, clf, cvsm, acc = sf.SCCAF_assessment(X, ad.obs['L1_result'])
-aucs = sf.plot_roc(y_prob, y_test, clf, cvsm=cvsm, acc=acc)
-plt.savefig('optim.png')
-ad.write('output.h5')
-#end if
+if not args.skip_assessment:
+    y_prob, y_pred, y_test, clf, cvsm, acc = sf.SCCAF_assessment(X, y)
+    aucs = sf.plot_roc(y_prob, y_test, clf, cvsm=cvsm, acc=acc)
+    plt.savefig('self-projection.png')
+    plt.close()
+
+if args.optimise:
+    if args.resolution:
+        sc.tl.louvain(ad, resolution=args.resolution, key_added='L1_Round0')
+    else:
+        # We use the predefined clustering (either internal or external).
+        ad.obs['L1_Round0'] = y
+
+    sf.SCCAF_optimize_all(min_acc=0.90, ad=ad, plot=False)
+    y_prob, y_pred, y_test, clf, cvsm, acc = sf.SCCAF_assessment(X, ad.obs['L1_result'])
+    aucs = sf.plot_roc(y_prob, y_test, clf, cvsm=cvsm, acc=acc)
+    plt.savefig('optim.png')
+    ad.write(args.output_file)
+
 
 
 ]]></configfile>
@@ -70,25 +117,26 @@ ad.write('output.h5')
     <conditional name="cluster_source">
       <param name="use_tsv" type="boolean" checked="true" label="Use external cluster information" help="If the provided AnnData/Loom file does not include the clustering, or if you want to use an external clustering assigment."/>
       <when value="true">
-        <param name="input_tsv" type="data" format="tsv" label="Cluster table for assessment in tsv format"/>
+        <param name="input_tsv" type="data" argument="--external-clustering-tsv" format="tsv" label="Cluster table for assessment in tsv format"/>
       </when>
       <when value="false">
-        <param name="obj_attr" type="text" value="louvain" label="Attribute in input object that contains cluster information" help="If you are not using an external clustering, then you must specify the slot/index in the AnnData or Loom file where the clustering to be used for assessment (and potentially optimisation starting point) is saved."/>
+        <param name="obj_attr" type="text" argument="--slot-for-existing-clustering" value="louvain" label="Attribute in input object that contains cluster information" help="If you are not using an external clustering, then you must specify the slot/index in the AnnData or Loom file where the clustering to be used for assessment (and potentially optimisation starting point) is saved."/>
       </when>
     </conditional>
 
     <conditional name="mode">
-      <param name="optimise" type="boolean" checked="false" label="Run clustering optimisation" help="By default the tool only runs an assesment of the clustering quality. To further optimise the clustering, enable this option."/>
+      <param name="optimise" type="boolean" checked="false" argument="--optimise" label="Run clustering optimisation" help="By default the tool only runs an assesment of the clustering quality. To further optimise the clustering, enable this option."/>
       <when value="true">
         <conditional name="init">
           <param name="from_input" type="boolean" checked="true" label="Use input clustering to initialise optimisation" help="This option uses the previously specified clustering (either external file provided or internal index/slot specified) to serve as starting point for the optimisation process."/>
           <when value="true">
           </when>
           <when value="false">
-            <param name="resolution" type="float" value="1.5" label="Resolution for initialising louvain clustering" help="Perform an initial clustering and use this as an starting point."/>
+            <param name="resolution" type="float" value="1.5" argument="--resolution" label="Resolution for initialising louvain clustering" help="Perform an initial clustering and use this as an starting point."/>
           </when>
         </conditional>
-        <param name="skip_init_assessment" type="boolean" checked="false" label="Run only the optimisation and skip the initial assessment" help="If you are running the optimisation, you can choose skip the initial assessment to save time."/>
+        <param name="accuracy" type="float" value="0.90" argument="--accuracy" label="Accuracy for convergence of the optimisation process" help="The SCCAF optimisation process will converge once this accuracy is achieved."/>
+        <param name="skip_init_assessment" type="boolean" argument="--skip-assessment" checked="false" label="Run only the optimisation and skip the initial assessment" help="If you are running the optimisation, you can choose skip the initial assessment to save time."/>
       </when>
       <when value="false">
       </when>
@@ -108,7 +156,6 @@ ad.write('output.h5')
 
   <tests>
     <test>
-      <param name="sccaf_lib" value="SCCAF.py"/>
       <param name="input_obj_file" value="find_cluster.h5"/>
       <param name="use_tsv" value="true"/>
       <param name="input_tsv" value="find_cluster.tsv"/>

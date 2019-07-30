@@ -53,7 +53,7 @@
     </citations>
   </xml>
   <xml name="input_object_params">
-    <param name="input_obj_file" argument="--input-object-file" type="data" format="h5" label="Input object in AnnData hdf5 format" help="Normally the result of Scanpy (or equivalent), which already has both UMAP (needed) and clustering (ideally) pre-computed."/>
+    <param name="input_obj_file" argument="--input-object-file" type="data" format="h5" label="Input object in AnnData hdf5 format" help="Normally the result of Scanpy (or equivalent), which already has both a visualisation (either tSNE, UMAP or PCA - needed) and clustering (ideally) pre-computed."/>
     <param name="input_format" argument="--input-format" type="select" label="Format of input object">
       <option value="anndata" selected="true">AnnData format hdf5</option>
       <option value="loom">Loom format hdf5, current support is incomplete</option>
