@@ -1,7 +1,7 @@
-<tool id="ucsc_cell_browser" name="UCSC Cell Browser" version="0.5.21+galaxy0">
+<tool id="ucsc_cell_browser" name="UCSC Cell Browser" version="0.5.43+galaxy0">
   <description>displays single-cell clusterized data in an interactive web application.</description>
   <requirements>
-    <requirement type="package" version="0.5.21">ucsc-cell-browser</requirement>
+    <requirement type="package" version="0.5.43">ucsc-cell-browser</requirement>
   </requirements>
 <stdio>
 <exit_code range="1:" />
@@ -100,6 +100,9 @@ EMBL-EBI https://www.ebi.ac.uk/.
 EMBL-EBI https://www.ebi.ac.uk/.
 
 0.5.21+galaxy0: Update UCSC CellBrowser version to 0.5.21. Pablo Moreno, Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
+EMBL-EBI https://www.ebi.ac.uk/.
+
+0.5.38+galaxy0: Update UCSC CellBrowser version to 0.5.43. Fixes bugs and improves usage of gene symbols in AnnData objects. Pablo Moreno, Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
 EMBL-EBI https://www.ebi.ac.uk/.
 ]]></help>
 <citations>
