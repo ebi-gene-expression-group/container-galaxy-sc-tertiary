@@ -38,6 +38,11 @@ __xlarge = {'requests_cpu': 4,
             'limits_memory': 16
             }
 
+__xxlarge = {'requests_cpu': 4,
+             'limits_cpu': 8,
+             'requests_memory': 16,
+             'limits_memory': 30 }
+
 __path_tool2container = "config/phenomenal_tools2container.yaml"
 
 def k8s_dispatcher(resource_params, rule_helper, no_docker_default_destination_id, tool):
@@ -49,32 +54,35 @@ def k8s_dispatcher(resource_params, rule_helper, no_docker_default_destination_i
     return JobDestination(runner="k8s", params=resource_params)
 
 
-def k8s_wrapper_tiny(resource_params, tool_id):
+def k8s_wrapper_tiny(resource_params, tool_id, job):
     __read_assignments(resource_params,tool_id)
-    return __setup_resources(resource_params, settings=__tiny)
+    return __setup_resources(resource_params, settings=__tiny, job=job, follow_up_destination="small")
 
 
-def k8s_wrapper_small(resource_params, tool_id):
+def k8s_wrapper_small(resource_params, tool_id, job):
     __read_assignments(resource_params, tool_id)
-    return __setup_resources(resource_params, settings=__small)
+    return __setup_resources(resource_params, settings=__small, job=job, follow_up_destination="medium")
 
 
-def k8s_wrapper_medium(resource_params, tool_id):
+def k8s_wrapper_medium(resource_params, tool_id, job):
     __read_assignments(resource_params, tool_id)
-    return __setup_resources(resource_params, settings=__medium)
+    return __setup_resources(resource_params, settings=__medium, job=job, follow_up_destination="large")
 
 
-def k8s_wrapper_large(resource_params, tool_id):
+def k8s_wrapper_large(resource_params, tool_id, job):
     __read_assignments(resource_params, tool_id)
-    return __setup_resources(resource_params, settings=__large)
+    return __setup_resources(resource_params, settings=__large, job=job, follow_up_destination="xlarge")
 
 
-def k8s_wrapper_xlarge(resource_params, tool_id):
+def k8s_wrapper_xlarge(resource_params, tool_id, job):
     __read_assignments(resource_params, tool_id)
-    return __setup_resources(resource_params, settings=__xlarge)
+    return __setup_resources(resource_params, settings=__xlarge, job=job, follow_up_destination="xxlarge")
 
+def k8s_wrapper_xxlarge(resource_params, tool_id, job):
+    __read_assignments(resource_params, tool_id)
+    return __setup_resources(resource_params, settings=__xlarge, job=job)
 
-def __read_assignments(resource_params, tool_id):
+def __read_assignments(resource_params, tool_id, job):
     stream = open(__path_tool2container, mode='r')
     mappings = yaml.load(stream)
     for mapping in mappings['assignment']:
@@ -83,13 +91,21 @@ def __read_assignments(resource_params, tool_id):
             break
 
 
-def __setup_resources(resource_params, settings):
+def __setup_resources(resource_params, settings, job, follow_up_destination=None):
     resource_params['docker_enabled'] = True
+    resource_params['resources'] = "all"
     __check_resource_params(resource_params, resource_type='cpu')
     __check_resource_params(resource_params, resource_type='memory')
     __merge_into_res_params(resource_params, settings, resource_type='cpu')
     __merge_into_res_params(resource_params, settings, resource_type='memory')
-    return JobDestination(runner="k8s", params=resource_params)
+    job_destination=JobDestination(runner="k8s", params=resource_params, id=settings['dest_id'])
+    if follow_up_destination is not None:
+        job_destination['resubmit'] = [dict(
+            condition="memory_limit_reached",
+            destination="dynamic-k8s-"+follow_up_destination,
+        )]
+    job.destination_id = settings['dest_id']
+    return job_destination
 
 
 def __check_resource_params(resource_params, resource_type):
