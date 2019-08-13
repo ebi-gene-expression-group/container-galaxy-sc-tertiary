@@ -7,8 +7,7 @@
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
 ln -s ${input_obj_file} input.h5 &&
-cp ${script_file} script.py &&
-python script.py -i input.h5
+sccaf -i input.h5
 
 #if $cluster_source.use_tsv
   --external-clustering-tsv ${cluster_source.input_tsv}
@@ -26,90 +25,11 @@ python script.py -i input.h5
   #end if
   --optimise
   --accuracy ${mode.accuracy}
+  --produce-rounds-summary
 #end if
 
 
 ]]></command>
-
-  <configfiles>
-    <configfile name="script_file"><![CDATA[
-import pandas as pd
-import matplotlib
-
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import scanpy.api as sc
-import SCCAF as sf
-import logging
-
-import argparse
-from sys import exit
-
-parser = argparse.ArgumentParser()
-parser.add_argument("-i", "--input-file",
-                    help="Path to input in AnnData or Loom")
-parser.add_argument("-o", "--output-file", default='output.h5',
-                    help="Path for output file")
-parser.add_argument("-e", "--external-clustering-tsv",
-                    help="Path to external clustering in TSV")
-parser.add_argument("--optimise",
-                    help="Not only run assessment, but also optimise the clustering",
-                    action="store_true")
-parser.add_argument("--skip-assessment", action="store_true",
-                    help="If --optimise given, then this allows to optionally skip the original "
-                         "assessment of the clustering")
-parser.add_argument("-s", "--slot-for-existing-clustering",
-                    help="Use clustering pre-computed in the input object, available in this slot of the object.")
-parser.add_argument("-r", "--resolution", default=1.5, type=float,
-                    help="Resolution for running clustering when no internal or external clustering is given.")
-parser.add_argument("-a", "--accuracy", type=float,
-                    help="Accuracy threshold for convergence of the optimisation procedure.")
-
-args = parser.parse_args()
-
-if not args.skip_assessment or (args.external_clustering_tsv or args.slot_for_existing_clustering):
-    logging.error("Either --external-clustering-tsv or --slot-for-existing-clustering needs to be set "
-                  "if the assessment is to be done.")
-    exit(1)
-
-ad = sc.read('input.h5')
-
-if args.external_clustering_tsv:
-    cluster = pd.read_table(args.external_clustering_tsv, usecols=[0, 1], index_col=0, header=0)
-    cluster.columns = ['CLUSTER']
-    y = (pd.merge(ad.obs, cluster, how='left', left_index=True, right_index=True))['CLUSTER']
-else:
-    y = ad.obs[args.slot_for_existing_clustering]
-
-raw = getattr(ad, 'raw')
-if raw:
-    X = raw.X
-else:
-    X = ad.X
-
-if not args.skip_assessment:
-    y_prob, y_pred, y_test, clf, cvsm, acc = sf.SCCAF_assessment(X, y)
-    aucs = sf.plot_roc(y_prob, y_test, clf, cvsm=cvsm, acc=acc)
-    plt.savefig('self-projection.png')
-    plt.close()
-
-if args.optimise:
-    if args.resolution:
-        sc.tl.louvain(ad, resolution=args.resolution, key_added='L1_Round0')
-    else:
-        # We use the predefined clustering (either internal or external).
-        ad.obs['L1_Round0'] = y
-
-    sf.SCCAF_optimize_all(min_acc=0.90, ad=ad, plot=False)
-    y_prob, y_pred, y_test, clf, cvsm, acc = sf.SCCAF_assessment(X, ad.obs['L1_result'])
-    aucs = sf.plot_roc(y_prob, y_test, clf, cvsm=cvsm, acc=acc)
-    plt.savefig('optim.png')
-    ad.write(args.output_file)
-
-
-
-]]></configfile>
-  </configfiles>
 
   <inputs>
     <expand macro="input_object_params"/>
@@ -144,12 +64,15 @@ if args.optimise:
   </inputs>
 
   <outputs>
-    <data name="output_png" format="png" from_work_dir="self-projection.png" label="${tool.name} on ${on_string} self-projection.png"/>
+    <data name="output_png" format="png" from_work_dir="roc-curve.png" label="${tool.name} on ${on_string} self-projection.png"/>
       <filter>not mode['skip_init_assessment']</filter>
     <data name="output_h5" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string} output.h5">
       <filter>mode['optimise']</filter>
     </data>
     <data name="optim_png" format="png" from_work_dir="optim.png" label="${tool.name} on ${on_string} optim.png">
+      <filter>mode['optimise']</filter>
+    </data>
+    <data name="rouds" format="txt" from_work_dir="rounds.txt" label="${tool.name} on ${on_string} rounds.txt">
       <filter>mode['optimise']</filter>
     </data>
   </outputs>
