@@ -50,6 +50,8 @@ __xxlarge = {'requests_cpu': 4,
              'dest_id': "dynamic-k8s-xxlarge"
               }
 
+__unit_suffix = {'memory': "Gi"}
+
 __path_tool2container = "config/phenomenal_tools2container.yaml"
 
 def k8s_dispatcher(resource_params, rule_helper, no_docker_default_destination_id, tool):
@@ -131,3 +133,8 @@ def __merge_into_res_params(resource_params, settings, resource_type):
     elif resource_params['requests_' + resource_type] == 0 and resource_params['limits_' + resource_type] != 0:
         resource_params['requests_' + resource_type] = min(settings['limits_' + resource_type],
                                                            resource_params['requests_' + resource_type])
+    if resource_type in __unit_suffix:
+        resource_params['requests_' + resource_type] = str(resource_params['requests_' + resource_type])
+                                                        + __unit_suffix[resource_type]
+        resource_params['limits_' + resource_type] = str(resource_params['limits_' + resource_type])
+                                                        + __unit_suffix[resource_type]
