@@ -55,31 +55,31 @@ def k8s_dispatcher(resource_params, rule_helper, no_docker_default_destination_i
 
 
 def k8s_wrapper_tiny(resource_params, tool_id, job):
-    __read_assignments(resource_params,tool_id)
+    __read_assignments(resource_params, tool_id, job)
     return __setup_resources(resource_params, settings=__tiny, job=job, follow_up_destination="small")
 
 
 def k8s_wrapper_small(resource_params, tool_id, job):
-    __read_assignments(resource_params, tool_id)
+    __read_assignments(resource_params, tool_id, job)
     return __setup_resources(resource_params, settings=__small, job=job, follow_up_destination="medium")
 
 
 def k8s_wrapper_medium(resource_params, tool_id, job):
-    __read_assignments(resource_params, tool_id)
+    __read_assignments(resource_params, tool_id, job)
     return __setup_resources(resource_params, settings=__medium, job=job, follow_up_destination="large")
 
 
 def k8s_wrapper_large(resource_params, tool_id, job):
-    __read_assignments(resource_params, tool_id)
+    __read_assignments(resource_params, tool_id, job)
     return __setup_resources(resource_params, settings=__large, job=job, follow_up_destination="xlarge")
 
 
 def k8s_wrapper_xlarge(resource_params, tool_id, job):
-    __read_assignments(resource_params, tool_id)
+    __read_assignments(resource_params, tool_id, job)
     return __setup_resources(resource_params, settings=__xlarge, job=job, follow_up_destination="xxlarge")
 
 def k8s_wrapper_xxlarge(resource_params, tool_id, job):
-    __read_assignments(resource_params, tool_id)
+    __read_assignments(resource_params, tool_id, job)
     return __setup_resources(resource_params, settings=__xlarge, job=job)
 
 def __read_assignments(resource_params, tool_id, job):
