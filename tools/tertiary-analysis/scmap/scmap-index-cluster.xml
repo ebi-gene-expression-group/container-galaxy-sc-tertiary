@@ -18,7 +18,7 @@
     <tests>
         <test>
             <param name="input_single_cell_experiment" value="select_features.rds" ftype="rdata"/>
-            <output name="output_single_cell_experiment" file="index_clusters.rds"/>
+            <output name="output_single_cell_experiment" file="index_cluster.rds"/>
             <output name="plot" file="index_cluster.png"/>
         </test>
     </tests>
