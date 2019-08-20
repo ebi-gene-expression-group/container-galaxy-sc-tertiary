@@ -12,8 +12,8 @@
         <param name="cluster_col" type="text" label="Cluster column" value="cell_type1" help="Column name in the 'colData' slot of the SingleCellExperiment object containing the cell classification information." />
     </inputs>
     <outputs>
-        <data name="output_single_cell_experiment" format="rdata" from_work_dir="select_features.rds" />
-        <data name="plot" format="png" from_work_dir="select_features.png" />
+        <data name="output_single_cell_experiment" format="rdata" />
+        <data name="plot" format="png" />
     </outputs>
     <tests>
         <test>

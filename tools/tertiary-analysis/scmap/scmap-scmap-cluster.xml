@@ -13,8 +13,8 @@
         <param name="threshold" type="text" label="Threshold" value="0.7" help="Threshold on similarity (or probability for SVM and RF)." />
     </inputs>
     <outputs>
-        <data name="output_single_cell_experiment" format="rdata" from_work_dir="project_cluster.rds" />
-        <data name="output_txt" format="csv" from_work_dir="project_cluster.csv" />
+        <data name="output_single_cell_experiment" format="rdata" />
+        <data name="output_txt" format="csv" />
     </outputs>
     <tests>
         <test>
