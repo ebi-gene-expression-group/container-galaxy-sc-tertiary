@@ -190,6 +190,13 @@
     <tool file="tertiary-analysis/scanpy/scanpy-find-markers.xml"/>
     <tool file="tertiary-analysis/scanpy/scanpy-parameter-iterator.xml"/>
   </section>
+  <section name='scmap' id='scmap-tools'>
+    <tool file="tertiary-analysis/scmap/scmap-select-features.xml" />
+    <tool file="tertiary-analysis/scmap/scmap-index-cluster.xml" />
+    <tool file="tertiary-analysis/scmap/scmap-scmap-cluster.xml" />
+    <tool file="tertiary-analysis/scmap/scmap-index-cell.xml" />
+    <tool file="tertiary-analysis/scmap/scmap-scmap-cell.xml" />
+  </section>
   <section name="UCSC Cell Browser" id="cell-browser">
     <tool file="tertiary-analysis/ucsc-cell-browser/cell-browser.xml"  labels="Viz"/>
   </section>
