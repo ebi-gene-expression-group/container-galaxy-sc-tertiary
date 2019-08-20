@@ -1,0 +1,20 @@
+categories:
+ - Transcriptomics
+ - RNA
+ - Statistics
+ - Sequence Analysis
+description: "De-composed scmap functionality tools, based on https://github.com/ebi-gene-expression-group/scmap-cli and scmap 1.6.0."
+long_description: |
+        scmap: A tool for unsupervised projection of single cell RNA-seq data
+name: suite_scmap
+owner: ebi-gxa
+remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for the scmap tool suite: {{ tool_name }}"
+suite:
+  name: "suite_scmap"
+  description: "De-composed scmap functionality tools, based on https://github.com/ebi-gene-expression-group/scmap-cli and scmap 1.6.0."
+  long_description: |
+    scmap: A tool for unsupervised projection of single cell RNA-seq data  
