@@ -5,18 +5,20 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        scmap-index-cell.R --input-object-file '$input_single_cell_experiment' --number-chunks '$n_chunks' --number-clustesr $n_clusters --output-object-file '$output_single_cell_experiment' --output-plot-file '$plot'
+        scmap-index-cell.R --input-object-file '$input_single_cell_experiment' --number-chunks '$n_chunks' --number-clusters $n_clusters --output-object-file '$output_single_cell_experiment'
     ]]></command>
     <inputs>
         <param type="data" name="input_single_cell_experiment" label="SingleCellExperiment object" format="rdata" help="File with serialized SingleCellExperiment object as produced by 'scmap select features'" />
-        <param name="n_chunks" type="integer" label="Number of chunks" help="Number of chunks into which the expr matrix is split" />
-        <param name="n_clusters" type="integer" label="Number of clusters" help="Number of clusters per group for k-means clustering" />
+        <param name="n_chunks" type="integer" label="Number of chunks" value='' help="Number of chunks into which the expr matrix is split" />
+        <param name="n_clusters" type="integer" label="Number of clusters" value='' help="Number of clusters per group for k-means clustering" />
     </inputs>
     <outputs>
         <data name="output_single_cell_experiment" format="rdata" />
     </outputs>
     <tests>
         <test>
+            <param name="n_chunks" value="50" />
+            <param name="n_clusters" value="9" />
             <param name="input_single_cell_experiment" value="select_features.rds" ftype="rdata"/>
             <output name="output_single_cell_experiment" file="index_cell.rds"/>
         </test>
