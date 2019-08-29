@@ -1,5 +1,5 @@
 <macros>
-  <token name="@TOOL_VERSION@">1.4.2</token>
+  <token name="@TOOL_VERSION@">1.4.2.post1</token>
   <token name="@HELP@">More information can be found at https://scanpy.readthedocs.io</token>
   <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
