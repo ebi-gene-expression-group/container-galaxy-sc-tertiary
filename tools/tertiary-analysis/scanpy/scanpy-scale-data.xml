@@ -1,40 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_scale_data" name="Scanpy ScaleData" version="@TOOL_VERSION@+galaxy1">
+<tool id="scanpy_scale_data" name="Scanpy ScaleData" version="@TOOL_VERSION@+galaxy0">
   <description>to make expression variance the same for all genes</description>
   <macros>
-    <import>scanpy_macros.xml</import>
+    <import>scanpy_macros2.xml</import>
   </macros>
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_obj_file}' input.h5 &&
-PYTHONIOENCODING=utf-8 scanpy-scale-data.py
-    -i input.h5
-    -f '${input_format}'
-    -o output.h5
-    -F '${output_format}'
+PYTHONIOENCODING=utf-8 scanpy-scale-data
     #if $scale_max
-        -x '${scale_max}'
+        --max-value '${scale_max}'
     #end if
-    #if $var_to_regress
-        -V '${var_to_regress}'
-    #end if
-    #if $do_log
-        --do-log
-    #end if
-    #if $zero_center
-        --zero-center
-    #end if
+    ${zero_center}
+    @INPUT_OPTS@
+    @OUTPUT_OPTS@
 ]]></command>
 
   <inputs>
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
-    <param name="do_log" argument="--do-log" type="boolean" checked="true" label="Do log(x+1) transformation"/>
-    <param name="zero_center" argument="--zero-center" type="boolean" checked="true" label="Zero center data before scaling"/>
-    <param name="var_to_regress" argument="--var-to-regress" type="text" optional="true" label="Variable(s) to regress out">
-      <option value="n_counts">n_counts</option>
-    </param>
-    <param name="scale_max" argument="--scale-max" type="float" optional="true" label="Truncate to this value after scaling"/>
+    <param name="zero_center" type="boolean" checked="true" truevalue="" falsevalue="--no-zero-center"
+           label="Zero center data before scaling"/>
+    <param name="scale_max" argument="--max-value" type="float" min="0" optional="true" label="Truncate to this value after scaling"/>
   </inputs>
 
   <outputs>
@@ -46,7 +33,6 @@ PYTHONIOENCODING=utf-8 scanpy-scale-data.py
       <param name="input_obj_file" value="find_variable_genes.h5"/>
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
-      <param name="do_log" value="true"/>
       <param name="zero_center" value="true"/>
       <param name="scale_max" value="10"/>
       <output name="output_h5" file="scale_data.h5" ftype="h5" compare="sim_size"/>
@@ -58,11 +44,7 @@ PYTHONIOENCODING=utf-8 scanpy-scale-data.py
 
     **What it does**
 
-    Scale data to unit variance and zero mean (`pp.scale`)
-    Regress out unwanted sources of variation (`pp.regress_out`)
-
-    Regress out unwanted sources of variation, using simple linear regression. This is
-    inspired by Seurat's `regressOut` function in R.
+    Scale data to unit variance and (optionally) zero mean (`scanpy.pp.scale`)
 
     @HELP@
 
