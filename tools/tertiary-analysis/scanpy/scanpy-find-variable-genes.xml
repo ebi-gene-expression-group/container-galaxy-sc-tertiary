@@ -31,12 +31,12 @@ PYTHONIOENCODING=utf-8 scanpy-find-variable-genes
       </param>
       <when value="seurat">
         <param name="min_mean" argument="--min-mean" type="float" min="0" value="0.0125"
-               label="Min value for mean expression (in log1p scale)"/>
+               label="Min value for normalised mean expression (in log1p scale)"/>
         <param name="max_mean" argument="--max-mean" type="float" min="0" value="3"
-               label="Max value for mean expresssion (in log1p scale)"/>
+               label="Max value for normalised mean expresssion (in log1p scale)"/>
         <param name="min_disp" argument="--min-disp" type="float" min="0" value="0.5"
                label="Min value for dispersion of expression"/>
-        <param name="max_disp" argument="--max-disp" type="float" min="0" value="20"
+        <param name="max_disp" argument="--max-disp" type="float" min="0" value="50"
                label="Max value for dispersion of expresssion"/>
       </when>
       <when value="cell_ranger">
