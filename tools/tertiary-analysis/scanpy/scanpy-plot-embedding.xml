@@ -14,6 +14,9 @@ PYTHONIOENCODING=utf-8 scanpy-cli plot embed
     ${use_raw}
     --legend-loc '${legend_loc}'
     --legend-fontsize '${legend_fontsize}'
+#if $point_size
+    --size ${point_size}
+#end if
     @PLOT_OPTS@
 ]]></command>
 
@@ -27,6 +30,8 @@ PYTHONIOENCODING=utf-8 scanpy-cli plot embed
       <option value="on data">On data</option>
     </param>
     <param name="legend_fontsize" argument="--legend-fontsize" type="integer" value="15" label="Legend font size"/>
+    <param name="point_size" argument="--size" type="integer" optional="true" label="Point size"
+           help="Automatically determined if not specified."/>
     <expand macro="output_plot_params"/>
   </inputs>
 

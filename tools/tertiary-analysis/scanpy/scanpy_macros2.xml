@@ -1,5 +1,5 @@
 <macros>
-  <token name="@TOOL_VERSION@">1.4.2.post1</token>
+  <token name="@TOOL_VERSION@">1.4.2</token>
   <token name="@HELP@">More information can be found at https://scanpy.readthedocs.io</token>
   <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
@@ -18,7 +18,9 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
     --show-obj stdout --output-format '${output_format}' output.h5
   </token>
   <token name="@PLOT_OPTS@">
+#if $fig_title
     --title '${fig_title}'
+#end if
     --fig-size '${fig_size}'
     --fig-dpi ${fig_dpi}
     --fig-fontsize ${fig_fontsize}
@@ -29,7 +31,7 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
 
   <xml name="requirements">
     <requirements>
-      <requirement type="package" version="0.2.4">scanpy-scripts</requirement>
+      <requirement type="package" version="0.2.4.post1">scanpy-scripts</requirement>
       <yield/>
     </requirements>
   </xml>
