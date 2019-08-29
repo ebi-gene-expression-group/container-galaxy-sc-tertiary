@@ -1,93 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_run_pca" name="Scanpy RunPCA" version="@TOOL_VERSION@+galaxy1">
+<tool id="scanpy_run_pca" name="Scanpy RunPCA" version="@TOOL_VERSION@+galaxy0">
   <description>for dimensionality reduction</description>
   <macros>
-    <import>scanpy_macros.xml</import>
+    <import>scanpy_macros2.xml</import>
   </macros>
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_obj_file}' input.h5 &&
-PYTHONIOENCODING=utf-8 scanpy-run-pca.py
-    -i input.h5
-    -f '${input_format}'
-    -o output.h5
-    -F '${output_format}'
-    -n '${n_pcs}'
-    #if $run_mode.chunked
-        -c
-        --chunk-size '${run_mode.chunk_size}'
-    #else
-        #if $run_mode.zero_center
-            -z
-        #else
-            -Z
-        #end if
-        #if $run_mode.svd_solver
-            --svd-solver '${run_mode.svd_solver}'
-        #end if
-        #if $run_mode.random_seed is not None
-            -s '${run_mode.random_seed}'
-        #end if
+PYTHONIOENCODING=utf-8 scanpy-run-pca
+    --n-comps '${n_pcs}'
+#if $run_mode.chunked
+    --chunked
+    --chunk-size '${run_mode.chunk_size}'
+#else
+    ${run_mode.zero_center}
+    #if $run_mode.svd_solver
+        --svd-solver '${run_mode.svd_solver}'
     #end if
-    #if $extra_outputs:
-        #set extras = ' '.join(['--output-{}-file {}.csv'.format(x, x) for x in str($extra_outputs).split(',')])
-        ${extras}
+    #if $run_mode.random_seed is not None
+        --random-state '${run_mode.random_seed}'
     #end if
-
-@PLOT_OPTS@
+#end if
+#if $extra_outputs and "embeddings" in str($extra_outputs).split(','):
+    --export-embedding embeddings.tsv
+#end if
+    @INPUT_OPTS@
+    @OUTPUT_OPTS@
 ]]></command>
 
   <inputs>
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
-    <param name="n_pcs" argument="--n-pcs" type="integer" value="50" label="Number of PCs to produce"/>
+    <param name="n_pcs" argument="--n-comps" type="integer" min="2" value="50" label="Number of PCs to produce"/>
     <conditional name="run_mode">
       <param name="chunked" argument="--chunked" type="boolean" checked="false" label="Perform incremental PCA by chunks"/>
       <when value="true">
         <param name="chunk_size" argument="--chunk-size" type="integer" value="0" label="Chunk size"/>
       </when>
       <when value="false">
-        <param name="zero_center" argument="--zero-center" type="boolean" checked="true" label="Zero center data before scaling"/>
+        <param name="zero_center" argument="--zero-center" type="boolean" truevalue="" falsevalue="--no-zero-center" checked="true"
+               label="Zero center data before scaling"/>
         <param name="svd_solver" argument="--svd-solver" type="select" optional="true" label="SVD solver">
           <option value="arpack">ARPACK</option>
-          <option value="randomised">Randomised</option>
+          <option value="randomized">Randomised</option>
         </param>
-        <param name="random_seed" argument="--random-seed" type="integer" value="0" label="random_seed for numpy random number generator"/>
+        <param name="random_seed" argument="--random-state" type="integer" value="0" label="random seed for numpy random number generator"/>
       </when>
     </conditional>
 
-    <param name="extra_outputs" type="select" multiple="true" optional="true" label="Type of output">
+    <param name="extra_outputs" type="select" multiple="true" display="checkboxes" optional="true" label="Export extra output">
       <option value="embeddings">PCA embeddings</option>
-      <option value="loadings">PCA loadings</option>
-      <option value="stdev">PCs stdev</option>
-      <option value="var-ratio">PCs proportion of variance</option>
     </param>
 
-    <conditional name="do_plotting">
-      <param name="plot" type="boolean" checked="false" label="Make PCA plot"/>
-      <when value="true">
-        <expand macro="output_plot_params"/>
-      </when>
-      <when value="false"/>
-    </conditional>
   </inputs>
 
   <outputs>
     <data name="output_h5" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string}: PCA object"/>
-    <data name="output_png" format="png" from_work_dir="output.png" label="${tool.name} on ${on_string}: PCA plot">
-      <filter>do_plotting['plot']</filter>
-    </data>
-    <data name="output_embed" format="csv" from_work_dir="embeddings.csv" label="${tool.name} on ${on_string}: PCA embeddings">
+    <data name="output_embed" format="tsv" from_work_dir="embeddings.tsv" label="${tool.name} on ${on_string}: PCA embeddings">
       <filter>extra_outputs and 'embeddings' in extra_outputs.split(',')</filter>
-    </data>
-    <data name="output_load" format="csv" from_work_dir="loadings.csv" label="${tool.name} on ${on_string}: PCA loadings">
-      <filter>extra_outputs and 'loadings' in extra_outputs.split(',')</filter>
-    </data>
-    <data name="output_stdev" format="csv" from_work_dir="stdev.csv" label="${tool.name} on ${on_string}: PCA stdev">
-      <filter>extra_outputs and 'stdev' in extra_outputs.split(',')</filter>
-    </data>
-    <data name="output_vprop" format="csv" from_work_dir="var-ratio.csv" label="${tool.name} on ${on_string}: PC explained proportion of variance">
-      <filter>extra_outputs and 'var-ratio' in extra_outputs.split(',')</filter>
     </data>
   </outputs>
 
@@ -115,9 +85,9 @@ PYTHONIOENCODING=utf-8 scanpy-run-pca.py
   </tests>
 
   <help><![CDATA[
-=======================================================================================================
-Computes PCA (principal component analysis) coordinates, loadings and variance decomposition (`tl.pca`)
-=======================================================================================================
+================================================================================
+Dimensionality reduction by PCA (principal component analysis) (`scanpy.pp.pca`)
+================================================================================
 
 It uses the implementation of *scikit-learn*.
 
