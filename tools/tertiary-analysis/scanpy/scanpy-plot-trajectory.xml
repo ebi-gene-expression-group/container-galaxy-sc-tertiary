@@ -8,11 +8,13 @@
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-cli plot paga
-    --type ${type}
 #if $use_key
     --use-key '${use_key}'
 #end if
     --layout ${layout}
+#if $basis
+    --basis ${basis}
+#end if
 #if $settings.default == "false"
     --threshold ${settings.threshold}
     #if $settings.root
@@ -31,6 +33,9 @@ PYTHONIOENCODING=utf-8 scanpy-cli plot paga
     #if $settings.node_font
         --fontsize ${settings.node_font}
     #end if
+    #if $settings.edge_width
+        --edge-width-scale ${settings.edge_width}
+    #end if
 #end if
     @INPUT_OPTS@
     @PLOT_OPTS@
@@ -38,10 +43,6 @@ PYTHONIOENCODING=utf-8 scanpy-cli plot paga
 
   <inputs>
     <expand macro="input_object_params"/>
-    <param name="type" argument="--type" type="select" label="Figure type">
-      <option value="paga">Trajectory</option>
-      <option value="paga_compare" selected="true">Trajectory + Embedding</option>
-    </param>
     <param name="use_key" argument="--use-key" type="text" value="paga"
            label="The key in `.uns` that contains trajectory information"/>
     <param name="layout" argument="--layout" type="select" label="Layout functions">
@@ -49,6 +50,8 @@ PYTHONIOENCODING=utf-8 scanpy-cli plot paga
       <option value="fr">Fruchterman-Reingold</option>
       <option value="rt">Reingold-Tilford</option>
     </param>
+    <param name="basis" argument="--basis" type="text" optional="true" label="Name of the embedding to plot"
+           help="Must be a key of `.obsm` without the prefix 'X_', e.g. 'umap'."/>
     <expand macro="output_plot_params"/>
     <conditional name="settings">
       <param name="default" type="boolean" checked="true" label="Use programme defaults"/>
@@ -70,6 +73,8 @@ PYTHONIOENCODING=utf-8 scanpy-cli plot paga
                label="Increase or decrease the size of the nodes"/>
         <param name="node_font" argument="--fontsize" type="integer" min="1" optional="true"
                label="Font size for the node labels"/>
+        <param name="edge_width" argument="--edge-width-scale" type="float" value="1.0"
+               label="Increase or decrease the width of the edges"/>
       </when>
     </conditional>
   </inputs>
