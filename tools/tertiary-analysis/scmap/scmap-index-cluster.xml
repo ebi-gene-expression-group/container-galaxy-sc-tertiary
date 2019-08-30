@@ -1,0 +1,31 @@
+<tool id="scmap-index-cluster" name="scmap index clusters" version="@TOOL_VERSION@+galaxy0" python_template_version="3.5">
+    <description>calculates centroids of each cell type and merges them into a single table</description>
+    <macros>
+        <import>scmap_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        scmap-index-cluster.R --input-object-file '$input_single_cell_experiment' --cluster-col '$cluster_col' --output-object-file '$output_single_cell_experiment' --output-plot-file '$plot'
+    ]]></command>
+    <inputs>
+        <param type="data" name="input_single_cell_experiment" label="SingleCellExperiment object" format="rdata" help="File with serialized SingleCellExperiment object as produced by 'scmap select features'" />
+        <param name="cluster_col" type="text" label="Cluster column" value="cell_type1" help="Column name in the 'colData' slot of the SingleCellExperiment object containing the cell classification information." />
+    </inputs>
+    <outputs>
+        <data name="output_single_cell_experiment" format="rdata" />
+        <data name="plot" format="png" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="input_single_cell_experiment" value="select_features.rds" ftype="rdata"/>
+            <output name="output_single_cell_experiment" file="index_cluster.rds"/>
+            <output name="plot" file="index_cluster.png"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+    @HELP@
+    
+    @VERSION_HISTORY@
+    ]]></help>
+    <expand macro="citations" />
+</tool>

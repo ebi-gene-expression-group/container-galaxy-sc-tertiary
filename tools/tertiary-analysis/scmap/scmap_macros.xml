@@ -1,0 +1,43 @@
+<macros>
+    <token name="@TOOL_VERSION@">1.6.0</token>
+    <token name="@HELP@">More information can be found at https://bioconductor.org/packages/release/bioc/html/scmap.html</token>
+    <xml name="requirements">
+      <requirements>
+        <requirement type="package" version="0.0.2">scmap-cli</requirement>
+            <yield/>
+      </requirements>
+    </xml>
+    <xml name="version">
+      <version_command><![CDATA[
+        echo $(R --version | grep version | grep -v GNU)", scmap version" $(R --vanilla --slave -e "library(scmap); cat(sessionInfo()\$otherPkgs\$scmap\$Version)" 2> /dev/null | grep -v -i "WARNING: ")
+    ]]></version_command>
+    </xml>
+    <token name="@VERSION_HISTORY@"><![CDATA[
+**Version history**
+1.6.0+galaxy0: Initial contribution. Jonathan Manning, Expression Atlas team https://www.ebi.ac.uk/gxa/home at EMBL-EBI https://www.ebi.ac.uk/.
+    ]]></token>
+    <xml name="citations">
+      <citations>
+        <citation type="bibtex">
+          @Article{,
+            title = {scmap - A tool for unsupervised projection of single cell RNA-seq data},
+            author = {Vladimir Yu. Kiselev and Martin Hemberg},
+            year = {2017},
+            journal = {bioRxiv},
+            url = {http://doi.org/10.1101/150292},
+          }
+        </citation>
+        <citation type="bibtex">
+          @misc{githubscmap-cli.git,
+            author = {Jonathan Manning, EBI Gene Expression Team},
+            year = {2018},
+            title = {scmap-cli: command line interface for scmap},
+            publisher = {GitHub},
+            journal = {GitHub repository},
+            url = {https://github.com/ebi-gene-expression-group/scmap-cli.git},
+          }
+        </citation>
+        <yield />
+      </citations>
+    </xml>
+</macros>
