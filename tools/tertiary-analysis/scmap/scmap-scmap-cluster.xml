@@ -1,5 +1,5 @@
 <tool id="scmap-scmap-cluster" name="scmap cluster projection" version="@TOOL_VERSION@+galaxy0" python_template_version="3.5">
-    <description>Projection of one dataset to another</description>
+    <description>projects one dataset to another</description>
     <macros>
         <import>scmap_macros.xml</import>
     </macros>
