@@ -7,7 +7,7 @@
 0.0.3 - First functional release of Monocle 3 beta command line client
     ]]></token>
   <token name="@INPUT_OPTS@">
-    --input-object-format '${input_object_format}' input.RDS
+    --input-object-format '${input_object_format}' '${input_object_file}'
   </token>
   <token name="@OUTPUT_OPTS@">
     --output-object-format '${output_object_format}' output.RDS

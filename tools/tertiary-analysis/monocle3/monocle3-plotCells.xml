@@ -7,13 +7,44 @@
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
 LANG=en_US.UTF-8 monocle3 plotCells
-    --neighbor-graph '$(neighbor_graph)'
     --reduction-method '$(reduction_method)'
-#if $knn
-    --knn '$(knn)'
+    --norm-method '$(norm_method)'
+#if $xdim
+    --xdim '$(xdim)'
 #end if
-    --method '$(method)'
-    --alternative '$(alternative)'
+#if $ydim
+    --ydim '$(ydim)'
+#end if
+#if $color_cells_by
+    --color-cells-by '$(color_cells_by)'
+#end if
+#if $genes
+    --genes '$(genes)'
+#end if
+#if $cell_size
+    --cell-size '$(cell_size)'
+#end if
+#if $alpha
+    --alpha '$(alpha)'
+#end if
+#if $label_cell_groups
+    --label-cell-groups
+#end if
+#if $no_trajectory_graph
+    --no-trajectory-graph
+#end if
+#if $label_groups_by_cluster
+    --label-groups-by-cluster
+#end if
+#if $label_leaves
+    --label-leaves
+#end if
+#if $label_roots
+    --label-roots
+#end if
+#if $label_branch_points
+    --label-branch-points
+#end if
 
     @INPUT_OPTS@
     output.png

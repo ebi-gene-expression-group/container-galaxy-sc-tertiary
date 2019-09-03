@@ -7,7 +7,7 @@
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
 LANG=en_US.UTF-8 monocle3 learnGraph
-#if $no-partition
+#if $no_partition
     --no-partition
 #end if
 #if $no_close_loop
@@ -49,7 +49,7 @@ LANG=en_US.UTF-8 monocle3 learnGraph
   </inputs>
 
   <outputs>
-    <data name="output_rds" format="rdata" from_work_dir="output.RDS" label="${tool.name} on ${on_string}: ${output_format}"/>
+    <data name="output_rds" format="rdata" from_work_dir="output.RDS" label="${tool.name} on ${on_string}: ${output_object_format}"/>
   </outputs>
 
   <tests>

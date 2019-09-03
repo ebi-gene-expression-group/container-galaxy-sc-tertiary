@@ -6,13 +6,16 @@
   </macros>
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
+ln -s '${expression_matrix}' expression_matrix.rds &&
+ln -s '${cell_metadata}' cell_metadata.rds &&
+ln -s '${gene_annotation}' gene_annotation.rds &&
 LANG=en_US.UTF-8 monocle3 create
-    --expression-matrix '${expression_matrix}'
+    --expression-matrix expression_matrix.rds
 #if $cell_metadata
-    --cell-metadata '${cell_metadata}'
+    --cell-metadata cell_metadata.rds
 #end if
 #if $gene_annotation
-    --gene-annotation '${gene_annotation}'
+    --gene-annotation gene_annotation.rds
 #end if
     @OUTPUT_OPTS@
     @VERBOSE@
