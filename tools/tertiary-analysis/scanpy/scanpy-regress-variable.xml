@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="scanpy_regress_variable" name="Scanpy RegressOut" version="@TOOL_VERSION@+galaxy0">
+  <description>variables that might introduce batch effect</description>
+  <macros>
+    <import>scanpy_macros2.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+ln -s '${input_obj_file}' input.h5 &&
+PYTHONIOENCODING=utf-8 scanpy-regress
+    --keys '${keys}'
+    @INPUT_OPTS@
+    @OUTPUT_OPTS@
+]]></command>
+
+  <inputs>
+    <expand macro="input_object_params"/>
+    <expand macro="output_object_params"/>
+    <param name="keys" type="text" label="Variables to regress out" help="Use comma to separate multiple variables"/>
+  </inputs>
+
+  <outputs>
+    <data name="output_h5" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string}: Scaled data"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="input_obj_file" value="find_variable_genes.h5"/>
+      <param name="input_format" value="anndata"/>
+      <param name="output_format" value="anndata"/>
+      <param name="keys" value="n_counts"/>
+      <output name="output_h5" file="scale_data.h5" ftype="h5" compare="sim_size"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+    .. class:: infomark
+
+    **What it does**
+
+    Regress out unwanted source of variance (`scanpy.pp.regress_out`)
+
+    @HELP@
+
+    @VERSION_HISTORY@
+]]></help>
+  <expand macro="citations"/>
+</tool>
