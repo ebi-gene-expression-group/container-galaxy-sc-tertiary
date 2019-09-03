@@ -102,7 +102,7 @@ PYTHONIOENCODING=utf-8 scanpy-run-tsne
 t-distributed stochastic neighborhood embedding (tSNE) (`scanpy.tl.tsne`)
 =========================================================================
 
-For making TSNE plots, please use `Scanpy PlotEmbed` and enter "tsne" as the
+For making TSNE plots, please use `Scanpy PlotEmbed` with the output of this tool and enter "tsne" as the
 name of the embedding to plot.
 
 t-distributed stochastic neighborhood embedding (tSNE) (Maaten et al, 2008) has been
