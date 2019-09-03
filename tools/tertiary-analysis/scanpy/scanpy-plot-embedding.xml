@@ -56,6 +56,10 @@ Plot embeddings of a given method of dimensionality reduction
 It yields a scatter plot in png format, wherein cells are placed in space of
 reduced dimensionality and coloured by attribute of choice.
 
+Requires calculating the specified embeddings first. For example, to make
+UMAP/TSNE plots, run `Scanpy RunUMAP`/`Scanpy RunTSNE` first, then enter
+"umap"/"tsne" as the name of the embedding to plot here.
+
 @HELP@
 
 @VERSION_HISTORY@
