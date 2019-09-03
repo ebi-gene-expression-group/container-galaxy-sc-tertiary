@@ -1,0 +1,94 @@
+<macros>
+  <token name="@TOOL_VERSION@">1.4.2</token>
+  <token name="@HELP@">More information can be found at https://scanpy.readthedocs.io</token>
+  <token name="@VERSION_HISTORY@"><![CDATA[
+**Version history**
+
+1.4.2+galaxy0: Update to scanpy-scripts 0.2.4 (requires scanpy >=1.4.2).
+
+1.3.2+galaxy1: Normalise-data and filter-genes: Exposes ability to output 10x files.
+
+1.3.2+galaxy0: Initial contribution. Ni Huang and Pablo Moreno, Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
+EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
+    ]]></token>
+  <token name="@INPUT_OPTS@">
+    --input-format '${input_format}' input.h5
+  </token>
+  <token name="@OUTPUT_OPTS@">
+    --show-obj stdout --output-format '${output_format}' output.h5
+  </token>
+  <token name="@PLOT_OPTS@">
+#if $fig_title
+    --title '${fig_title}'
+#end if
+    --fig-size '${fig_size}'
+    --fig-dpi ${fig_dpi}
+    --fig-fontsize ${fig_fontsize}
+    ${fig_frame}
+    ./output.png
+  </token>
+  <token name="@EXPORT_MTX_OPTS@">${export_mtx}</token>
+
+  <xml name="requirements">
+    <requirements>
+      <requirement type="package" version="0.2.4.post4">scanpy-scripts</requirement>
+      <yield/>
+    </requirements>
+  </xml>
+
+  <xml name="citations">
+    <citations>
+      <yield />
+      <citation type="doi">10.1186/s13059-017-1382-0</citation>
+      <citation type="bibtex">
+	@misc{githubscanpy-scripts,
+	author = {Ni Huang, EBI Gene Expression Team},
+	year = {2018},
+	title = {Scanpy-scripts: command line interface for Scanpy},
+	publisher = {GitHub},
+	journal = {GitHub repository},
+	url = {https://github.com/ebi-gene-expression-group/scanpy-scripts},
+      }</citation>
+    </citations>
+  </xml>
+
+  <xml name="input_object_params">
+    <param name="input_obj_file" argument="input-object-file" type="data" format="h5" label="Input object in hdf5 format"/>
+    <param name="input_format" argument="--input-format" type="select" label="Format of input object">
+      <option value="anndata" selected="true">AnnData format hdf5</option>
+      <option value="loom">Loom format hdf5</option>
+    </param>
+  </xml>
+
+  <xml name="output_object_params">
+    <param name="output_format" argument="--output-format" type="select" label="Format of output object">
+      <option value="anndata" selected="true">AnnData format hdf5</option>
+      <option value="loom">Loom format hdf5</option>
+    </param>
+  </xml>
+
+  <xml name="output_plot_params">
+    <param name="fig_title" argument="--title" type="text" label="Figure title"/>
+    <param name="fig_size" argument="--fig-size" type="text" value="4,4" label="Figure size as 'width,height', e.g, '7,7'"/>
+    <param name="fig_dpi" argument="--fig-dpi" type="integer" min="1" value="80" label="Figure dpi"/>
+    <param name="fig_fontsize" argument="--fig-fontsize" type="integer" min="0" value="10" label="Figure font size"/>
+    <param name="fig_frame" type="boolean" truevalue="--frameon" falsevalue="--frameoff" checked="false"
+           label="Show plot frame"/>
+  </xml>
+
+  <xml name="export_mtx_params">
+    <param name="export_mtx" argument="--export-mtx" type="boolean" truevalue="--export-mtx ./" falsevalue="" checked="false" label="Save normalised data to 10x mtx format" help="If enabled, it will generate in addition to the main output in Loom or AnnData an export in 10x format of the normalised data."/>
+  </xml>
+
+  <xml name="export_mtx_outputs">
+    <data name="matrix_10x" format="txt" from_work_dir="matrix.mtx" label="${tool.name} on ${on_string}: 10x matrix">
+      <filter>export_mtx</filter>
+    </data>
+    <data name="genes_10x" format="tsv" from_work_dir="genes.tsv" label="${tool.name} on ${on_string}: 10x genes">
+      <filter>export_mtx</filter>
+    </data>
+    <data name="barcodes_10x" format="tsv" from_work_dir="barcodes.tsv" label="${tool.name} on ${on_string}: 10x barcodes">
+      <filter>export_mtx</filter>
+    </data>
+  </xml>
+</macros>

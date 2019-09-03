@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="scanpy_plot_trajectory" name="Scanpy PlotTrajectory" version="@TOOL_VERSION@+galaxy0">
+  <description>visualise cell trajectories</description>
+  <macros>
+    <import>scanpy_macros2.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+ln -s '${input_obj_file}' input.h5 &&
+PYTHONIOENCODING=utf-8 scanpy-cli plot paga
+#if $use_key
+    --use-key '${use_key}'
+#end if
+    --layout ${layout}
+#if $basis
+    --basis ${basis}
+#end if
+#if $settings.default == "false"
+    --threshold ${settings.threshold}
+    #if $settings.root
+        --root ${settings.root}
+    #end if
+        ${settings.single_component}
+    #if $settings.solid_edges
+        --solid-edges ${settings.solid_edges}
+    #end if
+    #if $settings.color
+        --color '${settings.color}'
+    #end if
+    #if $settings.node_size
+        --node-size-scale ${settings.node_size}
+    #end if
+    #if $settings.node_font
+        --fontsize ${settings.node_font}
+    #end if
+    #if $settings.edge_width
+        --edge-width-scale ${settings.edge_width}
+    #end if
+#end if
+    @INPUT_OPTS@
+    @PLOT_OPTS@
+]]></command>
+
+  <inputs>
+    <expand macro="input_object_params"/>
+    <param name="use_key" argument="--use-key" type="text" value="paga"
+           label="The key in `.uns` that contains trajectory information"/>
+    <param name="layout" argument="--layout" type="select" label="Layout functions">
+      <option value="fa" selected="true">ForceAtlas2</option>
+      <option value="fr">Fruchterman-Reingold</option>
+      <option value="rt">Reingold-Tilford</option>
+    </param>
+    <param name="basis" argument="--basis" type="text" optional="true" label="Name of the embedding to plot"
+           help="Must be a key of `.obsm` without the prefix 'X_', e.g. 'umap'."/>
+    <expand macro="output_plot_params"/>
+    <conditional name="settings">
+      <param name="default" type="boolean" checked="true" label="Use programme defaults"/>
+      <when value="true"/>
+      <when value="false">
+        <param name="threshold" argument="--threshold" type="float" min="0" value="0.01"
+               label="Do not draw edges with weights below this threshold"
+               help="Set to 0 to include all edges."/>
+        <param name="root" argument="--root" type="integer" min="0" value="0"
+               label="The index of the root node when choosing a tree layout"/>
+        <param name="single_component" argument="--single-component" type="boolean" truevalue="--single-component" falsevalue="" checked="false"
+               label="Restrict to the largest connected component"/>
+        <param name="solid_edges" argument="--solid-edges" type="select" label="Edges to be drawn in solid black">
+          <option value="connectivities" selected="true">connectivities</option>
+          <option value="connectivities_tree">connectivities_tree</option>
+        </param>
+        <param name="color" argument="--color" type="text" label="Name of cell annotation or gene that is used to color the nodes"/>
+        <param name="node_size" argument="--node-size-scale" type="float" value="1.0"
+               label="Increase or decrease the size of the nodes"/>
+        <param name="node_font" argument="--fontsize" type="integer" min="1" optional="true"
+               label="Font size for the node labels"/>
+        <param name="edge_width" argument="--edge-width-scale" type="float" value="1.0"
+               label="Increase or decrease the width of the edges"/>
+      </when>
+    </conditional>
+  </inputs>
+
+  <outputs>
+    <data name="output_png" format="png" from_work_dir="output.png" label="${tool.name} on ${on_string}: trajectory plot"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="input_obj_file" value="find_cluster.h5"/>
+      <param name="input_format" value="anndata"/>
+      <param name="type" value="paga_compare"/>
+      <output name="output_png" file="paga_compare.png" ftype="png" compare="sim_size"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+===============================================================
+Plot PAGA-inferred trajectories (`scanpy.pl.paga/paga_compare`)
+===============================================================
+
+Depending on the selected options, it yields a plot of a graph representing
+inferred trajectory, or a trajectory graph side-by-side with a scatter plot of
+cells embedded to space of reduced dimensionality in png format.
+
+It requires running PAGA, first.
+
+@HELP@
+
+@VERSION_HISTORY@
+]]></help>
+  <expand macro="citations"/>
+</tool>

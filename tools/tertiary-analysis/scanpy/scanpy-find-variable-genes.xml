@@ -2,47 +2,51 @@
 <tool id="scanpy_find_variable_genes" name="Scanpy FindVariableGenes" version="@TOOL_VERSION@+galaxy0">
   <description>based on normalised dispersion of expression</description>
   <macros>
-    <import>scanpy_macros.xml</import>
+    <import>scanpy_macros2.xml</import>
   </macros>
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_obj_file}' input.h5 &&
-PYTHONIOENCODING=utf-8 scanpy-find-variable-genes.py -i input.h5
-    -f '${input_format}'
-    -o output.h5
-    -F '${output_format}'
-    --flavor '${flavor}'
-    -b '${n_bin}'
-    #if $parameters
-        #set pars = ','.join([str($p['name']) for $p in $parameters])
-        -p '${pars}'
-        #set mins = ','.join([str($p['min']) for $p in $parameters])
-        -l '${mins}'
-        #set maxs = ','.join([str($p['max']) for $p in $parameters])
-        -j '${maxs}'
-    #end if
-    #if $n_top_gene
-        -n '${n_top_gene}'
-    #end if
+PYTHONIOENCODING=utf-8 scanpy-find-variable-genes
+    --flavor '${method.flavor}'
+#if $method.flavor == 'seurat'
+    --mean-limits ${method.min_mean} ${method.max_mean}
+    --disp-limits ${method.min_disp} ${method.max_disp}
+#else
+    --n-top-genes ${method.n_top_gene}
+#end if
+    --n-bins '${n_bin}'
+    ${filter}
+    @INPUT_OPTS@
+    @OUTPUT_OPTS@
 ]]></command>
 
   <inputs>
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
-    <param name="flavor" argument="--flavor" type="select" value="seurat" label="Flavor of computing normalised dispersion">
-      <option value="seurat">Seurat</option>
-      <option value="cell_ranger">Cell-ranger</option>
-    </param>
-    <repeat name="parameters" min="1" title="Parameters used to find variable genes">
-      <param name="name" type="select" label="Name of parameter to filter on">
-        <option value="mean">Mean of expression</option>
-        <option value="disp">Dispersion of expression</option>
+    <conditional name="method">
+      <param name="flavor" argument="--flavor" type="select" label="Flavor of computing normalised dispersion">
+        <option value="seurat" selected="true">Seurat</option>
+        <option value="cell_ranger">Cell-ranger</option>
       </param>
-      <param name="min" type="float" value="0" label="Min value"/>
-      <param name="max" type="float" value="1e9" label="Max value"/>
-    </repeat>
+      <when value="seurat">
+        <param name="min_mean" argument="--min-mean" type="float" min="0" value="0.0125"
+               label="Min value for normalised mean expression (in log1p scale)"/>
+        <param name="max_mean" argument="--max-mean" type="float" min="0" value="3"
+               label="Max value for normalised mean expresssion (in log1p scale)"/>
+        <param name="min_disp" argument="--min-disp" type="float" min="0" value="0.5"
+               label="Min value for dispersion of expression"/>
+        <param name="max_disp" argument="--max-disp" type="float" min="0" value="50"
+               label="Max value for dispersion of expresssion"/>
+      </when>
+      <when value="cell_ranger">
+        <param name="n_top_gene" argument="--n-top-genes" type="integer" value="2000"
+               label="Number of top variable genes to keep"/>
+      </when>
+    </conditional>
     <param name="n_bin" argument="--n-bins" type="integer" value="20" label="Number of bins for binning the mean expression"/>
-    <param name="n_top_gene" argument="--n-top-genes" type="integer" optional="true" label="Number of top variable genes to keep"/>
+    <param name="filter" argument="--subset" type="boolean" truevalue="--subset" falsevalue="" checked="false"
+           label="Remove genes not marked as highly variable"/>
   </inputs>
 
   <outputs>
@@ -56,26 +60,20 @@ PYTHONIOENCODING=utf-8 scanpy-find-variable-genes.py -i input.h5
       <param name="output_format" value="anndata"/>
       <param name="flavor" value="seurat"/>
       <param name="n_bin" value="20"/>
-      <repeat name="parameters">
-        <param name="name" value="mean"/>
-        <param name="min" value="0.0125"/>
-        <param name="max" value="3"/>
-      </repeat>
-      <repeat name="parameters">
-        <param name="name" value="disp"/>
-        <param name="min" value="0.5"/>
-        <param name="max" value="1e9"/>
-      </repeat>
+      <param name="min_mean" value="0.0125"/>
+      <param name="max_mean" value="3"/>
+      <param name="min_disp" value="0.5"/>
+      <param name="max_disp" value="1e9"/>
       <output name="output_h5" file="find_variable_genes.h5" ftype="h5" compare="sim_size"/>
     </test>
   </tests>
 
   <help><![CDATA[
-============================================================
-Extract highly variable genes (`pp.filter_genes_dispersion`)
-============================================================
+==============================================================
+Mark highly variable genes (`scanpy.pp.highly_variable_genes`)
+==============================================================
 
-Depending on `flavor`, this reproduces the R-implementations of Seurat and Cell Ranger.
+Depending on `flavor`, this reproduces the R-implementations of Seurat or Cell Ranger.
 
 The normalized dispersion is obtained by scaling with the mean and standard
 deviation of the dispersions for genes falling into a given bin for mean

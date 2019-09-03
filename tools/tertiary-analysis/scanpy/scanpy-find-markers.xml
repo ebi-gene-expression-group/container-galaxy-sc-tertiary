@@ -2,56 +2,59 @@
 <tool id="scanpy_find_markers" name="Scanpy FindMarkers" version="@TOOL_VERSION@+galaxy1">
   <description>to find differentially expressed genes between groups</description>
   <macros>
-    <import>scanpy_macros.xml</import>
+    <import>scanpy_macros2.xml</import>
   </macros>
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_obj_file}' input.h5 &&
-PYTHONIOENCODING=utf-8 scanpy-find-markers.py
-    -i input.h5
-    -f '${input_format}'
-    -o output.h5
-    -F '${output_format}'
-    -n '${n_genes}'
-    #if $output_markers
-        --output-text-file output.csv
-    #end if
-    #if $settings.default == "false"
-        -g '${settings.groupby}'
-        --reference '${settings.reference}'
-        --method '${settings.method}'
-        #if $settings.use_raw == "false"
-            --no-raw
-        #end if
-        #if $settings.rankby_abs
-            --rankby_abs
-        #end if
-        #if $settings.groups
-            --groups '${settings.groups}'
-        #end if
+PYTHONIOENCODING=utf-8 scanpy-find-markers
+#if $output_markers
+    --save output.csv
 #end if
+    --n-genes '${n_genes}'
+    --groupby '${groupby}'
+#if $settings.default == "false"
+    --method '${settings.method}'
+    ${settings.use_raw}
+    ${settings.rankby_abs}
+    #if $settings.groups
+        --groups '${settings.groups}'
+    #end if
+    --reference '${settings.reference}'
+    --filter-params 'min_in_group_fraction:${settings.min_in_group_fraction},max_out_group_fraction:${settings.max_out_group_fraction},min_fold_change:${settings.min_fold_change}'
+#end if
+    @INPUT_OPTS@
+    @OUTPUT_OPTS@
 ]]></command>
 
   <inputs>
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
-    <param name="n_genes" argument="--n-genes" type="integer" value="50" label="Number of top genes to show per group/cluster"/>
     <param name="output_markers" type="boolean" checked="true" label="Output markers table in csv format"/>
+    <param name="n_genes" argument="--n-genes" type="integer" value="50" label="Number of top genes to show per group/cluster"/>
+    <param name="groupby" argument="--groupby" type="text" value="louvain" label="The sample grouping/clustering to use."/>
     <conditional name="settings">
       <param name="default" type="boolean" checked="true" label="Use programme defaults"/>
       <when value="true"/>
       <when value="false">
-        <param name="groupby" argument="--groupby" type="text" value="louvain" label="The sample grouping/clustering to use."/>
-        <param name="use_raw" type="boolean" checked="true" label="Use raw attribute if present"/>
-        <param name="reference" argument="--reference" type="text" value="rest" label="If 'rest', compare to the union of the rest of the group/cluster. If a group identifier, compare to that group"/>
         <param name="method" argument="--method" type="select" label="Method for testing differentially expressed genes">
           <option value="t-test_overestim_var" selected="true">t-test with over-estimated variance</option>
           <option value="t-test">t-test</option>
           <option value="wilcoxon">wilcoxon test, currently broken don't use</option>
           <option value="logreg">logistic regression</option>
         </param>
-        <param name="rankby_abs" argument="--rankby_abs" type="boolean" checked="false" label="Rank by absolute value of the scores instead of the scores"/>
+        <param name="use_raw" type="boolean" truevalue="--use-raw" falsevalue="--no-raw" checked="true"
+               label="Use raw attribute if present"/>
+        <param name="rankby_abs" argument="--rankby_abs" type="boolean" truevalue="--rankby-abs" falsevalue="" checked="false"
+               label="Rank by absolute value of the scores instead of the scores"/>
         <param name="groups" argument="--groups" optional="true" type="text" label="Subset of groups/clusters to which comparisons shell be restricted."/>
+        <param name="reference" argument="--reference" type="text" value="rest" label="If 'rest', compare to the union of the rest of the group/cluster. If a group identifier, compare to that group"/>
+        <param name="min_in_group_fraction" type="float" min="0.0" max="1.0" value="0.25" label="Minimum in-group fraction"
+               help="Post-test filtering to only keep genes expressed in at least this fraction of cells in the test group."/>
+        <param name="max_out_group_fraction" type="float" min="0.0" max="1.0" value="0.5" label="Maximum out-group fraction"
+               help="Post-test filtering to only keep genes expressed in at most this fraction of cells in the reference group."/>
+        <param name="min_fold_change" type="float" value="2" label="Minimum fold change"
+               help="Post-test filtering to only keep genes with at least this fold change of expression relative to the reference group."/>
       </when>
     </conditional>
   </inputs>
