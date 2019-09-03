@@ -98,9 +98,12 @@ PYTHONIOENCODING=utf-8 scanpy-run-tsne
   </tests>
 
   <help><![CDATA[
-==================================================================
-t-distributed stochastic neighborhood embedding (tSNE) (`tl.tsne`)
-==================================================================
+=========================================================================
+t-distributed stochastic neighborhood embedding (tSNE) (`scanpy.tl.tsne`)
+=========================================================================
+
+For making TSNE plots, please use `Scanpy PlotEmbed` and enter "tsne" as the
+name of the embedding to plot.
 
 t-distributed stochastic neighborhood embedding (tSNE) (Maaten et al, 2008) has been
 proposed for visualizating single-cell data by (Amir et al, 2013). Here, by default,

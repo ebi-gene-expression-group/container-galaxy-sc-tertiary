@@ -88,9 +88,12 @@ PYTHONIOENCODING=utf-8 scanpy-run-umap
   </tests>
 
   <help><![CDATA[
-========================================================
-Embed the neighborhood graph using UMAP (`tl.umap`)
-========================================================
+==========================================================
+Embed the neighborhood graph using UMAP (`scanpy.tl.umap`)
+==========================================================
+
+For making UMAP plots, please use `Scanpy PlotEmbed` and enter "umap" as the
+name of the embedding to plot.
 
 UMAP (Uniform Manifold Approximation and Projection) is a manifold learning
 technique suitable for visualizing high-dimensional data. Besides tending to
