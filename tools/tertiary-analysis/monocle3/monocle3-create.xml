@@ -6,16 +6,20 @@
   </macros>
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
-ln -s '${expression_matrix}' expression_matrix.rds &&
-ln -s '${cell_metadata}' cell_metadata.rds &&
-ln -s '${gene_annotation}' gene_annotation.rds &&
-LANG=en_US.UTF-8 monocle3 create
-    --expression-matrix expression_matrix.rds
+ln -s '${expression_matrix}' expression_matrix.'${expression_matrix_format}' &&
 #if $cell_metadata
-    --cell-metadata cell_metadata.rds
+ln -s '${cell_metadata}' cell_metadata.'${cell_metadata_format}' &&
 #end if
 #if $gene_annotation
-    --gene-annotation gene_annotation.rds
+ln -s '${gene_annotation}' gene_annotation.'${gene_annotation_format}' &&
+#end if
+LANG=en_US.UTF-8 monocle3 create
+    --expression-matrix expression_matrix.'${expression_matrix_format}'
+#if $cell_metadata
+    --cell-metadata cell_metadata.'${cell_metadata_format}'
+#end if
+#if $gene_annotation
+    --gene-annotation gene_annotation.'${gene_annotation_format}'
 #end if
     @OUTPUT_OPTS@
     @VERBOSE@
@@ -23,8 +27,23 @@ LANG=en_US.UTF-8 monocle3 create
 
   <inputs>
     <param name="expression_matrix" argument="--expression-matrix" type="data" format="tsv,csv,rdata" label="Expression matrix, genes as rows, cells as columns. Required input. Provide as TSV, CSV or RDS."/>
+    <param name="expression_matrix_format" type="select" label="Format of expression matrix">
+      <option value="rds" selected="true">RDS</option>
+      <option value="tsv">TSV</option>
+      <option value="csv">CSV</option>
+    </param>
     <param name="cell_metadata" argument="--cell-metadata" optional="true" type="data" format="tsv,csv,rdata" label="Per-cell annotation, optional. Row names must match the column names of the expression matrix. Provide as TSV, CSV or RDS."/>
+    <param name="cell_metadata_format" type="select" label="Format of cell metadata">
+      <option value="rds" selected="true">RDS</option>
+      <option value="tsv">TSV</option>
+      <option value="csv">CSV</option>
+    </param>
     <param name="gene_annotation" argument="--gene-annotation" optional="true" type="data" format="tsv,csv,rdata" label="Per-gene annotation, optional. Row names must match the row names of the expression matrix. Provide as TSV, CSV or RDS."/>
+    <param name="gene_annotation_format" type="select" label="Format of gene annotation">
+      <option value="rds" selected="true">RDS</option>
+      <option value="tsv">TSV</option>
+      <option value="csv">CSV</option>
+    </param>
     <expand macro="output_object_params"/>
     <expand macro="verbose_flag"/>
   </inputs>
@@ -52,7 +71,8 @@ Create a Monocle3 cds3 object from input expression data and optional metadata.
 The expression matrix, with genes as rows and cells as columns, is the only mandatory
 input. The cell metadata (with row names matching the column names of the expression
 matrix) and gene annotation (with row names matching the row names of the expression
-matrix) are optional. These files can be provided as RDS objects, or CSV/TSV.
+matrix) are optional. These files can be provided as RDS objects, or CSV/TSV. Select the
+format of your input files in the corresponding drop-downs.
 
 @HELP@
 
