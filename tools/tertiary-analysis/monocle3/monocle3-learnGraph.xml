@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="monocle3_learnGraph" name="Monocle3 learnGraph" version="@TOOL_VERSION@+galaxy0">
+  <description>between cells in dimensionality reduced space</description>
+  <macros>
+    <import>monocle3-macros.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+LANG=en_US.UTF-8 monocle3 learnGraph
+#if $no-partition
+    --no-partition
+#end if
+#if $no_close_loop
+    --no-close-loop
+#end if
+#if $euclidean_distance_ratio
+    --euclidean-distance-ratio '${euclidean_distance_ratio}'
+#end if
+#if $geodesic_distance_ratio
+    --geodesic-distance-ratio '${geodesic_distance_ratio}'
+#end if
+#if $no_prune_graph
+    --no-prune-graph
+#end if
+#if $minimal_branch_len
+    --minimal-branch-len '${minimal_branch_len}'
+#end if
+#if $orthogonal_proj_tip
+    --orthogonal-proj-tip
+#end if
+
+    @INPUT_OPTS@
+    @OUTPUT_OPTS@
+    
+    @VERBOSE@
+]]></command>
+
+  <inputs>
+    <param name="no_partition" argument="--no-partition" type="boolean" checked="false" label="When this option is set, learn a single tree structure for all the partitions. If not set, use the partitions calculated when clustering and identify disjoint graphs in each."/>
+    <param name="no_close_loop" argument="--no-close-loop" type="boolean" checked="false" label="When this option is set, skip the additional run of loop closing after computing the principal graphs to identify potential loop structure in the data space."/>
+    <param name="euclidean_distance_ratio" argument="--euclidean-distance-ratio" optional="true" type="float" value="1" label="The maximal ratio between the euclidean distance of two tip nodes in the spanning tree inferred from SimplePPT algorithm and that of the maximum distance between any connecting points on the spanning tree allowed to be connected during the loop closure procedure."/>
+    <param name="geodesic_distance_ratio" argument="--geodesic-distance-ratio" optional="true" type="float" value="0.33" label="The minimal ratio between the geodestic distance of two tip nodes in the spanning tree inferred from SimplePPT algorithm and that of the length of the diameter path on the spanning tree allowed to be connected during the loop closure procedure. (Both euclidean_distance_ratio and geodestic_distance_ratio need to be satisfied to introduce the edge for loop closure.)"/>
+    <param name="no_prune_graph" argument="--no-prune-graph" type="boolean" checked="false" label="When this option is set, perform an additional run of graph pruning to remove smaller insignificant branches."/>
+    <param name="minimal_branch_len" argument="--minimal-branch-len" optional="true" type="integer" value="10" label="The minimal length of the diameter path for a branch to be preserved during graph pruning procedure."/>
+    <param name="orthogonal_proj_tip" argument="--orthogonal-proj-tip" type="boolean" checked="false" label="When this option is set, perform orthogonal projection for cells corresponding to the tip principal points."/>
+    <expand macro="input_object_params"/>
+    <expand macro="output_object_params"/>
+    <expand macro="verbose_flag"/>
+  </inputs>
+
+  <outputs>
+    <data name="output_rds" format="rdata" from_work_dir="output.RDS" label="${tool.name} on ${on_string}: ${output_format}"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="input_object_file" value="input.RDS"/>
+      <param name="input_object_format" value="cds3"/>
+      <param name="euclidean_distance_ratio" value="1"/>
+      <param name="geodesic_distance_ratio" value="0.33"/>
+      <param name="minimal_branch_len" value="10"/>
+      <param name="output_object_format" value="cds3"/>
+      <output name="output_rds" file="output.rds" ftype="rdata" compare="sim_size"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+==========================================================
+Monocle3 identification of cell-cell graph (`learn_graph`)
+==========================================================
+
+Identify the underlying cell-cell graph in the data.
+
+@HELP@
+
+@VERSION_HISTORY@
+]]></help>
+  <expand macro="citations"/>
+</tool>

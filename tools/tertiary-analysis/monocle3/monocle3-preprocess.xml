@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="monocle3_preprocess" name="Monocle3 preprocess" version="@TOOL_VERSION@+galaxy0">
+  <description>a Monocle3 object to an initially dimensionally reduced space</description>
+  <macros>
+    <import>monocle3-macros.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+LANG=en_US.UTF-8 monocle3 preprocess
+    --method '${method}'
+#if $num_dim
+    --num-dim '${num_dim}'
+#end if
+    --norm-method '${norm_method}'
+#if $use_genes
+    --use-genes '${use_genes}'
+#end if
+#if $residual_model_formula_str
+    --residual-model-formula-str '${residual_model_formula_str}'
+#end if
+#if $pseudo_count
+    --pseudo-count '${pseudo_count}'
+#end if
+#if $no_scaling
+    --no-scaling
+#end if
+
+    @INPUT_OPTS@
+    @OUTPUT_OPTS@
+    
+    @VERBOSE@
+]]></command>
+
+  <inputs>
+    <param name="method" argument="--method" type="select" label="Initial dimensionality reduction to perform.">
+      <option value="PCA" selected="true">PCA</option>
+      <option value="LSI">LSI</option>
+    </param>
+    <param name="num_dim" argument="--num-dim" optional="true" type="integer" value="50" label="The dimensionality of the reduced space."/>
+    <param name="norm_method" argument="--norm-method" type="select" label="Determines how to transform expression values prior to reducing dimensionality.">
+      <option value="log" selected="true">Size factor correction and log transformation</option>
+      <option value="size_only">Size factor correction only</option>
+    </param>
+    <param name="use_genes" argument="--use-genes" type="text" optional="true" label="Manually subset the gene pool to these genes for dimensionality reduction."/>
+    <param name="residual_model_formula_str" argument="--residual-model-formula-str" type="text" optional="true" label="A string model formula specifying effects to subtract from the data."/>
+    <param name="pseudo_count" argument="--pseudo-count" optional="true" type="float" value="1" label="Amount to increase expression values before dimensionality reduction."/>
+    <param name="no_scaling" argument="--no-scaling" type="boolean" checked="false" label="When this option is NOT set, scale each gene before running trajectory reconstruction."/>
+    <expand macro="input_object_params"/>
+    <expand macro="output_object_params"/>
+    <expand macro="verbose_flag"/>
+  </inputs>
+
+  <outputs>
+    <data name="output_rds" format="rdata" from_work_dir="output.RDS" label="${tool.name} on ${on_string}: ${output_format}"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="input_object_file" value="input.RDS"/>
+      <param name="input_object_format" value="cds3"/>
+      <param name="method" value="PCA"/>
+      <param name="num_dim" value="50"/>
+      <param name="norm_method" value="log"/>
+      <param name="pseudo_count" value="1"/>
+      <param name="output_object_format" value="cds3"/>
+      <output name="output_rds" file="output.rds" ftype="rdata" compare="sim_size"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+====================================================================================
+Preprocess Monocle3 object up to initial dimensionality reduction (`preprocess_cds`)
+====================================================================================
+
+Preprocess a Monocle3 object with size factor scaling of the count data, optionally
+log transforming, and computing an initial dimensionality reduction. This space is
+used as a starting point for a number of subsequent analyses.
+
+@HELP@
+
+@VERSION_HISTORY@
+]]></help>
+  <expand macro="citations"/>
+</tool>

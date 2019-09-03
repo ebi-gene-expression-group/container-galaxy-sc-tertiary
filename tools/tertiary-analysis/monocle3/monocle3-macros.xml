@@ -1,0 +1,64 @@
+<macros>
+  <token name="@TOOL_VERSION@">0.0.2</token>
+  <token name="@HELP@">More information can be found at https://cole-trapnell-lab.github.io/monocle3/ and https://github.com/ebi-gene-expression-group/monocle-scripts</token>
+  <token name="@VERSION_HISTORY@"><![CDATA[
+**Version history**
+
+0.0.3 - First functional release of Monocle 3 beta command line client
+    ]]></token>
+  <token name="@INPUT_OPTS@">
+    --input-object-format '${input_object_format}' input.RDS
+  </token>
+  <token name="@OUTPUT_OPTS@">
+    --output-object-format '${output_object_format}' output.RDS
+#if $introspective
+    --introspective
+#end if
+  </token>
+  <token name="@VERBOSE@">
+#if $verbose
+    --verbose
+#end if
+  </token>
+
+  <xml name="requirements">
+    <requirements>
+      <requirement type="package" version="0.0.3">monocle3-cli</requirement>
+      <yield/>
+    </requirements>
+  </xml>
+
+  <xml name="citations">
+    <citations>
+      <yield />
+      <citation type="doi">10.1038/nmeth.4402</citation>
+      <citation type="bibtex">
+	@misc{githubscanpy-scripts,
+	author = {Ni Huang, Krzysztof Polanski, EBI Gene Expression Team},
+	year = {2019},
+	title = {Monocle3-cli: command line interface for Monocle3},
+	publisher = {GitHub},
+	journal = {GitHub repository},
+	url = {https://github.com/ebi-gene-expression-group/monocle-scripts},
+      }</citation>
+    </citations>
+  </xml>
+
+  <xml name="input_object_params">
+    <param name="input_object_file" argument="input-object-file" type="data" format="rdata" label="Input object in RDS format"/>
+    <param name="input_object_format" argument="--input-object-format" type="select" label="Format of input object">
+      <option value="cds3" selected="true">Monocle3 object in RDS</option>
+    </param>
+  </xml>
+
+  <xml name="output_object_params">
+    <param name="output_object_format" argument="--output-object-format" type="select" label="Format of output object">
+      <option value="cds3" selected="true">Monocle3 object in RDS</option>
+    </param>
+    <param name="introspective" argument="--introspective" type="boolean" checked="true" label="Print introspective information of output object"/>
+  </xml>
+  
+  <xml name="verbose_flag">
+  	<param name="verbose" argument="--verbose" type="boolean" checked="false" label="Emit verbose output"/>
+  </xml>
+</macros>

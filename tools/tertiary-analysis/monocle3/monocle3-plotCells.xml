@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="monocle3_plotCells" name="Monocle3 plotCells" version="@TOOL_VERSION@+galaxy0">
+  <description> in the reduced dimensionality space</description>
+  <macros>
+    <import>monocle3-macros.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+LANG=en_US.UTF-8 monocle3 plotCells
+    --neighbor-graph '$(neighbor_graph)'
+    --reduction-method '$(reduction_method)'
+#if $knn
+    --knn '$(knn)'
+#end if
+    --method '$(method)'
+    --alternative '$(alternative)'
+
+    @INPUT_OPTS@
+    output.png
+    
+    @VERBOSE@
+]]></command>
+
+  <inputs>
+    <param name="xdim" argument="--xdim" optional="true" type="integer" value="1" label="The column of reducedDimS(cds) to plot on the horizontal axis."/>
+    <param name="ydim" argument="--ydim" optional="true" type="integer" value="2" label="The column of reducedDimS(cds) to plot on the vertical axis."/>
+    <param name="reduction_method" argument="--reduction-method" type="select" label="The dimensionality reduction for plotting.">
+      <option value="UMAP" selected="true">UMAP</option>
+      <option value="tSNE">tSNE</option>
+      <option value="PCA">PCA</option>
+      <option value="LSI">LSI</option>
+    </param>
+    <param name="color_cells_by" argument="--color-cells-by" optional="true" type="text" value="pseudotime" label="The cell attribute (e.g. the column of pData(cds)) to map to each cell's color, or one of {clusters, partitions, pseudotime}."/>
+    <param name="genes" argument="--genes" optional="true" type="text" label="A list of gene IDs/short names to plot, one per panel."/>
+    <param name="norm_method" argument="--norm-method" type="select" label="Determines how to transform expression values for plotting.">
+      <option value="log" selected="true">Size factor correction and log transformation</option>
+      <option value="size_only">Size factor correction only</option>
+    </param>
+    <param name="cell_size" argument="--cell-size" optional="true" type="float" value="1.5" label="The size of the point for each cell."/>
+    <param name="alpha" argument="--alpha" optional="true" type="float" value="1" label="The alpha aesthetics for the original cell points, useful to highlight the learned principal graph."/>
+    <param name="label_cell_groups" argument="--label-cell-groups" type="boolean" checked="false" label="If set, display the cell group names directly on the plot. Otherwise include a color legend on the side of the plot."/>
+    <param name="no_trajectory_graph" argument="--no-trajectory-graph" type="boolean" checked="false" label="When this option is set, skip displaying the trajectory graph inferred by learn_graph()."/>
+    <param name="label_groups_by_cluster" argument="--label-groups-by-cluster" type="boolean" checked="false" label="If set, and setting --color-cells-by to something other than cluster, label the cells of each cluster independently. Can result in duplicate labels being present in the manifold."/>
+	<param name="label_leaves" argument="--label-leaves" type="boolean" checked="false" label="If set, label the leaves of the principal graph."/>
+	<param name="label_roots" argument="--label-roots" type="boolean" checked="false" label="If set, label the roots of the principal graph."/>
+	<param name="label_branch_points" argument="--label-branch-points" type="boolean" checked="false" label="If set, label the branch points of the principal graph."/>
+    <expand macro="input_object_params"/>
+    <expand macro="verbose_flag"/>
+  </inputs>
+
+  <outputs>
+    <data name="output_tsv" format="png" from_work_dir="output.png" label="${tool.name} on ${on_string}: png"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="input_object_file" value="input.RDS"/>
+      <param name="input_object_format" value="cds3"/>
+      <param name="reduction_method" value="UMAP"/>
+      <param name="xdim" value="1"/>
+      <param name="ydim" value="2"/>
+      <param name="color_cells_by" value="pseudotime"/>
+      <param name="norm_method" value="log"/>
+      <param name="cell_size" value="1.5"/>
+      <param name="alpha" value="1"/>
+      <output name="output_tsv" file="output.tsv" ftype="tsv" compare="sim_size"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+=====================================
+Monocle3 cell plotting (`plot_cells`)
+=====================================
+
+Display various information about cells (clustering, pseudotime, the inferred graph,
+user-provided annotations, gene expression) in reduced dimensions.
+
+@HELP@
+
+@VERSION_HISTORY@
+]]></help>
+  <expand macro="citations"/>
+</tool>
