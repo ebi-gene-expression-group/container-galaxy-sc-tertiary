@@ -1,10 +1,10 @@
 <macros>
-  <token name="@TOOL_VERSION@">0.0.2</token>
+  <token name="@TOOL_VERSION@">0.1.2</token>
   <token name="@HELP@">More information can be found at https://cole-trapnell-lab.github.io/monocle3/ and https://github.com/ebi-gene-expression-group/monocle-scripts</token>
   <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
 
-0.0.3 - First functional release of Monocle 3 beta command line client
+0.1.2+galaxy0: Initial version based on monocle3-cli 0.0.3 and monocle3 0.1.2
     ]]></token>
   <token name="@INPUT_OPTS@">
     --input-object-format '${input_object_format}' '${input_object_file}'
