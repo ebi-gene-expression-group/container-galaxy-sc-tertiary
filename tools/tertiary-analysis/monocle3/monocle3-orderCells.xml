@@ -28,6 +28,8 @@ LANG=en_US.UTF-8 monocle3 orderCells
 ]]></command>
 
   <inputs>
+    <expand macro="input_object_params"/>
+    <expand macro="output_object_params"/>
     <param name="root_pr_nodes" argument="--root-pr-nodes" type="text" optional="true" label="The starting principal points. We learn a principal graph that passes through the middle of the data points and use it to represent the developmental process. Exclusive with the root cell option."/>
     <param name="root_cells" argument="--root-cells" type="text" optional="true" label="The starting cells. Each cell corresponds to a principal point and multiple cells can correspond to the same principal point. Exclusive with the root node option."/>
     <param name="cell_phenotype" argument="--cell-phenotype" type="text" optional="true" label="The cell phenotype (column in pdata) used to identify root principal nodes."/>
@@ -38,8 +40,6 @@ LANG=en_US.UTF-8 monocle3 orderCells
       <option value="PCA">PCA</option>
       <option value="LSI">LSI</option>
     </param>
-    <expand macro="input_object_params"/>
-    <expand macro="output_object_params"/>
     <expand macro="verbose_flag"/>
   </inputs>
 

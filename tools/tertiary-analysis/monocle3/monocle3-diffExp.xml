@@ -22,6 +22,7 @@ LANG=en_US.UTF-8 monocle3 diffExp
 ]]></command>
 
   <inputs>
+    <expand macro="input_object_params"/>
     <param name="neighbor_graph" argument="--neighbor-graph" type="select" label="What neighbor graph to use, principal graph recommended for trajectory analysis.">
       <option value="knn" selected="true">KNN</option>
       <option value="principal_graph">Principal graph</option>
@@ -38,7 +39,6 @@ LANG=en_US.UTF-8 monocle3 diffExp
       <option value="less">less</option>
       <option value="two.sided">two-sided</option>
     </param>
-    <expand macro="input_object_params"/>
     <expand macro="verbose_flag"/>
   </inputs>
 

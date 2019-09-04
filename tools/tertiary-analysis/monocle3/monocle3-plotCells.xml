@@ -53,6 +53,7 @@ LANG=en_US.UTF-8 monocle3 plotCells
 ]]></command>
 
   <inputs>
+    <expand macro="input_object_params"/>
     <param name="xdim" argument="--xdim" optional="true" type="integer" value="1" label="The column of reducedDimS(cds) to plot on the horizontal axis."/>
     <param name="ydim" argument="--ydim" optional="true" type="integer" value="2" label="The column of reducedDimS(cds) to plot on the vertical axis."/>
     <param name="reduction_method" argument="--reduction-method" type="select" label="The dimensionality reduction for plotting.">
@@ -75,7 +76,6 @@ LANG=en_US.UTF-8 monocle3 plotCells
 	<param name="label_leaves" argument="--label-leaves" type="boolean" checked="false" label="If set, label the leaves of the principal graph."/>
 	<param name="label_roots" argument="--label-roots" type="boolean" checked="false" label="If set, label the roots of the principal graph."/>
 	<param name="label_branch_points" argument="--label-branch-points" type="boolean" checked="false" label="If set, label the branch points of the principal graph."/>
-    <expand macro="input_object_params"/>
     <expand macro="verbose_flag"/>
   </inputs>
 

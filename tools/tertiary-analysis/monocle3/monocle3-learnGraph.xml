@@ -36,6 +36,8 @@ LANG=en_US.UTF-8 monocle3 learnGraph
 ]]></command>
 
   <inputs>
+    <expand macro="input_object_params"/>
+    <expand macro="output_object_params"/>
     <param name="no_partition" argument="--no-partition" type="boolean" checked="false" label="When this option is set, learn a single tree structure for all the partitions. If not set, use the partitions calculated when clustering and identify disjoint graphs in each."/>
     <param name="no_close_loop" argument="--no-close-loop" type="boolean" checked="false" label="When this option is set, skip the additional run of loop closing after computing the principal graphs to identify potential loop structure in the data space."/>
     <param name="euclidean_distance_ratio" argument="--euclidean-distance-ratio" optional="true" type="float" value="1" label="The maximal ratio between the euclidean distance of two tip nodes in the spanning tree inferred from SimplePPT algorithm and that of the maximum distance between any connecting points on the spanning tree allowed to be connected during the loop closure procedure."/>
@@ -43,8 +45,6 @@ LANG=en_US.UTF-8 monocle3 learnGraph
     <param name="no_prune_graph" argument="--no-prune-graph" type="boolean" checked="false" label="When this option is set, perform an additional run of graph pruning to remove smaller insignificant branches."/>
     <param name="minimal_branch_len" argument="--minimal-branch-len" optional="true" type="integer" value="10" label="The minimal length of the diameter path for a branch to be preserved during graph pruning procedure."/>
     <param name="orthogonal_proj_tip" argument="--orthogonal-proj-tip" type="boolean" checked="false" label="When this option is set, perform orthogonal projection for cells corresponding to the tip principal points."/>
-    <expand macro="input_object_params"/>
-    <expand macro="output_object_params"/>
     <expand macro="verbose_flag"/>
   </inputs>
 

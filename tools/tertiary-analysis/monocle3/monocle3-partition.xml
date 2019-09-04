@@ -31,6 +31,8 @@ LANG=en_US.UTF-8 monocle3 partition
 ]]></command>
 
   <inputs>
+    <expand macro="input_object_params"/>
+    <expand macro="output_object_params"/>
     <param name="reduction_method" argument="--reduction-method" type="select" label="The dimensionality reduction to base the clustering on.">
       <option selected="true" value="UMAP">UMAP</option>
       <option value="tSNE">tSNE</option>
@@ -42,8 +44,6 @@ LANG=en_US.UTF-8 monocle3 partition
     <param name="louvain_iter" argument="--louvain-iter" optional="true" type="integer" value="1" label="The number of iterations for Louvain clustering."/>
     <param name="resolution" argument="--resolution" optional="true" type="float" label="Resolution of clustering result, specifying the granularity of clusters. Not used by default and the standard igraph louvain clustering algorithm will be used."/>
     <param name="partition_qval" argument="--partition-qval" optional="true" type="float" value="0.05" label="The q-value threshold used to determine the partition of cells."/>
-    <expand macro="input_object_params"/>
-    <expand macro="output_object_params"/>
     <expand macro="verbose_flag"/>
   </inputs>
 

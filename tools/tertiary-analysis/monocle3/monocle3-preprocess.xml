@@ -32,6 +32,8 @@ LANG=en_US.UTF-8 monocle3 preprocess
 ]]></command>
 
   <inputs>
+    <expand macro="input_object_params"/>
+    <expand macro="output_object_params"/>
     <param name="method" argument="--method" type="select" label="Initial dimensionality reduction to perform.">
       <option value="PCA" selected="true">PCA</option>
       <option value="LSI">LSI</option>
@@ -45,8 +47,6 @@ LANG=en_US.UTF-8 monocle3 preprocess
     <param name="residual_model_formula_str" argument="--residual-model-formula-str" type="text" optional="true" label="A string model formula specifying effects to subtract from the data."/>
     <param name="pseudo_count" argument="--pseudo-count" optional="true" type="float" value="1" label="Amount to increase expression values before dimensionality reduction."/>
     <param name="no_scaling" argument="--no-scaling" type="boolean" checked="false" label="When this option is NOT set, scale each gene before running trajectory reconstruction."/>
-    <expand macro="input_object_params"/>
-    <expand macro="output_object_params"/>
     <expand macro="verbose_flag"/>
   </inputs>
 

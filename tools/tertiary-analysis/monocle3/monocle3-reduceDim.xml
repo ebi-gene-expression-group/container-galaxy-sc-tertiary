@@ -20,6 +20,8 @@ LANG=en_US.UTF-8 monocle3 reduceDim
 ]]></command>
 
   <inputs>
+    <expand macro="input_object_params"/>
+    <expand macro="output_object_params"/>
     <param name="max_components" argument="--max-components" optional="true" type="integer" value="2" label="The dimensionality of the reduced space."/>
     <param name="reduction_method" argument="--reduction-method" type="select" label="The algorithm to use for dimensionality reduction.">
       <option selected="true" value="UMAP">UMAP</option>
@@ -31,8 +33,6 @@ LANG=en_US.UTF-8 monocle3 reduceDim
       <option value="PCA" selected="true">PCA</option>
       <option value="LSI">LSI</option>
     </param>
-    <expand macro="input_object_params"/>
-    <expand macro="output_object_params"/>
     <expand macro="verbose_flag"/>
   </inputs>
 
