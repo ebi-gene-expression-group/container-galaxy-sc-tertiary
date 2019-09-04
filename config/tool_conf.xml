@@ -181,13 +181,19 @@
     <tool file="tertiary-analysis/scanpy/scanpy-filter-genes.xml"/>
     <tool file="tertiary-analysis/scanpy/scanpy-normalise-data.xml"/>
     <tool file="tertiary-analysis/scanpy/scanpy-find-variable-genes.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-regress-variable.xml"/>
     <tool file="tertiary-analysis/scanpy/scanpy-scale-data.xml"/>
     <tool file="tertiary-analysis/scanpy/scanpy-run-pca.xml"/>
     <tool file="tertiary-analysis/scanpy/scanpy-neighbours.xml"/>
-    <tool file="tertiary-analysis/scanpy/scanpy-find-cluster.xml"/>
     <tool file="tertiary-analysis/scanpy/scanpy-run-umap.xml"/>
     <tool file="tertiary-analysis/scanpy/scanpy-run-tsne.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-run-diffmap.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-plot-embedding.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-find-cluster.xml"/>
     <tool file="tertiary-analysis/scanpy/scanpy-find-markers.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-run-dpt.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-run-paga.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-plot-trajectory.xml"/>
     <tool file="tertiary-analysis/scanpy/scanpy-parameter-iterator.xml"/>
   </section>
   <section name='scmap' id='scmap-tools'>
