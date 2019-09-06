@@ -62,7 +62,7 @@ LANG=en_US.UTF-8 monocle3 plotCells
       <option value="PCA">PCA</option>
       <option value="LSI">LSI</option>
     </param>
-    <param name="color_cells_by" argument="--color-cells-by" optional="true" type="text" value="pseudotime" label="The cell attribute (e.g. the column of pData(cds)) to map to each cell's color, or one of {clusters, partitions, pseudotime}."/>
+    <param name="color_cells_by" argument="--color-cells-by" optional="true" type="text" value="pseudotime" label="The cell attribute (e.g. the column of pData(cds)) to map to each cell's color, or one of {cluster, partition, pseudotime}."/>
     <param name="genes" argument="--genes" optional="true" type="text" label="A list of gene IDs/short names to plot, one per panel."/>
     <param name="norm_method" argument="--norm-method" type="select" label="Determines how to transform expression values for plotting.">
       <option value="log" selected="true">Size factor correction and log transformation</option>
@@ -70,7 +70,7 @@ LANG=en_US.UTF-8 monocle3 plotCells
     </param>
     <param name="cell_size" argument="--cell-size" optional="true" type="float" value="1.5" label="The size of the point for each cell."/>
     <param name="alpha" argument="--alpha" optional="true" type="float" value="1" label="The alpha aesthetics for the original cell points, useful to highlight the learned principal graph."/>
-    <param name="label_cell_groups" argument="--label-cell-groups" type="boolean" checked="false" label="If set, display the cell group names directly on the plot. Otherwise include a color legend on the side of the plot."/>
+    <param name="label_cell_groups" argument="--label-cell-groups" type="boolean" checked="true" label="If set, display the cell group names directly on the plot. Otherwise include a color legend on the side of the plot."/>
     <param name="no_trajectory_graph" argument="--no-trajectory-graph" type="boolean" checked="false" label="When this option is set, skip displaying the trajectory graph inferred by learn_graph()."/>
     <param name="label_groups_by_cluster" argument="--label-groups-by-cluster" type="boolean" checked="false" label="If set, and setting --color-cells-by to something other than cluster, label the cells of each cluster independently. Can result in duplicate labels being present in the manifold."/>
 	<param name="label_leaves" argument="--label-leaves" type="boolean" checked="false" label="If set, label the leaves of the principal graph."/>
