@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="monocle3_reduceDim" name="Monocle3 reduceDim" version="@TOOL_VERSION@+galaxy0">
+  <description>for downstream analysis</description>
+  <macros>
+    <import>monocle3-macros.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+LANG=en_US.UTF-8 monocle3 reduceDim
+#if $max_components
+    --max-components '${max_components}'
+#end if
+    --reduction-method '${reduction_method}'
+    --preprocess-method '${preprocess_method}'
+
+    @INPUT_OPTS@
+    @OUTPUT_OPTS@
+    
+    @VERBOSE@
+]]></command>
+
+  <inputs>
+    <expand macro="input_object_params"/>
+    <expand macro="output_object_params"/>
+    <param name="max_components" argument="--max-components" optional="true" type="integer" value="2" label="The dimensionality of the reduced space."/>
+    <param name="reduction_method" argument="--reduction-method" type="select" label="The algorithm to use for dimensionality reduction.">
+      <option selected="true" value="UMAP">UMAP</option>
+      <option value="tSNE">tSNE</option>
+      <option value="PCA">PCA</option>
+      <option value="LSI">LSI</option>
+    </param>
+    <param name="preprocess_method" argument="--preprocess-method" type="select" label="The preprocessing method used on the data.">
+      <option value="PCA" selected="true">PCA</option>
+      <option value="LSI">LSI</option>
+    </param>
+    <expand macro="verbose_flag"/>
+  </inputs>
+
+  <outputs>
+    <data name="output_rds" format="rdata" from_work_dir="output.RDS" label="${tool.name} on ${on_string}: ${output_object_format}"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="input_object_file" value="input.RDS"/>
+      <param name="input_object_format" value="cds3"/>
+      <param name="max_components" value="2"/>
+      <param name="reduction_method" value="UMAP"/>
+      <param name="preprocess_method" value="PCA"/>
+      <param name="output_object_format" value="cds3"/>
+      <output name="output_rds" file="output.rds" ftype="rdata" compare="sim_size"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+==============================================================
+Primary Monocle3 dimensionality reduction (`reduce_dimension`)
+==============================================================
+
+Use the results of preprocessing to propose a primary dimensionally reduced space for use
+in downstream analysis.
+
+@HELP@
+
+@VERSION_HISTORY@
+]]></help>
+  <expand macro="citations"/>
+</tool>

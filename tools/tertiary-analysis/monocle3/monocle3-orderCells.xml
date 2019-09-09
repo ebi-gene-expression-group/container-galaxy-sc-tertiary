@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="monocle3_orderCells" name="Monocle3 orderCells" version="@TOOL_VERSION@+galaxy0">
+  <description>along trajectories</description>
+  <macros>
+    <import>monocle3-macros.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+LANG=en_US.UTF-8 monocle3 orderCells
+    --reduction-method '${reduction_method}'
+#if $root_pr_nodes
+    --root-pr-nodes '${root_pr_nodes}'
+#end if
+#if $root_cells
+    --root-cells '${root_cells}'
+#end if
+#if $cell_phenotype
+    --cell-phenotype '${cell_phenotype}'
+#end if
+#if $root_type
+    --root-type '${root_type}'
+#end if
+
+    @INPUT_OPTS@
+    @OUTPUT_OPTS@
+    
+    @VERBOSE@
+]]></command>
+
+  <inputs>
+    <expand macro="input_object_params"/>
+    <expand macro="output_object_params"/>
+    <param name="root_pr_nodes" argument="--root-pr-nodes" type="text" optional="true" label="The starting principal points. We learn a principal graph that passes through the middle of the data points and use it to represent the developmental process. Exclusive with the root cell option."/>
+    <param name="root_cells" argument="--root-cells" type="text" optional="true" label="The starting cells. Each cell corresponds to a principal point and multiple cells can correspond to the same principal point. Exclusive with the root node option."/>
+    <param name="cell_phenotype" argument="--cell-phenotype" type="text" optional="true" label="The cell phenotype (column in pdata) used to identify root principal nodes."/>
+    <param name="root_type" argument="--root-type" type="text" optional="true" label="The value in the cell phenotype column used to extract root nodes."/>
+    <param name="reduction_method" argument="--reduction-method" type="select" label="The dimensionality reduction that was used for clustering.">
+      <option selected="true" value="UMAP">UMAP</option>
+      <option value="tSNE">tSNE</option>
+      <option value="PCA">PCA</option>
+      <option value="LSI">LSI</option>
+    </param>
+    <expand macro="verbose_flag"/>
+  </inputs>
+
+  <outputs>
+    <data name="output_rds" format="rdata" from_work_dir="output.RDS" label="${tool.name} on ${on_string}: ${output_object_format}"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="input_object_file" value="input.RDS"/>
+      <param name="input_object_format" value="cds3"/>
+      <param name="reduction_method" value="UMAP"/>
+      <param name="cell_phenotype" value="embryo.time.bin"/>
+      <param name="root_type" value="130-170"/>
+      <param name="output_object_format" value="cds3"/>
+      <output name="output_rds" file="output.rds" ftype="rdata" compare="sim_size"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+==========================================
+Monocle3 ordering of cells (`order_cells`)
+==========================================
+
+Order cells using the inferred graph
+
+@HELP@
+
+@VERSION_HISTORY@
+]]></help>
+  <expand macro="citations"/>
+</tool>

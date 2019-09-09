@@ -196,6 +196,15 @@
     <tool file="tertiary-analysis/scanpy/scanpy-plot-trajectory.xml"/>
     <tool file="tertiary-analysis/scanpy/scanpy-parameter-iterator.xml"/>
   </section>
+  <section name="Monocle3" id="monocle3-tools">
+    <tool file="tertiary-analysis/monocle3/monocle3-create.xml" labels="I/O"/>
+    <tool file="tertiary-analysis/monocle3/monocle3-preprocess.xml"/>
+    <tool file="tertiary-analysis/monocle3/monocle3-reduceDim.xml"/>
+    <tool file="tertiary-analysis/monocle3/monocle3-partition.xml"/>
+    <tool file="tertiary-analysis/monocle3/monocle3-learnGraph.xml"/>
+    <tool file="tertiary-analysis/monocle3/monocle3-orderCells.xml"/>
+    <tool file="tertiary-analysis/monocle3/monocle3-diffExp.xml"/>
+  </section>
   <section name='scmap' id='scmap-tools'>
     <tool file="tertiary-analysis/scmap/scmap-select-features.xml" />
     <tool file="tertiary-analysis/scmap/scmap-index-cluster.xml" />

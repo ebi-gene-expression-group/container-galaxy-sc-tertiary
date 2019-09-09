@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="monocle3_partition" name="Monocle3 partition" version="@TOOL_VERSION@+galaxy0">
+  <description>of cells into groups</description>
+  <macros>
+    <import>monocle3-macros.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+LANG=en_US.UTF-8 monocle3 partition
+    --reduction-method '${reduction_method}'
+#if $knn
+    --knn '${knn}'
+#end if
+#if $weight
+    --weight
+#end if
+#if $louvain_iter
+    --louvain-iter '${louvain_iter}'
+#end if
+#if $resolution
+    --resolution '${resolution}'
+#end if
+#if $partition_qval
+    --partition-qval '${partition_qval}'
+#end if
+
+    @INPUT_OPTS@
+    @OUTPUT_OPTS@
+    
+    @VERBOSE@
+]]></command>
+
+  <inputs>
+    <expand macro="input_object_params"/>
+    <expand macro="output_object_params"/>
+    <param name="reduction_method" argument="--reduction-method" type="select" label="The dimensionality reduction to base the clustering on.">
+      <option selected="true" value="UMAP">UMAP</option>
+      <option value="tSNE">tSNE</option>
+      <option value="PCA">PCA</option>
+      <option value="LSI">LSI</option>
+    </param>
+    <param name="knn" argument="--knn" optional="true" type="integer" value="20" label="Number of nearest neighbours used for Louvain clustering."/>
+    <param name="weight" argument="--weight" type="boolean" checked="false" label="When this option is set, calculate the weight for each edge in the kNN graph."/>
+    <param name="louvain_iter" argument="--louvain-iter" optional="true" type="integer" value="1" label="The number of iterations for Louvain clustering."/>
+    <param name="resolution" argument="--resolution" optional="true" type="float" label="Resolution of clustering result, specifying the granularity of clusters. Not used by default and the standard igraph louvain clustering algorithm will be used."/>
+    <param name="partition_qval" argument="--partition-qval" optional="true" type="float" value="0.05" label="The q-value threshold used to determine the partition of cells."/>
+    <expand macro="verbose_flag"/>
+  </inputs>
+
+  <outputs>
+    <data name="output_rds" format="rdata" from_work_dir="output.RDS" label="${tool.name} on ${on_string}: ${output_object_format}"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="input_object_file" value="input.RDS"/>
+      <param name="input_object_format" value="cds3"/>
+      <param name="reduction_method" value="UMAP"/>
+      <param name="knn" value="20"/>
+      <param name="louvain_iter" value="1"/>
+      <param name="partition_qval" value="0.05"/>
+      <param name="output_object_format" value="cds3"/>
+      <output name="output_rds" file="output.rds" ftype="rdata" compare="sim_size"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+==============================================
+Monocle3 clustering of cells (`cluster_cells`)
+==============================================
+
+Cluster the primary dimensionality reduced space
+
+@HELP@
+
+@VERSION_HISTORY@
+]]></help>
+  <expand macro="citations"/>
+</tool>
