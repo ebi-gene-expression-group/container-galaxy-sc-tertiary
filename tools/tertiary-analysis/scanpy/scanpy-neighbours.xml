@@ -32,7 +32,7 @@ PYTHONIOENCODING=utf-8 scanpy-neighbors
       <when value="true"/>
       <when value="false">
         <param name="n_neighbours" argument="--n-neighbors" type="integer" value="15" label="Maximum number of neighbours used"/>
-        <param name="use_rep" type="select" label="Use the indicated representation">
+        <param name="use_rep" type="text" label="Use the indicated representation">
           <option value="X_pca" selected="true">X_pca, use PCs</option>
           <option value="X">X, use normalised expression values</option>
         </param>
