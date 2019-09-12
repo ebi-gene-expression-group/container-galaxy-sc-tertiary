@@ -8,7 +8,7 @@
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-regress
-    --keys '${keys}'
+    --keys '${variable_keys}'
     @INPUT_OPTS@
     @OUTPUT_OPTS@
 ]]></command>
@@ -16,7 +16,7 @@ PYTHONIOENCODING=utf-8 scanpy-regress
   <inputs>
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
-    <param name="keys" type="text" label="Variables to regress out" help="Use comma to separate multiple variables"/>
+    <param name="variable_keys" type="text" label="Variables to regress out" help="Use comma to separate multiple variables"/>
   </inputs>
 
   <outputs>
@@ -28,7 +28,7 @@ PYTHONIOENCODING=utf-8 scanpy-regress
       <param name="input_obj_file" value="find_variable_genes.h5"/>
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
-      <param name="keys" value="n_counts"/>
+      <param name="variable_keys" value="n_counts"/>
       <output name="output_h5" file="scale_data.h5" ftype="h5" compare="sim_size"/>
     </test>
   </tests>
