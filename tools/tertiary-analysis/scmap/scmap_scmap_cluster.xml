@@ -1,4 +1,4 @@
-<tool id="scmap-scmap-cluster" name="scmap cluster projection" version="@TOOL_VERSION@+galaxy0" python_template_version="3.5">
+<tool id="scmap_scmap_cluster" name="scmap cluster projection" version="@TOOL_VERSION@+galaxy0" python_template_version="3.5">
     <description>projects one dataset to another</description>
     <macros>
         <import>scmap_macros.xml</import>
