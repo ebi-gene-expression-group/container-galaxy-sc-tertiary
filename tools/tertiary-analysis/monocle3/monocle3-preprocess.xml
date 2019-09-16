@@ -16,7 +16,7 @@ LANG=en_US.UTF-8 monocle3 preprocess
     --use-genes '${use_genes}'
 #end if
 #if $residual_model_formula_str
-    --residual-model-formula-str '${residual_model_formula_str}'
+    --residual-model-formula-str '~${residual_model_formula_str}'
 #end if
 #if $pseudo_count
     --pseudo-count '${pseudo_count}'
@@ -43,8 +43,8 @@ LANG=en_US.UTF-8 monocle3 preprocess
       <option value="log" selected="true">Size factor correction and log transformation</option>
       <option value="size_only">Size factor correction only</option>
     </param>
-    <!-- <param name="use_genes" argument="-\-use-genes" type="text" optional="true" label="Manually subset the gene pool to these genes for dimensionality reduction."/> -->
-    <param name="residual_model_formula_str" argument="--residual-model-formula-str" type="text" optional="true" label="A string model formula specifying effects to subtract from the data."/>
+    <param name="use_genes" argument="--use-genes" type="text" optional="true" label="Manually subset the gene pool to these genes for dimensionality reduction."/>
+    <param name="residual_model_formula_str" argument="--residual-model-formula-str" type="text" optional="true" label="A string model formula specifying effects to subtract from the data (excluding the leading ~)."/>
     <param name="pseudo_count" argument="--pseudo-count" optional="true" type="float" value="1" label="Amount to increase expression values before dimensionality reduction."/>
     <param name="no_scaling" argument="--no-scaling" type="boolean" checked="false" label="When this option is NOT set, scale each gene before running trajectory reconstruction."/>
     <expand macro="verbose_flag"/>

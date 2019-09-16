@@ -188,6 +188,7 @@
     <tool file="tertiary-analysis/scanpy/scanpy-run-umap.xml"/>
     <tool file="tertiary-analysis/scanpy/scanpy-run-tsne.xml"/>
     <tool file="tertiary-analysis/scanpy/scanpy-run-diffmap.xml"/>
+    <tool file="tertiary-analysis/scanpy/scanpy-run-fdg.xml"/>
     <tool file="tertiary-analysis/scanpy/scanpy-plot-embedding.xml"/>
     <tool file="tertiary-analysis/scanpy/scanpy-find-cluster.xml"/>
     <tool file="tertiary-analysis/scanpy/scanpy-find-markers.xml"/>
