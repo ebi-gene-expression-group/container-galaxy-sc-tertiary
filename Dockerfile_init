@@ -36,4 +36,9 @@ COPY html/welcome.html welcome/welcome.html
 
 COPY workflows workflows_to_load
 COPY post-start-actions.sh post-start-actions.sh
+
+# Patches for runner and bytesize
+# COPY patches/kubernetes.py /galaxy-central/lib/galaxy/jobs/runners/kubernetes.py
+# COPY patches/bytesize.py /galaxy-central/lib/galaxy/util/bytesize.py
+
 RUN chmod u+x post-start-actions.sh
