@@ -5,7 +5,7 @@ categories:
  - Sequence Analysis
 description: "De-composed monocle3 functionality tools, based on https://github.com/ebi-gene-expression-group/monocle-scripts and monocle3 0.1.2."
 long_description: |
-        scmap: A tool for trajectory analysis of single cell RNA-seq data
+        monocle3: A tool for trajectory analysis of single cell RNA-seq data
 name: suite_monocle3
 owner: ebi-gxa
 remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/
@@ -17,4 +17,4 @@ suite:
   name: "suite_scmap"
   description: "De-composed monocle3 functionality tools, based on https://github.com/ebi-gene-expression-group/monocle-scripts and monocle3 0.1.2."
   long_description: |
-    scmap: A tool for trajectory analysis of single cell RNA-seq data  
+    monocle3: A tool for trajectory analysis of single cell RNA-seq data  
