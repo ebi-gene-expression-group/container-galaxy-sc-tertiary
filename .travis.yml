@@ -7,7 +7,7 @@ env:
     - CHANGE_MINIKUBE_NONE_USER=true
     - K8S_VERSION="v1.10.0"
     - MINIKUBE_VERSION="v0.28.2"
-    - HELM_VERSION="v2.10.0-linux-amd64"
+    - HELM_VERSION="v2.14.3-linux-amd64"
     - HELM_REPO_VERSION="2.0.1"
 
 before_script:
@@ -25,7 +25,7 @@ before_script:
 - minikube update-context
 # Fix the kubectl context, as it's often stale.
 # - minikube update-context
-- curl -Lo helm.tar.gz https://kubernetes-helm.storage.googleapis.com/helm-${HELM_VERSION}.tar.gz
+- curl -Lo helm.tar.gz https://get.helm.sh/helm-${HELM_VERSION}.tar.gz
 - tar -xf helm.tar.gz
 - sudo mv linux-amd64/helm /usr/local/bin/
 - rm -rf linux-amd64

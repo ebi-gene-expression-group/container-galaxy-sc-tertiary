@@ -1,0 +1,20 @@
+categories:
+ - Transcriptomics
+ - RNA
+ - Statistics
+ - Sequence Analysis
+description: "De-composed monocle3 functionality tools, based on https://github.com/ebi-gene-expression-group/monocle-scripts and monocle3 0.1.2."
+long_description: |
+        monocle3: A tool for trajectory analysis of single cell RNA-seq data
+name: suite_monocle3
+owner: ebi-gxa
+remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for the monocle3 tool suite: {{ tool_name }}"
+suite:
+  name: "suite_monocle3"
+  description: "De-composed monocle3 functionality tools, based on https://github.com/ebi-gene-expression-group/monocle-scripts and monocle3 0.1.2."
+  long_description: |
+    monocle3: A tool for trajectory analysis of single cell RNA-seq data  

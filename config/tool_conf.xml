@@ -207,11 +207,11 @@
     <tool file="tertiary-analysis/monocle3/monocle3-diffExp.xml"/>
   </section>
   <section name='scmap' id='scmap-tools'>
-    <tool file="tertiary-analysis/scmap/scmap-select-features.xml" />
-    <tool file="tertiary-analysis/scmap/scmap-index-cluster.xml" />
-    <tool file="tertiary-analysis/scmap/scmap-scmap-cluster.xml" />
-    <tool file="tertiary-analysis/scmap/scmap-index-cell.xml" />
-    <tool file="tertiary-analysis/scmap/scmap-scmap-cell.xml" />
+    <tool file="tertiary-analysis/scmap/scmap_select_features.xml" />
+    <tool file="tertiary-analysis/scmap/scmap_index_cluster.xml" />
+    <tool file="tertiary-analysis/scmap/scmap_scmap_cluster.xml" />
+    <tool file="tertiary-analysis/scmap/scmap_index_cell.xml" />
+    <tool file="tertiary-analysis/scmap/scmap_scmap_cell.xml" />
   </section>
   <section name="UCSC Cell Browser" id="cell-browser">
     <tool file="tertiary-analysis/ucsc-cell-browser/cell-browser.xml"  labels="Viz"/>
