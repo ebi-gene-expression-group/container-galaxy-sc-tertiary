@@ -1,5 +1,5 @@
-Table O2: Decomposed modules contributed from the different tools. The name of the module links to an active Galaxy instance where that can be used, and TS provides a second link to the module in the Galaxy Toolshed.
-Each module is assigned to one or more of the relevant analysis areas: Clustering (C), Differential expression/Marker detection (DE-MD), Trajectories (T), Cell type alignment (CT) and Dimensionality reduction (DR).
+**Table O2**: Decomposed modules contributed from the different tools. The name of the module links to an active Galaxy instance where that can be used, and TS provides a second link to the module in the Galaxy Toolshed.
+Each module is linked to one of the cli-layers mentioned in [Table O1](O1_cli-layer.md) and assigned to one or more of the relevant analysis areas: Clustering (**C**), Differential expression/Marker detection (**DE-MD**), Trajectories (**T**), Cell type alignment (**CT**) and Dimensionality reduction (**DR**).
 
 | Module | Description | cli-layer | Analysis areas |
 |--------|-------------|-----------|----------------|

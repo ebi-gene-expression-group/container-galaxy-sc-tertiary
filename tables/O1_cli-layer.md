@@ -1,5 +1,4 @@
-
-
+**Table O1**: Command line argument layer for each tool, the analysis areas covered and with links to the different packaging generated:  Conda package (**C**) and Docker Containers (**DC**).
 
 | Tool | cli-layer | Packaging | Analysis areas |
 |------|-----------|-----------|-----|
@@ -10,8 +9,5 @@
 | scMap    | [scMap cli](https://github.com/ebi-gene-expression-group/scmap-cli) | [C](https://bioconda.github.io/recipes/scmap-cli/README.html) [DC](https://quay.io/repository/biocontainers/scmap-cli) | cell type alignment |
 | Monocle3 | [monocle scripts](https://github.com/ebi-gene-expression-group/monocle-scripts) | [C](https://bioconda.github.io/recipes/monocle-scripts/README.html) [DC](https://quay.io/repository/biocontainers/monocle-scripts) | clustering, trajectories. |
 | UCSC CellBrowser    | None needed | [C](https://bioconda.github.io/recipes/ucsc-cell-browser/README.html) [DC](https://quay.io/repository/biocontainers/ucsc-cell-browser) | interactive visualisation |
-| SCCAF | Contributed package includes cli | [C](https://bioconda.github.io/recipes/sccaf/README.html) [DC](https://quay.io/repository/biocontainers/sccaf) | clustering |
+| SCCAF | [Contributed package includes cli](https://github.com/SCCAF/sccaf/tree/master/cli) | [C](https://bioconda.github.io/recipes/sccaf/README.html) [DC](https://quay.io/repository/biocontainers/sccaf) | clustering |
 | DCP Matrix Service Client | Contributed package includes cli | [C](https://bioconda.github.io/recipes/hca-matrix-downloader/README.html) [DC]() | selection & aggregation |
-
-
-Table O1: Command line argument layer for each tool, with links to the different packaging generated (**S**ource code, **C**onda package and Docker Container **DC**) and the analysis areas covered.
