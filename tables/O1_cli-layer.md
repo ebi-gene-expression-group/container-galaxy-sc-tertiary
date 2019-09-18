@@ -10,4 +10,4 @@
 | Monocle3 | [monocle scripts](https://github.com/ebi-gene-expression-group/monocle-scripts) | [C](https://bioconda.github.io/recipes/monocle-scripts/README.html) [DC](https://quay.io/repository/biocontainers/monocle-scripts) | clustering, trajectories. |
 | UCSC CellBrowser    | None needed | [C](https://bioconda.github.io/recipes/ucsc-cell-browser/README.html) [DC](https://quay.io/repository/biocontainers/ucsc-cell-browser) | interactive visualisation |
 | SCCAF | [Contributed package includes cli](https://github.com/SCCAF/sccaf/tree/master/cli) | [C](https://bioconda.github.io/recipes/sccaf/README.html) [DC](https://quay.io/repository/biocontainers/sccaf) | clustering |
-| DCP Matrix Service Client | Contributed package includes cli | [C](https://bioconda.github.io/recipes/hca-matrix-downloader/README.html) [DC]() | selection & aggregation |
+| DCP Matrix Service Client | [Contributed package includes cli](https://github.com/ebi-gene-expression-group/hca-matrix-downloader) | [C](https://bioconda.github.io/recipes/hca-matrix-downloader/README.html) [DC]() | selection & aggregation |
