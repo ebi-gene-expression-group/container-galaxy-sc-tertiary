@@ -34,3 +34,9 @@ sc3_calc_consens:C
 sc3_calc_transfs:C
 sc3_estimate_k:C
 sc3_kmeans:C
+# scmap
+scmap_index_cell:CT
+scmap_index_cluster:CT
+scmap_scmap_cell:CT
+scmap_scmap_cluster:CT
+scmap_select_features:CT
