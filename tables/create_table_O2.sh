@@ -16,9 +16,12 @@ declare -A mappings
 while IFS= read -r line; do
     mappings[${line%%:*}]=${line#*:}
 done < module_analysis_mapping.txt
-# Requires perl-xml-xpath conda package for xpath
 
-echo "| Module | Description | cli-layer | Analysis areas |" > O2_modules_aut.md
+echo "Table O2: Decomposed modules contributed from the different tools. The name of the module links to an active Galaxy instance where that can be used, and TS provides a second link to the module in the Galaxy Toolshed." > O2_modules_aut.md
+echo "Each module is assigned to one or more of the relevant analysis areas: Clustering (C), Differential expression/Marker detection (DE-MD), Trajectories (T), Cell type alignment (CT) and Dimensionality reduction (DR)." >> O2_modules_aut.md
+# Requires perl-xml-xpath conda package for xpath
+echo "" >> O2_modules_aut.md
+echo "| Module | Description | cli-layer | Analysis areas |" >> O2_modules_aut.md
 echo "|--------|-------------|-----------|----------------|" >> O2_modules_aut.md
 
 tertiary_path=../tools/tertiary-analysis

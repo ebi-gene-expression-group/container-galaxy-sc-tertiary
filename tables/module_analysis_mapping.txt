@@ -49,3 +49,5 @@ monocle3_partition:C T
 monocle3_plotCells:T
 monocle3_preprocess:P
 monocle3_reduceDim:DR
+# scater
+scater_normalize:C
