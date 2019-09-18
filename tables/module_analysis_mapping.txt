@@ -1,24 +1,25 @@
 # Possible areas:
+# Preprocessing (P)
 # Clustering (C)
 # Differential expression/Marker detection (DE-MD)
 # Trajectories (T)
 # Cell type alignment (CT)
 # Dimensionality reduction (DR)
-scanpy_find_cluster:C CT
+scanpy_find_cluster:C C
 scanpy_find_markers:C DE-MD
-scanpy_find_variable_genes:C DE-MD
-scanpy_compute_graph:C
-scanpy_normalise_data:C
+scanpy_find_variable_genes:P
+scanpy_compute_graph:C T
+scanpy_normalise_data:P
 scanpy_plot_embed:C
 scanpy_plot_trajectory:T
-scanpy_regress_variable:C T CT
+scanpy_regress_variable:P
 scanpy_run_diffmap:T
 scanpy_run_dpt:T
 scanpy_run_paga:T
 scanpy_run_pca:DR
-scanpy_run_tsne:C DR
-scanpy_run_umap:C DR
-scanpy_scale_data:C DE-MD
+scanpy_run_tsne:DR
+scanpy_run_umap:DR
+scanpy_scale_data:P
 # Seurat
 seurat_dim_plot:DR
 seurat_find_clusters:C
@@ -40,3 +41,11 @@ scmap_index_cluster:CT
 scmap_scmap_cell:CT
 scmap_scmap_cluster:CT
 scmap_select_features:CT
+# monocle3
+monocle3_diffExp:DE-MD
+monocle3_learnGraph:T
+monocle3_orderCells:T
+monocle3_partition:C T
+monocle3_plotCells:T
+monocle3_preprocess:P
+monocle3_reduceDim:DR
