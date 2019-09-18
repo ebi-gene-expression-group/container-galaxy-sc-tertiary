@@ -15,7 +15,22 @@ scanpy_regress_variable:C T CT
 scanpy_run_diffmap:T
 scanpy_run_dpt:T
 scanpy_run_paga:T
-scanpy_run_pca:C T DE-MD
-scanpy_run_tsne:DR
-scanpy_run_umap:DR
+scanpy_run_pca:DR
+scanpy_run_tsne:C DR
+scanpy_run_umap:C DR
 scanpy_scale_data:C DE-MD
+# Seurat
+seurat_dim_plot:DR
+seurat_find_clusters:C
+seurat_find_markers:DE-MD
+seurat_find_variable_genes:C DE-MD
+seurat_normalise_data:C
+seurat_run_pca:DR
+seurat_run_tsne:C DR
+seurat_scale_data:C
+# SC3
+sc3_calc_biology:DE-MD
+sc3_calc_consens:C
+sc3_calc_transfs:C
+sc3_estimate_k:C
+sc3_kmeans:C
