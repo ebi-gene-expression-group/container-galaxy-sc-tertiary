@@ -1,0 +1,21 @@
+# Possible areas:
+# Clustering (C)
+# Differential expression/Marker detection (DE-MD)
+# Trajectories (T)
+# Cell type alignment (CT)
+# Dimensionality reduction (DR)
+scanpy_find_cluster:C CT
+scanpy_find_markers:C DE-MD
+scanpy_find_variable_genes:C DE-MD
+scanpy_compute_graph:C
+scanpy_normalise_data:C
+scanpy_plot_embed:C
+scanpy_plot_trajectory:T
+scanpy_regress_variable:C T CT
+scanpy_run_diffmap:T
+scanpy_run_dpt:T
+scanpy_run_paga:T
+scanpy_run_pca:C T DE-MD
+scanpy_run_tsne:DR
+scanpy_run_umap:DR
+scanpy_scale_data:C DE-MD
