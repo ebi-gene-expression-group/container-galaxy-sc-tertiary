@@ -5,8 +5,8 @@
 # Trajectories (T)
 # Cell type alignment (CT)
 # Dimensionality reduction (DR)
-scanpy_find_cluster:C C
-scanpy_find_markers:C DE-MD
+scanpy_find_cluster:C
+scanpy_find_markers:DE-MD
 scanpy_find_variable_genes:P
 scanpy_compute_graph:C T
 scanpy_normalise_data:P
