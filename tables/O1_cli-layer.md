@@ -1,0 +1,13 @@
+**Table O1**: Command line argument layer for each tool, the analysis areas covered and with links to the different packaging generated:  Conda package (**C**) and Docker Containers (**DC**).
+
+| Tool | cli-layer | Packaging | Analysis areas |
+|------|-----------|-----------|-----|
+| Scanpy | [Scanpy scripts](https://github.com/ebi-gene-expression-group/scanpy-scripts) | [C](https://bioconda.github.io/recipes/scanpy-scripts/README.html) [DC](https://quay.io/repository/biocontainers/scanpy-scripts) | clustering, dimensionality reduction, differential expression. |
+| Seurat | [Seurat scripts](https://github.com/ebi-gene-expression-group/seurat-scripts) | [C](https://bioconda.github.io/recipes/seurat-scripts/README.html) [DC](https://quay.io/repository/biocontainers/seurat-scripts) | clustering, dimensionality reduction, differential expression. |
+| SC3    | [SC3 scripts](https://github.com/ebi-gene-expression-group/sc3-scripts) | [C](https://bioconda.github.io/recipes/sc3-scripts/README.html) [DC](https://quay.io/repository/biocontainers/sc3-scripts) | clustering, dimensionality reduction,  differential expression. |
+| Scater | [Scater scripts](https://github.com/ebi-gene-expression-group/scater-scripts) | [C](https://bioconda.github.io/recipes/scater-scripts/README.html) [DC](https://quay.io/repository/biocontainers/scater-scripts) | clustering, dimensionality reduction, differential expression. |
+| scMap    | [scMap cli](https://github.com/ebi-gene-expression-group/scmap-cli) | [C](https://bioconda.github.io/recipes/scmap-cli/README.html) [DC](https://quay.io/repository/biocontainers/scmap-cli) | cell type alignment |
+| Monocle3 | [monocle scripts](https://github.com/ebi-gene-expression-group/monocle-scripts) | [C](https://bioconda.github.io/recipes/monocle-scripts/README.html) [DC](https://quay.io/repository/biocontainers/monocle-scripts) | clustering, trajectories. |
+| UCSC CellBrowser    | None needed | [C](https://bioconda.github.io/recipes/ucsc-cell-browser/README.html) [DC](https://quay.io/repository/biocontainers/ucsc-cell-browser) | interactive visualisation |
+| SCCAF | [Contributed package includes cli](https://github.com/SCCAF/sccaf/tree/master/cli) | [C](https://bioconda.github.io/recipes/sccaf/README.html) [DC](https://quay.io/repository/biocontainers/sccaf) | clustering |
+| DCP Matrix Service Client | [Contributed package includes cli](https://github.com/ebi-gene-expression-group/hca-matrix-downloader) | [C](https://bioconda.github.io/recipes/hca-matrix-downloader/README.html) [DC]() | selection & aggregation |
