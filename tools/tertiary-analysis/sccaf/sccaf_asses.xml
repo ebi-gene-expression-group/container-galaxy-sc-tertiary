@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="sccaf_asses" name="SCCAF assesment" version="@TOOL_VERSION@+galaxy0">
+  <description>runs an assesment of an SCCAF optimisation result</description>
+  <macros>
+    <import>sccaf_macros.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+ln -s ${input_obj_file} input.h5 &&
+
+sccaf-assess -i input.h5 --iterations $iterations --cores \${GALAXY_SLOTS:-1}
+    -o sccaf_assess.txt
+#if $rounds_file
+    --slot-for-existing-clustering \$( cat $rounds_file )
+#else
+    --slot-for-existing-clustering $existing_slot
+#end if
+
+
+]]></command>
+
+  <inputs>
+    <expand macro="input_object_params"/>
+
+    <conditional name="slot_source">
+      <param type="select" name="source" label="Choose the source of the slot for existing clustering" help="either a round file or an explicit name of a round.">
+        <option value="explicit" selected="True">Input the desired round directly</option>
+        <option value="file">Input the desired round through a file</option>
+      </param>
+      <when value="explicit">
+        <param type="text" value="" name="existing_slot" label="Specific round to asses" help="Write the slot of the AnnData object that you want assessed."/>
+      </when>
+      <when value="file">
+        <param name="rounds_file" argument="--slot-for-existing-clustering" type="data" format="txt,tsv" label="A file containing a single round to asses in the AnnData file." help="For use with sccaf_distribute_assesment" optional="true"/>
+      </when>
+    </conditional>
+    <param type="integer" value="5" name="iterations" label="Iterations for assesment" help="The number of times that the assesment is internally repeated to achieve a result."/>
+
+  </inputs>
+
+  <outputs>
+    <data name="output_table" format="txt" from_work_dir="sccaf_assess.txt" label="${tool.name} on ${on_string} assesment accuracy and cross validation."/>
+    <data name="output_png" format="png" from_work_dir="roc-curve.png" label="${tool.name} on ${on_string} ROC-Curve">
+      <filter>iterations == 1</filter>
+    </data>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="input_obj_file" value="find_cluster.h5"/>
+      <param name="use_tsv" value="true"/>
+      <param name="input_tsv" value="find_cluster.tsv"/>
+      <output name="output_png" file="run_sccaf.png" ftype="png"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+]]></help>
+  <!-- <expand macro="citations"/> -->
+</tool>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="sccaf_asses_merger" name="SCCAF Assesment Merger" version="@TOOL_VERSION@+galaxy0">
+  <description>brings together distributed assesments.</description>
+  <macros>
+    <import>sccaf_macros.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+
+mkdir -p asses_results;
+#for $assesment in $assesments:
+  ln -s '$assesment' asses_results/sccaf_assess_${assesments.index($assesment)}.txt;
+#end for
+
+sccaf-assess-merger -i asses_results -r '$rounds_file' -o report_merge.pdf
+
+]]></command>
+
+  <inputs>
+    <param type="data" name="assesments" label="Assesment results" format="txt" multiple="true" />
+    <param type="data" name="rounds_file" label="File containing names of rounds executed, produced by run-scaff" format="txt"/>
+  </inputs>
+
+  <outputs>
+    <data name="rounds" format="pdf" from_work_dir="report_merge.pdf" label="${tool.name} on ${on_string} assesment report pdf"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="input_obj_file" value="find_cluster.h5"/>
+      <param name="use_tsv" value="true"/>
+      <param name="input_tsv" value="find_cluster.tsv"/>
+      <output name="output_png" file="run_sccaf.png" ftype="png"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+]]></help>
+  <!-- <expand macro="citations"/> -->
+</tool>
