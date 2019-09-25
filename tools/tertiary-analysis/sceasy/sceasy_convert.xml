@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="sceasy_convert" name="SCEasy convert" version="@TOOL_VERSION@+galaxy0">
+  <description>a data object between formats</description>
+  <macros>
+    <import>sceasy_macros.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+#if str($conversion['direction']).startswith("loom")
+    ln -s ${conversion.input_object_file} input.h5 &&
+#else if str($conversion['direction']).startswith("anndata")
+    ln -s ${conversion.input_object_file} input.h5ad &&
+#else
+    ln -s ${conversion.input_object_file} input.rds &&
+#end if
+
+    Rscript -e 'library(sceasy)'
+#if $conversion.direction == "loom2sce"
+            -e 'sce <- sceasy::convertFormat("input.h5", from="loom", to="sce")'
+            -e 'saveRDS(sce, "output.rds")'
+#else if $conversion.direction == "sce2loom"
+            -e 'sce <- readRDS("input.rds")'
+            -e 'sceasy::convertFormat(sce, outFile="output.h5", from="sce", to="loom")'
+#else if $conversion.direction == "sce2anndata"
+            -e 'sce <- readRDS("input.rds")'
+            -e 'sceasy::convertFormat(sce, outFile="output.h5ad", from="sce", to="anndata")'
+#else if $conversion.direction == "seurat2anndata"
+            -e 'srt <- readRDS("input.rds")'
+            -e 'sceasy::convertFormat(srt, outFile="output.h5ad", from="seurat", to="anndata")'
+#end if
+]]></command>
+
+  <inputs>
+    <conditional name="conversion">
+      <param name="direction" type="select" label="Direction of conversion">
+        <option value="loom2sce" selected="true">Loom to SingleCellExperiment</option>
+        <option value="sce2loom">SingleCellExperiment to Loom</option>
+        <option value="seurat2anndata">Seurat to AnnData</option>
+        <option value="sce2anndata">SingleCellExperiment to AnnData</option>
+      </param>
+      <when value="loom2sce">
+        <param name="input_object_file" type="data" format="h5" label="Input object in Loom format"/>
+      </when>
+      <when value="sce2loom">
+        <param name="input_object_file" type="data" format="rdata" label="Input object in SingleCellExperiment RDS format"/>
+      </when>
+      <when value="sce2anndata">
+        <param name="input_object_file" type="data" format="rdata" label="Input object in SingleCellExperiment RDS format"/>
+      </when>
+      <when value="seurat2anndata">
+        <param name="input_object_file" type="data" format="rdata" label="Input object in Seurat RDS format"/>
+      </when>
+    </conditional>
+  </inputs>
+
+  <outputs>
+    <data name="output_sce" format="rdata" from_work_dir="output.rds" label="${tool.name} on ${on_string}: SingleCellExperiment">
+      <filter>conversion['direction'].endswith('sce')</filter>
+    </data>
+    <data name="output_loom" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string}: Loom">
+      <filter>conversion['direction'].endswith('loom')</filter>
+    </data>
+    <data name="output_anndata" format="h5" from_work_dir="output.h5ad" label="${tool.name} on ${on_string}: AnnData">
+      <filter>conversion['direction'].endswith('anndata')</filter>
+    </data>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="direction" value="loom2sce"/>
+      <param name="input_object_file" value="input.loom"/>
+      <output name="output_sce" file="output.rds" ftype="rdata" compare="sim_size"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+===================================================================
+Convert scRNA data object between formats `sceasy::convertFormat()`
+===================================================================
+
+Support the following conversion:
+ * Loom <-> SingleCellExperiment (full)
+ * SingleCellExperiment -> AnnData (matrix, metadata, reducedDim)
+ * Seurat -> AnnData (matrix, metadata, reducedDim)
+
+@HELP@
+
+@VERSION_HISTORY@
+]]></help>
+  <expand macro="citations"/>
+</tool>

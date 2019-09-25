@@ -142,6 +142,9 @@
     <tool file="tertiary-analysis/data-scxa/retrieve-scxa.xml"/>
     <tool file="tertiary-analysis/data-hca/matrix-service.xml"/>
   </section>
+  <section name="SCEasy" id="sceasy-tools">
+    <tool file="tertiary-analysis/sceasy/sceasy_convert.xml" labels="I/O"/>
+  </section>
   <section name="Seurat" id="seurat-tools">
     <tool file="tertiary-analysis/seurat/seurat_read10x.xml"  labels="I/O"/>
     <tool file="tertiary-analysis/seurat/seurat_create_object.xml"/>
@@ -206,7 +209,7 @@
     <tool file="tertiary-analysis/monocle3/monocle3-orderCells.xml"/>
     <tool file="tertiary-analysis/monocle3/monocle3-diffExp.xml"/>
   </section>
-  <section name='scmap' id='scmap-tools'>
+  <section name="scmap" id="scmap-tools">
     <tool file="tertiary-analysis/scmap/scmap_select_features.xml" />
     <tool file="tertiary-analysis/scmap/scmap_index_cluster.xml" />
     <tool file="tertiary-analysis/scmap/scmap_scmap_cluster.xml" />
