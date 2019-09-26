@@ -4,12 +4,12 @@
   <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
 
-0.0.1+galaxy0: Initial version based on sceasy 0.0.2
+0.0.1+galaxy0: Initial version based on sceasy 0.0.3
     ]]></token>
 
   <xml name="requirements">
     <requirements>
-      <requirement type="package" version="0.0.2">r-sceasy</requirement>
+      <requirement type="package" version="0.0.3">r-sceasy</requirement>
       <yield/>
     </requirements>
   </xml>
