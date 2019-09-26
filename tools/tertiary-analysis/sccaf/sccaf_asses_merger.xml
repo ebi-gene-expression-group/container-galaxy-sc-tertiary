@@ -12,13 +12,18 @@ mkdir -p asses_results;
   ln -s '$assesment' asses_results/sccaf_assess_${assesments.index($assesment)}.txt;
 #end for
 
-sccaf-assess-merger -i asses_results -r '$rounds_file' -o report_merge.pdf
+touch rounds.txt;
+#for $round_file in $round_files
+  cat '$round_file' >> rounds.txt;
+#end for
+
+sccaf-assess-merger -i asses_results -r rounds.txt -o report_merge.pdf
 
 ]]></command>
 
   <inputs>
     <param type="data" name="assesments" label="Assesment results" format="txt" multiple="true" />
-    <param type="data" name="rounds_file" label="File containing names of rounds executed, produced by run-scaff" format="txt"/>
+    <param type="data" name="round_files" label="Files containing names of rounds executed, produced by run-scaff" format="txt" multiple="true"/>
   </inputs>
 
   <outputs>

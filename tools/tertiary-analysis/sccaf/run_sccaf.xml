@@ -31,7 +31,19 @@ sccaf -i input.h5
     --undercluster-boundary ${mode.optimisation_stop.min_resolution_clustering_slot}
   #end if
   --produce-rounds-summary
+
+  --optimisation-plots-output ${opt_pdf_out}
+  > ${opt_text_out};
 #end if
+
+#if $mode.optimise and $mode.distribute_assesment:
+mkdir -p outputs;
+for round in \$(cat rounds.txt); do
+  echo "Round: "\$round;
+  echo \$round > outputs/round_\$round\.txt;
+done
+#end if
+
 
 
 ]]></command>
@@ -72,8 +84,8 @@ sccaf -i input.h5
             <param name="min_resolution_clustering_slot" type="text" argument="--undercluster-boundary" label="Underclustering boundary to use in the optimisation." help="The slot inside the ann data object with the desired underclustering (low resolution) to be used as exit condition."/>
           </when>
         </conditional>
-
         <param name="skip_init_assessment" type="boolean" argument="--skip-assessment" checked="false" label="Run only the optimisation and skip the initial assessment" help="If you are running the optimisation, you can choose skip the initial assessment to save time."/>
+        <param name="distribute_assesment" type="boolean" checked="false" label="Produce parameter walk for asessment distribution" help="Will split rounds in files so that multiple assess processes can be distributed down the line"/>
       </when>
       <when value="false">
       </when>
@@ -81,16 +93,23 @@ sccaf -i input.h5
   </inputs>
 
   <outputs>
-    <data name="output_png" format="png" from_work_dir="roc-curve.png" label="${tool.name} on ${on_string} self-projection.png">
+    <data name="output_png" format="png" from_work_dir="roc-curve.png" label="${tool.name} on ${on_string} ROC Curve for initial assesment">
       <filter>not mode['skip_init_assessment']</filter>
     </data>
     <data name="output_h5" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string} output.h5">
       <filter>mode['optimise']</filter>
     </data>
-    <data name="optim_png" format="png" from_work_dir="optim.png" label="${tool.name} on ${on_string} optim.png">
+    <data name="optim_png" format="png" from_work_dir="optim.png" label="${tool.name} on ${on_string} ROC Curve for optimisation result">
       <filter>mode['optimise']</filter>
     </data>
-    <data name="rounds" format="txt" from_work_dir="rounds.txt" label="${tool.name} on ${on_string} rounds.txt">
+    <collection name="rounds_walk" type="list" label="Rounds for assesment distribution">
+      <filter>mode['optimise'] and mode['distribute_assesment']</filter>
+      <discover_datasets pattern="__name_and_ext__" directory="outputs"/>
+    </collection>
+    <data name="opt_text_out" format="txt" label="${tool.name} on ${on_string} Optimisation process log">
+      <filter>mode['optimise']</filter>
+    </data>
+    <data name="opt_pdf_out" format="pdf" label="${tool.name} on ${on_string} Optimisation process plots">
       <filter>mode['optimise']</filter>
     </data>
   </outputs>
