@@ -24,7 +24,12 @@ sccaf -i input.h5
   --resolution ${mode.init.resolution}
   #end if
   --optimise
-  --min-accuracy ${mode.accuracy}
+  #if $mode.optimisation_stop.condition == "accuracy_threshold"
+    --min-accuracy ${mode.optimisation_stop.accuracy}
+  #else
+    --min-accuracy 0.955
+    --undercluster-boundary ${mode.optimisation_stop.min_resolution_clustering_slot}
+  #end if
   --produce-rounds-summary
 #end if
 
@@ -55,7 +60,19 @@ sccaf -i input.h5
             <param name="resolution" type="float" value="1.5" argument="--resolution" label="Resolution for initialising louvain clustering" help="Perform an initial clustering and use this as an starting point."/>
           </when>
         </conditional>
-        <param name="accuracy" type="float" value="0.90" argument="--accuracy" label="Accuracy for convergence of the optimisation process" help="The SCCAF optimisation process will converge once this accuracy is achieved."/>
+        <conditional name="optimisation_stop">
+          <param type="select" name="condition" help="How should the optimisation algorithm be stopped." label="Stop condition">
+            <option value="accuracy_threshold" selected="true">Set a threshold for accuracy</option>
+            <option value="min_resolution_clustering">Use a slot with a low resolution clustering</option>
+          </param>
+          <when value="accuracy_threshold">
+            <param name="accuracy" type="float" value="0.90" argument="--accuracy" label="Accuracy for convergence of the optimisation process" help="The SCCAF optimisation process will converge once this accuracy is achieved."/>
+          </when>
+          <when value="min_resolution_clustering">
+            <param name="min_resolution_clustering_slot" type="text" argument="--undercluster-boundary" label="Underclustering boundary to use in the optimisation." help="The slot inside the ann data object with the desired underclustering (low resolution) to be used as exit condition."/>
+          </when>
+        </conditional>
+
         <param name="skip_init_assessment" type="boolean" argument="--skip-assessment" checked="false" label="Run only the optimisation and skip the initial assessment" help="If you are running the optimisation, you can choose skip the initial assessment to save time."/>
       </when>
       <when value="false">

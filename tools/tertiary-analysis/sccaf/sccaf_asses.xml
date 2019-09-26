@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="sccaf_asses" name="SCCAF assesment" version="@TOOL_VERSION@+galaxy0">
-  <description>runs an assesment of an SCCAF optimisation result</description>
+<tool id="sccaf_asses" name="SCCAF Assesment" version="@TOOL_VERSION@+galaxy0">
+  <description>runs an assesment of an SCCAF optimisation result or an existing clustering.</description>
   <macros>
     <import>sccaf_macros.xml</import>
   </macros>

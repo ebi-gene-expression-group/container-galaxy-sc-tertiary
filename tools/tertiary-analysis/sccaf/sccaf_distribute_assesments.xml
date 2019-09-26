@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="sccaf_distribute_assesment" name="SCCAF distribute assesment" version="@TOOL_VERSION@+galaxy0">
+<tool id="sccaf_distribute_assesment" name="SCCAF Distribute Assesment" version="@TOOL_VERSION@+galaxy0">
   <description>parallelises outputs of sccaff run for assesment.</description>
   <macros>
     <import>sccaf_macros.xml</import>
