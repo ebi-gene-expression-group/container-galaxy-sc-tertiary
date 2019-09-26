@@ -1,9 +1,9 @@
 <macros>
-  <token name="@TOOL_VERSION@">1.8.4</token>
+  <token name="@TOOL_VERSION@">1.10.0</token>
   <token name="@HELP@">More information can be found at https://bioconductor.org/packages/release/bioc/html/scater.html</token>
   <xml name="requirements">
     <requirements>
-      <requirement type="package" version="0.0.4">bioconductor-scater-scripts</requirement>
+      <requirement type="package" version="0.0.5">scater-scripts</requirement>
       <yield/>
     </requirements>
   </xml>
@@ -14,6 +14,8 @@
   </xml>
   <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
+
+1.10.0+galaxy0: Update to scater-scripts 0.0.5 / bioconductor-scater 1.10.0
 
 1.8.4+galaxy0: Initial contribution. Suhaib Mohammed, Ni Huang and Pablo Moreno, Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
 EMBL-EBI https://www.ebi.ac.uk/ and and Teichmann Lab at Wellcome Sanger Institute.
