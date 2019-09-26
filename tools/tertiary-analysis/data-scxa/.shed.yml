@@ -10,7 +10,7 @@ remote_repository_url: https://github.com/ebi-gene-expression-group/container-ga
 type: unrestricted
 auto_tool_repositories:
   name_template: "{{ tool_id }}"
-  description_template: "Wrapper for the SC3 tool suite: {{ tool_name }}"
+  description_template: "Pull downloader for the EMBL-EBI Single Cell Expression Atlas."
 suite:
   name: "suite_ebi_expression_atlas"
   description: "Tools for interacting with the EMBL-EBI Expression Atlas resource https://www.ebi.ac.uk/gxa/home https://www.ebi.ac.uk/gxa/sc/home"
