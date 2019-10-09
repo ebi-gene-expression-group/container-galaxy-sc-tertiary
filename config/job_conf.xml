@@ -51,30 +51,48 @@
     <destination id="dynamic-k8s-tiny" runner="dynamic">
       <param id="type">python</param>
       <param id="function">k8s_wrapper_tiny</param>
+      <param id="no_docker_default_destination_id" from_environ="GALAXY_DESTINATIONS_NO_DOCKER_DEFAULT">slurm_cluster</param>
+      <param id="docker_default_container_id" from_environ="GALAXY_DOCKER_DEFAULT_CONTAINER">busybox:ubuntu-14.04</param>
+      <param id="docker_enabled">true</param>
       <resubmit condition="memory_limit_reached" destination="dynamic-k8s-small"/>
     </destination>
     <destination id="dynamic-k8s-small" runner="dynamic">
       <param id="type">python</param>
       <param id="function">k8s_wrapper_small</param>
+      <param id="no_docker_default_destination_id" from_environ="GALAXY_DESTINATIONS_NO_DOCKER_DEFAULT">slurm_cluster</param>
+      <param id="docker_default_container_id" from_environ="GALAXY_DOCKER_DEFAULT_CONTAINER">busybox:ubuntu-14.04</param>
+      <param id="docker_enabled">true</param>
       <resubmit condition="memory_limit_reached" destination="dynamic-k8s-medium"/>
     </destination>
     <destination id="dynamic-k8s-medium" runner="dynamic">
       <param id="type">python</param>
       <param id="function">k8s_wrapper_medium</param>
+      <param id="no_docker_default_destination_id" from_environ="GALAXY_DESTINATIONS_NO_DOCKER_DEFAULT">slurm_cluster</param>
+      <param id="docker_default_container_id" from_environ="GALAXY_DOCKER_DEFAULT_CONTAINER">busybox:ubuntu-14.04</param>
+      <param id="docker_enabled">true</param>
       <resubmit condition="memory_limit_reached" destination="dynamic-k8s-large"/>
     </destination>
     <destination id="dynamic-k8s-large" runner="dynamic">
       <param id="type">python</param>
       <param id="function">k8s_wrapper_large</param>
+      <param id="no_docker_default_destination_id" from_environ="GALAXY_DESTINATIONS_NO_DOCKER_DEFAULT">slurm_cluster</param>
+      <param id="docker_default_container_id" from_environ="GALAXY_DOCKER_DEFAULT_CONTAINER">busybox:ubuntu-14.04</param>
+      <param id="docker_enabled">true</param>
       <resubmit condition="memory_limit_reached" destination="dynamic-k8s-xlarge"/>
     </destination>
     <destination id="dynamic-k8s-xlarge" runner="dynamic">
       <param id="type">python</param>
       <param id="function">k8s_wrapper_xlarge</param>
+      <param id="no_docker_default_destination_id" from_environ="GALAXY_DESTINATIONS_NO_DOCKER_DEFAULT">slurm_cluster</param>
+      <param id="docker_default_container_id" from_environ="GALAXY_DOCKER_DEFAULT_CONTAINER">busybox:ubuntu-14.04</param>
+      <param id="docker_enabled">true</param>
     </destination>
     <destination id="dynamic-k8s-xxlarge" runner="dynamic">
       <param id="type">python</param>
       <param id="function">k8s_wrapper_xxlarge</param>
+      <param id="no_docker_default_destination_id" from_environ="GALAXY_DESTINATIONS_NO_DOCKER_DEFAULT">slurm_cluster</param>
+      <param id="docker_default_container_id" from_environ="GALAXY_DOCKER_DEFAULT_CONTAINER">busybox:ubuntu-14.04</param>
+      <param id="docker_enabled">true</param>
     </destination>
   </destinations>
   <tools>
