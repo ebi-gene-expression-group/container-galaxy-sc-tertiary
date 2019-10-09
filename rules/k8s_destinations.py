@@ -134,7 +134,5 @@ def __merge_into_res_params(resource_params, settings, resource_type):
         resource_params['requests_' + resource_type] = min(settings['limits_' + resource_type],
                                                            resource_params['requests_' + resource_type])
     if resource_type in __unit_suffix:
-        resource_params['requests_' + resource_type] = str(resource_params['requests_' + resource_type])
-                                                        + __unit_suffix[resource_type]
-        resource_params['limits_' + resource_type] = str(resource_params['limits_' + resource_type])
-                                                        + __unit_suffix[resource_type]
+        resource_params['requests_' + resource_type] = str(resource_params['requests_' + resource_type]) + __unit_suffix[resource_type]
+        resource_params['limits_' + resource_type] = str(resource_params['limits_' + resource_type]) + __unit_suffix[resource_type]
