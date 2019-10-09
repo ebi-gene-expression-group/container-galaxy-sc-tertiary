@@ -27,7 +27,7 @@ sccaf-assess-merger -i asses_results -r rounds.txt -o report_merge.pdf
   </inputs>
 
   <outputs>
-    <data name="rounds" format="pdf" from_work_dir="report_merge.pdf" label="${tool.name} on ${on_string} assesment report pdf"/>
+    <data name="accuracy_plot" format="pdf" from_work_dir="report_merge.pdf" label="${tool.name} on ${on_string} assesment report pdf"/>
   </outputs>
 
   <tests>
@@ -35,7 +35,7 @@ sccaf-assess-merger -i asses_results -r rounds.txt -o report_merge.pdf
       <param name="input_obj_file" value="find_cluster.h5"/>
       <param name="use_tsv" value="true"/>
       <param name="input_tsv" value="find_cluster.tsv"/>
-      <output name="output_png" file="run_sccaf.png" ftype="png"/>
+      <output name="accuracy_plot" file="report_merge.pdf" ftype="pdf"/>
     </test>
   </tests>
 
