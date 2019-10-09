@@ -72,6 +72,10 @@
       <param id="type">python</param>
       <param id="function">k8s_wrapper_xlarge</param>
     </destination>
+    <destination id="dynamic-k8s-xxlarge" runner="dynamic">
+      <param id="type">python</param>
+      <param id="function">k8s_wrapper_xxlarge</param>
+    </destination>
   </destinations>
   <tools>
     <!-- Tools can be configured to use specific destinations or handlers,
