@@ -55,6 +55,19 @@ sccaf-assess -i input.h5 --iterations $iterations --cores \${GALAXY_SLOTS:-1}
   </tests>
 
   <help><![CDATA[
+@SCCAF_INTRO@
+
+SCCAF Assesment
+===============
+
+This module is used to independently asses either SCCAF Optimisation rounds
+results or just any clustering contained in an AnnData object that contains also
+UMAP embeddings (necessary for the plots shown). The main purpose of this
+independent assesment module is to distribute assesment runs after an optimisation.
+
+
+
+
 ]]></help>
   <!-- <expand macro="citations"/> -->
 </tool>

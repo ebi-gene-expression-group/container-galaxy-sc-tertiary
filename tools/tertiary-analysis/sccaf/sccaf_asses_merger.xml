@@ -22,8 +22,8 @@ sccaf-assess-merger -i asses_results -r rounds.txt -o report_merge.pdf
 ]]></command>
 
   <inputs>
-    <param type="data" name="assesments" label="Assesment results" format="txt" multiple="true" />
-    <param type="data" name="round_files" label="Files containing names of rounds executed, produced by run-scaff" format="txt" multiple="true"/>
+    <param type="data" name="assesments" label="Assesment results" format="txt" multiple="true" help="A collection of results of SCCAF Assesment for the same or different rounds of the Run SCCAF optimisation process." />
+    <param type="data" name="round_files" label="Files containing names of rounds executed, produced by run-scaff" format="txt" multiple="true" help="Round files collection from Run SCCAF."/>
   </inputs>
 
   <outputs>
@@ -40,6 +40,16 @@ sccaf-assess-merger -i asses_results -r rounds.txt -o report_merge.pdf
   </tests>
 
   <help><![CDATA[
+@SCCAF_INTRO@
+
+The main tool in the SCCAF suite is Run SCCAF. The purpose of this tool is to
+merge multiple runs of SCCAF Assesment and produce a single plot that compares
+Test accuracy and Cross Validations, towards deciding on the best solution
+provided by the optimisation process.
+
+To produce the required Round files collection, RUN SCCAF needs to be run in
+optimisation mode and enable the `Produce parameter walk for asessment distribution`
+option. 
 ]]></help>
   <!-- <expand macro="citations"/> -->
 </tool>
