@@ -36,8 +36,8 @@ sccaf -i input.h5
 
   --optimisation-plots-output ${opt_pdf_out}
 
-  #if $citer
-    --conf-sampling-iterations ${citer}
+  #if $mode.citer
+    --conf-sampling-iterations ${mode.citer}
   #end if
 
   > ${opt_text_out};
