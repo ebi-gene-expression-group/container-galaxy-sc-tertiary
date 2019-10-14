@@ -16,19 +16,19 @@
 
     Rscript -e 'library(sceasy)'
 #if $conversion.direction == "loom2sce"
-            -e 'sce <- sceasy::convertFormat("input.loom", from="loom", to="sce")'
+            -e 'sce <- sceasy::convertFormat("input.loom", from="loom", to="sce", main_layer_name="${assay_name}")'
             -e 'saveRDS(sce, "output.rds")'
             -e 'print(sce)'
 #else if $conversion.direction == "sce2loom"
             -e 'sce <- readRDS("input.rds")'
-            -e 'sceasy::convertFormat(sce, outFile="output.loom", from="sce", to="loom")'
+            -e 'sceasy::convertFormat(sce, outFile="output.loom", from="sce", to="loom", main_layer="${assay}")'
 #else if $conversion.direction == "sce2anndata"
             -e 'sce <- readRDS("input.rds")'
-            -e 'sceasy::convertFormat(sce, outFile="output.h5ad", from="sce", to="anndata")'
+            -e 'sceasy::convertFormat(sce, outFile="output.h5ad", from="sce", to="anndata", main_layer="${assay}")'
             -e 'print(sce)'
 #else if $conversion.direction == "seurat2anndata"
             -e 'srt <- readRDS("input.rds")'
-            -e 'sceasy::convertFormat(srt, outFile="output.h5ad", from="seurat", to="anndata")'
+            -e 'sceasy::convertFormat(srt, outFile="output.h5ad", from="seurat", to="anndata", assay="${assay}", main_layer="${dtype}")'
             -e 'print(srt)'
 #end if
 ]]></command>
@@ -43,15 +43,36 @@
       </param>
       <when value="loom2sce">
         <param name="input_object_file" type="data" format="h5" label="Input object in Loom format"/>
+        <param name="assay_name" type="text" label="Name of the expression matrix to be transferred as">
+          <option value="counts" selected="true">counts</option>
+          <option value="logcounts">logcounts</option>
+          <option value="cpm">cpm</option>
+        </param>
       </when>
       <when value="sce2loom">
         <param name="input_object_file" type="data" format="rdata" label="Input object in SingleCellExperiment RDS format"/>
+        <param name="assay" type="text" label="Name of the assay to be transferred as main layer" help="Please make sure the assay exists">
+          <option value="counts" selected="true">counts</option>
+          <option value="logcounts">logcounts</option>
+          <option value="cpm">cpm</option>
+        </param>
       </when>
       <when value="sce2anndata">
         <param name="input_object_file" type="data" format="rdata" label="Input object in SingleCellExperiment RDS format"/>
+        <param name="assay" type="text" label="Name of the assay to be transferred as main layer" help="Please make sure the assay exists">
+          <option value="counts" selected="true">counts</option>
+          <option value="logcounts">logcounts</option>
+          <option value="cpm">cpm</option>
+        </param>
       </when>
       <when value="seurat2anndata">
         <param name="input_object_file" type="data" format="rdata" label="Input object in Seurat RDS format"/>
+        <param name="assay" type="text" value="RNA" label="Name of the assay to be transferred" help="Please make sure the assay exists"/>
+        <param name="dtype" type="select" value="RNA" label="Data type of the assay to be transferred" help="Please make sure the data type exists">
+          <option value="data" selected="true">data</option>
+          <option value="counts">counts</option>
+          <option value="scale.data">scale.data</option>
+        </param>
       </when>
     </conditional>
   </inputs>
