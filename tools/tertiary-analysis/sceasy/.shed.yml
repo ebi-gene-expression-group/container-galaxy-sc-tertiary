@@ -1,0 +1,17 @@
+categories:
+ - Transcriptomics
+description: "Convert scRNA data object between popular formats"
+long_description: |
+        Support the conversion between Loom <-> SingleCellExperiment (full), SingleCellExperiment -> AnnData (matrix, metadata, reducedDim) and Seurat -> AnnData (matrix, metadata, reducedDim).
+name: "sceasy"
+owner: ebi-gxa
+remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for the SCEasy tool: {{ tool_name }}"
+suite:
+  name: "suite_sceasy"
+  description: "Convert scRNA data object between popular formats"
+  long_description: |
+        Support the conversion between Loom <-> SingleCellExperiment (full), SingleCellExperiment -> AnnData (matrix, metadata, reducedDim) and Seurat -> AnnData (matrix, metadata, reducedDim).
