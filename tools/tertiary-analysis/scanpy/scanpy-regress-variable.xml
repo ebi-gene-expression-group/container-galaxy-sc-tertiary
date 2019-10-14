@@ -21,7 +21,11 @@
   <inputs>
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
-    <param name="variable_keys" type="text" label="Variables to regress out" help="Use comma to separate multiple variables. Not supplying variables will simply pass the input data as output unchanged."/>
+    <param name="variable_keys" type="text" label="Variables to regress out" help="Use comma to separate multiple variables. Not supplying variables will simply pass the input data as output unchanged.">
+      <sanitizer>
+        <valid initial="string.printable"/>
+      </sanitizer>
+    </param>
   </inputs>
 
   <outputs>
