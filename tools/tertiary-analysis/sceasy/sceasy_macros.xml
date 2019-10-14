@@ -4,7 +4,7 @@
   <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
 
-0.0.1+galaxy0: Initial version based on sceasy 0.0.5
+0.0.1+galaxy0: Initial version based on sceasy 0.0.5 by Ni Huang, WTSI.
     ]]></token>
 
   <xml name="requirements">
