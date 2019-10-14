@@ -5,7 +5,7 @@
     "name": "Atlas-Scanpy-SCCAF", 
     "steps": {
         "0": {
-            "annotation": "", 
+            "annotation": "A Single Cell Expression Atlas accession, for instance E-GEOD-130473", 
             "content_id": null, 
             "errors": null, 
             "id": 0, 
@@ -27,7 +27,7 @@
                 {
                     "label": null, 
                     "output_name": "output", 
-                    "uuid": "2fbc30ff-0d58-4b48-9e66-704f00db987f"
+                    "uuid": "d2d04c52-ed1c-4d58-8b2c-8821c04d167f"
                 }
             ]
         }, 
@@ -38,6 +38,33 @@
             "id": 1, 
             "input_connections": {}, 
             "inputs": [], 
+            "label": "Regress out variables", 
+            "name": "Input parameter", 
+            "outputs": [], 
+            "position": {
+                "left": 310.90625, 
+                "top": 614.828125
+            }, 
+            "tool_id": null, 
+            "tool_state": "{\"optional\": false, \"parameter_type\": \"text\"}", 
+            "tool_version": null, 
+            "type": "parameter_input", 
+            "uuid": "9d6605d1-60cf-42d0-b8ce-66c5b26eff24", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output", 
+                    "uuid": "fadc677d-1b10-450f-b7e4-c372f57696a0"
+                }
+            ]
+        }, 
+        "2": {
+            "annotation": "A floating point number for the over clustering resolution, usually above 1.0, for example, 1.5.", 
+            "content_id": null, 
+            "errors": null, 
+            "id": 2, 
+            "input_connections": {}, 
+            "inputs": [], 
             "label": "Over clustered resolution", 
             "name": "Input parameter", 
             "outputs": [], 
@@ -46,7 +73,7 @@
                 "top": 735.578125
             }, 
             "tool_id": null, 
-            "tool_state": "{\"optional\": true, \"parameter_type\": \"float\"}", 
+            "tool_state": "{\"optional\": false, \"parameter_type\": \"float\"}", 
             "tool_version": null, 
             "type": "parameter_input", 
             "uuid": "710db49b-c117-4d53-a505-ae269acaa01e", 
@@ -54,15 +81,15 @@
                 {
                     "label": null, 
                     "output_name": "output", 
-                    "uuid": "fb129ffc-0e2e-4ab9-8de5-66b5a1561c8f"
+                    "uuid": "792ea684-7308-4b9c-8bee-317333db160a"
                 }
             ]
         }, 
-        "2": {
-            "annotation": "", 
+        "3": {
+            "annotation": "A label for the over clustered clustering; this will be used to identify the clustering inside the AnnData object.", 
             "content_id": null, 
             "errors": null, 
-            "id": 2, 
+            "id": 3, 
             "input_connections": {}, 
             "inputs": [], 
             "label": "Over clustered anndata label", 
@@ -81,15 +108,15 @@
                 {
                     "label": null, 
                     "output_name": "output", 
-                    "uuid": "0b54a92f-18b5-48b7-80df-dfa23632486c"
+                    "uuid": "99f52dd4-7dd4-4518-bc56-982f70bef5f5"
                 }
             ]
         }, 
-        "3": {
-            "annotation": "", 
+        "4": {
+            "annotation": "A positive floating point number for the under clustering resolution, usually below 1.0, for example, 0.7.", 
             "content_id": null, 
             "errors": null, 
-            "id": 3, 
+            "id": 4, 
             "input_connections": {}, 
             "inputs": [], 
             "label": "Under clustered resolution", 
@@ -108,15 +135,15 @@
                 {
                     "label": null, 
                     "output_name": "output", 
-                    "uuid": "5c297979-d2f9-494c-bdc0-f6f87b1b5006"
+                    "uuid": "33344379-6fec-4228-ad7b-1728fa54d568"
                 }
             ]
         }, 
-        "4": {
-            "annotation": "", 
+        "5": {
+            "annotation": "A label for the under clustered clustering; this will be used to identify the clustering inside the AnnData object.", 
             "content_id": null, 
             "errors": null, 
-            "id": 4, 
+            "id": 5, 
             "input_connections": {}, 
             "inputs": [], 
             "label": "Under clustered anndata label", 
@@ -135,15 +162,15 @@
                 {
                     "label": null, 
                     "output_name": "output", 
-                    "uuid": "ff86e5d9-cef3-48c3-9996-49a5f723b5c4"
+                    "uuid": "121484b8-2638-4155-8436-bbdc3fb9b38c"
                 }
             ]
         }, 
-        "5": {
+        "6": {
             "annotation": "", 
             "content_id": "retrieve_scxa", 
             "errors": null, 
-            "id": 5, 
+            "id": 6, 
             "input_connections": {
                 "accession": {
                     "id": 0, 
@@ -184,13 +211,13 @@
             "workflow_outputs": [
                 {
                     "label": null, 
-                    "output_name": "matrix_mtx", 
-                    "uuid": "b6b84e99-5e60-4433-a28f-7cb780af1955"
+                    "output_name": "barcode_tsv", 
+                    "uuid": "6ebb2a7d-9d7f-4aac-be67-c78f650ba8dc"
                 }, 
                 {
                     "label": null, 
-                    "output_name": "barcode_tsv", 
-                    "uuid": "6ebb2a7d-9d7f-4aac-be67-c78f650ba8dc"
+                    "output_name": "genes_tsv", 
+                    "uuid": "83fde645-1b7a-44b2-9def-d364a259fa15"
                 }, 
                 {
                     "label": null, 
@@ -199,27 +226,31 @@
                 }, 
                 {
                     "label": null, 
-                    "output_name": "genes_tsv", 
-                    "uuid": "83fde645-1b7a-44b2-9def-d364a259fa15"
+                    "output_name": "matrix_mtx", 
+                    "uuid": "b6b84e99-5e60-4433-a28f-7cb780af1955"
                 }
             ]
         }, 
-        "6": {
+        "7": {
             "annotation": "", 
             "content_id": "scanpy_read_10x", 
             "errors": null, 
-            "id": 6, 
+            "id": 7, 
             "input_connections": {
                 "barcodes": {
-                    "id": 5, 
+                    "id": 6, 
                     "output_name": "barcode_tsv"
                 }, 
+                "cell_meta": {
+                    "id": 6, 
+                    "output_name": "design_tsv"
+                }, 
                 "genes": {
-                    "id": 5, 
+                    "id": 6, 
                     "output_name": "genes_tsv"
                 }, 
                 "matrix": {
-                    "id": 5, 
+                    "id": 6, 
                     "output_name": "matrix_mtx"
                 }
             }, 
@@ -259,14 +290,14 @@
                 }
             ]
         }, 
-        "7": {
+        "8": {
             "annotation": "", 
             "content_id": "scanpy_filter_cells", 
             "errors": null, 
-            "id": 7, 
+            "id": 8, 
             "input_connections": {
                 "input_obj_file": {
-                    "id": 6, 
+                    "id": 7, 
                     "output_name": "output_h5"
                 }
             }, 
@@ -297,14 +328,14 @@
                 }
             ]
         }, 
-        "8": {
+        "9": {
             "annotation": "", 
             "content_id": "scanpy_filter_genes", 
             "errors": null, 
-            "id": 8, 
+            "id": 9, 
             "input_connections": {
                 "input_obj_file": {
-                    "id": 7, 
+                    "id": 8, 
                     "output_name": "output_h5"
                 }
             }, 
@@ -335,14 +366,14 @@
                 }
             ]
         }, 
-        "9": {
+        "10": {
             "annotation": "", 
             "content_id": "scanpy_normalise_data", 
             "errors": null, 
-            "id": 9, 
+            "id": 10, 
             "input_connections": {
                 "input_obj_file": {
-                    "id": 8, 
+                    "id": 9, 
                     "output_name": "output_h5"
                 }
             }, 
@@ -356,8 +387,8 @@
                 }
             ], 
             "position": {
-                "left": 598.6875, 
-                "top": 601.578125
+                "left": 572.6875, 
+                "top": 589.578125
             }, 
             "post_job_actions": {}, 
             "tool_id": "scanpy_normalise_data", 
@@ -373,14 +404,94 @@
                 }
             ]
         }, 
-        "10": {
+        "11": {
+            "annotation": "", 
+            "content_id": "scanpy_regress_variable", 
+            "errors": null, 
+            "id": 11, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 10, 
+                    "output_name": "output_h5"
+                }, 
+                "variable_keys": {
+                    "id": 1, 
+                    "output_name": "output"
+                }
+            }, 
+            "inputs": [], 
+            "label": null, 
+            "name": "Scanpy RegressOut", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }
+            ], 
+            "position": {
+                "left": 876.453125, 
+                "top": 573.46875
+            }, 
+            "post_job_actions": {}, 
+            "tool_id": "scanpy_regress_variable", 
+            "tool_state": "{\"__page__\": null, \"input_format\": \"\\\"anndata\\\"\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"ConnectedValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null, \"variable_keys\": \"{\\\"__class__\\\": \\\"ConnectedValue\\\"}\"}", 
+            "tool_version": "1.4.2+galaxy1", 
+            "type": "tool", 
+            "uuid": "fd6dd40d-489d-4d6f-b95b-c6266a134256", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output_h5", 
+                    "uuid": "13cc6c23-5b9b-457c-bcb3-6d282c922f51"
+                }
+            ]
+        }, 
+        "12": {
+            "annotation": "", 
+            "content_id": "scanpy_scale_data", 
+            "errors": null, 
+            "id": 12, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 11, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [], 
+            "label": null, 
+            "name": "Scanpy ScaleData", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }
+            ], 
+            "position": {
+                "left": 579.453125, 
+                "top": 714.46875
+            }, 
+            "post_job_actions": {}, 
+            "tool_id": "scanpy_scale_data", 
+            "tool_state": "{\"__page__\": null, \"zero_center\": \"\\\"true\\\"\", \"input_format\": \"\\\"anndata\\\"\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"ConnectedValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"scale_max\": \"\\\"\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "1.4.2+galaxy0", 
+            "type": "tool", 
+            "uuid": "57adb6d4-6205-4478-9cce-2491f4fc30db", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output_h5", 
+                    "uuid": "cfac085b-ad9e-49c7-a5b9-32e493b399f8"
+                }
+            ]
+        }, 
+        "13": {
             "annotation": "", 
             "content_id": "scanpy_find_variable_genes", 
             "errors": null, 
-            "id": 10, 
+            "id": 13, 
             "input_connections": {
                 "input_obj_file": {
-                    "id": 9, 
+                    "id": 12, 
                     "output_name": "output_h5"
                 }
             }, 
@@ -394,8 +505,8 @@
                 }
             ], 
             "position": {
-                "left": 909.1875, 
-                "top": 601.578125
+                "left": 863.1875, 
+                "top": 716.578125
             }, 
             "post_job_actions": {}, 
             "tool_id": "scanpy_find_variable_genes", 
@@ -411,14 +522,14 @@
                 }
             ]
         }, 
-        "11": {
+        "14": {
             "annotation": "", 
             "content_id": "scanpy_run_pca", 
             "errors": null, 
-            "id": 11, 
+            "id": 14, 
             "input_connections": {
                 "input_obj_file": {
-                    "id": 10, 
+                    "id": 13, 
                     "output_name": "output_h5"
                 }
             }, 
@@ -432,8 +543,8 @@
                 }
             ], 
             "position": {
-                "left": 587.6875, 
-                "top": 760.578125
+                "left": 578.6875, 
+                "top": 853.578125
             }, 
             "post_job_actions": {}, 
             "tool_id": "scanpy_run_pca", 
@@ -449,14 +560,14 @@
                 }
             ]
         }, 
-        "12": {
+        "15": {
             "annotation": "", 
             "content_id": "scanpy_compute_graph", 
             "errors": null, 
-            "id": 12, 
+            "id": 15, 
             "input_connections": {
                 "input_obj_file": {
-                    "id": 11, 
+                    "id": 14, 
                     "output_name": "output_h5"
                 }
             }, 
@@ -470,8 +581,8 @@
                 }
             ], 
             "position": {
-                "left": 883.1875, 
-                "top": 759.578125
+                "left": 876.1875, 
+                "top": 831.578125
             }, 
             "post_job_actions": {}, 
             "tool_id": "scanpy_compute_graph", 
@@ -487,22 +598,22 @@
                 }
             ]
         }, 
-        "13": {
+        "16": {
             "annotation": "", 
             "content_id": "scanpy_find_cluster", 
             "errors": null, 
-            "id": 13, 
+            "id": 16, 
             "input_connections": {
                 "input_obj_file": {
-                    "id": 12, 
+                    "id": 15, 
                     "output_name": "output_h5"
                 }, 
                 "settings|key_added": {
-                    "id": 2, 
+                    "id": 3, 
                     "output_name": "output"
                 }, 
                 "settings|resolution": {
-                    "id": 1, 
+                    "id": 2, 
                     "output_name": "output"
                 }
             }, 
@@ -525,8 +636,8 @@
                 }
             ], 
             "position": {
-                "left": 566.6875, 
-                "top": 893.578125
+                "left": 569.6875, 
+                "top": 997.578125
             }, 
             "post_job_actions": {}, 
             "tool_id": "scanpy_find_cluster", 
@@ -547,22 +658,22 @@
                 }
             ]
         }, 
-        "14": {
+        "17": {
             "annotation": "", 
             "content_id": "scanpy_find_cluster", 
             "errors": null, 
-            "id": 14, 
+            "id": 17, 
             "input_connections": {
                 "input_obj_file": {
-                    "id": 13, 
+                    "id": 16, 
                     "output_name": "output_h5"
                 }, 
                 "settings|key_added": {
-                    "id": 4, 
+                    "id": 5, 
                     "output_name": "output"
                 }, 
                 "settings|resolution": {
-                    "id": 3, 
+                    "id": 4, 
                     "output_name": "output"
                 }
             }, 
@@ -607,22 +718,69 @@
             "uuid": "660ee501-0404-4756-8b0f-19e363f5c114", 
             "workflow_outputs": []
         }, 
-        "15": {
+        "18": {
+            "annotation": "", 
+            "content_id": "scanpy_run_umap", 
+            "errors": null, 
+            "id": 18, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 17, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [], 
+            "label": null, 
+            "name": "Scanpy RunUMAP", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }, 
+                {
+                    "name": "output_embed", 
+                    "type": "csv"
+                }
+            ], 
+            "position": {
+                "left": 1253.3125, 
+                "top": 1273.59375
+            }, 
+            "post_job_actions": {}, 
+            "tool_id": "scanpy_run_umap", 
+            "tool_state": "{\"__page__\": null, \"embeddings\": \"\\\"true\\\"\", \"input_format\": \"\\\"anndata\\\"\", \"settings\": \"{\\\"__current_case__\\\": 0, \\\"default\\\": \\\"true\\\"}\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"ConnectedValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"key_added\": \"\\\"\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"use_graph\": \"\\\"neighbors\\\"\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "1.4.2+galaxy1", 
+            "type": "tool", 
+            "uuid": "e633c14e-bedc-44c4-8981-4c74f0f4a46f", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output_embed", 
+                    "uuid": "da9b429a-1c5d-4761-bc21-193d55c4105c"
+                }, 
+                {
+                    "label": null, 
+                    "output_name": "output_h5", 
+                    "uuid": "520525e8-c5f2-4c8a-ad17-3a97a29173b6"
+                }
+            ]
+        }, 
+        "19": {
             "annotation": "", 
             "content_id": "run_sccaf", 
             "errors": null, 
-            "id": 15, 
+            "id": 19, 
             "input_connections": {
                 "cluster_source|obj_attr": {
-                    "id": 2, 
+                    "id": 3, 
                     "output_name": "output"
                 }, 
                 "input_obj_file": {
-                    "id": 14, 
+                    "id": 18, 
                     "output_name": "output_h5"
                 }, 
                 "mode|optimisation_stop|min_resolution_clustering_slot": {
-                    "id": 4, 
+                    "id": 5, 
                     "output_name": "output"
                 }
             }, 
@@ -699,18 +857,18 @@
                 }
             ]
         }, 
-        "16": {
+        "20": {
             "annotation": "", 
             "content_id": "sccaf_asses", 
             "errors": null, 
-            "id": 16, 
+            "id": 20, 
             "input_connections": {
                 "input_obj_file": {
-                    "id": 15, 
+                    "id": 19, 
                     "output_name": "output_h5"
                 }, 
                 "slot_source|rounds_file": {
-                    "id": 15, 
+                    "id": 19, 
                     "output_name": "rounds_walk"
                 }
             }, 
@@ -741,18 +899,18 @@
                 }
             ]
         }, 
-        "17": {
+        "21": {
             "annotation": "", 
             "content_id": "sccaf_asses_merger", 
             "errors": null, 
-            "id": 17, 
+            "id": 21, 
             "input_connections": {
                 "assesments": {
-                    "id": 16, 
+                    "id": 20, 
                     "output_name": "output_table"
                 }, 
                 "round_files": {
-                    "id": 15, 
+                    "id": 19, 
                     "output_name": "rounds_walk"
                 }
             }, 
@@ -785,6 +943,6 @@
         }
     }, 
     "tags": [], 
-    "uuid": "94ac617b-e51d-4aa9-bc73-70c6d2f2819c", 
-    "version": 4
+    "uuid": "ed8e4abf-ba3a-466f-b51e-aa53faec1edb", 
+    "version": 13
 }
