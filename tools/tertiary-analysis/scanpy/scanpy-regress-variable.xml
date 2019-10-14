@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_regress_variable" name="Scanpy RegressOut" version="@TOOL_VERSION@+galaxy0">
+<tool id="scanpy_regress_variable" name="Scanpy RegressOut" version="@TOOL_VERSION@+galaxy1">
   <description>variables that might introduce batch effect</description>
   <macros>
     <import>scanpy_macros2.xml</import>
   </macros>
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
-ln -s '${input_obj_file}' input.h5 &&
-PYTHONIOENCODING=utf-8 scanpy-regress
-    --keys '${variable_keys}'
-    @INPUT_OPTS@
-    @OUTPUT_OPTS@
+#if $variable_keys
+  ln -s '${input_obj_file}' input.h5 &&
+  PYTHONIOENCODING=utf-8 scanpy-regress
+      --keys '${variable_keys}'
+      @INPUT_OPTS@
+      @OUTPUT_OPTS@
+#else
+  echo "No regression variables passed, simply passing original input as output unchanged.";
+  cp '${input_obj_file}' '${output_h5}'
+#end if
 ]]></command>
 
   <inputs>
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
-    <param name="variable_keys" type="text" label="Variables to regress out" help="Use comma to separate multiple variables"/>
+    <param name="variable_keys" type="text" label="Variables to regress out" help="Use comma to separate multiple variables. Not supplying variables will simply pass the input data as output unchanged."/>
   </inputs>
 
   <outputs>
