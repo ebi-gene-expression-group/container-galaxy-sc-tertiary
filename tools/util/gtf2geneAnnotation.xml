@@ -1,0 +1,54 @@
+<tool id="_ensembl_gtf2geneAnnotation" name="GTF2GeneAnnotationTable" version="1.42.1+galaxy0">
+    <description>extracts a complete annotation table from an Ensembl GTF using rtracklayer</description>
+    <requirements>
+      <requirement type="package" version="1.42.1">bioconductor-rtracklayer</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+       ln -s '$gtf_input' input.gtf;
+       Rscript $__tool_directory__/gtf2geneAnnotation.R input.gtf annotation.txt
+	    ]]></command>
+
+    <inputs>
+        <param name="gtf_input" type="data" format="gff" label="Ensembl GTF file" />
+    </inputs>
+
+    <outputs>
+        <data name="gene_annotation" format="tsv" from_work_dir="annotation.txt" label="${tool.name} on ${on_string}"/>
+    </outputs>
+    <tests>
+      <test>
+        <param name="gtf_input" ftype="data" value="short_ensembl_gtf.gtf"/>
+        <output name="gene_annotation" ftype="data" value="annotation.txt" compare="sim_size"/>
+      </test>
+    </tests>
+
+
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+
+Given an Ensembl GTF file, it will extract all information on chromosomes, coordinates, and attributes provided at the gene level. Mitochondrial genes will also be flagged.
+
+**Inputs**
+
+    * Ensembl GTF file
+
+-----
+
+**Outputs**
+
+    * Gene annotations in tsv.
+]]></help>
+<citations>
+  <citation type="bibtex">
+@misc{github-hinxton-single-cell,
+author = {Pablo Moreno, EBI Gene Expression Team},
+year = {2019},
+title = {Hinxton Single Cell Anlysis Environment},
+publisher = {GitHub},
+journal = {GitHub repository},
+url = {https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary},
+  }</citation>
+</citations>
+</tool>
