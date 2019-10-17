@@ -43,7 +43,7 @@ Given an Ensembl GTF file, it will extract all information on chromosomes, coord
 <citations>
   <citation type="bibtex">
 @misc{github-hinxton-single-cell,
-author = {Pablo Moreno, EBI Gene Expression Team},
+author = {Jonathan Manning, EBI Gene Expression Team},
 year = {2019},
 title = {Hinxton Single Cell Anlysis Environment},
 publisher = {GitHub},
