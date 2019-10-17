@@ -1,15 +1,35 @@
-<tool id="_ensembl_gtf2geneAnnotation" name="GTF2GeneAnnotationTable" version="1.42.1+galaxy0">
-    <description>extracts a complete annotation table from an Ensembl GTF using rtracklayer</description>
+<tool id="_ensembl_gtf2gene_annotation" name="GTF2GeneAnnotationTable" version="1.42.1+galaxy0">
+    <description>extracts a complete annotation table or subsets thereof from an Ensembl GTF using rtracklayer</description>
     <requirements>
       <requirement type="package" version="1.42.1">bioconductor-rtracklayer</requirement>
+      <requirement type="package">r-optparse</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
        ln -s '$gtf_input' input.gtf;
-       Rscript $__tool_directory__/gtf2geneAnnotation.R input.gtf annotation.txt
+       Rscript $__tool_directory__/gtf2geneAnnotation.R --gtf-file input.gtf
+#if $noheader
+--no-header
+#end if
+#if $mito.mark_mito
+--mito --mito-chr "${mito.mito_chr}" --mito-biotypes "${mito.mito_biotypes}" 
+#end if
+--feature-type "${feature_type}" --first-field "${first_field}" --output-file annotation.txt --fields "${fields}"
 	    ]]></command>
 
     <inputs>
         <param name="gtf_input" type="data" format="gff" label="Ensembl GTF file" />
+        <param name="feature_type" type="text" optional='true' value="gene" label="Feature type for which to derive annotation"/>
+        <param name="first_field" type="text" optional='true' value="gene_id" label="Field to place first in output table"/>
+        <param name="noheader" type="boolean" checked="false" label="Suppress header line in output?"/>
+        <param name="fields" type="text" optional='true' value="" label="Comma-separated list of field names to extract from the GTF (default: use all fields)"/>
+        <conditional name="mito">
+          <param name="mark_mito" type="boolean" checked="true" label="Flag mitochondrial features?"/>
+          <when value="true">
+            <param name="mito_chr" type="text" optional='true' value="mt,mitochondrion_genome,mito" label="Comma-separated list of possible mitochondrial chromosome names (case insensitive)"/>
+            <param name="mito_biotypes" type="text" optional='true' value="mt_trna,mt_rrna,mt_trna_pseudogene" label="Comma-separated list of possible mitochondrial biotypes (case insensitive)"/>
+          </when>
+          <when value="false" />
+        </conditional>
     </inputs>
 
     <outputs>
@@ -17,8 +37,8 @@
     </outputs>
     <tests>
       <test>
-        <param name="gtf_input" ftype="data" value="short_ensembl_gtf.gtf"/>
-        <output name="gene_annotation" ftype="data" value="annotation.txt" compare="sim_size"/>
+        <param name="gtf_input" ftype="gtf" value="test.gtf"/>
+        <output name="gene_annotation" file="annotation.txt"/>
       </test>
     </tests>
 
@@ -28,7 +48,7 @@
 
 **What it does**
 
-Given an Ensembl GTF file, it will extract all information on chromosomes, coordinates, and attributes provided at the gene level. Mitochondrial genes will also be flagged.
+Given an Ensembl GTF file, it will extract all information on chromosomes, coordinates, and attributes provided at the specified feature level. Mitochondrial features can also be flagged.
 
 **Inputs**
 
