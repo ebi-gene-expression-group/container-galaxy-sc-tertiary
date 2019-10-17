@@ -1,0 +1,11 @@
+gene_id	chromosome	start	end	width	source	type	score	phase	gene_version	gene_name	gene_source	gene_biotype	mito
+ENSG00000223972	1	11869	14409	2541	havana	gene	NA	NA	5	DDX11L1	havana	transcribed_unprocessed_pseudogene	False
+ENSG00000227232	1	14404	29570	15167	havana	gene	NA	NA	5	WASH7P	havana	unprocessed_pseudogene	False
+ENSG00000278267	1	17369	17436	68	mirbase	gene	NA	NA	1	MIR6859-1	mirbase	miRNA	False
+ENSG00000243485	1	29554	31109	1556	havana	gene	NA	NA	5	MIR1302-2HG	havana	lncRNA	False
+ENSG00000284332	1	30366	30503	138	mirbase	gene	NA	NA	1	MIR1302-2	mirbase	miRNA	False
+ENSG00000237613	1	34554	36081	1528	havana	gene	NA	NA	2	FAM138A	havana	lncRNA	False
+ENSG00000268020	1	52473	53312	840	havana	gene	NA	NA	3	OR4G4P	havana	unprocessed_pseudogene	False
+ENSG00000240361	1	57598	64116	6519	havana	gene	NA	NA	2	OR4G11P	havana	transcribed_unprocessed_pseudogene	False
+ENSG00000186092	1	65419	71585	6167	ensembl_havana	gene	NA	NA	6	OR4F5	ensembl_havana	protein_coding	False
+ENSG00000238009	1	89295	133723	44429	ensembl_havana	gene	NA	NA	6	AL627309.1	ensembl_havana	lncRNA	False
