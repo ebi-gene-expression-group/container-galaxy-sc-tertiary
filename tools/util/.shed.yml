@@ -2,6 +2,6 @@ categories: [Sequence Analysis]
 description: Utility to extract annotations from Ensembl GTF files.
 homepage_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary 
 long_description: Given a GTF file from Ensembl, this utility will generate a simple text file containing annotation, derived using the rtracklayer R package. All annotations can be extracted or a selection of specified columns, with or without a header.
-name: gtf2gene_annotation
+name: gtf2feature_annotation
 owner: ebi-gxa
 remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/tools/util/.shed.yml

@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
-# This script parses the GTF file to create a gene-wise annotation file with
-# mitochondrial genes flagged, to assist in annotation and QC of single-cell
+# This script parses the GTF file to create a feature-wise annotation file with
+# mitochondrial features flagged, to assist in annotation and QC of single-cell
 # expression data analysis.
 
 suppressPackageStartupMessages(require(rtracklayer))
@@ -70,14 +70,14 @@ option_list = list(
     action = "store",
     default = 'mt,mitochondrion_genome,mito',
     type = 'character',
-    help = 'If specified, marks in a column called "mito" genes on the specified chromosomes (case insensitive)'
+    help = 'If specified, marks in a column called "mito" features on the specified chromosomes (case insensitive)'
   ),
   make_option(
     c("-p", "--mito-biotypes"),
     action = "store",
     default = 'mt_trna,mt_rrna,mt_trna_pseudogene',
     type = 'character',
-    help = 'If specified,  marks in a column called "mito" genes with the specified biotypes (case insensitve)'
+    help = 'If specified,  marks in a column called "mito" features with the specified biotypes (case insensitve)'
   ),
   make_option(
     c("-o", "--output-file"),
