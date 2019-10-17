@@ -6,7 +6,7 @@
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
        ln -s '$gtf_input' input.gtf;
-       Rscript $__tool_directory__/gtf2featureAnnotation.R --gtf-file input.gtf
+       $__tool_directory__/gtf2featureAnnotation.R --gtf-file input.gtf
 #if $noheader
 --no-header
 #end if
