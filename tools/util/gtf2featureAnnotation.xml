@@ -29,7 +29,7 @@
         <param name="first_field" type="text" optional='true' value="gene_id" label="Field to place first in output table"/>
         <param name="noheader" type="boolean" checked="false" label="Suppress header line in output?"/>
         <param name="fields" type="text" optional='true' value="" label="Comma-separated list of field names to extract from the GTF (default: use all fields)"/>
-        <param name="version_transcripts" type="boolean" checked="false" label="Append version to transcript identifiers?" help="For transcripipt feature type only: where the GTF contains transcript versions, should these be appended to transcript identifiers? Useful when generating transcript/gene mappings for use with transcriptomes"/>
+        <param name="version_transcripts" type="boolean" checked="false" label="Append version to transcript identifiers?" help="For transcript feature type only: where the GTF contains transcript versions, should these be appended to transcript identifiers? Useful when generating transcript/gene mappings for use with transcriptomes"/>
         <conditional name="mito">
           <param name="mark_mito" type="boolean" checked="true" label="Flag mitochondrial features?"/>
           <when value="true">
