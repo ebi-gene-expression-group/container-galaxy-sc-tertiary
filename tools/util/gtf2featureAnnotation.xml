@@ -1,4 +1,4 @@
-<tool id="_ensembl_gtf2feature_annotation" name="GTF2GeneAnnotationTable" version="1.42.1+galaxy0">
+<tool id="_ensembl_gtf2gene_list" name="GTF2GeneAnnotationTable" version="1.42.1+galaxy0">
     <description>extracts a complete annotation table or subsets thereof from an Ensembl GTF using rtracklayer</description>
     <requirements>
       <requirement type="package" version="1.42.1">bioconductor-rtracklayer</requirement>
