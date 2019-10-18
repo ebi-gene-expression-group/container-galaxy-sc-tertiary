@@ -68,7 +68,7 @@ option_list = list(
   make_option(
     c("-n", "--mito-chr"),
     action = "store",
-    default = 'mt,mitochondrion_genome,mito',
+    default = 'mt,mitochondrion_genome,mito,m,chrM,chrMt',
     type = 'character',
     help = 'If specified, marks in a column called "mito" features on the specified chromosomes (case insensitive)'
   ),

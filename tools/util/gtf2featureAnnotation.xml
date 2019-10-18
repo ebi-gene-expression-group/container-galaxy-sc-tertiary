@@ -25,7 +25,7 @@
         <conditional name="mito">
           <param name="mark_mito" type="boolean" checked="true" label="Flag mitochondrial features?"/>
           <when value="true">
-            <param name="mito_chr" type="text" optional='true' value="mt,mitochondrion_genome,mito" label="Comma-separated list of possible mitochondrial chromosome names (case insensitive)"/>
+            <param name="mito_chr" type="text" optional='true' value="mt,mitochondrion_genome,mito,m,chrM,chrMt" label="Comma-separated list of possible mitochondrial chromosome names (case insensitive)"/>
             <param name="mito_biotypes" type="text" optional='true' value="mt_trna,mt_rrna,mt_trna_pseudogene" label="Comma-separated list of possible mitochondrial biotypes (case insensitive)"/>
           </when>
           <when value="false" />
