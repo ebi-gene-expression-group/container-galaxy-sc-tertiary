@@ -2,6 +2,7 @@
     <description>extracts a complete annotation table or subsets thereof from an Ensembl GTF using rtracklayer</description>
     <requirements>
       <requirement type="package" version="1.42.1">bioconductor-rtracklayer</requirement>
+      <requirement type="package">bioconductor-biostrings</requirement>
       <requirement type="package">r-optparse</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
@@ -10,8 +11,14 @@
 #if $noheader
 --no-header
 #end if
+#if $version_transcripts
+--version-transcripts
+#end if
 #if $mito.mark_mito
 --mito --mito-chr "${mito.mito_chr}" --mito-biotypes "${mito.mito_biotypes}" 
+#end if
+#if $cdnas.filter_cdnas
+--filter-cdnas "${cdnas.fasta_input}" --filter-cdnas-field "${cdnas.cdnas_field}" --filter-cdnas-output "${fasta_output}"
 #end if
 --feature-type "${feature_type}" --first-field "${first_field}" --output-file annotation.txt --fields "${fields}"
 	    ]]></command>
@@ -22,6 +29,7 @@
         <param name="first_field" type="text" optional='true' value="gene_id" label="Field to place first in output table"/>
         <param name="noheader" type="boolean" checked="false" label="Suppress header line in output?"/>
         <param name="fields" type="text" optional='true' value="" label="Comma-separated list of field names to extract from the GTF (default: use all fields)"/>
+        <param name="version_transcripts" type="boolean" checked="false" label="Append version to transcript identifiers?" help="For transcripipt feature type only: where the GTF contains transcript versions, should these be appended to transcript identifiers? Useful when generating transcript/gene mappings for use with transcriptomes"/>
         <conditional name="mito">
           <param name="mark_mito" type="boolean" checked="true" label="Flag mitochondrial features?"/>
           <when value="true">
@@ -30,10 +38,21 @@
           </when>
           <when value="false" />
         </conditional>
+        <conditional name="cdnas">
+          <param name="filter_cdnas" type="boolean" checked="false" label="Filter a FASTA-format cDNA file to match annotations?" help="For some applications, e.g. transcriptome mappers, its useful to match a cDNAs file to an annotation list (e.g. transcript-to-gene mapping)"/>
+          <when value="true">
+            <param name="fasta_input" type="data" format="fasta" label="FASTA-format cDNA/ transcript file" />
+            <param name="cdnas_field" type="text" optional='true' value="transcript_id" label="Annotation field to match with sequences."/>
+          </when>
+          <when value="false" />
+        </conditional>
     </inputs>
 
     <outputs>
-        <data name="feature_annotation" format="tsv" from_work_dir="annotation.txt" label="${tool.name} on ${on_string}"/>
+        <data name="feature_annotation" format="tsv" from_work_dir="annotation.txt" label="${tool.name} on ${on_string}: annotation table"/>
+        <data name="fasta_output" format="fasta" from_work_dir="filtered.fa.gz" label="${tool.name} on ${on_string}: annotation-matched sequences">
+          <filter>filter_cdnas</filter>
+        </data>
     </outputs>
     <tests>
       <test>
@@ -49,6 +68,9 @@
 **What it does**
 
 Given an Ensembl GTF file, it will extract all information on chromosomes, coordinates, and attributes provided at the specified feature level. Mitochondrial features can also be flagged.
+
+You can also supply a fasta-format file of sequences, which will be filtered by identifier to match annotation. This can be useful for tools such as Alevin which need a transcript-to-gene mapping and a transcriptome file without any missing entries (with respect to annotation).
+
 
 **Inputs**
 

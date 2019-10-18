@@ -45,7 +45,7 @@ option_list = list(
     help = 'Field to place first in output table (default: gene_id)'
   ),
   make_option(
-    c("-e", "--no-header"),
+    c("-r", "--no-header"),
     action = "store_false",
     default = TRUE,
     type = 'logical',
@@ -80,6 +80,34 @@ option_list = list(
     help = 'If specified,  marks in a column called "mito" features with the specified biotypes (case insensitve)'
   ),
   make_option(
+    c("-c", "--filter-cdnas"),
+    action = "store",
+    default = NULL,
+    type = 'character',
+    help = 'If specified, sequences in the provided FASTA-format cDNAs file will be filtered to remove entries not present in the annotation'
+  ),
+  make_option(
+    c("-d", "--filter-cdnas-field"),
+    action = "store",
+    default = 'transcript_id',
+    type = 'character',
+    help = 'Where --filter-cdnas is specified, what field should be used to compare to identfiers from the FASTA?'
+  ),
+  make_option(
+    c("-e", "--filter-cdnas-output"),
+    action = "store",
+    default = 'filtered.fa.gz',
+    type = 'character',
+    help = 'Where --filter-cdnas is specified, what file should the filtered sequences be output to?'
+  ),
+  make_option(
+    c("-u", "--version-transcripts"),
+    action = "store_true",
+    default = FALSE,
+    type = 'logical',
+    help = 'Where the GTF contains transcript versions, should these be appended to transcript identifiers? Useful when generating transcript/gene mappings for use with transcriptomes.'
+  ),
+  make_option(
     c("-o", "--output-file"),
     action = "store",
     default = NA,
@@ -91,11 +119,11 @@ option_list = list(
 opt <- parse_args(OptionParser(option_list = option_list), convert_hyphens_to_underscores = TRUE)
 
 if (is.na(opt$gtf_file)){
-  die('No input GTF file specified')
+  die('ERROR: No input GTF file specified')
 }
 
 if (is.na(opt$output_file)){
-  die('No output file specified')
+  die('ERROR: No output file specified')
 }
 
 # Import the GTF
@@ -123,14 +151,45 @@ if (! is.na(opt$first_field)){
   anno <- anno[,c(opt$first_field, colnames(anno)[colnames(anno) != opt$first_field])]
 }
 
+# Version transcripts
+
+if ( opt$feature_type == 'transcript' && opt$version_transcripts && all(c('transcript_id', 'transcript_version') %in% colnames(anno) )){
+  anno$transcript_id <- paste(anno$transcript_id, anno$transcript_version, sep='.')
+}
+
+# If specified, filter down a provided cDNA FASTA file
+
+if (! is.null(opt$filter_cdnas)){
+  
+  print(paste("Filtering", opt$filter_cdnas, "to match the GTF"))
+  
+  suppressPackageStartupMessages(require(Biostrings))
+  
+  cdna <- readDNAStringSet(opt$filter_cdnas)
+  cdna_transcript_names <- unlist(lapply(names(cdna), function(x) unlist(strsplit(x, ' '))[1]  ))
+  
+  # Filter out cDNAs without matching transcript entries in the GTF
+  
+  if (! any(cdna_transcript_names %in% anno[[opt$filter_cdnas_field]])){
+    die(paste("ERROR: None of the input sequences have matching", opt$filter_cdnas_field, 'values in the GTF file'))
+  }
+  
+  cdna <- cdna[which(cdna_transcript_names %in% anno[[opt$filter_cdnas_field]])]
+  
+  print(paste('Storing filtered seqeunces to', opt$filter_cdnas_output))
+  writeXStringSet(x = cdna, filepath = opt$filter_cdnas_output, compress = 'gzip')
+}
+
 # If specified, subset to desired fields
 
 if (! is.null(opt$fields) && opt$fields != ''){
   fields <- unlist(strsplit(opt$fields, ','))
-  if (any(! fields %in% colnames(anno))){
-    die(paste(fields, 'contains invalid field(s)'))
+  print(fields)
+    if (any(! fields %in% colnames(anno))){
+    die(paste('ERROR:', fields, 'contains invalid field(s)'))
   }
   anno <- anno[,fields, drop = FALSE]
+  anno <- anno[apply(anno, 1, function(x) all(! is.na(x))), ]
 }
 
 print(paste('Storing output to', opt$output_file))
