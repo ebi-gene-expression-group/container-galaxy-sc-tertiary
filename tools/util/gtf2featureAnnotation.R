@@ -184,8 +184,7 @@ if (! is.null(opt$filter_cdnas)){
 
 if (! is.null(opt$fields) && opt$fields != ''){
   fields <- unlist(strsplit(opt$fields, ','))
-  print(fields)
-    if (any(! fields %in% colnames(anno))){
+  if (any(! fields %in% colnames(anno))){
     die(paste('ERROR:', fields, 'contains invalid field(s)'))
   }
   anno <- anno[,fields, drop = FALSE]
