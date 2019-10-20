@@ -51,3 +51,9 @@ monocle3_preprocess:P
 monocle3_reduceDim:DR
 # scater
 scater_normalize:C
+# SCCAF
+run_sccaf:C
+sccaf_assess:C
+sccaf_asses_merger:C
+# SCEASY
+sceasy_convert:C

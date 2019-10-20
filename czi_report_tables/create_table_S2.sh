@@ -7,7 +7,7 @@ write_rows_for_modules() {
     local mod_id=$(xpath -q -e /tool/@id $mod | sed -E 's+(id=)?"++g' | sed 's/ *//g')
     local mod_instance_link=https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2F$mod_id%2F$mod_id
     local mod_ts_link=https://toolshed.g2.bx.psu.edu/view/ebi-gxa/$mod_id
-    echo "| [$mod_id]($mod_instance_link)<sup>[TS]($mod_ts_link) | $desc | [$cli]($cli_link) | ${mappings[$mod_id]} |" >> O2_modules_aut.md
+    echo "| [$mod_id]($mod_instance_link)<sup>[TS]($mod_ts_link) | $desc | [$cli]($cli_link) | ${mappings[$mod_id]} |" >> S2_modules_aut.md
   done
 }
 
@@ -17,8 +17,8 @@ while IFS= read -r line; do
     mappings[${line%%:*}]=${line#*:}
 done < module_analysis_mapping.txt
 
-echo "**Table S2**: Decomposed modules contributed from the different tools. The name of the module links to an active Galaxy instance where that can be used, and TS provides a second link to the module in the Galaxy Toolshed." > O2_modules_aut.md
-echo "Each module is linked to one of the cli-layers mentioned in [Table O1](O1_cli-layer.md) and assigned to one or more of the relevant analysis areas: Clustering (**C**), Differential expression/Marker detection (**DE-MD**), Trajectories (**T**), Cell type alignment (**CT**) and Dimensionality reduction (**DR**)." >> O2_modules_aut.md
+echo "**Table S2**: Decomposed modules contributed from the different tools. The name of the module links to an active Galaxy instance where that can be used, and TS provides a second link to the module in the Galaxy Toolshed." > S2_modules_aut.md
+echo "Each module is linked to one of the cli-layers mentioned in [Table S1](S1_cli-layer.md) and assigned to one or more of the relevant analysis areas: Clustering (**C**), Differential expression/Marker detection (**DE-MD**), Trajectories (**T**), Cell type alignment (**CT**) and Dimensionality reduction (**DR**)." >> S2_modules_aut.md
 # Requires perl-xml-xpath conda package for xpath
 echo "" >> S2_modules_aut.md
 echo "| Module | Description | cli-layer | Analysis areas |" >> S2_modules_aut.md
