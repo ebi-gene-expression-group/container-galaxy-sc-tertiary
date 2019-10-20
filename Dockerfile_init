@@ -30,6 +30,9 @@ COPY rules/k8s_destinations.py /galaxy-central/lib/galaxy/jobs/rules/k8s_destina
 # Galaxy tours which guide users through the subsequent steps in an analysis
 # COPY config/plugins/tours/*.yaml config/plugins/tours/
 
+# Patches
+COPY patches/kubernetes.py lib/galaxy/jobs/runners/kubernetes.py
+
 COPY html/welcome_embl_ebi_rgb_2018.png welcome/welcome_embl_ebi_rgb_2018.png
 COPY html/welcome_sanger_RGB_Full_Colour_landscape.png welcome/welcome_sanger_RGB_Full_Colour_landscape.png
 COPY html/welcome.html welcome/welcome.html

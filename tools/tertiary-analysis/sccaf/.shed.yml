@@ -1,0 +1,34 @@
+name: SCCAF
+owner: ebi-gxa
+description: "SCCAF: Single Cell Clustering Assessment Framework."
+long_description: |
+    Single Cell Clustering Assessment Framework (SCCAF) is a novel method for
+    automated identification of putative cell types from single cell RNA-seq
+    (scRNA-seq) data. By iteratively applying clustering and a machine learning
+    approach to gene expression profiles of a given set of cells, SCCAF
+    simultaneously identifies distinct cell groups and a weighted list of
+    feature genes for each group. The feature genes, which are overexpressed in
+    the particular cell group, jointly discriminate the given cell group from
+    other cells. Each such group of cells corresponds to a putative cell type
+    or state, characterised by the feature genes as markers.
+homepage_url: https://github.com/sccaf/sccaf
+remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/tools/tertiary-analysis/sccaf
+type: unrestricted
+categories:
+- Transcriptomics
+auto_tool_repositories:
+    name_template: "{{ tool_id }}"
+    description_template: "Wrapper for the SCCAF tool: {{ tool_name }}"
+suite:
+    name: "suite_sccaf"
+    description: "SCCAF: Single Cell Clustering Assessment Framework."
+    long_description: |
+        Single Cell Clustering Assessment Framework (SCCAF) is a novel method for
+        automated identification of putative cell types from single cell RNA-seq
+        (scRNA-seq) data. By iteratively applying clustering and a machine learning
+        approach to gene expression profiles of a given set of cells, SCCAF
+        simultaneously identifies distinct cell groups and a weighted list of
+        feature genes for each group. The feature genes, which are overexpressed in
+        the particular cell group, jointly discriminate the given cell group from
+        other cells. Each such group of cells corresponds to a putative cell type
+        or state, characterised by the feature genes as markers.

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="run_sccaf" name="Run SCCAF" version="@TOOL_VERSION@+galaxy0">
+  <description>to assess and optimise clustering</description>
+  <macros>
+    <import>sccaf_macros.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+ln -s ${input_obj_file} input.h5 &&
+sccaf -i input.h5
+
+--cores \${GALAXY_SLOTS:-1}
+
+#if $cluster_source.use_tsv
+  --external-clustering-tsv ${cluster_source.input_tsv}
+#else
+  --slot-for-existing-clustering ${cluster_source.obj_attr}
+#end if
+
+#if $mode.skip_init_assessment
+  --skip-assessment
+#end if
+
+#if $mode.optimise
+  #if not $mode.init.from_input
+  --resolution ${mode.init.resolution}
+  #end if
+  --optimise
+  #if $mode.optimisation_stop.condition == "accuracy_threshold"
+    --min-accuracy ${mode.optimisation_stop.accuracy}
+  #else
+    --min-accuracy 0.955
+    --undercluster-boundary ${mode.optimisation_stop.min_resolution_clustering_slot}
+  #end if
+  --produce-rounds-summary
+
+  --optimisation-plots-output ${opt_pdf_out}
+
+  #if $mode.citer
+    --conf-sampling-iterations ${mode.citer}
+  #end if
+
+  > ${opt_text_out};
+#end if
+
+#if $mode.optimise and $mode.distribute_assesment:
+mkdir -p outputs;
+for round in \$(cat rounds.txt); do
+  echo "Round: "\$round;
+  echo \$round > outputs/round_\$round\.txt;
+done
+#end if
+
+
+
+]]></command>
+
+  <inputs>
+    <expand macro="input_object_params"/>
+
+    <conditional name="cluster_source">
+      <param name="use_tsv" type="boolean" checked="true" label="Use external cluster information" help="If the provided AnnData/Loom file does not include the clustering, or if you want to use an external clustering assigment."/>
+      <when value="true">
+        <param name="input_tsv" type="data" argument="--external-clustering-tsv" format="tsv" label="Cluster table for assessment in tsv format"/>
+      </when>
+      <when value="false">
+        <param name="obj_attr" type="text" argument="--slot-for-existing-clustering" value="louvain" label="Attribute in input object that contains cluster information" help="If you are not using an external clustering, then you must specify the slot/index in the AnnData or Loom file where the clustering to be used for assessment (and potentially optimisation starting point) is saved."/>
+      </when>
+    </conditional>
+
+    <conditional name="mode">
+      <param name="optimise" type="boolean" checked="false" argument="--optimise" label="Run clustering optimisation" help="By default the tool only runs an assesment of the clustering quality. To further optimise the clustering, enable this option."/>
+      <when value="true">
+        <conditional name="init">
+          <param name="from_input" type="boolean" checked="true" label="Use input clustering to initialise optimisation" help="This option uses the previously specified clustering (either external file provided or internal index/slot specified) to serve as starting point for the optimisation process."/>
+          <when value="true">
+          </when>
+          <when value="false">
+            <param name="resolution" type="float" value="1.5" argument="--resolution" label="Resolution for initialising louvain clustering" help="Perform an initial clustering and use this as an starting point."/>
+          </when>
+        </conditional>
+        <conditional name="optimisation_stop">
+          <param type="select" name="condition" help="How should the optimisation algorithm be stopped." label="Stop condition">
+            <option value="accuracy_threshold" selected="true">Set a threshold for accuracy</option>
+            <option value="min_resolution_clustering">Use a slot with a low resolution clustering</option>
+          </param>
+          <when value="accuracy_threshold">
+            <param name="accuracy" type="float" value="0.90" argument="--accuracy" label="Accuracy for convergence of the optimisation process" help="The SCCAF optimisation process will converge once this accuracy is achieved."/>
+          </when>
+          <when value="min_resolution_clustering">
+            <param name="min_resolution_clustering_slot" type="text" argument="--undercluster-boundary" label="Underclustering boundary to use in the optimisation." help="The slot inside the ann data object with the desired underclustering (low resolution) to be used as exit condition."/>
+          </when>
+        </conditional>
+        <param name="skip_init_assessment" type="boolean" argument="--skip-assessment" checked="false" label="Run only the optimisation and skip the initial assessment" help="If you are running the optimisation, you can choose skip the initial assessment to save time."/>
+        <param name="distribute_assesment" type="boolean" checked="false" label="Produce parameter walk for asessment distribution" help="Will split rounds in files so that multiple assess processes can be distributed down the line"/>
+        <param name="citer" type="integer" value="3" argument="--conf-sampling-iterations" label="Number of iterations of sampling for the confusion matrix." help="By default is 3, higher numbers mean more stable results (number of rounds) but also longer execution times." optional="True"/>
+      </when>
+      <when value="false">
+      </when>
+    </conditional>
+  </inputs>
+
+  <outputs>
+    <data name="output_png" format="png" from_work_dir="roc-curve.png" label="${tool.name} on ${on_string} ROC Curve for initial assesment">
+      <filter>not mode['skip_init_assessment']</filter>
+    </data>
+    <data name="output_h5" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string} output.h5">
+      <filter>mode['optimise']</filter>
+    </data>
+    <data name="optim_png" format="png" from_work_dir="optim.png" label="${tool.name} on ${on_string} ROC Curve for optimisation result">
+      <filter>mode['optimise']</filter>
+    </data>
+    <collection name="rounds_walk" type="list" label="Rounds for assesment distribution">
+      <filter>mode['optimise'] and mode['distribute_assesment']</filter>
+      <discover_datasets pattern="__name_and_ext__" directory="outputs"/>
+    </collection>
+    <data name="opt_text_out" format="txt" label="${tool.name} on ${on_string} Optimisation process log">
+      <filter>mode['optimise']</filter>
+    </data>
+    <data name="opt_pdf_out" format="pdf" label="${tool.name} on ${on_string} Optimisation process plots">
+      <filter>mode['optimise']</filter>
+    </data>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="input_obj_file" value="find_cluster.h5"/>
+      <param name="use_tsv" value="true"/>
+      <param name="input_tsv" value="find_cluster.tsv"/>
+      <output name="output_png" file="run_sccaf.png" ftype="png"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+@SCCAF_INTRO@
+
+Inputs
+------
+
+* AnnData object which contains the expression matrix and pre-calculated coordinates for UMAP. The AnnData object can include already clustering data, in which case the user will need to know on which AnnData slot/label is contained.
+* Optional external text file with mappings between cells and clusters (when no clustering is given inside the AnnData file).
+
+Modes of operation
+------------------
+
+* Optimisation with exit condition based on accuracy cut-off. In this case the user provides a minimum cut-off for the accuracy to be achieved and the optimisation process will exit at that point.
+* Optimisation with exit condition based on under-clustered scenario. In the case the AnnData object given must include a low resolution, under clustered clustering, and its label must be know to be specified.
+* Assesment only (no optimisation), where an existing clustering is assessed.
+
+This is resource intensive.
+
+Distributed assesment
+---------------------
+
+If running the optimisation you can distribute assessments of the optimisation
+results. For this, activate the "Produce parameter walk for assessment
+distribution" option, which will generate a "Rounds for assesment distribution".
+Then feed the AnnData output of the optimisation process and the rounds output
+to the SCCAF Assesment module. Then merge all assessment results with
+SCCAF Assesment Merger (this also receives the rounds output). The workflow
+would look like this:
+
+.. image:: example_sccaf_workflow.png
+   :height: 400 px
+   :width: 850 px
+   :scale: 80 %
+
+
+]]></help>
+  <!-- <expand macro="citations"/> -->
+</tool>

@@ -200,6 +200,11 @@
     <tool file="tertiary-analysis/scanpy/scanpy-plot-trajectory.xml"/>
     <tool file="tertiary-analysis/scanpy/scanpy-parameter-iterator.xml"/>
   </section>
+  <section name="SCCAF" id="sccaf-tools">
+    <tool file="tertiary-analysis/sccaf/run_sccaf.xml"/>
+    <tool file="tertiary-analysis/sccaf/sccaf_asses.xml"/>
+    <tool file="tertiary-analysis/sccaf/sccaf_asses_merger.xml"/>
+  </section>
   <section name="Monocle3" id="monocle3-tools">
     <tool file="tertiary-analysis/monocle3/monocle3-create.xml" labels="I/O"/>
     <tool file="tertiary-analysis/monocle3/monocle3-preprocess.xml"/>
