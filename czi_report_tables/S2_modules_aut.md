@@ -64,3 +64,9 @@ Each module is linked to one of the cli-layers mentioned in [Table O1](O1_cli-la
 | [ucsc_cell_browser](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fucsc_cell_browser%2Fucsc_cell_browser)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/ucsc_cell_browser) | displays single-cell clusterized data in an interactive web application. | [None]([None](https://github.com/ebi-gene-expression-group/None/tree/master)) |  |
 | [hca_matrix_downloader](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fhca_matrix_downloader%2Fhca_matrix_downloader)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/hca_matrix_downloader) | retrieves expression matrices and metadata from the Human Cell Atlas. | [hca-matrix-downloader]([hca-matrix-downloader](https://github.com/ebi-gene-expression-group/hca-matrix-downloader/tree/master)) |  |
 | [retrieve_scxa](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fretrieve_scxa%2Fretrieve_scxa)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/retrieve_scxa) | Retrieves expression matrixes and metadata from EBI Single Cell Expression Atlas (SCXA) | [None]([None](https://github.com/ebi-gene-expression-group/None/tree/master)) |  |
+
+| Module | Description | cli-layer | Analysis areas |
+|--------|-------------|-----------|----------------|
+
+| Module | Description | cli-layer | Analysis areas |
+|--------|-------------|-----------|----------------|
