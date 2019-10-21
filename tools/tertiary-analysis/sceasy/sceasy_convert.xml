@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="sceasy_convert" name="SCEasy convert" version="@TOOL_VERSION@+galaxy0">
+<tool id="sceasy_convert" name="SCEasy convert" version="@TOOL_VERSION@+galaxy1">
   <description>a data object between formats</description>
   <macros>
     <import>sceasy_macros.xml</import>
@@ -16,19 +16,19 @@
 
     Rscript -e 'library(sceasy)'
 #if $conversion.direction == "loom2sce"
-            -e 'sce <- sceasy::convertFormat("input.loom", from="loom", to="sce", main_layer_name="${assay_name}")'
+            -e 'sce <- sceasy::convertFormat("input.loom", from="loom", to="sce", main_layer_name="${conversion.assay_name}")'
             -e 'saveRDS(sce, "output.rds")'
             -e 'print(sce)'
 #else if $conversion.direction == "sce2loom"
             -e 'sce <- readRDS("input.rds")'
-            -e 'sceasy::convertFormat(sce, outFile="output.loom", from="sce", to="loom", main_layer="${assay}")'
+            -e 'sceasy::convertFormat(sce, outFile="output.loom", from="sce", to="loom", main_layer="${conversion.assay}")'
 #else if $conversion.direction == "sce2anndata"
             -e 'sce <- readRDS("input.rds")'
-            -e 'sceasy::convertFormat(sce, outFile="output.h5ad", from="sce", to="anndata", main_layer="${assay}")'
+            -e 'sceasy::convertFormat(sce, outFile="output.h5ad", from="sce", to="anndata", main_layer="${conversion.assay}")'
             -e 'print(sce)'
 #else if $conversion.direction == "seurat2anndata"
             -e 'srt <- readRDS("input.rds")'
-            -e 'sceasy::convertFormat(srt, outFile="output.h5ad", from="seurat", to="anndata", assay="${assay}", main_layer="${dtype}")'
+            -e 'sceasy::convertFormat(srt, outFile="output.h5ad", from="seurat", to="anndata", assay="${conversion.assay}", main_layer="${conversion.dtype}")'
             -e 'print(srt)'
 #end if
 ]]></command>
