@@ -1,4 +1,4 @@
-**Table O1**: Command line argument layer for each tool, the analysis areas covered and with links to the different packaging generated:  Conda package (**C**) and Docker Containers (**DC**).
+**Table S1**: Command line argument layer for each tool, the analysis areas covered and with links to the different packaging generated:  Conda package (**C**) and Docker Containers (**DC**).
 
 | Tool | cli-layer | Packaging | Analysis areas |
 |------|-----------|-----------|-----|
@@ -10,5 +10,5 @@
 | Monocle3 | [monocle scripts](https://github.com/ebi-gene-expression-group/monocle-scripts) | [C](https://bioconda.github.io/recipes/monocle-scripts/README.html) [DC](https://quay.io/repository/biocontainers/monocle-scripts) | clustering, trajectories. |
 | UCSC CellBrowser    | None needed | [C](https://bioconda.github.io/recipes/ucsc-cell-browser/README.html) [DC](https://quay.io/repository/biocontainers/ucsc-cell-browser) | interactive visualisation |
 | SCCAF | [Contributed package includes cli](https://github.com/SCCAF/sccaf/tree/master/cli) | [C](https://bioconda.github.io/recipes/sccaf/README.html) [DC](https://quay.io/repository/biocontainers/sccaf) | clustering |
-| SCEasy | [Contributed packaged includes cli](https://github.com/cellgeni/sceasy) | [C](https://bioconda.github.io/recipes/r-sceasy/README.html) [DC](https://quay.io/repository/biocontainers/sceasy) | Format conversion |
+| SCEasy | [Contributed packaged includes cli](https://github.com/cellgeni/sceasy) | [C](https://bioconda.github.io/recipes/r-sceasy/README.html) [DC](https://quay.io/repository/biocontainers/r-sceasy) | Format conversion |
 | DCP Matrix Service Client | [Contributed package includes cli](https://github.com/ebi-gene-expression-group/hca-matrix-downloader) | [C](https://bioconda.github.io/recipes/hca-matrix-downloader/README.html) [DC](https://quay.io/repository/biocontainers/hca-matrix-downloader) | selection & aggregation |
