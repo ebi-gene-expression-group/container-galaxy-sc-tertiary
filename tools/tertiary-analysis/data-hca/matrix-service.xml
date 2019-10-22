@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="hca_matrix_downloader" name="Human Cell Atlas Matrix Downloader" version="v0.0.2+galaxy0">
+<tool id="hca_matrix_downloader" name="Human Cell Atlas Matrix Downloader" version="v0.0.2+galaxy1">
   <description>retrieves expression matrices and metadata from the Human Cell Atlas.</description>
   <requirements>
     <requirement type="package" version="0.0.2">hca-matrix-downloader</requirement>
   </requirements>
   <command detect_errors="exit_code"><![CDATA[
 
-hca-matrix-downloader -p '${project}' -f mtx -o out -f '${matrix_format}'
+hca-matrix-downloader -p '${project}' -o out -f '${matrix_format}'
 
 #if $matrix_format == "mtx":
   && hca-mtx-to-10x out.mtx .
