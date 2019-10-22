@@ -17,7 +17,7 @@ PYTHONIOENCODING=utf-8 scanpy-filter-genes
     ${cats}
 #end if
 #if $subsets
-    #set subs = ' '.join(['--subsets {name} {subset}'.format(**$s) for $s in $subsets])
+    #set subs = ' '.join(['--subset {name} {subset}'.format(**$s) for $s in $subsets])
     ${subs}
 #end if
     @INPUT_OPTS@
