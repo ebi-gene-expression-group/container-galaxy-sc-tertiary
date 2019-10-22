@@ -1,4 +1,4 @@
-<tool id="_ensembl_gtf2gene_list" name="GTF2GeneAnnotationTable" version="1.42.1+galaxy1">
+<tool id="_ensembl_gtf2gene_list" name="GTF2GeneList" version="1.42.1+galaxy3">
     <description>extracts a complete annotation table or subsets thereof from an Ensembl GTF using rtracklayer</description>
     <requirements>
       <requirement type="package" version="1.42.1">bioconductor-rtracklayer</requirement>
@@ -41,7 +41,7 @@
         <conditional name="cdnas">
           <param name="filter_cdnas" type="boolean" checked="false" label="Filter a FASTA-format cDNA file to match annotations?" help="For some applications, e.g. transcriptome mappers, its useful to match a cDNAs file to an annotation list (e.g. transcript-to-gene mapping)"/>
           <when value="true">
-            <param name="fasta_input" type="data" format="fasta" label="FASTA-format cDNA/ transcript file" />
+            <param name="fasta_input" type="data" format="fasta,fasta.gz" label="FASTA-format cDNA/ transcript file" />
             <param name="cdnas_field" type="text" optional='true' value="transcript_id" label="Annotation field to match with sequences."/>
           </when>
           <when value="false" />
@@ -50,7 +50,7 @@
 
     <outputs>
         <data name="feature_annotation" format="tsv" from_work_dir="annotation.txt" label="${tool.name} on ${on_string}: annotation table"/>
-        <data name="fasta_output" format="fasta" from_work_dir="filtered.fa.gz" label="${tool.name} on ${on_string}: annotation-matched sequences">
+        <data name="fasta_output" format="fasta.gz" from_work_dir="filtered.fa.gz" label="${tool.name} on ${on_string}: annotation-matched sequences">
           <filter>filter_cdnas</filter>
         </data>
     </outputs>
