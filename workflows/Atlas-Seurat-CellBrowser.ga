@@ -32,13 +32,13 @@
                 }
             ], 
             "position": {
-                "left": 200, 
-                "top": 115.5
+                "left": 126, 
+                "top": 118.5
             }, 
             "post_job_actions": {}, 
             "tool_id": "retrieve_scxa", 
             "tool_state": "{\"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__page__\": null, \"__rerun_remap_job_id__\": null, \"accession\": \"\\\"E-GEOD-100058\\\"\", \"matrix_type\": \"\\\"raw\\\"\"}", 
-            "tool_version": "v0.0.1+galaxy1", 
+            "tool_version": "v0.0.2+galaxy2", 
             "type": "tool", 
             "uuid": "e2e8b1a2-38a0-4b4d-b650-f590ac286e7f", 
             "workflow_outputs": []
@@ -298,7 +298,7 @@
             "id": 8, 
             "input_connections": {
                 "input": {
-                    "id": 6, 
+                    "id": 7, 
                     "output_name": "output"
                 }
             }, 
@@ -312,8 +312,8 @@
                 }
             ], 
             "position": {
-                "left": 245, 
-                "top": 828.5
+                "left": 542, 
+                "top": 522.5
             }, 
             "post_job_actions": {}, 
             "tool_id": "seurat_dim_plot", 
@@ -348,8 +348,8 @@
                 }
             ], 
             "position": {
-                "left": 479.5, 
-                "top": 583.5
+                "left": 340.5, 
+                "top": 828.5
             }, 
             "post_job_actions": {}, 
             "tool_id": "seurat_find_clusters", 
@@ -452,8 +452,8 @@
                 }
             ], 
             "position": {
-                "left": 602, 
-                "top": 880.5
+                "left": 637, 
+                "top": 892.5
             }, 
             "post_job_actions": {}, 
             "tool_id": "seurat_find_markers", 
@@ -488,8 +488,8 @@
                 }
             ], 
             "position": {
-                "left": 887, 
-                "top": 873.5
+                "left": 993, 
+                "top": 868.5
             }, 
             "post_job_actions": {}, 
             "tool_id": "seurat_export_cellbrowser", 
@@ -526,13 +526,13 @@
             "post_job_actions": {}, 
             "tool_id": "ucsc_cell_browser", 
             "tool_state": "{\"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"input_type\": \"{\\\"__current_case__\\\": 1, \\\"expression_source\\\": \\\"cell-browser-tar\\\", \\\"tarred_sources\\\": {\\\"__class__\\\": \\\"ConnectedValue\\\"}}\", \"__rerun_remap_job_id__\": null, \"__page__\": null}", 
-            "tool_version": "0.5.21+galaxy0", 
+            "tool_version": "0.5.43+galaxy0", 
             "type": "tool", 
             "uuid": "62322f04-63e1-428e-8cdf-9aebc9990f23", 
             "workflow_outputs": []
         }
     }, 
     "tags": [], 
-    "uuid": "cbb54c40-bbf4-4325-b7bb-a3f9e56b4132", 
-    "version": 1
+    "uuid": "bfa52963-15bd-4eff-9e1b-14602f6a7a9f", 
+    "version": 3
 }
