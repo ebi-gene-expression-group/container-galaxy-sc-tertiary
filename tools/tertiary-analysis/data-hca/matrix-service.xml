@@ -2,7 +2,7 @@
 <tool id="hca_matrix_downloader" name="Human Cell Atlas Matrix Downloader" version="v0.0.2+galaxy1">
   <description>retrieves expression matrices and metadata from the Human Cell Atlas.</description>
   <requirements>
-    <requirement type="package" version="0.0.2">hca-matrix-downloader</requirement>
+    <requirement type="package" version="0.0.3">hca-matrix-downloader</requirement>
   </requirements>
   <command detect_errors="exit_code"><![CDATA[
 
