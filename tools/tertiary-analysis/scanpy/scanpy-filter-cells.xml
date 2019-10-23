@@ -12,15 +12,15 @@ PYTHONIOENCODING=utf-8 scanpy-filter-cells
     --gene-name '${gene_name}'
 #end if
 #if $parameters
-    #set pars = ' '.join(['--param {name} {min} {max}'.format(**$p) for $p in $parameters])
+    #set pars = ' '.join(['--param c:{name} {min} {max}'.format(**$p) for $p in $parameters])
     ${pars}
 #end if
 #if $categories
-    #set cats = ' '.join(['--category {name} {values}'.format(**$c) for $c in $categories])
+    #set cats = ' '.join(['--category c:{name} {values}'.format(**$c) for $c in $categories])
     ${cats}
 #end if
 #if $subsets
-    #set subs = ' '.join(['--subsets {name} {subset}'.format(**$s) for $c in $subsets])
+    #set subs = ' '.join(['--subsets c:{name} {subset}'.format(**$s) for $c in $subsets])
     ${subs}
 #end if
     @INPUT_OPTS@
@@ -37,7 +37,7 @@ PYTHONIOENCODING=utf-8 scanpy-filter-cells
     <repeat name="parameters" title="Parameters used to filter cells" min="1">
       <param name="name" type="text" value="n_genes" label="Name of parameter to filter on" help="for example n_genes or n_counts">
         <option value="n_genes">n_genes</option>
-        <option value="cell:n_counts">n_counts</option>
+        <option value="n_counts">n_counts</option>
         <option value="pct_counts_mito">pct_counts_mito</option>
       </param>
       <param name="min" type="float" value="0" min="0" label="Min value"/>

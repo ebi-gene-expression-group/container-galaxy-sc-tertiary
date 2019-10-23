@@ -9,15 +9,15 @@
 ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-filter-genes
 #if $parameters
-    #set pars = ' '.join(['--param {name} {min} {max}'.format(**$p) for $p in $parameters])
+    #set pars = ' '.join(['--param g:{name} {min} {max}'.format(**$p) for $p in $parameters])
     ${pars}
 #end if
 #if $categories
-    #set cats = ' '.join(['--category {name} {values}'.format(**$c) for $c in $categories])
+    #set cats = ' '.join(['--category g:{name} {values}'.format(**$c) for $c in $categories])
     ${cats}
 #end if
 #if $subsets
-    #set subs = ' '.join(['--subsets {name} {subset}'.format(**$s) for $s in $subsets])
+    #set subs = ' '.join(['--subset g:{name} {subset}'.format(**$s) for $c in $subsets])
     ${subs}
 #end if
     @INPUT_OPTS@
@@ -31,7 +31,7 @@ PYTHONIOENCODING=utf-8 scanpy-filter-genes
     <repeat name="parameters" title="Parameters used to filter cells" min="1">
       <param name="name" type="text" value="n_cells" label="Name of parameter to filter on" help="for example n_genes or n_counts">
         <option value="n_cells">n_cells</option>
-        <option value="gene:n_counts">n_counts</option>
+        <option value="n_counts">n_counts</option>
       </param>
       <param name="min" type="float" min="0" value="0" label="Min value"/>
       <param name="max" type="float" min="0" value="1e9" label="Max value"/>
