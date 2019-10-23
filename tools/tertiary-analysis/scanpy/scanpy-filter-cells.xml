@@ -20,7 +20,7 @@ PYTHONIOENCODING=utf-8 scanpy-filter-cells
     ${cats}
 #end if
 #if $subsets
-    #set subs = ' '.join(['--subsets c:{name} {subset}'.format(**$s) for $c in $subsets])
+    #set subs = ' '.join(['--subset c:{name} {subset}'.format(**$s) for $s in $subsets])
     ${subs}
 #end if
     @INPUT_OPTS@
