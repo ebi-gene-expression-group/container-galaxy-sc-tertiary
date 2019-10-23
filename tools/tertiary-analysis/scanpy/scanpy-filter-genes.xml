@@ -28,7 +28,7 @@ PYTHONIOENCODING=utf-8 scanpy-filter-genes
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
 
-    <repeat name="parameters" title="Parameters used to filter cells" min="1">
+    <repeat name="parameters" title="Parameters used to filter genes" min="1">
       <param name="name" type="text" value="n_cells" label="Name of parameter to filter on" help="for example n_genes or n_counts">
         <option value="n_cells">n_cells</option>
         <option value="n_counts">n_counts</option>
@@ -39,12 +39,12 @@ PYTHONIOENCODING=utf-8 scanpy-filter-genes
 
     <repeat name="categories" title="Categories used to filter genes" min="0">
       <param name="name" type="text" value="" label="Name of the categorical variable to filter on"/>
-      <param name="values" type="text" value="" label="Comma-separated values"/>
+      <param name="values" type="text" value="" label="Comma-separated values to keep"/>
     </repeat>
 
     <repeat name="subsets" title="Subsets used to filter genes" min="0">
       <param name="name" type="text" value="" label="Name of the categorical variable to filter on"/>
-      <param name="subset" type="data" format="tabular" label="List of values"/>
+      <param name="subset" type="data" format="tabular" label="List of values to keep" help="A one-column headerless text file is required"/>
     </repeat>
     <expand macro="export_mtx_params"/>
   </inputs>
@@ -65,7 +65,7 @@ PYTHONIOENCODING=utf-8 scanpy-filter-genes
         <param name="max" value="1e9"/>
       </repeat>
       <repeat name="parameters">
-        <param name="name" value="gene:n_counts"/>
+        <param name="name" value="n_counts"/>
         <param name="min" value="0"/>
         <param name="max" value="1e9"/>
       </repeat>
@@ -74,16 +74,14 @@ PYTHONIOENCODING=utf-8 scanpy-filter-genes
   </tests>
 
   <help><![CDATA[
-===================================================================
-Filter genes based on number of cells or counts (`pp.filter_genes`)
-===================================================================
+=====================================================================
+Filter genes based on arbitrary attributes (`scanpy.pp.filter_genes`)
+=====================================================================
 
 Keep genes that have at least `min_counts` counts or are expressed in at
 least `min_cells` cells or have at most `max_counts` counts or are expressed
-in at most `max_cells` cells.
-
-Only provide one of the optional parameters `min_counts`, `min_cells`,
-`max_counts`, `max_cells` per call.
+in at most `max_cells` cells. Other gene attributes can be used for filtering
+too if available.
 
 
 @HELP@
