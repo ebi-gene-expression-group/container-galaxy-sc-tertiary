@@ -1,0 +1,442 @@
+{
+    "a_galaxy_workflow": "true", 
+    "annotation": "Maps EBi Single Cell Expression Atlas cells to an SCMap index", 
+    "format-version": "0.1", 
+    "name": "Atlas-Scanpy-SCMap", 
+    "steps": {
+        "0": {
+            "annotation": "", 
+            "content_id": null, 
+            "errors": null, 
+            "id": 0, 
+            "input_connections": {}, 
+            "inputs": [], 
+            "label": "EBI SCXA Accession", 
+            "name": "Input parameter", 
+            "outputs": [], 
+            "position": {
+                "left": 192.59375, 
+                "top": 214.5
+            }, 
+            "tool_id": null, 
+            "tool_state": "{\"optional\": false, \"parameter_type\": \"text\"}", 
+            "tool_version": null, 
+            "type": "parameter_input", 
+            "uuid": "823f6e88-7257-4bd7-87d2-d14390d1f509", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output", 
+                    "uuid": "4f5d8ef2-96cf-4550-9851-83576f37fd4b"
+                }
+            ]
+        }, 
+        "1": {
+            "annotation": "", 
+            "content_id": null, 
+            "errors": null, 
+            "id": 1, 
+            "input_connections": {}, 
+            "inputs": [], 
+            "label": "SingleCellExperiment Index", 
+            "name": "Input dataset", 
+            "outputs": [], 
+            "position": {
+                "left": 200, 
+                "top": 350.25
+            }, 
+            "tool_id": null, 
+            "tool_state": "{}", 
+            "tool_version": null, 
+            "type": "data_input", 
+            "uuid": "166af648-8226-4212-a851-ea06181bf248", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output", 
+                    "uuid": "0723415e-3138-4a3c-a55a-2eefaf03c0f8"
+                }
+            ]
+        }, 
+        "2": {
+            "annotation": "", 
+            "content_id": "retrieve_scxa", 
+            "errors": null, 
+            "id": 2, 
+            "input_connections": {
+                "accession": {
+                    "id": 0, 
+                    "output_name": "output"
+                }
+            }, 
+            "inputs": [], 
+            "label": null, 
+            "name": "EBI SCXA Data Retrieval", 
+            "outputs": [
+                {
+                    "name": "matrix_mtx", 
+                    "type": "txt"
+                }, 
+                {
+                    "name": "genes_tsv", 
+                    "type": "tsv"
+                }, 
+                {
+                    "name": "barcode_tsv", 
+                    "type": "tsv"
+                }, 
+                {
+                    "name": "design_tsv", 
+                    "type": "tsv"
+                }
+            ], 
+            "position": {
+                "left": 416.609375, 
+                "top": 224
+            }, 
+            "post_job_actions": {}, 
+            "tool_id": "retrieve_scxa", 
+            "tool_state": "{\"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__page__\": null, \"__rerun_remap_job_id__\": null, \"accession\": \"{\\\"__class__\\\": \\\"ConnectedValue\\\"}\", \"matrix_type\": \"\\\"raw\\\"\"}", 
+            "tool_version": "v0.0.2+galaxy2", 
+            "type": "tool", 
+            "uuid": "90f0edc2-ff61-4b5b-b366-57379ea9a56b", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "matrix_mtx", 
+                    "uuid": "b8747622-4bf9-473f-95e9-25be2cae436d"
+                }, 
+                {
+                    "label": null, 
+                    "output_name": "design_tsv", 
+                    "uuid": "227fbde7-66d5-4fc4-b87f-21f0df43d02c"
+                }, 
+                {
+                    "label": null, 
+                    "output_name": "genes_tsv", 
+                    "uuid": "c7e1007d-155c-45ae-9f43-53ea85369ee6"
+                }, 
+                {
+                    "label": null, 
+                    "output_name": "barcode_tsv", 
+                    "uuid": "7b5139b3-37b2-4b1f-96af-fc9a5a780d16"
+                }
+            ]
+        }, 
+        "3": {
+            "annotation": "", 
+            "content_id": "scanpy_read_10x", 
+            "errors": null, 
+            "id": 3, 
+            "input_connections": {
+                "barcodes": {
+                    "id": 2, 
+                    "output_name": "barcode_tsv"
+                }, 
+                "cell_meta": {
+                    "id": 2, 
+                    "output_name": "design_tsv"
+                }, 
+                "genes": {
+                    "id": 2, 
+                    "output_name": "genes_tsv"
+                }, 
+                "matrix": {
+                    "id": 2, 
+                    "output_name": "matrix_mtx"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy Read10x", 
+                    "name": "gene_meta"
+                }, 
+                {
+                    "description": "runtime parameter for tool Scanpy Read10x", 
+                    "name": "genes"
+                }, 
+                {
+                    "description": "runtime parameter for tool Scanpy Read10x", 
+                    "name": "cell_meta"
+                }, 
+                {
+                    "description": "runtime parameter for tool Scanpy Read10x", 
+                    "name": "matrix"
+                }, 
+                {
+                    "description": "runtime parameter for tool Scanpy Read10x", 
+                    "name": "barcodes"
+                }
+            ], 
+            "label": null, 
+            "name": "Scanpy Read10x", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }
+            ], 
+            "position": {
+                "left": 742.609375, 
+                "top": 200
+            }, 
+            "post_job_actions": {}, 
+            "tool_id": "scanpy_read_10x", 
+            "tool_state": "{\"gene_meta\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"__page__\": null, \"genes\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"cell_meta\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"var_names\": \"\\\"gene_ids\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"barcodes\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"__rerun_remap_job_id__\": null, \"matrix\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\"}", 
+            "tool_version": "1.4.2+galaxy0", 
+            "type": "tool", 
+            "uuid": "344efd9b-692e-4de0-a06e-e81fd53e034d", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output_h5", 
+                    "uuid": "465f11cb-3f07-4e69-a7be-bef8f0ec9b5c"
+                }
+            ]
+        }, 
+        "4": {
+            "annotation": "", 
+            "content_id": "scanpy_filter_cells", 
+            "errors": null, 
+            "id": 4, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 3, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy FilterCells", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": null, 
+            "name": "Scanpy FilterCells", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }
+            ], 
+            "position": {
+                "left": 423.109375, 
+                "top": 474
+            }, 
+            "post_job_actions": {}, 
+            "tool_id": "scanpy_filter_cells", 
+            "tool_state": "{\"export_mtx\": \"\\\"false\\\"\", \"parameters\": \"[{\\\"__index__\\\": 0, \\\"max\\\": \\\"1000000000.0\\\", \\\"min\\\": \\\"0.0\\\", \\\"name\\\": \\\"n_genes\\\"}]\", \"input_format\": \"\\\"anndata\\\"\", \"__page__\": null, \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"gene_name\": \"\\\"index\\\"\", \"subsets\": \"[]\", \"__rerun_remap_job_id__\": null, \"categories\": \"[]\"}", 
+            "tool_version": "1.4.2+galaxy0", 
+            "type": "tool", 
+            "uuid": "51f96c29-3f6c-4b2a-8a7a-208bf5f16180", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output_h5", 
+                    "uuid": "2ceeee93-4b9b-45ec-92d0-51f03ec27f9a"
+                }
+            ]
+        }, 
+        "5": {
+            "annotation": "", 
+            "content_id": "scanpy_filter_genes", 
+            "errors": null, 
+            "id": 5, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 4, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy FilterGenes", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": null, 
+            "name": "Scanpy FilterGenes", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }
+            ], 
+            "position": {
+                "left": 720.609375, 
+                "top": 470
+            }, 
+            "post_job_actions": {}, 
+            "tool_id": "scanpy_filter_genes", 
+            "tool_state": "{\"export_mtx\": \"\\\"false\\\"\", \"input_format\": \"\\\"anndata\\\"\", \"subsets\": \"[]\", \"__page__\": null, \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"anndata\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"parameters\": \"[{\\\"__index__\\\": 0, \\\"max\\\": \\\"1000000000.0\\\", \\\"min\\\": \\\"0.0\\\", \\\"name\\\": \\\"n_cells\\\"}]\", \"__rerun_remap_job_id__\": null, \"categories\": \"[]\"}", 
+            "tool_version": "1.4.2+galaxy2", 
+            "type": "tool", 
+            "uuid": "a67b2d58-913e-4667-b209-af3e26efb599", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output_h5", 
+                    "uuid": "dc06a7bb-83a6-4927-85f0-3c6bcb4b6864"
+                }
+            ]
+        }, 
+        "6": {
+            "annotation": "", 
+            "content_id": "scanpy_normalise_data", 
+            "errors": null, 
+            "id": 6, 
+            "input_connections": {
+                "input_obj_file": {
+                    "id": 5, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Scanpy NormaliseData", 
+                    "name": "input_obj_file"
+                }
+            ], 
+            "label": null, 
+            "name": "Scanpy NormaliseData", 
+            "outputs": [
+                {
+                    "name": "output_h5", 
+                    "type": "h5"
+                }
+            ], 
+            "position": {
+                "left": 422.609375, 
+                "top": 618
+            }, 
+            "post_job_actions": {}, 
+            "tool_id": "scanpy_normalise_data", 
+            "tool_state": "{\"export_mtx\": \"\\\"false\\\"\", \"scale_factor\": \"\\\"10000.0\\\"\", \"input_format\": \"\\\"anndata\\\"\", \"__page__\": null, \"save_raw\": \"\\\"true\\\"\", \"input_obj_file\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"output_format\": \"\\\"loom\\\"\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"fraction\": \"\\\"1.0\\\"\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "1.4.2+galaxy1", 
+            "type": "tool", 
+            "uuid": "a3c74380-8ea6-46c8-9593-7bb0a5010493", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output_h5", 
+                    "uuid": "cd1a6839-89c7-482d-89af-2936147a3847"
+                }
+            ]
+        }, 
+        "7": {
+            "annotation": "", 
+            "content_id": "sceasy_convert", 
+            "errors": null, 
+            "id": 7, 
+            "input_connections": {
+                "conversion|input_object_file": {
+                    "id": 6, 
+                    "output_name": "output_h5"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool SCEasy convert", 
+                    "name": "conversion"
+                }
+            ], 
+            "label": null, 
+            "name": "SCEasy convert", 
+            "outputs": [
+                {
+                    "name": "output_sce", 
+                    "type": "rdata"
+                }
+            ], 
+            "position": {
+                "left": 738.109375, 
+                "top": 616.5
+            }, 
+            "post_job_actions": {}, 
+            "tool_id": "sceasy_convert", 
+            "tool_state": "{\"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"__page__\": null, \"conversion\": \"{\\\"__current_case__\\\": 0, \\\"assay_name\\\": \\\"\\\", \\\"direction\\\": \\\"loom2sce\\\", \\\"input_object_file\\\": {\\\"__class__\\\": \\\"RuntimeValue\\\"}}\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "0.0.5+galaxy1", 
+            "type": "tool", 
+            "uuid": "bd7f5b88-3308-432c-a1d8-08b92564a14d", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output_sce", 
+                    "uuid": "e8384884-7ca3-4b5c-bd72-8a8c8276afb0"
+                }
+            ]
+        }, 
+        "8": {
+            "annotation": "", 
+            "content_id": "scmap_scmap_cell", 
+            "errors": null, 
+            "id": 8, 
+            "input_connections": {
+                "index_single_cell_experiment": {
+                    "id": 1, 
+                    "output_name": "output"
+                }, 
+                "project_single_cell_experiment": {
+                    "id": 7, 
+                    "output_name": "output_sce"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool scmap cell projection", 
+                    "name": "index_single_cell_experiment"
+                }, 
+                {
+                    "description": "runtime parameter for tool scmap cell projection", 
+                    "name": "project_single_cell_experiment"
+                }
+            ], 
+            "label": null, 
+            "name": "scmap cell projection", 
+            "outputs": [
+                {
+                    "name": "output_single_cell_experiment", 
+                    "type": "rdata"
+                }, 
+                {
+                    "name": "closest_cells_text_file", 
+                    "type": "csv"
+                }, 
+                {
+                    "name": "closest_cells_similarities_text_file", 
+                    "type": "csv"
+                }
+            ], 
+            "position": {
+                "left": 820.109375, 
+                "top": 764.5
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionclosest_cells_similarities_text_file": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "closest_cells_similarities_text_file"
+                }, 
+                "HideDatasetActionclosest_cells_text_file": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "closest_cells_text_file"
+                }, 
+                "HideDatasetActionoutput_single_cell_experiment": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_single_cell_experiment"
+                }
+            }, 
+            "tool_id": "scmap_scmap_cell", 
+            "tool_state": "{\"n_nearest_neighbours\": \"\\\"5\\\"\", \"__page__\": null, \"__rerun_remap_job_id__\": null, \"project_single_cell_experiment\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"__job_resource\": \"{\\\"__current_case__\\\": 0, \\\"__job_resource__select\\\": \\\"no\\\"}\", \"cluster_projection\": \"{\\\"__current_case__\\\": 1, \\\"cluster_col\\\": \\\"NULL\\\", \\\"cluster_projection\\\": \\\"false\\\"}\", \"index_single_cell_experiment\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\"}", 
+            "tool_version": "1.6.0+galaxy0", 
+            "type": "tool", 
+            "uuid": "ba72652e-1a89-46e4-851f-c1fbdcfcfb3e", 
+            "workflow_outputs": []
+        }
+    }, 
+    "tags": [], 
+    "uuid": "226c5c3d-ffdb-4c66-9f27-750069a5fc1f", 
+    "version": 1
+}
