@@ -12,15 +12,15 @@ PYTHONIOENCODING=utf-8 scanpy-filter-cells
     --gene-name '${gene_name}'
 #end if
 #if $parameters
-    #set pars = ' '.join(['--param {name} {min} {max}'.format(**$p) for $p in $parameters])
+    #set pars = ' '.join(['--param c:{name} {min} {max}'.format(**$p) for $p in $parameters])
     ${pars}
 #end if
 #if $categories
-    #set cats = ' '.join(['--category {name} {values}'.format(**$c) for $c in $categories])
+    #set cats = ' '.join(['--category c:{name} {values}'.format(**$c) for $c in $categories])
     ${cats}
 #end if
 #if $subsets
-    #set subs = ' '.join(['--subsets {name} {subset}'.format(**$s) for $c in $subsets])
+    #set subs = ' '.join(['--subset c:{name} {subset}'.format(**$s) for $s in $subsets])
     ${subs}
 #end if
     @INPUT_OPTS@
@@ -31,14 +31,14 @@ PYTHONIOENCODING=utf-8 scanpy-filter-cells
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
 
-    <param name="gene_name" type="text" value="index" label="Name of the column in `anndata.var` that contains gene name"
-           help="This is used for flagging mitochondria genes (starting with 'MT-')"/>
+    <param name="gene_name" type="text" optional="true" label="Name of the column in `anndata.var` that contains gene name"
+           help="Used for flagging mitochondria genes (starting with 'MT-'). Leave empty if gene table already has a boolean column called 'mito' that flags MT genes"/>
 
     <repeat name="parameters" title="Parameters used to filter cells" min="1">
       <param name="name" type="text" value="n_genes" label="Name of parameter to filter on" help="for example n_genes or n_counts">
         <option value="n_genes">n_genes</option>
-        <option value="cell:n_counts">n_counts</option>
-        <option value="pct_counts_mito">pct_counts_mito</option>
+        <option value="n_counts">n_counts</option>
+        <option value="pct_counts_mito">pct_counts_mito (only usable if MT genes are flagged)</option>
       </param>
       <param name="min" type="float" value="0" min="0" label="Min value"/>
       <param name="max" type="float" value="1e9" label="Max value"/>
@@ -46,12 +46,12 @@ PYTHONIOENCODING=utf-8 scanpy-filter-cells
 
     <repeat name="categories" title="Categories used to filter cells" min="0">
       <param name="name" type="text" value="" label="Name of the categorical variable to filter on"/>
-      <param name="values" type="text" value="" label="Comma-separated values"/>
+      <param name="values" type="text" value="" label="Comma-separated values to keep"/>
     </repeat>
 
     <repeat name="subsets" title="Subsets used to filter cells" min="0">
       <param name="name" type="text" value="" label="Name of the categorical variable to filter on"/>
-      <param name="subset" type="data" format="tabular" label="List of values"/>
+      <param name="subset" type="data" format="tabular" label="List of values to keep" help="A one-column headerless text file is required"/>
     </repeat>
     <expand macro="export_mtx_params"/>
   </inputs>
@@ -72,7 +72,7 @@ PYTHONIOENCODING=utf-8 scanpy-filter-cells
         <param name="max" value="2500"/>
       </repeat>
       <repeat name="parameters">
-        <param name="name" value="cell:n_counts"/>
+        <param name="name" value="n_counts"/>
         <param name="min" value="0"/>
         <param name="max" value="1e9"/>
       </repeat>
