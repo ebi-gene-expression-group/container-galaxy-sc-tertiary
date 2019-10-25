@@ -5,8 +5,7 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        scmap-preprocess-sce.R --input-object "${input_single_cell_experiment}" --output-sce-object "preprocessed_${input_single_cell_experiment}"
-        scmap-index-cluster.R --input-object-file "preprocessed_${input_single_cell_experiment}" --cluster-col '$cluster_col' --output-object-file '$output_single_cell_experiment' --output-plot-file '$plot'
+        scmap-preprocess-sce.R --input-object "${input_single_cell_experiment}" --output-sce-object "preprocessed_${input_single_cell_experiment}" && scmap-index-cluster.R --input-object-file "preprocessed_${input_single_cell_experiment}" --cluster-col '$cluster_col' --output-object-file '$output_single_cell_experiment' --output-plot-file '$plot'
     ]]></command>
     <inputs>
         <param type="data" name="input_single_cell_experiment" label="SingleCellExperiment object" format="rdata" help="File with serialized SingleCellExperiment object as produced by 'scmap select features'" />

@@ -3,7 +3,9 @@
     <token name="@HELP@">More information can be found at https://bioconductor.org/packages/release/bioc/html/scmap.html</token>
     <xml name="requirements">
       <requirements>
-        <requirement type="package" version="0.0.3">scmap-cli</requirement>
+        <requirement type="package">openblas</requirement>
+        <requirement type="package">bioconductor-delayedarray</requirement>
+        <requirement type="package" version="0.0.4">scmap-cli</requirement>
             <yield/>
       </requirements>
     </xml>
