@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_normalise_data" name="Scanpy NormaliseData" version="@TOOL_VERSION@+galaxy1">
+<tool id="scanpy_normalise_data" name="Scanpy NormaliseData" version="@TOOL_VERSION@+galaxy2">
   <description>to make all cells having the same total expression</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -14,6 +14,7 @@ PYTHONIOENCODING=utf-8 scanpy-normalise-data
     ${log_transform}
     @INPUT_OPTS@
     @OUTPUT_OPTS@
+    @EXPORT_MTX_OPTS@
 ]]></command>
 
   <inputs>
