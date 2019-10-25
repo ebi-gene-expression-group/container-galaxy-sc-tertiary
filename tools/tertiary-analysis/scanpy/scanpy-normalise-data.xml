@@ -11,6 +11,7 @@ PYTHONIOENCODING=utf-8 scanpy-normalise-data
     --normalize-to ${scale_factor}
     --fraction ${fraction}
     --save-raw ${save_raw}
+    ${log_transform}
     @INPUT_OPTS@
     @OUTPUT_OPTS@
 ]]></command>
@@ -23,6 +24,8 @@ PYTHONIOENCODING=utf-8 scanpy-normalise-data
     <param name="fraction" argument="--fraction" type="float" value="1" min="0" max="1"
            label="Exclude top expressed genes until the remaining account for no greater than specified fraction of total counts"
            help="Only non-excluded genes will sum up the target number."/>
+    <param name="log_transform" argument="--no-log-transform" type="boolean" truevalue="" falsevalue="--no-log-tranform" checked="True" 
+           label="Apply log transform?" help="If enabled, will apply a log transformation following normalisation."/>
     <param name="save_raw" argument="--save-raw" type="boolean" truevalue="yes" falsevalue="no" checked="true"
            label="Save normalised data in `.raw`" help="The saved normalised data are log1p transformed."/>
     <expand macro="export_mtx_params"/>
