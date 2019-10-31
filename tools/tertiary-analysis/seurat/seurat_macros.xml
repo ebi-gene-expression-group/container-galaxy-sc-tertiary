@@ -97,11 +97,14 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
 
     <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
+3.1+galaxy0: Moved to Seurat 3.
 
-0.0.1: Initial contribution. Maria Doyle, https://github.com/mblue9.
+  Find clusters: removed dims-use, k-param, prune-snn.
 
 2.3.1+galaxy0: Improved documentation and further exposition of all script's options. Pablo Moreno, Jonathan Manning and Ni Huang, Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
 EMBL-EBI https://www.ebi.ac.uk/. Parts obtained from wrappers from Christophe Antoniewski(https://github.com/drosofff) and Lea Bellenger(https://github.com/bellenger-l).
+
+0.0.1: Initial contribution. Maria Doyle, https://github.com/mblue9.
       ]]></token>
 
 
