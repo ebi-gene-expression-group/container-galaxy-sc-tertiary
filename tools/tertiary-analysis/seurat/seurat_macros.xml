@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <macros>
 
-    <token name="@VERSION@">0.0.5</token>
+    <token name="@VERSION@">3.1.2</token>
 
     <xml name="requirements">
         <requirements>
@@ -14,6 +14,41 @@
 echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla --slave -e "library(seurat); cat(sessionInfo()\$otherPkgs\$seurat\$Version)" 2> /dev/null | grep -v -i "WARNING: ")
     ]]></version_command>
     </xml>
+
+   <xml name="input_object_params">
+     <conditional name="input" label="Input format">
+       <param type="select" name="format" label="Choose the format of the input" help="RData, Loom or AnnData">
+         <option value="anndata" selected="true">AnnData</option>
+         <option value="loom">Loom</option>
+         <option value="rds_seurat">RDS with a Seurat object</option>
+         <option value="rds_sce">RDS with a Seurat object</option>
+       </param>
+       <when value="anndata">
+         <param type="data" name="anndata_file" label="AnnData file" help="The AnnData format provided by Scanpy" format="h5,h5ad"/>
+       </when>
+       <when value="loom">
+         <param type="data" name="loom_file" label="Loom file" help="Input as Loom v? file" format="h5,h5loom"/>
+       </when>
+       <when value="rds_seurat">
+         <param type="data" name="rds_seurat_file" label="RDS file" help="Input as RDS file with Seurat 3 object" format="rdata"/>
+       </when>
+       <when value="rds_sce">
+         <param type="data" name="rds_sce_file" label="RDS file" help="Input as RDS file with Single Cell Experiment object" format="rdata"/>
+       </when>
+     </conditional>
+   </xml>
+
+   <token name="@INPUT_OBJECT@">
+    #if $input.format == "anndata"
+        --input-object-file '$input.anndata_file' --input-format anndata
+    #else if $input.format == "loom"
+        --input-object-file '$input.loom_file' --input-format loom
+    #else if $input.format == "rds_seurat"
+        --input-object-file '$input.rds_seurat_file' --input-format seurat
+    #else if $input.format == "rds_sce"
+        --input-object-file '$input.rds_sce_file' --input-format singlecellexperiment
+    #end if    
+   </token>
 
     <xml name="genes-use-input">
       <param name="genes_use" argument="--genes-use" optional="true" type="data" format="tsv, txt" label="Genes to use" help="A file with gene names to use in construction of SNN graph if building directly based on expression data rather than a dimensionally reduced representation (i.e. PCs)."/>
