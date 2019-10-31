@@ -21,7 +21,7 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
          <option value="anndata" selected="true">AnnData</option>
          <option value="loom">Loom</option>
          <option value="rds_seurat">RDS with a Seurat object</option>
-         <option value="rds_sce">RDS with a Seurat object</option>
+         <option value="rds_sce">RDS with a Single Cell Experiment object</option>
        </param>
        <when value="anndata">
          <param type="data" name="anndata_file" label="AnnData file" help="The AnnData format provided by Scanpy" format="h5,h5ad"/>
@@ -50,7 +50,45 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
     #end if
    </token>
 
-    <xml name="genes-use-input">
+   <xml name="output_object_params">
+     <conditional name="output" label="Ouput format">
+       <param type="select" name="format" label="Choose the format of the output" help="Seurat, Single Cell Experiment, Loom or AnnData">
+         <option value="anndata" selected="true">AnnData</option>
+         <option value="loom">Loom</option>
+         <option value="rds_seurat">RDS with a Seurat object</option>
+         <option value="rds_sce">RDS with a Single Cell Experiment object</option>
+       </param>
+     </conditional>
+   </xml>
+
+   <xml name="output_files">
+    <data name="anndata_file" format="h5" label="${tool.name} on ${on_string}: Seurat AnnData">
+      <filter>output['format'] == 'anndata'</filter>
+    </data>
+    <data name="loom_file" format="h5" label="${tool.name} on ${on_string}: Seurat Loom">
+      <filter>output['format'] == 'loom'</filter>
+    </data>
+    <data name="rds_seurat_file" format="rdata" label="${tool.name} on ${on_string}: Seurat RDS">
+      <filter>output['format'] == 'rds_seurat'</filter>
+    </data>
+    <data name="rds_sce_file" format="rdata" label="${tool.name} on ${on_string}: Seurat Single Cell Experiment RDS">
+      <filter>output['format'] == 'rds_sce'</filter>
+    </data>
+   </xml>
+
+   <token name="@OUTPUT_OBJECT@">
+    #if $output.format == "anndata"
+        --output-object-file '$output.anndata_file' --output-format anndata
+    #else if $output.format == "loom"
+        --output-object-file '$output.loom_file' --output-format loom
+    #else if $output.format == "rds_seurat"
+        --output-object-file '$output.rds_seurat_file' --output-format seurat
+    #else if $output.format == "rds_sce"
+        --output-object-file '$output.rds_sce_file' --output-format singlecellexperiment
+    #end if
+   </token>
+
+    <xml name="genes-use-output">
       <param name="genes_use" argument="--genes-use" optional="true" type="data" format="tsv, txt" label="Genes to use" help="A file with gene names to use in construction of SNN graph if building directly based on expression data rather than a dimensionally reduced representation (i.e. PCs)."/>
     </xml>
     <xml name="dims-use-input">
