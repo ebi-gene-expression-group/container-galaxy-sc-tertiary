@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <macros>
 
-    <token name="@VERSION@">3.1.2</token>
+    <token name="@VERSION@">3.1</token>
 
     <xml name="requirements">
         <requirements>
@@ -47,7 +47,7 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
         --input-object-file '$input.rds_seurat_file' --input-format seurat
     #else if $input.format == "rds_sce"
         --input-object-file '$input.rds_sce_file' --input-format singlecellexperiment
-    #end if    
+    #end if
    </token>
 
     <xml name="genes-use-input">
