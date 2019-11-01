@@ -154,7 +154,8 @@ if (! is.na(opt$first_field)){
 # Version transcripts
 
 if ( opt$feature_type == 'transcript' && opt$version_transcripts && all(c('transcript_id', 'transcript_version') %in% colnames(anno) )){
-  anno$transcript_id <- paste(anno$transcript_id, anno$transcript_version, sep='.')
+  has_transcript_version <- ! is.na(anno$transcript_version)
+  anno$transcript_id[has_transcript_version] <- paste(anno$transcript_id[has_transcript_version], anno$transcript_version[has_transcript_version], sep='.')
 }
 
 # If specified, filter down a provided cDNA FASTA file
