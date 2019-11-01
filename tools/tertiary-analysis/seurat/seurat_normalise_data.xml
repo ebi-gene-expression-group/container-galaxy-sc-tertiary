@@ -1,4 +1,4 @@
-<tool id="seurat_normalise_data" name="Seurat NormaliseData" version="2.3.1+galaxy1">
+<tool id="seurat_normalise_data" name="Seurat NormaliseData" version="@VERSION@+galaxy0">
     <description>normalise data</description>
     <macros>
         <import>seurat_macros.xml</import>
@@ -8,7 +8,7 @@
     <command detect_errors="exit_code"><![CDATA[
 seurat-normalise-data.R
 
---input-object-file '$input'
+@INPUT_OBJECT@
 #if $norm:
     --normalization-method $norm
 #end if
@@ -18,12 +18,17 @@ seurat-normalise-data.R
 #if $scale:
     --scale-factor $scale
 #end if
---output-object-file '$output'
+@OUTPUT_OBJECT@
 ]]></command>
 
     <inputs>
-        <param name="input" argument="--input-object-file" type="data" format="rdata" label="Seurat RDS object" help="Possibly the output of Seurat filter cells or Seurat create object." />
-        <param name="norm" argument="--normalization-method" type="text" optional="True" label="Normalisation method" help = "Method for normalization. Default is log-normalization (LogNormalize)."/>
+        <expand macro="input_object_params"/>
+        <expand macro="output_object_params"/>
+        <param name="norm" argument="--normalization-method" type="select" optional="True" label="Normalisation method" help = "Method for normalization. Default is log-normalization (LogNormalize). Can be 'CLR' or 'RC' additionally.">
+          <option name="LogNormalize" selected="true">Log Normalise</option>
+          <option name="CLR">CLR</option>
+          <option name="RC">RC</option>
+        </param>
         <param name="assay" argument="--assay-type" type="text" optional="True" label="Assay type" help = "Type of assay to normalize for (default is RNA), but can be changed for multimodal analyses.">
             <validator type="regex" message="Please only use letters">^[\(\w\)]+$</validator>
         </param>
@@ -31,7 +36,7 @@ seurat-normalise-data.R
     </inputs>
 
     <outputs>
-        <data name="output" format="rdata" from_work_dir="*.rds" label="${tool.name} on ${on_string}: RDS file"/>
+        <expand macro="output_files"/>
     </outputs>
 
     <tests>
