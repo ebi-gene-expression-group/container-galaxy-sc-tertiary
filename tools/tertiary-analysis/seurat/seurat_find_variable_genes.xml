@@ -1,4 +1,4 @@
-<tool id="seurat_find_variable_genes" name="Seurat FindVariableGenes" version="2.3.1+galaxy1">
+<tool id="seurat_find_variable_genes" name="Seurat FindVariableGenes" version="@VERSION@+galaxy0">
     <description>identify variable genes</description>
     <macros>
         <import>seurat_macros.xml</import>
@@ -8,9 +8,12 @@
     <command detect_errors="exit_code"><![CDATA[
 seurat-find-variable-genes.R
 
---input-object-file '$input'
+@INPUT_OBJECT@
 #if $mean:
     --mean-function '$mean'
+#end if
+#if $selection_method
+  --selection-method '$selection_method'
 #end if
 #if $disp:
 --dispersion-function $disp
@@ -27,22 +30,29 @@ seurat-find-variable-genes.R
 #if $yhigh:
 --y-high-cutoff $yhigh
 #end if
---output-object-file '$output'
+@OUTPUT_OBJECT@
 --output-text-file '$output_tab'
 ]]></command>
 
     <inputs>
-        <param name="input" argument="--input-object-file" type="data" format="rdata" label="Seurat RDS object" help="R serialized object for Seurat, normally the one produced by Seurat FindVariableGenes" />
+        <expand macro="input_object_params"/>
+        <expand macro="output_object_params"/>
+        <param label="Number of features" optional="true" name="nfeatures" argument="--nfeatures" type="integer" help="Number of features to return."/>
         <param name="mean" argument="--mean-function" type="text" optional="True" label="Mean function" help="Function to compute x-axis value (average expression). Default is to take the mean of the detected (i.e. non-zero) values."/>
         <param name="disp" argument="--dispersion-function" type="text" optional="True" label="Dispersion function" help="Function to compute y-axis value (dispersion). Default is to take the standard deviation of all values." />
-        <param name="xlow" argument="--x-low-cutoff" type="float" optional="True" label="X-axis low cutoff" help="Bottom cutoff on x-axis for identifying variable genes."/>
-        <param name="xhigh" argument="--x-high-cutoff" type="float" optional="True" label="X-axis high cutoff" help="Top cutoff on x-axis for identifying variable genes."/>
-        <param name="ylow" argument="--y-low-cutoff" type="float" optional="True" label="Y-axis low cutoff" help="Bottom cutoff on y-axis for identifying variable genes."/>
-        <param name="yhigh" argument="--y-high-cutoff" type="float" optional="True" label="Y-axis high cutoff" help="Top cutoff on y-axis for identifying variable genes."/>
+        <param name="xlow" argument="--x-low-cutoff" type="float" optional="True" label="X-axis low cutoff" help="Bottom cutoff on x-axis (mean) for identifying variable genes."/>
+        <param name="xhigh" argument="--x-high-cutoff" type="float" optional="True" label="X-axis high cutoff" help="Top cutoff on x-axis (mean) for identifying variable genes."/>
+        <param name="ylow" argument="--y-low-cutoff" type="float" optional="True" label="Y-axis low cutoff" help="Bottom cutoff on y-axis (dispersion) for identifying variable genes."/>
+        <param name="yhigh" argument="--y-high-cutoff" type="float" optional="True" label="Y-axis high cutoff" help="Top cutoff on y-axis (dispersion) for identifying variable genes."/>
+        <param label="Selection method" optional="true" name="selection_method" argument="--selection-method" type="select" help="How to choose top variable features. Choose one of: 'vst', 'mvp', disp.">
+          <option value="vst" selected="true">vst</option>
+          <option value="mbp">mbp</option>
+          <option value="disp">disp</option>
+        </param>
     </inputs>
 
     <outputs>
-        <data name="output" format="rdata" from_work_dir="*.rds" label="${tool.name} on ${on_string}: Seurat RDS"/>
+        <expand macro="output_files"/>
         <data name="output_tab" format="tabular" from_work_dir="*.tab" label="${tool.name} on ${on_string}: Variable genes tabular file"/>
     </outputs>
 
