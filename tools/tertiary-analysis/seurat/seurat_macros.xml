@@ -1,14 +1,11 @@
 <?xml version="1.0"?>
 <macros>
-
     <token name="@VERSION@">3.1</token>
-
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="@VERSION@">seurat-scripts</requirement>
         </requirements>
     </xml>
-
     <xml name="version">
     	<version_command><![CDATA[
 echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla --slave -e "library(seurat); cat(sessionInfo()\$otherPkgs\$seurat\$Version)" 2> /dev/null | grep -v -i "WARNING: ")
@@ -97,6 +94,7 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
 
     <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
+
 3.1+galaxy0: Moved to Seurat 3.
 
   Find clusters: removed dims-use, k-param, prune-snn.
