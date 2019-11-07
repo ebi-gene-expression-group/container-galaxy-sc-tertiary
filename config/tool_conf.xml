@@ -225,6 +225,7 @@
     <tool file="tertiary-analysis/ucsc-cell-browser/cell-browser.xml"  labels="Viz"/>
   </section>
   <section name="Util" id="utilities">
-    <tool file="util/gtf2gene_list.xml"/>
+    <tool file="gtf-2-gene-list/gtf2featureAnnotation.xml" />
+    <tool file="salmon-kallisto-mtx-to-10x/salmonKallistoMtxTo10x.xml" />
   </section>
 </toolbox>

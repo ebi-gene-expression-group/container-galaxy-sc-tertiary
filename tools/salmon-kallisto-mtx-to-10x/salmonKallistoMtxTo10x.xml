@@ -1,0 +1,62 @@
+<tool id="_salmon_kallisto_mtx_to_10x" name="salmonKallistoMtxTo10x" version="0.0.1+galaxy0">
+    <description>Transforms .mtx matrix and associated labels into a format compatible with tools expecting old-style 10X data</description>
+    <requirements>
+      <requirement type="package">scipy</requirement>
+      <requirement type="package">pandas</requirement>
+    </requirements>
+    <command interpreter="python" detect_errors="exit_code"><![CDATA[
+        $__tool_directory__/salmonKallistoMtxTo10x.py --cell_prefix "${cell_prefix}" "${mtx_file}" "${genes_file}" "${barcodes_file}" ./
+	    ]]></command>
+
+    <inputs>
+        <param name="mtx_file" type="data" format="txt" label=".mtx-format matrix" />
+        <param name="genes_file" type="data" format="txt" label="Tab-delimited genes file" />
+        <param name="barcodes_file" type="data" format="txt" label="Tab-delimited barcodes file" />
+        <param name="cell_prefix" type="text" optional='true' value="" label="Prefix to prepend to cell names / barcodes" help="This is useful when multiple matrices from different libraries with overlapping barcodes will be merged"/>
+    </inputs>
+
+    <outputs>
+        <data name="genes_out" format="txt" from_work_dir="genes.tsv" label="${tool.name} on ${on_string}: genes"/>
+        <data name="barcodes_out" format="txt" from_work_dir="barcodes.tsv" label="${tool.name} on ${on_string}: barcodes"/>
+        <data name="matrix_out" format="txt" from_work_dir="matrix.mtx" label="${tool.name} on ${on_string}: matrix" />
+    </outputs>
+    
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+
+Kallisto and Alevin (and possibly other tools) output an MTX file and associated labels that are not consistent with the old-style 10X, meaning that routines designed to parse those files cannot be used. This tool transforms (in the mathematical sense) the matrix, and reformats the genes file (essentially duplicating the column) to match those earlier conventions.
+
+**Inputs**
+
+MTX and row and gene labels from the relevant tool. For Alevin this will be
+
+ * Matrix file: quants_mat.mtx.gz 
+ * Genes file: quants_mat_cols.txt
+ * Barcodes file: quants_mat_rows.txt
+
+For Kallisto it will be:
+
+ * Matrix file: [name].mtx.gz 
+ * Genes file: [name].genes.txt
+ * Barcodes file: [name].barcodes.txt
+
+-----
+
+**Outputs**
+
+ * MTX, gene and cell labels in 10X style
+]]></help>
+<citations>
+  <citation type="bibtex">
+@misc{github-hinxton-single-cell,
+author = {Jonathan Manning, EBI Gene Expression Team},
+year = {2019},
+title = {Hinxton Single Cell Anlysis Environment},
+publisher = {GitHub},
+journal = {GitHub repository},
+url = {https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary},
+  }</citation>
+</citations>
+</tool>

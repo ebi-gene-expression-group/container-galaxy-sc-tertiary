@@ -1,0 +1,7 @@
+categories: [Sequence Analysis]
+description: Transforms .mtx matrix and associated labels into a format compatible with tools expecting old-style 10X data
+homepage_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary 
+long_description: Kallisto and Alevin (and possibly other tools) output an MTX file and associated labels that are not consistent with the old-style 10X, meaning that routines designed to parse those files cannot be used. This tool transforms (in the mathematical sense) the matrix, and reformats the genes file (essentially duplicating the column) to match those earlier conventions.
+name: salmon_kallisto_mtx_to_10x 
+owner: ebi-gxa
+remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/tools/salmon-kallisto-mtx-to-10x/.shed.yml
