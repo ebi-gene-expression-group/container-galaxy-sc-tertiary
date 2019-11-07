@@ -52,11 +52,25 @@ option_list = list(
     help = "Number of bins used to calculate density plot"
   ),
   make_option(
-    c("-o", "--output-file"),
+    c("-y", "--roryk-multiplier"),
+    action = "store",
+    default = 1.5,
+    type = 'numeric',
+    help = "Above-baseline multiplier to calculate roryk threshold"
+  ),
+  make_option(
+    c("-o", "--output-plot"),
     action = "store",
     default = 'barcode_plot.png',
     type = 'character',
     help = "File path for output plot"
+  ),
+  make_option(
+    c("-t", "--output-thresholds"),
+    action = "store",
+    default = 'barcode_thresholds.txt',
+    type = 'character',
+    help = "File path for output file containing calculted thresholds"
   )
 )
 
@@ -85,7 +99,7 @@ if (is.na(opt$mtx_matrix)){
 
 # Pick a cutoff on count as per https://github.com/COMBINE-lab/salmon/issues/362#issuecomment-490160480
 
-pick_roryk_cutoff = function(bcs){
+pick_roryk_cutoff = function(bcs, above_baseline_multiplier = 1.5){
   bcs_hist = hist(log10(bcs), plot=FALSE, n=opt$density_bins)
   mids = bcs_hist$mids
   vals = bcs_hist$count
@@ -96,9 +110,9 @@ pick_roryk_cutoff = function(bcs){
   
   peak <- which(wdensity == max(wdensity[((length(wdensity)+1)/2):length(wdensity)]))
   
-  # Cutoff is the point before the peak at which density falls below 2X baseline
+  # Cutoff is the point before the peak at which density falls below the multiplier of baseline
   
-  10^mids[max(which(wdensity[1:peak] < (1.5*baseline)))]
+  10^mids[max(which(wdensity[1:peak] < (above_baseline_multiplier*baseline)))]
 }
 
 # Plot densities 
@@ -129,7 +143,7 @@ barcode_rank_plot <- function(br.out, roryk_total_cutoff, knee, inflection, name
 
 barcode_counts <- barcode_counts[order(barcode_counts$V2, decreasing = TRUE), ]
 
-roryk_count_cutoff <- pick_roryk_cutoff(barcode_counts$V2)
+roryk_count_cutoff <- pick_roryk_cutoff(barcode_counts$V2, opt$roryk_multiplier)
   
 # Run dropletUtils' barcodeRanks to get knee etc
 br.out <- barcodeRanks(t(barcode_counts[,2,drop=FALSE]))
@@ -147,6 +161,10 @@ plots <- list(
   roryk = barcode_density_plot(barcode_counts$V2, roryk_count_cutoff, dropletutils_knee, dropletutils_inflection, name = '   ')
 )
 
-png(width = 1000, height = 600, file=opt$output_file)
+# Create output plot
+png(width = 1000, height = 600, file=opt$output_plot)
 grid.arrange(plots$dropletutils, plots$roryk, nrow=1)
 dev.off()
+
+# Return calculated thresholds
+write.table(data.frame(dropletutils_knee = dropletutils_knee, dropletutils_inflection = dropletutils_inflection, roryk=roryk_count_cutoff), file = opt$output_thresholds, row.names = FALSE, quote = FALSE)

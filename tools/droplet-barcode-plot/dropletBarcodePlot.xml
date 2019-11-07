@@ -10,7 +10,7 @@
       <requirement type="package">bioconductor-delayedarray</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-        $__tool_directory__/dropletBarcodePlot.R --output-file "${plot_file}" --label "${label}" --density-bins "${density_bins}"
+        $__tool_directory__/dropletBarcodePlot.R --output-plot "${plot_file}" --output-thresholds "${thresholds_file}" --label "${label}" --density-bins "${density_bins}" --roryk-multiplier "${roryk_multiplier}"
 #if $input.type == 'mtx_matrix'
 --mtx-matrix ${input.mtx_matrix}
 #if $input.cellsbyrow
@@ -35,10 +35,12 @@
         </conditional>
         <param name="label" type="text" optional='true' value="" label="Label to place in plot title"/>
         <param name="density_bins" type="integer" value="50" label="Number of bins used in barcode count frequency distribution"/>
+        <param name="roryk_multiplier" type="float" value="1.5" label="Above-baseline multiplier to calculate roryk threshold"/>
     </inputs>
 
     <outputs>
-        <data name="plot_file" format="png" label="${tool.name} on ${on_string}"/>
+        <data name="plot_file" format="png" label="${tool.name} on ${on_string}: barcode rank plot"/>
+        <data name="thresholds_file" format="txt" label="${tool.name} on ${on_string}: barcode thresholds"/>
     </outputs>
     
     <tests>
