@@ -4,4 +4,4 @@ homepage_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-t
 long_description: Given a GTF file from Ensembl, this utility will generate a simple text file containing annotation, derived using the rtracklayer R package. All annotations can be extracted or a selection of specified columns, with or without a header.
 name: gtf2gene_list 
 owner: ebi-gxa
-remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/tools/util/.shed.yml
+remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/tools/gtf-2-gene-list/.shed.yml
