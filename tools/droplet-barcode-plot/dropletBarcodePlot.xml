@@ -1,0 +1,84 @@
+<tool id="_dropletBarcodePlot" name="Droplet barcode rank plot" version="1.6.1+galaxy0">
+    <description>Creates a barcode rank plot for quality control of droplet single-cell RNA-seq data</description>
+    <requirements>
+      <requirement type="package" version="1.6.1">bioconductor-dropletutils</requirement>
+      <requirement type="package">openblas</requirement>
+      <requirement type="package">r-matrix</requirement>
+      <requirement type="package">r-ggplot2</requirement>
+      <requirement type="package">r-optparse</requirement>
+      <requirement type="package">r-gridextra</requirement>
+      <requirement type="package">bioconductor-delayedarray</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        $__tool_directory__/dropletBarcodePlot.R --output-file "${plot_file}" --label "${label}" --density-bins "${density_bins}"
+#if $input.type == 'mtx_matrix'
+--mtx-matrix ${input.mtx_matrix}
+#if $input.cellsbyrow
+--cells-by-row
+#end if
+#end if
+#if $input.type == 'barcode_freqs'
+--barcode-frequencies ${input.barcode_frequencies}
+#end if
+	    ]]></command>
+
+    <inputs>
+        <conditional name="input">
+          <param name="type" type="boolean" truevalue='mtx_matrix' falsevalue='barcode_freqs' checked="true" label="Input MTX-format matrix?" help="Barcode frequencies will be calculated for you. The alternative is to provide barcode frequencies directly"/>
+          <when value="mtx_matrix">
+            <param name="mtx_matrix" type="data" format="mtx" label="Matrix-market format matrix file, with cells by column (overrides --barcode-frequencies if supplied)" />
+            <param name="cellsbyrow" type="boolean" checked="false" label="For use with --mtx-matrix: force interpretation of matrix to assume cells are by row, rather than by column (default)"/>
+          </when>
+          <when value="barcode_freqs">
+            <param name="barcode_frequencies" type="data" format="txt" label="A two-column tab-delimited file, with barcodes in the first column and frequencies in the second" />
+          </when>
+        </conditional>
+        <param name="label" type="text" optional='true' value="" label="Label to place in plot title"/>
+        <param name="density_bins" type="integer" value="50" label="Number of bins used in barcode count frequency distribution"/>
+    </inputs>
+
+    <outputs>
+        <data name="plot_file" format="png" label="${tool.name} on ${on_string}"/>
+    </outputs>
+    
+    <tests>
+      <test>
+        <conditional name='input'>
+          <param name="type" value="barcode_freqs"/>
+          <param name="barcode_frequencies" ftype="txt" value="raw_cb_frequency.txt"/>
+        </conditional>      
+        <output name="plot_file" file="barcode_plot.png"/>
+      </test>
+    </tests>
+
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+
+Given a barcode freqeuncy table or an MTX-format matrix from which one can be calculated, produces a barcode rank plot to assess distinctness of droplets with cells over those without (a key mark of good-quality droplet single-cell RNA-seq data). 
+
+Thresholds are calculated and plotted, either with DropletUtils or by custom method discussed at https://github.com/COMBINE-lab/salmon/issues/362#issuecomment-490160480.
+
+**Inputs**
+
+    * two-column tab-delimted text file with barcode frequencies OR an MTX-format matrix file
+
+-----
+
+**Outputs**
+
+    * PNG-format plot file.
+]]></help>
+<citations>
+  <citation type="bibtex">
+@misc{github-hinxton-single-cell,
+author = {Jonathan Manning, EBI Gene Expression Team},
+year = {2019},
+title = {Hinxton Single Cell Anlysis Environment},
+publisher = {GitHub},
+journal = {GitHub repository},
+url = {https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary},
+  }</citation>
+</citations>
+</tool>
