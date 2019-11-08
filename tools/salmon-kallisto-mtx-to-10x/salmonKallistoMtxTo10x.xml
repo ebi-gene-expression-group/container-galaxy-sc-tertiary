@@ -1,15 +1,22 @@
-<tool id="_salmon_kallisto_mtx_to_10x" name="salmonKallistoMtxTo10x" version="0.0.1+galaxy0">
+<tool id="_salmon_kallisto_mtx_to_10x" name="salmonKallistoMtxTo10x" version="0.0.1+galaxy1">
     <description>Transforms .mtx matrix and associated labels into a format compatible with tools expecting old-style 10X data</description>
     <requirements>
       <requirement type="package">scipy</requirement>
       <requirement type="package">pandas</requirement>
     </requirements>
-    <command interpreter="python" detect_errors="exit_code"><![CDATA[
-        $__tool_directory__/salmonKallistoMtxTo10x.py --cell_prefix "${cell_prefix}" "${mtx_file}" "${genes_file}" "${barcodes_file}" ./
+    <command detect_errors="exit_code"><![CDATA[
+        file $mtx_file | grep 'gzip compressed' > /dev/null;
+        if [ $? -eq 0 ]; then
+            matrixfile=matrix.mtx.gz;
+        else
+            matrixfile=matrix.mtx;
+        fi;
+        ln -s ${mtx_file} \$matrixfile;
+        $__tool_directory__/salmonKallistoMtxTo10x.py --cell_prefix "${cell_prefix}" "\${matrixfile}" "${genes_file}" "${barcodes_file}" ./
 	    ]]></command>
 
     <inputs>
-        <param name="mtx_file" type="data" format="txt" label=".mtx-format matrix" />
+        <param name="mtx_file" type="data" format="mtx" label=".mtx-format matrix" />
         <param name="genes_file" type="data" format="txt" label="Tab-delimited genes file" />
         <param name="barcodes_file" type="data" format="txt" label="Tab-delimited barcodes file" />
         <param name="cell_prefix" type="text" optional='true' value="" label="Prefix to prepend to cell names / barcodes" help="This is useful when multiple matrices from different libraries with overlapping barcodes will be merged"/>
@@ -18,7 +25,7 @@
     <outputs>
         <data name="genes_out" format="txt" from_work_dir="genes.tsv" label="${tool.name} on ${on_string}: genes"/>
         <data name="barcodes_out" format="txt" from_work_dir="barcodes.tsv" label="${tool.name} on ${on_string}: barcodes"/>
-        <data name="matrix_out" format="txt" from_work_dir="matrix.mtx" label="${tool.name} on ${on_string}: matrix" />
+        <data name="matrix_out" format="mtx" from_work_dir="matrix.mtx" label="${tool.name} on ${on_string}: matrix" />
     </outputs>
     
     <help><![CDATA[
