@@ -32,11 +32,9 @@
   </outputs>
 
   <help><![CDATA[
-=============================================================
-Distinguish between droplets containing cells and ambient RNA
-in a droplet-based single-cell RNA sequencing experiment. 
-(`emptyDrops()`)
-=============================================================
+========================================================================================================================================
+Distinguish between droplets containing cells and ambient RNA in a droplet-based single-cell RNA sequencing experiment. (`emptyDrops()`)
+========================================================================================================================================
 
 This tool takes a SingleCellExeriment object and esitmates empty cells. From ?emptyDrops():
 
