@@ -12,15 +12,32 @@ ln -s "$matrix" matrix.mtx;
 ln -s "$genes" genes.tsv;
 ln -s "$barcodes" barcodes.tsv;
 
-seurat-read-10x.R -d ./ -o "$R_seurat_serialized"
+seurat-read-10x.R -d ./
+
+#if $metadata
+  --metadata '$metadata'
+#end if
+#if $min_cells
+  --min-cells '$min_cells'
+#end if
+#if $min_features
+  --min-features '$min_features'
+#end if
+
+@OUTPUT_OBJECT@
+
 ]]></command>
 <inputs>
     <param type="data" name="matrix" help="Raw expression quantification as a sparse matrix in Matrix Market format, where each column is a gene and each row is a barcode/cell." format="txt" label="Expression matrix in sparse matrix format (.mtx)" />
     <param type="data" name="genes" help="Matrix market column file for genes" label="Gene table" format="tsv,tabular"/>
     <param type="data" name="barcodes" help="Matrix market row file for genes" label="Barcode/cell table" format="tsv,tabular"/>
+    <param label="Cell Metadata" optional="true" name="metadata" argument="--metadata" type="data" format="tsv,tabular" help="File with metdata for the cells, first column should be cell identifiers as used in the cells 10x file."/>
+    <param label="Minimum cells to include features" optional="true" name="min_cells" argument="--min-cells" type="integer" help="Include features detected in at least this many cells. Will subset the counts matrix as well. To reintroduce excluded features, create a new object with a lower cutoff."/>
+    <param label="Minimum features to include cells" optional="true" name="min_features" argument="--min-features" type="integer" help="Include cells where at least this many features are detected."/>
+    <expand macro="output_object_params"/>
 </inputs>
 <outputs>
-    <data name="R_seurat_serialized" format="rdata" label="${tool.name} on ${on_string}: RData file" />
+    <expand macro="output_files"/>
 </outputs>
 
 <tests>

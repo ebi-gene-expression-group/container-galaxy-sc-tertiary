@@ -1,4 +1,4 @@
-<tool id="seurat_create_seurat_object" name="Seurat CreateSeuratObject" version="2.3.1+galaxy0">
+<tool id="seurat_create_seurat_object" name="Seurat CreateSeuratObject" version="@VERSION@+galaxy0">
     <description>create a Seurat object</description>
     <macros>
         <import>seurat_macros.xml</import>
