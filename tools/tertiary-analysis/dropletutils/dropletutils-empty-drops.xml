@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="dropletutils_empty-drops" name="DropletUtils emptyDrops" version="@TOOL_VERSION@+galaxy0">
+<tool id="dropletutils_empty_drops" name="DropletUtils emptyDrops" version="@TOOL_VERSION@+galaxy0">
   <description>Distinguish between droplets containing cells and ambient RNA in a droplet-based single-cell RNA sequencing experiment.</description>
   <macros>
     <import>dropletutils_macros.xml</import>
