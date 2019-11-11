@@ -161,6 +161,7 @@
   </section>
   <section name="DropletUtils" id="droputil-tools">
     <tool file="tertiary-analysis/dropletutils/dropletutils-read-10x.xml"/>
+    <tool file="tertiary-analysis/dropletutils/dropletutils-empty-drops.xml"/>
   </section>
   <section name="Scater" id="scater-tools">
     <tool file="tertiary-analysis/scater/scater-calculate-cpm.xml"/>
