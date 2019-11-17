@@ -38,6 +38,7 @@ seurat-run-tsne.R
 
     <inputs>
         <expand macro="input_object_params"/>
+        <expand macro="output_object_params"/>
         <expand macro="genes-use-input"/>
         <section name="adv" title="Advanced Options">
             <expand macro="dims-use-input"/>
