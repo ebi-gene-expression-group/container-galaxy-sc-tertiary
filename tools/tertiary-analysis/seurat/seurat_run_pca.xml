@@ -10,7 +10,7 @@ seurat-run-pca.R
 
 @INPUT_OBJECT@
 #if $pc_genes:
-    --pc-genes '$pc-genes'
+    --pc-genes '$pc_genes'
 #end if
 #if $pc_cells
   --pc-cells '$pc_cells'
@@ -22,7 +22,9 @@ seurat-run-pca.R
 #if $pcs_compute:
     --pcs-compute '$pcs_compute'
 #end if
-'$reverse_pca'
+#if $reverse_pca
+  '$reverse_pca'
+#end if
 
 ]]></command>
 
