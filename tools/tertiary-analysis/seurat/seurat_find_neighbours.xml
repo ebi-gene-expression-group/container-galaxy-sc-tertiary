@@ -6,13 +6,13 @@
     <expand macro="requirements" />
     <expand macro="version" />
     <command detect_errors="exit_code"><![CDATA[
-seurat-find-neighbors.R
+seurat-find-neighbours.R
 @INPUT_OBJECT@
-'$distance_matrix'
+$distance_matrix
 #if $k_param
   --k-param  '$k_param'
 #end if
-'$compute_snn'
+$compute_snn
 #if $prune_snn
   --prune-snn  '$prune_snn'
 #end if
@@ -28,7 +28,7 @@ seurat-find-neighbors.R
 #if $nn_eps and $nn_method == "rann"
   --nn-eps '$nn_eps'
 #end if
-'$force_recalc'
+$force_recalc
 #if $features_file
   --features '$features_file'
 #else if $features
@@ -43,7 +43,9 @@ seurat-find-neighbors.R
 #if $assay
   --assay  '$assay'
 #end if
-'$do_plot'
+#if $do_plot
+  $do_plot
+#end if
 @OUTPUT_OBJECT@
 ]]></command>
 
@@ -56,9 +58,9 @@ seurat-find-neighbors.R
         <param label="Reduction" optional="true" name="reduction" argument="--reduction" type="text" help="Reduction to use as input for building the SNN"/>
         <param label="Dimensions" optional="true" name="dims" argument="--dims" type="text" help="Dimensions of reduction to use as input. A comma-separated list of the dimensions to use in construction of the SNN graph (e.g. To use the first 5 PCs, pass 1,2,3,4,5)."/>
         <param label="Assay" optional="true" name="assay" argument="--assay" type="text" help="Assay to use in construction of SNN"/>
-        <param label="Distance matrix" optional="true" name="distance_matrix" argument="--distance-matrix" type="boolean" truevalue="--distance-matrix" checked="false" help="Boolean value of whether the provided matrix is a distance matrix; note, for objects of class dist, this parameter will be set automatically."/>
+        <param label="Distance matrix" optional="true" name="distance_matrix" argument="--distance-matrix" type="boolean" truevalue="--distance-matrix" falsevalue="" checked="false" help="Boolean value of whether the provided matrix is a distance matrix; note, for objects of class dist, this parameter will be set automatically."/>
         <param label="k" optional="true" name="k_param" argument="--k-param" type="integer" help="Defines k for the k-nearest neighbor algorithm"/>
-        <param label="Compute SNN" optional="true" name="compute_snn" argument="--compute-snn" type="boolean" truevalue="--compute-snn" checked="false" help="Also compute the shared nearest neighbor graph"/>
+        <param label="Compute SNN" optional="true" name="compute_snn" argument="--compute-snn" type="boolean" truevalue="--compute-snn" falsevalue="" checked="false" help="Also compute the shared nearest neighbor graph"/>
         <param label="Prune SNN" optional="true" name="prune_snn" argument="--prune-snn" type="float" help="Sets the cutoff for acceptable Jaccard index when computing the neighborhood overlap for the SNN construction. Any edges with values less than or equal to this will be set to 0 and removed from the SNN graph. Essentially sets the strigency of pruning (0 --- no pruning, 1 --- prune everything)."/>
         <param label="NN method" optional="true" name="nn_method" argument="--nn-method" type="select" help="Method for nearest neighbor finding. Options include: rann (default), annoy">
           <option value="rann" selected="true">rann</option>
@@ -72,13 +74,14 @@ seurat-find-neighbors.R
         </param>
         <param label="Graph name" optional="true" name="graph_name" argument="--graph-name" type="text" help="Name of graph to use for the clustering algorithm."/>
         <param label="NN Error bound" optional="true" name="nn_eps" argument="--nn-eps" type="float" help="Error bound when performing nearest neighbor seach using RANN; default of 0.0 implies exact nearest neighbor search"/>
-        <param label="Force recalc" optional="true" name="force_recalc" argument="--force-recalc" type="boolean" truevalue="--force-recalc" checked="false" help="Force recalculation of SNN"/>
+        <param label="Force recalc" optional="true" name="force_recalc" argument="--force-recalc" type="boolean" truevalue="--force-recalc" falsevalue="" checked="false" help="Force recalculation of SNN"/>
     </inputs>
 
     <outputs>
         <expand macro="output_files"/>
-        <data name="snn_on_tsne" format="pdf" from_work_dir="snn_on_tsne.pdf" label="${tool.name} on ${on_string}: SNN on tSNE Plot"/>
+        <data name="snn_on_tsne" format="pdf" from_work_dir="snn_on_tsne.pdf" label="${tool.name} on ${on_string}: SNN on tSNE Plot">
           <filter>do_plot</filter>
+        </data>
     </outputs>
 
     <tests>
