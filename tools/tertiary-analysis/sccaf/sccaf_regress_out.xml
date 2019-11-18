@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="sccaf_regress_out" name="SCCAF mulitple regress out" version="@TOOL_VERSION@+galaxy0">
+  <description>with multiple categorical keys on an AnnData object.</description>
+  <macros>
+    <import>sccaf_macros.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+  ln -s '${input_obj_file}' input.h5 &&
+  sccaf-regress-out -i input.h5 -o output.h5 -k '${keys_to_regress}'
+  ]]></command>
+  <configfiles>
+    <configfile name="operations">
+
+
+import SCCAF as sf
+import scanpy as sc
+import argparse
+import logging
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-i", "--input-file",
+                    help="Path to input in AnnData or Loom", required=True)
+parser.add_argument("-o", "--output-file", required=True,
+                    help="Path for output file for annData with regression done.")
+parser.add_argument('-k', "--keys-to-regress", required=True,
+                    help="Keys to regress out, comma separated. They should be in the anndata object."
+                    )
+
+args = parser.parse_args()
+
+if len(args.keys_to_regress) == 0:
+    logging.error("--keys-to-regress value cannot be empty")
+    exit(1)
+
+keys_to_regress = [k.strip() for k in str(args.keys_to_regress).split(sep=",")]
+
+if len(keys_to_regress) == 0:
+    logging.error("Comma separated list of keys contains no keys")
+    exit(1)
+
+ad = sc.read(args.input_file)
+
+for k in keys_to_regress:
+    if k not in ad.obs:
+        logging.error("Variable {} is not in the annData object".format(k))
+        exit(1)
+
+sf.sc_pp_regress_out(ad, keys=keys_to_regress)
+ad.write(args.output_file, compression='gzip')
+    </configfile>
+</configfiles>
+  <inputs>
+    <param name="input_obj_file" argument="input-object-file" type="data" format="h5" label="Input object in hdf5 AnnData format"/>
+    <param name="keys_to_regress" label="Keys to regress" help="Comma separated keys for regressing out; they need to exist in the observations part of the AnnData object." type="text"/>
+  </inputs>
+  <outputs>
+    <data name="output" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string}: regressesed out on ${keys_to_regress}"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="input_obj_file" value="find_cluster.h5"/>
+      <param name="input_format" value="anndata"/>
+      <param name="color_by" value="louvain"/>
+      <output name="output" file="output.h5" ftype="h5" compare="sim_size"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+=============================
+Operations on AnnData objects
+=============================
+
+Performs the following operations:
+
+* Change observation fields, mostly for downstreaming processes convenience. Multiple fields can be changed as one.
+* Flag genes that start with a certain text: useful for flagging mitochondrial, spikes or other groups of genes.
+* For the flags created, calculates qc metrics (pct_<flag>_counts).
+* Calculates `n_genes`, `n_counts` for cells and `n_cells`, `n_counts` for genes.
+* For top <N> genes specified, calculate qc metrics (pct_counts_in_top_<N>_genes).
+
+This functionality will probably be added in the future to a larger package.
+]]></help>
+  <!-- <expand macro="citations"/> -->
+</tool>
