@@ -5,6 +5,10 @@
     <import>scanpy_macros2.xml</import>
   </macros>
   <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+ln -s '${input_obj_file}' input.h5 &&
+python $operations
+]]></command>
   <configfiles>
     <configfile name="operations">
 import scanpy as sc
@@ -47,10 +51,6 @@ if 'n_counts' not in adata.var.columns:
 adata.write('output.h5', compression='gzip')
     </configfile>
 </configfiles>
-  <command detect_errors="exit_code"><![CDATA[
-ln -s '${input_obj_file}' input.h5 &&
-python $operations
-]]></command>
 
   <inputs>
     <param name="input_obj_file" argument="input-object-file" type="data" format="h5" label="Input object in hdf5 AnnData format"/>
@@ -79,7 +79,7 @@ python $operations
       <param name="input_obj_file" value="find_cluster.h5"/>
       <param name="input_format" value="anndata"/>
       <param name="color_by" value="louvain"/>
-      <output name="output_png" file="run_tsne.png" ftype="png" compare="sim_size"/>
+      <output name="output" file="output.h5" ftype="h5" compare="sim_size"/>
     </test>
   </tests>
 
