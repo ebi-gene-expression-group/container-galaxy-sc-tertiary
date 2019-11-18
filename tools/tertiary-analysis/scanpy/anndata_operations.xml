@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="anndata_ops" name="AnnData Operations" version="0.0.1+galaxy0">
+  <description>modifies metadata and flags genes</description>
+  <macros>
+    <import>scanpy_macros2.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+ln -s '${input_obj_file}' input.h5 &&
+python $operations
+]]></command>
+  <configfiles>
+    <configfile name="operations">
+import scanpy as sc
+import logging
+
+adata = sc.read('input.h5')
+
+gene_name = '${gene_symbols_field}'
+qc_vars = list()
+
+#for $i, $s in enumerate($modifications)
+adata.obs['${s.to_obs}'] = adata.obs['${s.from_obs}']
+#end for
+
+gene_names = getattr(adata.var, gene_name)
+
+#for $i, $flag in enumerate($gene_flags)
+k_cat = gene_names.str.startswith('${flag.startswith}')
+if k_cat.sum() > 0:
+    adata.var['${flag.flag}'] = k_cat
+    qc_vars.append('${flag.flag}')
+else:
+    logging.warning('No genes starting with {} found, skip calculating expression of {} genes'.format('${flag.startswith}', '${flag.flag}'))
+#end for
+
+
+if len(qc_vars) > 0:
+    pct_top = [${top_genes}]
+    sc.pp.calculate_qc_metrics(adata, qc_vars=qc_vars, percent_top=pct_top, inplace=True)
+
+if 'n_genes' not in adata.obs.columns:
+    sc.pp.filter_cells(adata, min_genes=0)
+if 'n_counts' not in adata.obs.columns:
+    sc.pp.filter_cells(adata, min_counts=0)
+if 'n_cells' not in adata.var.columns:
+    sc.pp.filter_genes(adata, min_cells=0)
+if 'n_counts' not in adata.var.columns:
+    sc.pp.filter_genes(adata, min_counts=0)
+
+adata.write('output.h5', compression='gzip')
+    </configfile>
+</configfiles>
+
+  <inputs>
+    <param name="input_obj_file" argument="input-object-file" type="data" format="h5" label="Input object in hdf5 AnnData format"/>
+    <repeat name="modifications" title="Change field names in AnnData observations" min="0">
+      <param name="from_obs" type="text" label="Original name" help="Name in observations that you want to change">
+        <sanitizer>
+          <valid initial="string.printable"/>
+        </sanitizer>
+      </param>
+      <param name="to_obs" type="text" label="New name" help="New name in observations that you want to change"/>
+    </repeat>
+    <param name="gene_symbols_field" value='index' type="text" label="Gene symbols field in AnnData" help="Field inside var.params where the gene symbols are, normally 'index' or 'gene_symbols'"/>
+    <repeat name="gene_flags" title="Flag genes that start with these names">
+      <param name="startswith" type="text" label="Starts with" help="Text that you expect the genes to be flagged to start with, such as 'MT-' for mito genes"/>
+      <param name="flag" type="text" label="Var name" help="Name of the column in var.names where this boolean flag is stored, for example 'mito' for mitochondrial genes."/>
+    </repeat>
+    <param name="top_genes" label="Number of top genes" value='50' help="to calculate percentage of the flagged genes in that number of top genes. Used by sc.pp.calculate_qc_metrics (integer)." type="integer"/>
+  </inputs>
+
+  <outputs>
+    <data name="output" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string}: anndata operations"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="input_obj_file" value="find_cluster.h5"/>
+      <param name="input_format" value="anndata"/>
+      <param name="color_by" value="louvain"/>
+      <output name="output" file="output.h5" ftype="h5" compare="sim_size"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+=============================
+Operations on AnnData objects
+=============================
+
+Performs the following operations:
+
+* Change observation fields, mostly for downstreaming processes convenience. Multiple fields can be changed as one.
+* Flag genes that start with a certain text: useful for flagging mitochondrial, spikes or other groups of genes.
+* For the flags created, calculates qc metrics (pct_<flag>_counts).
+* Calculates `n_genes`, `n_counts` for cells and `n_cells`, `n_counts` for genes.
+* For top <N> genes specified, calculate qc metrics (pct_counts_in_top_<N>_genes).
+
+This functionality will probably be added in the future to a larger package.
+]]></help>
+  <expand macro="citations"/>
+</tool>
