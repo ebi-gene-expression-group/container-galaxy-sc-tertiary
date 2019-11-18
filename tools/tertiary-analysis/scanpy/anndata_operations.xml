@@ -32,7 +32,7 @@ else:
 
 
 if len(qc_vars) > 0:
-    pct_top = [${pct}]
+    pct_top = [${top_genes}]
     sc.pp.calculate_qc_metrics(adata, qc_vars=qc_vars, percent_top=pct_top, inplace=True)
 
 if 'n_genes' not in adata.obs.columns:
@@ -67,7 +67,7 @@ python $operations
       <param name="startswith" type="text" label="Starts with" help="Text that you expect the genes to be flagged to start with, such as 'MT-' for mito genes"/>
       <param name="flag" type="text" label="Var name" help="Name of the column in var.names where this boolean flag is stored, for example 'mito' for mitochondrial genes."/>
     </repeat>
-    <param name="pct" label="Top percent of genes" value='50' help="to use in sc.pp.calculate_qc_metrics (0 to 100)" type="integer"/>
+    <param name="top_genes" label="Number of top genes" value='50' help="to calculate percentage of the flagged genes in that number of top genes. Used by sc.pp.calculate_qc_metrics (integer)." type="integer"/>
   </inputs>
 
   <outputs>
@@ -94,6 +94,7 @@ Performs the following operations:
 * Flag genes that start with a certain text: useful for flagging mitochondrial, spikes or other groups of genes.
 * For the flags created, calculates qc metrics (pct_<flag>_counts).
 * Calculates `n_genes`, `n_counts` for cells and `n_cells`, `n_counts` for genes.
+* For top <N> genes specified, calculate qc metrics (pct_counts_in_top_<N>_genes).
 
 This functionality will probably be added in the future to a larger package.
 ]]></help>
