@@ -1,4 +1,4 @@
-<tool id="seurat_filter_cells" name="Seurat FilterCells" version="@VERSION@+galaxy0">
+<tool id="seurat_filter_cells" name="Seurat FilterCells" version="@SEURAT_VERSION@_@VERSION@+galaxy0">
     <description>filter cells in a Seurat object</description>
     <macros>
         <import>seurat_macros.xml</import>

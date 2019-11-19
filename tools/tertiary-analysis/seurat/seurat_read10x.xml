@@ -1,4 +1,4 @@
-<tool id="seurat_read10x" name="Seurat Read10x" version="@VERSION@+galaxy0">
+<tool id="seurat_read10x" name="Seurat Read10x" version="@SEURAT_VERSION@_@VERSION@+galaxy0">
 <description>Loads 10x data into a serialized seurat R object</description>
   <macros>
       <import>seurat_macros.xml</import>

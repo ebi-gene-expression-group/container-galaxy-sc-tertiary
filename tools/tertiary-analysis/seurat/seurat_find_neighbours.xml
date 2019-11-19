@@ -1,4 +1,4 @@
-<tool id="seurat_find_neighbours" name="Seurat FindNeighbours" version="@VERSION@+galaxy0">
+<tool id="seurat_find_neighbours" name="Seurat FindNeighbours" version="@SEURAT_VERSION@_@VERSION@+galaxy0">
     <description>constructs a Shared Nearest Neighbor (SNN) Graph</description>
     <macros>
         <import>seurat_macros.xml</import>
