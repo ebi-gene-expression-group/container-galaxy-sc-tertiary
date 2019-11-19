@@ -88,12 +88,17 @@ seurat-find-markers.R
 
 **What it does**
 
-Seurat_ is a toolkit for quality control, analysis, and exploration of single cell RNA sequencing data.
-It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enable users to identify and
-interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse
-types of single cell data.
+This tool finds markers (differentially expressed genes) for each of the identity classes in a dataset.
+It outputs a text file containing a ranked list of putative markers, and associated statistics (p-values, ROC score, etc.)
 
-This tool finds markers (differentially expressed genes) for each of the identity classes in a dataset. It outputs a text file containing a ranked list of putative markers, and associated statistics (p-values, ROC score, etc.)
+p-value adjustment is performed using bonferroni correction based on the total
+number of genes in the dataset. Other correction methods are not recommended,
+as Seurat pre-filters genes using the arguments above, reducing the number of
+tests performed. Lastly, as Aaron Lun has pointed out, p-values should be
+interpreted cautiously, as the genes used for clustering are the same genes
+tested for differential expression.
+
+@SEURAT_INTRO@
 
 -----
 

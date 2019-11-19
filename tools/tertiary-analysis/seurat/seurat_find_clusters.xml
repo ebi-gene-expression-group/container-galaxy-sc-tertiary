@@ -87,16 +87,14 @@
 
 **What it does**
 
-Seurat_ is a toolkit for quality control, analysis, and exploration of single cell RNA sequencing data.
-It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enable users to identify and
-interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse
-types of single cell data.
+Identify clusters of cells by a shared nearest neighbor (SNN) modularity optimization
+based clustering algorithm. First calculate k-nearest neighbors and construct t
+he SNN graph (using Seurat find neighbours).
+Then optimize the modularity function to determine clusters.
+For a full description of the algorithms, see Waltman and van Eck (2013)
+The European Physical Journal B.
 
-Seurat clustering use SNN method to determine different clusters in your dataset. In order to construct a
-SNN graph, you must have perform a PCA before launch this tool (you can use Seurat dimensional reduction).
-It will search k (30) nearest neighbors for each cells and link cells to each other if they shared the
-same neighbors. You can modulate the resolution in order to get larger (resolution superior to 1) or smaller
-(inferior to 1) clusters.
+@SEURAT_INTRO@
 
 -----
 

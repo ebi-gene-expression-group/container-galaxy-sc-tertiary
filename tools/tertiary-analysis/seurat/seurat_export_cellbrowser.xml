@@ -43,13 +43,12 @@ cd output_html && tar -cf '$output' *;
 
 **What it does**
 
-Seurat_ is a toolkit for quality control, analysis, and exploration of single cell RNA sequencing data.
-It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enable users to identify and
-interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse
-types of single cell data.
+This tool converts a Seurat object (hopefully with t-SNE results) and its
+accompanying marker genes file (optional) to a tar that can be feed to the
+UCSC CellBrowser tool.
 
-This tool converts a Seurat object (hopefully with t-SNE results) and its accompanying marker genes file (optional)
-to a tar that can be feed to the UCSC CellBrowser tool.
+@SEURAT_INTRO@
+
 -----
 
 **Inputs**

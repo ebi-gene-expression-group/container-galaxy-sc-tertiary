@@ -55,10 +55,7 @@ seurat-read-10x.R -d ./
 
   **What it does**
 
-  Seurat_ is a toolkit for quality control, analysis, and exploration of single cell RNA sequencing data.
-  It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enable users to identify and
-  interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse
-  types of single cell data. See the `Seurat Guided Clustering tutorial`_ for more information.
+  @SEURAT_INTRO@
 
   **Read 10x-Genomics-formatted mtx directory (`read_10x_mtx`)**
 
@@ -78,6 +75,7 @@ seurat-read-10x.R -d ./
       * Raw expression quantification as a sparse matrix in Matrix Market format, where the each column is a gene and each row is a barcode/cell.
       * A gene table of at least two columns where the first column gives the gene IDs.
       * A barcode/cell table of at least one column giving the barcode/cell IDs.
+      * Optionally, a file with cell metadata.
 
   **Outputs**
       * R object for Seurat

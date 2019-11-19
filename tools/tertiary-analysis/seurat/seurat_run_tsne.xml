@@ -76,10 +76,9 @@ It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enab
 interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse
 types of single cell data.
 
-Run t-SNE dimensionality reduction on selected features. Has the option of
-running in a reduced dimensional space (i.e. spectral tSNE, recommended),
-or running based on a set of genes. For details about stored TSNE calculation
-parameters, see standard output of the tool.
+Run t-SNE dimensionality reduction on selected features. Has the option of running
+in a reduced dimensional space (i.e. spectral tSNE, recommended), or
+running based on a set of genes.
 
 -----
 

@@ -85,13 +85,12 @@
 
 **What it does**
 
-Seurat_ is a toolkit for quality control, analysis, and exploration of single cell RNA sequencing
-data.  It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enable users to
-identify and interpret sources of heterogeneity from single cell transcriptomic measurements, and to
-integrate diverse types of single cell data.
+Graphs the output of a dimensional reduction technique on a 2D scatter plot
+where each point is a cell and it's positioned based on the cell embeddings
+determined by the reduction technique. By default, cells are colored by their
+identity class (can be changed with the group.by parameter).
 
-This tool graphs the output of a dimensional reduction technique (PCA by default). Cells are colored
-by their identity class.
+@SEURAT_INTRO@
 
 -----
 

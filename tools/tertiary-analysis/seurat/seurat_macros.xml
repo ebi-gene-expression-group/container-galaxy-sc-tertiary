@@ -87,10 +87,17 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
       <param name="dims_use" argument="--dims-use" min="1" optional="true" type="integer" label="PCA Dimensions to use" help="Number of PCs (dimensions) to use in construction of the SNN graph."/>
     </xml>
 
+    <token name="@SEURAT_INTRO@"><![CDATA[
+Seurat_ is a toolkit for quality control, analysis, and exploration of single cell RNA sequencing data.
+It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enable users to identify and
+interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse
+types of single cell data.
+      ]]></token>
+
     <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
 
-3.1+galaxy0: Moved to Seurat 3.
+3.1.1_0.0.6+galaxy0: Moved to Seurat 3.
 
   Find clusters: removed dims-use, k-param, prune-snn.
 
