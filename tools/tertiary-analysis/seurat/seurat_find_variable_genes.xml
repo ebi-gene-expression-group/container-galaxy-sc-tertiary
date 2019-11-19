@@ -59,7 +59,7 @@ seurat-find-variable-genes.R
     <tests>
         <test>
             <param name="input" ftype="rdata" value="out_norm.rds"/>
-            <output name="output" ftype="rdata" value="out_findvar.rds" compare="sim_size"/>
+            <output name="rds_seurat_file" ftype="rdata" value="out_findvar.rds" compare="sim_size"/>
         </test>
     </tests>
     <help><![CDATA[

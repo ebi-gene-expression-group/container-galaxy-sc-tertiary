@@ -87,7 +87,7 @@ $force_recalc
     <tests>
         <test>
             <param name="input" ftype="rdata" value="seurat.rds"/>
-            <output name="output" ftype="rdata" value="out_filter.rds" compare="sim_size"/>
+            <output name="rds_seurat_file" ftype="rdata" value="out_filter.rds" compare="sim_size"/>
         </test>
     </tests>
     <help><![CDATA[

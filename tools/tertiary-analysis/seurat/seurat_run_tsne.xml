@@ -44,12 +44,12 @@ seurat-run-tsne.R
             <expand macro="dims-use-input"/>
             <param name="do_fast" label="Faster execution" argument="--do-fast" checked="true" type="boolean" truevalue="" falsevalue="FALSE" help="If TRUE, uses the Barnes-hut implementation, which runs faster, but is less flexible. TRUE by default."/>
             <param label="tSNE method" optional="true" name="tsne_method" argument="--tsne-method" type="select" help="Select the method to use to compute the tSNE. Available methods are: Rtsne, Flt-SNE">
-              <option name="Rtsne" selected="true">Rtsne</option>
-              <option name="Flt-SNE">Flt-SNE</option>
+              <option value="Rtsne" selected="true">Rtsne</option>
+              <option value="Flt-SNE">Flt-SNE</option>
             </param>
             <param label="tSNE dimensions" optional="true" name="dim_embed" argument="--dim_embed" type="select" help="The dimensional space of the resulting tSNE embedding (default is 2). For example, set to 3 for a 3d tSNE">
-              <option name="2" selected="true">2</option>
-              <option name="3">3</option>
+              <option value="2" selected="true">2</option>
+              <option value="3">3</option>
             </param>
             <param label="Random seed" optional="true" name="random_seed" argument="--random-seed" type="integer" help="Seed of the random number generator"/>
         </section>
@@ -63,7 +63,7 @@ seurat-run-tsne.R
     <tests>
         <test>
             <param name="input" ftype="rdata" value="out_findclust.rds"/>
-            <output name="output" ftype="rdata" value="out_runtsne.rds" compare="sim_size"/>
+            <output name="rds_seurat_file" ftype="rdata" value="out_runtsne.rds" compare="sim_size"/>
         </test>
     </tests>
     <help><![CDATA[
