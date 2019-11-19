@@ -16,9 +16,9 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
    <xml name="input_object_params">
      <conditional name="input" label="Input format">
        <param type="select" name="format" label="Choose the format of the input" help="RData, Loom or AnnData">
-         <option value="loom" selected="true">Loom</option>
+         <option value="rds_seurat" selected="true">RDS with a Seurat object</option>
+         <option value="loom">Loom</option>
          <option value="anndata">AnnData</option>
-         <option value="rds_seurat">RDS with a Seurat object</option>
          <option value="rds_sce">RDS with a Single Cell Experiment object</option>
        </param>
        <when value="anndata">
@@ -49,9 +49,9 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
    </token>
 
    <xml name="output_object_params">
-     <param type="select" name="format" label="Choose the format of the output" help="Seurat, Single Cell Experiment, Loom or AnnData">
-       <option value="loom" selected="true">Loom</option>
-       <option value="rds_seurat">RDS with a Seurat object</option>
+     <param type="select" name="format" label="Choose the format of the output" help="Seurat, Single Cell Experiment or Loom">
+       <option value="rds_seurat" selected="true">RDS with a Seurat object</option>
+       <option value="loom">Loom</option>
        <option value="rds_sce">RDS with a Single Cell Experiment object</option>
      </param>
    </xml>
