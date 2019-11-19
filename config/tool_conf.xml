@@ -181,6 +181,7 @@
   </section>
   <section name="Scanpy" id="scanpy-tools">
     <tool file="tertiary-analysis/scanpy/scanpy-read-10x.xml" labels="I/O"/>
+    <tool file="tertiary-analysis/scanpy/anndata_operations.xml"/>
     <tool file="tertiary-analysis/scanpy/scanpy-filter-cells.xml"/>
     <tool file="tertiary-analysis/scanpy/scanpy-filter-genes.xml"/>
     <tool file="tertiary-analysis/scanpy/scanpy-normalise-data.xml"/>
@@ -205,6 +206,7 @@
     <tool file="tertiary-analysis/sccaf/run_sccaf.xml"/>
     <tool file="tertiary-analysis/sccaf/sccaf_asses.xml"/>
     <tool file="tertiary-analysis/sccaf/sccaf_asses_merger.xml"/>
+    <tool file="tertiary-analysis/sccaf/sccaf_regress_out.xml"/>
   </section>
   <section name="Monocle3" id="monocle3-tools">
     <tool file="tertiary-analysis/monocle3/monocle3-create.xml" labels="I/O"/>
