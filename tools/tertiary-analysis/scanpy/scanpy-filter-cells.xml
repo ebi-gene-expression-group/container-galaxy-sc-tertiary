@@ -16,7 +16,7 @@ PYTHONIOENCODING=utf-8 scanpy-filter-cells
     ${pars}
 #end if
 #if $categories
-#set cats = ' '.join(["--category c:{name} '{negate}{values}'".format(**$c) for $c in $categories])
+    #set cats = ' '.join(["--category c:{name} '{negate}{values}'".format(**$c) for $c in $categories])
     ${cats}
 #end if
 #if $subsets
