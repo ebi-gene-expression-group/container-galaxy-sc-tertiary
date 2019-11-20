@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_filter_cells" name="Scanpy FilterCells" version="@TOOL_VERSION@+galaxy1">
+<tool id="scanpy_filter_cells" name="Scanpy FilterCells" version="@TOOL_VERSION@+galaxy0">
   <description>based on counts and numbers of genes expressed</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -16,7 +16,7 @@ PYTHONIOENCODING=utf-8 scanpy-filter-cells
     ${pars}
 #end if
 #if $categories
-    #set cats = ' '.join(['--category c:{name} {values}'.format(**$c) for $c in $categories])
+    #set cats = ' '.join(["--category c:{name} '{negate}{values}'".format(**$c) for $c in $categories])
     ${cats}
 #end if
 #if $subsets
@@ -47,7 +47,8 @@ PYTHONIOENCODING=utf-8 scanpy-filter-cells
 
     <repeat name="categories" title="Categories used to filter cells" min="0">
       <param name="name" type="text" value="" label="Name of the categorical variable to filter on"/>
-      <param name="values" type="text" value="" label="Comma-separated values to keep"/>
+      <param name="values" type="text" value="" label="Comma-separated list of categories"/>
+      <param name="negate" type="boolean" truevalue="!" falsevalue="" checked="false" label="Apply as negative filter" help="If enabled, specified categories will be removed rather than retained."/>
     </repeat>
 
     <repeat name="subsets" title="Subsets used to filter cells" min="0">
