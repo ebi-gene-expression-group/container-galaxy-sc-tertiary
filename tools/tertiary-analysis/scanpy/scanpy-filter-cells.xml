@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_filter_cells" name="Scanpy FilterCells" version="@TOOL_VERSION@+galaxy2">
+<tool id="scanpy_filter_cells" name="Scanpy FilterCells" version="@TOOL_VERSION@+galaxy3">
   <description>based on counts and numbers of genes expressed</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -12,15 +12,15 @@ PYTHONIOENCODING=utf-8 scanpy-filter-cells
     --gene-name '${gene_name}'
 #end if
 #if $parameters
-    #set pars = ' '.join(['--param c:{name} {min} {max}'.format(**$p) for $p in $parameters])
+    #set pars = ' '.join(["--param 'c:{name}' {min} {max}".format(**$p) for $p in $parameters])
     ${pars}
 #end if
 #if $categories
-    #set cats = ' '.join(["--category c:{name} '{negate}{values}'".format(**$c) for $c in $categories])
+    #set cats = ' '.join(["--category 'c:{name}' '{negate}{values}'".format(**$c) for $c in $categories])
     ${cats}
 #end if
 #if $subsets
-    #set subs = ' '.join(['--subset c:{name} {subset}'.format(**$s) for $s in $subsets])
+    #set subs = ' '.join(["--subset 'c:{name}' '{subset}'".format(**$s) for $s in $subsets])
     ${subs}
 #end if
     @INPUT_OPTS@
