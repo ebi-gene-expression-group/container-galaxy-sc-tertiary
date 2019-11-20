@@ -13,7 +13,7 @@ PYTHONIOENCODING=utf-8 scanpy-filter-genes
     ${pars}
 #end if
 #if $categories
-    #set cats = ' '.join(['--category g:{name} {values}'.format(**$c) for $c in $categories])
+    #set cats = ' '.join(["--category g:{name} '{negate}{values}'".format(**$c) for $c in $categories])
     ${cats}
 #end if
 #if $subsets
@@ -40,7 +40,8 @@ PYTHONIOENCODING=utf-8 scanpy-filter-genes
 
     <repeat name="categories" title="Categories used to filter genes" min="0">
       <param name="name" type="text" value="" label="Name of the categorical variable to filter on"/>
-      <param name="values" type="text" value="" label="Comma-separated values to keep"/>
+      <param name="values" type="text" value="" label="Comma-separated list of categories"/>
+      <param name="negate" type="boolean" truevalue="!" falsevalue="" checked="false" label="Apply as negative filter" help="If enabled, specified categories will be removed rather than retained."/>
     </repeat>
 
     <repeat name="subsets" title="Subsets used to filter genes" min="0">
