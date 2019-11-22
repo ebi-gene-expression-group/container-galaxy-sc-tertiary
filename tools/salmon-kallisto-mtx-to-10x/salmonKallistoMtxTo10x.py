@@ -56,7 +56,7 @@ ncols = umi_counts.shape[1]
 # Add a dimension check
 
 if len(cb_names) != nrows:
-    print('The number of matrix rows (%d) does not match the number of supplied bardcodes (%d)' % (nrows, len(cb_names)))
+    print('The number of matrix rows (%d) does not match the number of supplied barcodes (%d)' % (nrows, len(cb_names)))
     sys.exit(1)
 
 if len(gene_names) != nrows:
