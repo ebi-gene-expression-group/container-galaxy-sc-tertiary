@@ -59,7 +59,7 @@ if len(cb_names) != nrows:
     print('The number of matrix rows (%d) does not match the number of supplied bardcodes (%d)' % (nrows, len(cb_names)))
     sys.exit(1)
 
-if len(gene_names) != nrows:
+if len(gene_names) != ncols:
     print('The number of matrix columns (%d) does not match the number of supplied genes (%d)' % (ncols, len(gene_names)))
     sys.exit(1)
 
