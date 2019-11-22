@@ -49,7 +49,20 @@ if not os.path.exists(gene_file):
 cb_names = [cell_prefix + s for s in pd.read_csv(cb_file, header=None)[0].values]
 gene_names = pd.read_csv(gene_file, header=None)[0].values
 umi_counts = mmread( quant_file )
-    
+   
+nrows = umi_counts.shape[0]  
+ncols = umi_counts.shape[1]  
+
+# Add a dimension check
+
+if len(cb_names) != nrows:
+    print('The number of matrix rows (%d) does not match the number of supplied bardcodes (%d)' % (nrows, len(cb_names)))
+    sys.exit(1)
+
+if len(gene_names) != nrows:
+    print('The number of matrix columns (%d) does not match the number of supplied genes (%d)' % (ncols, len(gene_names)))
+    sys.exit(1)
+
 # Write outputs to a .mtx file readable by tools expecting 10X outputs.
 # Barcodes file works as-is, genes need to be two-column, duplicating the
 # identifiers. Matrix itself needs to have genes by row, so we transpose. 
