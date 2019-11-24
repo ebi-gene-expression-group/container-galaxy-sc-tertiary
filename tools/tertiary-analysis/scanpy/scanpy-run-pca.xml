@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_run_pca" name="Scanpy RunPCA" version="@TOOL_VERSION@+galaxy0">
+<tool id="scanpy_run_pca" name="Scanpy RunPCA" version="@TOOL_VERSION@+galaxy6">
   <description>for dimensionality reduction</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -55,7 +55,7 @@ PYTHONIOENCODING=utf-8 scanpy-run-pca
   </inputs>
 
   <outputs>
-    <data name="output_h5" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string}: PCA object"/>
+    <expand macro="output_data_obj" description="PCA object"/>
     <data name="output_embed" format="tsv" from_work_dir="embeddings.tsv" label="${tool.name} on ${on_string}: PCA embeddings">
       <filter>extra_outputs and 'embeddings' in extra_outputs.split(',')</filter>
     </data>
