@@ -1,4 +1,4 @@
-<tool id="seurat_export_cellbrowser" name="Seurat Export2CellBrowser" version="2.3.1+galaxy0">
+<tool id="seurat_export_cellbrowser" name="Seurat Export2CellBrowser" version="@SEURAT_VERSION@_@VERSION@+galaxy0">
     <description>produces files for UCSC CellBrowser import.</description>
     <macros>
         <import>seurat_macros.xml</import>
@@ -10,7 +10,8 @@
   cp '$markers_file' markers.csv;
 #end if
 
-seurat-export-cellbrowser.R -i '$rds_input'
+seurat-export-cellbrowser.R
+@INPUT_OBJECT@
 
 #if $markers_file:
 -m markers.csv
@@ -22,7 +23,7 @@ cd output_html && tar -cf '$output' *;
 ]]></command>
 
     <inputs>
-        <param name="rds_input" type="data" format="rdata" label="Seurat RDS object" />
+        <expand macro="input_object_params"/>
         <param name="markers_file" type="data" format="txt" label="Marker genes file from Seurat" />
     </inputs>
 
@@ -42,13 +43,12 @@ cd output_html && tar -cf '$output' *;
 
 **What it does**
 
-Seurat_ is a toolkit for quality control, analysis, and exploration of single cell RNA sequencing data.
-It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enable users to identify and
-interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse
-types of single cell data.
+This tool converts a Seurat object (hopefully with t-SNE results) and its
+accompanying marker genes file (optional) to a tar that can be feed to the
+UCSC CellBrowser tool.
 
-This tool converts a Seurat object (hopefully with t-SNE results) and its accompanying marker genes file (optional)
-to a tar that can be feed to the UCSC CellBrowser tool.
+@SEURAT_INTRO@
+
 -----
 
 **Inputs**

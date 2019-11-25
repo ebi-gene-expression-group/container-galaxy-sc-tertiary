@@ -1,4 +1,4 @@
-<tool id="seurat_scale_data" name="Seurat ScaleData" version="2.3.1+galaxy1">
+<tool id="seurat_scale_data" name="Seurat ScaleData" version="@SEURAT_VERSION@_@VERSION@+galaxy0">
     <description>scale and center genes</description>
     <macros>
         <import>seurat_macros.xml</import>
@@ -8,21 +8,21 @@
     <command detect_errors="exit_code"><![CDATA[
 seurat-scale-data.R
 
---input-object-file '$input'
+@INPUT_OBJECT@
 #if $vars:
     --vars-to-regress '$vars'
 #else
     --vars-to-regress nUMI
 #end if
 
-#if $genes:
-    --genes-use '$genes'
+#if $genes_use:
+    --genes-use '$genes_use'
 #end if
 
 --model-use '$model'
 
 $use_umi
-$do_center
+$do_not_center
 
 #if $scale_max:
     --scale-max '$scale_max'
@@ -38,22 +38,26 @@ $do_center
 
 $check_for_norm
 
-
-
---output-object-file '$output'
+@OUTPUT_OBJECT@
 ]]></command>
 
     <inputs>
-        <param name="input" argument="--input-object-file" type='data' format='rdata' help="File name in where a serialized R matrix object can be found." label="Seurat RDS object"/>
-        <param name="genes" argument="--genes-use" type='data' format='txt' optional='true' help="File to be used to derive a vector of gene names to scale/center (one gene per line). Default is all genes in object@data."/>
-        <param name="vars" argument="--vars-to-regress" type='text' optional='True' label="Vars to regress" help="Comma-separated list of variables to regress out (previously latent.vars in RegressOut). For example, nUMI, or percent.mito."/>
+        <expand macro="input_object_params"/>
+        <expand macro="output_object_params"/>
+        <expand macro="genes-use-input"/>
+        <param name="vars" argument="--vars-to-regress" type='text' value="nCount_RNA" label="Vars to regress" help="Comma-separated list of variables to regress out (previously latent.vars in RegressOut). For example, nCount_RNA, or percent.mito.">
+          <validator type="regex" message="Please only use letters or numbers">^[\(\w\)]+$</validator>
+          <option value="nCount_RNA">nCount_RNA</option>
+          <option value="nFeature_RNA">nFeature_RNA</option>
+        </param>
         <param name="model" argument="--model-use" type="select" label="Statistical model" help="Use a linear model or generalized linear model (poisson, negative binomial) for the regression.">
           <option value="linear" selected="true">Linear model</option>
           <option value="poisson">Poisson model</option>
           <option value="negbinom">Negative binomial model</option>
         </param>
         <param name="use_umi" argument="--use-umi" type="boolean" truevalue="--use-umi TRUE" falsevalue="" checked="false" label="Use UMIs." help="Regress on UMI count data. Default is FALSE for linear modeling, but automatically set to TRUE if model.use is 'negbinom' or 'poisson'."/>
-        <param name="do_center" argument="--do-center" type="boolean" falsevalue="--do-center FALSE" truevalue="" checked="true" label="Perform centering" help="Whether to center the data."/>
+        <param name="do_not_center" argument="--do-not-center" type="boolean" falsevalue="" truevalue="--do-not-center" checked="false" label="Skip centering" help="By default data is centered, with this option you can skip centering."/>
+        <param name="do_not_scale" argument="--do-not-scale" type="boolean" falsevalue="" truevalue="--do-not-scale" checked="false" label="Skip scaling" help="By default data is scaled, with this option you can skip scaling."/>
         <param name="scale_max" argument="--scale-max" optional="true" type="float" label="Scale maximum" help = "Max value to return for scaled data. The default is 10. Setting this can help reduce the effects of genes that are only expressed in a very small number of cells. If regressing out latent variables and using a non-linear model, the default is 50."/>
         <param name="block_size" argument="--block-size" optional="true" type="integer" label="Block size" help = "Default size for number of genes to scale at in a single computation. Increasing block.size may speed up calculations but at an additional memory cost. Defaults to 1000 if not specified."/>
         <param name="min_cells_to_block" argument="--min-cells-to-block" optional="true" type="integer" label="Minimum number of cells to block" help="If object contains fewer than this number of cells, don't block for scaling calculations. Defaults to 1000."/>
@@ -61,13 +65,13 @@ $check_for_norm
     </inputs>
 
     <outputs>
-        <data name="output" format="rdata" from_work_dir="*.rds" label="${tool.name} on ${on_string}: Seurat RDS"/>
+      <expand macro="output_files"/>
     </outputs>
 
     <tests>
         <test>
             <param name="input" ftype="rdata" value="out_findvar.rds"/>
-            <output name="output" ftype="rdata" value="out_scale.rds" compare="sim_size"/>
+            <output name="rds_seurat_file" ftype="rdata" value="out_scale.rds" compare="sim_size"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -75,13 +79,9 @@ $check_for_norm
 
 **What it does**
 
-Seurat_ is a toolkit for quality control, analysis, and exploration of single cell RNA sequencing data.
-It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enable users to identify and
-interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse
-types of single cell data.
-
 This tool regresses out variables in a Seurat object to mitigate the effect of confounding factors.
 
+@SEURAT_INTRO@
 
 -----
 

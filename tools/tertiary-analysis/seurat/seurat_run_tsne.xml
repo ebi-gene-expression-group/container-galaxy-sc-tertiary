@@ -1,4 +1,4 @@
-<tool id="seurat_run_tsne" name="Seurat RunTSNE" version="2.3.1+galaxy1">
+<tool id="seurat_run_tsne" name="Seurat RunTSNE" version="@SEURAT_VERSION@_@VERSION@+galaxy0">
     <description>run t-SNE dimensionality reduction</description>
     <macros>
         <import>seurat_macros.xml</import>
@@ -8,8 +8,7 @@
     <command detect_errors="exit_code"><![CDATA[
 seurat-run-tsne.R
 
---input-object-file '$input'
-
+@INPUT_OBJECT@
 #if $genes_use:
   --genes-use '$genes_use'
 #end if
@@ -23,29 +22,48 @@ seurat-run-tsne.R
 #if not $adv.do_fast:
     --do-fast '$adv.do_fast'
 #end if
+#if $adv.tsne_method
+  --tsne-method '$adv.tsne_method'
+#end if
+#if $adv.dim_embed
+  --dim_embed '$adv.dim_embed'
+#end if
+#if $adv.random_seed
+  --random-seed '$adv.random_seed'
+#end if
 
---output-object-file '$output'
+@OUTPUT_OBJECT@
 --output-embeddings-file output_embed
 ]]></command>
 
     <inputs>
-        <param name="input" argument="--input-obj-file" type="data" format="rdata" label="Seurat RDS object" help="The RDS/Rdata result of Seurat FindClusters."/>
+        <expand macro="input_object_params"/>
+        <expand macro="output_object_params"/>
         <expand macro="genes-use-input"/>
         <section name="adv" title="Advanced Options">
             <expand macro="dims-use-input"/>
             <param name="do_fast" label="Faster execution" argument="--do-fast" checked="true" type="boolean" truevalue="" falsevalue="FALSE" help="If TRUE, uses the Barnes-hut implementation, which runs faster, but is less flexible. TRUE by default."/>
+            <param label="tSNE method" optional="true" name="tsne_method" argument="--tsne-method" type="select" help="Select the method to use to compute the tSNE. Available methods are: Rtsne, Flt-SNE">
+              <option value="Rtsne" selected="true">Rtsne</option>
+              <option value="Flt-SNE">Flt-SNE</option>
+            </param>
+            <param label="tSNE dimensions" optional="true" name="dim_embed" argument="--dim_embed" type="select" help="The dimensional space of the resulting tSNE embedding (default is 2). For example, set to 3 for a 3d tSNE">
+              <option value="2" selected="true">2</option>
+              <option value="3">3</option>
+            </param>
+            <param label="Random seed" optional="true" name="random_seed" argument="--random-seed" type="integer" help="Seed of the random number generator"/>
         </section>
     </inputs>
 
     <outputs>
-        <data name="output" format="rdata" from_work_dir="*.rds" label="${tool.name} on ${on_string}: Seurat RDS"/>
+        <expand macro="output_files"/>
         <data name="output_embed" format="csv" from_work_dir="output_embed" label="${tool.name} on ${on_string}: Seurat Embeddings"/>
     </outputs>
 
     <tests>
         <test>
             <param name="input" ftype="rdata" value="out_findclust.rds"/>
-            <output name="output" ftype="rdata" value="out_runtsne.rds" compare="sim_size"/>
+            <output name="rds_seurat_file" ftype="rdata" value="out_runtsne.rds" compare="sim_size"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -58,10 +76,9 @@ It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enab
 interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse
 types of single cell data.
 
-Run t-SNE dimensionality reduction on selected features. Has the option of
-running in a reduced dimensional space (i.e. spectral tSNE, recommended),
-or running based on a set of genes. For details about stored TSNE calculation
-parameters, see standard output of the tool.
+Run t-SNE dimensionality reduction on selected features. Has the option of running
+in a reduced dimensional space (i.e. spectral tSNE, recommended), or
+running based on a set of genes.
 
 -----
 

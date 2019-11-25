@@ -1,4 +1,4 @@
-<tool id="seurat_filter_cells" name="Seurat FilterCells" version="2.3.1+galaxy1">
+<tool id="seurat_filter_cells" name="Seurat FilterCells" version="@SEURAT_VERSION@_@VERSION@+galaxy0">
     <description>filter cells in a Seurat object</description>
     <macros>
         <import>seurat_macros.xml</import>
@@ -7,43 +7,43 @@
     <expand macro="version" />
     <command detect_errors="exit_code"><![CDATA[
 seurat-filter-cells.R
+@INPUT_OBJECT@
+#if $subsets:
+    #set subsets_clause = ','.join(['{name}'.format(**$s) for $s in $subsets])
+    #set low_clause = ",".join(['{min}'.format(**$s) for $s in $subsets])
+    #set high_clause = ",".join(['{max}'.format(**$s) for $s in $subsets])
+    --subset-names '${subsets_clause}' --low-thresholds '${low_clause}' --high-thresholds '${high_clause}'
+#end if
 
---input-object-file '$input'
-#if $subset:
-    --subset-names '$subset'
-#else
-    --subset-names nUMI
-#end if
-#if $low:
---low-thresholds $low
-#end if
-#if $high:
---high-thresholds $high
-#end if
 #if $cells:
     --cells-use $cells
 #end if
---output-object-file '$output'
+@OUTPUT_OBJECT@
 ]]></command>
 
     <inputs>
-        <param name="input" argument="--input-object-file" type="data" format="rdata" label="Seurat RDS object" help="Output from Seurat create object." />
-        <param name="subset" argument="--subset-names" type="text" label="Subset names" optional="True" help="Parameters to subset on. Eg, the name of a gene, PC1, a column name in object@meta.data, etc. Any argument that can be retreived using FetchData. Multiple values can be separated by colons (:).">
+        <expand macro="input_object_params"/>
+        <repeat name="subsets" title="Subsets used to filter cells" min="1">
+          <param name="name" argument="--subset-names" type="text" label="Name of parameter to filter on" help="for example nCount_RNA, nFeature_RNA, the name of a gene, PC1, a column name in object@meta.data, etc. Any argument that can be retreived using FetchData.">
             <validator type="regex" message="Please only use letters or numbers">^[\(\w\)]+$</validator>
-        </param>
-        <param name="low" argument="--low-thresholds" type="float" optional="True" label="Low threshold for filtering cells" help="Multiple values can be separated by colons (:) and should have same length as provided for `Subset names`." />
-        <param name="high" argument="--high-thresholds" type="float" optional="True" label="High threshold for filtering cells" help="Multiple values can be separated by colons (:) and should have same length as provided for `Subset names`." />
+            <option value="nCount_RNA">nCount_RNA</option>
+            <option value="nFeature_RNA">nFeature_RNA</option>
+          </param>
+          <param name="min" type="float" value="0" min="0" label="Min value"/>
+          <param name="max" type="float" value="1e9" label="Max value"/>
+        </repeat>
         <param name="cells" argument="--cells-use" type="text" min="0" optional="True" help="Comma-separated list of cell names to use as a subset." label="Cells to use" />
+        <expand macro="output_object_params"/>
     </inputs>
 
     <outputs>
-        <data name="output" format="rdata" from_work_dir="*.rds" label="${tool.name} on ${on_string}: Seurat RDS"/>
+        <expand macro="output_files"/>
     </outputs>
 
     <tests>
         <test>
             <param name="input" ftype="rdata" value="seurat.rds"/>
-            <output name="output" ftype="rdata" value="out_filter.rds" compare="sim_size"/>
+            <output name="rds_seurat_file" ftype="rdata" value="out_filter.rds" compare="sim_size"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -51,12 +51,9 @@ seurat-filter-cells.R
 
 **What it does**
 
-Seurat_ is a toolkit for quality control, analysis, and exploration of single cell RNA sequencing data.
-It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enable users to identify and
-interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse
-types of single cell data.
+This tool filters cells in a Seurat object.
 
-This tool filters a Seurat RDS object.
+@SEURAT_INTRO@
 
 -----
 

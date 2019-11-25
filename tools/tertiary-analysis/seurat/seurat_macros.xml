@@ -1,34 +1,110 @@
 <?xml version="1.0"?>
 <macros>
-
-    <token name="@VERSION@">0.0.5</token>
-
+    <token name="@VERSION@">0.0.6</token>
+    <token name="@SEURAT_VERSION@">3.1.1</token>
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="@VERSION@">seurat-scripts</requirement>
         </requirements>
     </xml>
-
     <xml name="version">
     	<version_command><![CDATA[
 echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla --slave -e "library(seurat); cat(sessionInfo()\$otherPkgs\$seurat\$Version)" 2> /dev/null | grep -v -i "WARNING: ")
     ]]></version_command>
     </xml>
 
+   <xml name="input_object_params">
+     <conditional name="input" label="Input format">
+       <param type="select" name="format" label="Choose the format of the input" help="RData, Loom or AnnData">
+         <option value="rds_seurat" selected="true">RDS with a Seurat object</option>
+         <option value="loom">Loom</option>
+         <option value="anndata">AnnData</option>
+         <option value="rds_sce">RDS with a Single Cell Experiment object</option>
+       </param>
+       <when value="anndata">
+         <param type="data" name="anndata_file" label="AnnData file" help="The AnnData format provided by Scanpy" format="h5,h5ad"/>
+       </when>
+       <when value="loom">
+         <param type="data" name="loom_file" label="Loom file" help="Input as Loom v? file" format="h5,h5loom"/>
+       </when>
+       <when value="rds_seurat">
+         <param type="data" name="rds_seurat_file" label="RDS file" help="Input as RDS file with Seurat 3 object" format="rdata"/>
+       </when>
+       <when value="rds_sce">
+         <param type="data" name="rds_sce_file" label="RDS file" help="Input as RDS file with Single Cell Experiment object" format="rdata"/>
+       </when>
+     </conditional>
+   </xml>
+
+   <token name="@INPUT_OBJECT@">
+    #if $input.format == "anndata"
+        --input-object-file '$input.anndata_file' --input-format anndata
+    #else if $input.format == "loom"
+        --input-object-file '$input.loom_file' --input-format loom
+    #else if $input.format == "rds_seurat"
+        --input-object-file '$input.rds_seurat_file' --input-format seurat
+    #else if $input.format == "rds_sce"
+        --input-object-file '$input.rds_sce_file' --input-format singlecellexperiment
+    #end if
+   </token>
+
+   <xml name="output_object_params">
+     <param type="select" name="format" label="Choose the format of the output" help="Seurat, Single Cell Experiment or Loom">
+       <option value="rds_seurat" selected="true">RDS with a Seurat object</option>
+       <option value="loom">Loom</option>
+       <option value="rds_sce">RDS with a Single Cell Experiment object</option>
+     </param>
+   </xml>
+
+   <xml name="output_files">
+    <data name="loom_file" from_work_dir="seurat_obj.loom" format="h5" label="${tool.name} on ${on_string}: Seurat Loom">
+      <filter>format == 'loom'</filter>
+    </data>
+    <data name="rds_seurat_file" format="rdata" label="${tool.name} on ${on_string}: Seurat RDS">
+      <filter>format == 'rds_seurat'</filter>
+    </data>
+    <data name="rds_sce_file" format="rdata" label="${tool.name} on ${on_string}: Seurat Single Cell Experiment RDS">
+      <filter>format == 'rds_sce'</filter>
+    </data>
+   </xml>
+
+   <token name="@OUTPUT_OBJECT@">
+    #if $format == "anndata"
+        --output-object-file '$anndata_file' --output-format anndata
+    #else if $format == "loom"
+        --output-object-file seurat_obj.loom --output-format loom
+    #else if $format == "rds_seurat"
+        --output-object-file '$rds_seurat_file' --output-format seurat
+    #else if $format == "rds_sce"
+        --output-object-file '$rds_sce_file' --output-format singlecellexperiment
+    #end if
+   </token>
+
     <xml name="genes-use-input">
-      <param name="genes_use" argument="--genes-use" optional="true" type="data" format="tsv, txt" label="Genes to use" help="A file with gene names to use in construction of SNN graph if building directly based on expression data rather than a dimensionally reduced representation (i.e. PCs)."/>
+      <param name="genes_use" argument="--genes-use" optional="true" type="data" format="tsv,txt,tabular" label="Genes to use" help="A file with gene names to use in construction of SNN graph if building directly based on expression data rather than a dimensionally reduced representation (i.e. PCs)."/>
     </xml>
     <xml name="dims-use-input">
       <param name="dims_use" argument="--dims-use" min="1" optional="true" type="integer" label="PCA Dimensions to use" help="Number of PCs (dimensions) to use in construction of the SNN graph."/>
     </xml>
 
+    <token name="@SEURAT_INTRO@"><![CDATA[
+Seurat_ is a toolkit for quality control, analysis, and exploration of single cell RNA sequencing data.
+It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enable users to identify and
+interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse
+types of single cell data.
+      ]]></token>
+
     <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
 
-0.0.1: Initial contribution. Maria Doyle, https://github.com/mblue9.
+3.1.1_0.0.6+galaxy0: Moved to Seurat 3.
+
+  Find clusters: removed dims-use, k-param, prune-snn.
 
 2.3.1+galaxy0: Improved documentation and further exposition of all script's options. Pablo Moreno, Jonathan Manning and Ni Huang, Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
 EMBL-EBI https://www.ebi.ac.uk/. Parts obtained from wrappers from Christophe Antoniewski(https://github.com/drosofff) and Lea Bellenger(https://github.com/bellenger-l).
+
+0.0.1: Initial contribution. Maria Doyle, https://github.com/mblue9.
       ]]></token>
 
 

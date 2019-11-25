@@ -1,4 +1,4 @@
-<tool id="seurat_dim_plot" name="Seurat Plot dimension reduction" version="2.3.1+galaxy0">
+<tool id="seurat_dim_plot" name="Seurat Plot dimension reduction" version="@SEURAT_VERSION@_@VERSION@+galaxy0">
     <description>graphs the output of a dimensional reduction technique (PCA by default). Cells are colored by their identity class.</description>
     <macros>
         <import>seurat_macros.xml</import>
@@ -7,7 +7,7 @@
     <expand macro="version" />
     <command detect_errors="exit_code"><![CDATA[
         seurat-dim-plot.R
-        --input-object-file '$input'
+        @INPUT_OBJECT@
         #if $reduction_use
         --reduction-use '$reduction_use'
         #end if
@@ -51,7 +51,7 @@
         --output-image-file $output_image_file
     ]]></command>
     <inputs>
-        <param type="data" name="input" format="rdata" label="RDS object" help='File in which a serialized R matrix object may be found'/>
+        <expand macro="input_object_params"/>
         <param type="text" name="reduction_use" value='pca' label="Dimensionality reduction" help='Which dimensionality reduction to use. Default is "pca", can also be "tsne", or "ica", assuming these are precomputed' />
         <param type="integer" name="dim_1" value='1' label="X axis dimension" help='Dimension for x-axis' />
         <param type="integer" name="dim_2" value='2' label="Y axis dimension" help='Dimension for y-axis' />
@@ -85,13 +85,12 @@
 
 **What it does**
 
-Seurat_ is a toolkit for quality control, analysis, and exploration of single cell RNA sequencing
-data.  It is developed and maintained by the `Satija Lab`_ at NYGC. Seurat aims to enable users to
-identify and interpret sources of heterogeneity from single cell transcriptomic measurements, and to
-integrate diverse types of single cell data.
+Graphs the output of a dimensional reduction technique on a 2D scatter plot
+where each point is a cell and it's positioned based on the cell embeddings
+determined by the reduction technique. By default, cells are colored by their
+identity class (can be changed with the group.by parameter).
 
-This tool graphs the output of a dimensional reduction technique (PCA by default). Cells are colored
-by their identity class.
+@SEURAT_INTRO@
 
 -----
 
