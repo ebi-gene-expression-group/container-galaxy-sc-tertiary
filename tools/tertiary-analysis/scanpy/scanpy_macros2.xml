@@ -101,10 +101,10 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
       <filter>output_format == 'anndata'</filter>
     </data>
     <data name="output_loom_legacy" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string}: @DESCRIPTION@ Loom">
-      <filter>output_format == 'loom'</filter>
+      <filter>output_format == 'loom_legacy'</filter>
     </data>
     <data name="output_loom" format="loom" from_work_dir="output.h5" label="${tool.name} on ${on_string}: @DESCRIPTION@ Loom">
-      <filter>output_format == 'loom_legacy'</filter>
+      <filter>output_format == 'loom'</filter>
     </data>
   </xml>
 
