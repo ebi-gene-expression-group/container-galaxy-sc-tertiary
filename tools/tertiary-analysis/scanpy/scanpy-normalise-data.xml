@@ -33,7 +33,7 @@ PYTHONIOENCODING=utf-8 scanpy-normalise-data
   </inputs>
 
   <outputs>
-    <expand macro="output_data_obj"/>
+    <expand macro="output_data_obj" description="Normalised data"/>
     <expand macro="export_mtx_outputs"/>
   </outputs>
 
