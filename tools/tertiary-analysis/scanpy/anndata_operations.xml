@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="anndata_ops" name="AnnData Operations" version="0.0.1+galaxy0">
+<tool id="anndata_ops" name="AnnData Operations" version="0.0.1+galaxy1">
   <description>modifies metadata and flags genes</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -53,7 +53,8 @@ adata.write('output.h5', compression='gzip')
 </configfiles>
 
   <inputs>
-    <param name="input_obj_file" argument="input-object-file" type="data" format="h5" label="Input object in hdf5 AnnData format"/>
+    <param name="input_obj_file" argument="input-object-file" type="data" format="h5,h5ad" label="Input object in hdf5 AnnData format"/>
+    <expand macro="output_object_params_no_loom"/>
     <repeat name="modifications" title="Change field names in AnnData observations" min="0">
       <param name="from_obs" type="text" label="Original name" help="Name in observations that you want to change">
         <sanitizer>
@@ -71,7 +72,7 @@ adata.write('output.h5', compression='gzip')
   </inputs>
 
   <outputs>
-    <data name="output" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string}: anndata with metadata changes."/>
+    <expand macro="output_data_obj_no_loom" description="metadata changes on"/>
   </outputs>
 
   <tests>
@@ -79,7 +80,7 @@ adata.write('output.h5', compression='gzip')
       <param name="input_obj_file" value="find_cluster.h5"/>
       <param name="input_format" value="anndata"/>
       <param name="color_by" value="louvain"/>
-      <output name="output" file="output.h5" ftype="h5" compare="sim_size"/>
+      <output name="output_h5ad" file="output.h5" ftype="h5" compare="sim_size"/>
     </test>
   </tests>
 

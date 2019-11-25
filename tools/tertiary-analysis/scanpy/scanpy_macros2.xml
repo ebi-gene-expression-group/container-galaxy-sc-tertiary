@@ -4,6 +4,8 @@
   <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
 
+1.4.3+galaxy6: Update to scanpy-scripts 0.2.8 (running scanpy ==1.4.3) and wider compatibility with other Galaxy modules. Bug fixes in filtering and plotting improvements.
+
 1.4.3+galaxy0: Update to scanpy-scripts 0.2.5 (running scanpy ==1.4.3).
 
 1.4.2+galaxy0: Update to scanpy-scripts 0.2.4 (requires scanpy >=1.4.2).
@@ -17,7 +19,11 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
     --input-format '${input_format}' input.h5
   </token>
   <token name="@OUTPUT_OPTS@">
-    --show-obj stdout --output-format '${output_format}' output.h5
+#if str($output_format).startswith('anndata')
+    --show-obj stdout --output-format anndata output.h5
+#else
+    --show-obj stdout --output-format loom output.h5
+#end if
   </token>
   <token name="@PLOT_OPTS@">
 #if $fig_title
@@ -33,7 +39,7 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
 
   <xml name="requirements">
     <requirements>
-      <requirement type="package" version="0.2.6">scanpy-scripts</requirement>
+      <requirement type="package" version="0.2.8">scanpy-scripts</requirement>
       <yield/>
     </requirements>
   </xml>
@@ -55,7 +61,7 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
   </xml>
 
   <xml name="input_object_params">
-    <param name="input_obj_file" argument="input-object-file" type="data" format="h5" label="Input object in hdf5 format"/>
+    <param name="input_obj_file" argument="input-object-file" type="data" format="h5,h5ad" label="Input object in AnnData/Loom format"/>
     <param name="input_format" argument="--input-format" type="select" label="Format of input object">
       <option value="anndata" selected="true">AnnData format hdf5</option>
       <option value="loom">Loom format hdf5</option>
@@ -64,9 +70,42 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
 
   <xml name="output_object_params">
     <param name="output_format" argument="--output-format" type="select" label="Format of output object">
-      <option value="anndata" selected="true">AnnData format hdf5</option>
-      <option value="loom">Loom format hdf5</option>
+      <option value="anndata_h5ad" selected="true">AnnData format</option>
+      <option value="anndata">AnnData format (h5 for older versions)</option>
+      <option value="loom">Loom format</option>
+      <option value="loom_legacy">Loom format (h5 for older versions)</option>
     </param>
+  </xml>
+
+  <xml name="output_object_params_no_loom">
+    <param name="output_format" argument="--output-format" type="select" label="Format of output object">
+      <option value="anndata_h5ad" selected="true">AnnData format</option>
+      <option value="anndata">AnnData format (h5 for older versions)</option>
+    </param>
+  </xml>
+
+  <xml name="output_data_obj_no_loom" token_description="operation">
+    <data name="output_h5ad" format="h5ad" from_work_dir="output.h5" label="${tool.name} on ${on_string}: @DESCRIPTION@ AnnData">
+      <filter>output_format == 'anndata_h5ad'</filter>
+    </data>
+    <data name="output_h5" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string}: @DESCRIPTION@ AnnData">
+      <filter>output_format == 'anndata'</filter>
+    </data>
+  </xml>
+
+  <xml name="output_data_obj" token_description="operation">
+    <data name="output_h5ad" format="h5ad" from_work_dir="output.h5" label="${tool.name} on ${on_string}: @DESCRIPTION@ AnnData">
+      <filter>output_format == 'anndata_h5ad'</filter>
+    </data>
+    <data name="output_h5" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string}: @DESCRIPTION@ AnnData">
+      <filter>output_format == 'anndata'</filter>
+    </data>
+    <data name="output_loom_legacy" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string}: @DESCRIPTION@ Loom">
+      <filter>output_format == 'loom_legacy'</filter>
+    </data>
+    <data name="output_loom" format="loom" from_work_dir="output.h5" label="${tool.name} on ${on_string}: @DESCRIPTION@ Loom">
+      <filter>output_format == 'loom'</filter>
+    </data>
   </xml>
 
   <xml name="output_plot_params">
