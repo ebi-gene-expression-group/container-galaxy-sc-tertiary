@@ -4,7 +4,7 @@
       <requirement type="package" version="@TOOL_VERSION@">sccaf</requirement>
     </requirements>
   </xml>
-  <token name="@TOOL_VERSION@">0.0.8</token>
+  <token name="@TOOL_VERSION@">0.0.9</token>
   <token name="@SCCAF_INTRO@">
 SCCAF explained
 ===============
@@ -67,17 +67,21 @@ characterised by the feature genes as markers.
     </citations>
   </xml>
   <xml name="input_object_params">
-    <param name="input_obj_file" argument="--input-object-file" type="data" format="h5" label="Input object in AnnData hdf5 format" help="Normally the result of Scanpy (or equivalent), which already has both a visualisation (either tSNE, UMAP or PCA - needed) and clustering (ideally) pre-computed."/>
-    <param name="input_format" argument="--input-format" type="select" label="Format of input object">
-      <option value="anndata" selected="true">AnnData format hdf5</option>
-      <option value="loom">Loom format hdf5, current support is incomplete</option>
-    </param>
+    <param name="input_obj_file" argument="--input-object-file" type="data" format="h5,h5ad" label="Input object in AnnData hdf5 format" help="Normally the result of Scanpy (or equivalent), which already has both a visualisation (either tSNE, UMAP or PCA - needed) and clustering (ideally) pre-computed."/>
   </xml>
   <xml name="output_object_params">
     <param name="output_format" argument="--output-format" type="select" label="Format of output object">
-      <option value="anndata" selected="true">AnnData format hdf5</option>
-      <option value="loom">Loom format hdf5, current support is defective</option>
+      <option value="anndata_h5ad" selected="true">AnnData format hdf5</option>
+      <option value="anndata">AnnData format (h5 for older versions)</option>
     </param>
+  </xml>
+  <xml name="output_data_obj" token_description="operation">
+    <data name="output_h5ad" format="h5ad" from_work_dir="output.h5" label="${tool.name} on ${on_string}: @DESCRIPTION@ AnnData">
+      <filter>output_format == 'anndata_h5ad'</filter>
+    </data>
+    <data name="output_h5" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string}: @DESCRIPTION@ AnnData">
+      <filter>output_format == 'anndata'</filter>
+    </data>
   </xml>
   <xml name="output_plot_params">
     <param name="color_by" argument="--color-by" type="text" value="n_genes" label="Color by attributes, comma separated strings"/>
