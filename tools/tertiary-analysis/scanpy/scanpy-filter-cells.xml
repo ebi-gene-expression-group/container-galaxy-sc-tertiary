@@ -12,8 +12,15 @@ PYTHONIOENCODING=utf-8 scanpy-filter-cells
     --gene-name '${gene_name}'
 #end if
 #if $parameters
-    #set pars = ' '.join(["--param 'c:{name}' {min} {max}".format(**$p) for $p in $parameters])
-    ${pars}
+#for $p in $parameters
+    #set $min = $p.min
+    #set $max = $p.max
+    #if $p.name.startswith('pct_')
+      #set $min = float($min) / 100
+      #set $max = float($max) / 100
+    #end if
+    --param 'c:$p.name' $min $max
+#end for
 #end if
 #if $categories
     #set cats = ' '.join(["--category 'c:{name}' '{negate}{values}'".format(**$c) for $c in $categories])
@@ -35,26 +42,27 @@ PYTHONIOENCODING=utf-8 scanpy-filter-cells
     <param name="gene_name" type="text" optional="true" label="Name of the column in `anndata.var` that contains gene name"
            help="Used for flagging mitochondria genes (starting with 'MT-'). Leave empty if gene table already has a boolean column called 'mito' that flags MT genes"/>
 
-    <repeat name="parameters" title="Parameters used to filter cells" min="1">
+    <repeat name="parameters" title="Parameters to select cells to keep" min="1">
       <param name="name" type="text" value="n_genes" label="Name of parameter to filter on" help="for example n_genes or n_counts">
         <option value="n_genes">n_genes</option>
         <option value="n_counts">n_counts</option>
-        <option value="pct_counts_mito">pct_counts_mito (only usable if MT genes are flagged)</option>
+        <option value="pct_counts_mito">pct_counts_mito (only usable if MT genes are flagged or has been pre-calculated)</option>
       </param>
-      <param name="min" type="float" value="0" min="0" label="Min value"/>
-      <param name="max" type="float" value="1e9" label="Max value"/>
+      <param name="min" type="float" value="0" min="0" label="Min value" help="Cells with value below min will be discarded."/>
+      <param name="max" type="float" value="1e9" label="Max value" help="Cells with value above max will be discarded."/>
     </repeat>
 
-    <repeat name="categories" title="Categories used to filter cells" min="0">
+    <repeat name="categories" title="Categories to select cells to keep (unless negate is checked)" min="0">
       <param name="name" type="text" value="" label="Name of the categorical variable to filter on"/>
-      <param name="values" type="text" value="" label="Comma-separated list of categories"/>
+      <param name="values" type="text" value="" label="Comma-separated list of categories" help="Cells with these values in this categorical variable will be kept."/>
       <param name="negate" type="boolean" truevalue="!" falsevalue="" checked="false" label="Apply as negative filter" help="If enabled, specified categories will be removed rather than retained."/>
     </repeat>
 
-    <repeat name="subsets" title="Subsets used to filter cells" min="0">
+    <repeat name="subsets" title="Subsets to select cells to keep" min="0">
       <param name="name" type="text" value="" label="Name of the categorical variable to filter on"/>
       <param name="subset" type="data" format="tabular" label="List of values to keep" help="A one-column headerless text file is required"/>
     </repeat>
+    <param name="force_recalc" label="Force recalculation of QC vars" type="boolean" truevalue="--force-recalc" falsevalue="" help="If set, it will recalculate pcts and other existing QC vars, overwriting existing ones."/>
     <expand macro="export_mtx_params"/>
   </inputs>
 
