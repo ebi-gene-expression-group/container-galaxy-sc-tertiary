@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_run_tsne" name="Scanpy RunTSNE" version="@TOOL_VERSION@+galaxy6">
+<tool id="scanpy_run_tsne" name="Scanpy RunTSNE" version="@TOOL_VERSION@+galaxy8" profile="@PROFILE@">
   <description>visualise cell clusters using tSNE</description>
   <macros>
     <import>scanpy_macros2.xml</import>

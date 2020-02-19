@@ -1,8 +1,11 @@
 <macros>
   <token name="@TOOL_VERSION@">1.4.3</token>
   <token name="@HELP@">More information can be found at https://scanpy.readthedocs.io</token>
+  <token name="@PROFILE@">18.01</token>
   <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
+
+1.4.3+galaxy8: Use profile 18.01 for modules.
 
 1.4.3+galaxy6: Update to scanpy-scripts 0.2.8 (running scanpy ==1.4.3) and wider compatibility with other Galaxy modules. Bug fixes in filtering and plotting improvements.
 
