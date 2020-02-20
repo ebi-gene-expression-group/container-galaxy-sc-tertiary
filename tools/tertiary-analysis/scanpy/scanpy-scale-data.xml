@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_scale_data" name="Scanpy ScaleData" version="@TOOL_VERSION@+galaxy8" profile="@PROFILE@">
+<tool id="scanpy_scale_data" name="Scanpy ScaleData" version="@TOOL_VERSION@+galaxy9" profile="@PROFILE@">
   <description>to make expression variance the same for all genes</description>
   <macros>
     <import>scanpy_macros2.xml</import>
