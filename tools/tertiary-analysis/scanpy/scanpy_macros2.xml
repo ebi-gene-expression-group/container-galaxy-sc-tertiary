@@ -7,7 +7,7 @@
 
 1.4.3+galaxy9: Update to scanpy-scripts 0.2.9 (running scanpy ==1.4.3) to address bugfixes in find-variable-genes.
 
-1.4.3+galaxy8: Use profile 18.01 for modules.
+1.4.3+galaxy9: Use profile 18.01 for modules.
 
 1.4.3+galaxy6: Update to scanpy-scripts 0.2.8 (running scanpy ==1.4.3) and wider compatibility with other Galaxy modules. Bug fixes in filtering and plotting improvements.
 
