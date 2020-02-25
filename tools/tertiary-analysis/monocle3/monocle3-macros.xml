@@ -25,7 +25,7 @@
 
   <xml name="requirements">
     <requirements>
-      <requirement type="package" version="0.0.5">monocle3-cli</requirement>
+      <requirement type="package" version="0.0.7">monocle3-cli</requirement>
       <yield/>
     </requirements>
   </xml>
