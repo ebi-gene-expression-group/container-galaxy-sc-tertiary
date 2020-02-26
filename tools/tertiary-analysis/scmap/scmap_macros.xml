@@ -5,7 +5,7 @@
       <requirements>
         <requirement type="package">openblas</requirement>
         <requirement type="package">bioconductor-delayedarray</requirement>
-        <requirement type="package" version="0.0.4">scmap-cli</requirement>
+        <requirement type="package" version="0.0.5">scmap-cli</requirement>
             <yield/>
       </requirements>
     </xml>
