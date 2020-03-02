@@ -1,4 +1,4 @@
-<tool id="scmap_select_features" name="scmap select features" version="@TOOL_VERSION@+galaxy0" python_template_version="3.5">
+<tool id="scmap_select_features" name="scmap select features" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
     <description>finds the most informative features (genes/transcripts) for projection.</description>
     <macros>
         <import>scmap_macros.xml</import>
