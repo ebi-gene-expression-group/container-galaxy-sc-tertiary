@@ -1,0 +1,27 @@
+<tool id="scpred_train_model" name="scpred train prediction model" version="@TOOL_VERSION@+galaxy0">
+    <description>Make cell type predictions using trained model this script can be used both for evaluation of model performance on test data and obtaining predictions on new data.</description>
+     <macros>
+        <import>scpred_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        scpred_predict.R --input-object "${input_object}" --pred-data "${pred_data}" --test-labels "${test_labels}" --cell-types-column "${cell_types_column}" --output-path "${output_path}" --plot-path "${plot_path}" --confusion-table "${confusion_table}"
+        ]]></command>
+    <inputs>
+        <param type="data" name="input_object" label="Input SCE object" format="rdata" help="Input SCE object in .rds format" />
+        <param type="data" name="pred_data" label="Matrix with query data" format="rdata" help="Path to the input prediction matrix in .rds format"/>
+        <param type="text" name="test_labels" label="Test labels" help="Path to the test labels file for evalutation of model performance in text format" />
+        <param type="text" name="cell_types_column" label="Cell types column name" help="Column name of true labels in provided metadata file" />
+    </inputs>
+    <outputs>
+        <data name="output_path" format="txt" />
+        <data name="plot_path" format="txt" />
+        <data name="confusion_table" format="txt" />
+    </outputs>
+     <help><![CDATA[
+    @HELP@
+    
+    @VERSION_HISTORY@
+    ]]></help>
+    <expand macro="citations" />
+</tool> 
