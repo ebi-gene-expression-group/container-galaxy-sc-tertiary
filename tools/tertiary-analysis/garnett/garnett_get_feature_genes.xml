@@ -1,4 +1,4 @@
-<tool id="garnett_get_feature_genes" name="Garnett - get feature genes" version="@TOOL_VERSION@+galaxy0" python_template_version="3.5">
+<tool id="garnett_get_feature_genes" name="Garnett - get feature genes" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
     <macros>
         <import>garnett_macros.xml</import>
     </macros>

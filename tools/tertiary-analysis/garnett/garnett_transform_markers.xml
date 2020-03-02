@@ -1,4 +1,4 @@
-<tool id="garnett_transform_markers" name="Garnett - transform markes" version="@TOOL_VERSION@+galaxy0" python_template_version="3.5">
+<tool id="garnett_transform_markers" name="Garnett - transform markes" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
     <description>Parse and transform marker file from SCXA's format into that accepted by Garnett</description>
     <macros>
         <import>garnett_macros.xml</import>

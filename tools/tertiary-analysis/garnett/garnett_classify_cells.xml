@@ -1,4 +1,4 @@
-<tool id="garnett_classify_cells" name="Garnett - classify cells" version="@TOOL_VERSION@+galaxy0" python_template_version="3.5">
+<tool id="garnett_classify_cells" name="Garnett - classify cells" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
     <macros>
         <import>garnett_macros.xml</import>
     </macros>
