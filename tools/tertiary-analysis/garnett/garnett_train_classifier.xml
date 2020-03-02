@@ -1,0 +1,39 @@
+<tool id="garnett_train_classifier" name="Garnett - train classifier" version="@TOOL_VERSION@+galaxy0" python_template_version="3.5">
+    <macros>
+        <import>garnett_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        garnett_train_classifier.R --cds-object '${cds_object}' --marker-file-path '${marker_file_path}' --database '${database}' --cds-gene-id-type '${cds_gene_id_type}' --marker-file-gene-id-type '${marker_file_gene_id_type}' --num-unknown '${num_unknown}' --min-observations '${min_observations}' --max-training-samples '${max_training_samples}' --propogate-markers '${propogate_markers}' --cores '${cores}' --classifier-gene-id-type '${classifier_gene_id_type}' --output-path '${output_path}'
+    ]]></command>
+    <inputs>
+        <param type="data" name="cds_object" label="CDS object" format="rdata" help="CDS object with expression data for training" />
+        <param type="data" name="marker_file_path" format="txt" label="Marker file path" help="File with marker genes specifying cell types. 
+        See https://cole-trapnell-lab.github.io/garnett/docs/#constructing-a-marker-file for specification of the file format" />
+        <param type="text" name="database" label="gene database" help="argument for Bioconductor AnnotationDb-class package used for converting gene IDs" />
+        <param type="text" name="cds_gene_id_type" label="CDS gene id type" value="ENSEMBL" help="Format of the gene IDs in your CDS object" />
+        <param type="text" name="marker_file_gene_id_type" label="Marker gene id type" value="ENSEMBL" help="Format of the gene IDs in your marker file" />
+        <param type="integer" name="num_unknown" value='500' label="number of outputs" help="Number of outgroups to compare against" />
+        <param type="integer" name="min_observations" value='8' label="Min num of observations" help="The minimum number of representative cells per 
+        cell type required to include the cell type in the predictive model" />
+        <param type="integer" name="max_training_samples" value='500' label="Max num of training samples" help="The maximum number of representative cells per cell
+        type to be included in the model training. Decreasing this number 
+        increases speed, but may hurt performance of the model." />
+        <param type="boolean" name="propogate_markers" checked="true" label="propogate markers" help="Should markers from child nodes of a cell type be used
+        in finding representatives of the parent type?" />
+        <param type="integer" name="cores" label="cores" help="The number of cores to use for computation" />
+        <param type="text" name="classifier_gene_id_type"  label="Classifier gene ID type" value="ENSEMBL" help="The type of gene ID that will be used in the classifier. If possible for your organism, this should be 'ENSEMBL', which is
+        the default." />
+    </inputs>
+    <outputs>
+        <data name="output_path" format="rdata" />
+    </outputs>
+    <help><![CDATA[
+        @HELP@
+
+        @VERSION_HISTORY@
+    ]]></help>
+    <expand macro="citations" />
+</tool>
+
+

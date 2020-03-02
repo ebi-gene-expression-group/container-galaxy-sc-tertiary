@@ -1,0 +1,28 @@
+<tool id="garnett_classify_cells" name="Garnett - classify cells" version="@TOOL_VERSION@+galaxy0" python_template_version="3.5">
+    <macros>
+        <import>garnett_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        garnett_classify_cells.R --cds-object '${cds_object}' --classifier-object '${classifier_object}' --database '${database}' --cds-gene-id-type '${cds_gene_id_type}' --cluster-extend '${cluster_extend}' --rank-prob-ratio '${rank_prob_ratio}' --plot-output-path '${plot_output_path}' --cds-output-obj '${cds_output_obj}'
+    ]]></command>
+    <inputs>
+        <param type="data" name="cds_object" label="CDS object" format="rdata" help="CDS object with expression data for training" />
+        <param type="data" name="classifier_object" label="classifier object" format="rdata" help="Path to the object of class garnett_classifier, which is either trained via garnett_train_classifier.R or obtained elsewhere" />
+        <param type="text" name="database" label="gene database" help="argument for Bioconductor AnnotationDb-class package used for converting gene IDs" />
+        <param type="text" name="cds_gene_id_type" label="CDS gene id type" value="ENSEMBL" help="Format of the gene IDs in your CDS object" />
+        <param type="boolean" name="cluster_extend" checked="true" label="cluster-extended classification" help="Boolean, tells Garnett whether to create a second set of assignments that expands classifications to cells in the same cluster" />
+        <param type="float" name="rank_prob_ratio" value="1.5" label="label probability ratio" help="Numeric value greater than 1. This is the minimum odds ratio between the probability of the most likely cell type to the second most likely cell type to allow assignment. Default is 1.5. Higher values are more conservative." />
+    </inputs>
+    <outputs>
+        <data name="plot_output_path" format="png" />
+        <data name="cds_output_obj" format="rdata" />
+    </outputs>
+    <help><![CDATA[
+        @HELP@
+
+        @VERSION_HISTORY@
+    ]]></help>
+     <expand macro="citations" />
+</tool>
+

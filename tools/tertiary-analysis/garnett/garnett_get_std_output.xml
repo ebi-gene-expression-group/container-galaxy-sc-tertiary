@@ -1,0 +1,23 @@
+<tool id="garnett_get_std_output" name="Garnett - get standard output" version="@TOOL_VERSION@+galaxy0" python_template_version="3.5">
+    <macros>
+        <import>garnett_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        garnett_get_std_output.R --input-object '${input_object}' --cell-id-field '${cell_id_field}' --predicted-cell-type-field '${predicted_cell_type_field}' --output-file-path '${output_file_path}'
+    ]]></command>
+    <inputs>
+        <param type="data" name="input_object" label="input CDS object" format="rdata" help="CDS object with predicted labels" />
+        <param type="text" name="cell_id_field" label="cell ID field" help="Column name of the cell id annotations. If not supplied, it is assumed that cell ids are represented by index" />
+        <param type="text" name="predicted_cell_type_field" label="predicted cell type field" value="cluster_ext_type" help="Column name of the predicted cell type annotation" />
+    </inputs>
+    <outputs>
+        <data name="output_file_path" format="txt" />
+    </outputs>
+    <help><![CDATA[
+        @HELP@
+
+        @VERSION_HISTORY@
+    ]]></help>
+     <expand macro="citations" />
+</tool>

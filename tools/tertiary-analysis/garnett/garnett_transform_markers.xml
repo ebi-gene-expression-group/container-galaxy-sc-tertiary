@@ -1,0 +1,29 @@
+<tool id="garnett_transform_markers" name="Garnett - transform markes" version="@TOOL_VERSION@+galaxy0" python_template_version="3.5">
+    <description>Parse and transform marker file from SCXA's format into that accepted by Garnett</description>
+    <macros>
+        <import>garnett_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        transform_marker_file.R --input-marker-file '${input_marker_file}' --marker-list '${marker_list}' --pval-col '${pval_col}' --pval-threshold '${pval_threshold}' --groups-col '${groups_col}' --gene-names '${gene_names}' --garnett-marker-file '${garnett_marker_file}'
+    ]]></command>
+    <inputs>
+        <param type="data" name="input_marker_file" format="txt" label="Input marker file" help="Path to the SCXA-style marker gene file in .txt format" />
+        <param type="data" name="marker_list" format="rdata" label="Marker lsit object" help="Path to a serialised object containing marker genes" />
+        <param type="text" name="pval_col" value="pvals_adj" label="p-value column name" help="Column name of marker p-values" />
+        <param type="float" name="pval_threshold" value="0.05" label="p-value threshold" help="Cut-off p-value for marker genes" />
+        <param type="text" name="groups_col" value="groups" label="groups column" help="Column name of cell groups (i.e. cluster IDs or cell types) in marker file" />
+        <param type="text" name="gene_names" value="names" label="gene names" help="Column containing gene names in marker file" />
+        <param type="data" name="garnett_marker_file" format="txt" label="garnett marker file" />
+    </inputs>
+    <outputs>
+        <data name="garnett_marker_file" format="txt" />
+    </outputs>
+    <help><![CDATA[
+         @HELP@
+
+        @VERSION_HISTORY@
+    ]]></help>
+    <expand macro="citations" />
+</tool>
+

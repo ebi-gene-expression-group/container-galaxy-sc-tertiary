@@ -1,0 +1,24 @@
+<tool id="garnett_get_feature_genes" name="Garnett - get feature genes" version="@TOOL_VERSION@+galaxy0" python_template_version="3.5">
+    <macros>
+        <import>garnett_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        garnett_get_feature_genes.R --classifier-object '${classifier_object}' --node '${node}' --database '${database}' --convert-ids '${convert_ids}' --output-path '${output_path}'
+    ]]></command>
+    <inputs>
+        <param type="data" name="classifier_object" label="classifier object" format="rdata" help="Path to the object of class garnett_classifier, which is either trained via garnett_train_classifier.R or obtained elsewhere" />
+        <param type="text" name="node" label="node" value="root" help="In case a hierarchical marker tree was used to train the classifier, specify which node features should be shown. Default is 'root'. For other nodes, use the corresponding parent cell type name" />
+        <param type="text" name="database" label="gene database" help="argument for Bioconductor AnnotationDb-class package used for converting gene IDs" />
+        <param type="boolean" name="convert_ids" checked="false" label="convert gene IDs" help="Boolean that indicates whether the gene IDs should be converted into SYMBOL notation" />
+    </inputs>
+    <outputs>
+        <data name="output_path" format="txt" />
+    </outputs>
+   <help><![CDATA[
+        @HELP@
+
+        @VERSION_HISTORY@
+    ]]></help>
+     <expand macro="citations" />
+</tool>
