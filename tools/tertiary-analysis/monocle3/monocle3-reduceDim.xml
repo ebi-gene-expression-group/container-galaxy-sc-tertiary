@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="monocle3_reduceDim" name="Monocle3 reduceDim" version="@TOOL_VERSION@+galaxy0">
+<tool id="monocle3_reduceDim" name="Monocle3 reduceDim" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>for downstream analysis</description>
   <macros>
     <import>monocle3-macros.xml</import>
@@ -15,7 +15,7 @@ LANG=en_US.UTF-8 monocle3 reduceDim
 
     @INPUT_OPTS@
     @OUTPUT_OPTS@
-    
+
     @VERBOSE@
 ]]></command>
 
