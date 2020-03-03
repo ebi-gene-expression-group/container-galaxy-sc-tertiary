@@ -1,9 +1,9 @@
-<tool id="_ensembl_gtf2gene_list" name="GTF2GeneList" version="1.42.1+galaxy5">
+<tool id="_ensembl_gtf2gene_list" name="GTF2GeneList" version="1.42.1+galaxy6" profile="18.01">
     <description>extracts a complete annotation table or subsets thereof from an Ensembl GTF using rtracklayer</description>
     <requirements>
       <requirement type="package" version="1.42.1">bioconductor-rtracklayer</requirement>
-      <requirement type="package">bioconductor-biostrings</requirement>
-      <requirement type="package">r-optparse</requirement>
+      <requirement type="package" version="2.50.2">bioconductor-biostrings</requirement>
+      <requirement type="package" version="1.6.4">r-optparse</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
        ln -s '$gtf_input' input.gtf;
@@ -15,7 +15,7 @@
 --version-transcripts
 #end if
 #if $mito.mark_mito
---mito --mito-chr "${mito.mito_chr}" --mito-biotypes "${mito.mito_biotypes}" 
+--mito --mito-chr "${mito.mito_chr}" --mito-biotypes "${mito.mito_biotypes}"
 #end if
 #if $cdnas.filter_cdnas
 --filter-cdnas "${cdnas.fasta_input}" --filter-cdnas-field "${cdnas.cdnas_field}" --filter-cdnas-output "${fasta_output}"
