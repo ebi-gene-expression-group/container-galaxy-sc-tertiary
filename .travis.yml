@@ -33,7 +33,6 @@ jobs:
               while read -r DIR; do planemo shed_update --shed_target toolshed --shed_key "$SHED_KEY" --force_repository_creation "$DIR" || exit 1; done < changed_repositories.list
           fi
 
-# This moves Kubernetes specific config files.
 env:
   global:
     - CHANGE_MINIKUBE_NONE_USER=true
