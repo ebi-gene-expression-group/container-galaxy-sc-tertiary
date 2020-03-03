@@ -6,10 +6,12 @@ python: 3.7
 
 jobs:
   include:
+    - stage: test
     - stage: deploy
       if: (type = push) AND (branch = develop)
       addons: {}
       before_install: skip
+      before_script: skip
       install:
         - pip install planemo
         - planemo --version
