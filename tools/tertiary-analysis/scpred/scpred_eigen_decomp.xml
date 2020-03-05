@@ -1,4 +1,4 @@
-<tool id="scpred_eigen_decompose" name="scpred matrix eigen-decomposition" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scpred_eigen_decompose" name="Perform matrix eigen-decomposition" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
     <description>Calculate n first principal components and apply log-transformation to the matrix if specified; initialize object of scPred class</description>
     <macros>
          <import>scpred_macros.xml</import>
@@ -10,7 +10,7 @@
         <param type="data" name="training_matrix" label="Training matrix" format="rdata" help="Training matrix obtained from train/test split step" />
         <param type="boolean" name="log_transform" label="log-transform" checked="True" help="Should log-transform be performed on training data?" />
         <param type="data" name="training_labels" label="training labels file" format="txt" help="Path to training labels in text format" />
-        <param type="integer" name="principal_components" label="Number of pincipal components" value=10 help="Number of principal components" />
+        <param type="integer" name="principal_components" label="Number of pincipal components" value="10" help="Number of principal components" />
     </inputs>
     <outputs>
         <data name="output_path" format="rdata" />

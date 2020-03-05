@@ -1,4 +1,4 @@
-<tool id='scpred_get_feature_space' name='scpred get feature space' version='@TOOL_VERSION@+galaxy0' profile="@PROFILE@">
+<tool id='scpred_get_feature_space' name='Get feature space for training data' version='@TOOL_VERSION@+galaxy0' profile="@PROFILE@">
     <description>Get feature space for training matrix</description>
     <macros>
          <import>scpred_macros.xml</import>
@@ -9,7 +9,7 @@
     <inputs>
         <param type='data' name='input_object' label='Input SCE object' format='rdata' help='Input SCE object in .rds format' />
         <param type='text' name='prediction_column' label='Prediction column' help='Name of the metadata column that contains training labels' />
-        <param type='float' name='explained_var_limit' label='Limit of explained variance' value=0.01 help='Threshold to filter principal components based on variance explained' />
+        <param type='float' name='explained_var_limit' label='Limit of explained variance' value="0.01" help='Threshold to filter principal components based on variance explained' />
     </inputs>
     <outputs>
         <data name='output_path' format='rdata' />

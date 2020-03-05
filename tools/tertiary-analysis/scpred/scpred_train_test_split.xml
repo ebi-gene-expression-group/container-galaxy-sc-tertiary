@@ -1,4 +1,4 @@
-<tool id="scpred_traint_test_split" name="scpred train-test split" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scpred_traint_test_split" name="Perform train-test split" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
     <description>Input dataset is pre-processed (CPM normalization) and partitioned into train/test data</description>
     <macros>
         <import>scpred_macros.xml</import>

@@ -1,4 +1,4 @@
-<tool id="scpred_train_model" name="scpred train prediction model" version="@TOOL_VERSION@+galaxy0">
+<tool id="scpred_predict_labels" name="Obtain predicted labels" version="@TOOL_VERSION@+galaxy0">
     <description>Make cell type predictions using trained model this script can be used both for evaluation of model performance on test data and obtaining predictions on new data.</description>
      <macros>
         <import>scpred_macros.xml</import>
