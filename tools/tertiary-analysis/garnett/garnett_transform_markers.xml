@@ -1,5 +1,4 @@
 <tool id="garnett_transform_markers" name="Garnett - transform markes" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
-    <description>Parse and transform marker file from SCXA's format into that accepted by Garnett</description>
     <macros>
         <import>garnett_macros.xml</import>
     </macros>
@@ -10,15 +9,21 @@
     <inputs>
         <param type="data" name="input_marker_file" format="txt" label="Input marker file" help="Path to the SCXA-style marker gene file in .txt format" />
         <param type="data" name="marker_list" format="rdata" label="Marker lsit object" help="Path to a serialised object containing marker genes" />
-        <param type="text" name="pval_col" value="pvals_adj" label="p-value column name" help="Column name of marker p-values" />
+        <param type="text" name="pval_col" value="pvals" label="p-value column name" help="Column name of marker p-values" />
         <param type="float" name="pval_threshold" value="0.05" label="p-value threshold" help="Cut-off p-value for marker genes" />
         <param type="text" name="groups_col" value="groups" label="groups column" help="Column name of cell groups (i.e. cluster IDs or cell types) in marker file" />
         <param type="text" name="gene_names" value="names" label="gene names" help="Column containing gene names in marker file" />
-        <param type="data" name="garnett_marker_file" format="txt" label="garnett marker file" />
     </inputs>
     <outputs>
         <data name="garnett_marker_file" format="txt" />
     </outputs>
+    <tests>
+        <test>
+            <param name="input_marker_file" value="ref_marker_genes.txt" />
+            <param name="marker_list" value="marker_list.rds" />
+            <output name="garnett_marker_file" file="markers_transformed.txt" />
+        </test>
+    </tests>
     <help><![CDATA[
          @HELP@
 

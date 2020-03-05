@@ -16,6 +16,13 @@
     <outputs>
         <data name="updated_marker_file" format="txt" />
     </outputs>
+    <tests>
+        <test>
+            <param name="marker_list_obj" value="marker_list.rds" />
+            <param name="marker_check_file" value="marker_check.txt" />
+            <output name="updated_marker_file" file="markers_upd.txt" />
+        </test>
+    </tests>
     <help><![CDATA[
         @HELP@
 

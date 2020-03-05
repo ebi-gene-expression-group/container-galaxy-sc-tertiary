@@ -10,7 +10,7 @@
         <param type="data" name="cds_object" label="CDS object" format="rdata" help="CDS object with expression data for training" />
         <param type="data" name="marker_file_path" format="txt" label="Marker file path" help="File with marker genes specifying cell types. 
         See https://cole-trapnell-lab.github.io/garnett/docs/#constructing-a-marker-file for specification of the file format" />
-        <param type="text" name="database" label="gene database" help="argument for Bioconductor AnnotationDb-class package used for converting gene IDs" />
+        <param type="text" name="database" label="gene database" value="org.Hs.eg.db" help="argument for Bioconductor AnnotationDb-class package used for converting gene IDs" />
         <param type="text" name="cds_gene_id_type" label="CDS gene id type" value="ENSEMBL" help="Format of the gene IDs in your CDS object" />
         <param type="text" name="marker_file_gene_id_type" label="Marker gene id type" value="ENSEMBL" help="Format of the gene IDs in your marker file" />
         <param type="integer" name="num_unknown" value='500' label="number of outputs" help="Number of outgroups to compare against" />
@@ -28,6 +28,13 @@
     <outputs>
         <data name="output_path" format="rdata" />
     </outputs>
+    <tests>
+        <test>
+            <param name="cds_object" value="garnett_cds.rds" />
+            <param name="marker_file_path" value="markers_upd.txt" />
+            <output name="output_path" value="trained_classifier.rds" />
+        </test>
+    </tests>
     <help><![CDATA[
         @HELP@
 
