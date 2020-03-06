@@ -18,7 +18,7 @@
      <tests>
         <test>
             <param name="input_object" value="scPred_feat_space.rds" />
-            <output name="output_obj_path" file="scPred_trained.rds" />
+            <output name="output_obj_path" />
         </test>
     </tests>
      <help><![CDATA[
