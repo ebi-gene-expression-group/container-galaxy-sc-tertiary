@@ -4,9 +4,8 @@
     <token name="@PROFILE@">18.01</token>
     <xml name="requirements">
         <requirements>
-            <requirement type="package">r-scpred</requirement>
-            <requirement type="package">r-optparse</requirement>
-            <requirement type="package">r-workflowscriptscommon</requirement>
+            <requirement type="package" version="0.0.5">scpred-cli</requirement>
+            <requirement type="package" version="0.9_29">r-kernlab</requirement>
                 <yield/>
         </requirements>
     </xml>

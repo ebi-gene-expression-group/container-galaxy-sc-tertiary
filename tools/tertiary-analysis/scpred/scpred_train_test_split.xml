@@ -18,6 +18,16 @@
         <data name="training_labs" format="txt" />
         <data name="test_labs" format="txt" /> 
     </outputs>
+    <tests>
+        <test>
+            <param name="input_sce_object" value="pollen_cpm.rds" />
+            <param name="cell_types_col" value="cell_type2" />
+            <output name="training_mat" file="train_matrix.mtx" />
+            <output name="test_mat" file="test_matrix.mtx" />
+            <output name="training_labs" file="train_metadata.txt" />
+            <output name="test_labs" file="test_metadata.txt" />
+        </test>
+    </tests>
     <help><![CDATA[
     @HELP@
     

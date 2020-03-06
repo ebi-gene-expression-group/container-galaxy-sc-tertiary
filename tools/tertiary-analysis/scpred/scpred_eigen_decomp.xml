@@ -5,7 +5,7 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        scpred_eigen_decomp.R --training-matrix "${training_matrix}" --log-transform "${log_transform}" --training-labels "${training_labels}" --principal-comps "${principal_components}" --output-path "${output_path}" ]]></command>
+        scpred_eigen_decomp.R --training-matrix "${training_matrix}" --log-transform "${log_transform}" --training-labels "${training_labels}" --principal-comps "${principal_components}" --output-path "${output_object_path}" ]]></command>
     <inputs>
         <param type="data" name="training_matrix" label="Training matrix" format="rdata" help="Training matrix obtained from train/test split step" />
         <param type="boolean" name="log_transform" label="log-transform" checked="True" help="Should log-transform be performed on training data?" />
@@ -13,8 +13,15 @@
         <param type="integer" name="principal_components" label="Number of pincipal components" value="10" help="Number of principal components" />
     </inputs>
     <outputs>
-        <data name="output_path" format="rdata" />
+        <data name="output_object_path" format="rdata" />
     </outputs>
+    <tests>
+        <test>
+            <param name="training_matrix" value="train_matrix.mtx" />
+            <param name="training_labels" value="train_metadata.txt" />
+            <output name="output_object_path" file="scPred_object.rds" />
+        </test>
+    </tests>
     <help><![CDATA[
     @HELP@
     
