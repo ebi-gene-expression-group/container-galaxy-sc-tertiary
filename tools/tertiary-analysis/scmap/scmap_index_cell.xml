@@ -5,7 +5,7 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        scmap-preprocess-sce.R --input-object "${input_single_cell_experiment}" --output-sce-object "preprocessed_${input_single_cell_experiment}" && scmap-index-cell.R --input-object-file "preprocessed_${input_single_cell_experiment}" --number-chunks '$n_chunks' --number-clusters '$n_clusters' --output-object-file '$output_single_cell_experiment' --random-seed '$random_seed'
+        scmap-preprocess-sce.R --input-object "${input_single_cell_experiment}" --output-sce-object "${input_single_cell_experiment}.preprocessed" && scmap-index-cell.R --input-object-file "${input_single_cell_experiment}.preprocessed" --number-chunks '$n_chunks' --number-clusters '$n_clusters' --output-object-file '$output_single_cell_experiment' --random-seed '$random_seed'
     ]]></command>
     <inputs>
         <param type="data" name="input_single_cell_experiment" label="SingleCellExperiment object" format="rdata" help="File with serialized SingleCellExperiment object as produced by 'scmap select features'" />
@@ -21,7 +21,7 @@
             <param name="n_chunks" value="50" />
             <param name="n_clusters" value="9" />
             <param name="input_single_cell_experiment" value="select_features.rds" ftype="rdata"/>
-            <output name="output_single_cell_experiment" file="index_cell.rds"/>
+            <output name="output_single_cell_experiment" file="index_cell.rds" compare="sim_size"/>
         </test>
     </tests>
     <help><![CDATA[

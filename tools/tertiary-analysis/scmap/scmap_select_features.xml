@@ -18,8 +18,8 @@
     <tests>
         <test>
             <param name="input_single_cell_experiment" value="test_sce.rds" ftype="rdata"/>
-            <output name="output_single_cell_experiment" file="select_features.rds"/>
-            <output name="plot" file="select_features.png"/>
+            <output name="output_single_cell_experiment" file="select_features.rds" compare="sim_size"/>
+            <output name="plot" file="select_features.png" compare="sim_size"/>
         </test>
     </tests>
     <help><![CDATA[

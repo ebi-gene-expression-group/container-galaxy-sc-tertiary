@@ -15,6 +15,13 @@
     <outputs>
         <data name="output_predictions_file" format="txt" />
     </outputs>
+    <tests>
+        <test>
+            <param name="input_predictions_file" value="project_cluster.csv" />
+            <param name="include_scores" value="TRUE" />
+            <output name="output_predictions_file" value="scmap_output_tbl.txt" compare="sim_size" />
+        </test>
+    </tests>
     <help><![CDATA[
     @HELP@
     
