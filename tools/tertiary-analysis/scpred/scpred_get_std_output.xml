@@ -18,7 +18,7 @@
         <test>
             <param name="predictions_file" value="predictions_table.txt" />
             <param name="get_scores" value="TRUE" />
-            <output name="output_table" file="scpred_output_tbl.txt" />
+            <output name="output_table" file="scpred_output_tbl.txt" compare="sim_size"/>
         </test>
     </tests>
      <help><![CDATA[

@@ -19,7 +19,7 @@
         <test>
             <param name="training_matrix" value="train_matrix.mtx" />
             <param name="training_labels" value="train_metadata.txt" />
-            <output name="output_object_path" file="scPred_object.rds" />
+            <output name="output_object_path" file="scPred_object.rds" compare="sim_size" />
         </test>
     </tests>
     <help><![CDATA[

@@ -5,7 +5,7 @@
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="0.0.5">scpred-cli</requirement>
-            <requirement type="package" version="0.9_29">r-kernlab</requirement>
+            <requirement type="package" version="0.9_27">r-kernlab</requirement>
                 <yield/>
         </requirements>
     </xml>

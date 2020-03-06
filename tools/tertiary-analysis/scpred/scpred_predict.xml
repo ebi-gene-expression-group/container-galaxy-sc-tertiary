@@ -10,8 +10,8 @@
     <inputs>
         <param type="data" name="input_object" label="Input SCE object" format="rdata" help="Input SCE object in .rds format" />
         <param type="data" name="pred_data" label="Matrix with query data" format="rdata" help="Path to the input prediction matrix in .rds format"/>
-        <param type="text" name="test_labels" label="Test labels" help="Path to the test labels file for evalutation of model performance in text format" />
-        <param type="text" name="cell_types_column" label="Cell types column name" help="Column name of true labels in provided metadata file" />
+        <param type="data" name="test_labels" format="txt" label="Test labels" help="Path to the test labels file for evalutation of model performance in text format" />
+        <param type="text" name="cell_types_column" value="cell_type2" label="Cell types column name" help="Column name of true labels in provided metadata file" />
     </inputs>
     <outputs>
         <data name="output_tbl_path" format="txt" />
@@ -22,8 +22,8 @@
         <test>
             <param name="input_object" value="scPred_trained.rds" />
             <param name="pred_data" value="test_matrix.mtx" />
-             <param name="test_labels" value="test_metadata.txt" />
-            <output name="output_tbl_path" file="predictions_table.txt" />
+            <param name="test_labels" value="test_metadata.txt" />
+            <output name="output_tbl_path" file="predictions_table.txt" compare="sim_size"/>
         </test>
     </tests>
      <help><![CDATA[

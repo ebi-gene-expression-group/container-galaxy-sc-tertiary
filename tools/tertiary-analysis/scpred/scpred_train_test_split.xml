@@ -22,10 +22,10 @@
         <test>
             <param name="input_sce_object" value="pollen_cpm.rds" />
             <param name="cell_types_col" value="cell_type2" />
-            <output name="training_mat" file="train_matrix.mtx" />
-            <output name="test_mat" file="test_matrix.mtx" />
-            <output name="training_labs" file="train_metadata.txt" />
-            <output name="test_labs" file="test_metadata.txt" />
+            <output name="training_mat" file="train_matrix.mtx" compare="sim_size"/>
+            <output name="test_mat" file="test_matrix.mtx" compare="sim_size"/>
+            <output name="training_labs" file="train_metadata.txt" compare="sim_size" />
+            <output name="test_labs" file="test_metadata.txt" compare="sim_size" />
         </test>
     </tests>
     <help><![CDATA[
