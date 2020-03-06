@@ -23,7 +23,7 @@
             <param name="input_object" value="scPred_trained.rds" />
             <param name="pred_data" value="test_matrix.mtx" />
              <param name="test_labels" value="test_metadata.txt" />
-            <output name="output_tbl_path" />
+            <output name="output_tbl_path" file="predictions_table.txt" />
         </test>
     </tests>
      <help><![CDATA[
