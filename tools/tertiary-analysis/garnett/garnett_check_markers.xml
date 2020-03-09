@@ -25,7 +25,7 @@
         <test>
             <param name="cds_object" value="garnett_cds.rds" />
             <param name="marker_file_path" value="markers_transformed.txt" />
-            <output name="marker_output_path" value="marker_plot.png" />
+            <output name="marker_output_path" value="marker_check.txt" compare="sim_size" />
         </test>
     </tests>
     <help><![CDATA[

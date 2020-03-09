@@ -15,7 +15,7 @@
     <tests>
         <test>
             <param name="input_object" value="cds_pred_labs.rds" />
-            <output name="output_file_path" value="garnett_output_tbl.txt" />
+            <output name="output_file_path" value="garnett_output_tbl.txt" compare="sim_size" />
         </test>
     </tests>
     <help><![CDATA[

@@ -23,7 +23,7 @@
             <param name="cds_object" value="garnett_cds.rds" />
             <param name="classifier_object" value="trained_classifier.rds" />
             <output name="plot_output_path" value="cell_pred_plot.png" />
-            <output name="cds_output_obj" value="cds_pred_labs.rds" />
+            <output name="cds_output_obj" value="cds_pred_labs.rds" compare="sim_size" />
         </test>
     </tests>
     <help><![CDATA[

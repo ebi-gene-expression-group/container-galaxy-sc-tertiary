@@ -21,7 +21,7 @@
         <test>
             <param name="input_marker_file" value="ref_marker_genes.txt" />
             <param name="marker_list" value="marker_list.rds" />
-            <output name="garnett_marker_file" file="markers_transformed.txt" />
+            <output name="garnett_marker_file" file="markers_transformed.txt" compare="sim_size"/>
         </test>
     </tests>
     <help><![CDATA[

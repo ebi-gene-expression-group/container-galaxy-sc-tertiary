@@ -32,7 +32,7 @@
         <test>
             <param name="cds_object" value="garnett_cds.rds" />
             <param name="marker_file_path" value="markers_upd.txt" />
-            <output name="output_path" value="trained_classifier.rds" />
+            <output name="output_path" value="trained_classifier.rds" compare="sim_size" />
         </test>
     </tests>
     <help><![CDATA[
