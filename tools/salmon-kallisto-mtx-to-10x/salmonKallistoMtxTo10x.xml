@@ -1,4 +1,4 @@
-<tool id="_salmon_kallisto_mtx_to_10x" name="salmonKallistoMtxTo10x" version="0.0.1+galaxy4" profile="18.01">
+<tool id="_salmon_kallisto_mtx_to_10x" name="salmonKallistoMtxTo10x" version="0.0.1+galaxy5" profile="18.01">
     <description>Transforms .mtx matrix and associated labels into a format compatible with tools expecting old-style 10X data</description>
     <requirements>
       <requirement type="package" version="1.4.1">scipy</requirement>
