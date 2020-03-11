@@ -3,6 +3,7 @@
     <requirements>
       <requirement type="package" version="1.4.1">scipy</requirement>
       <requirement type="package" version="1.0.1">pandas</requirement>
+      <requirement type="package" version="5.37">file</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         file $mtx_file | grep 'gzip compressed' > /dev/null;
