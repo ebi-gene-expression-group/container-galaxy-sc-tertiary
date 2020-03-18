@@ -4,7 +4,7 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        garnett_train_classifier.R --cds-object '${cds_object}' --marker-file-path '${marker_file_path}' --database '${database}' --cds-gene-id-type '${cds_gene_id_type}' --marker-file-gene-id-type '${marker_file_gene_id_type}' --num-unknown '${num_unknown}' --min-observations '${min_observations}' --max-training-samples '${max_training_samples}' --propogate-markers '${propogate_markers}' --cores '${cores}' --classifier-gene-id-type '${classifier_gene_id_type}' --output-path '${output_path}'
+        garnett_train_classifier.R --cds-object '${cds_object}' --marker-file-path '${marker_file_path}' --database '${database}' --cds-gene-id-type '${cds_gene_id_type}' --marker-file-gene-id-type '${marker_file_gene_id_type}' --num-unknown '${num_unknown}' --min-observations '${min_observations}' --max-training-samples '${max_training_samples}' --propogate-markers '${propogate_markers}' --cores '${cores}' --classifier-gene-id-type '${classifier_gene_id_type}' --output-path '${output_classifier_path}'
     ]]></command>
     <inputs>
         <param type="data" name="cds_object" label="CDS object" format="rdata" help="CDS object with expression data for training" />
@@ -22,17 +22,16 @@
         <param type="boolean" name="propogate_markers" checked="true" label="propogate markers" help="Should markers from child nodes of a cell type be used
         in finding representatives of the parent type?" />
         <param type="integer" name="cores" label="cores" value="1" help="The number of cores to use for computation" />
-        <param type="text" name="classifier_gene_id_type"  label="Classifier gene ID type" value="ENSEMBL" help="The type of gene ID that will be used in the classifier. If possible for your organism, this should be 'ENSEMBL', which is
-        the default." />
+        <param type="text" name="classifier_gene_id_type"  label="Classifier gene ID type" value="ENSEMBL" help="The type of gene ID that will be used in the classifier. If possible for your organism, this should be 'ENSEMBL', which is the default." />
     </inputs>
     <outputs>
-        <data name="output_path" format="rdata" />
+        <data name="output_classifier_path" format="rdata" />
     </outputs>
     <tests>
         <test>
             <param name="cds_object" value="garnett_cds.rds" />
             <param name="marker_file_path" value="markers_upd.txt" />
-            <output name="output_path" value="trained_classifier.rds" compare="sim_size" />
+            <output name="output_classifier_path" value="trained_classifier.rds" />
         </test>
     </tests>
     <help><![CDATA[

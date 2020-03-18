@@ -8,7 +8,7 @@
     ]]></command>
     <inputs>
         <param type="data" name="input_marker_file" format="txt" label="Input marker file" help="Path to the SCXA-style marker gene file in .txt format" />
-        <param type="data" name="marker_list" format="rdata" label="Marker lsit object" help="Path to a serialised object containing marker genes" />
+        <param type="data" name="marker_list" format="rdata" label="Marker list object" help="Path to a serialised object containing marker genes" />
         <param type="text" name="pval_col" value="pvals" label="p-value column name" help="Column name of marker p-values" />
         <param type="float" name="pval_threshold" value="0.05" label="p-value threshold" help="Cut-off p-value for marker genes" />
         <param type="text" name="groups_col" value="groups" label="groups column" help="Column name of cell groups (i.e. cluster IDs or cell types) in marker file" />

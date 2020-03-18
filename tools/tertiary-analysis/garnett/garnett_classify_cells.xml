@@ -4,7 +4,7 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        garnett_classify_cells.R --cds-object '${cds_object}' --classifier-object '${classifier_object}' --database '${database}' --cds-gene-id-type '${cds_gene_id_type}' --cluster-extend '${cluster_extend}' --rank-prob-ratio '${rank_prob_ratio}' --plot-output-path '${plot_output_path}' --cds-output-obj '${cds_output_obj}'
+        garnett_classify_cells.R --cds-object '${cds_object}' --classifier-object '${classifier_object}' --database '${database}' --cds-gene-id-type '${cds_gene_id_type}' --cluster-extend '${cluster_extend}' --rank-prob-ratio '${rank_prob_ratio}' --cds-output-obj '${cds_output_obj}'
     ]]></command>
     <inputs>
         <param type="data" name="cds_object" label="CDS object" format="rdata" help="CDS object with expression data for training" />
@@ -15,14 +15,12 @@
         <param type="float" name="rank_prob_ratio" value="1.5" label="label probability ratio" help="Numeric value greater than 1. This is the minimum odds ratio between the probability of the most likely cell type to the second most likely cell type to allow assignment. Default is 1.5. Higher values are more conservative." />
     </inputs>
     <outputs>
-        <data name="plot_output_path" format="png" />
         <data name="cds_output_obj" format="rdata" />
     </outputs>
     <tests>
         <test>
             <param name="cds_object" value="garnett_cds.rds" />
             <param name="classifier_object" value="trained_classifier.rds" />
-            <output name="plot_output_path" value="cell_pred_plot.png" />
             <output name="cds_output_obj" value="cds_pred_labs.rds" compare="sim_size" />
         </test>
     </tests>
