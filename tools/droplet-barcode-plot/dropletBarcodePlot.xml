@@ -1,13 +1,7 @@
-<tool id="_dropletBarcodePlot" name="Droplet barcode rank plot" version="1.6.1+galaxy1" profile="18.01">
+<tool id="_dropletBarcodePlot" name="Droplet barcode rank plot" version="1.6.1+galaxy2" profile="18.01">
     <description>Creates a barcode rank plot for quality control of droplet single-cell RNA-seq data</description>
     <requirements>
-      <requirement type="package" version="1.6.1">bioconductor-dropletutils</requirement>
-      <requirement type="package" version="0.3.9">openblas</requirement>
-      <requirement type="package" version="1.2">r-matrix</requirement>
-      <requirement type="package" version="3.2.1">r-ggplot2</requirement>
-      <requirement type="package" version="1.6.4">r-optparse</requirement>
-      <requirement type="package" version="2.3">r-gridextra</requirement>
-      <requirement type="package" version="0.12.0">bioconductor-delayedarray</requirement>
+      <requirement type="package" version="0.0.1">scxa-plots</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         $__tool_directory__/dropletBarcodePlot.R --output-plot "${plot_file}" --output-thresholds "${thresholds_file}" --label "${label}" --density-bins "${density_bins}" --roryk-multiplier "${roryk_multiplier}"
