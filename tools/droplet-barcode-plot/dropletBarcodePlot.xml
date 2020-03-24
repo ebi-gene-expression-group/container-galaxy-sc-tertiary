@@ -4,7 +4,7 @@
       <requirement type="package" version="0.0.1">scxa-plots</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-        $__tool_directory__/dropletBarcodePlot.R --output-plot "${plot_file}" --output-thresholds "${thresholds_file}" --label "${label}" --density-bins "${density_bins}" --roryk-multiplier "${roryk_multiplier}"
+        dropletBarcodePlot.R --output-plot "${plot_file}" --output-thresholds "${thresholds_file}" --label "${label}" --density-bins "${density_bins}" --roryk-multiplier "${roryk_multiplier}"
 #if $input.type == 'mtx_matrix'
 --mtx-matrix ${input.mtx_matrix}
 #if $input.cellsbyrow
