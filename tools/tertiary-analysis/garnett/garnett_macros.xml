@@ -5,8 +5,6 @@
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="0.0.3">garnett-cli</requirement>
-            <requirement type="package" version="0.0.7">monocle3-cli</requirement>
-            <requirement type="package" version="2.0_18">r-glmnet</requirement>
             <yield/>
         </requirements>
     </xml>
