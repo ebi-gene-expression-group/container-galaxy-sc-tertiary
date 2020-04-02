@@ -4,8 +4,6 @@
     <token name="@PROFILE@">18.01</token>
     <xml name="requirements">
       <requirements>
-        <requirement type="package">openblas</requirement>
-        <requirement type="package">bioconductor-delayedarray</requirement>
         <requirement type="package" version="0.0.5">scmap-cli</requirement>
             <yield/>
       </requirements>
