@@ -1,7 +1,7 @@
 <macros>
     <token name="@TOOL_VERSION@">1.0.0</token>
     <token name="@HELP@">More information can be found at https://joseah.github.io/post/introduction-to-scpred/</token>
-    <token name="@PROFILE@">20.01</token>
+    <token name="@PROFILE@">18.01</token>
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="0.0.5">scpred-cli</requirement>
