@@ -1,4 +1,4 @@
-<tool id="scmap_scmap_cluster" name="scmap cluster projection" version="@TOOL_VERSION@+@GALAXY_VERSION@" profile="@PROFILE@">
+<tool id="scmap_scmap_cluster" name="scmap cluster projection" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
     <description>projects one dataset to another</description>
     <macros>
         <import>scmap_macros.xml</import>

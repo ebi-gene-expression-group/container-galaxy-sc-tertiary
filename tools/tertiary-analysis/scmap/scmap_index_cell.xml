@@ -1,4 +1,4 @@
-<tool id="scmap_index_cell" name="scmap index cells" version="@TOOL_VERSION@+@GALAXY_VERSION@" profile="@PROFILE@">
+<tool id="scmap_index_cell" name="scmap index cells" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
     <description>creates a cell index for a dataset to enable fast approximate nearest neighbour search</description>
     <macros>
         <import>scmap_macros.xml</import>
