@@ -1,5 +1,5 @@
 <tool id="scmap_get_std_output" name="scmap get standard output" version="@TOOL_VERSION@+galaxy0"  profile="@PROFILE@">
-    <description>Create final output in standard format to allow for downstream analysis of predicted labels</description>
+    <description>Create final output in standard format to allow for downstream analysis of predicted labels by tools of the EBI gene expression group's cell-types-analysis package</description>
     <macros>
          <import>scmap_macros.xml</import>
     </macros>
@@ -23,8 +23,14 @@
         </test>
     </tests>
     <help><![CDATA[
-    @HELP@
-    
+    Generate output tables in tab-separated format compatible with input specified in cell-types-analysis package: https://github.com/ebi-gene-expression-group/cell-types-analysis. 
+
+    See the example snippet below: 
+    ________________________________________
+    |  cell_id   | predicted_label | score |
+    | ERR2632411 | memory B cell   |  0.8  |
+    ...
+
     @VERSION_HISTORY@
     ]]></help>
     <expand macro="citations" />
