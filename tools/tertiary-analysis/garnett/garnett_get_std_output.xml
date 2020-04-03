@@ -1,0 +1,28 @@
+<tool id="garnett_get_std_output" name="Garnett - get standard output" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+    <description>Get final output in standard format to allow for downstream analysis of predicted labels by tools of the EBI gene expression group's cell-types-analysis package</description>
+    <macros>
+        <import>garnett_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        garnett_get_std_output.R --input-object '${input_object}' --output-file-path '${output_file_path}'
+    ]]></command>
+    <inputs>
+        <param type="data" name="input_object" label="input CDS object" format="rdata" help="CDS object with predicted labels" />
+    </inputs>
+    <outputs>
+        <data name="output_file_path" format="txt" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="input_object" value="cds_pred_labs.rds" />
+            <output name="output_file_path" value="garnett_output_tbl.txt" compare="sim_size" />
+        </test>
+    </tests>
+    <help><![CDATA[
+        @HELP@
+
+        @VERSION_HISTORY@
+    ]]></help>
+     <expand macro="citations" />
+</tool>

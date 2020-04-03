@@ -1,0 +1,33 @@
+<tool id="update_marker_file" name="Garnett - update markers" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+    <description>Update marker file by filtering out suboptimal markers</description>
+   <macros>
+        <import>garnett_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        update_marker_file.R --marker-list-obj '${marker_list_obj}' --marker-check-file '${marker_check_file}' --summary-col '${summary_col}' --cell-type-col '${cell_type_col}' --gene-id-col '${gene_id_col}' --updated-marker-file '${updated_marker_file}' 
+    ]]></command>
+    <inputs>
+        <param type="data" name="marker_list_obj" label="Marker list object" format="rdata" help="Serialised object containing markers list produced by garnett_transform_markers" />
+        <param type="data" name="marker_check_file" label="marker check file" format="txt" help="Path to the file with marker gene assessment done by garnett" />
+        <param type="text" name="summary_col" value="summary" label="Name of summary column" help="Marker gene assessment column name" />
+        <param type="text" name="cell_type_col" value="cell_type" label="Name of cell type column" help="Marker gene assessment column name" />
+        <param type="text" name="gene_id_col" value="gene_id" label="Name of gene id column" help="Gene id column name in marker assessment file" />
+    </inputs>
+    <outputs>
+        <data name="updated_marker_file" format="txt" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="marker_list_obj" value="marker_list.rds" />
+            <param name="marker_check_file" value="marker_check.txt" />
+            <output name="updated_marker_file" file="markers_upd.txt" compare="sim_size"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+        @HELP@
+
+        @VERSION_HISTORY@
+    ]]></help>
+     <expand macro="citations" /> 
+</tool>
