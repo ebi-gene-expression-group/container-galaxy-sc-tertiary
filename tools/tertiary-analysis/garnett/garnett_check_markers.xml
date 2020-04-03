@@ -1,4 +1,5 @@
 <tool id="garnett_check_markers" name="Garnett - check markers" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+    <description>Check marker file to filter out markers of suboptimal quality</description>
     <macros>
         <import>garnett_macros.xml</import>
     </macros>
