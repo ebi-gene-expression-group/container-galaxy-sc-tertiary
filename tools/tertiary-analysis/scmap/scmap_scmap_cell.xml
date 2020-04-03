@@ -1,4 +1,4 @@
-<tool id="scmap_scmap_cell" name="scmap cell projection" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scmap_scmap_cell" name="scmap cell projection" version="@TOOL_VERSION@+@GALAXY_VERSION@" profile="@PROFILE@">
     <description>searches each cell in a query dataset for the nearest neighbours by cosine distance within a collection of reference datasets.</description>
     <macros>
         <import>scmap_macros.xml</import>
