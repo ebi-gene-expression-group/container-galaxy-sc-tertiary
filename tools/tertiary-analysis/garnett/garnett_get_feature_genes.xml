@@ -1,4 +1,5 @@
 <tool id="garnett_get_feature_genes" name="Garnett - get feature genes" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+    <description>Obtain a list of genes used as features in classification model</description>
     <macros>
         <import>garnett_macros.xml</import>
     </macros>

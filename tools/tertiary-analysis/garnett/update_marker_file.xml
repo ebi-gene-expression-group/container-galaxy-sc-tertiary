@@ -1,4 +1,5 @@
 <tool id="update_marker_file" name="Garnett - update markers" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+    <description>Update marker file by filtering out suboptimal markers</description>
    <macros>
         <import>garnett_macros.xml</import>
     </macros>

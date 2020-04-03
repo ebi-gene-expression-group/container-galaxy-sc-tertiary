@@ -1,4 +1,5 @@
 <tool id="garnett_classify_cells" name="Garnett - classify cells" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+    <description>Classify cells into cell types</description>
     <macros>
         <import>garnett_macros.xml</import>
     </macros>
