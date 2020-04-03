@@ -1,0 +1,38 @@
+<tool id="scmap_get_std_output" name="scmap get standard output" version="@TOOL_VERSION@+galaxy1"  profile="@PROFILE@">
+    <description>Create final output in standard format to allow for downstream analysis of predicted labels by tools of the EBI gene expression group's cell-types-analysis package</description>
+    <macros>
+         <import>scmap_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        scmap_get_std_output.R --predictions-file "${input_predictions_file}" --output-table "${output_predictions_file}" --include-scores "${include_scores}" --sim-col-name "${sim_col_name}"
+    ]]></command>
+    <inputs>
+        <param type="data" name="input_predictions_file" label="Scmap predictions file in text format" format="txt" help="Path to the predictions file in text format" />
+        <param type="boolean" name="include_scores" checked="false"  label="Should prediction scores be included?" help="Boolean indicating whether similarity scores should be included in the final output" />
+        <param type="text" name="sim_col_name" value="scmap_cluster_siml" label="Column name of similarity scores" help="Name of column that contains distances between clusters/cells" />
+    </inputs>
+    <outputs>
+        <data name="output_predictions_file" format="txt" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="input_predictions_file" value="project_cluster.csv" />
+            <param name="include_scores" value="TRUE" />
+            <output name="output_predictions_file" value="scmap_output_tbl.txt" compare="sim_size" />
+        </test>
+    </tests>
+    <help><![CDATA[
+    Generate output tables in tab-separated format compatible with input specified in cell-types-analysis package: https://github.com/ebi-gene-expression-group/cell-types-analysis. 
+    See the example snippet below: 
+    ________________________________________
+    |  cell_id   | predicted_label | score |
+    | ERR2632411 | memory B cell   |  0.8  |
+    ...
+    
+    @VERSION_HISTORY@
+    ]]></help>
+    <expand macro="citations" />
+</tool>
+
+
