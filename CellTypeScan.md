@@ -46,8 +46,8 @@ Predictions will be collated and analysed for consistency using a two-step strat
 
 
 ## Results to date 
-### Command-line interfaces
 
+### Command-line interfaces 
 The following CLI components have been developed:
 
 Scmap: https://github.com/ebi-gene-expression-group/scmap-cli
