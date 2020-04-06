@@ -1,5 +1,5 @@
-<tool id="scpred_eigen_decompose" name="Perform matrix eigen-decomposition" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
-    <description>Calculate n first principal components and apply log-transformation to the matrix if specified; initialize object of scPred class</description>
+<tool id="scpred_eigen_decompose" name="Scpred eigen-decompose" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+    <description>Perform matrix eigen-decomposition; initialize object of scPred class</description>
     <macros>
          <import>scpred_macros.xml</import>
     </macros>

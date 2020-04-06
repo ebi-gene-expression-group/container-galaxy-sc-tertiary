@@ -1,4 +1,4 @@
-<tool id="scpred_predict_labels" name="Obtain predicted labels" version="@TOOL_VERSION@+galaxy0">
+<tool id="scpred_predict_labels" name="Scpred predict" version="@TOOL_VERSION@+galaxy0">
     <description>Make cell type predictions using trained model.</description>
      <macros>
         <import>scpred_macros.xml</import>
