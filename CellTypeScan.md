@@ -39,14 +39,14 @@ The statistics we use in assessment build on those used in [this study](https://
 
 For cross-validation, final reported performance will be the mean of the performance achieved for each ‘fold’.
 
-## Integration with Single-cell Expression Atlas
+## Integration with Single-cell Expression Atlas 
 In a production scenario we are interested in generating reliable predictions for unseen data. A common strategy in this case is to use consensus-based predictions from multiple tools. Because each prediction tool requires its own index structure/ classifier, we will build a library of such classifiers that are then available for cell tying with new data. 
 
 Predictions will be collated and analysed for consistency using a two-step strategy. Firstly, predictions will be filtered at the level of individual tools. For each tool, classifier outputs that produce best-matching predictions will be selected based on similarity score (e.g. a distance metric or a p-value). Secondly, top predictions from each tool will be collated and analysed for consistency and semantic similarity. Tables with most likely consensus predictions and their corresponding scores will be produced. Similar to the performance evaluation use case, Nextflow pipelines were initially produced, replicated by Galaxy pipelines to provide garphical user interface. 
 
 
 ## Results to date 
-### Command-line interfaces
+### Command-line interfaces 
 The following CLI components have been developed:
 
 Scmap: https://github.com/ebi-gene-expression-group/scmap-cli
@@ -58,7 +58,7 @@ These components are now available for incorporation into workflows in whatever 
 ### New components
 Scripts for generating prediction scores and p values for cell type predictions are available in a repository and Conda package - see https://github.com/ebi-gene-expression-group/cell-types-analysis. 
 
-### Workflows
+### Workflows 
 
 **Evaluation** 
 
@@ -79,7 +79,7 @@ https://github.com/ebi-gene-expression-group/garnett-predict-workflow
 
 We are further developing a Nextflow wrapper workflow that will coordinate performance evaluation (https://github.com/ebi-gene-expression-group/cell-types-eval-control-workflow-cross-validation) and prediction (https://github.com/ebi-gene-expression-group/labels-prediction-workflow).
 
-### Galaxy tools
+### Galaxy tools 
 The CLI conda packages have been implemented as Galaxy tools, which allows to use them to duplicate pipelines created in Nextflow 
 
 https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/tools/tertiary-analysis/garnett
