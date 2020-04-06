@@ -46,11 +46,14 @@ Predictions will be collated and analysed for consistency using a two-step strat
 
 
 ## Results to date 
-### Command-line interfaces 
+### Command-line interfaces
+
 The following CLI components have been developed:
 
 Scmap: https://github.com/ebi-gene-expression-group/scmap-cli
+
 Garnett: https://github.com/ebi-gene-expression-group/garnett-cli
+
 scPred https://github.com/ebi-gene-expression-group/scpred-cli
 
 These components are now available for incorporation into workflows in whatever combination required. 
@@ -58,14 +61,16 @@ These components are now available for incorporation into workflows in whatever 
 ### New components
 Scripts for generating prediction scores and p values for cell type predictions are available in a repository and Conda package - see https://github.com/ebi-gene-expression-group/cell-types-analysis. 
 
-### Workflows 
+### Workflows 
 
 **Evaluation** 
 
 The following Nextflow workflows have been built for running the native workflows of the associated tools for use in performance assessment:
 
 https://github.com/ebi-gene-expression-group/scmap-workflow
+
 https://github.com/ebi-gene-expression-group/garnett-workflow
+
 https://github.com/ebi-gene-expression-group/scpred-workflow
 
 **Production**
@@ -73,6 +78,7 @@ https://github.com/ebi-gene-expression-group/scpred-workflow
 For use in production context, separate Nextflow workflows have been constructed:
 
 https://github.com/ebi-gene-expression-group/scpred-predict-workflow
+
 https://github.com/ebi-gene-expression-group/garnett-predict-workflow
 
 **Coordination**
@@ -83,7 +89,9 @@ We are further developing a Nextflow wrapper workflow that will coordinate perfo
 The CLI conda packages have been implemented as Galaxy tools, which allows to use them to duplicate pipelines created in Nextflow 
 
 https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/tools/tertiary-analysis/garnett
+
 https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/tools/tertiary-analysis/scmap
+
 https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/feature/scpred
 
 
