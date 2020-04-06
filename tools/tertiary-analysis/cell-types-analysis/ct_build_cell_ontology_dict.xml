@@ -19,7 +19,7 @@
         <param type="text" name="cell_ontology_col_name" label="Cell ontology column name" value="cell.type.ontology" help="Name of the cell ontology terms column in SDRF files (must be identical across all files)" />
     </inputs>
     <outputs>
-        <data name="output_dict_path" format="rds" />
+        <data name="output_dict_path" format="rdata" />
         <data name="output_txt_path" format="tsv" />
     </outputs>
     <tests>
