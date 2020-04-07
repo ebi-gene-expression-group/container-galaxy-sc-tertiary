@@ -1,0 +1,20 @@
+categories:
+ - Transcriptomics
+ - RNA
+ - Statistics
+ - Sequence Analysis
+description: "De-composed scpred functionality tools, based on https://github.com/ebi-gene-expression-group/scpred-cli and r-scPred 1.0"
+long_description: |
+        scPred: Single cell prediction using singular value decomposition and machine learning classification
+name: suite_scpred
+owner: ebi-gxa
+remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for the scPred tool suite: {{ tool_name }}"
+suite:
+  name: "suite_scpred"
+  description: "De-composed scpred functionality tools, based on https://github.com/ebi-gene-expression-group/scpred-cli and r-scPred 1.0"
+  long_description: |
+    scPred: Single cell prediction using singular value decomposition and machine learning classification
