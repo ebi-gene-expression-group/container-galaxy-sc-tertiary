@@ -1,0 +1,48 @@
+<tool id="ct_get_consensus_outputs" name="Cell types - get consensus outputs" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+    <description>Get consensus outputs across multiple tools</description>
+    <macros>
+        <import>ct_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        mkdir -p input_dir;
+        #for $table in $input_tables:
+          cp '$table' input_dir/;
+        #end for
+
+        ln -s $'${ontology_graph}' cl-basic.obo;
+        
+        get_consensus_output.R --input-dir input_dir --tool-table "${tool_table}" --num-cores "${num_cores}" --cl-dictionary "${lab_cl_mapping}" --parallel "${parallel}" --exclusions "${exclusions}" --ontology-graph cl-basic.obo --semantic-sim-metric "${semantic_sim_metric}" --summary-table-output-path "${summary_table_output_path}" --raw-table-output-path "${raw_table_output_path}" ]]></command>
+    <inputs>
+        <param type="data" name="input_tables" label="Aggregated tables" format="tsv" multiple="true" help="Aggregated prediction tables from multiple tools" />
+        <param type="data" name="tool_table" format="tsv" label="Tools table" help="Table with tools performance metrics" />
+        <param type="boolean" name="parallel" label="Parallel execution" checked="false" help="Should the table values be computed in parallel?" />
+        <param type="integer" name="num_cores" value='4' label="Number of cores" help="Number of cores to run the process" />
+        <param type="data" name="exclusions" label="Exclusions file" format="yml" optional="true" help="Yaml file with trivial terms and unlabelled cells" />
+        <param type="data" name="lab_cl_mapping" format="rdata" label="cl terms mapping" help="Label - CL term mapping" />
+        <param type="data" name="ontology_graph" format="obo" label="Ontology graph" help="Ontology graph to run similairty calculations" />
+        <param type="text" name="semantic_sim_metric" label="Semantic similarity metric" value="edge_resnik" help="Type of semantic similarity metric used" />
+    </inputs>
+    <outputs>
+        <data name="summary_table_output_path" format="txt" />
+        <data name="raw_table_output_path" format="txt" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="input_tables" value="prod_combined_tools/scmap_combined.tsv,prod_combined_tools/scpred_combined.tsv" />
+            <param name="tool_table" value="tool_perf_pvals.tsv" />
+            <param name="exclusions" value="exclusions.yml" />
+            <param name="parallel" value="TRUE" />
+            <param name="lab_cl_mapping" value="label_cl_dict.rds" />
+            <param name="ontology_graph" value="cl-basic.obo" />
+            <output name="summary_table_output_path" file="summary_output_table.tsv" compare="sim_size" />
+            <output name="raw_table_output_path" file="raw_labels_table.tsv" compare="sim_size" />
+        </test>
+    </tests>
+    <help><![CDATA[
+    @HELP@
+    
+    @VERSION_HISTORY@
+    ]]></help>
+    <expand macro="citations" />
+</tool>
