@@ -1,8 +1,8 @@
-# HSCG direct tools install
+# Galaxy tools
 
-This part of the setup explains how to deploy all of our latest tools and workflows on a living Galaxy instance. This could have been achieved in different ways, but once the Galaxy instance is up, it becomes irrelevant how it was provisioned for the sake of adding our tools and workflows.
+This part of the setup explains how to deploy all of our latest tools and workflows on a living Galaxy instance, for which you will need to know its URL, port and have an API key from an admin user that can install tools in the instance. This could have been achieved in different ways, but once the Galaxy instance is up, it becomes irrelevant how it was provisioned for the sake of adding our tools and workflows.
 
-This instructions also adds third party tools that we have considered useful through the time that we have used this setup for production, exploratory analysis and trainings.
+These instructions also adds third party tools that we have considered useful through the time that we have used this setup for production, exploratory analysis and trainings.
 
 ## Tools installation
 
@@ -17,7 +17,37 @@ conda create -n galaxy-ephemeris -c bioconda ephemeris
 ```
 
 - A Galaxy API key for an administrator user in the instance where you would like to install the tools.
-- Place `tool_conf_ebi-gxa.xml` inside the Galaxy config files.
+- Inside `tool_conf.xml` Galaxy config file, place the following content (this is not necessary if you are using the helm/k8s setup):
+
+```
+<label id="single_cell" text="Single Cell RNA-Seq Tools"/>
+<section id="hca_sc_get-scrna" name="Get scRNAseq data">
+ </section>
+<section id="hca_sc_seurat_tools" name="Seurat">
+ </section>
+<section id="hca_sc_sc3_tools" name="SC3">
+ </section>
+<section id="hca_sc_scanpy_tools" name="Scanpy">
+ </section>
+<section id="hca_sc_monocle3_tools" name="Monocl3">
+ </section>
+<section id="hca_sc_scmap_tools" name="SCMap">
+ </section>
+<section id="hca_sc_sccaf_tools" name="SCCAF">
+ </section>
+<section id="hca_sc_utils_viz" name="Single Cell Utils and Viz">
+ </section>
+<label id="rna_seq_label" text="Bulk RNA-Seq Tools"/>
+<section id="rna_seq" name="RNA-Seq">
+ </section>
+<section id="gxa_util" name="Util">
+ </section>
+```
+
+You can re-arrange the order of sections or their names, but their identifiers should be kept.
+
+Please note that tools will only appear in the Galaxy instance if a section identifier matches between the above and
+the content of the .lock files in https://github.com/ebi-gene-expression-group/galaxy-gxa-tools-setup.
 
 To be executed in bash
 ```
@@ -31,3 +61,12 @@ cd galaxy-gxa-tools-setup
 
 The above github repository is routinely updated with newer revisions of the tools, so if you want to keep
 up-to-date, you might want to run this routinely.
+
+# Conda package installation
+
+Any of the conda packages mentioned in the tools supplementary note can be installed, once conda is available,
+through:
+
+```
+conda create -n <name-of-an-environment> <name-of-conda-package>
+```
