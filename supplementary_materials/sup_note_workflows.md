@@ -64,5 +64,6 @@ Table S4 below shows examples where tools are deployed in Nextflow workflows. Ar
 | Workflow | Description | Analysis areas |
 |----------|-------------|----------------|
 | [scmap-prod-workflow](https://github.com/ebi-gene-expression-group/scmap-prod-workflow]) | Predict cell types using scmap, incorporating tools of the [DropletUtils CLI](https://github.com/ebi-gene-expression-group/dropletutils-scripts) | CTP |
+| [scpred-prod-workflow](https://github.com/ebi-gene-expression-group/scpred-prod-workflow]) | Predict cell types using scPred, incorporating tools of the [DropletUtils CLI](https://github.com/ebi-gene-expression-group/dropletutils-scripts) | CTP |
 | [garnett-prod-workflow](https://github.com/ebi-gene-expression-group/garnett-prod-workflow) | Predict cell types using Garnett, incorporating tools of the [Monocle CLI](https://github.com/ebi-gene-expression-group/monocle-scripts) | QC/P |
 | [droplet-quantification-workflow](https://github.com/ebi-gene-expression-group/scxa-droplet-quantification-workflow/blob/develop/main.nf) | Used by the Atlas team for quantifying droplet single-cell experiments, incorporating tools of the [DropletUtils CLI](https://github.com/ebi-gene-expression-group/dropletutils-scripts) | QC/P | 
