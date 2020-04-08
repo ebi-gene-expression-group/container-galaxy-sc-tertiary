@@ -32,7 +32,7 @@ PYTHONIOENCODING=utf-8 scanpy-cli embed diffmap
     <param name="use_graph" argument="--use-graph" value="neighbors" type="text"
            label="Name of the slot that holds the KNN graph"/>
     <param name="key_added" argument="--key-added" type="text" optional="true"
-           label="Additional suffix to the name of the slot to save the calculated trajectory"/>
+           label="Additional suffix to the name of the slot to save the calculated diffusion map"/>
   </inputs>
 
   <outputs>
