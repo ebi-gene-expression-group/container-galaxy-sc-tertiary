@@ -300,3 +300,90 @@ Each module is linked to one of the cli-layers to one or more of the relevant an
 | Module | Description | cli-layer | Analysis areas |
 |--------|-------------|-----------|----------------|
 | [ucsc_cell_browser](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fucsc_cell_browser%2Fucsc_cell_browser)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/ucsc_cell_browser) | displays single-cell clusterized data in an interactive web application. | [None]([None](https://github.com/ebi-gene-expression-group/None/tree/master)) |  |
+
+
+# Garnett
+
+From its website, Garnett allows users to:
+
+> - Train cell type classifiers: Use your single-cell RNA-seq data to build a cell type classifier.
+- Classify your cells: Use pre-trained classifiers to identify cell types in your data
+
+Garnett is used as an R library, so R code needs to be written to use it directly. We have written
+a CLI component named garnett-cli which allows its usage from the command line, avoiding the need
+of having to write R code to use it for the wrapped functionality. The sections available below detail all the steps wrapped.
+
+## Garnett Exchange formats
+
+- Garnett R object.
+
+## Garnett modules available
+
+Table 1 below details all modules available as both a CLI component and as a Galaxy wrapper. The name of the module links to an active Galaxy instance where that can be used, and TS provides a second link to the module in the Galaxy Toolshed.
+Each module is linked to one of the cli-layers to one or more of the relevant analysis areas: Clustering (**C**), Differential expression/Marker detection (**DE-MD**), Trajectories (**T**), Cell type alignment (**CT**), quality control (**QC**) and Dimensionality reduction (**DR**).
+
+| Module | Description | cli-layer | Analysis areas |
+|--------|-------------|-----------|----------------|
+| [garnett_check_markers](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fgarnett_check_markers%2Fgarnett_check_markers)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/garnett_check_markers) | Check marker file to filter out markers of suboptimal quality | [garnett-cli]([garnett-cli](https://github.com/ebi-gene-expression-group/garnett-cli/tree/master)) |  |
+| [garnett_classify_cells](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fgarnett_classify_cells%2Fgarnett_classify_cells)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/garnett_classify_cells) | Classify cells into cell types | [garnett-cli]([garnett-cli](https://github.com/ebi-gene-expression-group/garnett-cli/tree/master)) |  |
+| [garnett_get_feature_genes](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fgarnett_get_feature_genes%2Fgarnett_get_feature_genes)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/garnett_get_feature_genes) | Obtain a list of genes used as features in classification model | [garnett-cli]([garnett-cli](https://github.com/ebi-gene-expression-group/garnett-cli/tree/master)) |  |
+| [garnett_get_std_output](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fgarnett_get_std_output%2Fgarnett_get_std_output)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/garnett_get_std_output) | Get final output in standard format to allow for downstream analysis of predicted labels by tools of the EBI gene expression group's cell-types-analysis package | [garnett-cli]([garnett-cli](https://github.com/ebi-gene-expression-group/garnett-cli/tree/master)) |  |
+| [garnett_train_classifier](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fgarnett_train_classifier%2Fgarnett_train_classifier)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/garnett_train_classifier) | Train classifier based on marker gene list | [garnett-cli]([garnett-cli](https://github.com/ebi-gene-expression-group/garnett-cli/tree/master)) |  |
+| [garnett_transform_markers](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fgarnett_transform_markers%2Fgarnett_transform_markers)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/garnett_transform_markers) | Transform marker files from Single Cell Expression Atlas format to that compatible with Garnett | [garnett-cli]([garnett-cli](https://github.com/ebi-gene-expression-group/garnett-cli/tree/master)) |  |
+| [update_marker_file](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fupdate_marker_file%2Fupdate_marker_file)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/update_marker_file) | Update marker file by filtering out suboptimal markers | [garnett-cli]([garnett-cli](https://github.com/ebi-gene-expression-group/garnett-cli/tree/master)) |  |
+
+# SCPred
+
+From its website, SCPred:
+
+> ...is a general method to predict cell types based on variance structure decomposition. It selects the most cell type-informative principal components from a dataset and trains a prediction model for each cell type. The principal training axes are projected onto the test dataset to obtain the PCs scores for the test dataset and the trained model(s) is/are used to classify single cells.
+
+SCPred is used as an R library, so R code needs to be written to use it directly. We have written
+a CLI component named scpred-cli which allows its usage from the command line, avoiding the need
+of having to write R code to use it for the wrapped functionality. The sections available below detail all the steps wrapped.
+
+## SCPred Exchange formats
+
+- SCPred R object.
+
+## SCPred modules available
+
+Table 1 below details all modules available as both a CLI component and as a Galaxy wrapper. The name of the module links to an active Galaxy instance where that can be used, and TS provides a second link to the module in the Galaxy Toolshed.
+Each module is linked to one of the cli-layers to one or more of the relevant analysis areas: Clustering (**C**), Differential expression/Marker detection (**DE-MD**), Trajectories (**T**), Cell type alignment (**CT**), quality control (**QC**) and Dimensionality reduction (**DR**).
+
+| Module | Description | cli-layer | Analysis areas |
+|--------|-------------|-----------|----------------|
+| [scpred_eigen_decompose](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fscpred_eigen_decompose%2Fscpred_eigen_decompose)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/scpred_eigen_decompose) | Perform matrix eigen-decomposition; initialize object of scPred class | [scpred-cli]([scpred-cli](https://github.com/ebi-gene-expression-group/scpred-cli/tree/master)) |  |
+| [scpred_get_feature_space](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fscpred_get_feature_space%2Fscpred_get_feature_space)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/scpred_get_feature_space) | Get feature space for training matrix | [scpred-cli]([scpred-cli](https://github.com/ebi-gene-expression-group/scpred-cli/tree/master)) |  |
+| [scpred_get_std_output](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fscpred_get_std_output%2Fscpred_get_std_output)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/scpred_get_std_output) | This method allows to export predicted labels in a standardised format, simplifying downstream analyses. | [scpred-cli]([scpred-cli](https://github.com/ebi-gene-expression-group/scpred-cli/tree/master)) |  |
+| [scpred_predict_labels](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fscpred_predict_labels%2Fscpred_predict_labels)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/scpred_predict_labels) | Make cell type predictions using trained model. | [scpred-cli]([scpred-cli](https://github.com/ebi-gene-expression-group/scpred-cli/tree/master)) |  |
+| [scpred_train_model](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fscpred_train_model%2Fscpred_train_model)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/scpred_train_model) | Train classification model | [scpred-cli]([scpred-cli](https://github.com/ebi-gene-expression-group/scpred-cli/tree/master)) |  |
+| [scpred_traint_test_split](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fscpred_traint_test_split%2Fscpred_traint_test_split)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/scpred_traint_test_split) | CPM normalise and partition into train/test data | [scpred-cli]([scpred-cli](https://github.com/ebi-gene-expression-group/scpred-cli/tree/master)) |  |
+
+# Cell-type-analysis
+
+From its website, SCPred:
+
+> ...is a general method to predict cell types based on variance structure decomposition. It selects the most cell type-informative principal components from a dataset and trains a prediction model for each cell type. The principal training axes are projected onto the test dataset to obtain the PCs scores for the test dataset and the trained model(s) is/are used to classify single cells.
+
+SCPred is used as an R library, so R code needs to be written to use it directly. We have written
+a CLI component named scpred-cli which allows its usage from the command line, avoiding the need
+of having to write R code to use it for the wrapped functionality. The sections available below detail all the steps wrapped.
+
+## SCPred Exchange formats
+
+- SCPred R object.
+
+## SCPred modules available
+
+Table 1 below details all modules available as both a CLI component and as a Galaxy wrapper. The name of the module links to an active Galaxy instance where that can be used, and TS provides a second link to the module in the Galaxy Toolshed.
+Each module is linked to one of the cli-layers to one or more of the relevant analysis areas: Clustering (**C**), Differential expression/Marker detection (**DE-MD**), Trajectories (**T**), Cell type alignment (**CT**), quality control (**QC**) and Dimensionality reduction (**DR**).
+
+| Module | Description | cli-layer | Analysis areas |
+|--------|-------------|-----------|----------------|
+| [ct_build_cell_ontology_dict](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fct_build_cell_ontology_dict%2Fct_build_cell_ontology_dict)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/ct_build_cell_ontology_dict) | Create a mapping from labels to CL terms | [cell-types-analysis]([cell-types-analysis](https://github.com/ebi-gene-expression-group/cell-types-analysis/tree/master)) |  |
+| [ct_combine_tool_outputs](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fct_combine_tool_outputs%2Fct_combine_tool_outputs)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/ct_combine_tool_outputs) | Combine predictions for single tool from multiple datasets | [cell-types-analysis]([cell-types-analysis](https://github.com/ebi-gene-expression-group/cell-types-analysis/tree/master)) |  |
+| [ct_get_consensus_outputs](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fct_get_consensus_outputs%2Fct_get_consensus_outputs)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/ct_get_consensus_outputs) | Get consensus outputs across multiple tools | [cell-types-analysis]([cell-types-analysis](https://github.com/ebi-gene-expression-group/cell-types-analysis/tree/master)) |  |
+| [ct_get_empirical_dist](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fct_get_empirical_dist%2Fct_get_empirical_dist)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/ct_get_empirical_dist) | Get empirical distribution for tool performance table | [cell-types-analysis]([cell-types-analysis](https://github.com/ebi-gene-expression-group/cell-types-analysis/tree/master)) |  |
+| [ct_get_tool_perf_table](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fct_get_tool_perf_table%2Fct_get_tool_perf_table)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/ct_get_tool_perf_table) | Get performance table for a list of outputs generated by various tools | [cell-types-analysis]([cell-types-analysis](https://github.com/ebi-gene-expression-group/cell-types-analysis/tree/master)) |  |
+| [ct_get_tool_pvals](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fct_get_tool_pvals%2Fct_get_tool_pvals)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/ct_get_tool_pvals) | Get p-values for tool performance metrics | [cell-types-analysis]([cell-types-analysis](https://github.com/ebi-gene-expression-group/cell-types-analysis/tree/master)) |  |

@@ -79,3 +79,23 @@ write_rows_for_modules
 path=$tertiary_path/data-scxa
 cli=None
 write_rows_for_modules
+
+# droplet-utils
+path=$tertiray_path/dropletutils
+cli=dropletutils-scripts
+write_rows_for_modules
+
+# garnett
+path=$tertiary_path/garnett
+cli=garnett-cli
+write_rows_for_modules
+
+# scpred
+path=$tertiary_path/scpred
+cli=scpred-cli
+write_rows_for_modules
+
+# cell-types-analysis
+path=$tertiary_path/cell-types-analysis
+cli=cell-types-analysis
+write_rows_for_modules
