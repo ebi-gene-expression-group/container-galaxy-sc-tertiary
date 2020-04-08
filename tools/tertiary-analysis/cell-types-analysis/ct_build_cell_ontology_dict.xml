@@ -1,0 +1,38 @@
+<tool id="ct_build_cell_ontology_dict" name="Cell types - build cell ontology map" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+    <description>Create a mapping from labels to CL terms</description>
+    <macros>
+        <import>ct_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        mkdir -p input_dir;
+        #for $sdrf in $input_sdrfs:
+            cp '$sdrf' input_dir/;
+        #end for
+
+        build_cell_ontology_dict.R --input-dir input_dir --condensed-sdrf "${condensed_sdrf}" --barcode-col-name "${barcode_col_name}" --cell-label-col-name "${cell_label_col_name}" --cell-ontology-col-name "${cell_ontology_col_name}" --output-dict-path "${output_dict_path}" --output-text-path "${output_txt_path}" ]]></command>
+    <inputs>
+        <param type="data" name="input_sdrfs" label="Input SDRF tables" multiple="true" format="tsv" help="Input SDRF tables" />
+        <param type="boolean" name="condensed_sdrf" checked="false" label="Condensed SDRF" help="Are the supplied SDRFs of condensed format?" />
+        <param type="text" name="barcode_col_name" label="Barcode column name" value="id" help="Name of the barcode field in provided SDRF files" />
+        <param type="text" name="cell_label_col_name" label="Cell label column name" value="cell.type" help="Name of the cell label field name in provided SDRF files" />
+        <param type="text" name="cell_ontology_col_name" label="Cell ontology column name" value="cell.type.ontology" help="Name of the cell ontology terms column in SDRF files (must be identical across all files)" />
+    </inputs>
+    <outputs>
+        <data name="output_dict_path" format="rdata" />
+        <data name="output_txt_path" format="tsv" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="input_sdrfs" value="SDRFs/ref_condensed_sdrf.tsv,SDRFs/ref_condensed_sdrf_1.tsv" />
+            <param name="condensed_sdrf" value="TRUE" />
+            <output name="output_dict_path" file="label_cl_dict.rds" compare="sim_size" />
+        </test>
+    </tests>
+    <help><![CDATA[
+    @HELP@
+    
+    @VERSION_HISTORY@
+    ]]></help>
+    <expand macro="citations" />
+</tool>

@@ -1,16 +1,10 @@
-<tool id="_dropletBarcodePlot" name="Droplet barcode rank plot" version="1.6.1+galaxy0">
+<tool id="_dropletBarcodePlot" name="Droplet barcode rank plot" version="1.6.1+galaxy2" profile="18.01">
     <description>Creates a barcode rank plot for quality control of droplet single-cell RNA-seq data</description>
     <requirements>
-      <requirement type="package" version="1.6.1">bioconductor-dropletutils</requirement>
-      <requirement type="package">openblas</requirement>
-      <requirement type="package">r-matrix</requirement>
-      <requirement type="package">r-ggplot2</requirement>
-      <requirement type="package">r-optparse</requirement>
-      <requirement type="package">r-gridextra</requirement>
-      <requirement type="package">bioconductor-delayedarray</requirement>
+      <requirement type="package" version="0.0.1">scxa-plots</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-        $__tool_directory__/dropletBarcodePlot.R --output-plot "${plot_file}" --output-thresholds "${thresholds_file}" --label "${label}" --density-bins "${density_bins}" --roryk-multiplier "${roryk_multiplier}"
+        dropletBarcodePlot.R --output-plot "${plot_file}" --output-thresholds "${thresholds_file}" --label "${label}" --density-bins "${density_bins}" --roryk-multiplier "${roryk_multiplier}"
 #if $input.type == 'mtx_matrix'
 --mtx-matrix ${input.mtx_matrix}
 #if $input.cellsbyrow
@@ -42,13 +36,13 @@
         <data name="plot_file" format="png" label="${tool.name} on ${on_string}: barcode rank plot"/>
         <data name="thresholds_file" format="txt" label="${tool.name} on ${on_string}: barcode thresholds"/>
     </outputs>
-    
+
     <tests>
       <test>
         <conditional name='input'>
           <param name="type" value="barcode_freqs"/>
           <param name="barcode_frequencies" ftype="txt" value="raw_cb_frequency.txt"/>
-        </conditional>      
+        </conditional>
         <output name="plot_file" file="barcode_plot.png"/>
       </test>
     </tests>
@@ -58,7 +52,7 @@
 
 **What it does**
 
-Given a barcode freqeuncy table or an MTX-format matrix from which one can be calculated, produces a barcode rank plot to assess distinctness of droplets with cells over those without (a key mark of good-quality droplet single-cell RNA-seq data). 
+Given a barcode freqeuncy table or an MTX-format matrix from which one can be calculated, produces a barcode rank plot to assess distinctness of droplets with cells over those without (a key mark of good-quality droplet single-cell RNA-seq data).
 
 Thresholds are calculated and plotted, either with DropletUtils or by custom method discussed at https://github.com/COMBINE-lab/salmon/issues/362#issuecomment-490160480.
 

@@ -1,0 +1,44 @@
+<macros>
+    <token name="@TOOL_VERSION@">0.2.8</token>
+    <token name="@HELP@">More information can be found at https://cole-trapnell-lab.github.io/garnett/docs/</token>
+    <token name="@PROFILE@">18.01</token>
+    <xml name="requirements">
+        <requirements>
+            <requirement type="package" version="0.0.3">garnett-cli</requirement>
+            <yield/>
+        </requirements>
+    </xml>
+    <xml name="version">
+        <version_command><![CDATA[
+        echo $(R --version | grep version | grep -v GNU)", garnett version" $(R --vanilla --slave -e "library(garnett); cat(sessionInfo()\$otherPkgs\$garnett\$Version)" 2> /dev/null | grep -v -i "WARNING: ")
+        ]]></version_command>
+    </xml>
+    <token name="@VERSION_HISTORY@"><![CDATA[
+    **Version history**
+    0.2.8+galaxy0: Initial contribution. Andrey Solovyev, Expression Atlas team https://www.ebi.ac.uk/gxa/home at EMBL-EBI https://www.ebi.ac.uk/.
+    ]]></token>
+    <xml name="citations">
+        <citations>
+            <citation type="bibtex">
+                @article{,
+                url = {https://doi.org/10.1038/s41592-019-0535-3},           
+                author = {Hannah A. Pliner and Jay Shendure and Cole Trapnell},
+                title = {Supervised classification enables rapid annotation of cell atlases},
+                journal = {Nature Methods}
+            }
+        </citation>
+            <citation type="bibtex">
+                @misc{githubgarnett-cli.git,
+                    author = {Andrey Solovyev, EBI Gene Expression Team},
+                    year = {2019},
+                    title = {garnett-cli: command line interface for Garnett tool},
+                    publisher = {GitHub},
+                    journal = {GitHub repository},
+                    url = {https://github.com/ebi-gene-expression-group/garnett-cli.git},
+                  }
+            </citation>
+            <yield />
+        </citations>
+    </xml>
+</macros>
+
