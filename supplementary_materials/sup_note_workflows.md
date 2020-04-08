@@ -1,8 +1,10 @@
 # Available workflows
 
-Table S3 below gives a summary of example workflows where different tools are mixed
-through the use of intermediate exchange formats or conversions. The sections below
-explain in more detail each of the workflows.
+The command-line-interface layer allows deployment of tools in any workflow environment. 
+
+## Galaxy
+
+Table S3 below gives a summary of example workflows where different tools are deployed in Galaxy. Note in particular the use intermediate exchange formats or conversions to connect disparte tools. The sections below explain in more detail each of the workflows.
 
 **Table S3**: Workflows with links to  Galaxy instance and to their source definition, assigned to one or more of the relevant analysis areas: Clustering (**C**), Differential expression/Marker detection (**DE-MD**), Trajectories (**T**), Cell type alignment (**CT**) and Dimensionality reduction (**DR**). All the workflow source files are available [here](https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/workflows).
 
@@ -15,7 +17,7 @@ explain in more detail each of the workflows.
 | [Atlas-Scanpy-SCCAF](https://humancellatlas.usegalaxy.eu/u/pmoreno/w/atlas-scanpy-sccaf)* | Retrieves data from Single Cell Expression Atlas, preprocess and clusterise with Scanpy at two different resolutions and search for best clustering with SCCAF after batch correcting. | C DR DE BC |
 | [Atlas-Scanpy-SCMap](https://humancellatlas.usegalaxy.eu/u/pmoreno/w/atlas-scanpy-scmap)* | Retrieves data from Single Cell Expression Atlas, preprocess and map to an SCMap cell index | C CT |
 
-## Atlas Scanpy CellBrowser
+### Atlas Scanpy CellBrowser
 
 This workflow (available [here](https://humancellatlas.usegalaxy.eu/u/pmoreno/w/atlas-scanpy-cellbrowser-imported-from-uploaded-file) at the Human Cell Atlas Galaxy instance) retrieves quantified data matrix
 in 10x format from the Single Cell Expression Atlas through an accession number. The data is transformed
@@ -23,34 +25,38 @@ into AnnData, the format used by Scanpy, and then a downstream analysis is carri
 
 ![Screenshot-2020-01-09-at-15.26.41](img/Screenshot-2020-01-09-at-15.26.41.png)
 
-## Atlas Seurat CellBrowser
+### Atlas Seurat CellBrowser
 
 This workflow, is analogous to the previous one, but uses instead of Scanpy the downstream analysis steps of Seurat.
 
 ![Screenshot-2020-01-09-at-15.31.23](img/Screenshot-2020-01-09-at-15.31.23.png)
 
-## SC Atlas Production
+### SC Atlas Production
 
 This workflow was used for releases 4, 5 and 6 of the EBI Single Cell Expression Atlas. Currently it relies mostly on Scanpy steps, but as interoperability improves, some of the analysis
 steps could be changed to other software providers. It distributes generation of tSNE plots across different persplexity values and clusters through a set of resolutions. This workflow mostly generates text files that are loaded into databases and indexes for expression atlas, so no interactive modules or plots are generated, and is provided to enable reproducibility of our results.
 
 ![Screenshot-2020-01-09-at-15.41.42](img/Screenshot-2020-01-09-at-15.41.42.png)
 
-## Human cell atlas Scanpy CellBrowser
+### Human cell atlas Scanpy CellBrowser
 
 Equivalent to the first workflow using EBI Single Cell Atlas downloader, Scanpy modules and CellBrowser, but using the Human Cell Atlas matrix service as input.
 
 ![Screenshot-2020-01-09-at-15.55.22](img/Screenshot-2020-01-09-at-15.55.22.png)
 
 
-## Atlas Scanpy SCCAF
+### Atlas Scanpy SCCAF
 
 This workflow helps in the decision of the number of clusters to pick for a dataset through the use of the SCCAF tool. It will run Scanpy with two different resolution values, a high resolution and a low resolution, and through a machine learning process provide an assessment of adequate clustering in between these settings to prefer for the dataset at hand.
 
 ![Screenshot-2020-01-09-at-16.02.11](img/Screenshot-2020-01-09-at-16.02.11.png)
 
-## Atlas Scanpy SCMap
+### Atlas Scanpy SCMap
 
 This workflow does the downstream analysis with Scanpy for one Atlas dataset and projects it through SCMap at the level of cells and clusters to cell and clusters indexes provided in a format that SCMap can read. The scanpy analysis is exported as Loom file and transformed into SingleCellExperiment by the SCEasy conversion module.
 
 ![Screenshot-2020-01-09-at-16.11.10](img/Screenshot-2020-01-09-at-16.11.10.png)
+
+## Nextflow
+
+
