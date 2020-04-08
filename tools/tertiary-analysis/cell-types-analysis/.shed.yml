@@ -1,0 +1,20 @@
+categories:
+ - Transcriptomics
+ - RNA
+ - Statistics
+ - Benchmarking
+description: "Tools for analysis of predictions from scRNAseq cell type classification tools, see https://github.com/ebi-gene-expression-group/cell-types-analysis"
+long_description: |
+        A suite of scripts for analysis of scRNA-seq cell type classification tool outputs. These scripts can be used both for evaluating the existing methods by running pipelines on labelled data and for analysing predicted labels for novel data sets.
+name: suite_cell_types_analysis
+owner: ebi-gxa
+remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for the cell-types-analysis tool suite: {{ tool_name }}"
+suite:
+  name: "suite_cell_types_analysis"
+  description: "Tools for cell-types-analysis scripts, see https://github.com/ebi-gene-expression-group/cell-types-analysis"
+  long_description: |
+    A suite of scripts for analysis of scRNA-seq cell type classification tool outputs. These scripts can be used both for evaluating the existing methods by running pipelines on labelled data and for analysing predicted labels for novel data sets.
