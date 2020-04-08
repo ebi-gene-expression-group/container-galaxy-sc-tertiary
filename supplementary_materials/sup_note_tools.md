@@ -242,3 +242,61 @@ Each module is linked to one of the cli-layers to one or more of the relevant an
 | [sccaf_asses](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fsccaf_asses%2Fsccaf_asses)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/sccaf_asses) | runs an assesment of an SCCAF optimisation result or an existing clustering. | [None]([None](https://github.com/ebi-gene-expression-group/None/tree/master)) |  |
 | [sccaf_asses_merger](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fsccaf_asses_merger%2Fsccaf_asses_merger)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/sccaf_asses_merger) | brings together distributed assesments. | [None]([None](https://github.com/ebi-gene-expression-group/None/tree/master)) | C |
 | [sccaf_regress_out](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fsccaf_regress_out%2Fsccaf_regress_out)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/sccaf_regress_out) | with multiple categorical keys on an AnnData object. | [None]([None](https://github.com/ebi-gene-expression-group/None/tree/master)) |  |
+
+
+# Data retrieval
+
+We provide two modules for data retrieval of expression matrices, one from EMBL-EBI Single Cell Expression Atlas and one from the Human Cell Atlas (HCA) Matrix service. They both require an study identifier (or description as well in the case of the HCA matrix service), and produce output in 10x format.
+
+Table 8 below details all modules available as both a CLI component and as a Galaxy wrapper. The name of the module links to an active Galaxy instance where that can be used, and TS provides a second link to the module in the Galaxy Toolshed.
+Each module is linked to one of the cli-layers to one or more of the relevant analysis areas: Clustering (**C**), Differential expression/Marker detection (**DE-MD**), Trajectories (**T**), Cell type alignment (**CT**), quality control (**QC**) and Dimensionality reduction (**DR**).
+
+| Module | Description | cli-layer | Analysis areas |
+|--------|-------------|-----------|----------------|
+| [hca_matrix_downloader](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fhca_matrix_downloader%2Fhca_matrix_downloader)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/hca_matrix_downloader) | retrieves expression matrices and metadata from the Human Cell Atlas. | [hca-matrix-downloader]([hca-matrix-downloader](https://github.com/ebi-gene-expression-group/hca-matrix-downloader/tree/master)) |  |
+| [retrieve_scxa](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fretrieve_scxa%2Fretrieve_scxa)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/retrieve_scxa) | Retrieves expression matrixes and metadata from EBI Single Cell Expression Atlas (SCXA) | [None]([None](https://github.com/ebi-gene-expression-group/None/tree/master)) |  |
+
+
+# Format conversion
+
+[SCEASY](https://github.com/cellgeni/sceasy) provides the following formats conversion:
+
+| From | To | Comments |
+|------|----|----------|
+| Seurat | AnnData |   |
+| Seurat | SingleCellExperiment | |
+| SingleCellExperiment | AnnData | |
+| Loom | AnnData | |
+| Loom | SingleCellExperiment | |
+
+Table 9 below details all modules available as both a CLI component and as a Galaxy wrapper. The name of the module links to an active Galaxy instance where that can be used, and TS provides a second link to the module in the Galaxy Toolshed.
+Each module is linked to one of the cli-layers to one or more of the relevant analysis areas: Clustering (**C**), Differential expression/Marker detection (**DE-MD**), Trajectories (**T**), Cell type alignment (**CT**), quality control (**QC**) and Dimensionality reduction (**DR**).
+| Module | Description | cli-layer | Analysis areas |
+|--------|-------------|-----------|----------------|
+| [sceasy_convert](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fsceasy_convert%2Fsceasy_convert)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/sceasy_convert) | a data object between formats | [None]([None](https://github.com/ebi-gene-expression-group/None/tree/master)) | C |
+
+# Visualisation
+
+According to its website, [UCSC CellBrowser](https://github.com/maximilianh/cellBrowser) is:
+
+>a viewer for single cell data. You can click on and hover over cells to get meta information, search for genes to color on and click clusters to show cluster-specific marker genes.
+To look at a list of selected single cell datasets, see http://cells.ucsc.edu
+
+UCSC CellBrowser provides a CLI component, which exposes relevant functionality through a command line interface, enabling its use without having to write Python code.
+
+## Exchange formats
+
+UCSC CellBrowser supports the following exchange formats:
+
+- AnnData (input)
+- Seurat archive (input)
+- Loom (input)
+
+## Modules available
+
+Table 10 below details all modules available as both a CLI component and as a Galaxy wrapper. The name of the module links to an active Galaxy instance where that can be used, and TS provides a second link to the module in the Galaxy Toolshed.
+Each module is linked to one of the cli-layers to one or more of the relevant analysis areas: Clustering (**C**), Differential expression/Marker detection (**DE-MD**), Trajectories (**T**), Cell type alignment (**CT**), quality control (**QC**) and Dimensionality reduction (**DR**).
+
+| Module | Description | cli-layer | Analysis areas |
+|--------|-------------|-----------|----------------|
+| [ucsc_cell_browser](https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2Fucsc_cell_browser%2Fucsc_cell_browser)<sup>[TS](https://toolshed.g2.bx.psu.edu/view/ebi-gxa/ucsc_cell_browser) | displays single-cell clusterized data in an interactive web application. | [None]([None](https://github.com/ebi-gene-expression-group/None/tree/master)) |  |
