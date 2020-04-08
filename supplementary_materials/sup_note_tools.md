@@ -6,7 +6,9 @@ those tools, we have made an effort to isolate its main analysis steps, towards
 an scenario where different analysis components from each tool can be used interchangeably
 provided by that their adherence to exchange formats, or intermediate converters, allow so.
 Tables contain all the tools currently wrapped, with links to their sorce codes and our wrappers.
-The following section discusses the merits of each tool and the steps that we extracted.
+The following section goes through each tool and the steps that we extracted.
+
+The most up-to-date version of this supplementary material will be available [here](https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/blob/develop/supplementary_materials/sup_note_tools.md).
 
 # Scanpy
 

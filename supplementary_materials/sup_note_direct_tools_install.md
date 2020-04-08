@@ -4,6 +4,8 @@ This part of the setup explains how to deploy all of our latest tools and workfl
 
 These instructions also adds third party tools that we have considered useful through the time that we have used this setup for production, exploratory analysis and trainings.
 
+The most up-to-date version of this supplementary material will be available [here](https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/blob/develop/supplementary_materials/sup_note_direct_tools_install.md).
+
 ## Tools installation
 
 Tools to be provisioned are mostly available through the main Galaxy Toolshed within our [ebi-gxa user](https://toolshed.g2.bx.psu.edu/view/ebi-gxa). There are additional third party tools that we provision as part of this process. All versions of each tool are installed, which means that workflows created at different points in time will work with the tools that they were originally created with. Normally, they user should be able to upgrade the tools in a workflow through the interface without much issues, but this design guarantees reproducibility.
