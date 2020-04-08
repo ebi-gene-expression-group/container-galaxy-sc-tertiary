@@ -59,8 +59,10 @@ This workflow does the downstream analysis with Scanpy for one Atlas dataset and
 
 ## Nextflow
 
-Table S4 below shows examples where tools of the same packages are deployed in Nextflow workflows. Areas: Cell type prediction (CTP). 
+Table S4 below shows examples where tools of the same packages are deployed in Nextflow workflows. Areas: Cell type prediction (**CTP**), QC/ preprocessing (**QC/P**). 
 
 | Workflow | Description | Analysis areas |
 |----------|-------------|----------------|
-| [garnett-prod-workflow](https://github.com/ebi-gene-expression-group/garnett-prod-workflow) | Runs a workflows to predict cell types using the Garnett workflow, incorporating tools built for the Monocle CLI | CTP |
+| [scmap-prod-workflow](https://github.com/ebi-gene-expression-group/scmap-prod-workflow]) | A workflow to predict cell types using scmap, incorporating tools of the [DropletUtils CLI](https://github.com/ebi-gene-expression-group/dropletutils-scripts) | CTP |
+| [garnett-prod-workflow](https://github.com/ebi-gene-expression-group/garnett-prod-workflow) | A workflow to predict cell types using Garnett, incorporating tools of the [Monocle CLI](https://github.com/ebi-gene-expression-group/monocle-scripts) | QC/P |
+| [droplet-quantification-workflow](https://github.com/ebi-gene-expression-group/scxa-droplet-quantification-workflow/blob/develop/main.nf) | A workflow used by the Atlas team for quantifying droplet single-cell experiments, incorporating tools of the [DropletUtils CLI](https://github.com/ebi-gene-expression-group/dropletutils-scripts) | QC/P | 
