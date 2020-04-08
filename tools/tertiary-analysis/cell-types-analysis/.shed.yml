@@ -2,7 +2,6 @@ categories:
  - Transcriptomics
  - RNA
  - Statistics
- - Benchmarking
 description: "Tools for analysis of predictions from scRNAseq cell type classification tools, see https://github.com/ebi-gene-expression-group/cell-types-analysis"
 long_description: |
         A suite of scripts for analysis of scRNA-seq cell type classification tool outputs. These scripts can be used both for evaluating the existing methods by running pipelines on labelled data and for analysing predicted labels for novel data sets.
