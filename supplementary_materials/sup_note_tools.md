@@ -200,7 +200,8 @@ SCMap, as any R package, requires the user to write R code in order to use it to
 
 SCMap wrapped supports the following exchange formats:
 
-- SingleCellExperiment
+- SingleCellExperiment (input/output)
+- Tab-separated text file (output)
 
 ## SCMap modules available
 
@@ -315,7 +316,8 @@ of having to write R code to use it for the wrapped functionality. The sections 
 
 ## Garnett Exchange formats
 
-- Garnett R object.
+- R CellDataSet (CDS) object (input/output)
+- Tab-separated text file (output)
 
 ## Garnett modules available
 
@@ -344,7 +346,8 @@ of having to write R code to use it for the wrapped functionality. The sections 
 
 ## SCPred Exchange formats
 
-- SCPred R object.
+- SingleCellExperiment (input/output)
+- Tab-separated text file (output)
 
 ## SCPred modules available
 
@@ -362,19 +365,15 @@ Each module is linked to one of the cli-layers to one or more of the relevant an
 
 # Cell-type-analysis
 
-From its website, SCPred:
+A suite of scripts for analysis of scRNA-seq cell type classification tool outputs. These scripts can be used both for evaluating the existing methods by running pipelines on labelled data and for analysing predicted labels for novel data sets.
 
-> ...is a general method to predict cell types based on variance structure decomposition. It selects the most cell type-informative principal components from a dataset and trains a prediction model for each cell type. The principal training axes are projected onto the test dataset to obtain the PCs scores for the test dataset and the trained model(s) is/are used to classify single cells.
+## cell-types-analysis Exchange formats
 
-SCPred is used as an R library, so R code needs to be written to use it directly. We have written
-a CLI component named scpred-cli which allows its usage from the command line, avoiding the need
-of having to write R code to use it for the wrapped functionality. The sections available below detail all the steps wrapped.
+- Tab-separated text format (input/output)
+- R `RDS` object (input/output)
 
-## SCPred Exchange formats
 
-- SCPred R object.
-
-## SCPred modules available
+## cell-types-analysis modules available
 
 Table 1 below details all modules available as both a CLI component and as a Galaxy wrapper. The name of the module links to an active Galaxy instance where that can be used, and TS provides a second link to the module in the Galaxy Toolshed.
 Each module is linked to one of the cli-layers to one or more of the relevant analysis areas: Clustering (**C**), Differential expression/Marker detection (**DE-MD**), Trajectories (**T**), Cell type alignment (**CT**), quality control (**QC**) and Dimensionality reduction (**DR**).
