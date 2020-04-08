@@ -93,7 +93,7 @@ To run this workflow:
 - Import the workflow: [Click here](https://humancellatlas.usegalaxy.eu/u/pmoreno/w/atlas-scanpy-sccaf) and then click on the + (plus) button next to "About this workflow", to import it.
 - On the next window click on `Start using this workflow`.
 - From the Workflows view, locate the new workflow (it will be called "imported: EBI Single Cell Expression Atlas Scanpy SCCAF") and click on `Run` or `Edit`. `Edit` will allow you to make changes on the workflow.
-- If pressed `Run`, on the next screen click on the pencil box next to `SC-Atlas experiment accession` to set the accession of the EMBL-EBI Single Cell Expression dataset. You can use for instance `E-MTAB-7195`
+- If pressed `Run`, on the next screen click on the pencil box next to `SC-Atlas experiment accession` to set the accession of the EMBL-EBI Single Cell Expression dataset. You can use for instance `E-MTAB-7195`. Set as well the over and under clustered resolutions (to fractions below 1, under clustered smaller and over clustered bigger) and the over and under clustered labels (just two labels with no spaces to name them).
 - Click on the blue button `Run Workflow`. Results will start to appear on the right panel (History), unless that you selected to create a new history with the results.
 
 
