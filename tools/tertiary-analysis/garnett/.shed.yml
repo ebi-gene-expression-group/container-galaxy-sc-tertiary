@@ -3,7 +3,7 @@ categories:
  - RNA
  - Statistics
  - Sequence Analysis
-description: "De-composed garnett functionality tools, based on https://github.com/ebi-gene-expression-group/garnett-cli and r-garnett 0.2.8"
+description: "De-composed Garnett functionality tools, see https://github.com/ebi-gene-expression-group/garnett-cli and r-garnett 0.2.8"
 long_description: |
         Garnett is a software package that faciliates automated cell type classification from single-cell expression data.
 name: suite_garnett
@@ -15,6 +15,6 @@ auto_tool_repositories:
   description_template: "Wrapper for the Garnett tool suite: {{ tool_name }}"
 suite:
   name: "suite_garnett"
-  description: "De-composed garnett functionality tools, based on https://github.com/ebi-gene-expression-group/garnett-cli and r-garnett 0.2.8"
+  description: "De-composed Garnett functionality tools, see https://github.com/ebi-gene-expression-group/garnett-cli and r-garnett 0.2.8"
   long_description: |
     Garnett is a software package that faciliates automated cell type classification from single-cell expression data.
