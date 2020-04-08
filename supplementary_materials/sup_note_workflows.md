@@ -59,4 +59,8 @@ This workflow does the downstream analysis with Scanpy for one Atlas dataset and
 
 ## Nextflow
 
+Table S4 below shows examples where tools of the same packages are deployed in Nextflow workflows. Areas: Cell type prediction (CTP). 
 
+| Workflow | Description | Analysis areas |
+|----------|-------------|----------------|
+| [garnett-prod-workflow](https://github.com/ebi-gene-expression-group/garnett-prod-workflow) | Runs a workflows to predict cell types using the Garnett workflow, incorporating tools built for the Monocle CLI | CTP |
