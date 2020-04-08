@@ -1,0 +1,43 @@
+<tool id="ct_get_empirical_dist" name="Cell types - get empirical distribution" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+    <description>Get empirical distribution for tool performance table</description>
+    <macros>
+        <import>ct_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+
+         ln -s $'${ontology_graph}' cl-basic.obo;
+
+        get_empirical_dist.R --input-ref-file "${input_ref_file}" --parallel "${parallel}" --exclusions "${exclusions}" --label-column-ref "${label_col_ref}" --lab-cl-mapping "${lab_cl_mapping}" --num-iterations "${num_iter}" --num-cores "${num_cores}" --ontology-graph cl-basic.obo --semantic-sim-metric "${sem_sim_metric}" --output-path "${output_list_path}" ]]></command>
+    <inputs>
+        <param type="data" name="input_ref_file" label="Input reference file" format="tsv" help="Text file with reference cell labels" />
+        <param type="data" name="exclusions" format="yml" label="Exclusions file" help="YML file with excluded/unlabelled terms" />
+        <param type="text" name="label_col_ref" label="Reference label column" value="cell_type" help="Label column in reference file" />
+        <param type="data" name="lab_cl_mapping" label="Label - CL term mapping" format="rdata" help="Mapping between cell labels and ontology terms" />
+        <param type="boolean" name="parallel" label="Parallel execution" checked="false" help="Should the table values be computed in parallel?" />
+        <param type="integer" name="num_iter" value='5' label="Number of iterations" help="Number of simulations to generate empirical CDF" />
+        <param type="integer" name="num_cores" value='4' label="Number of cores" help="Number of cores to run the process" />
+        <param type="data" name="ontology_graph" label="Ontology graph" format="obo" help="Ontology graph to run semantis similarity computations" />
+        <param type="text" name="sem_sim_metric" label="Semantic similarity metric" value="edge_resnik" help="Type of semantic similarity metric used" />
+    </inputs>
+    <outputs>
+        <data name="output_list_path" format="rdata" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="input_ref_file" value="reference_sdrf.tsv" />
+            <param name="label_col_ref" value="Sample.Characteristic.cell.type." />
+            <param name="ontology_graph" value="cl-basic.obo" />
+            <param name="exclusions" value="exclusions.yml" />
+            <param name="parallel" value="TRUE" />
+            <param name="lab_cl_mapping" value="label_cl_dict.rds" />
+            <output name="output_list_path" file="empirical_dist_list.rds" compare="sim_size" />
+        </test>
+    </tests>
+    <help><![CDATA[
+    @HELP@
+
+    @VERSION_HISTORY@
+    ]]></help>
+    <expand macro="citations" />
+</tool>

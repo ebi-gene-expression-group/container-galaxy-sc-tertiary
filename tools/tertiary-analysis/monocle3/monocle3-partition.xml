@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="monocle3_partition" name="Monocle3 partition" version="@TOOL_VERSION@+galaxy0">
+<tool id="monocle3_partition" name="Monocle3 partition" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>of cells into groups</description>
   <macros>
     <import>monocle3-macros.xml</import>
@@ -26,7 +26,7 @@ LANG=en_US.UTF-8 monocle3 partition
 
     @INPUT_OPTS@
     @OUTPUT_OPTS@
-    
+
     @VERBOSE@
 ]]></command>
 

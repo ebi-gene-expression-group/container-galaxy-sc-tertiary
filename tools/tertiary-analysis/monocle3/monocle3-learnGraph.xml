@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="monocle3_learnGraph" name="Monocle3 learnGraph" version="@TOOL_VERSION@+galaxy0">
+<tool id="monocle3_learnGraph" name="Monocle3 learnGraph" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>between cells in dimensionality reduced space</description>
   <macros>
     <import>monocle3-macros.xml</import>
@@ -31,7 +31,7 @@ LANG=en_US.UTF-8 monocle3 learnGraph
 
     @INPUT_OPTS@
     @OUTPUT_OPTS@
-    
+
     @VERBOSE@
 ]]></command>
 

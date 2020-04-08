@@ -1,7 +1,40 @@
 sudo: required
 cache: pip
+language: python
 
-# This moves Kubernetes specific config files.
+python: 3.7
+
+jobs:
+  include:
+    - stage: test
+    - stage: deploy
+      if: (type = push) AND (branch = develop)
+      addons: {}
+      before_install: skip
+      before_script: skip
+      install:
+        - pip install planemo
+        - planemo --version
+        - git diff --quiet "$TRAVIS_COMMIT_RANGE" -- ; GIT_DIFF_EXIT_CODE=$?
+        - |
+          if [ "$GIT_DIFF_EXIT_CODE" -gt 1 ] ; then
+              git remote set-branches --add origin develop
+              git fetch
+              TRAVIS_COMMIT_RANGE=origin/develop...
+          fi
+        - echo $TRAVIS_COMMIT_RANGE
+        - |
+          planemo ci_find_repos --changed_in_commit_range "$TRAVIS_COMMIT_RANGE" \
+                                --output changed_repositories.list
+        - cat changed_repositories.list
+      script:
+        - set -e
+        - |
+          if [ "$TRAVIS_PULL_REQUEST" == "false" -a "$TRAVIS_BRANCH" == "develop" ]; then
+              while read -r DIR; do planemo shed_update --shed_target testtoolshed --shed_key "$TEST_SHED_KEY" --force_repository_creation "$DIR" || exit 1; done < changed_repositories.list
+              while read -r DIR; do planemo shed_update --shed_target toolshed --shed_key "$SHED_KEY" --force_repository_creation "$DIR" || exit 1; done < changed_repositories.list
+          fi
+
 env:
   global:
     - CHANGE_MINIKUBE_NONE_USER=true

@@ -1,0 +1,30 @@
+<tool id="scpred_get_std_output" name="Get output in standard format" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+    <description>This method allows to export predicted labels in a standardised format, simplifying downstream analyses.</description>
+    <macros>
+        <import>scpred_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[ 
+        scpred_get_std_output.R --predictions-file "${predictions_file}" --get-scores "${get_scores}" --output-table "${output_table}" 
+        ]]></command>
+    <inputs>
+        <param type="data" name="predictions_file" label="Predictions file" format="txt" help="Path to the predictions file in text format" />
+        <param type="boolean" checked="false" name="get_scores" label="Get scores" help="Boolean: should the prediction scores be included? default: FALSE" />
+    </inputs>
+    <outputs>
+        <data name="output_table" format="txt" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="predictions_file" value="predictions_table.txt" />
+            <param name="get_scores" value="TRUE" />
+            <output name="output_table" file="scpred_output_tbl.txt" compare="sim_size"/>
+        </test>
+    </tests>
+     <help><![CDATA[
+    @HELP@
+    
+    @VERSION_HISTORY@
+    ]]></help>
+    <expand macro="citations" />
+</tool>

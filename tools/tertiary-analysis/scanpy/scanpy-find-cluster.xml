@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_find_cluster" name="Scanpy FindCluster" version="@TOOL_VERSION@+galaxy9" profile="@PROFILE@">
+<tool id="scanpy_find_cluster" name="Scanpy FindCluster" version="@TOOL_VERSION@+galaxy11" profile="@PROFILE@">
   <description>based on community detection on KNN graph</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -52,7 +52,7 @@ PYTHONIOENCODING=utf-8 scanpy-find-cluster
         <param name="use_graph" argument="--use-graph" value="neighbors" type="text"
             label="Name of the slot that holds the KNN graph"/>
         <param name="key_added" argument="--key-added" type="text" optional="true"
-            label="Additional suffix to the name of the slot to save the calculated trajectory"/>
+            label="Additional suffix to the name of the slot to save the calculated clustering"/>
 
         <param name="resolution" argument="--resolution" type="float" min="0.0" value="1.0"
                label="Resolution, high value for more and smaller clusters"/>

@@ -1,0 +1,29 @@
+<tool id="ct_get_tool_pvals" name="Cell types - get tool p-values" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+    <description>Get p-values for tool performance metrics</description>
+    <macros>
+        <import>ct_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        get_tool_pvals.R --input-table "${input_table}" --emp-dist-list "${emp_dist_list}" --output-table "${output_table}" ]]></command>
+    <inputs>
+        <param type="data" name="input_table" label="Table with tool stats" format="tsv" help="Path to the table of tool statistics from get_tool_performance_table.R" />
+        <param type="data" name="emp_dist_list" label="List of empirical distributions" format="rdata" help="Path to the list of empirical distributions in .rds format" />
+    </inputs>
+    <outputs>
+        <data name="output_table" format="tsv" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="input_table" value="tool_perf_table.tsv" />
+            <param name="emp_dist_list" value="empirical_dist_list.rds" />
+            <output name="output_table" file="tool_perf_pvals.tsv" compare="sim_size" />
+        </test>
+    </tests>
+    <help><![CDATA[
+    @HELP@
+    
+    @VERSION_HISTORY@
+    ]]></help>
+    <expand macro="citations" />
+</tool>

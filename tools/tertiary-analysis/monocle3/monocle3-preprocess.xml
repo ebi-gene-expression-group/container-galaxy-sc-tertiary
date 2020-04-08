@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="monocle3_preprocess" name="Monocle3 preprocess" version="@TOOL_VERSION@+galaxy0">
+<tool id="monocle3_preprocess" name="Monocle3 preprocess" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>a Monocle3 object to an initially dimensionally reduced space</description>
   <macros>
     <import>monocle3-macros.xml</import>
@@ -27,7 +27,7 @@ LANG=en_US.UTF-8 monocle3 preprocess
 
     @INPUT_OPTS@
     @OUTPUT_OPTS@
-    
+
     @VERBOSE@
 ]]></command>
 

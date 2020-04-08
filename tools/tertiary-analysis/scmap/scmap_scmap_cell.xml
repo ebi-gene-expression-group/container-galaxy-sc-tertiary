@@ -1,4 +1,4 @@
-<tool id="scmap_scmap_cell" name="scmap cell projection" version="@TOOL_VERSION@+galaxy0" python_template_version="3.5">
+<tool id="scmap_scmap_cell" name="scmap cell projection" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
     <description>searches each cell in a query dataset for the nearest neighbours by cosine distance within a collection of reference datasets.</description>
     <macros>
         <import>scmap_macros.xml</import>
@@ -45,10 +45,10 @@
             <param name="index_single_cell_experiment" value="index_cell.rds" ftype="rdata"/>
             <param name="project_single_cell_experiment" value="test_sce.rds" ftype="rdata"/>
             <param name="cluster_projection" value="true" ftype="rdata"/>
-            <output name="output_single_cell_experiment" file="closest_cells_clusters.rds"/>
-            <output name="closest_cells_clusters_csv" file="closest_cells_clusters.csv" />
-            <output name="closest_cells_text_file" file="closest_cells.csv"/>
-            <output name="closest_cells_similarities_text_file" file="closest_cells_similarities.csv"/>
+            <output name="output_single_cell_experiment" file="closest_cells_clusters.rds" compare="sim_size"/>
+            <output name="closest_cells_clusters_csv" file="closest_cells_clusters.csv" compare="sim_size" />
+            <output name="closest_cells_text_file" file="closest_cells.csv" compare="sim_size"/>
+            <output name="closest_cells_similarities_text_file" file="closest_cells_similarities.csv" compare="sim_size"/>
         </test>
     </tests>
     <help><![CDATA[
