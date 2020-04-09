@@ -5,6 +5,8 @@
 # Trajectories (T)
 # Cell type alignment (CT)
 # Dimensionality reduction (DR)
+scanpy_filter_cells:QC
+scanpy_filter_genes:QC
 scanpy_find_cluster:C
 scanpy_find_markers:DE-MD
 scanpy_find_variable_genes:P
@@ -24,6 +26,7 @@ scanpy_scale_data:P
 seurat_dim_plot:DR
 seurat_find_clusters:C
 seurat_find_markers:DE-MD
+seurat_find_neighbours:C
 seurat_find_variable_genes:C DE-MD
 seurat_normalise_data:C
 seurat_run_pca:DR
