@@ -76,5 +76,6 @@ publisher = {GitHub},
 journal = {GitHub repository},
 url = {https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary},
   }</citation>
+  <citation type="doi">10.1101/2020.04.08.032698</citation>
 </citations>
 </tool>

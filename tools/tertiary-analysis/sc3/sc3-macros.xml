@@ -25,6 +25,7 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
         journal = {GitHub repository},
         url = {https://github.com/ebi-gene-expression-group/bioconductor-sc3-scripts.git},
       }</citation>
+      <citation type="doi">10.1101/2020.04.08.032698</citation>
       <yield />
     </citations>
   </xml>

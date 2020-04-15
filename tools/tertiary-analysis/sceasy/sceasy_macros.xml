@@ -17,6 +17,7 @@
   <xml name="citations">
     <citations>
       <yield />
+      <citation type="doi">10.1101/2020.04.08.032698</citation>
       <!-- <citation type="doi"> </citation> -->
       <!-- <citation type="bibtex"> </citation> -->
     </citations>
