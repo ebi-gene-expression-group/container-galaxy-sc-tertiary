@@ -21,7 +21,7 @@
         <citations>
             <citation type="bibtex">
                 @article{,
-                url = {https://doi.org/10.1038/s41592-019-0535-3},           
+                url = {https://doi.org/10.1038/s41592-019-0535-3},
                 author = {Hannah A. Pliner and Jay Shendure and Cole Trapnell},
                 title = {Supervised classification enables rapid annotation of cell atlases},
                 journal = {Nature Methods}
@@ -38,7 +38,7 @@
                   }
             </citation>
             <yield />
+            <citation type="doi">10.1101/2020.04.08.032698</citation>
         </citations>
     </xml>
 </macros>
-

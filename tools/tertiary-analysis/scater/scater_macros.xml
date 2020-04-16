@@ -46,6 +46,7 @@ EMBL-EBI https://www.ebi.ac.uk/ and and Teichmann Lab at Wellcome Sanger Institu
         url = {https://github.com/ebi-gene-expression-group/bioconductor-scater-scripts.git},
       }
       </citation>
+      <citation type="doi">10.1101/2020.04.08.032698</citation>
       <yield />
     </citations>
   </xml>
