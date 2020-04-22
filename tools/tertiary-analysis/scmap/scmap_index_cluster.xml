@@ -5,10 +5,11 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        scmap-preprocess-sce.R --input-object "${input_single_cell_experiment}" --output-sce-object "${input_single_cell_experiment}.preprocessed" && scmap-index-cluster.R --input-object-file "${input_single_cell_experiment}" --cluster-col '$cluster_col' --output-object-file '$output_single_cell_experiment' --output-plot-file '$plot'
+        scmap-preprocess-sce.R --input-object "${input_single_cell_experiment}" --output-sce-object "${input_single_cell_experiment}.preprocessed" && scmap-index-cluster.R --input-object-file "${input_single_cell_experiment}" --cluster-col '$cluster_col' --train-idf '${train_idf}' --output-object-file '$output_single_cell_experiment' --output-plot-file '$plot'
     ]]></command>
     <inputs>
         <param type="data" name="input_single_cell_experiment" label="SingleCellExperiment object" format="rdata" help="File with serialized SingleCellExperiment object as produced by 'scmap select features'" />
+        <param type="data" name="train_idf" label="IDF file" format="txt" help="IDF file to extract training dataset name from" />
         <param name="cluster_col" type="text" label="Cluster column" value="cell_type1" help="Column name in the 'colData' slot of the SingleCellExperiment object containing the cell classification information." />
     </inputs>
     <outputs>
