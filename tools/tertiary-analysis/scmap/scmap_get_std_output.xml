@@ -11,7 +11,10 @@
         <param type="data" name="input_predictions_file" label="Scmap predictions file in text format" format="txt" help="Path to the predictions file in text format" />
         <param type="boolean" name="include_scores" checked="false"  label="Should prediction scores be included?" help="Boolean indicating whether similarity scores should be included in the final output" />
         <param type="data" name="index" label="Scmap index object" format="rdata" help="Scmap index object in rdata format" />
-        <param type="text" name="tool" label="Tool used (cell/cluster)"  help="What tool was used - scmap-cell or scmap-cluster?" />
+        <param type="select" name="tool" label="Tool used (cell/cluster)"  help="What tool was used - scmap-cell or scmap-cluster?">
+            <option value="scmap-cell">Scmap-cell</option>
+            <option value="scmap-cluster">Scmap-cluster</option>
+        </param>
         <param type="text" name="sim_col_name" value="scmap_cluster_siml" label="Column name of similarity scores" help="Name of column that contains distances between clusters/cells" />
     </inputs>
     <outputs>

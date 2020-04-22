@@ -4,7 +4,7 @@
     <token name="@PROFILE@">18.01</token>
     <xml name="requirements">
         <requirements>
-            <requirement type="package" version="0.0.3">garnett-cli</requirement>
+            <requirement type="package" version="0.0.4">garnett-cli</requirement>
             <yield/>
         </requirements>
     </xml>
