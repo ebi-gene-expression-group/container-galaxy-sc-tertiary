@@ -12,12 +12,24 @@
 
         ln -s $'${ontology_graph}' cl-basic.obo;
         
-        get_consensus_output.R --input-dir input_dir --tool-table "${tool_table}" --num-cores "${num_cores}" --cl-dictionary "${lab_cl_mapping}" --parallel "${parallel}" --exclusions "${exclusions}" --ontology-graph cl-basic.obo --semantic-sim-metric "${semantic_sim_metric}" --summary-table-output-path "${summary_table_output_path}" --raw-table-output-path "${raw_table_output_path}" ]]></command>
+        get_consensus_output.R --input-dir input_dir --num-cores \${GALAXY_SLOTS:-1} --cl-dictionary "${lab_cl_mapping}"  --ontology-graph cl-basic.obo --summary-table-output-path "${summary_table_output_path}" --raw-table-output-path "${raw_table_output_path}"
+        #if $tool_table
+        --tool-table "${tool_table}"
+        #end if
+        #if $parallel
+        --parallel "${parallel}"
+        #end if
+        #if $exclusions
+        --exclusions "${exclusions}"
+        #end if
+        #if $semantic_sim_metric
+        --semantic-sim-metric "${semantic_sim_metric}" 
+        #end if
+         ]]></command>
     <inputs>
         <param type="data" name="input_tables" label="Aggregated tables" format="tsv" multiple="true" help="Aggregated prediction tables from multiple tools" />
         <param type="data" name="tool_table" format="tsv" label="Tools table" help="Table with tools performance metrics" />
         <param type="boolean" name="parallel" label="Parallel execution" checked="false" help="Should the table values be computed in parallel?" />
-        <param type="integer" name="num_cores" value='4' label="Number of cores" help="Number of cores to run the process" />
         <param type="data" name="exclusions" label="Exclusions file" format="yml" optional="true" help="Yaml file with trivial terms and unlabelled cells" />
         <param type="data" name="lab_cl_mapping" format="rdata" label="cl terms mapping" help="Label - CL term mapping" />
         <param type="data" name="ontology_graph" format="obo" label="Ontology graph" help="Ontology graph to run similairty calculations" />

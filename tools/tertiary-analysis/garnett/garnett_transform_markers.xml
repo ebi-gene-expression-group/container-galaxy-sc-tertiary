@@ -5,7 +5,20 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        transform_marker_file.R --input-marker-file '${input_marker_file}' --marker-list '${marker_list}' --pval-col '${pval_col}' --pval-threshold '${pval_threshold}' --groups-col '${groups_col}' --gene-names '${gene_names}' --garnett-marker-file '${garnett_marker_file}'
+        transform_marker_file.R --input-marker-file '${input_marker_file}' --marker-list '${marker_list}'  --garnett-marker-file '${garnett_marker_file}'
+
+        #if $pval_col
+        --pval-col '${pval_col}'
+        #end if
+        #if $pval_threshold
+        --pval-threshold '${pval_threshold}'
+        #end if
+        #if $groups_col
+        --groups-col '${groups_col}'
+        #end if
+        #if $gene_names
+        --gene-names '${gene_names}'
+        #end if
     ]]></command>
     <inputs>
         <param type="data" name="input_marker_file" format="txt" label="Input marker file" help="Path to the SCXA-style marker gene file in .txt format" />

@@ -10,7 +10,20 @@
             cp '$sdrf' input_dir/;
         #end for
 
-        build_cell_ontology_dict.R --input-dir input_dir --condensed-sdrf "${condensed_sdrf}" --barcode-col-name "${barcode_col_name}" --cell-label-col-name "${cell_label_col_name}" --cell-ontology-col-name "${cell_ontology_col_name}" --output-dict-path "${output_dict_path}" --output-text-path "${output_txt_path}" ]]></command>
+        build_cell_ontology_dict.R --input-dir input_dir  --output-dict-path "${output_dict_path}" --output-text-path "${output_txt_path}"
+        #if $condensed_sdrf
+        --condensed-sdrf "${condensed_sdrf}" 
+        #end if
+        #if $barcode_col_name
+        --barcode-col-name "${barcode_col_name}"
+        #end if
+        #if $cell_label_col_name
+        --cell-label-col-name "${cell_label_col_name}"
+        #end if
+        #if $cell_ontology_col_name
+        --cell-ontology-col-name "${cell_ontology_col_name}" 
+        #end if
+         ]]></command>
     <inputs>
         <param type="data" name="input_sdrfs" label="Input SDRF tables" multiple="true" format="tsv" help="Input SDRF tables" />
         <param type="boolean" name="condensed_sdrf" checked="false" label="Condensed SDRF" help="Are the supplied SDRFs of condensed format?" />

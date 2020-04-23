@@ -5,7 +5,23 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        garnett_check_markers.R --cds-object '${cds_object}' --marker-file-path '${marker_file_path}' --database '${database}' --cds-gene-id-type '${cds_gene_id_type}' --marker-file-gene-id-type '${marker_file_gene_id_type}' --marker-output-path '${marker_output_path}' --plot-output-path '${plot_output_path}' --propogate-markers '${propogate_markers}' --classifier-gene-id-type '${classifier_gene_id_type}'
+        garnett_check_markers.R --cds-object '${cds_object}' --marker-file-path '${marker_file_path}' --database '${database}' --marker-output-path '${marker_output_path}'
+
+        #if $cds_gene_id_type
+        --cds-gene-id-type '${cds_gene_id_type}' 
+        #end if
+        #if $marker_file_gene_id_type
+        --marker-file-gene-id-type '${marker_file_gene_id_type}'
+        #end if
+        #if $plot_output_path
+        --plot-output-path '${plot_output_path}' 
+        #end if
+        #if $propogate_markers
+        --propogate-markers '${propogate_markers}'  
+        #end if
+        #if $propogate_markers
+        --classifier-gene-id-type '${classifier_gene_id_type}'
+        #end if
     ]]></command>
     <inputs>
         <param type="data" name="cds_object" label="CDS object" format="rdata" help="CDS object with expression data for training" />

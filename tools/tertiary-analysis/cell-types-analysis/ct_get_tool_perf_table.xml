@@ -12,12 +12,36 @@
 
         ln -s $'${ontology_graph}' cl-basic.obo;
        
-        get_tool_performance_table.R --input-dir input_dir --ref-file "${ref_file}" --num-cores "${num_cores}" --exclusions "${exclusions}" --parallel "${parallel}" --ontology-graph cl-basic.obo --lab-cl-mapping "${lab_cl_mapping}" --barcode-col-ref "${barcode_col_ref}" --barcode-col-pred "${barcode_col_pred}" --label-column-ref "${label_col_ref}" --label-column-pred "${label_col_pred}" --semantic-sim-metric "${semantic_sim_metric}" --output-path "${output_path}" ]]></command>
+        get_tool_performance_table.R --input-dir input_dir --ref-file "${ref_file}" --num-cores \${GALAXY_SLOTS:-1}   --ontology-graph cl-basic.obo --lab-cl-mapping "${lab_cl_mapping}" --output-path "${output_path}"
+
+        #if $exclusions
+        --exclusions "${exclusions}"
+        #end if
+        #if $parallel
+        --parallel "${parallel}"
+        #end if
+        #if $barcode_col_ref
+        --barcode-col-ref "${barcode_col_ref}"
+        #end if
+        #if $barcode_col_pred
+        --barcode-col-pred "${barcode_col_pred}"
+        #end if
+        #if $label_col_ref
+        --label-column-ref "${label_col_ref}" 
+        #end if
+        #if $label_col_pred
+        --label-column-pred "${label_col_pred}" 
+        #end if
+        #if $semantic_sim_metric
+        --semantic-sim-metric "${semantic_sim_metric}" 
+        #end if
+
+
+         ]]></command>
     <inputs>
         <param type="data" name="input_files" label="Input tables" multiple="true" format="txt" help="Classification tables obtained from multiple classisifiers" />
         <param type="data" name="ref_file" label="Reference metadata file" format="txt" help="Metadata file with reference labels" />
         <param type="boolean" name="parallel" label="Parallel execution" checked="false" help="Should the table values be computed in parallel?" />
-        <param type="integer" name="num_cores" label="Number of cores" value='1' help="Number of cores used for computation" />
         <param type="data" name="exclusions" label="Exclusions" format="yml" optional="true" help="Config file with exclusions" />
         <param type="data" name="ontology_graph" label="Ontology graph" format="obo" help="Ontology graph to run semantis similarity computations" />
         <param type="data" name="lab_cl_mapping" label="Label - CL term mapping" format="rdata" help="Mapping between cell labels and ontology terms" />
