@@ -7,6 +7,12 @@
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_obj_file}' input.h5 &&
+#for $i, $os in enumerate($obs_sources):
+  ln -s '${os}' obs_source_${i}.h5 &&
+#endfor
+#for $i, $es in enumerate($embedding_sources):
+  ln -s '${es}' embedding_source_${i}.h5 &&
+#endfor
 python $operations
 ]]></command>
   <configfiles>
@@ -33,6 +39,28 @@ if k_cat.sum() > 0:
 else:
     logging.warning('No genes starting with {} found, skip calculating expression of {} genes'.format('${flag.startswith}', '${flag.flag}'))
 #end for
+
+#if len($obs_keys) > 0:
+#for $i, $obs_s in enumerate($obs_sources)):
+  ad_s = sc.read('obs_source_${i}.h5')
+  #for $j, $o_key in enumerate($obs_keys):
+    keys_to_copy = (k for k in ad_s.obs.keys() if "${o_key.contains}" in k)
+    for k_to_copy in keys_to_copy:
+      adata.obs[[k_to_copy+"_${i}"]] = ad_s.obs[[k_to_copy]]
+  #endfor
+#endfor
+#endif
+
+#if len($embedding_keys) > 0:
+#for $i, $obs_s in enumerate($embedding_sources)):
+  ad_s = sc.read('embedding_source_${i}.h5')
+  #for $j, $e_key in enumerate($embedding_keys):
+    keys_to_copy = (k for k in ad_s.obsm.keys() if "${e_key.contains}" in k)
+    for k_to_copy in keys_to_copy:
+      adata.obsm[[k_to_copy+"_${i}"]] = ad_s.obsm[[k_to_copy]]
+  #endfor
+#endfor
+#endif
 
 
 if len(qc_vars) > 0:
@@ -69,6 +97,26 @@ adata.write('output.h5', compression='gzip')
       <param name="flag" type="text" label="Var name" help="Name of the column in var.names where this boolean flag is stored, for example 'mito' for mitochondrial genes."/>
     </repeat>
     <param name="top_genes" label="Number of top genes" value='50' help="to calculate percentage of the flagged genes in that number of top genes. Used by sc.pp.calculate_qc_metrics (integer)." type="integer"/>
+    <conditional name="copy_o">
+      <param name="default" type="boolean" checked="false" label="Copy observations (such as clusters)"/>
+      <when value="true">
+        <repeat name="obs_keys" title="Keys from obs to copy" help="will copy all obs keys in the given AnnData object to the main AnnData object. Make sure to use AnnData objects that are compatible in terms of genes, cells and expression data. You can use this to copy clusters." min="0">
+          <param name="contains" type="text" label="Key contains" help="Keys to be copied need to contain the text set here."/>
+        </repeat>
+        <param name="obs_sources" type="data" label="AnnData objects with obs to copy" help="Extracts obs (such as clusters) from these AnnData objects and merges them into the main input. Make sure to use AnnData objects that are compatible in terms of genes, cells and expression data." format="h5,h5ad" multiple="true"/>
+      </when>
+      <when value="false"/>
+    </conditional>
+    <conditional name="copy_e">
+      <param name="default" type="boolean" checked="false" label="Copy embeddings (such as UMAP, tSNE)"/>
+      <when value="true">
+        <repeat name="embedding_keys" title="Keys from embeddings to copy" help="will copy all embedding keys in the given AnnData object to the main AnnData object. Make sure to use AnnData objects that are compatible in terms of genes, cells and expression data. You can use this to copy tSNE, UMAP, etc." min="0">
+          <param name="contains" type="text" label="Key contains" help="Keys to be copied need to contain the text set here."/>
+        </repeat>
+        <param name="embedding_sources" type="data" label="AnnData objects with embeddings to copy" help="Extracts embeddings (tSNE, UMAP) from these AnnData objects and merges them into the main input. Make sure to use AnnData objects that are compatible in terms of genes, cells and expression data." format="h5,h5ad" multiple="true"/>
+      </when>
+      <when value="false"/>
+    </conditional>
   </inputs>
 
   <outputs>
