@@ -47,6 +47,8 @@ ad_s = sc.read('obs_source_${i}.h5')
 keys_to_copy = (k for k in ad_s.obs.keys() if "${o_key.contains}" in k)
 for k_to_copy in keys_to_copy:
   adata.obs[[k_to_copy+"_${i}"]] = ad_s.obs[[k_to_copy]]
+  if k_to_copy in ad_s.uns.keys():
+    adata.uns[k_to_copy+"_${i}"] = ad_s.uns[k_to_copy]
   #end for
 #end for
 #end if
