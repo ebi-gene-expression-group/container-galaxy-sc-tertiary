@@ -7,12 +7,12 @@
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_obj_file}' input.h5 &&
-#for $i, $os in enumerate($obs_sources):
+#for $i, $os in enumerate($copy_o.obs_sources):
   ln -s '${os}' obs_source_${i}.h5 &&
-#endfor
-#for $i, $es in enumerate($embedding_sources):
+#end for
+#for $i, $es in enumerate($copy_e.embedding_sources):
   ln -s '${es}' embedding_source_${i}.h5 &&
-#endfor
+#end for
 python $operations
 ]]></command>
   <configfiles>
@@ -40,27 +40,27 @@ else:
     logging.warning('No genes starting with {} found, skip calculating expression of {} genes'.format('${flag.startswith}', '${flag.flag}'))
 #end for
 
-#if len($obs_keys) > 0:
-#for $i, $obs_s in enumerate($obs_sources)):
-  ad_s = sc.read('obs_source_${i}.h5')
-  #for $j, $o_key in enumerate($obs_keys):
-    keys_to_copy = (k for k in ad_s.obs.keys() if "${o_key.contains}" in k)
-    for k_to_copy in keys_to_copy:
-      adata.obs[[k_to_copy+"_${i}"]] = ad_s.obs[[k_to_copy]]
-  #endfor
-#endfor
-#endif
+#if len($copy_o.obs_keys) > 0:
+#for $i, $obs_s in enumerate($copy_o.obs_sources):
+ad_s = sc.read('obs_source_${i}.h5')
+  #for $j, $o_key in enumerate($copy_o.obs_keys):
+keys_to_copy = (k for k in ad_s.obs.keys() if "${o_key.contains}" in k)
+for k_to_copy in keys_to_copy:
+  adata.obs[[k_to_copy+"_${i}"]] = ad_s.obs[[k_to_copy]]
+  #end for
+#end for
+#end if
 
-#if len($embedding_keys) > 0:
-#for $i, $obs_s in enumerate($embedding_sources)):
-  ad_s = sc.read('embedding_source_${i}.h5')
-  #for $j, $e_key in enumerate($embedding_keys):
-    keys_to_copy = (k for k in ad_s.obsm.keys() if "${e_key.contains}" in k)
-    for k_to_copy in keys_to_copy:
-      adata.obsm[[k_to_copy+"_${i}"]] = ad_s.obsm[[k_to_copy]]
-  #endfor
-#endfor
-#endif
+#if len($copy_e.embedding_keys) > 0:
+#for $i, $obs_s in enumerate($copy_e.embedding_sources):
+ad_s = sc.read('embedding_source_${i}.h5')
+  #for $j, $e_key in enumerate($copy_e.embedding_keys):
+keys_to_copy = (k for k in ad_s.obsm.keys() if "${e_key.contains}" in k)
+for k_to_copy in keys_to_copy:
+  adata.obsm[k_to_copy+"_${i}"] = ad_s.obsm[k_to_copy]
+  #end for
+#end for
+#end if
 
 
 if len(qc_vars) > 0:
