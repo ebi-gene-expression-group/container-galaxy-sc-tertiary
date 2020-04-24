@@ -5,7 +5,7 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        scmap-preprocess-sce.R --input-object "${input_single_cell_experiment}" --output-sce-object "${input_single_cell_experiment}.preprocessed" && scmap-index-cluster.R --input-object-file "${input_single_cell_experiment}" --cluster-col '$cluster_col' --output-object-file '$output_single_cell_experiment' --output-plot-file '$plot'
+        scmap-preprocess-sce.R --input-object "${input_single_cell_experiment}" --output-sce-object sce_object_preprocessed.rds && scmap-index-cluster.R --input-object-file sce_object_preprocessed.rds --cluster-col '$cluster_col' --output-object-file '$output_single_cell_experiment' --output-plot-file '$plot'
         #if $train_id
         --train-id '${train_id}' 
         #end if
