@@ -5,10 +5,11 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[ 
-        scpred_get_std_output.R --predictions-file "${predictions_file}" --get-scores "${get_scores}" --output-table "${output_table}" 
+        scpred_get_std_output.R --predictions-file "${predictions_file}" --get-scores "${get_scores}" --classifier '${classifier}' --output-table "${output_table}" 
         ]]></command>
     <inputs>
         <param type="data" name="predictions_file" label="Predictions file" format="txt" help="Path to the predictions file in text format" />
+        <param type="data" name="classifier" label="Classifier object" format="rdata" help="Path to the classifier object used to obtain predictions" />
         <param type="boolean" checked="false" name="get_scores" label="Get scores" help="Boolean: should the prediction scores be included? default: FALSE" />
     </inputs>
     <outputs>

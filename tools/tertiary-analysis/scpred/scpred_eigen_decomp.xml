@@ -5,7 +5,15 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        scpred_eigen_decomp.R --training-matrix "${training_matrix}" --log-transform "${log_transform}" --training-labels "${training_labels}" --principal-comps "${principal_components}" --output-path "${output_object_path}" ]]></command>
+        scpred_eigen_decomp.R --training-matrix "${training_matrix}" --training-labels "${training_labels}"  --output-path "${output_object_path}"
+
+        #if $log_transform
+        --log-transform "${log_transform}" 
+        #end if
+        #if $principal_components
+        --principal-comps "${principal_components}"
+        #end if
+         ]]></command>
     <inputs>
         <param type="data" name="training_matrix" label="Training matrix" format="rdata" help="Training matrix obtained from train/test split step" />
         <param type="boolean" name="log_transform" label="log-transform" checked="True" help="Should log-transform be performed on training data?" />

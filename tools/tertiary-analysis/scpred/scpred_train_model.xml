@@ -5,10 +5,14 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        scpred_train_model.R --input-object "${input_object}" --model "${model}"  --output-path "${output_obj_path}" --train-probs-plot "${train_probs_plot}"
+        scpred_train_model.R --input-object "${input_object}" --model "${model}" --output-path "${output_obj_path}" --train-probs-plot "${train_probs_plot}"
+        #if $train_id
+        --train-id '${train_id}' 
+        #end if
         ]]></command>
     <inputs>
         <param type="data" name="input_object" label="Input SCE object" format="rdata" help="Input SCE object in .rds format"/>
+        <param type="text" name="train_id" label="Dataset ID" help="ID of the training dataset" />
         <param type="text" name="model" label="Model type to train" value="svmRadial" help="Model type used for training. Must be one of the models supported by Caret package. Default: svmRadial" />
     </inputs>
     <outputs>

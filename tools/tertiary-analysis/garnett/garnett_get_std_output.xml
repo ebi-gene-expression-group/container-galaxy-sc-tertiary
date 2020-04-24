@@ -5,10 +5,11 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        garnett_get_std_output.R --input-object '${input_object}' --output-file-path '${output_file_path}'
+        garnett_get_std_output.R --input-object '${input_object}' --classifier '${classifier}' --output-file-path '${output_file_path}'
     ]]></command>
     <inputs>
         <param type="data" name="input_object" label="input CDS object" format="rdata" help="CDS object with predicted labels" />
+        <param type="data" name="classifier" label="classifier object" format="rdata" help="Classifier object in rdata format" />
     </inputs>
     <outputs>
         <data name="output_file_path" format="txt" />

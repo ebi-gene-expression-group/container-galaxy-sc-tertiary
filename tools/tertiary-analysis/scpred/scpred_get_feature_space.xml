@@ -5,7 +5,15 @@
     </macros>
     <expand macro='requirements' />
     <command detect_errors='exit_code'><![CDATA[
-        scpred_get_feature_space.R  --input-object '${input_object}'  --prediction-column '${prediction_column}' --explained-var-limit '${explained_var_limit}' --output-path '${output_obj_path}' --eigenvalue-plot-path '${eigenvalue_plot_path}']]></command>
+        scpred_get_feature_space.R  --input-object '${input_object}'  --prediction-column '${prediction_column}'  --output-path '${output_obj_path}' 
+
+        #if $explained_var_limit
+        --explained-var-limit '${explained_var_limit}'
+        #end if
+        #if $eigenvalue_plot_path
+        --eigenvalue-plot-path '${eigenvalue_plot_path}'
+        #end if
+        ]]></command>
     <inputs>
         <param type='data' name='input_object' label='Input SCE object' format='rdata' help='Input SCE object in .rds format' />
         <param type='text' name='prediction_column' label='Prediction column' help='Name of the metadata column that contains training labels' />

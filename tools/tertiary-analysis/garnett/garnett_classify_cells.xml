@@ -5,7 +5,17 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        garnett_classify_cells.R --cds-object '${cds_object}' --classifier-object '${classifier_object}' --database '${database}' --cds-gene-id-type '${cds_gene_id_type}' --cluster-extend '${cluster_extend}' --rank-prob-ratio '${rank_prob_ratio}' --cds-output-obj '${cds_output_obj}'
+        garnett_classify_cells.R --cds-object '${cds_object}' --classifier-object '${classifier_object}' --database '${database}' --cds-output-obj '${cds_output_obj}'
+
+        #if $cds_gene_id_type
+        --cds-gene-id-type '${cds_gene_id_type}'
+        #end if
+        #if $cluster_extend
+        --cluster-extend '${cluster_extend}'
+        #end if
+        #if $rank_prob_ratio
+        --rank-prob-ratio '${rank_prob_ratio}'
+        #end if
     ]]></command>
     <inputs>
         <param type="data" name="cds_object" label="CDS object" format="rdata" help="CDS object with expression data for training" />

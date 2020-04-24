@@ -5,12 +5,37 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        garnett_train_classifier.R --cds-object '${cds_object}' --marker-file-path '${marker_file_path}' --database '${database}' --cds-gene-id-type '${cds_gene_id_type}' --marker-file-gene-id-type '${marker_file_gene_id_type}' --num-unknown '${num_unknown}' --min-observations '${min_observations}' --max-training-samples '${max_training_samples}' --propogate-markers '${propogate_markers}' --cores '${cores}' --classifier-gene-id-type '${classifier_gene_id_type}' --output-path '${output_classifier_path}'
+        garnett_train_classifier.R --cds-object '${cds_object}' --marker-file-path '${marker_file_path}' --database '${database}' --cores \${GALAXY_SLOTS:-1} --output-path '${output_classifier_path}'
+        #if $train_id
+        --train-id '${train_id}' 
+        #end if
+        #if $cds_gene_id_type
+        --cds-gene-id-type '${cds_gene_id_type}' 
+        #end if
+        #if $marker_file_gene_id_type
+        --marker-file-gene-id-type '${marker_file_gene_id_type}' 
+        #end if
+        #if $num_unknown
+        --num-unknown '${num_unknown}' 
+        #end if
+        #if $min_observations
+        --min-observations '${min_observations}' 
+        #end if
+        #if $max_training_samples
+        --max-training-samples '${max_training_samples}' 
+        #end if
+        #if $propogate_markers
+        --propogate-markers '${propogate_markers}'
+        #end if
+        #if $classifier_gene_id_type
+        --classifier-gene-id-type '${classifier_gene_id_type}' 
+        #end if
     ]]></command>
     <inputs>
         <param type="data" name="cds_object" label="CDS object" format="rdata" help="CDS object with expression data for training" />
         <param type="data" name="marker_file_path" format="txt" label="Marker file path" help="File with marker genes specifying cell types. 
         See https://cole-trapnell-lab.github.io/garnett/docs/#constructing-a-marker-file for specification of the file format" />
+        <param type="text" name="train_id" label="Dataset ID" help="ID of the training dataset" />
         <param type="text" name="database" label="gene database" value="org.Hs.eg.db" help="argument for Bioconductor AnnotationDb-class package used for converting gene IDs" />
         <param type="text" name="cds_gene_id_type" label="CDS gene id type" value="ENSEMBL" help="Format of the gene IDs in your CDS object" />
         <param type="text" name="marker_file_gene_id_type" label="Marker gene id type" value="ENSEMBL" help="Format of the gene IDs in your marker file" />
@@ -22,7 +47,6 @@
         increases speed, but may hurt performance of the model." />
         <param type="boolean" name="propogate_markers" checked="true" label="propogate markers" help="Should markers from child nodes of a cell type be used
         in finding representatives of the parent type?" />
-        <param type="integer" name="cores" label="cores" value="1" help="The number of cores to use for computation" />
         <param type="text" name="classifier_gene_id_type"  label="Classifier gene ID type" value="ENSEMBL" help="The type of gene ID that will be used in the classifier. If possible for your organism, this should be 'ENSEMBL', which is the default." />
     </inputs>
     <outputs>
@@ -42,5 +66,3 @@
     ]]></help>
     <expand macro="citations" />
 </tool>
-
-

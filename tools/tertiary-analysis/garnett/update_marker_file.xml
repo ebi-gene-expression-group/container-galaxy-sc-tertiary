@@ -5,7 +5,17 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        update_marker_file.R --marker-list-obj '${marker_list_obj}' --marker-check-file '${marker_check_file}' --summary-col '${summary_col}' --cell-type-col '${cell_type_col}' --gene-id-col '${gene_id_col}' --updated-marker-file '${updated_marker_file}' 
+        update_marker_file.R --marker-list-obj '${marker_list_obj}' --marker-check-file '${marker_check_file}'    --updated-marker-file '${updated_marker_file}'
+
+        #if $summary_col
+        --summary-col '${summary_col}'
+        #end if
+        #if $cell_type_col
+        --cell-type-col '${cell_type_col}'
+        #end if
+        #if $gene_id_col
+        --gene-id-col '${gene_id_col}'
+        #end if
     ]]></command>
     <inputs>
         <param type="data" name="marker_list_obj" label="Marker list object" format="rdata" help="Serialised object containing markers list produced by garnett_transform_markers" />

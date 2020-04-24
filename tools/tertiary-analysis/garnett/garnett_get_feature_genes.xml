@@ -5,7 +5,14 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        garnett_get_feature_genes.R --classifier-object '${classifier_object}' --node '${node}' --database '${database}' --convert-ids '${convert_ids}' --output-path '${output_path}'
+        garnett_get_feature_genes.R --classifier-object '${classifier_object}'  --database '${database}' --output-path '${output_path}'
+
+        #if $node
+        --node '${node}'
+        #end if
+        #if $convert_ids
+        --convert-ids '${convert_ids}'
+        #end if
     ]]></command>
     <inputs>
         <param type="data" name="classifier_object" label="classifier object" format="rdata" help="Path to the object of class garnett_classifier, which is either trained via garnett_train_classifier.R or obtained elsewhere" />

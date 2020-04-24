@@ -4,7 +4,7 @@
     <token name="@PROFILE@">18.01</token>
     <xml name="requirements">
         <requirements>
-            <requirement type="package" version="0.0.5">scpred-cli</requirement>
+            <requirement type="package" version="0.0.7">scpred-cli</requirement>
                 <yield/>
         </requirements>
     </xml>
