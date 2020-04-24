@@ -12,7 +12,7 @@
     ]]></command>
     <inputs>
         <param type="data" name="input_single_cell_experiment" label="SingleCellExperiment object" format="rdata" help="File with serialized SingleCellExperiment object as produced by 'scmap select features'" />
-        <param type="text" name="train_id" label="dataset ID" help="ID of the training dataset" />
+        <param type="text" name="train_id" label="Dataset ID" help="ID of the training dataset" />
         <param name="cluster_col" type="text" label="Cluster column" value="cell_type1" help="Column name in the 'colData' slot of the SingleCellExperiment object containing the cell classification information." />
     </inputs>
     <outputs>

@@ -12,7 +12,7 @@
         ]]></command>
     <inputs>
         <param type="data" name="input_object" label="Input SCE object" format="rdata" help="Input SCE object in .rds format"/>
-        <param type="text" name="train_id" label="dataset ID" help="ID of the training dataset" />
+        <param type="text" name="train_id" label="Dataset ID" help="ID of the training dataset" />
         <param type="text" name="model" label="Model type to train" value="svmRadial" help="Model type used for training. Must be one of the models supported by Caret package. Default: svmRadial" />
     </inputs>
     <outputs>
