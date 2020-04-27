@@ -1,4 +1,4 @@
-<tool id="garnett_transform_markers" name="Garnett - transform markes" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="garnett_transform_markers" name="Garnett - transform markes" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
     <description>Transform marker files from Single Cell Expression Atlas format to that compatible with Garnett</description>
     <macros>
         <import>garnett_macros.xml</import>
