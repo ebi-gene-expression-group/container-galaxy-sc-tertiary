@@ -52,7 +52,7 @@
         <param type="text" name="semantic_sim_metric" label="Semantic similarity metric" value="edge_resnik" help="Type of semantic similarity metric used" />
     </inputs>
     <outputs>
-         <data name="output_path" format="tsv" />
+         <data name="output_path" format="txt" />
     </outputs>
     <tests>
         <test>
