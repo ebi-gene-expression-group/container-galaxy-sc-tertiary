@@ -16,6 +16,7 @@
     <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
 0.0.5+galaxy0: Initial contribution. Andrey Solovyev, Expression Atlas team https://www.ebi.ac.uk/gxa/home at EMBL-EBI https://www.ebi.ac.uk/.
+0.0.5+galaxy1: Standardise input/output format into .txt. 
     ]]></token>
     <xml name="citations">
       <citations>

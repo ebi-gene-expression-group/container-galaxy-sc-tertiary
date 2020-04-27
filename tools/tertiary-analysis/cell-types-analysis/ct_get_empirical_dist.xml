@@ -1,4 +1,4 @@
-<tool id="ct_get_empirical_dist" name="Cell types - get empirical distribution" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="ct_get_empirical_dist" name="Cell types - get empirical distribution" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
     <description>Get empirical distribution for tool performance table</description>
     <macros>
         <import>ct_macros.xml</import>
