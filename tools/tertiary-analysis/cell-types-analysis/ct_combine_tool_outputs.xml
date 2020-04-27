@@ -10,15 +10,20 @@
           cp '$table' input_dir/;
         #end for
 
-        combine_tool_outputs.R --input-dir input_dir --top-labels-num "${top_labels_num}" --exclusions "${exclusions}" --scores "${scores}" --output-table "${output_table}" ]]></command>
+        combine_tool_outputs.R --input-dir input_dir --top-labels-num "${top_labels_num}" --scores "${scores}" --output-table "${output_table}" 
+
+        #if $exclusions
+        --exclusions "${exclusions}"
+        #end if
+        ]]></command>
     <inputs>
-        <param type="data" name="input_tables" label="Tables with predicted labels" multiple="true" format="tsv" help="Standardised tables obtained from multiple classifiers" />
+        <param type="data" name="input_tables" label="Tables with predicted labels" multiple="true" format="txt" help="Standardised tables obtained from multiple classifiers" />
         <param type="integer" name="top_labels_num" label="Number of top labels" value='3' help="Number of top labels to select" />
         <param type="data" name="exclusions" label="Exclusions file" format="yml" optional="true" help="Yaml file with trivial terms and unlabelled cells" />
         <param type="boolean" name="scores" label="scores" checked="false" help="Are scores included into the tool outpus?" />
     </inputs>
     <outputs>
-        <data name="output_table" format="tsv" />
+        <data name="output_table" format="txt" />
     </outputs>
     <tests>
         <test>

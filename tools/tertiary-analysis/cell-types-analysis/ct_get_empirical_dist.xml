@@ -21,7 +21,7 @@
         #end if
         ]]></command>
     <inputs>
-        <param type="data" name="input_ref_file" label="Input reference file" format="tsv" help="Text file with reference cell labels" />
+        <param type="data" name="input_ref_file" label="Input reference file" format="txt" help="Text file with reference cell labels" />
         <param type="data" name="exclusions" format="yml" label="Exclusions file" help="YML file with excluded/unlabelled terms" />
         <param type="text" name="label_col_ref" label="Reference label column" value="cell_type" help="Label column in reference file" />
         <param type="data" name="lab_cl_mapping" label="Label - CL term mapping" format="rdata" help="Mapping between cell labels and ontology terms" />

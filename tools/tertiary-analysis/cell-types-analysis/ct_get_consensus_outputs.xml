@@ -27,8 +27,8 @@
         #end if
          ]]></command>
     <inputs>
-        <param type="data" name="input_tables" label="Aggregated tables" format="tsv" multiple="true" help="Aggregated prediction tables from multiple tools" />
-        <param type="data" name="tool_table" format="tsv" label="Tools table" help="Table with tools performance metrics" />
+        <param type="data" name="input_tables" label="Aggregated tables" format="txt" multiple="true" help="Aggregated prediction tables from multiple tools" />
+        <param type="data" name="tool_table" format="txt" label="Tools table" help="Table with tools performance metrics" />
         <param type="boolean" name="parallel" label="Parallel execution" checked="false" help="Should the table values be computed in parallel?" />
         <param type="data" name="exclusions" label="Exclusions file" format="yml" optional="true" help="Yaml file with trivial terms and unlabelled cells" />
         <param type="data" name="lab_cl_mapping" format="rdata" label="cl terms mapping" help="Label - CL term mapping" />

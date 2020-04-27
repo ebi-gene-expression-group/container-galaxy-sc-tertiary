@@ -7,11 +7,11 @@
     <command detect_errors="exit_code"><![CDATA[
         get_tool_pvals.R --input-table "${input_table}" --emp-dist-list "${emp_dist_list}" --output-table "${output_table}" ]]></command>
     <inputs>
-        <param type="data" name="input_table" label="Table with tool stats" format="tsv" help="Path to the table of tool statistics from get_tool_performance_table.R" />
+        <param type="data" name="input_table" label="Table with tool stats" format="txt" help="Path to the table of tool statistics from get_tool_performance_table.R" />
         <param type="data" name="emp_dist_list" label="List of empirical distributions" format="rdata" help="Path to the list of empirical distributions in .rds format" />
     </inputs>
     <outputs>
-        <data name="output_table" format="tsv" />
+        <data name="output_table" format="txt" />
     </outputs>
     <tests>
         <test>
