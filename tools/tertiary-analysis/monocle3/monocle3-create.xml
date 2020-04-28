@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="monocle3_create" name="Monocle3 create" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
+<tool id="monocle3_create" name="Monocle3 create" version="@TOOL_VERSION@+galaxy2" profile="@PROFILE@">
   <description>a Monocle3 object from input data</description>
   <macros>
     <import>monocle3-macros.xml</import>
@@ -30,6 +30,7 @@ LANG=en_US.UTF-8 monocle3 create
     <param name="expression_matrix_format" type="select" label="Format of expression matrix">
       <option value="rds" selected="true">RDS</option>
       <option value="tsv">TSV</option>
+      <option value="mtx">MTX</option>
       <option value="csv">CSV</option>
     </param>
     <param name="cell_metadata" argument="--cell-metadata" optional="true" type="data" format="tabular,tsv,csv,rdata" label="Per-cell annotation, optional. Row names must match the column names of the expression matrix. Provide as TSV, CSV or RDS."/>
