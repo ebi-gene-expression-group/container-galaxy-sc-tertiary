@@ -1,4 +1,4 @@
-<tool id="garnett_train_classifier" name="Garnett - train classifier" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="garnett_train_classifier" name="Garnett - train classifier" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
     <description>Train classifier based on marker gene list</description>
     <macros>
         <import>garnett_macros.xml</import>
