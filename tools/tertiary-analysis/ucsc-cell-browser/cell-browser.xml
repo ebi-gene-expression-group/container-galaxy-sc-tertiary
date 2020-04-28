@@ -1,7 +1,7 @@
-<tool id="ucsc_cell_browser" name="UCSC Cell Browser" version="0.7.9+galaxy0" profile="18.01">
+<tool id="ucsc_cell_browser" name="UCSC Cell Browser" version="0.5.43+galaxy1" profile="18.01">
   <description>displays single-cell clusterized data in an interactive web application.</description>
   <requirements>
-    <requirement type="package" version="0.7.9">ucsc-cell-browser</requirement>
+    <requirement type="package" version="0.5.43">ucsc-cell-browser</requirement>
   </requirements>
 <stdio>
 <exit_code range="1:" />
@@ -26,12 +26,12 @@
 
 #else if $input_type.expression_source == "scanpy":
 
+   ## We could add a condition here were, if cluster_field is provided
+   ## then we rename it inside with an AnnData relying script to read 'louvain' to please UCSC CellBrowser
+
    ln -s '$input_anndata_file' scanpy_ann_data.h5ad;
    cbImportScanpy -i scanpy_ann_data.h5ad
 
-   #if $cluster_field:
-     --clusterField '$cluster_field'
-   #end if
    #if $marker_field:
      --markerField '$marker_field'
    #end if
@@ -60,8 +60,10 @@
       <param name="input_anndata_file" type="data" format="h5,h5ad" label="Input object in AnnData hdf5 format" help="Scanpy serialized output is by default produced as an AnnData hdf5 file."/>
     </when>
   </conditional>
+  <!-- if I put these vvv two inside the when scanpy, these for some reason don't get picked ¿? -->
   <param name="cluster_field" argument="--clusterField" type="text" label="Cluster field" help="Scanpy cluster field to use, optional, if not set 'louvain' will be used."/>
-  <param name="marker_field" argument="--markerField" type="text" label="Marker genes field" help="Scanpy marker genes field to use, optional, if not set 'rank_genes_groups' will be used."/>
+  <param name="marker_field" argument="--markerField" type="text" value="rank_genes_groups" label="Marker genes field" help="Scanpy marker genes field to use, optional, if not set 'rank_genes_groups' will be used."/>
+  <!-- if I put these ^^^ two inside the when scanpy, these for some reason don't get picked ¿? -->
 </inputs>
 <outputs>
     <data format="html" name="html_file" label="Interactive UCSC Cell Browser"/>
