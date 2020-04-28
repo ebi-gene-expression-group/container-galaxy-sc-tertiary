@@ -1,7 +1,7 @@
-<tool id="ucsc_cell_browser" name="UCSC Cell Browser" version="0.5.43+galaxy0">
+<tool id="ucsc_cell_browser" name="UCSC Cell Browser" version="0.7.9+galaxy0" profile="18.01">
   <description>displays single-cell clusterized data in an interactive web application.</description>
   <requirements>
-    <requirement type="package" version="0.5.43">ucsc-cell-browser</requirement>
+    <requirement type="package" version="0.7.9">ucsc-cell-browser</requirement>
   </requirements>
 <stdio>
 <exit_code range="1:" />
@@ -9,7 +9,7 @@
 <command><![CDATA[
 #if $input_type.expression_source == "native-cell-browser":
 
-   echo "coords = [ {'file':'$tsneCoordinates', 'shortLabel':'t-SNE on WGCNA'} ]" > ./cellbrowser.conf;
+   echo "coords = [ {'file':'$tsneCoordinates', 'shortLabel':'t-SNE'} ]" > ./cellbrowser.conf;
    echo "meta = '$cellMetadata'" >> ./cellbrowser.conf;
    echo "name = 'sample'" >> ./cellbrowser.conf;
    echo "exprMatrix = '$expressionMatrix'" >> ./cellbrowser.conf;
@@ -27,8 +27,17 @@
 #else if $input_type.expression_source == "scanpy":
 
    ln -s '$input_anndata_file' scanpy_ann_data.h5ad;
-   cbImportScanpy -i scanpy_ann_data.h5ad -o outdir -n sample --htmlDir "$html_file.extra_files_path";
-   mv "$html_file.extra_files_path"/index.html "$html_file";
+   cbImportScanpy -i scanpy_ann_data.h5ad
+
+   #if $cluster_field:
+     --clusterField '$cluster_field'
+   #end if
+   #if $marker_field:
+     --markerField '$marker_field'
+   #end if
+
+     -o outdir -n sample --htmlDir "$html_file.extra_files_path";
+   mv "$__tool_directory__/redirect.html" "$html_file";
 
 #end if
 ]]></command>
@@ -48,9 +57,11 @@
       <param name="tarred_sources" type="data" format="tar" label="CellBrowser source files tarred" help="Tar containing CellBrowser config, tsne, umap and other source files for running cbBuild"/>
     </when>
     <when value="scanpy">
-      <param name="input_anndata_file" type="data" format="h5" label="Input object in AnnData hdf5 format" help="Scanpy serialized output is by default produced as an AnnData hdf5 file."/>
+      <param name="input_anndata_file" type="data" format="h5,h5ad" label="Input object in AnnData hdf5 format" help="Scanpy serialized output is by default produced as an AnnData hdf5 file."/>
     </when>
   </conditional>
+  <param name="cluster_field" argument="--clusterField" type="text" label="Cluster field" help="Scanpy cluster field to use, optional, if not set 'louvain' will be used."/>
+  <param name="marker_field" argument="--markerField" type="text" label="Marker genes field" help="Scanpy marker genes field to use, optional, if not set 'rank_genes_groups' will be used."/>
 </inputs>
 <outputs>
     <data format="html" name="html_file" label="Interactive UCSC Cell Browser"/>
