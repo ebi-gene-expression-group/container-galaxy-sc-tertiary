@@ -16,6 +16,7 @@
     <token name="@VERSION_HISTORY@"><![CDATA[
     **Version history**
     0.2.8+galaxy0: Initial contribution. Andrey Solovyev, Expression Atlas team https://www.ebi.ac.uk/gxa/home at EMBL-EBI https://www.ebi.ac.uk/.
+    0.2.8+galaxy1: Minor improvements and bug fixes in IO.
     ]]></token>
     <xml name="citations">
         <citations>
