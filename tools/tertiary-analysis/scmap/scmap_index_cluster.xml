@@ -1,4 +1,4 @@
-<tool id="scmap_index_cluster" name="scmap index clusters" version="@TOOL_VERSION@+galaxy2" profile="@PROFILE@">
+<tool id="scmap_index_cluster" name="Scmap index clusters" version="@TOOL_VERSION@+galaxy2" profile="@PROFILE@">
     <description>calculates centroids of each cell type and merges them into a single table</description>
     <macros>
         <import>scmap_macros.xml</import>
