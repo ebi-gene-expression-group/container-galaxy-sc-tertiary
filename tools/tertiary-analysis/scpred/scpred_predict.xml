@@ -5,7 +5,21 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        scpred_predict.R --input-object "${input_object}" --pred-data "${pred_data}" --test-labels "${test_labels}" --cell-types-column "${cell_types_column}" --output-path "${output_tbl_path}" --plot-path "${plot_path}" --confusion-table "${confusion_table}"
+        scpred_predict.R --input-object "${input_object}" --pred-data "${pred_data}" --output-path "${output_tbl_path}"  
+
+        #if $test_labels
+        --test-labels "${test_labels}" 
+        #end if
+        #if $cell_types_column
+        --cell-types-column "${cell_types_column}"
+        #end if
+        #if $plot_path
+        --plot-path "${plot_path}"
+        #end if
+        #if $confusion_table
+        --confusion-table "${confusion_table}"
+        #end if
+
         ]]></command>
     <inputs>
         <param type="data" name="input_object" label="Input SCE object" format="rdata" help="Input SCE object in .rds format" />

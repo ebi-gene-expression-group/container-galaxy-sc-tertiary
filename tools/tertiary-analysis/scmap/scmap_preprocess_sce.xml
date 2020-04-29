@@ -1,4 +1,4 @@
-<tool id="scmap_index_cluster" name="Scmap pre-process" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scmap_preprocess_sce" name="Scmap pre-process" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
     <description>Pre-process SCE object before running downstream analysis</description>
     <macros>
         <import>scmap_macros.xml</import>

@@ -5,7 +5,16 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        scpred_train_test_split.R --input-sce-object "${input_sce_object}" --normalised-counts-slot "${norm_counts_slot}" --training-matrix "${training_mat}" --test-matrix "${test_mat}" --cell-types-column "${cell_types_col}" --training-labels "${training_labs}" --test-labels "${test_labs}" --training-ratio "${training_ratio}" ]]></command>
+        scpred_train_test_split.R --input-sce-object "${input_sce_object}"  --training-matrix "${training_mat}" --test-matrix "${test_mat}"  --training-labels "${training_labs}"  --cell-types-column "${cell_types_col}" --test-labels "${test_labs}" 
+
+        #if $norm_counts_slot
+        --normalised-counts-slot "${norm_counts_slot}"
+        #end if
+        #if $training_ratio
+        --training-ratio "${training_ratio}" 
+        #end if
+
+        ]]></command>
     <inputs>
         <param type="data" name="input_sce_object" label="SCE object containing expression data" format="rdata" help="File with serialized SingleCellExperiment object that contains expression matrix" />
         <param type="text" name="norm_counts_slot" value="normcounts" label="Normalised counts slot" help="Slot containing normalised counts in input SCE object" />
