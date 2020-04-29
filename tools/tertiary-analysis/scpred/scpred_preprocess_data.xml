@@ -1,11 +1,20 @@
-<tool id="scpred_preprocess_data" name="Scpred pre-process" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scpred_preprocess_data" name="Scpred pre-process" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
     <description>Pre-process input dataset (no train/test split)</description>
     <macros>
         <import>scpred_macros.xml</import>
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        scpred_preprocess_data.R --input-sce-object "${input_sce_object}" --normalised-counts-slot "${norm_counts_slot}" --output-matrix-object "${output_mat_object}" --output-labels "${output_labels}" ]]></command>
+        scpred_preprocess_data.R --input-sce-object "${input_sce_object}" --output-matrix-object "${output_mat_object}" 
+
+        #if $norm_counts_slot
+        --normalised-counts-slot "${norm_counts_slot}"
+        #end if
+        #if $output_labels
+        --output-labels "${output_labels}"
+        #end if
+
+         ]]></command>
     <inputs>
          <param type="data" name="input_sce_object" label="SCE object containing expression data" format="rdata" help="File with serialized SingleCellExperiment object that contains expression matrix" />
          <param type="text" name="norm_counts_slot" value="normcounts" label="Normalised counts slot" help="Slot containing normalised counts in input SCE object" />
