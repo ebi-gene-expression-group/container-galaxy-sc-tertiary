@@ -1,7 +1,7 @@
-<tool id="ucsc_cell_browser" name="UCSC Cell Browser" version="0.5.43+galaxy1" profile="18.01">
+<tool id="ucsc_cell_browser" name="UCSC Cell Browser" version="0.7.9+galaxy1" profile="18.01">
   <description>displays single-cell clusterized data in an interactive web application.</description>
   <requirements>
-    <requirement type="package" version="0.5.43">ucsc-cell-browser</requirement>
+    <requirement type="package" version="0.7.9">ucsc-cell-browser</requirement>
   </requirements>
 <stdio>
 <exit_code range="1:" />
@@ -37,7 +37,7 @@
    #end if
 
      -o outdir -n sample --htmlDir "$html_file.extra_files_path";
-   mv "$__tool_directory__/redirect.html" "$html_file";
+   cp "$__tool_directory__/redirect.html" "$html_file";
 
 #end if
 ]]></command>
