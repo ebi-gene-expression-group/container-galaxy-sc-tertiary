@@ -1,4 +1,4 @@
-<tool id="scpred_preprocess_data" name="Scpred pre-process" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
+<tool id="scpred_preprocess_data" name="Scpred pre-process" version="@TOOL_VERSION@+galaxy2" profile="@PROFILE@">
     <description>Pre-process input dataset (no train/test split)</description>
     <macros>
         <import>scpred_macros.xml</import>
@@ -17,7 +17,7 @@
          ]]></command>
     <inputs>
          <param type="data" name="input_sce_object" label="SCE object containing expression data" format="rdata" help="File with serialized SingleCellExperiment object that contains expression matrix" />
-         <param type="text" name="norm_counts_slot" value="normcounts" label="Normalised counts slot" help="Slot containing normalised counts in input SCE object" />
+         <param type="text" name="norm_counts_slot" optional="true" value="normcounts" label="Normalised counts slot" help="Slot containing normalised counts in input SCE object" />
     </inputs> 
     <outputs>
         <data name="output_mat_object" format="rdata" />
