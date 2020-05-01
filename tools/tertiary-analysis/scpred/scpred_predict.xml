@@ -1,4 +1,4 @@
-<tool id="scpred_predict_labels" name="Scpred predict" version="@TOOL_VERSION@+galaxy1">
+<tool id="scpred_predict_labels" name="Scpred predict" version="@TOOL_VERSION@+galaxy2">
     <description>Make cell type predictions using trained model.</description>
      <macros>
         <import>scpred_macros.xml</import>
@@ -24,8 +24,8 @@
     <inputs>
         <param type="data" name="input_object" label="Input SCE object" format="rdata" help="Input SCE object in .rds format" />
         <param type="data" name="pred_data" label="Matrix with query data" format="rdata" help="Path to the input prediction matrix in .rds format"/>
-        <param type="data" name="test_labels" format="txt" label="Test labels" help="Path to the test labels file for evalutation of model performance in text format" />
-        <param type="text" name="cell_types_column" value="cell_type2" label="Cell types column name" help="Column name of true labels in provided metadata file" />
+        <param type="data" name="test_labels" optional="true" format="txt" label="Test labels" help="Path to the test labels file for evalutation of model performance in text format" />
+        <param type="text" name="cell_types_column" value="cell_type2" optional="true" label="Cell types column name" help="Column name of true labels in provided metadata file" />
     </inputs>
     <outputs>
         <data name="output_tbl_path" format="txt" />
