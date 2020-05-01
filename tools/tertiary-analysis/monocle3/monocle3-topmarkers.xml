@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="monocle3_topmarkers" name="Monocle3 top markers" version="0.1.5+galaxy0" profile="@PROFILE@">
+  <description>for cell groups</description>
+  <macros>
+    <import>monocle3-macros.xml</import>
+  </macros>
+  <requirements>
+    <requirement type="package" version="0.0.8">monocle3-cli</requirement>
+  </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+    ln -s '$input_object' input.rds;
+    #if $ref_cells.source == 'file' and $ref_cells.file
+    list_of_cells = \$(cat $ref_cells.file | tr '\n' ',')
+    #end if
+    LANG=en_US.UTF-8 monocle3 topMarkers
+    --input-object-format cds3
+    #if $filter_fraction_expression
+    --filter-fraction-expression '$filter_fraction_expression'
+    #end if
+    #if $top_n_markers
+    --top-n-markers '$top_n_markers'
+    #end if
+    #if $plot_top_markers
+    --plot-top-markers top_markers.pdf
+    #end if
+    #if $save_full_markers
+    --save-full-markers full_markers.tsv
+    #end if
+    #if $ref_cells.source == 'file' and $ref_cells.file
+    --reference-cells \$list_of_cells
+    #end if
+    #if $ref_cells.source == 'number' and $ref_cells.number
+    --reference-cells '$ref_cells.number'
+    #end if
+    #if $marker_sig_test
+    --marker-sig-test
+    #end if
+    #if $genes_to_test_per_group
+    --genes-to-test-per-group '$genes_to_test_per_group'
+    #end if
+    #if $group_cells_by
+    --group-cells-by '$group_cells_by'
+    #end if
+    --cores \${GALAXY_SLOTS:-1}
+    --introspective
+
+    input.rds
+    output.tsv
+    ]]></command>
+<inputs>
+  <param label="Input Object" name="input_object" type="data" format='rdata'  help="Input file with monocle3 object cds3 in RDS"/>
+  <conditional name="ref_cells">
+    <param label="Reference cells source" name="source" type="select" argument="--reference-cells" optional="true" help="(Optional) Set of cells to be considered as reference for marker significance test. Accelerates the marker significance test at some cost in sensitivity.">
+      <option value="file">File</option>
+      <option value="number">Number of cells</option>
+    </param>
+    <when value="file">
+      <param label="Reference cells file" name="file" optional="true" argument="--reference-cells" type="data" format='txt'  help="File with cells to be used as reference cells."/>
+    </when>
+    <when value="number">
+      <param label="Number of reference cells" name="number" optional="true" argument="--reference-cells" type="integer" help="Number of cells to be used as reference cells."/>
+    </when>
+  </conditional>
+  <param label="Filter fraction for expression" optional='true' value="0.1" name="filter_fraction_expression" argument="--filter-fraction-expression" type="float"   help="Filters the markers test result by this fraction of expression"/>
+  <param label="Top-n-markers" optional='true' value="5" name="top_n_markers" argument="--top-n-markers" type="integer"   help="The number of top marker genes to report in plots and in top markers list"/>
+  <param label="Number of genes to test per group" optional='true' value="25" name="genes_to_test_per_group" argument="--genes-to-test-per-group" type="integer"   help="how many genes of the top ranked specific genes by Jenson-Shannon, to do the more expensive regression test on"/>
+  <param label="Group cell by" optional='true' value='cluster' name="group_cells_by" argument="--group-cells-by" type="text"   help="Cell groups, choose from 'cluster', 'partition', or any categorical variable in `colData(cds)`"/>
+  <param label="Use logistic regression to asses discriminatory power" optional='true' value='false' name="marker_sig_test" argument="--marker-sig-test" type="boolean" checked='false' help="whether to assess the discriminative power of each marker through logistic regression. Can be slow, consider disabling to speed up top_markers()."/>
+  <param label="Save full markers" value='false' name="save_full_markers" argument="--save-full-markers" type="boolean"  checked='false' help="whether to generate the full markers list as well."/>
+  <param label="Plot top markers" value='false' name="plot_top_markers" argument="--plot-top-markers" type="boolean"  checked='true' help="whether to generate the top markers plot."/>
+</inputs>
+
+<outputs>
+  <data label="${tool.name} on ${on_string}: Top markers plot" name="top_markers_plot" format='pdf' from_work_dir='top_markers.pdf' />
+    <filter>plot_top_markers</filter>
+  <data label="${tool.name} on ${on_string}: Full markers" name="full_markers" from_work_dir="full_markers.tsv" format='tabular'>
+    <filter>save_full_markers</filter>
+  </data>
+  <data label="${tool.name} on ${on_string}: Top markers" name="output_path" from_work_dir="output.tsv" format='tabular' />
+</outputs>
+
+<help><![CDATA[
+==========================================================
+Monocle3 top markers genes
+==========================================================
+
+Identify the genes most specifically expressed in groups of cells. See inline help for options.
+
+@HELP@
+
+@VERSION_HISTORY@
+]]></help>
+<expand macro="citations"/>
+</tool>
