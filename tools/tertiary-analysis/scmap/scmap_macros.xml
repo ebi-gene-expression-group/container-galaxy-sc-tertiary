@@ -1,5 +1,5 @@
 <macros>
-    <token name="@TOOL_VERSION@">1.6.0</token>
+    <token name="@TOOL_VERSION@">1.6.1</token>
     <token name="@HELP@">More information can be found at https://bioconductor.org/packages/release/bioc/html/scmap.html</token>
     <token name="@PROFILE@">18.01</token>
     <xml name="requirements">
@@ -15,6 +15,7 @@
     </xml>
     <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
+1.6.1+galaxy0: Update scmap-cli to 0.0.9.
 1.6.0+galaxy0: Initial contribution. Jonathan Manning, Expression Atlas team https://www.ebi.ac.uk/gxa/home at EMBL-EBI https://www.ebi.ac.uk/.
     ]]></token>
     <xml name="citations">
