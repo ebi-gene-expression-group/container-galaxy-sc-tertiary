@@ -10,7 +10,7 @@
     <command detect_errors="exit_code"><![CDATA[
     ln -s '$input_object' input.rds;
     #if $ref_cells.source == 'file' and $ref_cells.file
-    list_of_cells = \$(cat $ref_cells.file | tr '\n' ',')
+    list_of_cells=\$(cat $ref_cells.file | tr '\n' ',')
     #end if
     LANG=en_US.UTF-8 monocle3 topMarkers
     --input-object-format cds3
