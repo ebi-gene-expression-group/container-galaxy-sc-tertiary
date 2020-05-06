@@ -23,7 +23,7 @@
       <param name="n_nearest_neighbours" type="integer" label="Number of nearest neighbours" value='5' help="A positive integer specifying the number of nearest neighbours to find" />
       
      <conditional name="cluster_projection">
-        <param name="cluster_projection" type="boolean" checked="false" label="Annotate cells of the projection dataset using labels of the reference?" help="If cell cluster annotation is available for the reference datasets, in addition to finding top 10 nearest neighbours scmap-cell also allows to annotate cells of the projection dataset using labels of the reference."/>
+        <param name="do_cluster_projection" type="boolean" checked="false" label="Annotate cells of the projection dataset using labels of the reference?" help="If cell cluster annotation is available for the reference datasets, in addition to finding top 10 nearest neighbours scmap-cell also allows to annotate cells of the projection dataset using labels of the reference."/>
         <when value="true" >
           <param name="cluster_col" type="text" label="Cluster column" value="cell_type1" help="Column name in the 'colData' slot of the SingleCellExperiment object containing the cell classification information." />
         </when>
@@ -37,7 +37,7 @@
       <data name="closest_cells_text_file" format="csv" />
       <data name="closest_cells_similarities_text_file" format="csv" />
       <data name="closest_cells_clusters_csv" format="csv">
-        <filter>cluster_projection == "true"</filter>
+        <filter>cluster_projection['do_cluster_projection'] == "true"</filter>
       </data>
     </outputs>
     <tests>
