@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="monocle3_diffExp" name="Monocle3 diffExp" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="monocle3_diffExp" name="Monocle3 diffExp" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
   <description> of genes along a trajectory</description>
   <macros>
     <import>monocle3-macros.xml</import>
@@ -14,6 +14,7 @@ LANG=en_US.UTF-8 monocle3 diffExp
 #end if
     --method '$(method)'
     --alternative '$(alternative)'
+    --cores \${GALAXY_SLOTS:-1}
 
     @INPUT_OPTS@
     output.tsv

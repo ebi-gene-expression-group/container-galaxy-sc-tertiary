@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="monocle3_plotCells" name="Monocle3 plotCells" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="monocle3_plotCells" name="Monocle3 plotCells" version="0.1.5+galaxy0" profile="@PROFILE@">
   <description> in the reduced dimensionality space</description>
   <macros>
     <import>monocle3-macros.xml</import>
   </macros>
-  <expand macro="requirements"/>
+  <requirements>
+    <requirement type="package" version="0.0.8">monocle3-cli</requirement>
+  </requirements>
   <command detect_errors="exit_code"><![CDATA[
 LANG=en_US.UTF-8 monocle3 plotCells
     --reduction-method '$(reduction_method)'
