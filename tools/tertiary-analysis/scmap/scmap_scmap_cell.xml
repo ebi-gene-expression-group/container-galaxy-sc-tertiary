@@ -1,4 +1,4 @@
-<tool id="scmap_scmap_cell" name="Scmap cell projection" version="@TOOL_VERSION@+galaxy2" profile="@PROFILE@">
+<tool id="scmap_scmap_cell" name="Scmap cell projection" version="@TOOL_VERSION@+galaxy3" profile="@PROFILE@">
     <description>searches each cell in a query dataset for the nearest neighbours by cosine distance within a collection of reference datasets.</description>
     <macros>
         <import>scmap_macros.xml</import>
@@ -37,7 +37,7 @@
       <data name="closest_cells_text_file" format="csv" />
       <data name="closest_cells_similarities_text_file" format="csv" />
       <data name="closest_cells_clusters_csv" format="csv">
-        <filter>cluster_projection['do_cluster_projection'] == "true"</filter>
+        <filter>cluster_projection['do_cluster_projection']</filter>
       </data>
     </outputs>
     <tests>
