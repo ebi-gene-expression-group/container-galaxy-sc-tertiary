@@ -38,8 +38,8 @@
    ln -s '$input_anndata_file' scanpy_ann_data.h5ad;
    cbImportScanpy -i scanpy_ann_data.h5ad
 
-   #if $marker_field:
-     --markerField '$marker_field'
+   #if $input_type.marker_field:
+     --markerField '${input_type.marker_field}'
    #end if
 
      -o outdir -n sample --htmlDir '$html_file.extra_files_path';
@@ -64,15 +64,12 @@
     </when>
     <when value="scanpy">
       <param name="input_anndata_file" type="data" format="h5,h5ad" label="Input object in AnnData hdf5 format" help="Scanpy serialized output is by default produced as an AnnData hdf5 file."/>
+      <param name="marker_field" argument="--markerField" type="text" value="rank_genes_groups" label="Marker genes field" help="Scanpy marker genes field to use, optional, if not set 'rank_genes_groups' will be used."/>
     </when>
   </conditional>
-  <!-- if I put these vvv two inside the when scanpy, these for some reason don't get picked ¿? -->
-  <param name="cluster_field" argument="--clusterField" type="text" label="Cluster field" help="Scanpy cluster field to use, optional, if not set 'louvain' will be used."/>
-  <param name="marker_field" argument="--markerField" type="text" value="rank_genes_groups" label="Marker genes field" help="Scanpy marker genes field to use, optional, if not set 'rank_genes_groups' will be used."/>
-  <!-- if I put these ^^^ two inside the when scanpy, these for some reason don't get picked ¿? -->
 </inputs>
 <outputs>
-    <data format="html" name="html_file" label="Interactive UCSC Cell Browser"/>
+    <data format="html" name="html_file" label="${tool.name} on ${on_string}: Interactive Viewer"/>
 </outputs>
 
 <tests>
