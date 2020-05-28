@@ -16,13 +16,19 @@
    echo "geneIdType = 'symbol'" >> ./cellbrowser.conf;
 
    cbBuild -i cellbrowser.conf -o "$html_file.extra_files_path";
-   mv "$html_file.extra_files_path"/index.html "$html_file";
+
+   ## "sample" is used as name, so no change needed.
+   cp '$__tool_directory__/redirect.html' '$html_file';
 
 #else if $input_type.expression_source == "cell-browser-tar":
 
    tar -xf '$tarred_sources';
    cbBuild -i cellbrowser.conf -o "$html_file.extra_files_path";
-   mv "$html_file.extra_files_path"/index.html "$html_file";
+
+   ## we need to adapt redirect to use the study name used in cellbrowser.conf
+   study=\$(grep '^name=' cellbrowser.conf | awk -F'=' '{ print $2 }' | sed s/\"//g ) &&
+   echo "Study to replace: "\$study &&
+   sed "s/ds=sample/ds=\$study/" '$__tool_directory__/redirect.html' > '$html_file';
 
 #else if $input_type.expression_source == "scanpy":
 
@@ -36,8 +42,8 @@
      --markerField '$marker_field'
    #end if
 
-     -o outdir -n sample --htmlDir "$html_file.extra_files_path";
-   cp "$__tool_directory__/redirect.html" "$html_file";
+     -o outdir -n sample --htmlDir '$html_file.extra_files_path';
+   cp '$__tool_directory__/redirect.html' '$html_file';
 
 #end if
 ]]></command>
