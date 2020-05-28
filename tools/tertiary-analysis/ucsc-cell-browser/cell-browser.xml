@@ -1,7 +1,7 @@
-<tool id="ucsc_cell_browser" name="UCSC Cell Browser" version="0.7.9+galaxy1" profile="18.01">
+<tool id="ucsc_cell_browser" name="UCSC Cell Browser" version="0.5.43+galaxy1" profile="18.01">
   <description>displays single-cell clusterized data in an interactive web application.</description>
   <requirements>
-    <requirement type="package" version="0.7.9">ucsc-cell-browser</requirement>
+    <requirement type="package" version="0.5.43">ucsc-cell-browser</requirement>
   </requirements>
 <stdio>
 <exit_code range="1:" />
