@@ -18,6 +18,7 @@ python $operations
   <configfiles>
     <configfile name="operations">
 import scanpy as sc
+import anndata
 from numpy import all
 import logging
 
@@ -71,6 +72,11 @@ else:
 #end for
 #end if
 
+#if $sanitize_varm:
+if hasattr(adata, 'raw') and  hasattr(adata.raw, 'X') and hasattr(adata.raw, 'var'):
+  new_ad = anndata.AnnData(X=adata.raw.X, obs=adata.obs, var=adata.raw.var)
+  adata.raw = new_ad
+#end if
 
 if len(qc_vars) > 0:
     pct_top = [${top_genes}]
@@ -128,6 +134,7 @@ adata.write('output.h5', compression='gzip')
       </when>
       <when value="false"/>
     </conditional>
+    <param name="sanitize_varm" type="boolean" checked="false" label="Sanitise any null raw.varm objects if any" help="This might be relevant for interfacing with newer versions of AnnData, that might complain if .raw includes a varm null object."/>
   </inputs>
 
   <outputs>
