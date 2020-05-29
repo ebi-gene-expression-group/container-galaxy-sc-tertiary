@@ -1,4 +1,4 @@
-<tool id="ucsc_cell_browser" name="UCSC Cell Browser" version="0.5.43+galaxy0">
+<tool id="ucsc_cell_browser" name="UCSC Cell Browser" version="0.5.43+galaxy1" profile="18.01">
   <description>displays single-cell clusterized data in an interactive web application.</description>
   <requirements>
     <requirement type="package" version="0.5.43">ucsc-cell-browser</requirement>
@@ -9,26 +9,41 @@
 <command><![CDATA[
 #if $input_type.expression_source == "native-cell-browser":
 
-   echo "coords = [ {'file':'$tsneCoordinates', 'shortLabel':'t-SNE on WGCNA'} ]" > ./cellbrowser.conf;
+   echo "coords = [ {'file':'$tsneCoordinates', 'shortLabel':'t-SNE'} ]" > ./cellbrowser.conf;
    echo "meta = '$cellMetadata'" >> ./cellbrowser.conf;
    echo "name = 'sample'" >> ./cellbrowser.conf;
    echo "exprMatrix = '$expressionMatrix'" >> ./cellbrowser.conf;
    echo "geneIdType = 'symbol'" >> ./cellbrowser.conf;
 
    cbBuild -i cellbrowser.conf -o "$html_file.extra_files_path";
-   mv "$html_file.extra_files_path"/index.html "$html_file";
+
+   ## "sample" is used as name, so no change needed.
+   cp '$__tool_directory__/redirect.html' '$html_file';
 
 #else if $input_type.expression_source == "cell-browser-tar":
 
    tar -xf '$tarred_sources';
    cbBuild -i cellbrowser.conf -o "$html_file.extra_files_path";
-   mv "$html_file.extra_files_path"/index.html "$html_file";
+
+   ## we need to adapt redirect to use the study name used in cellbrowser.conf
+   study=\$(grep '^name=' cellbrowser.conf | awk -F'=' '{ print $2 }' | sed s/\"//g ) &&
+   echo "Study to replace: "\$study &&
+   sed "s/ds=sample/ds=\$study/" '$__tool_directory__/redirect.html' > '$html_file';
 
 #else if $input_type.expression_source == "scanpy":
 
+   ## We could add a condition here were, if cluster_field is provided
+   ## then we rename it inside with an AnnData relying script to read 'louvain' to please UCSC CellBrowser
+
    ln -s '$input_anndata_file' scanpy_ann_data.h5ad;
-   cbImportScanpy -i scanpy_ann_data.h5ad -o outdir -n sample --htmlDir "$html_file.extra_files_path";
-   mv "$html_file.extra_files_path"/index.html "$html_file";
+   cbImportScanpy -i scanpy_ann_data.h5ad
+
+   #if $input_type.marker_field:
+     --markerField '${input_type.marker_field}'
+   #end if
+
+     -o outdir -n sample --htmlDir '$html_file.extra_files_path';
+   cp '$__tool_directory__/redirect.html' '$html_file';
 
 #end if
 ]]></command>
@@ -48,12 +63,13 @@
       <param name="tarred_sources" type="data" format="tar" label="CellBrowser source files tarred" help="Tar containing CellBrowser config, tsne, umap and other source files for running cbBuild"/>
     </when>
     <when value="scanpy">
-      <param name="input_anndata_file" type="data" format="h5" label="Input object in AnnData hdf5 format" help="Scanpy serialized output is by default produced as an AnnData hdf5 file."/>
+      <param name="input_anndata_file" type="data" format="h5,h5ad" label="Input object in AnnData hdf5 format" help="Scanpy serialized output is by default produced as an AnnData hdf5 file."/>
+      <param name="marker_field" argument="--markerField" type="text" value="rank_genes_groups" label="Marker genes field" help="Scanpy marker genes field to use, optional, if not set 'rank_genes_groups' will be used."/>
     </when>
   </conditional>
 </inputs>
 <outputs>
-    <data format="html" name="html_file" label="Interactive UCSC Cell Browser"/>
+    <data format="html" name="html_file" label="${tool.name} on ${on_string}: Interactive Viewer"/>
 </outputs>
 
 <tests>
