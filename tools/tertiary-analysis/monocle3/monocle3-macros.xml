@@ -4,6 +4,7 @@
   <token name="@HELP@">More information can be found at https://cole-trapnell-lab.github.io/monocle3/ and https://github.com/ebi-gene-expression-group/monocle-scripts</token>
   <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
+0.1.5+galaxy0: Updated to monocle3-cli 0.0.8 to add top marker genes and fix container plots for plotCells (only those two modules upgraded).
 
 0.1.4+galaxy0: Updated to monocle3-cli 0.0.7 to fix bug with column headers in tsv.
 
