@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="monocle3_plotCells" name="Monocle3 plotCells" version="0.1.5+galaxy0" profile="@PROFILE@">
+<tool id="monocle3_plotCells" name="Monocle3 plotCells" version="0.1.5+galaxy1" profile="@PROFILE@">
   <description> in the reduced dimensionality space</description>
   <macros>
     <import>monocle3-macros.xml</import>
   </macros>
   <requirements>
-    <requirement type="package" version="0.0.8">monocle3-cli</requirement>
+    <requirement type="package" version="0.0.9">monocle3-cli</requirement>
   </requirements>
   <command detect_errors="exit_code"><![CDATA[
 LANG=en_US.UTF-8 monocle3 plotCells
@@ -65,7 +65,7 @@ LANG=en_US.UTF-8 monocle3 plotCells
       <option value="LSI">LSI</option>
     </param>
     <param name="color_cells_by" argument="--color-cells-by" optional="true" type="text" value="pseudotime" label="The cell attribute (e.g. the column of pData(cds)) to map to each cell's color, or one of {cluster, partition, pseudotime}."/>
-    <param name="genes" argument="--genes" optional="true" type="text" label="A list of gene IDs/short names to plot, one per panel."/>
+    <param name="genes" argument="--genes" optional="true" type="text" label="A list of gene IDs/short names to plot." help="For adding more than one gene, write them as a comma separated list, with no spaces in the middle, like `crp1,crp2,cycX`."/>
     <param name="norm_method" argument="--norm-method" type="select" label="Determines how to transform expression values for plotting.">
       <option value="log" selected="true">Size factor correction and log transformation</option>
       <option value="size_only">Size factor correction only</option>
