@@ -20,7 +20,7 @@
 	    ]]></command>
 
     <inputs>
-      <param type="select" name="parameter_name" label="Choose the format of the expression data" help="Use compressed txt, Scanpy or Seurat objects">
+      <param type="select" name="parameter_name" label="Choose the parameter to iterate" help="Select one of the available parameters to iterate, will affect names of output files">
         <option value="perplexity" selected="True">Perplexity</option>
         <option value="resolution">Resolution</option>
         <option value="n_neighbors">Number of neighbors</option>
