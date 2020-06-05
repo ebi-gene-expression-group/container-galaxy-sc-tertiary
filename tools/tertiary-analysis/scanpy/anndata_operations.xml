@@ -7,12 +7,18 @@
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_obj_file}' input.h5 &&
+
+#if $copy_o.obs_sources:
 #for $i, $os in enumerate($copy_o.obs_sources):
   ln -s '${os}' obs_source_${i}.h5 &&
 #end for
+#end if
+
+#if $copy_e.embedding_sources:
 #for $i, $es in enumerate($copy_e.embedding_sources):
   ln -s '${es}' embedding_source_${i}.h5 &&
 #end for
+#end if
 python $operations
 ]]></command>
   <configfiles>
@@ -117,7 +123,7 @@ adata.write('output.h5', compression='gzip')
     <conditional name="copy_o">
       <param name="default" type="boolean" checked="false" label="Copy observations (such as clusters)"/>
       <when value="true">
-        <repeat name="obs_keys" title="Keys from obs to copy" help="will copy all obs keys in the given AnnData object to the main AnnData object. Make sure to use AnnData objects that are compatible in terms of genes, cells and expression data. You can use this to copy clusters." min="0">
+        <repeat name="obs_keys" title="Keys from obs to copy" help="will copy all obs keys in the given AnnData object to the main AnnData object. Make sure to use AnnData objects that are compatible in terms of genes, cells and expression data. You can use this to copy clusters." min="1">
           <param name="contains" type="text" label="Key contains" help="Keys to be copied need to contain the text set here."/>
         </repeat>
         <param name="obs_sources" type="data" label="AnnData objects with obs to copy" help="Extracts obs (such as clusters) from these AnnData objects and merges them into the main input. Make sure to use AnnData objects that are compatible in terms of genes, cells and expression data." format="h5,h5ad" multiple="true"/>
@@ -128,7 +134,7 @@ adata.write('output.h5', compression='gzip')
     <conditional name="copy_e">
       <param name="default" type="boolean" checked="false" label="Copy embeddings (such as UMAP, tSNE)"/>
       <when value="true">
-        <repeat name="embedding_keys" title="Keys from embeddings to copy" help="will copy all embedding keys in the given AnnData object to the main AnnData object. Make sure to use AnnData objects that are compatible in terms of genes, cells and expression data. You can use this to copy tSNE, UMAP, etc." min="0">
+        <repeat name="embedding_keys" title="Keys from embeddings to copy" help="will copy all embedding keys in the given AnnData object to the main AnnData object. Make sure to use AnnData objects that are compatible in terms of genes, cells and expression data. You can use this to copy tSNE, UMAP, etc." min="1">
           <param name="contains" type="text" label="Key contains" help="Keys to be copied need to contain the text set here."/>
         </repeat>
         <param name="embedding_sources" type="data" label="AnnData objects with embeddings to copy" help="Extracts embeddings (tSNE, UMAP) from these AnnData objects and merges them into the main input. Make sure to use AnnData objects that are compatible in terms of genes, cells and expression data." format="h5,h5ad" multiple="true"/>
