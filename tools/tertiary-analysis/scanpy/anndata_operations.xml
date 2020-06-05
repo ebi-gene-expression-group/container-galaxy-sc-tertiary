@@ -42,6 +42,7 @@ else:
     logging.warning('No genes starting with {} found, skip calculating expression of {} genes'.format('${flag.startswith}', '${flag.flag}'))
 #end for
 
+#if $copy_o:
 #if len($copy_o.obs_keys) > 0:
 #for $i, $obs_s in enumerate($copy_o.obs_sources):
 ad_s = sc.read('obs_source_${i}.h5')
@@ -57,8 +58,9 @@ else:
   logging.warning("Observation source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
 #end for
 #end if
+#end if
 
-#if len($copy_e.embedding_keys) > 0:
+#if $copy_e and len($copy_e.embedding_keys) > 0:
 #for $i, $obs_s in enumerate($copy_e.embedding_sources):
 ad_s = sc.read('embedding_source_${i}.h5')
 if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
