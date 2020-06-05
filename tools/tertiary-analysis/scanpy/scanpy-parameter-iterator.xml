@@ -23,7 +23,7 @@
       <param type="select" name="parameter_name" label="Choose the format of the expression data" help="Use compressed txt, Scanpy or Seurat objects">
         <option value="perplexity" selected="True">Perplexity</option>
         <option value="resolution">Resolution</option>
-        <option value="n_neighbours">Number of neighbours</option>
+        <option value="n_neighbors">Number of neighbors</option>
       </param> 
       <conditional name="input_type">    
         <param type="select" name="parameter_values" label="Choose the format of the input values" help="step increase values or list of all the parameter values">
