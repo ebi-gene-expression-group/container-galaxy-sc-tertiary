@@ -1,4 +1,4 @@
-<tool id="scanpy_parameter_iterator" name="Scanpy ParameterIterator" version="0.0.1+galaxy1">
+<tool id="scanpy_parameter_iterator" name="Scanpy ParameterIterator" version="0.0.1+galaxy2">
     <description>produce an iteration over a defined parameter</description>
     <macros>
       <import>scanpy_macros.xml</import>
@@ -23,6 +23,7 @@
       <param type="select" name="parameter_name" label="Choose the format of the expression data" help="Use compressed txt, Scanpy or Seurat objects">
         <option value="perplexity" selected="True">Perplexity</option>
         <option value="resolution">Resolution</option>
+        <option value="n_neighbours">Number of neighbours</option>
       </param> 
       <conditional name="input_type">    
         <param type="select" name="parameter_values" label="Choose the format of the input values" help="step increase values or list of all the parameter values">
@@ -66,8 +67,8 @@
 
 **What it does**
 
-Given start, step and end, it will iterate parameters for either perplexity or
-resolution.
+Given start, step and end, it will iterate parameters for either perplexity (for t-SNE), resolution (clustering)
+or number of neighbours (neighbour graph construction).
 
 **Inputs**
 
