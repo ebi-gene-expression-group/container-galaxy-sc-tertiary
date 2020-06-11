@@ -1,10 +1,10 @@
 <macros>
-    <token name="@TOOL_VERSION@">1.0.0</token>
+    <token name="@TOOL_VERSION@">1.1.0</token>
     <token name="@HELP@">More information can be found at https://github.com/ebi-gene-expression-group/cell-types-analysis</token>
     <token name="@PROFILE@">18.01</token>
     <xml name="requirements">
       <requirements>
-        <requirement type="package" version="0.0.8">cell-types-analysis</requirement>
+        <requirement type="package" version="0.1.0">cell-types-analysis</requirement>
             <yield/>
       </requirements>
     </xml>
