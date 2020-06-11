@@ -135,7 +135,7 @@ adata.write('output.h5', compression='gzip')
         </sanitizer>
       </param>
       <param name="to_obs" type="text" label="New name" help="New name in observations that you want to change"/>
-      <param name="keep_original" type="boolean" lable="Keep original" help="If activated, it will also keep the original column" checked="false"/>
+      <param name="keep_original" type="boolean" label="Keep original" help="If activated, it will also keep the original column" checked="false"/>
     </repeat>
     <param name="gene_symbols_field" value='index' type="text" label="Gene symbols field in AnnData" help="Field inside var.params where the gene symbols are, normally 'index' or 'gene_symbols'"/>
     <repeat name="gene_flags" title="Flag genes that start with these names">
