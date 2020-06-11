@@ -41,7 +41,7 @@
         <param type="data" name="exclusions" label="Exclusions file" format="yml" optional="true" help="Yaml file with trivial terms and unlabelled cells" />
         <param type="data" name="lab_cl_mapping" format="rdata" label="cl terms mapping" help="Label - CL term mapping" />
         <param type="data" name="ontology_graph" format="obo" label="Ontology graph" help="Ontology graph to run similairty calculations" />
-        <param type="text" name="semantic_sim_metric" label="Semantic similarity metric" value="lin" help="Type of semantic similarity metric used" />
+        <param type="text" name="semantic_sim_metric" label="Semantic similarity metric" value="lin" help="Type of semantic similarity metric used. NB: if include-sem-siml is set to True, make sure to use a metric that is in the [0;1] interval. See https://www.bioconductor.org/packages/release/bioc/html/Onassis.html for more detail." />
     </inputs>
     <outputs>
         <data name="summary_table_output_path" format="txt" />

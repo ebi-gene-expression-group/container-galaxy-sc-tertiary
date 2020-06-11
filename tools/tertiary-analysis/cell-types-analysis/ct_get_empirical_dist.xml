@@ -32,7 +32,7 @@
         <param type="integer" name="num_iter" value='5' label="Number of iterations" help="Number of simulations to generate empirical CDF" />
         <param type="integer" name="sample_labs" value='50' label="Number of labels to sample" help="Numbre of labels to sample for each permutation" />
         <param type="data" name="ontology_graph" label="Ontology graph" format="obo" help="Ontology graph to run semantis similarity computations" />
-        <param type="text" name="sem_sim_metric" label="Semantic similarity metric" value="edge_resnik" help="Type of semantic similarity metric used" />
+        <param type="text" name="sem_sim_metric" label="Semantic similarity metric" value="lin" help="Type of semantic similarity metric used" />
     </inputs>
     <outputs>
         <data name="output_list_path" format="rdata" />

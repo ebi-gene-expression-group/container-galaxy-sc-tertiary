@@ -53,7 +53,7 @@
         <param type="text" name="barcode_col_pred" label="Predicted file barcode field" value="cell_id" help="Name of barcode field in predictions file" />
         <param type="text" name="label_col_ref" label="Reference label column" value="cell_type" help="Label column in reference file" />
         <param type="text" name="label_col_pred" label="Predicted file label column" value="pred_label" help="Name of label field in predictions file" />
-        <param type="text" name="semantic_sim_metric" label="Semantic similarity metric" value="lin" help="Type of semantic similarity metric used" />
+        <param type="text" name="semantic_sim_metric" label="Semantic similarity metric" value="lin" help="Type of semantic similarity metric used. NB: if include-sem-siml is set to True, make sure to use a metric that is in the [0;1] interval. See https://www.bioconductor.org/packages/release/bioc/html/Onassis.html for more detail." />
     </inputs>
     <outputs>
          <data name="output_path" format="txt" />
