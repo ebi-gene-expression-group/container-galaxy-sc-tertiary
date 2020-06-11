@@ -42,7 +42,7 @@ qc_vars = list()
 #for $i, $s in enumerate($modifications)
 adata.obs['${s.to_obs}'] = adata.obs['${s.from_obs}']
 #if not $s.keep_original:
-del adata.obs[${s.from_obs}']
+del adata.obs['${s.from_obs}']
 #end if
 #end for
 
