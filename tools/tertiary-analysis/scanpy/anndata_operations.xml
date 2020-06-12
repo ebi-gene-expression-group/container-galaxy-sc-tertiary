@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="anndata_ops" name="AnnData Operations" version="0.0.3+galaxy0" profile="@PROFILE@">
+<tool id="anndata_ops" name="AnnData Operations" version="0.0.3+galaxy1" profile="@PROFILE@">
   <description>modifies metadata and flags genes</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -35,6 +35,10 @@ from numpy import all
 import logging
 
 adata = sc.read('input.h5')
+
+#if $copy_adata_to_raw:
+adata.raw = adata
+#end if
 
 gene_name = '${gene_symbols_field}'
 qc_vars = list()
@@ -128,6 +132,7 @@ adata.write('output.h5', compression='gzip')
   <inputs>
     <param name="input_obj_file" argument="input-object-file" type="data" format="h5,h5ad" label="Input object in hdf5 AnnData format"/>
     <expand macro="output_object_params_no_loom"/>
+    <param name="copy_adata_to_raw" type="boolean" label="Copy AnnData to .raw" help="If activated, it will do 'adata.raw = adata'" checked="false"/>
     <repeat name="modifications" title="Change field names in AnnData observations" min="0">
       <param name="from_obs" type="text" label="Original name" help="Name in observations that you want to change">
         <sanitizer>
