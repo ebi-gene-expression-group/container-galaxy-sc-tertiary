@@ -20,7 +20,7 @@
         #if $parallel
         --parallel "${parallel}"
         #end if
-        #if $include-sem-siml
+        #if $include_sem_siml
         --include-sem-siml "${include_sem_siml}"
         #end if
         #if $barcode_col_ref
@@ -38,7 +38,6 @@
         #if $semantic_sim_metric
         --semantic-sim-metric "${semantic_sim_metric}" 
         #end if
-
 
          ]]></command>
     <inputs>

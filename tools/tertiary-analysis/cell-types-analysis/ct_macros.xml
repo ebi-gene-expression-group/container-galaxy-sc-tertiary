@@ -20,7 +20,7 @@
     ]]></token>
     <xml name="sem_siml_options">
       <param type="select" name="sem_siml_metric" label="Semantic similarity metric"  help="What semantic similarity metric should be used? NB: if include-sem-siml is set to True, make sure to use a metric that is in the [0;1] interval. See https://www.bioconductor.org/packages/release/bioc/html/Onassis.html for more detail.">
-            <option value="lin" selected=“true”>lin</option>
+            <option value="lin" selected="true">lin</option>
             <option value="jaccard">jaccard</option>
             <option value="jc_norm">jc_norm</option>
             <option value="schlicker">schlicker</option>

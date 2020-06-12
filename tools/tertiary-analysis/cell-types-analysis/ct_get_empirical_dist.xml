@@ -19,7 +19,7 @@
         #if $exclusions
         --exclusions "${exclusions}"
         #end if
-        #if $exclusions
+        #if $sem_sim_metric
         --semantic-sim-metric "${sem_sim_metric}"
         #end if
         ]]></command>
