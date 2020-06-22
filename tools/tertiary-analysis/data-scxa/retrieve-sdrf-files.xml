@@ -1,7 +1,7 @@
 <tool id="atlas_import_sdrf_files" name="Atlas import: get sdrf files" version="@TOOL_VERSION@+galaxy0"  profile="@PROFILE@">
     <description>Import sdrf files from Single Cell Expression Atlas</description>
     <macros>
-         <import>atlas_import_macros.xml</import>
+         <import>atlas-retrieve-macros.xml</import>
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[

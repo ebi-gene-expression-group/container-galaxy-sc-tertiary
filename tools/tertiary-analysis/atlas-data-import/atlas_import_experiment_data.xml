@@ -16,17 +16,11 @@
         #if $use_default_expr_names 
         --use-default-expr-names "${use_default_expr_names}" 
         #end if
-        #if $exp_data_dir 
-        --exp-data-dir "${exp_data_dir}" 
-        #end if
         #if $get_idf 
         --get-idf "${get_idf}" 
         #end if
         #if $number_of_clusters 
         --number-of-clusters  "${number_of_clusters}" 
-        #end if
-        #if $use_full_names
-        --use-full-names  "${use_full_names}" 
         #end if
     ]]></command>
     <inputs>
@@ -37,19 +31,28 @@
             <option value="tpm">TPM-normalised</option>
             <option value="cpm">CPM-normalised</option>
         </param>
-        <param type="boolean" name="get_sdrf" checked="false"  label="Import SDRF file" help="Boolean indicating whether SDRF file needs to be imported" />
-        <param type="boolean" name="get_idf" checked="false"  label="Import IDF file" help="Boolean indicating whether IDF file needs to be imported" />
+        <param type="boolean" name="get_sdrf" checked="false" label="Import SDRF file" help="Boolean indicating whether SDRF file needs to be imported" />
+        <param type="boolean" name="get_idf" checked="false" label="Import IDF file" help="Boolean indicating whether IDF file needs to be imported" />
         <param type="boolean" name="get_condensed_sdrf" checked="false"  label="Get condensed SDRF file" help="Boolean indicating whether condensed SDRF file needs to be imported" />
         <param type="boolean" name="get_marker_genes" checked="false"  label="Import marker genes" help="Boolean indicating whether marker genes should be imported" />
         <param type="data" name="config_file" label="Config file" format="yml" help="Config file with user-provided parameters" />
         <param type="boolean" name="decorated_rows" checked="false"  label="Decorated rows" help="Boolean indicating whether a decorated version of the rows should be imported" />
         <param type="boolean" name="use_default_expr_names" checked="false"  label="Use default expr names" help="Should default (non 10x-type) file names be used for expression data? Default: FALSE" />
-        <param type="text" name="exp_data_dir" label="Expression data dir" help="Name of the directory with expression data" />
         <param type="integer" name="number_of_clusters" label="Number of clusters" help="Number of clusters in marker genes file" />
-        <param type="boolean" name="use_full_names" checked="false"  label="Use full names" help="Should non-expression data files be named with full file names? Default: FALSE" />
     </inputs>
     <outputs>
-        
+        <data name="expr_mtx" format="txt" from_work_dir="${accession_code}/10x_data/matrix.mtx" />
+        <data name="barcodes" format="txt" from_work_dir="${accession_code}/10x_data/barcodes.tsv" />
+        <data name="genes" format="txt" from_work_dir="${accession_code}/10x_data/genes.tsv" />
+        <data name="sdrf" format="txt" from_work_dir="${accession_code}/sdrf.txt">
+            <filter>get_sdrf==True</filter>
+        </data>
+        <data name="idf" format="txt" from_work_dir="${accession_code}/idf.txt">
+            <filter>get_idf==True</filter>
+        </data>
+        <data name="marker_genes" format="txt" from_work_dir="${accession_code}/marker_genes_${number_of_clusters}.tsv">
+            <filter>get_marker_genes==True</filter>
+        </data>
     </outputs>
     <help><![CDATA[
     @HELP@
