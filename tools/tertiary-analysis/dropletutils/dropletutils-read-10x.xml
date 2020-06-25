@@ -14,10 +14,8 @@ dropletutils-read-10x-counts.R
     -c TRUE
     -o '${output_rds}'
 
-#if $metadata_files 
+#if $add_metadata_file 
 --metadata-files "${metadata_files}" 
-#end if
-#if $cell_id_column 
 --cell-id-column "${cell_id_column}" 
 #end if
 
@@ -33,10 +31,6 @@ dropletutils-read-10x-counts.R
         <when value="true" >
           <param name="metadata_files" type="data" label="Metadata file" help="Provide metadata file e.g. containing cell types"/>
           <param name="cell_id_column" type="text" label="Cell ID column" help="Cell ID column. Values must match those provided in the expression matrix." />
-        </when>
-        <when value="false">
-          <param name="metadata_files" type="hidden" value="NULL" />
-          <param name="cell_id_column" type="hidden" value="NULL" />
         </when>
       </conditional>
   </inputs>
