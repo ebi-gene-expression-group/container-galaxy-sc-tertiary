@@ -14,11 +14,10 @@ dropletutils-read-10x-counts.R
     -c TRUE
     -o '${output_rds}'
 
-#if $add_metadata_file 
---metadata-files "${metadata_files}" 
---cell-id-column "${cell_id_column}" 
+#if $add_metadata.add_metadata_file 
+--metadata-files "${add_metadata.metadata_files}"
+--cell-id-column "${add_metadata.cell_id_column}" 
 #end if
-
 
 ]]></command>
 
