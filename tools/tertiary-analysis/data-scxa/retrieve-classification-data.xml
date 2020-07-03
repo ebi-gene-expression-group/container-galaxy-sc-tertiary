@@ -5,21 +5,16 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        import_classification_data.R  --tool "${tool}" --classifiers-output-dir "${classifier_output_dir}"
+        import_classification_data.R  --tool "${tool}" 
 
         #if $config_file 
         --config-file "${config_file}" 
         #end if
-        #if $get_sdrf 
-        --get-sdrf "${get_sdrf}" 
+        #if $import_sdrf_files.get_sdrf 
+        --get-sdrf "${import_sdrf_files.get_sdrf}" 
+        --condensed-sdrf "${import_sdrf_files.condensed_sdrf}" 
         #end if
-        #if $condensed_sdrf 
-        --condensed-sdrf "${condensed_sdrf}" 
-        #end if
-        #if $sdrf_output_dir 
-        --sdrf-output-dir "${sdrf_output_dir}" 
-        #end if
-        #if $get_tool_perf_table 
+        #if $get_tool_perf_table
         --get-tool-perf-table "${get_tool_perf_table}" 
         #end if
         #if $tool_perf_table_output_path 
@@ -28,10 +23,10 @@
 
     ]]></command>
     <inputs>
-        <param type="data" name="config_file" label="Config file" format="yml" help="Config file with user-provided parameters" />
+        <param type="data" name="config_file" label="Config file" format="yml" optional="true" help="Config file with user-provided parameters" />
         <param type="text" name="tool" label="Tool" help="For which tool should the classifiers be imported?" />
-        <conditional name="get_sdrf">
-        <param name="import_sdrf_files" type="boolean" checked="false" label="Import SDRF files for the given experiments?" help="If specified, SDRF files will also be imported"/>
+        <conditional name="import_sdrf_files">
+        <param name="get_sdrf" type="boolean" checked="false" label="Import SDRF files for the given experiments?" help="If specified, SDRF files will be imported"/>
         <when value="true" >
           <param name="condensed_sdrf" type="boolean" label="Import condensed version of SDRF files?" checked="false" help="Should condensed SDRF files be imported? By default, normal version is imported." />
         </when>
@@ -39,16 +34,19 @@
           <param name="condensed_sdrf" type="hidden" value="NULL" />
         </when>
       </conditional>
+      <param name="get_tool_perf_table" type="boolean" checked="false" label="Import tool performance table" help="If specified, tool performance table will be imported"/>
     </inputs>
     <outputs>
         <collection name="imported_classifiers" type="list" label="Collection of imported classifiers">
-            <discover_datasets pattern="__name_and_ext__" directory="${classifier_output_dir}" />
+            <discover_datasets pattern="__name_and_ext__" directory="imported_classifiers" />
         </collection>
         <collection name="imported_sdrfs" type="list" label="Collection of imported SDRF files">
-            <discover_datasets pattern="__name_and_ext__" directory="${sdrf_output_dir}" />
-            <filter>get_sdrf['import_sdrf_files']</filter>
+            <discover_datasets pattern="__name_and_ext__" directory="imported_SDRFs" />
+            <filter>import_sdrf_files['get_sdrf']</filter>
         </collection>
-        <data name="tool_perf_table_output_path" format="tsv" />
+        <data name="tool_perf_table_output_path" format="tsv">
+            <filter>get_tool_perf_table</filter>
+        </data>
     </outputs>
     <help><![CDATA[
     @HELP@

@@ -1,5 +1,5 @@
 <tool id="atlas_import_experiment_data" name="Atlas import: get experiment data" version="@TOOL_VERSION@+galaxy0"  profile="@PROFILE@">
-    <description>Retrieves expression matrixes and metadata from EBI Single Cell Expression Atlas (SCXA)</description>
+    <description>Retrieve expression matrices and metadata from EBI Single Cell Expression Atlas (SCXA)</description>
     <macros>
          <import>atlas-retrieve-macros.xml</import>
     </macros>
@@ -39,7 +39,7 @@
         <param type="boolean" name="get_idf" checked="false" label="Import IDF file" help="Boolean indicating whether IDF file needs to be imported" />
         <param type="boolean" name="get_condensed_sdrf" checked="false"  label="Get condensed SDRF file" help="Boolean indicating whether condensed SDRF file needs to be imported" />
         <param type="boolean" name="get_marker_genes" checked="false"  label="Import marker genes" help="Boolean indicating whether marker genes should be imported" />
-        <param type="data" name="config_file" label="Config file" format="yml" help="Config file with user-provided parameters" />
+        <param type="data" name="config_file" label="Config file" optional="true" format="yml" help="Config file with user-provided parameters" />
         <param type="boolean" name="decorated_rows" checked="false"  label="Decorated rows" help="Boolean indicating whether a decorated version of the rows should be imported" />
         <param type="boolean" name="use_default_expr_names" checked="false"  label="Use default expr names" help="Should default (non 10x-type) file names be used for expression data? Default: FALSE" />
         <param type="integer" name="number_of_clusters" label="Number of clusters" help="Number of clusters in marker genes file" />
@@ -50,6 +50,9 @@
         <data name="genes" format="txt" from_work_dir="${accession_code}/10x_data/genes.tsv" label="${tool.name} on ${on_string} ${accession} genes.tsv (${matrix_type.value_label})" />
         <data name="sdrf" format="txt" from_work_dir="${accession_code}/sdrf.txt" label="${tool.name} on ${on_string} ${accession} sdrf.txt (${matrix_type.value_label})" >
             <filter>get_sdrf</filter>
+        </data>
+        <data name="condensed_sdrf" format="txt" from_work_dir="${accession_code}/condensed-sdrf.tsv" label="${tool.name} on ${on_string} ${accession} condensed-sdrf.tsv (${matrix_type.value_label})" >
+            <filter>get_condensed_sdrf</filter>
         </data>
         <data name="idf" format="txt" from_work_dir="${accession_code}/idf.txt" label="${tool.name} on ${on_string} ${accession} idf.txt (${matrix_type.value_label})">
             <filter>get_idf</filter>
