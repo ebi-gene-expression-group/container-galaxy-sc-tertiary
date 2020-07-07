@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="dropletutils_read_10x" name="DropletUtils Read10x" version="@TOOL_VERSION@+galaxy1">
+<tool id="dropletutils_read_10x" name="DropletUtils Read10x" version="@TOOL_VERSION@+galaxy2">
   <description>into SingleCellExperiment object</description>
   <macros>
     <import>dropletutils_macros.xml</import>
   </macros>
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
-ln -s '${matrix}' matrix.mtx &&
-ln -s '${genes}' genes.tsv &&
-ln -s '${barcodes}' barcodes.tsv &&
-dropletutils-read-10x-counts.R
-    -s .
-    -c TRUE
-    -o '${output_rds}'
+      ln -s '${matrix}' matrix.mtx &&
+      ln -s '${genes}' genes.tsv &&
+      ln -s '${barcodes}' barcodes.tsv &&
+      dropletutils-read-10x-counts.R
+          -s .
+          -c TRUE
+          -o '${output_rds}'
 
-#if $add_metadata.add_metadata_file 
---metadata-files "${add_metadata.metadata_files}"
---cell-id-column "${add_metadata.cell_id_column}" 
-#end if
-
+      #if $add_metadata.add_metadata_file 
+      --metadata-files "${add_metadata.metadata_files}"
+      --cell-id-column "${add_metadata.cell_id_column}" 
+      #end if
 ]]></command>
 
   <inputs>
