@@ -1,24 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="dropletutils_read_10x" name="DropletUtils Read10x" version="@TOOL_VERSION@+galaxy0">
+<tool id="dropletutils_read_10x" name="DropletUtils Read10x" version="@TOOL_VERSION@+galaxy2">
   <description>into SingleCellExperiment object</description>
   <macros>
     <import>dropletutils_macros.xml</import>
   </macros>
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
-ln -s '${matrix}' matrix.mtx &&
-ln -s '${genes}' genes.tsv &&
-ln -s '${barcodes}' barcodes.tsv &&
-dropletutils-read-10x-counts.R
-    -s .
-    -c TRUE
-    -o '${output_rds}'
+    ln -s '${matrix}' matrix.mtx &&
+    ln -s '${genes}' genes.tsv &&
+    ln -s '${barcodes}' barcodes.tsv &&
+    dropletutils-read-10x-counts.R
+        -s .
+        -c TRUE
+        -o '${output_rds}'
+
+    #if $add_metadata.add_metadata_file 
+    --metadata-files "${add_metadata.metadata_files}"
+    --cell-id-column "${add_metadata.cell_id_column}" 
+    #end if
+
 ]]></command>
 
   <inputs>
     <param name="matrix" type="data" format="txt" label="Expression matrix in sparse matrix format (.mtx)"/>
     <param name="genes" type="data" format="tsv,tabular" label="Gene table"/>
     <param name="barcodes" type="data" format="tsv,tabular" label="Barcode/cell table"/>
+    <conditional name="add_metadata">
+        <param name="add_metadata_file" type="boolean" checked="false" label="Should metadata file be added?" />
+        <when value="true" >
+          <param name="metadata_files" type="data" label="Metadata file" help="Provide metadata file e.g. containing cell types"/>
+          <param name="cell_id_column" type="text" label="Cell ID column" help="Cell ID column. Values must match those provided in the expression matrix." />
+        </when>
+      </conditional>
   </inputs>
 
   <outputs>
