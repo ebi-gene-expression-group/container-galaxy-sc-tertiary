@@ -5,13 +5,22 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        get_experiment_data.R --accesssion-code "${accession_code}" --matrix-type "${matrix_type}" --get-sdrf "${get_sdrf}" --get-condensed-sdrf "${get_condensed_sdrf}" --get-marker-genes "${get_marker_genes}" 
+        ln -s "${accession_code}_${matrix_type}/10x_data/matrix.mtx" matrix.mtx &&
+        ln -s "${accession_code}_${matrix_type}/10x_data/genes.tsv" genes.tsv &&
+        ln -s "${accession_code}_${matrix_type}/10x_data/barcodes.tsv" barcodes.tsv &&
+        ln -s "${accession_code}_${matrix_type}/sdrf.txt" sdrf.txt &&
+        ln -s "${accession_code}_${matrix_type}/condensed-sdrf.tsv" condensed-sdrf.tsv &&
+        ln -s "${accession_code}_${matrix_type}/idf.txt" idf.txt &&
+        ln -s "${accession_code}_${matrix_type}/marker_genes_${number_of_clusters}.tsv" marker_genes_${number_of_clusters}.tsv &&
+        ln -s "${accession_code}_${matrix_type}/exp_design.tsv" exp_design.tsv &&
+
+        get_experiment_data.R --accesssion-code "${accession_code}" --matrix-type "${matrix_type}" --get-sdrf "${get_sdrf}" --get-condensed-sdrf "${get_condensed_sdrf}" --get-marker-genes "${get_marker_genes}"
 
         #if $config_file 
-        --config-file "${config_file}" 
-        #end if
+        --config-file "${config_file}"
+        #end if        
         #if $get_exp_design
-        --get-exp-design "${get_exp_design}"
+        --get-exp-design "${get_exp_design}" 
         #end if 
         #if $decorated_rows 
         --decorated-rows "${decorated_rows}" 
@@ -29,10 +38,10 @@
     <inputs>
         <param type="text" name="accession_code" label="SC-Atlas experiment accession" value="E-GEOD-100058" help="EBI Single Cell Atlas accession for the experiment that you want to retrieve." />
         <param type="select" name="matrix_type" label="Choose the type of matrix to download" help="Type of matrix to be imported">
-            <option value="raw">Raw</option>
-            <option value="filtered">Filtered Counts</option>
-            <option value="tpm">TPM-normalised</option>
-            <option value="cpm">CPM-normalised</option>
+            <option value="RAW">Raw</option>
+            <option value="FILTERED">Filtered Counts</option>
+            <option value="TPM">TPM-normalised</option>
+            <option value="CPM">CPM-normalised</option>
         </param>
         <param type="boolean" name="get_sdrf" checked="false" label="Import SDRF file" help="Boolean indicating whether SDRF file needs to be imported" />
         <param type="boolean" name="get_exp_design" checked="false" label="Import experiment design file" help="Boolean indicating whether experiment design file needs to be imported" />
@@ -45,22 +54,22 @@
         <param type="integer" name="number_of_clusters" value="0" label="Number of clusters" help="Number of clusters in marker genes file" />
     </inputs>
     <outputs>
-        <data name="expr_mtx" format="txt" from_work_dir="${accession_code}/10x_data/matrix.mtx" label="${tool.name} on ${on_string} ${accession_code} matrix.mtx (${matrix_type.value_label})" />
-        <data name="barcodes" format="txt" from_work_dir="${accession_code}/10x_data/barcodes.tsv" label="${tool.name} on ${on_string} ${accession_code} barcodes.tsv (${matrix_type.value_label})" />
-        <data name="genes" format="txt" from_work_dir="${accession_code}/10x_data/genes.tsv" label="${tool.name} on ${on_string} ${accession_code} genes.tsv (${matrix_type.value_label})" />
-        <data name="sdrf" format="txt" from_work_dir="${accession_code}/sdrf.txt" label="${tool.name} on ${on_string} ${accession_code} sdrf.txt (${matrix_type.value_label})" >
+        <data name="expr_mtx" format="txt" from_work_dir="matrix.mtx" label="${tool.name} on ${on_string} ${accession_code} matrix.mtx (${matrix_type.value_label})" />
+        <data name="barcodes" format="txt" from_work_dir="barcodes.tsv" label="${tool.name} on ${on_string} ${accession_code} barcodes.tsv (${matrix_type.value_label})" />
+        <data name="genes" format="txt" from_work_dir="genes.tsv" label="${tool.name} on ${on_string} ${accession_code} genes.tsv (${matrix_type.value_label})" />
+        <data name="sdrf" format="txt" from_work_dir="sdrf.txt" label="${tool.name} on ${on_string} ${accession_code} sdrf.txt (${matrix_type.value_label})" >
             <filter>get_sdrf</filter>
         </data>
-        <data name="condensed_sdrf" format="txt" from_work_dir="${accession_code}/condensed-sdrf.tsv" label="${tool.name} on ${on_string} ${accession_code} condensed-sdrf.tsv (${matrix_type.value_label})" >
+        <data name="condensed_sdrf" format="txt" from_work_dir="condensed-sdrf.tsv" label="${tool.name} on ${on_string} ${accession_code} condensed-sdrf.tsv (${matrix_type.value_label})" >
             <filter>get_condensed_sdrf</filter>
         </data>
-        <data name="idf" format="txt" from_work_dir="${accession_code}/idf.txt" label="${tool.name} on ${on_string} ${accession_code} idf.txt (${matrix_type.value_label})">
+        <data name="idf" format="txt" from_work_dir="idf.txt" label="${tool.name} on ${on_string} ${accession_code} idf.txt (${matrix_type.value_label})">
             <filter>get_idf</filter>
         </data>
-        <data name="marker_genes" from_work_dir="${accession_code}/marker_genes_${number_of_clusters}.tsv" format="txt"  >
+        <data name="marker_genes" from_work_dir="marker_genes_${number_of_clusters}.tsv" format="txt"  >
             <filter>get_marker_genes</filter>
         </data>
-        <data name="exp_design" from_work_dir="${accession_code}/exp_design.tsv" format="txt"  >
+        <data name="exp_design" from_work_dir="exp_design.tsv" format="txt"  >
             <filter>get_exp_design</filter>
         </data>
     </outputs>
