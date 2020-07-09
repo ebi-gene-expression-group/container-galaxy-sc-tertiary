@@ -1,4 +1,4 @@
-<tool id="ct_get_empirical_dist" name="Cell types - get empirical distribution" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
+<tool id="ct_get_empirical_dist" name="Cell types - get empirical distribution" version="@TOOL_VERSION@+galaxy2" profile="@PROFILE@">
     <description>Get empirical distribution for tool performance table</description>
     <macros>
         <import>ct_macros.xml</import>
@@ -6,9 +6,7 @@
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
 
-        ln -s $'${ontology_graph}' cl-basic.obo;
-
-        get_empirical_dist.R --input-ref-file "${input_ref_file}" --label-column-ref "${label_col_ref}" --lab-cl-mapping "${lab_cl_mapping}" --num-iterations "${num_iter}" --num-cores \${GALAXY_SLOTS:-1} --ontology-graph cl-basic.obo --output-path "${output_list_path}" 
+        get_empirical_dist.R --input-ref-file "${input_ref_file}" --label-column-ref "${label_col_ref}" --lab-cl-mapping "${lab_cl_mapping}" --num-iterations "${num_iter}" --num-cores \${GALAXY_SLOTS:-1} --ontology-graph "${ontology_graph}" --output-path "${output_list_path}" 
 
         #if $parallel
         --parallel "${parallel}"
@@ -22,6 +20,7 @@
         #if $sem_sim_metric
         --semantic-sim-metric "${sem_sim_metric}"
         #end if
+
         ]]></command>
     <inputs>
         <param type="data" name="input_ref_file" label="Input reference file" format="txt" help="Text file with reference cell labels" />
