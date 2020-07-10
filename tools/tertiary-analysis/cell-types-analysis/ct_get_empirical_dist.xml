@@ -6,10 +6,16 @@
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
 
-        get_empirical_dist.R --input-ref-file "${input_ref_file}" --label-column-ref "${label_col_ref}" --lab-cl-mapping "${lab_cl_mapping}" --num-iterations "${num_iter}" --num-cores \${GALAXY_SLOTS:-1} --ontology-graph "${ontology_graph}" --output-path "${output_list_path}" 
+        get_empirical_dist.R --input-ref-file "${input_ref_file}" --label-column-ref "${label_col_ref}" --lab-cl-mapping "${lab_cl_mapping}" --num-iterations "${num_iter}" --num-cores \${GALAXY_SLOTS:-1}  --output-path "${output_list_path}" 
 
         #if $parallel
         --parallel "${parallel}"
+        #end if
+        #if $ontology_graph
+        --ontology-graph "${ontology_graph}"
+        #end if 
+        #if $tmpdir
+        --tmpdir "${tmpdir}"
         #end if
         #if $sample_labs
         --sample-labs "${sample_labs}"
@@ -17,14 +23,14 @@
         #if $exclusions
         --exclusions "${exclusions}"
         #end if
-        #if $sem_sim_metric
-        --semantic-sim-metric "${sem_sim_metric}"
+        #if $sem_siml_metric
+        --semantic-sim-metric "${sem_siml_metric}"
         #end if
 
         ]]></command>
     <inputs>
         <param type="data" name="input_ref_file" label="Input reference file" format="txt" help="Text file with reference cell labels" />
-        <param type="data" name="exclusions" format="yml" label="Exclusions file" help="YML file with excluded/unlabelled terms" />
+        <param type="data" name="exclusions" format="yml" label="Exclusions file" optional="true" help="YML file with excluded/unlabelled terms" />
         <param type="text" name="label_col_ref" label="Reference label column" value="cell_type" help="Label column in reference file" />
         <param type="text" name="tmpdir" label="Tmpdir for caching" optional="true" help="Temporary directory for caching" />
         <param type="data" name="lab_cl_mapping" label="Label - CL term mapping" format="rdata" help="Mapping between cell labels and ontology terms" />

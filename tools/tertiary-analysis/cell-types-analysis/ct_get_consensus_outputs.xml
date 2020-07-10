@@ -10,11 +10,17 @@
           cp '$table' input_dir/;
         #end for
         
-        get_consensus_output.R --input-dir input_dir --num-cores \${GALAXY_SLOTS:-1} --cl-dictionary "${lab_cl_mapping}"  --ontology-graph "${ontology_graph}" --summary-table-output-path "${summary_table_output_path}" --raw-table-output-path "${raw_table_output_path}"
+        get_consensus_output.R --input-dir input_dir --num-cores \${GALAXY_SLOTS:-1} --cl-dictionary "${lab_cl_mapping}"   --summary-table-output-path "${summary_table_output_path}" --raw-table-output-path "${raw_table_output_path}"
         #if $tool_table
         --tool-table "${tool_table}"
         #end if
-        #if $include-sem-siml
+        #if $ontology_graph
+        --ontology-graph "${ontology_graph}"
+        #end if
+        #if $tmpdir
+        --tmpdir "${tmpdir}"
+        #end if
+        #if $include_sem_siml
         --include-sem-siml "${include_sem_siml}"
         #end if
         #if $parallel
@@ -26,8 +32,8 @@
         #if $exclusions
         --exclusions "${exclusions}"
         #end if
-        #if $semantic_sim_metric
-        --semantic-sim-metric "${semantic_sim_metric}" 
+        #if $sem_siml_metric
+        --semantic-sim-metric "${sem_siml_metric}" 
         #end if
          ]]></command>
     <inputs>

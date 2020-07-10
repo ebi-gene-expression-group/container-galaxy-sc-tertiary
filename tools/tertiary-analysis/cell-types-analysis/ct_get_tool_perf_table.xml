@@ -10,13 +10,19 @@
           cp '$input_file' input_dir/;
         #end for
 
-        get_tool_performance_table.R --input-dir input_dir --ref-file "${ref_file}" --num-cores \${GALAXY_SLOTS:-1}   --ontology-graph "${ontology_graph}" --lab-cl-mapping "${lab_cl_mapping}" --output-path "${output_path}"
+        get_tool_performance_table.R --input-dir input_dir --ref-file "${ref_file}" --num-cores \${GALAXY_SLOTS:-1}    --lab-cl-mapping "${lab_cl_mapping}" --output-path "${output_path}"
 
         #if $exclusions
         --exclusions "${exclusions}"
         #end if
+        #if $ontology_graph
+        --ontology-graph "${ontology_graph}"
+        #end if
         #if $parallel
         --parallel "${parallel}"
+        #end if
+        #if $tmpdir
+        --tmpdir "${tmpdir}"
         #end if
         #if $include_sem_siml
         --include-sem-siml "${include_sem_siml}"
@@ -50,8 +56,7 @@
         <param type="text" name="barcode_col_ref" label="Reference file barcode field" value='cell_id' help="Name of barcode field in reference metadata file" />
         <param type="text" name="barcode_col_pred" label="Predicted file barcode field" value="cell_id" help="Name of barcode field in predictions file" />
         <param type="text" name="label_col_ref" label="Reference label column" value="cell_type" help="Label column in reference file" />
-        <expand macro="sem_siml_options" />
-        <param type="text" name="label_col_pred" label="Predicted file label column" value="pred_label" help="Name of label field in predictions file" />
+        <param type="text" name="label_col_pred" label="Predicted file label column" value="predicted_label" help="Name of label field in predictions file" />
         <expand macro="sem_siml_options" />
     </inputs>
     <outputs>
