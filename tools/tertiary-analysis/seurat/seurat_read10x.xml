@@ -8,12 +8,19 @@
 <exit_code range="1:" />
 </stdio>
 <command><![CDATA[
-ln -s "$matrix" matrix.mtx;
-ln -s "$genes" genes.tsv;
-ln -s "$barcodes" barcodes.tsv;
 
-seurat-read-10x.R -d ./
+#if str($input.format) == "mtx":
+    ln -s "$matrix" matrix.mtx;
+    ln -s "$genes" genes.tsv;
+    ln -s "$barcodes" barcodes.tsv;
+# end if
 
+seurat-read-10x.R
+#if str($input.format) == "mtx":
+ -d ./
+#else
+ -f $input.file
+# end if
 #if $metadata
   --metadata '$metadata'
 #end if
@@ -28,9 +35,20 @@ seurat-read-10x.R -d ./
 
 ]]></command>
 <inputs>
-    <param type="data" name="matrix" help="Raw expression quantification as a sparse matrix in Matrix Market format, where each column is a gene and each row is a barcode/cell." format="txt" label="Expression matrix in sparse matrix format (.mtx)" />
-    <param type="data" name="genes" help="Matrix market column file for genes" label="Gene table" format="tsv,tabular"/>
-    <param type="data" name="barcodes" help="Matrix market row file for genes" label="Barcode/cell table" format="tsv,tabular"/>
+     <conditional name="input" label="Input expression data">
+       <param type="select" name="format" label="Choose the format of the input" help="10X MTX or tabular">
+         <option value="mtx" selected="true">10X-type MTX</option>
+         <option value="tab" selected="true">tab-delimited text</option>
+       </param>
+       <when value="tab">
+         <param type="data" name="file" label="Expression table" help="Tab-delimted expression table" format="tabular"/>
+       </when>
+       <when value="mtx">
+        <param type="data" name="matrix" help="Raw expression quantification as a sparse matrix in Matrix Market format, where each column is a gene and each row is a barcode/cell." format="txt" label="Expression matrix in sparse matrix format (.mtx)" />
+        <param type="data" name="genes" help="Matrix market column file for genes" label="Gene table" format="tsv,tabular"/>
+        <param type="data" name="barcodes" help="Matrix market row file for genes" label="Barcode/cell table" format="tsv,tabular"/>
+       </when>
+     </conditional>
     <param label="Cell Metadata" optional="true" name="metadata" argument="--metadata" type="data" format="tsv,tabular" help="File with metdata for the cells, first column should be cell identifiers as used in the cells 10x file."/>
     <param label="Minimum cells to include features" optional="true" name="min_cells" argument="--min-cells" type="integer" help="Include features detected in at least this many cells. Will subset the counts matrix as well. To reintroduce excluded features, create a new object with a lower cutoff."/>
     <param label="Minimum features to include cells" optional="true" name="min_features" argument="--min-features" type="integer" help="Include cells where at least this many features are detected."/>
@@ -57,9 +75,9 @@ seurat-read-10x.R -d ./
 
   @SEURAT_INTRO@
 
-  **Read 10x-Genomics-formatted mtx directory (`read_10x_mtx`)**
+  **Read expression data from a tabular file or a 10x-Genomics-formatted mtx directory (`read_10x_mtx`)**
 
-  The mtx directory should contain:
+  For mtx, the  directory should contain:
 
   1) Raw expression quantification as a sparse matrix in Matrix Market format, where the each column is a gene and each row is a barcode/cell.
 
@@ -72,9 +90,10 @@ seurat-read-10x.R -d ./
   datasets.
 
   **Inputs**
-      * Raw expression quantification as a sparse matrix in Matrix Market format, where the each column is a gene and each row is a barcode/cell.
-      * A gene table of at least two columns where the first column gives the gene IDs.
-      * A barcode/cell table of at least one column giving the barcode/cell IDs.
+      * A tabular file of expression data OR
+          * Raw expression quantification as a sparse matrix in Matrix Market format, where the each column is a gene and each row is a barcode/cell.
+          * A gene table of at least two columns where the first column gives the gene IDs.
+          * A barcode/cell table of at least one column giving the barcode/cell IDs.
       * Optionally, a file with cell metadata.
 
   **Outputs**
