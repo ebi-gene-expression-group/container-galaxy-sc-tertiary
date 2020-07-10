@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <macros>
-    <token name="@VERSION@">0.0.6</token>
+    <token name="@VERSION@">0.0.7</token>
     <token name="@SEURAT_VERSION@">3.1.1</token>
     <xml name="requirements">
         <requirements>
@@ -96,6 +96,8 @@ types of single cell data.
 
     <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
+
+3.1.1_0.0.7: Exposes perplexity and enables tab input.
 
 3.1.1_0.0.6+galaxy0: Moved to Seurat 3.
 

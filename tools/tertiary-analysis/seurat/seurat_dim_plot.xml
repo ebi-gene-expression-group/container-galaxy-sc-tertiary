@@ -1,4 +1,4 @@
-<tool id="seurat_dim_plot" name="Seurat Plot dimension reduction" version="@SEURAT_VERSION@_@VERSION@+galaxy0">
+<tool id="seurat_dim_plot" name="Seurat Plot dimension reduction" version="@SEURAT_VERSION@+galaxy0">
     <description>graphs the output of a dimensional reduction technique (PCA by default). Cells are colored by their identity class.</description>
     <macros>
         <import>seurat_macros.xml</import>
