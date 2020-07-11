@@ -1,4 +1,4 @@
-<tool id="seurat_run_tsne" name="Seurat RunTSNE" version="@SEURAT_VERSION@_@VERSION@+galaxy0">
+<tool id="seurat_run_tsne" name="Seurat RunTSNE" version="@SEURAT_VERSION@+galaxy1">
     <description>run t-SNE dimensionality reduction</description>
     <macros>
         <import>seurat_macros.xml</import>
@@ -31,6 +31,9 @@ seurat-run-tsne.R
 #if $adv.random_seed
   --random-seed '$adv.random_seed'
 #end if
+#if $adv.perplexity
+  --perplexity '$adv.perplexity'
+#end if
 
 @OUTPUT_OBJECT@
 --output-embeddings-file output_embed
@@ -51,6 +54,7 @@ seurat-run-tsne.R
               <option value="2" selected="true">2</option>
               <option value="3">3</option>
             </param>
+            <param label="Perplexity" optional="true" name="perplexity" argument="--perplexity" type="integer" help="An integer above 0."/>
             <param label="Random seed" optional="true" name="random_seed" argument="--random-seed" type="integer" help="Seed of the random number generator"/>
         </section>
     </inputs>
