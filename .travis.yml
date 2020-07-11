@@ -31,7 +31,7 @@ jobs:
         - set -e
         - |
           if [ "$TRAVIS_PULL_REQUEST" == "false" -a "$TRAVIS_BRANCH" == "develop" ]; then
-              while read -r DIR; do planemo shed_update --shed_target testtoolshed --shed_key "$TEST_SHED_KEY" --force_repository_creation "$DIR" || exit 1; done < changed_repositories.list
+              # while read -r DIR; do planemo shed_update --shed_target testtoolshed --shed_key "$TEST_SHED_KEY" --force_repository_creation "$DIR" || exit 1; done < changed_repositories.list
               while read -r DIR; do planemo shed_update --shed_target toolshed --shed_key "$SHED_KEY" --force_repository_creation "$DIR" || exit 1; done < changed_repositories.list
           fi
 
