@@ -13,14 +13,14 @@
     ln -s "$matrix" matrix.mtx;
     ln -s "$genes" genes.tsv;
     ln -s "$barcodes" barcodes.tsv;
-# end if
+#end if
 
 seurat-read-10x.R
 #if str($input.format) == "mtx":
  -d ./
 #else
  -f $input.file
-# end if
+#end if
 #if $metadata
   --metadata '$metadata'
 #end if
