@@ -1,4 +1,4 @@
-<tool id="ct_get_consensus_outputs" name="Cell types - get consensus outputs" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
+<tool id="ct_get_consensus_outputs" name="Cell types - get consensus outputs" version="@TOOL_VERSION@+galaxy2" profile="@PROFILE@">
     <description>Get consensus outputs across multiple tools</description>
     <macros>
         <import>ct_macros.xml</import>
@@ -9,14 +9,18 @@
         #for $table in $input_tables:
           cp '$table' input_dir/;
         #end for
-
-        ln -s $'${ontology_graph}' cl-basic.obo;
         
-        get_consensus_output.R --input-dir input_dir --num-cores \${GALAXY_SLOTS:-1} --cl-dictionary "${lab_cl_mapping}"  --ontology-graph cl-basic.obo --summary-table-output-path "${summary_table_output_path}" --raw-table-output-path "${raw_table_output_path}"
+        get_consensus_output.R --input-dir input_dir --num-cores \${GALAXY_SLOTS:-1} --cl-dictionary "${lab_cl_mapping}"   --summary-table-output-path "${summary_table_output_path}" --raw-table-output-path "${raw_table_output_path}"
         #if $tool_table
         --tool-table "${tool_table}"
         #end if
-        #if $include-sem-siml
+        #if $ontology_graph
+        --ontology-graph "${ontology_graph}"
+        #end if
+        #if $tmpdir
+        --tmpdir "${tmpdir}"
+        #end if
+        #if $include_sem_siml
         --include-sem-siml "${include_sem_siml}"
         #end if
         #if $parallel
@@ -28,13 +32,13 @@
         #if $exclusions
         --exclusions "${exclusions}"
         #end if
-        #if $semantic_sim_metric
-        --semantic-sim-metric "${semantic_sim_metric}" 
+        #if $sem_siml_metric
+        --semantic-sim-metric "${sem_siml_metric}" 
         #end if
          ]]></command>
     <inputs>
         <param type="data" name="input_tables" label="Aggregated tables" format="txt" multiple="true" help="Aggregated prediction tables from multiple tools" />
-        <param type="data" name="tool_table" format="txt" label="Tools table" help="Table with tools performance metrics" />
+        <param type="data" name="tool_table" format="txt" optional="true" label="Tool performance table" help="Table with tools performance metrics" />
         <param type="boolean" name="parallel" label="Parallel execution" checked="false" help="Should the table values be computed in parallel?" />
         <param type="text" name="tmpdir" label="Tmpdir for caching" optional="true" help="Temporary directory for caching" />
         <param type="boolean" name="include_sem_siml" label="Include Semantic Similarity" checked="false" help="Should semantic similarity be included in calculation of combined score?" />
