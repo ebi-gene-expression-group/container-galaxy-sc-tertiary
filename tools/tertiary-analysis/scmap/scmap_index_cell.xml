@@ -1,4 +1,4 @@
-<tool id="scmap_index_cell" name="Scmap index cells" version="@TOOL_VERSION@+galaxy3" profile="@PROFILE@">
+<tool id="scmap_index_cell" name="Scmap index cells" version="@TOOL_VERSION@+galaxy4" profile="@PROFILE@">
     <description>creates a cell index for a dataset to enable fast approximate nearest neighbour search</description>
     <macros>
         <import>scmap_macros.xml</import>
@@ -20,8 +20,8 @@
     ]]></command>
     <inputs>
         <param type="data" name="input_single_cell_experiment" label="SingleCellExperiment object" format="rdata" help="File with serialized SingleCellExperiment object as produced by 'scmap select features'" />
-        <param name="n_chunks" type="integer" label="Number of chunks" optional="true" help="Number of chunks into which the expr matrix is split" />
-        <param name="n_clusters" type="integer" label="Number of clusters" optional="true" help="Number of clusters per group for k-means clustering" />
+        <param name="n_chunks" type="integer" label="Number of chunks" optional="true" value="0" help="Number of chunks into which the expr matrix is split" />
+        <param name="n_clusters" type="integer" label="Number of clusters" optional="true" value="0" help="Number of clusters per group for k-means clustering" />
         <param type="text" name="train_id" label="Dataset ID" help="ID of the training dataset" />
         <param name="random_seed" type="integer" label="Random seed" value='1' help="scmap-cell contains k-means step which makes it stochastic, i.e. running it multiple times will provide slightly different results. A fixed random seed ensures reproducibility." />
     </inputs>
