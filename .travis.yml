@@ -14,7 +14,7 @@ jobs:
       before_script: skip
       install:
         - sudo -H pip3 install --upgrade pip
-        - pip install planemo
+        - python3 -m pip install planemo
         - planemo --version
         - git diff --quiet "$TRAVIS_COMMIT_RANGE" -- ; GIT_DIFF_EXIT_CODE=$?
         - |
@@ -63,7 +63,7 @@ before_script:
 - tar -xf helm.tar.gz
 - sudo mv linux-amd64/helm /usr/local/bin/
 - rm -rf linux-amd64
-- sudo -H pip install planemo
+- sudo -H python3 -m pip install planemo
 # Wait for Kubernetes to be up and ready.
 - JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
 # Set up helm
@@ -75,7 +75,6 @@ before_script:
 
 
 script:
-- sudo -H pip3 install --upgrade pip
 - sudo docker build -t test/galaxy-sc-tertiary:19.05-dev -f Dockerfile_init .
 - kubectl cluster-info
 # for kube-dns
@@ -85,7 +84,6 @@ script:
 # Wait for kube-dns to be ready.
 - JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl -n kube-system get pods -lk8s-app=kube-dns -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1;echo "waiting for kube-dns to be available"; kubectl get pods --all-namespaces; done
 - helm install -f helm-configs/.travis-galaxy-sc-deployment.yaml --name travis --version $HELM_REPO_VERSION galaxy-helm-repo/galaxy-stable
-- python --version
 - planemo lint -r --report_level error tools
 - kubectl describe pods/$(kubectl get pods | awk '{ print $1 }' | grep -v proftpd | grep -v postgres | grep galaxy)
 - ./util/wait-for-deployment -n default -t 600 $(kubectl get deployment | awk '{ print $1 }' | grep 'galaxy-stable$')
