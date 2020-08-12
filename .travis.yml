@@ -1,6 +1,6 @@
 sudo: required
 cache: pip
-language: python
+language: python3
 
 python: 3.7
 
