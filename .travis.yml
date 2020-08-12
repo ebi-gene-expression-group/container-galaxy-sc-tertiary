@@ -13,7 +13,8 @@ jobs:
       before_install: skip
       before_script: skip
       install:
-        - pip install planemo gxformat2==0.11.1
+        - sudo apt-get install python3-pip
+        - pip3 install planemo gxformat2==0.11.1
         - planemo --version
         - git diff --quiet "$TRAVIS_COMMIT_RANGE" -- ; GIT_DIFF_EXIT_CODE=$?
         - |
@@ -44,6 +45,7 @@ env:
     - HELM_REPO_VERSION="2.0.1"
 
 before_script:
+- sudo apt-get install python3-pip
 - sudo mount --make-rshared /
 - sudo apt-get install -y socat
 # Download kubectl, which is a requirement for using minikube.
@@ -62,7 +64,7 @@ before_script:
 - tar -xf helm.tar.gz
 - sudo mv linux-amd64/helm /usr/local/bin/
 - rm -rf linux-amd64
-- sudo -H pip install planemo gxformat2==0.11.1
+- sudo -H pip3 install planemo gxformat2==0.11.1
 # Wait for Kubernetes to be up and ready.
 - JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
 # Set up helm
