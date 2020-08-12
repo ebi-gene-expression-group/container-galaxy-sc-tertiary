@@ -75,6 +75,7 @@ before_script:
 
 
 script:
+- sudo -H pip3 install --upgrade pip
 - sudo docker build -t test/galaxy-sc-tertiary:19.05-dev -f Dockerfile_init .
 - kubectl cluster-info
 # for kube-dns
