@@ -1,4 +1,4 @@
-<tool id="scmap_get_std_output" name="Scmap get standard output" version="@TOOL_VERSION@+galaxy2"  profile="@PROFILE@">
+<tool id="scmap_get_std_output" name="Scmap get standard output" version="@TOOL_VERSION@+galaxy0"  profile="@PROFILE@">
     <description>Create final output in standard format to allow for downstream analysis of predicted labels by tools of the EBI gene expression group's cell-types-analysis package</description>
     <macros>
          <import>scmap_macros.xml</import>
