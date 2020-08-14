@@ -34,9 +34,9 @@
     </inputs>
     <outputs>
       <data name="output_single_cell_experiment" format="rdata" />
-      <data name="closest_cells_text_file" format="tsv" />
-      <data name="closest_cells_similarities_text_file" format="tsv" />
-      <data name="closest_cells_clusters_csv" format="tsv">
+      <data name="closest_cells_text_file" format="tabular" />
+      <data name="closest_cells_similarities_text_file" format="tabular" />
+      <data name="closest_cells_clusters_csv" format="tabular">
         <filter>cluster_projection['do_cluster_projection']</filter>
       </data>
     </outputs>
