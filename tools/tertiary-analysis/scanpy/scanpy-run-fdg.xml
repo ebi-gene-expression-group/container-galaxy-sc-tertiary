@@ -8,7 +8,7 @@
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-cli embed fdg
-    --use-graph '${use_graph}'
+    --neighbors-key '${use_graph}'
     --key-added '${key_added}'
 #if $embeddings
     --export-embedding embeddings.csv
@@ -29,7 +29,7 @@ PYTHONIOENCODING=utf-8 scanpy-cli embed fdg
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
     <param name="embeddings" type="boolean" checked="true" label="Output embeddings in csv format"/>
-    <param name="use_graph" argument="--use-graph" value="neighbors" type="text"
+    <param name="use_graph" argument="--neighbors-key" value="neighbors" type="text"
            label="Name of the slot that holds the KNN graph"/>
     <param name="key_added" argument="--key-added" type="text" optional="true"
            label="Additional suffix to the name of the slot to save the embedding"/>

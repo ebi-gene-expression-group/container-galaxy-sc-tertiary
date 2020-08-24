@@ -15,7 +15,7 @@ PYTHONIOENCODING=utf-8 scanpy-cli dpt
     --min-group-size ${min_group_size}
 #end if
 #if $use_graph
-    --use-graph '${use_graph}'
+    --neighbors-key '${use_graph}'
 #end if
 #if $key_added
     --key-added '${key_added}'
@@ -39,7 +39,7 @@ PYTHONIOENCODING=utf-8 scanpy-cli dpt
            label="Name of attribute that defines clustering"/>
     <param name="root_value" argument="--root attr {value}" type="text"
            label="Name of the clustering that defines the root cell type"/>
-    <param name="use_graph" argument="--use-graph" value="neighbors" type="text"
+    <param name="use_graph" argument="--neighbors-key" value="neighbors" type="text"
            label="Name of the slot that holds the KNN graph"/>
     <param name="key_added" argument="--key-added" type="text" optional="true"
            label="Additional suffix to the name of the slot to save the calculated pseudo-time"/>

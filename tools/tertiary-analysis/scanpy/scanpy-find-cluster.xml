@@ -10,7 +10,7 @@ ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-find-cluster
     ${method}
 #if $settings.default == "false"
-    --use-graph '${settings.use_graph}'
+    --neighbors-key '${settings.use_graph}'
     #if $settings.key_added
         --key-added '${settings.key_added}'
     #end if
@@ -49,7 +49,7 @@ PYTHONIOENCODING=utf-8 scanpy-find-cluster
       <param name="default" type="boolean" checked="true" label="Use programme defaults"/>
       <when value="true"/>
       <when value="false">
-        <param name="use_graph" argument="--use-graph" value="neighbors" type="text"
+        <param name="use_graph" argument="--neighbors-key" value="neighbors" type="text"
             label="Name of the slot that holds the KNN graph"/>
         <param name="key_added" argument="--key-added" type="text" optional="true"
             label="Additional suffix to the name of the slot to save the calculated clustering"/>

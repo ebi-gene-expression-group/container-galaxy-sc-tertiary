@@ -10,7 +10,7 @@ ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-cli embed diffmap
     --n-comps ${n_comps}
 #if $use_graph
-    --use-graph '${use_graph}'
+    --neighbors-key '${use_graph}'
 #end if
 #if $key_added
     --key-added '${key_added}'
@@ -29,7 +29,7 @@ PYTHONIOENCODING=utf-8 scanpy-cli embed diffmap
     <param name="export_embed" argument="--export-embedding" type="boolean" checked="false"
            truevalue="--export-embedding embed.tsv" falsevalue=""
            label="Export embeddings as a tab-separated text table"/>
-    <param name="use_graph" argument="--use-graph" value="neighbors" type="text"
+    <param name="use_graph" argument="--neighbors-key" value="neighbors" type="text"
            label="Name of the slot that holds the KNN graph"/>
     <param name="key_added" argument="--key-added" type="text" optional="true"
            label="Additional suffix to the name of the slot to save the calculated diffusion map"/>
