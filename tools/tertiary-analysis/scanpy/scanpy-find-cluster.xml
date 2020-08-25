@@ -54,7 +54,7 @@ PYTHONIOENCODING=utf-8 scanpy-find-cluster
       <when value="false">
         <param name="neighbors_key" argument="--neighbors-key" value="neighbors" type="text"
             label="Name of the slot that holds the KNN graph"/>
-        <param name="layer" argument="--layer" value="layer" type="text"
+        <param name="layer" argument="--layer" value="" type="text"
             label="Key from adata.layers whose value will be used to perform tests on. (Default: use .X)"/>
         <param name="key_added" argument="--key-added" type="text" optional="true"
             label="Additional suffix to the name of the slot to save the calculated clustering"/>
