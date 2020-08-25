@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_run_fdg" name="Scanpy RunFDG" version="@TOOL_VERSION@+galaxy10" profile="@PROFILE@">
+<tool id="scanpy_run_fdg" name="Scanpy RunFDG" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>visualise cell clusters using force-directed graph</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -8,16 +8,24 @@
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-cli embed fdg
-    --neighbors-key '${use_graph}'
-    --key-added '${key_added}'
+    --key-added-ext '${key_added_ext}'
 #if $embeddings
     --export-embedding embeddings.csv
 #end if
 #if $settings.default == "false"
+    #if '${settings.neighbors_key}'
+    --neighbors-key '${settings.neighbors_key}'
+    #end if
+    #if '${settings.obsp}'
+    --obsp '${settings.obsp}'
+    #end if
     --random-state ${settings.random_seed}
     --layout ${settings.layout}
     #if $settings.init_pos
         --init-pos '${settings.init_pos}'
+    #end if
+    #if $settings.iroot
+        --root '${settings.root}'
     #end if
 #end if
     @INPUT_OPTS@
@@ -29,15 +37,16 @@ PYTHONIOENCODING=utf-8 scanpy-cli embed fdg
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
     <param name="embeddings" type="boolean" checked="true" label="Output embeddings in csv format"/>
-    <param name="use_graph" argument="--neighbors-key" value="neighbors" type="text"
-           label="Name of the slot that holds the KNN graph"/>
-    <param name="key_added" argument="--key-added" type="text" optional="true"
+    <param name="key_added_ext" argument="--key-added-ext" type="text" optional="true"
            label="Additional suffix to the name of the slot to save the embedding"/>
 
     <conditional name="settings">
       <param name="default" type="boolean" checked="true" label="Use programme defaults"/>
       <when value="true"/>
       <when value="false">
+        <param name="neighbors_key" argument="--neighbors-key" value="neighbors" type="text"
+               label="Name of the slot that holds the KNN graph"/>
+        <param name="obsp" type="boolean" checked="false" label="Use .obsp[obsp] as adjacency" help="You can’t specify both obsp and neighbors-key at the same time."/>
         <param name="init_pos" argument="--init-pos" type="text" label="Method to initialise embedding, any key for adata.obsm or choose from the preset methods">
           <option value="paga">paga</option>
         </param>
@@ -45,7 +54,13 @@ PYTHONIOENCODING=utf-8 scanpy-cli embed fdg
           <option value="fa" selected="true">fa</option>
           <option value="fr">fr</option>
           <option value="grid_fr">grid fr</option>
+          <option value="kk">kk</option>
+          <option value="lgl">lgl</option>
+          <option value="drl">drl</option>
+          <option value="rt">rt</option>
+          <option value="rt_circular">rt_circular</option>
         </param>
+        <param name="root" argument="--root" type="integer" optional="true" label="Root for tree layouts"/>
         <param name="random_seed" argument="--random-state" type="integer" value="0" label="Seed for numpy random number generator"/>
       </when>
     </conditional>
