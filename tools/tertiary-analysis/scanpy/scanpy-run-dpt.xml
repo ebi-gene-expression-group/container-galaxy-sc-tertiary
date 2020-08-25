@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_run_dpt" name="Scanpy DPT" version="@TOOL_VERSION@+galaxy11" profile="@PROFILE@">
+<tool id="scanpy_run_dpt" name="Scanpy DPT" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>diffusion pseudotime inference</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -19,6 +19,9 @@ PYTHONIOENCODING=utf-8 scanpy-cli dpt
 #end if
 #if $key_added
     --key-added '${key_added}'
+#end if
+#if not $allow_kendall_tau_shift
+    --disallow-kendall-tau-shift
 #end if
     @INPUT_OPTS@
     @OUTPUT_OPTS@
@@ -43,6 +46,7 @@ PYTHONIOENCODING=utf-8 scanpy-cli dpt
            label="Name of the slot that holds the KNN graph"/>
     <param name="key_added" argument="--key-added" type="text" optional="true"
            label="Additional suffix to the name of the slot to save the calculated pseudo-time"/>
+    <param name="allow_kendall_tau_shift" type="boolean" checked="true" label="Allow Kendall Tau shift" help="If a very small branch is detected upon splitting, shift away from maximum correlation in Kendall tau criterion of [Haghverdi16] to stabilize the splitting" />
   </inputs>
 
   <outputs>
