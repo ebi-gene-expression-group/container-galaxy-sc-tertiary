@@ -22,7 +22,8 @@ PYTHONIOENCODING=utf-8 scanpy-find-markers
     #end if
     --reference '${settings.reference}'
     --filter-params 'min_in_group_fraction:${settings.min_in_group_fraction},max_out_group_fraction:${settings.max_out_group_fraction},min_fold_change:${settings.min_fold_change}'
-#end if
+    #end if
+    $pts $tie_correct
     @INPUT_OPTS@
     @OUTPUT_OPTS@
 ]]></command>
@@ -55,6 +56,8 @@ PYTHONIOENCODING=utf-8 scanpy-find-markers
                help="Post-test filtering to only keep genes expressed in at most this fraction of cells in the reference group."/>
         <param name="min_fold_change" type="float" value="2" label="Minimum fold change"
                help="Post-test filtering to only keep genes with at least this fold change of expression relative to the reference group."/>
+        <param name="pts" argument="--pts"  type="boolean" checked="false" label="Compute the fraction of cells expressing the genes?" truevalue="--pts" falsevalue="" />
+        <param name="tie_correct" argument="--tie-correct"  type="boolean" checked="false" label="Use tie correction for 'wilcoxon' scores. Used only for 'wilcoxon'." truevalule="--tie-correct" falsevalue=""/>
       </when>
     </conditional>
   </inputs>
