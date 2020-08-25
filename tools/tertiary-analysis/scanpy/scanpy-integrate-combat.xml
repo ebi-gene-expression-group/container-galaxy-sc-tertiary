@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="scanpy_integrate_combat" name="Scanpy ComBat" version="@TOOL_VERSION@+galaxy10" profile="@PROFILE@">
+  <description>adjust expression for variables that might introduce batch effect</description>
+  <macros>
+    <import>scanpy_macros2.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+#if $batch_key
+  ln -s '${input_obj_file}' input.h5 &&
+  PYTHONIOENCODING=utf-8 scanpy-integrate combat 
+  --batch-key '${batch_key}'
+  #if $batch_layer
+    --batch-layer '${batch_layer}'
+  #end if
+  #if $covariates
+    --covariates '${$covariates}'
+  #end if
+  #if $key_added
+    --key-added '${key_added}'
+  #end if
+  @INPUT_OPTS@
+  @OUTPUT_OPTS@
+#else
+  echo "No batch variables passed, simply passing original input as output unchanged.";
+  cp '${input_obj_file}' '${output_h5}'
+#end if
+]]></command>
+
+  <inputs>
+    <expand macro="input_object_params"/>
+    <expand macro="output_object_params"/>
+    <param name="batch_key" type="text" argument="--batch-key" label="The name of the column in adata.obs that differentiates among experiments/batches.">
+      <sanitizer>
+        <valid initial="string.printable"/>
+      </sanitizer>
+    </param>
+    <param name="batch_layer" type="text" argument="--batch-layer" label="Layer to batch correct. By default corrects the contents of .X.">
+      <sanitizer>
+        <valid initial="string.printable"/>
+      </sanitizer>
+    </param>
+    <param name="covariates" argument="--covariates" type="text" label="Comma separated list of additional covariates besides the batch variable such as adjustment variables or biological condition." help="This parameter refers to the design matrix X in Equation 2.1 in [Johnson07] and to the mod argument in the original combat function in the sva R package. Note that not including covariates may introduce bias or lead to the removal of biological signal in unbalanced designs.">
+      <sanitizer>
+        <valid initial="string.printable"/>
+      </sanitizer>
+    </param>
+    <param name="key_added" argument="--key-added" type="text" optional="true"
+        label="Key under which to add the computed results." help="By default a new layer will be created called 'combat', 'combat_{layer}' or 'combat_{layer}_{key_added}' where those parameters were specified. A value of 'X' causes batch-corrected values to overwrite the original content of .X."/>
+  </inputs>
+
+  <outputs>
+    <expand macro="output_data_obj" description="Batch-corrected for ${batch_key}"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="input_obj_file" value="find_cluster.h5"/>
+      <param name="input_format" value="anndata"/>
+      <param name="output_format" value="anndata"/>
+      <param name="batch_key" value="louvain"/>
+      <output name="output_h5" file="combat.h5" ftype="h5" compare="sim_size"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+    .. class:: infomark
+
+    **What it does**
+
+    Corrects for batch effects by fitting linear models, gains statistical power via an EB framework where information is borrowed across genes.
+
+    @HELP@
+
+    @VERSION_HISTORY@
+]]></help>
+  <expand macro="citations"/>
+</tool>
