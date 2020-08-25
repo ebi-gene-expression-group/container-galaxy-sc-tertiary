@@ -8,20 +8,22 @@
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-normalise-data
-    #if not $settings.log_transform
-        ${settings.log_transform}
-    #end if
-    #if $settings.scale_factor
-        --normalize-to '${settings.scale_factor}'
-    #end if
-    #if $settings.key_added
-        --key-added '${settings.key_added}'
-    #end if
-    #if $settings.exclude.exclude_highly_expressed
-        --exclude-highly-expressed --max-fraction '${settings.exclude.max_fraction}'
-    #end if
-    #if $settings.save_raw
-         --save-raw ${settings.save_raw}
+    #if not $settings.default 
+        #if $settings.log_transform
+            '${settings.log_transform}'
+        #end if
+        #if $settings.scale_factor
+            --normalize-to '${settings.scale_factor}'
+        #end if
+        #if $settings.key_added
+            --key-added '${settings.key_added}'
+        #end if
+        #if $settings.exclude.exclude_highly_expressed
+            --exclude-highly-expressed --max-fraction '${settings.exclude.max_fraction}'
+        #end if
+        #if $settings.save_raw
+             --save-raw ${settings.save_raw}
+        #end if
     #end if
     @INPUT_OPTS@
     @OUTPUT_OPTS@
