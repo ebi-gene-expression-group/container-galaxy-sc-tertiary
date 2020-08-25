@@ -8,12 +8,18 @@
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-find-variable-genes
-    --flavor '${method.flavor}'
-#if $method.flavor == 'seurat'
-    --mean-limits ${method.min_mean} ${method.max_mean}
-    --disp-limits ${method.min_disp} ${method.max_disp}
-#else
-    --n-top-genes ${method.n_top_gene}
+    --flavor '${flavor}'
+#if $min_mean
+    --mean-limits ${min_mean} ${max_mean}
+#end if    
+#if $min_disp
+    --disp-limits ${min_disp} ${max_disp}
+#end if    
+#if $n_top_gene
+    --n-top-genes ${n_top_gene}
+#end if
+#if $span
+    --span ${span}
 #end if
     --n-bins '${n_bin}'
     ${filter}
@@ -24,29 +30,27 @@ PYTHONIOENCODING=utf-8 scanpy-find-variable-genes
   <inputs>
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
-    <conditional name="method">
-      <param name="flavor" argument="--flavor" type="select" label="Flavor of computing normalised dispersion">
-        <option value="seurat" selected="true">Seurat</option>
-        <option value="cell_ranger">Cell-ranger</option>
-      </param>
-      <when value="seurat">
-        <param name="min_mean" argument="--min-mean" type="float" min="0" value="0.0125"
-               label="Min value for normalised mean expression (in log1p scale)"/>
-        <param name="max_mean" argument="--max-mean" type="float" min="0" value="3"
-               label="Max value for normalised mean expresssion (in log1p scale)"/>
-        <param name="min_disp" argument="--min-disp" type="float" min="0" value="0.5"
-               label="Min value for dispersion of expression"/>
-        <param name="max_disp" argument="--max-disp" type="float" min="0" value="50"
-               label="Max value for dispersion of expresssion"/>
-      </when>
-      <when value="cell_ranger">
-        <param name="n_top_gene" argument="--n-top-genes" type="integer" value="2000"
-               label="Number of top variable genes to keep"/>
-      </when>
-    </conditional>
+    <param name="flavor" argument="--flavor" type="select" label="Flavor of computing normalised dispersion">
+      <option value="seurat" selected="true">Seurat</option>
+      <option value="cell_ranger">Cell-ranger</option>
+      <option value="seurat_v3" selected="true">Seurat V3</option>
+    </param>
+    <param name="min_mean" argument="--min-mean" type="float" min="0" value="0.0125" optional="true" 
+           label="Min value for normalised mean expression (in log1p scale), ignored if flavor='seurat_v3'"/>
+    <param name="max_mean" argument="--max-mean" type="float" min="0" value="3" optional="true" 
+           label="Max value for normalised mean expresssion (in log1p scale), Ignored if flavor='seurat_v3'"/>
+    <param name="min_disp" argument="--min-disp" type="float" min="0" value="0.5" optional="true" 
+           label="Min value for dispersion of expression, ignored if flavor='seurat_v3'"/>
+    <param name="max_disp" argument="--max-disp" type="float" min="0" value="50" optional="true" 
+           label="Max value for dispersion of expresssion, ignored if flavor='seurat_v3'"/>
+    <param name="n_top_gene" argument="--n-top-genes" type="integer" value="2000" optional="true" 
+           label="Number of top variable genes to keep, mandatory if flavor='seurat_v3'"/>
+    <param name="span" argument="--span" type="float" min="0" max="1" value="0.3" optional="true" 
+           label="The fraction of the data (cells) used when estimating the variance in the loess model fit if flavor='seurat_v3'"/>
     <param name="n_bin" argument="--n-bins" type="integer" value="20" label="Number of bins for binning the mean expression"/>
     <param name="filter" argument="--subset" type="boolean" truevalue="--subset" falsevalue="" checked="false"
-           label="Remove genes not marked as highly variable"/>
+           label="Remove genes not marked as highly variable" help="When set, inplace subset to highly-variable genes, otherwise only flag highly-variable genes."/>
+    <param name="batch_key" argument="--batch-key" type="text" label="Batch key" help="If specified, highly-variable genes are selected within each batch separately and merged. This simple process avoids the selection of batch-specific genes and acts as a lightweight batch correction method. For all flavors, genes are first sorted by how many batches they are a HVG. For dispersion-based flavors ties are broken by normalized dispersion. If flavor = 'seurat_v3', ties are broken by the median (across batches) rank based on within-batch normalized variance."/>
   </inputs>
 
   <outputs>
