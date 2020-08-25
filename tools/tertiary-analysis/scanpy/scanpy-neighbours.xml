@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_compute_graph" name="Scanpy ComputeGraph" version="@TOOL_VERSION@+galaxy11" profile="@PROFILE@">
+<tool id="scanpy_compute_graph" name="Scanpy ComputeGraph" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>to derive kNN graph</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -15,6 +15,7 @@ PYTHONIOENCODING=utf-8 scanpy-neighbors
         --n-neighbors '${settings.n_neighbors}'
     #end if
     --method '${settings.method}'
+    --metric '${settings.metric}'
     --random-state '${settings.random_seed}'
     #if $settings.use_rep != "auto"
         --use-rep '${settings.use_rep}'
@@ -48,6 +49,32 @@ PYTHONIOENCODING=utf-8 scanpy-neighbors
         <param name="method" argument="--method" type="select" label="Method for calculating connectivity">
           <option value="umap" selected="true">UMAP</option>
           <option value="gauss">Gaussian</option>
+          <option value="rapids">RAPIDS</option>
+        </param>
+        <param name="metric" argument="--metric" type="select" label="A known metric’s name">
+          <option value="euclidean" selected="true">Euclidean</option>
+          <option value="cityblock">cityblock</option>
+          <option value="cosine">cosine</option>
+          <option value="l1">l1</option>
+          <option value="l2">l2</option>
+          <option value="manhattan">manhattan</option>
+          <option value="braycurtis">braycurtis</option>
+          <option value="canberra">canberra</option>
+          <option value="chebyshev">chebyshev</option>
+          <option value="correlation">correlation</option>
+          <option value="dice">dice</option>
+          <option value="hamming">hamming</option>
+          <option value="jaccard">jaccard</option>
+          <option value="kulsinski">kulsinski</option>
+          <option value="mahalanobis">mahalanobis</option>
+          <option value="minkowski">minkowski</option>
+          <option value="rogerstanimoto">rogerstanimoto</option>
+          <option value="russelrao">russelrao</option>
+          <option value="seuclidan">seuclidian</option>
+          <option value="sokalmichener">sokalmichener</option>
+          <option value="sokalsneath">sokalsneath</option>
+          <option value="sqeuclidean">sqeuclidean</option>
+          <option value="yule">yule</option>
         </param>
         <param name="random_seed" argument="--random-seed" type="integer" value="0" label="Seed for random number generator"/>
       </when>
