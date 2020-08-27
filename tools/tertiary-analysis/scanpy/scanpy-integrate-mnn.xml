@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="scanpy_integrate_mnn" name="Scanpy MNN" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+  <description>correct batch effects by matching mutual nearest neighbors</description>
+  <macros>
+    <import>scanpy_macros2.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+#if $batch_key
+  ln -s '${input_obj_file}' input.h5 &&
+  PYTHONIOENCODING=utf-8 scanpy-integrate mnn 
+  --batch-key '${batch_key}'
+  #if $batch_layer
+    --batch-layer '${batch_layer}'
+  #end if
+  #if $key_added
+    --key-added '${key_added}'
+  #end if
+  #if $var_subset
+    #set var_subsets = ' '.join(["--var-subset '{name}' '{values}'".format(**$v) for $v in $var_subset])
+    ${var_subsets}
+  #if $settings.default == "false"
+    #if $settings.n_neighbors
+        --n-neighbors '${settings.n_neighbors}'
+    #end if
+    #if $settings.sigma
+        --sigma '${settings.sigma}'
+    #end if
+    #if not $settings.cos_norm_in
+        ${settings.cos_norm_in}
+    #end if
+    #if $settings.svd_dim
+        --svd-dim '${settings.svd_dim}'
+    #end if
+    #if not $settings.var_adj
+        ${settings.var_adj}
+    #end if
+    #if $settings.compute_angle
+        ${settings.compute_angle}
+    #end if
+    #if $settings.svd_mode
+        --svd-mode '${settings.svd_mode}'
+    #end if
+  #end if
+#end if
+  @INPUT_OPTS@
+  @OUTPUT_OPTS@
+#else
+  echo "No batch variables passed, simply passing original input as output unchanged.";
+  cp '${input_obj_file}' '${output_h5}'
+#end if
+]]></command>
+
+  <inputs>
+    <expand macro="input_object_params"/>
+    <expand macro="output_object_params"/>
+    <param name="batch_key" type="text" argument="--batch-key" label="The name of the column in adata.obs that differentiates among experiments/batches.">
+      <sanitizer>
+        <valid initial="string.printable"/>
+      </sanitizer>
+    </param>
+    <param name="batch_layer" type="text" argument="--batch-layer" label="Layer to batch correct. By default corrects the contents of .X.">
+      <sanitizer>
+        <valid initial="string.printable"/>
+      </sanitizer>
+    </param>
+    <param name="key_added" argument="--key-added" type="text" optional="true" label="Key under which to add the computed results." help="By default a new layer will be created called 'mnn', 'mnn_{layer}' or 'mnn_{layer}_{key_added}' where those parameters were specified. A value of 'X' causes batch-corrected values to overwrite the original content of .X."/>
+    <repeat name="var_subset" title="The subset of vars (list of str) to be used when performing MNN correction" min="0">
+      <param name="name" type="text" value="" label="Name of the categorical variable to filter on" help="e.g. 'highly_variable'"/>
+      <param name="values" type="text" value="" label="Category or comma-separated list of categories" help="e.g. 'True'"/>
+    </repeat>
+    <conditional name="settings">
+      <param name="default" type="boolean" checked="true" label="Use programme defaults"/>
+      <when value="true"/>
+      <when value="false">
+        <param name="n_neighbors" argument="--n-neighbors" type="integer" value="20" label="Number of mutual nearest neighbors."/>
+        <param name="sigma" argument="--sigma" type="float" value="1.0" label="Sigma" help="The bandwidth of the Gaussian smoothing kernel used to compute the correction vectors." />
+        <param name="cos_norm_in" argument="--no-cos-norm-in" type="boolean" truevalue="" falsevalue="--no-cos-norm-in" checked="True"
+            label="Perform cosine normalization prior to computing corrected expression values?" />
+        <param name="svd_dim" argument="--svd-dim" type="integer" optional="true" label="Number of dimensions to use for summarizing biological substructure within each batch." help="If not set, biological components will not be removed from the correction vectors."/>
+        <param name="var_adj" argument="--no-var-adj" type="boolean" truevalue="" falsevalue="--no-var-adj" checked="True"
+            label="Adjust variance of the correction vectors?" help="Note this step takes most computing time." />
+        <param name="compute_angle" argument="--compute-angle" type="boolean" truevalue="--compute-angle" falsevalue="" checked="False"
+            label="Compute the angle between each cell’s correction vector and the biological subspace of the reference batch?" />
+        <param name="svd_mode" argument="--svd-mode" type="select" label="SVD mode" help="'svd' computes SVD using a non-randomized SVD-via-ID algorithm, while 'rsvd' uses a randomized version. 'irlb' performs truncated SVD by implicitly restarted Lanczos bidiagonalization (forked from https://github.com/airysen/irlbpy)." >
+          <option value="rsvd" selected="true">rsvd</option>
+          <option value="svd">svd</option>
+          <option value="irlb">irlb</option>
+        </param>
+      </when>
+    </conditional>
+  </inputs>
+
+  <outputs>
+    <expand macro="output_data_obj" description="Batch-corrected for ${batch_key}"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="input_obj_file" value="find_cluster.h5"/>
+      <param name="input_format" value="anndata"/>
+      <param name="output_format" value="anndata"/>
+      <param name="batch_key" value="louvain"/>
+      <output name="output_h5" file="mnn.h5" ftype="h5" compare="sim_size"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+    .. class:: infomark
+
+    **What it does**
+
+    Corrects for batch effects by fitting linear models, gains statistical power via an EB framework where information is borrowed across genes.
+
+    @HELP@
+
+    @VERSION_HISTORY@
+]]></help>
+  <expand macro="citations"/>
+</tool>
