@@ -136,6 +136,8 @@
 
     Batch balanced kNN alters the kNN procedure to identify each cell’s top neighbours in each batch separately instead of the entire cell pool with no accounting for batch. Aligns batches in a quick and lightweight manner.
 
+    Use as an alternative to Scanpy ComputeGraph.
+
     @HELP@
 
     @VERSION_HISTORY@
