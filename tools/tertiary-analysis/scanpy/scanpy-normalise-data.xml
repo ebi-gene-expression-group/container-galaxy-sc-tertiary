@@ -9,8 +9,8 @@
 ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-normalise-data
     #if not $settings.default 
-        #if $settings.log_transform
-            '${settings.log_transform}'
+        #if not $settings.log_transform
+            ${settings.log_transform}
         #end if
         #if $settings.scale_factor
             --normalize-to '${settings.scale_factor}'
