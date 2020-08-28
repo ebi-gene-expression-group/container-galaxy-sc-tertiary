@@ -39,7 +39,7 @@ PYTHONIOENCODING=utf-8 scanpy-neighbors
         <param name="n_neighbors" argument="--n-neighbors" type="integer" value="15" label="Maximum number of neighbors used"/>
         <param name="n_neighbors_file" argument="--n-neighbors" type="data" format="txt,tsv" optional="true"
                label="File with n_neighbours, use with parameter iterator. Overrides the n_neighbors setting"/>
-        <param name="use_rep" type="text" label="Use the indicated representation">
+        <param name="use_rep" type="select" label="Use the indicated representation">
           <option value="X_pca" selected="true">X_pca, use PCs</option>
           <option value="X">X, use normalised expression values</option>
         </param>
