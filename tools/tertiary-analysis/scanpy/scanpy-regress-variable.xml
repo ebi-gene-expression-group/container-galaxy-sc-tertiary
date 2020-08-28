@@ -38,7 +38,7 @@
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
       <param name="variable_keys" value="n_counts"/>
-      <output name="output_h5" file="scale_data.h5" ftype="h5" compare="sim_size"/>
+      <output name="output_h5" file="regress.h5" ftype="h5" compare="sim_size"/>
     </test>
   </tests>
 

@@ -72,7 +72,7 @@ $force_recalc
       <param name="output_format" value="anndata"/>
       <repeat name="parameters">
         <param name="name" value="n_cells"/>
-        <param name="min" value="3"/>
+        <param name="min" value="20"/>
         <param name="max" value="1e9"/>
       </repeat>
       <repeat name="parameters">

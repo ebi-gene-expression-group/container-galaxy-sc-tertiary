@@ -13,10 +13,10 @@ PYTHONIOENCODING=utf-8 scanpy-cli embed fdg
     --export-embedding embeddings.csv
 #end if
 #if $settings.default == "false"
-    #if '${settings.neighbors_key}'
+    #if $settings.neighbors_key
     --neighbors-key '${settings.neighbors_key}'
     #end if
-    #if '${settings.obsp}'
+    #if $settings.obsp
     --obsp '${settings.obsp}'
     #end if
     --random-state ${settings.random_seed}
@@ -24,7 +24,7 @@ PYTHONIOENCODING=utf-8 scanpy-cli embed fdg
     #if $settings.init_pos
         --init-pos '${settings.init_pos}'
     #end if
-    #if $settings.iroot
+    #if $settings.root
         --root '${settings.root}'
     #end if
 #end if

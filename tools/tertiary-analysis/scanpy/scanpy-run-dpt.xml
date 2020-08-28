@@ -59,10 +59,10 @@ PYTHONIOENCODING=utf-8 scanpy-cli dpt
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
       <param name="n_dcs" value="10"/>
-      <param name="root_attr" value="leiden"/>
+      <param name="root_attr" value="louvain"/>
       <param name="root_value" value="1"/>
       <param name="use_graph" value="neighbors"/>
-      <output name="output_h5" file="paga.h5" ftype="h5" compare="sim_size"/>
+      <output name="output_h5" file="dpt.h5" ftype="h5" compare="sim_size"/>
     </test>
   </tests>
 
