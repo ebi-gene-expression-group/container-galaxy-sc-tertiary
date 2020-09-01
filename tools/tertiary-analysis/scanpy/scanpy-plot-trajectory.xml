@@ -46,8 +46,8 @@ PYTHONIOENCODING=utf-8 scanpy-cli plot paga
     <param name="use_key" argument="--use-key" type="text" value="paga"
            label="The key in `.uns` that contains trajectory information"/>
     <param name="layout" argument="--layout" type="select" label="Layout functions">
-      <option value="fa" selected="true">ForceAtlas2</option>
-      <option value="fr">Fruchterman-Reingold</option>
+      <option value="fa">ForceAtlas2</option>
+      <option value="fr" selected="true">Fruchterman-Reingold</option>
       <option value="rt">Reingold-Tilford</option>
     </param>
     <param name="basis" argument="--basis" type="text" optional="true" label="Name of the embedding to plot"
@@ -85,7 +85,7 @@ PYTHONIOENCODING=utf-8 scanpy-cli plot paga
 
   <tests>
     <test>
-      <param name="input_obj_file" value="find_cluster.h5"/>
+      <param name="input_obj_file" value="paga.h5"/>
       <param name="input_format" value="anndata"/>
       <param name="type" value="paga_compare"/>
       <output name="output_png" file="paga_compare.png" ftype="png" compare="sim_size"/>
