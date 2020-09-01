@@ -87,8 +87,9 @@ $sort_order
     <test>
       <param name="input_obj_file" value="find_cluster.h5"/>
       <param name="input_format" value="anndata"/>
+      <param name="basis" value="X_pca"/>
       <param name="color_by" value="louvain"/>
-      <output name="output_png" file="run_tsne.png" ftype="png" compare="sim_size"/>
+      <output name="output_png" file="plot_embed.png" ftype="png" compare="sim_size"/>
     </test>
   </tests>
 
