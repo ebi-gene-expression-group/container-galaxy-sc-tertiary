@@ -10,7 +10,7 @@ ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-cli embed fdg
     --key-added-ext '${key_added_ext}'
 #if $embeddings
-    --export-embedding embeddings.csv
+    --export-embedding embeddings.tsv
 #end if
 #if $settings.default == "false"
     #if $settings.neighbors_key
@@ -36,7 +36,7 @@ PYTHONIOENCODING=utf-8 scanpy-cli embed fdg
   <inputs>
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
-    <param name="embeddings" type="boolean" checked="true" label="Output embeddings in csv format"/>
+    <param name="embeddings" type="boolean" checked="true" label="Output embeddings in tsv format"/>
     <param name="key_added_ext" argument="--key-added-ext" type="text" optional="true"
            label="Additional suffix to the name of the slot to save the embedding"/>
 
@@ -51,8 +51,8 @@ PYTHONIOENCODING=utf-8 scanpy-cli embed fdg
           <option value="paga">paga</option>
         </param>
         <param name="layout" argument="--layout" type="select" label="Graph layout">
-          <option value="fa" selected="true">fa</option>
-          <option value="fr">fr</option>
+          <option value="fa">fa</option>
+          <option value="fr" selected="true">fr</option>
           <option value="grid_fr">grid fr</option>
           <option value="kk">kk</option>
           <option value="lgl">lgl</option>
@@ -68,7 +68,7 @@ PYTHONIOENCODING=utf-8 scanpy-cli embed fdg
 
   <outputs>
     <expand macro="output_data_obj" description="FDG object"/>
-    <data name="output_embed" format="csv" from_work_dir="embeddings.csv" label="${tool.name} on ${on_string}: FDG embeddings">
+    <data name="output_embed" format="tsv" from_work_dir="embeddings.tsv" label="${tool.name} on ${on_string}: FDG embeddings">
       <filter>embeddings</filter>
     </data>
   </outputs>
@@ -82,9 +82,9 @@ PYTHONIOENCODING=utf-8 scanpy-cli embed fdg
       <param name="embeddings" value="true"/>
       <param name="random_seed" value="0"/>
       <output name="output_h5" file="run_fdg.h5" ftype="h5" compare="sim_size"/>
-      <output name="output_embed" file="run_fdg.embeddings.csv" ftype="csv" compare="sim_size">
+      <output name="output_embed" file="run_fdg.embeddings.tsv" ftype="tsv" compare="sim_size">
         <assert_contents>
-          <has_n_columns n="2" sep=","/>
+          <has_n_columns n="3"/>
         </assert_contents>
       </output>
     </test>
