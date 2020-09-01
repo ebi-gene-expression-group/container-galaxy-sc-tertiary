@@ -85,7 +85,6 @@ before_script:
 - kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
 - kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
 
-
 script:
 - sudo docker build -t test/galaxy-sc-tertiary:19.05-dev -f Dockerfile_init .
 - kubectl cluster-info
