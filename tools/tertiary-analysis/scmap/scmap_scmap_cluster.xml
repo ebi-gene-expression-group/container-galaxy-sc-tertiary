@@ -14,7 +14,7 @@
     </inputs>
     <outputs>
         <data name="output_single_cell_experiment" format="rdata" />
-        <data name="output_txt" format="tabular" />
+        <data name="output_txt" format="csv" />
     </outputs>
     <tests>
         <test>

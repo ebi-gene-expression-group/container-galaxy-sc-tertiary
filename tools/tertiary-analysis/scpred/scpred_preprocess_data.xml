@@ -1,4 +1,4 @@
-<tool id="scpred_preprocess_data" name="Scpred pre-process" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scpred_preprocess_data" name="Scpred pre-process" version="@TOOL_VERSION@+galaxy3" profile="@PROFILE@">
     <description>Pre-process input dataset (no train/test split)</description>
     <macros>
         <import>scpred_macros.xml</import>

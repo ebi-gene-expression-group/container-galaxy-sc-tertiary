@@ -1,4 +1,4 @@
-<tool id="scpred_train_model" name="Scpred train" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scpred_train_model" name="Scpred train" version="@TOOL_VERSION@+galaxy3" profile="@PROFILE@">
     <description>Train classification model</description>
     <macros>
         <import>scpred_macros.xml</import>

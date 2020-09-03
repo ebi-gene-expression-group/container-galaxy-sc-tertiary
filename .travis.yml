@@ -13,7 +13,7 @@ jobs:
       before_install: skip
       before_script: skip
       install:
-        - pip install planemo==0.70 gxformat2==0.11.1
+        - pip install planemo
         - planemo --version
         - git diff --quiet "$TRAVIS_COMMIT_RANGE" -- ; GIT_DIFF_EXIT_CODE=$?
         - |
@@ -62,7 +62,7 @@ before_script:
 - tar -xf helm.tar.gz
 - sudo mv linux-amd64/helm /usr/local/bin/
 - rm -rf linux-amd64
-- sudo -H pip install planemo==0.70 gxformat2==0.11.1
+- sudo -H pip install planemo
 # Wait for Kubernetes to be up and ready.
 - JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
 # Set up helm

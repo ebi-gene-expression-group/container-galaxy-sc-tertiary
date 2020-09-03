@@ -1,4 +1,4 @@
-<tool id='scpred_get_feature_space' name='ScPred feature space' version='@TOOL_VERSION@+galaxy0' profile="@PROFILE@">
+<tool id='scpred_get_feature_space' name='ScPred feature space' version='@TOOL_VERSION@+galaxy1' profile="@PROFILE@">
     <description>Get feature space for training matrix</description>
     <macros>
          <import>scpred_macros.xml</import>

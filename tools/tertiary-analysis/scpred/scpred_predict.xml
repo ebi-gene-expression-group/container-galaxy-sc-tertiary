@@ -1,4 +1,4 @@
-<tool id="scpred_predict_labels" name="Scpred predict" version="@TOOL_VERSION@+galaxy0">
+<tool id="scpred_predict_labels" name="Scpred predict" version="@TOOL_VERSION@+galaxy3">
     <description>Make cell type predictions using trained model.</description>
      <macros>
         <import>scpred_macros.xml</import>
@@ -29,7 +29,7 @@
     </inputs>
     <outputs>
         <data name="output_tbl_path" format="txt" />
-        <data name="plot_path" format="png" />
+        <data name="plot_path" format="txt" />
         <data name="confusion_table" format="txt" />
     </outputs>
     <tests>
