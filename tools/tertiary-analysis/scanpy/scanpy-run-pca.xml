@@ -73,7 +73,7 @@ PYTHONIOENCODING=utf-8 scanpy-run-pca
       <param name="random_seed" value="1"/>
       <param name="chunked" value="false"/>
       <output name="output_h5" file="run_pca.h5" ftype="h5" compare="sim_size"/>
-      <output name="output_embed" file="run_pca.embeddings.tsv" ftype="tsv" compare="sim_size" >
+      <output name="output_embed" file="run_pca.embeddings.tsv" ftype="tabular" compare="sim_size" >
         <assert_contents>
           <has_n_columns n="51"/>
         </assert_contents>
