@@ -100,7 +100,7 @@ script:
 - set -e
 - |
   while read -r TOOL; do
-    planemo lint --report_level error "$TOOL"
+    planemo lint -r --report_level error "$TOOL"
   done < changed_tools.list
 - |
   while read -r TOOL; do
