@@ -89,7 +89,7 @@ PYTHONIOENCODING=utf-8 scanpy-run-tsne
       <param name="embeddings" value="true"/>
       <param name="random_seed" value="0"/>
       <output name="output_h5" file="run_tsne.h5" ftype="h5" compare="sim_size"/>
-      <output name="output_embed" file="run_tsne.embeddings.tsv" ftype="tsv" compare="sim_size">
+      <output name="output_embed" file="run_tsne.embeddings.tsv" ftype="tabular" compare="sim_size">
         <assert_contents>
           <has_n_columns n="3"/>
         </assert_contents>
