@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="scanpy_integrate_bbknn" name="Scanpy BBKNN" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+  <description>batch-balanced K-nearest neighbours</description>
+  <macros>
+    <import>scanpy_macros2.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+#if $batch_key
+  ln -s '${input_obj_file}' input.h5 &&
+  PYTHONIOENCODING=utf-8 scanpy-integrate bbknn 
+  --batch-key '${batch_key}'
+  #if $settings.default == "false"
+    #if $settings.use_rep
+      --use-rep '${settings.use_rep}'
+    #end if
+    #if $settings.key_added
+      --key-added '${settings.key_added}'
+    #end if
+    #if $settings.n_pcs
+      --n-pcs '${settings.n_pcs}'
+    #end if
+    #if not $settings.approx
+        ${settings.approx}
+    #end if
+    #if $settings.metric
+        --metric '${settings.metric}'
+    #end if
+    #if $settings.neighbors_within_batch
+        --neighbors-within-batch '${settings.neighbors_within_batch}'
+    #end if
+    #if $settings.trim
+        --trim '${settings.trim}'
+    #end if
+    #if $settings.n_trees
+        --n-trees '${settings.n_trees}'
+    #end if
+    #if not $settings.use_faiss
+        ${settings.use_faiss}
+    #end if
+    #if $settings.set_op_mix_ratio
+        --set-op-mix-ratio '${settings.set_op_mix_ratio}'
+    #end if
+    #if $settings.local_connectivity
+        --local-connectivity '${settings.local_connectivity}'
+    #end if
+  #end if
+  @INPUT_OPTS@
+  @OUTPUT_OPTS@
+#else
+  echo "No batch variables passed, simply passing original input as output unchanged.";
+  cp '${input_obj_file}' '${output_h5}'
+#end if
+]]></command>
+
+  <inputs>
+    <expand macro="input_object_params"/>
+    <expand macro="output_object_params"/>
+    <param name="batch_key" type="text" argument="--batch-key" label="The name of the column in adata.obs that differentiates among experiments/batches.">
+      <sanitizer>
+        <valid initial="string.printable"/>
+      </sanitizer>
+    </param>
+    <conditional name="settings">
+      <param name="default" type="boolean" checked="true" label="Use programme defaults"/>
+      <when value="true"/>
+      <when value="false">
+        <param name="use_rep" argument="--use-rep" type="text" value='X_pca' label="The dimensionality reduction in .obsm to use for neighbour detection.">
+          <sanitizer>
+            <valid initial="string.printable"/>
+          </sanitizer>
+        </param>
+        <param name="key_added" argument="--key-added" type="text" optional="true" label="Key under which to add the computed results." help="If not specified, the neighbors data is stored in .uns[‘neighbors’], distances and connectivities are stored in .obsp[‘distances’] and .obsp[‘connectivities’] respectively. If specified, the neighbors data is added to .uns[key_added], distances are stored in .obsp[key_added+’_distances’] and connectivities in .obsp[key_added+’_connectivities’].">
+          <sanitizer>
+            <valid initial="string.printable"/>
+          </sanitizer>
+        </param>
+        <param name="n_pcs" argument="--n-pcs" type="integer" value="50" optional="true" label="Number of PCs to use"/>
+        <param name="approx" argument="--no-approx" type="boolean" truevalue="" falsevalue="--no-approx" checked="True"
+            label="Use annoy’s approximate neighbour finding?" help="This results in a quicker run time for large datasets while also potentially increasing the degree of batch correction."/>
+        <param name="metric" argument="--metric" type="select" label="A known metric’s name">
+          <option value="angular" selected="true">angular</option>
+          <option value="euclidean">Euclidean</option>
+          <option value="cityblock">cityblock</option>
+          <option value="cosine">cosine</option>
+          <option value="l1">l1</option>
+          <option value="l2">l2</option>
+          <option value="manhattan">manhattan</option>
+          <option value="braycurtis">braycurtis</option>
+          <option value="canberra">canberra</option>
+          <option value="chebyshev">chebyshev</option>
+          <option value="correlation">correlation</option>
+          <option value="dice">dice</option>
+          <option value="hamming">hamming</option>
+          <option value="jaccard">jaccard</option>
+          <option value="kulsinski">kulsinski</option>
+          <option value="mahalanobis">mahalanobis</option>
+          <option value="minkowski">minkowski</option>
+          <option value="rogerstanimoto">rogerstanimoto</option>
+          <option value="russelrao">russelrao</option>
+          <option value="seuclidan">seuclidian</option>
+          <option value="sokalmichener">sokalmichener</option>
+          <option value="sokalsneath">sokalsneath</option>
+          <option value="sqeuclidean">sqeuclidean</option>
+          <option value="yule">yule</option>
+        </param>
+        <param name="neighbors_within_batch" argument="--neighbors-within-batch" type="integer" value="3" optional="true" label="How many top neighbours to report for each batch" help="Total number of neighbours will be this number times the number of batches."/>
+        <param name="trim" argument="--trim" type="integer" value="" optional="true" label="Trim the neighbours of each cell to these many top connectivities." help="May help with population independence and improve the tidiness of clustering. The lower the value the more independent the individual populations, at the cost of more conserved batch effect. If not set, sets the parameter value automatically to 10 times the total number of neighbours for each cell. Set to 0 to skip."/>
+        <param name="n_trees" argument="--n-trees" type="integer" value="10" optional="true" label="The number of trees to construct in the annoy forest." help="More trees give higher precision when querying, at the cost of increased run time and resource intensity."/>
+        <param name="use_faiss" argument="--no-use-faiss" type="boolean" truevalue="" falsevalue="--no-use-faiss" checked="True"
+            label="Use the faiss package to compute nearest neighbours if installed" help="If approx=False and the metric is 'euclidean' use the faiss package to compute nearest neighbours if installed. This improves performance at a minor cost to numerical precision as faiss operates on float32."/>
+        <param name="set_op_mix_ratio" argument="--set-op-mix-ratio" type="float" value="1" min="0" max="1" label="UMAP connectivity computation parameter" help="Float between 0 and 1, controlling the blend between a connectivity matrix formed exclusively from mutual nearest neighbour pairs (0) and a union of all observed neighbour relationships with the mutual pairs emphasised (1)."/>
+        <param name="local_connectivity" argument="--local-connectivity" type="integer" value="1" label="UMAP connectivity computation parameter, how many nearest neighbors of each cell are assumed to be fully connected (and given a connectivity value of 1)."/>
+      </when>
+    </conditional>    
+  </inputs>
+
+  <outputs>
+    <expand macro="output_data_obj" description="Batch-corrected for ${batch_key}"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="input_obj_file" value="find_cluster.h5"/>
+      <param name="input_format" value="anndata"/>
+      <param name="output_format" value="anndata"/>
+      <param name="batch_key" value="louvain"/>
+      <output name="output_h5" file="bbknn.h5" ftype="h5" compare="sim_size"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+    .. class:: infomark
+
+    **What it does**
+
+    Batch balanced kNN alters the kNN procedure to identify each cell’s top neighbours in each batch separately instead of the entire cell pool with no accounting for batch. Aligns batches in a quick and lightweight manner.
+
+    Use as an alternative to Scanpy ComputeGraph.
+
+    @HELP@
+
+    @VERSION_HISTORY@
+]]></help>
+  <expand macro="citations"/>
+</tool>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="scanpy_integrate_harmony" name="Scanpy Harmony" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+  <description>adjust principal components for variables that might introduce batch effect</description>
+  <macros>
+    <import>scanpy_macros2.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+#if $batch_key
+  ln -s '${input_obj_file}' input.h5 &&
+  PYTHONIOENCODING=utf-8 scanpy-integrate harmony
+  --batch-key '${batch_key}'
+  #if $basis
+    --basis '${basis}'
+  #end if
+  --adjusted-basis '${adjusted_basis}'
+  #if not $settings.default
+      #if $settings.theta
+      --theta '${settings.theta}'
+      #end if 
+      #if $settings.lambda
+      --lambda '${settings.lambda}'
+      #end if 
+      #if $settings.sigma
+      --sigma '${settings.sigma}'
+      #end if 
+      #if $settings.nclust
+      --nclust '${settings.nclust}'
+      #end if 
+      #if $settings.tau
+      --tau '${settings.tau}'
+      #end if 
+      #if $settings.block_size
+      --block-size '${settings.block_size}'
+      #end if 
+      #if $settings.max_iter_cluster
+      --max-iter-cluster '${settings.max_iter_cluster}'
+      #end if 
+      #if $settings.max_iter_harmony
+      --max-iter-harmony '${settings.max_iter_harmony}'
+      #end if 
+      #if $settings.epsilon_cluster
+      --epsilon-cluster '${settings.epsilon_cluster}'
+      #end if 
+      #if $settings.epsilon_harmony
+      --epsilon-harmony '${settings.epsilon_harmony}'
+      #end if 
+      #if $settings.random_state
+      --random-state '${settings.random_state}'
+      #end if 
+  #end if
+  @INPUT_OPTS@
+  @OUTPUT_OPTS@
+#else
+  echo "No batch variables passed, simply passing original input as output unchanged.";
+  cp '${input_obj_file}' '${output_h5}'
+#end if
+]]></command>
+
+  <inputs>
+    <expand macro="input_object_params"/>
+    <expand macro="output_object_params"/>
+    <param name="batch_key" type="text" argument="--batch-key" label="The name of the column in adata.obs that differentiates among experiments/batches.">
+      <sanitizer>
+        <valid initial="string.printable"/>
+      </sanitizer>
+    </param>
+    <param name="basis" argument="--basis" type="text" value='X_pca' label="The name of the field in adata.obsm where the PCA table is stored. Defaults to 'X_pca', which is the default for sc.tl.pca().">
+      <sanitizer>
+        <valid initial="string.printable"/>
+      </sanitizer>
+    </param>
+    <param name="adjusted_basis" argument="--adjusted-basis" type="text" value='X_pca_harmony' label="he name of the field in adata.obsm where the adjusted PCA table will be stored after running this function.">
+      <sanitizer>
+        <valid initial="string.printable"/>
+      </sanitizer>
+    </param>
+    <conditional name="settings">
+      <param name="default" type="boolean" checked="true" label="Use programme defaults"/>
+      <when value="true"/>
+      <when value="false">
+        <param name="theta" argument="--theta" type="float" value="2.0"
+              label="Diversity clustering penalty parameter" help="theta=0 does not encourage any diversity. Larger values of theta result in more diverse clusters." />
+        <param name="lambda" argument="--lambda" type="float" min="0" value="1.0"
+              label="Ridge regression penalty parameter" help="Lambda must be strictly positive. Smaller values result in more aggressive correction." />
+        <param name="sigma" argument="--sigma" type="float" value="0.1"
+              label="Ridge regression penalty parameter" help="Width of soft kmeans clusters. Sigma scales the distance from a cell to cluster centroids. Larger values of sigma result in cells assigned to more clusters. Smaller values of sigma make soft kmeans cluster approach hard clustering." />
+        <param name="nclust" argument="--nclust" type="integer" value="" optional="true"
+              label="Number of clusters in model." help="nclust=1 equivalent to simple linear regression." />
+        <param name="tau" argument="--tau" type="integer" value="0"
+              label="Protection against overclustering small datasets with large ones." help="'tau is the expected number of cells per cluster." />
+        <param name="block_size" argument="--block-size" type="float" value="0.05"
+              label="What proportion of cells to update during clustering" min="0" max="1" help="Between 0 to 1, default 0.05. Larger values may be faster but less accurate." />
+        <param name="max_iter_cluster" argument="--max-iter-cluster" type="integer" value="20"
+              label="Maximum number of rounds to run clustering at each round of Harmony" />
+        <param name="max_iter_harmony" argument="--max-iter-harmony" type="integer" value="10"
+              label="Maximum number of rounds to run Harmony. One round of Harmony involves one clustering and one correction step." />
+        <param name="epsilon_cluster" argument="--epsilon-cluster" type="float" value="0.00001"
+              label="Convergence tolerance for clustering round of Harmony" help="Set to -Inf to never stop early." />
+        <param name="epsilon_harmony" argument="--epsilon-harmony" type="float" value="0.00001"
+              label="Convergence tolerance for Harmony." help="Set to -Inf to never stop early." />
+        <param name="random_state" argument="--random-state" type="integer" value="0"
+              label="Seed for random number generator." />
+      </when>
+    </conditional>    
+  </inputs>
+
+  <outputs>
+    <expand macro="output_data_obj" description="Batch-corrected for ${batch_key}"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="input_obj_file" value="find_cluster.h5"/>
+      <param name="input_format" value="anndata"/>
+      <param name="output_format" value="anndata"/>
+      <param name="batch_key" value="louvain"/>
+      <output name="output_h5" file="harmony.h5" ftype="h5" compare="sim_size"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+    .. class:: infomark
+
+    **What it does**
+
+    Uses harmonypy [Korunsky19] to integrate different experiments at the principal components level. 
+
+    @HELP@
+
+    @VERSION_HISTORY@
+]]></help>
+  <expand macro="citations"/>
+</tool>

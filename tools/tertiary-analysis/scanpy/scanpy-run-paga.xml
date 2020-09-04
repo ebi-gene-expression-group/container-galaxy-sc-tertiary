@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_run_paga" name="Scanpy PAGA" version="@TOOL_VERSION@+galaxy10" profile="@PROFILE@">
+<tool id="scanpy_run_paga" name="Scanpy PAGA" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>trajectory inference</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -9,11 +9,14 @@
 ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-cli paga
     --groups '${groups}'
-#if $use_graph
-    --use-graph '${use_graph}'
+#if $neighbors_key
+    --neighbors-key '${neighbors_key}'
 #end if
 #if $key_added
     --key-added '${key_added}'
+#end if
+#if $use_rna_velocity
+    --use-rna-velocity
 #end if
     @INPUT_OPTS@
     @OUTPUT_OPTS@
@@ -24,8 +27,9 @@ PYTHONIOENCODING=utf-8 scanpy-cli paga
     <expand macro="output_object_params"/>
 
     <param name="groups" argument="--groups" type="text" label="Name of the clustering"/>
-    <param name="use_graph" argument="--use-graph" value="neighbors" type="text" label="Name of the slot that holds the KNN graph"/>
+    <param name="neighbors_key" argument="--neighbors-key" value="neighbors" type="text" label="Name of the slot that holds the KNN graph"/>
     <param name="key_added" argument="--key-added" type="text" optional="true" label="Additional suffix to the name of the slot to save the calculated trajectory"/>
+    <param name="use_rna_velocity" type="boolean" checked="false" label="Use RNA velocity to orient edges in the abstracted graph and estimate transitions." help=" Requires that adata.uns contains a directed single-cell graph with key velocity_graph. This feature might be subject to change in the future."/>
   </inputs>
 
   <outputs>
@@ -34,11 +38,11 @@ PYTHONIOENCODING=utf-8 scanpy-cli paga
 
   <tests>
     <test>
-      <param name="input_obj_file" value="compute_graph.h5"/>
+      <param name="input_obj_file" value="find_cluster.h5"/>
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
-      <param name="groups" value="leiden"/>
-      <param name="use_graph" value="neighbors"/>
+      <param name="groups" value="louvain"/>
+      <param name="neighbors_key" value="neighbors"/>
       <output name="output_h5" file="paga.h5" ftype="h5" compare="sim_size"/>
     </test>
   </tests>

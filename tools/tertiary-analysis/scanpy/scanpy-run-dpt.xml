@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_run_dpt" name="Scanpy DPT" version="@TOOL_VERSION@+galaxy11" profile="@PROFILE@">
+<tool id="scanpy_run_dpt" name="Scanpy DPT" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>diffusion pseudotime inference</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -15,10 +15,13 @@ PYTHONIOENCODING=utf-8 scanpy-cli dpt
     --min-group-size ${min_group_size}
 #end if
 #if $use_graph
-    --use-graph '${use_graph}'
+    --neighbors-key '${use_graph}'
 #end if
 #if $key_added
     --key-added '${key_added}'
+#end if
+#if not $allow_kendall_tau_shift
+    --disallow-kendall-tau-shift
 #end if
     @INPUT_OPTS@
     @OUTPUT_OPTS@
@@ -39,10 +42,11 @@ PYTHONIOENCODING=utf-8 scanpy-cli dpt
            label="Name of attribute that defines clustering"/>
     <param name="root_value" argument="--root attr {value}" type="text"
            label="Name of the clustering that defines the root cell type"/>
-    <param name="use_graph" argument="--use-graph" value="neighbors" type="text"
+    <param name="use_graph" argument="--neighbors-key" value="neighbors" type="text"
            label="Name of the slot that holds the KNN graph"/>
     <param name="key_added" argument="--key-added" type="text" optional="true"
            label="Additional suffix to the name of the slot to save the calculated pseudo-time"/>
+    <param name="allow_kendall_tau_shift" type="boolean" checked="true" label="Allow Kendall Tau shift" help="If a very small branch is detected upon splitting, shift away from maximum correlation in Kendall tau criterion of [Haghverdi16] to stabilize the splitting" />
   </inputs>
 
   <outputs>
@@ -55,10 +59,10 @@ PYTHONIOENCODING=utf-8 scanpy-cli dpt
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
       <param name="n_dcs" value="10"/>
-      <param name="root_attr" value="leiden"/>
+      <param name="root_attr" value="louvain"/>
       <param name="root_value" value="1"/>
       <param name="use_graph" value="neighbors"/>
-      <output name="output_h5" file="paga.h5" ftype="h5" compare="sim_size"/>
+      <output name="output_h5" file="dpt.h5" ftype="h5" compare="sim_size"/>
     </test>
   </tests>
 

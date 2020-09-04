@@ -63,6 +63,19 @@ before_script:
 - sudo mv linux-amd64/helm /usr/local/bin/
 - rm -rf linux-amd64
 - sudo -H pip install planemo==0.70 gxformat2==0.11.1
+# Record which repositories are changed in these commits
+- git diff --quiet "$TRAVIS_COMMIT_RANGE" -- ; GIT_DIFF_EXIT_CODE=$?
+- |
+  if [ "$GIT_DIFF_EXIT_CODE" -gt 1 ] ; then
+      git remote set-branches --add origin develop
+      git fetch
+      TRAVIS_COMMIT_RANGE=origin/develop...
+  fi
+- echo $TRAVIS_COMMIT_RANGE
+- |
+  planemo ci_find_repos --changed_in_commit_range "$TRAVIS_COMMIT_RANGE" \
+                        --output changed_repositories.list
+- cat changed_repositories.list
 # Wait for Kubernetes to be up and ready.
 - JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
 # Set up helm
@@ -71,7 +84,6 @@ before_script:
 - kubectl create serviceaccount --namespace kube-system tiller
 - kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
 - kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
-
 
 script:
 - sudo docker build -t test/galaxy-sc-tertiary:19.05-dev -f Dockerfile_init .
@@ -83,7 +95,17 @@ script:
 # Wait for kube-dns to be ready.
 - JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl -n kube-system get pods -lk8s-app=kube-dns -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1;echo "waiting for kube-dns to be available"; kubectl get pods --all-namespaces; done
 - helm install -f helm-configs/.travis-galaxy-sc-deployment.yaml --name travis --version $HELM_REPO_VERSION galaxy-helm-repo/galaxy-stable
-- planemo lint -r --report_level error tools
+# Run planemo linting and testing for repositories changed in these commits
+- cat changed_repositories.list
+- set -e
+- |
+  while read -r DIR; do
+    planemo lint -r --report_level error "$DIR"
+  done < changed_repositories.list
+- |
+  while read -r DIR; do
+    planemo test --galaxy_python_version 3.7 "$DIR"
+  done < changed_repositories.list
 - kubectl describe pods/$(kubectl get pods | awk '{ print $1 }' | grep -v proftpd | grep -v postgres | grep galaxy)
 - ./util/wait-for-deployment -n default -t 600 $(kubectl get deployment | awk '{ print $1 }' | grep 'galaxy-stable$')
 # - sleep 360

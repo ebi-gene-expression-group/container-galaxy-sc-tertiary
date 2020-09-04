@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_filter_cells" name="Scanpy FilterCells" version="@TOOL_VERSION@+galaxy10" profile="@PROFILE@" >
+<tool id="scanpy_filter_cells" name="Scanpy FilterCells" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@" >
   <description>based on counts and numbers of genes expressed</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -79,14 +79,14 @@ PYTHONIOENCODING=utf-8 scanpy-filter-cells
       <repeat name="parameters">
         <param name="name" value="n_genes"/>
         <param name="min" value="200"/>
-        <param name="max" value="2500"/>
+        <param name="max" value="20000"/>
       </repeat>
       <repeat name="parameters">
         <param name="name" value="n_counts"/>
         <param name="min" value="0"/>
         <param name="max" value="1e9"/>
       </repeat>
-      <output name="output_h5" file="output.h5" ftype="h5" compare="sim_size"/>
+      <output name="output_h5" file="filter_cells.h5" ftype="h5" compare="sim_size"/>
     </test>
   </tests>
 

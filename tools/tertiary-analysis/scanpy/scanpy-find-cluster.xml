@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_find_cluster" name="Scanpy FindCluster" version="@TOOL_VERSION@+galaxy11" profile="@PROFILE@">
+<tool id="scanpy_find_cluster" name="Scanpy FindCluster" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>based on community detection on KNN graph</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -10,7 +10,10 @@ ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-find-cluster
     ${method}
 #if $settings.default == "false"
-    --use-graph '${settings.use_graph}'
+    --neighbors-key '${settings.neighbors_key}'
+    #if $settings.layer
+        --layer '${settings.layer}'
+    #end if
     #if $settings.key_added
         --key-added '${settings.key_added}'
     #end if
@@ -49,8 +52,10 @@ PYTHONIOENCODING=utf-8 scanpy-find-cluster
       <param name="default" type="boolean" checked="true" label="Use programme defaults"/>
       <when value="true"/>
       <when value="false">
-        <param name="use_graph" argument="--use-graph" value="neighbors" type="text"
+        <param name="neighbors_key" argument="--neighbors-key" value="neighbors" type="text"
             label="Name of the slot that holds the KNN graph"/>
+        <param name="layer" argument="--layer" value="" type="text"
+            label="Key from adata.layers whose value will be used to perform tests on. (Default: use .X)"/>
         <param name="key_added" argument="--key-added" type="text" optional="true"
             label="Additional suffix to the name of the slot to save the calculated clustering"/>
 
