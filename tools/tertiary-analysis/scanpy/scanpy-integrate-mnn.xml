@@ -46,8 +46,7 @@
   @INPUT_OPTS@
   @OUTPUT_OPTS@
 #else
-  echo "No batch variables passed, simply passing original input as output unchanged.";
-  cp '${input_obj_file}' '${output_h5}'
+  echo "No batch variables passed, simply passing original input as output unchanged." && cp '${input_obj_file}' output.h5
 #end if
 ]]></command>
 
