@@ -46,7 +46,8 @@
   @INPUT_OPTS@
   @OUTPUT_OPTS@
 #else
-  echo "No batch variables passed, simply passing original input as output unchanged." && cp '${input_obj_file}' output.h5
+  echo "No batch variables passed, simply passing original input as output unchanged.";
+  cp '${input_obj_file}' '${output_h5}'
 #end if
 ]]></command>
 
@@ -101,12 +102,6 @@
       <param name="output_format" value="anndata"/>
       <param name="batch_key" value="louvain"/>
       <output name="output_h5" file="mnn.h5" ftype="h5" compare="sim_size"/>
-    </test>
-    <test>
-      <param name="input_obj_file" value="find_cluster.h5"/>
-      <param name="input_format" value="anndata"/>
-      <param name="output_format" value="anndata"/>
-      <output name="output_h5" file="mnn_copy.h5" ftype="h5" compare="sim_size"/>
     </test>
   </tests>
 
