@@ -34,7 +34,7 @@ jobs:
               # while read -r DIR; do planemo shed_update --shed_target testtoolshed --shed_key "$TEST_SHED_KEY" --force_repository_creation "$DIR" || exit 1; done < changed_repositories.list
               while read -r DIR; do 
                 if [ -d "$DIR/test-data" ]; then
-                    max_test_file_size=$(du test-data/$(ls -S test-data | head -n 1) | awk '{print $1}')
+                    max_test_file_size=$(du $DIR/test-data/$(ls -S $DIR/test-data | head -n 1) | awk '{print $1}')
                     if [ $max_test_file_size -gt 10000 ]; then
                         echo "Deleting test files, found one > 10Mb" 1>&2
                         rm -rf $DIR/test-data
