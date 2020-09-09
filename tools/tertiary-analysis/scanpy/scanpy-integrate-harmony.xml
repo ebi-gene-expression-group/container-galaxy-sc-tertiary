@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_integrate_harmony" name="Scanpy Harmony" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scanpy_integrate_harmony" name="Scanpy Harmony" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
   <description>adjust principal components for variables that might introduce batch effect</description>
   <macros>
     <import>scanpy_macros2.xml</import>
