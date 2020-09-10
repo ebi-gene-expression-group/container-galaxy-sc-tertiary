@@ -1,4 +1,4 @@
-<tool id="ct_build_cell_ontology_dict" name="Cell types - build cell ontology map" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
+<tool id="ct_build_cell_ontology_dict" name="Cell types - build cell ontology map" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
     <description>Create a mapping from labels to CL terms</description>
     <macros>
         <import>ct_macros.xml</import>

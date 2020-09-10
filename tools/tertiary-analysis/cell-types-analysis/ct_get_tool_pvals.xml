@@ -1,4 +1,4 @@
-<tool id="ct_get_tool_pvals" name="Cell types - get tool p-values" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
+<tool id="ct_get_tool_pvals" name="Cell types - get tool p-values" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
     <description>Get p-values for tool performance metrics</description>
     <macros>
         <import>ct_macros.xml</import>
