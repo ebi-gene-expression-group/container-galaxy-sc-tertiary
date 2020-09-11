@@ -8,10 +8,11 @@
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-run-umap
-    --neighbors-key '${use_graph}'
+#set neighbors_key = $use_graph.replace('INPUT_OBJ', $input_obj_file.__getattr__('name'))
+--neighbors-key '${neighbors_key}'
 #if $key_added
-    #if $use_graph
-        #set key_added = $key_added.replace('NEIGHBORS_KEY', $use_graph.__str__)
+    #if $neighbors_key
+        #set key_added = $key_added.replace('NEIGHBORS_KEY', $neighbors_key.__str__)
     #set embeddings_tsv="embeddings_" + $key_added.__str__ + ".tsv"    
 #end if
     --key-added '${key_added}'
