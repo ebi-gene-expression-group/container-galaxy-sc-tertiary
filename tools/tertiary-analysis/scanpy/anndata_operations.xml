@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="anndata_ops" name="AnnData Operations" version="0.0.4+galaxy0" profile="@PROFILE@">
+<tool id="anndata_ops" name="AnnData Operations" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>modifies metadata and flags genes</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -217,7 +217,7 @@ This functionality will probably be added in the future to a larger package.
 History
 -------
 
-0.0.4+galaxy0: Moves to Scanpy Scripts 0.3.0 (Scanpy 1.6.0)
+1.6.0+galaxy0: Moves to Scanpy Scripts 0.3.0 (Scanpy 1.6.0), versioning switched to track Scanpy as other tools.
 
 0.0.3+galaxy0: Adds ability to merge AnnData objects (Scanpy 1.4.3).
 ]]></help>
