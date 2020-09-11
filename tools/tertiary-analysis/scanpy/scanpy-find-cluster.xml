@@ -10,7 +10,7 @@
 #if $settings.resolution_file
     #set resolution = Path($settings.resolution_file.__str__).read_text().strip()
 #elif $settings.resolution
-    #set resolution = $settings.resolution.strip()
+    #set resolution = $settings.resolution.__str__.strip()
 #end if
 
 ln -s '${input_obj_file}' input.h5 &&
