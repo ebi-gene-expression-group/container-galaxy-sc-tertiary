@@ -30,6 +30,7 @@ PYTHONIOENCODING=utf-8 scanpy-run-tsne
             #set key_added = $key_added.replace('PERPLEXITY', $perplexity.__str__)
         #end if
         --key-added '${key_added}'
+        #set embeddings_tsv="embeddings_" + $key_added.__str__ + ".tsv"    
     #end if
     --early-exaggeration '${settings.early_exaggeration}'
     --learning-rate '${settings.learning_rate}'
@@ -48,6 +49,9 @@ PYTHONIOENCODING=utf-8 scanpy-run-tsne
 #end if
     @INPUT_OPTS@
     @OUTPUT_OPTS@
+#if $embeddings_tsv
+    && mv '${embeddings_tsv}' embeddings.tsv
+#end if
 
 ]]></command>
 
