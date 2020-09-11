@@ -213,6 +213,13 @@ Performs the following operations:
   * Unstructure annotations, like gene markers.
 
 This functionality will probably be added in the future to a larger package.
+
+History
+-------
+
+0.0.4+galaxy0: Moves to Scanpy Scripts 0.3.0 (Scanpy 1.6.0)
+
+0.0.3+galaxy0: Adds ability to merge AnnData objects (Scanpy 1.4.3).
 ]]></help>
   <expand macro="citations"/>
 </tool>
