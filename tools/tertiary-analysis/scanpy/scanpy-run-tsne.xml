@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_run_tsne" name="Scanpy RunTSNE" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scanpy_run_tsne" name="Scanpy RunTSNE" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
   <description>visualise cell clusters using tSNE</description>
   <macros>
     <import>scanpy_macros2.xml</import>
   </macros>
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
+#from pathlib import Path
 ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-run-tsne
 #if $use_rep != "auto"
     --use-rep '${use_rep}'
-#end if
-#if $key_added
-    --key-added '${key_added}'
 #end if
 #if $embeddings
     --export-embedding embeddings.tsv
 #end if
 #if $settings.default == "false"
     #if $settings.perplexity_file
-        --perplexity \$( cat $settings.perplexity_file )
-    #else
-        --perplexity '${settings.perplexity}'
+        #set perplexity = Path($settings.perplexity_file.__str__).read_text().strip()
+    #elif $settings.perplexity
+        #set perplexity = $settings.perplexity.__str__.strip()
+    #end if      
+    #if $perplexity
+        --perplexity '$perplexity'
+    #end if
+    #if $settings.key_added
+        #set key_added = $settings.key_added
+        #if $perplexity
+            #set key_added = $key_added.replace('PERPLEXITY', $perplexity.__str__)
+        #end if
+        --key-added '${key_added}'
     #end if
     --early-exaggeration '${settings.early_exaggeration}'
     --learning-rate '${settings.learning_rate}'
@@ -53,13 +61,12 @@ PYTHONIOENCODING=utf-8 scanpy-run-tsne
       <option value="X">X, use normalised expression values</option>
       <option value="auto" selected="true">Automatically chosen based on problem size</option>
     </param>
-    <param name="key_added" argument="--key-added" type="text" optional="true"
-           label="Additional suffix to the name of the slot to save the embedding"/>
-
     <conditional name="settings">
       <param name="default" type="boolean" checked="true" label="Use programme defaults"/>
       <when value="true"/>
       <when value="false">
+        <param name="key_added" argument="--key-added" type="text" optional="true"
+               label="Additional suffix to the name of the slot to save the embedding. PERPLEXITY will be subsituted with the value of the perplexity setting."/>
         <param name="perplexity" argument="--perplexity" type="float" value="30" label="The perplexity is related to the number of nearest neighbours, select a value between 5 and 50"/>
         <param name="perplexity_file" argument="--perplexity" type="data" format="txt,tsv" label="The perplexity is related to the number of nearest neighbours" help="For use with the parameter iterator. Overrides the persplexity option above" optional="true"/>
         <param name="early_exaggeration" argument="--early-exaggeration" type="float" value="12" label="Controls the tightness within and between clusters"/>
