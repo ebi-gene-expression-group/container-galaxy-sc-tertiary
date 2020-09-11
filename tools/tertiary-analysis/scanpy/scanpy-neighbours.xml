@@ -6,14 +6,27 @@
   </macros>
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
+#from pathlib import Path
+#if $settings.n_neighbors_file
+    #set n_neighbors = Path($settings.n_neighbors_file.__str__).read_text().strip()
+#elif $settings.n_neighbors
+    #set n_neighbors = $settings.n_neighbors.__str__.strip()
+#end if
+
 ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-neighbors
 #if $settings.default == "false"
-    #if $settings.n_neighbors_file
-        --n-neighbors \$( cat $settings.n_neighbors_file )
-    #elif $settings.n_neighbors
-        --n-neighbors '${settings.n_neighbors}'
+    #if $n_neighbors
+        --n-neighbors $n_neighbors
     #end if
+    #if $settings.key_added
+        #set key_added = $settings.key_added
+        #if $n_neighbors
+            #set key_added = $key_added.replace('N_NEIGHBORS', $n_neighbors.__str__)
+        #end if
+        --key-added '${key_added}'
+    #end if
+
     --method '${settings.method}'
     --metric '${settings.metric}'
     --random-state '${settings.random_seed}'
@@ -36,6 +49,8 @@ PYTHONIOENCODING=utf-8 scanpy-neighbors
       <param name="default" type="boolean" checked="true" label="Use programme defaults"/>
       <when value="true"/>
       <when value="false">
+        <param name="key_added" argument="--key-added" type="text" optional="true" label="Key added"
+            help="If not specified, the neighbors data is stored in .uns[‘neighbors’], distances and connectivities are stored in .obsp[‘distances’] and .obsp[‘connectivities’] respectively. If specified, the neighbors data is added to .uns[key_added], distances are stored in .obsp[key_added+’_distances’] and connectivities in .obsp[key_added+’_connectivities’]." value='neighbours' />
         <param name="n_neighbors" argument="--n-neighbors" type="integer" value="15" label="Maximum number of neighbors used"/>
         <param name="n_neighbors_file" argument="--n-neighbors" type="data" format="txt,tsv" optional="true"
                label="File with n_neighbours, use with parameter iterator. Overrides the n_neighbors setting"/>
