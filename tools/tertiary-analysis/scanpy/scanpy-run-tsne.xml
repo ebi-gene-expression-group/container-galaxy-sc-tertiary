@@ -7,6 +7,7 @@
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
 #from pathlib import Path
+#set embeddings_tsv='embeddings.tsv'
 ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-run-tsne
 #if $use_rep != "auto"
@@ -49,8 +50,10 @@ PYTHONIOENCODING=utf-8 scanpy-run-tsne
 #end if
     @INPUT_OPTS@
     @OUTPUT_OPTS@
-#if $embeddings_tsv
-    && mv '${embeddings_tsv}' embeddings.tsv
+#if $embeddings
+    #if $embeddings_tsv != 'embeddings.tsv'
+        && mv '${embeddings_tsv}' embeddings.tsv
+    #end if
 #end if
 
 ]]></command>

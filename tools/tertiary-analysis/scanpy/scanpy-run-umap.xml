@@ -9,6 +9,7 @@
 ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-run-umap
 #set neighbors_key = $use_graph.replace('INPUT_OBJ', $input_obj_file.__getattr__('name'))
+#set embeddings_tsv='embeddings.tsv'
 --neighbors-key '${neighbors_key}'
 #if $key_added
     #if $neighbors_key
@@ -37,8 +38,10 @@ PYTHONIOENCODING=utf-8 scanpy-run-umap
 #end if
     @INPUT_OPTS@
     @OUTPUT_OPTS@
-#if $embeddings_tsv
-    && mv '${embeddings_tsv}' embeddings.tsv
+#if $embeddings
+    #if $embeddings_tsv != 'embeddings.tsv'
+        && mv '${embeddings_tsv}' embeddings.tsv
+    #end if
 #end if
 
 ]]></command>
