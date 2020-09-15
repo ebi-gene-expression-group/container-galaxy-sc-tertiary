@@ -73,7 +73,7 @@ PYTHONIOENCODING=utf-8 scanpy-run-tsne
       <when value="true"/>
       <when value="false">
         <param name="key_added" argument="--key-added" type="text" optional="true"
-               label="Additional suffix to the name of the slot to save the embedding. PERPLEXITY will be subsituted with the value of the perplexity setting."/>
+               label="Additional suffix to the name of the slot to save the embedding" help="If included, PERPLEXITY will be substituted with the value of the perplexity setting."/>
         <param name="perplexity" argument="--perplexity" type="float" value="30" label="The perplexity is related to the number of nearest neighbours, select a value between 5 and 50"/>
         <param name="perplexity_file" argument="--perplexity" type="data" format="txt,tsv" label="The perplexity is related to the number of nearest neighbours" help="For use with the parameter iterator. Overrides the persplexity option above" optional="true"/>
         <param name="early_exaggeration" argument="--early-exaggeration" type="float" value="12" label="Controls the tightness within and between clusters"/>
