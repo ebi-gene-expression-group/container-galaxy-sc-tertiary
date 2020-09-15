@@ -66,7 +66,7 @@ PYTHONIOENCODING=utf-8 scanpy-find-cluster
         <param name="layer" argument="--layer" value="" type="text"
             label="Key from adata.layers whose value will be used to perform tests on. (Default: use .X)"/>
         <param name="key_added" argument="--key-added" type="text" optional="true"
-            label="Additional suffix to the name of the slot to save the calculated clustering. METHOD will be subsituted with the value of the method setting, RESOLUTION with the value of that field."/>
+            label="Additional suffix to the name of the slot to save the calculated clustering" help="If included, the keyword 'METHOD' will be substituted with the value of the method setting and 'RESOLUTION' with the value of that field."/>
         <param name="resolution" argument="--resolution" type="float" min="0.0" value="1.0"
                label="Resolution, high value for more and smaller clusters"/>
         <param name="resolution_file" argument="--resolution" type="data" format="txt,tsv" optional="true"
