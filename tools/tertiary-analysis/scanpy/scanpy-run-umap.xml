@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_run_umap" name="Scanpy RunUMAP" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scanpy_run_umap" name="Scanpy RunUMAP" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
   <description>visualise cell clusters using UMAP</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -8,8 +8,16 @@
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-run-umap
-    --neighbors-key '${use_graph}'
+#set neighbors_key = $use_graph.replace('INPUT_OBJ', $input_obj_file.__getattr__('name'))
+#set embeddings_tsv='embeddings.tsv'
+--neighbors-key '${neighbors_key}'
+#if $key_added
+    #if $neighbors_key
+        #set key_added = $key_added.replace('NEIGHBORS_KEY', $neighbors_key.__str__)
+    #set embeddings_tsv="embeddings_" + $key_added.__str__ + ".tsv"    
+#end if
     --key-added '${key_added}'
+#end if
 #if $embeddings
     --export-embedding embeddings.tsv
 #end if
@@ -30,6 +38,11 @@ PYTHONIOENCODING=utf-8 scanpy-run-umap
 #end if
     @INPUT_OPTS@
     @OUTPUT_OPTS@
+#if $embeddings
+    #if $embeddings_tsv != 'embeddings.tsv'
+        && mv '${embeddings_tsv}' embeddings.tsv
+    #end if
+#end if
 
 ]]></command>
 

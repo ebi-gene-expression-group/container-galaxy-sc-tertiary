@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_find_cluster" name="Scanpy FindCluster" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scanpy_find_cluster" name="Scanpy FindCluster" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
   <description>based on community detection on KNN graph</description>
   <macros>
     <import>scanpy_macros2.xml</import>
   </macros>
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
+#from pathlib import Path
+#if $settings.resolution_file
+    #set resolution = Path($settings.resolution_file.__str__).read_text().strip()
+#elif $settings.resolution
+    #set resolution = $settings.resolution.__str__.strip()
+#end if
+
 ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-find-cluster
     ${method}
 #if $settings.default == "false"
     --neighbors-key '${settings.neighbors_key}'
+    #if $settings.key_added
+        #set key_added = $settings.key_added.replace('METHOD', $method.__str__)
+        #if $resolution
+            #set key_added = $key_added.replace('RESOLUTION', $resolution.__str__)
+        #end if
+        --key-added '${key_added}'
+    #end if
+    #if $resolution
+        --resolution '$resolution'
+    #end if
     #if $settings.layer
         --layer '${settings.layer}'
-    #end if
-    #if $settings.key_added
-        --key-added '${settings.key_added}'
-    #end if
-    #if $settings.resolution_file
-        --resolution \$( cat $settings.resolution_file )
-    #elif $settings.resolution
-        --resolution '${settings.resolution}'
     #end if
     #if $settings.restrict_to
         --restrict-to '${settings.restrict_to}'
@@ -57,8 +66,7 @@ PYTHONIOENCODING=utf-8 scanpy-find-cluster
         <param name="layer" argument="--layer" value="" type="text"
             label="Key from adata.layers whose value will be used to perform tests on. (Default: use .X)"/>
         <param name="key_added" argument="--key-added" type="text" optional="true"
-            label="Additional suffix to the name of the slot to save the calculated clustering"/>
-
+            label="Additional suffix to the name of the slot to save the calculated clustering" help="If included, the keyword 'METHOD' will be substituted with the value of the method setting and 'RESOLUTION' with the value of that field."/>
         <param name="resolution" argument="--resolution" type="float" min="0.0" value="1.0"
                label="Resolution, high value for more and smaller clusters"/>
         <param name="resolution_file" argument="--resolution" type="data" format="txt,tsv" optional="true"
