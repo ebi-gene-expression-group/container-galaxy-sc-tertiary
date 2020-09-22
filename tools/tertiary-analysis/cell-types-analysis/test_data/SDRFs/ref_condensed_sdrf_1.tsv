@@ -1,0 +1,1404 @@
+E-MTAB-6386		ERR2632411	characteristic	age	33 year
+E-MTAB-6386		ERR2632411	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632411	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632411	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632411	characteristic	individual	A
+E-MTAB-6386		ERR2632411	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632411	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632411	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632411	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632411	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632411	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632411	factor	single cell identifier	cell 13
+E-MTAB-6386		ERR2632412	characteristic	age	33 year
+E-MTAB-6386		ERR2632412	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632412	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632412	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632412	characteristic	individual	A
+E-MTAB-6386		ERR2632412	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632412	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632412	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632412	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632412	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632412	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632412	factor	single cell identifier	cell 14
+E-MTAB-6386		ERR2632413	characteristic	age	33 year
+E-MTAB-6386		ERR2632413	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632413	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632413	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632413	characteristic	individual	A
+E-MTAB-6386		ERR2632413	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632413	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632413	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632413	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632413	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632413	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632413	factor	single cell identifier	cell 15
+E-MTAB-6386		ERR2632414	characteristic	age	33 year
+E-MTAB-6386		ERR2632414	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632414	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632414	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632414	characteristic	individual	A
+E-MTAB-6386		ERR2632414	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632414	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632414	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632414	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632414	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632414	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632414	factor	single cell identifier	cell 16
+E-MTAB-6386		ERR2632415	characteristic	age	33 year
+E-MTAB-6386		ERR2632415	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632415	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632415	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632415	characteristic	individual	A
+E-MTAB-6386		ERR2632415	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632415	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632415	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632415	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632415	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632415	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632415	factor	single cell identifier	cell 17
+E-MTAB-6386		ERR2632416	characteristic	age	33 year
+E-MTAB-6386		ERR2632416	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632416	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632416	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632416	characteristic	individual	A
+E-MTAB-6386		ERR2632416	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632416	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632416	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632416	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632416	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632416	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632416	factor	single cell identifier	cell 18
+E-MTAB-6386		ERR2632417	characteristic	age	33 year
+E-MTAB-6386		ERR2632417	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632417	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632417	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632417	characteristic	individual	A
+E-MTAB-6386		ERR2632417	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632417	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632417	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632417	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632417	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632417	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632417	factor	single cell identifier	cell 19
+E-MTAB-6386		ERR2632418	characteristic	age	33 year
+E-MTAB-6386		ERR2632418	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632418	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632418	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632418	characteristic	individual	A
+E-MTAB-6386		ERR2632418	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632418	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632418	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632418	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632418	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632418	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632418	factor	single cell identifier	cell 20
+E-MTAB-6386		ERR2632419	characteristic	age	33 year
+E-MTAB-6386		ERR2632419	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632419	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632419	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632419	characteristic	individual	A
+E-MTAB-6386		ERR2632419	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632419	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632419	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632419	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632419	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632419	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632419	factor	single cell identifier	cell 21
+E-MTAB-6386		ERR2632420	characteristic	age	33 year
+E-MTAB-6386		ERR2632420	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632420	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632420	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632420	characteristic	individual	A
+E-MTAB-6386		ERR2632420	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632420	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632420	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632420	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632420	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632420	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632420	factor	single cell identifier	cell 22
+E-MTAB-6386		ERR2632421	characteristic	age	33 year
+E-MTAB-6386		ERR2632421	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632421	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632421	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632421	characteristic	individual	A
+E-MTAB-6386		ERR2632421	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632421	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632421	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632421	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632421	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632421	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632421	factor	single cell identifier	cell 23
+E-MTAB-6386		ERR2632422	characteristic	age	33 year
+E-MTAB-6386		ERR2632422	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632422	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632422	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632422	characteristic	individual	A
+E-MTAB-6386		ERR2632422	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632422	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632422	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632422	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632422	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632422	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632422	factor	single cell identifier	cell 24
+E-MTAB-6386		ERR2632423	characteristic	age	33 year
+E-MTAB-6386		ERR2632423	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632423	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632423	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632423	characteristic	individual	A
+E-MTAB-6386		ERR2632423	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632423	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632423	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632423	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632423	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632423	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632423	factor	single cell identifier	cell 55
+E-MTAB-6386		ERR2632424	characteristic	age	33 year
+E-MTAB-6386		ERR2632424	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632424	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632424	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632424	characteristic	individual	A
+E-MTAB-6386		ERR2632424	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632424	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632424	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632424	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632424	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632424	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632424	factor	single cell identifier	cell 56
+E-MTAB-6386		ERR2632425	characteristic	age	33 year
+E-MTAB-6386		ERR2632425	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632425	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632425	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632425	characteristic	individual	A
+E-MTAB-6386		ERR2632425	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632425	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632425	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632425	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632425	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632425	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632425	factor	single cell identifier	cell 57
+E-MTAB-6386		ERR2632426	characteristic	age	33 year
+E-MTAB-6386		ERR2632426	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632426	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632426	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632426	characteristic	individual	A
+E-MTAB-6386		ERR2632426	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632426	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632426	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632426	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632426	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632426	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632426	factor	single cell identifier	cell 58
+E-MTAB-6386		ERR2632427	characteristic	age	33 year
+E-MTAB-6386		ERR2632427	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632427	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632427	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632427	characteristic	individual	A
+E-MTAB-6386		ERR2632427	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632427	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632427	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632427	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632427	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632427	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632427	factor	single cell identifier	cell 59
+E-MTAB-6386		ERR2632428	characteristic	age	33 year
+E-MTAB-6386		ERR2632428	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632428	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632428	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632428	characteristic	individual	A
+E-MTAB-6386		ERR2632428	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632428	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632428	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632428	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632428	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632428	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632428	factor	single cell identifier	cell 60
+E-MTAB-6386		ERR2632429	characteristic	age	33 year
+E-MTAB-6386		ERR2632429	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632429	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632429	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632429	characteristic	individual	A
+E-MTAB-6386		ERR2632429	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632429	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632429	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632429	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632429	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632429	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632429	factor	single cell identifier	cell 82
+E-MTAB-6386		ERR2632430	characteristic	age	33 year
+E-MTAB-6386		ERR2632430	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632430	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632430	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632430	characteristic	individual	A
+E-MTAB-6386		ERR2632430	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632430	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632430	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632430	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632430	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632430	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632430	factor	single cell identifier	cell 83
+E-MTAB-6386		ERR2632431	characteristic	age	33 year
+E-MTAB-6386		ERR2632431	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632431	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632431	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632431	characteristic	individual	A
+E-MTAB-6386		ERR2632431	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632431	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632431	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632431	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632431	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632431	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632431	factor	single cell identifier	cell 84
+E-MTAB-6386		ERR2632432	characteristic	age	33 year
+E-MTAB-6386		ERR2632432	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632432	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632432	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632432	characteristic	individual	A
+E-MTAB-6386		ERR2632432	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632432	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632432	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632432	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632432	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632432	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632432	factor	single cell identifier	cell 85
+E-MTAB-6386		ERR2632433	characteristic	age	33 year
+E-MTAB-6386		ERR2632433	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632433	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632433	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632433	characteristic	individual	A
+E-MTAB-6386		ERR2632433	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632433	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632433	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632433	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632433	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632433	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632433	factor	single cell identifier	cell 86
+E-MTAB-6386		ERR2632434	characteristic	age	33 year
+E-MTAB-6386		ERR2632434	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632434	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632434	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632434	characteristic	individual	A
+E-MTAB-6386		ERR2632434	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632434	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632434	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632434	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632434	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632434	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632434	factor	single cell identifier	cell 87
+E-MTAB-6386		ERR2632435	characteristic	age	33 year
+E-MTAB-6386		ERR2632435	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632435	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632435	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632435	characteristic	individual	A
+E-MTAB-6386		ERR2632435	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632435	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632435	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632435	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632435	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632435	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632435	factor	single cell identifier	cell 88
+E-MTAB-6386		ERR2632436	characteristic	age	33 year
+E-MTAB-6386		ERR2632436	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632436	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632436	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632436	characteristic	individual	A
+E-MTAB-6386		ERR2632436	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632436	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632436	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632436	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632436	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632436	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632436	factor	single cell identifier	cell 89
+E-MTAB-6386		ERR2632437	characteristic	age	33 year
+E-MTAB-6386		ERR2632437	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632437	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632437	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632437	characteristic	individual	A
+E-MTAB-6386		ERR2632437	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632437	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632437	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632437	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632437	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632437	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632437	factor	single cell identifier	cell 90
+E-MTAB-6386		ERR2632438	characteristic	age	33 year
+E-MTAB-6386		ERR2632438	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632438	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632438	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632438	characteristic	individual	A
+E-MTAB-6386		ERR2632438	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632438	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632438	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632438	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632438	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632438	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632438	factor	single cell identifier	cell 91
+E-MTAB-6386		ERR2632439	characteristic	age	33 year
+E-MTAB-6386		ERR2632439	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632439	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632439	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632439	characteristic	individual	A
+E-MTAB-6386		ERR2632439	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632439	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632439	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632439	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632439	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632439	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632439	factor	single cell identifier	cell 92
+E-MTAB-6386		ERR2632440	characteristic	age	33 year
+E-MTAB-6386		ERR2632440	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632440	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632440	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632440	characteristic	individual	A
+E-MTAB-6386		ERR2632440	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632440	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632440	characteristic	phenotype	CD19+ IgD- CD27+ IgG+
+E-MTAB-6386		ERR2632440	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632440	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632440	factor	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-6386		ERR2632440	factor	single cell identifier	cell 93
+E-MTAB-6386		ERR2632441	characteristic	age	33 year
+E-MTAB-6386		ERR2632441	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632441	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632441	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632441	characteristic	individual	A
+E-MTAB-6386		ERR2632441	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632441	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632441	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632441	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632441	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632441	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632441	factor	single cell identifier	cell 1
+E-MTAB-6386		ERR2632442	characteristic	age	33 year
+E-MTAB-6386		ERR2632442	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632442	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632442	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632442	characteristic	individual	A
+E-MTAB-6386		ERR2632442	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632442	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632442	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632442	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632442	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632442	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632442	factor	single cell identifier	cell 10
+E-MTAB-6386		ERR2632443	characteristic	age	33 year
+E-MTAB-6386		ERR2632443	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632443	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632443	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632443	characteristic	individual	A
+E-MTAB-6386		ERR2632443	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632443	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632443	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632443	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632443	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632443	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632443	factor	single cell identifier	cell 11
+E-MTAB-6386		ERR2632444	characteristic	age	33 year
+E-MTAB-6386		ERR2632444	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632444	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632444	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632444	characteristic	individual	A
+E-MTAB-6386		ERR2632444	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632444	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632444	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632444	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632444	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632444	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632444	factor	single cell identifier	cell 12
+E-MTAB-6386		ERR2632445	characteristic	age	33 year
+E-MTAB-6386		ERR2632445	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632445	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632445	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632445	characteristic	individual	A
+E-MTAB-6386		ERR2632445	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632445	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632445	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632445	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632445	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632445	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632445	factor	single cell identifier	cell 2
+E-MTAB-6386		ERR2632446	characteristic	age	33 year
+E-MTAB-6386		ERR2632446	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632446	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632446	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632446	characteristic	individual	A
+E-MTAB-6386		ERR2632446	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632446	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632446	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632446	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632446	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632446	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632446	factor	single cell identifier	cell 3
+E-MTAB-6386		ERR2632447	characteristic	age	33 year
+E-MTAB-6386		ERR2632447	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632447	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632447	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632447	characteristic	individual	A
+E-MTAB-6386		ERR2632447	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632447	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632447	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632447	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632447	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632447	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632447	factor	single cell identifier	cell 4
+E-MTAB-6386		ERR2632448	characteristic	age	33 year
+E-MTAB-6386		ERR2632448	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632448	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632448	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632448	characteristic	individual	A
+E-MTAB-6386		ERR2632448	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632448	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632448	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632448	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632448	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632448	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632448	factor	single cell identifier	cell 49
+E-MTAB-6386		ERR2632449	characteristic	age	33 year
+E-MTAB-6386		ERR2632449	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632449	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632449	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632449	characteristic	individual	A
+E-MTAB-6386		ERR2632449	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632449	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632449	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632449	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632449	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632449	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632449	factor	single cell identifier	cell 5
+E-MTAB-6386		ERR2632450	characteristic	age	33 year
+E-MTAB-6386		ERR2632450	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632450	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632450	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632450	characteristic	individual	A
+E-MTAB-6386		ERR2632450	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632450	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632450	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632450	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632450	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632450	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632450	factor	single cell identifier	cell 50
+E-MTAB-6386		ERR2632451	characteristic	age	33 year
+E-MTAB-6386		ERR2632451	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632451	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632451	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632451	characteristic	individual	A
+E-MTAB-6386		ERR2632451	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632451	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632451	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632451	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632451	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632451	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632451	factor	single cell identifier	cell 51
+E-MTAB-6386		ERR2632452	characteristic	age	33 year
+E-MTAB-6386		ERR2632452	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632452	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632452	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632452	characteristic	individual	A
+E-MTAB-6386		ERR2632452	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632452	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632452	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632452	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632452	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632452	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632452	factor	single cell identifier	cell 52
+E-MTAB-6386		ERR2632453	characteristic	age	33 year
+E-MTAB-6386		ERR2632453	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632453	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632453	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632453	characteristic	individual	A
+E-MTAB-6386		ERR2632453	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632453	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632453	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632453	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632453	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632453	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632453	factor	single cell identifier	cell 53
+E-MTAB-6386		ERR2632454	characteristic	age	33 year
+E-MTAB-6386		ERR2632454	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632454	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632454	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632454	characteristic	individual	A
+E-MTAB-6386		ERR2632454	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632454	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632454	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632454	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632454	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632454	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632454	factor	single cell identifier	cell 54
+E-MTAB-6386		ERR2632455	characteristic	age	33 year
+E-MTAB-6386		ERR2632455	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632455	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632455	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632455	characteristic	individual	A
+E-MTAB-6386		ERR2632455	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632455	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632455	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632455	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632455	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632455	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632455	factor	single cell identifier	cell 6
+E-MTAB-6386		ERR2632456	characteristic	age	33 year
+E-MTAB-6386		ERR2632456	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632456	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632456	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632456	characteristic	individual	A
+E-MTAB-6386		ERR2632456	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632456	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632456	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632456	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632456	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632456	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632456	factor	single cell identifier	cell 7
+E-MTAB-6386		ERR2632457	characteristic	age	33 year
+E-MTAB-6386		ERR2632457	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632457	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632457	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632457	characteristic	individual	A
+E-MTAB-6386		ERR2632457	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632457	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632457	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632457	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632457	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632457	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632457	factor	single cell identifier	cell 70
+E-MTAB-6386		ERR2632458	characteristic	age	33 year
+E-MTAB-6386		ERR2632458	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632458	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632458	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632458	characteristic	individual	A
+E-MTAB-6386		ERR2632458	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632458	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632458	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632458	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632458	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632458	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632458	factor	single cell identifier	cell 71
+E-MTAB-6386		ERR2632459	characteristic	age	33 year
+E-MTAB-6386		ERR2632459	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632459	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632459	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632459	characteristic	individual	A
+E-MTAB-6386		ERR2632459	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632459	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632459	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632459	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632459	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632459	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632459	factor	single cell identifier	cell 72
+E-MTAB-6386		ERR2632460	characteristic	age	33 year
+E-MTAB-6386		ERR2632460	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632460	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632460	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632460	characteristic	individual	A
+E-MTAB-6386		ERR2632460	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632460	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632460	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632460	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632460	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632460	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632460	factor	single cell identifier	cell 73
+E-MTAB-6386		ERR2632461	characteristic	age	33 year
+E-MTAB-6386		ERR2632461	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632461	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632461	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632461	characteristic	individual	A
+E-MTAB-6386		ERR2632461	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632461	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632461	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632461	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632461	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632461	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632461	factor	single cell identifier	cell 74
+E-MTAB-6386		ERR2632462	characteristic	age	33 year
+E-MTAB-6386		ERR2632462	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632462	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632462	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632462	characteristic	individual	A
+E-MTAB-6386		ERR2632462	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632462	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632462	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632462	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632462	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632462	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632462	factor	single cell identifier	cell 75
+E-MTAB-6386		ERR2632463	characteristic	age	33 year
+E-MTAB-6386		ERR2632463	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632463	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632463	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632463	characteristic	individual	A
+E-MTAB-6386		ERR2632463	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632463	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632463	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632463	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632463	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632463	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632463	factor	single cell identifier	cell 76
+E-MTAB-6386		ERR2632464	characteristic	age	33 year
+E-MTAB-6386		ERR2632464	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632464	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632464	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632464	characteristic	individual	A
+E-MTAB-6386		ERR2632464	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632464	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632464	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632464	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632464	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632464	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632464	factor	single cell identifier	cell 77
+E-MTAB-6386		ERR2632465	characteristic	age	33 year
+E-MTAB-6386		ERR2632465	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632465	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632465	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632465	characteristic	individual	A
+E-MTAB-6386		ERR2632465	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632465	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632465	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632465	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632465	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632465	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632465	factor	single cell identifier	cell 78
+E-MTAB-6386		ERR2632466	characteristic	age	33 year
+E-MTAB-6386		ERR2632466	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632466	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632466	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632466	characteristic	individual	A
+E-MTAB-6386		ERR2632466	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632466	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632466	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632466	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632466	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632466	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632466	factor	single cell identifier	cell 79
+E-MTAB-6386		ERR2632467	characteristic	age	33 year
+E-MTAB-6386		ERR2632467	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632467	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632467	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632467	characteristic	individual	A
+E-MTAB-6386		ERR2632467	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632467	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632467	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632467	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632467	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632467	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632467	factor	single cell identifier	cell 8
+E-MTAB-6386		ERR2632468	characteristic	age	33 year
+E-MTAB-6386		ERR2632468	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632468	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632468	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632468	characteristic	individual	A
+E-MTAB-6386		ERR2632468	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632468	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632468	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632468	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632468	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632468	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632468	factor	single cell identifier	cell 80
+E-MTAB-6386		ERR2632469	characteristic	age	33 year
+E-MTAB-6386		ERR2632469	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632469	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632469	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632469	characteristic	individual	A
+E-MTAB-6386		ERR2632469	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632469	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632469	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632469	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632469	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632469	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632469	factor	single cell identifier	cell 81
+E-MTAB-6386		ERR2632470	characteristic	age	33 year
+E-MTAB-6386		ERR2632470	characteristic	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632470	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632470	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632470	characteristic	individual	A
+E-MTAB-6386		ERR2632470	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632470	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632470	characteristic	phenotype	CD19+ IgD+ CD27- CD10-
+E-MTAB-6386		ERR2632470	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632470	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632470	factor	cell type	naive B cell	http://purl.obolibrary.org/obo/CL_0000788
+E-MTAB-6386		ERR2632470	factor	single cell identifier	cell 9
+E-MTAB-6386		ERR2632471	characteristic	age	33 year
+E-MTAB-6386		ERR2632471	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632471	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632471	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632471	characteristic	individual	A
+E-MTAB-6386		ERR2632471	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632471	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632471	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632471	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632471	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632471	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632471	factor	single cell identifier	cell 106
+E-MTAB-6386		ERR2632472	characteristic	age	33 year
+E-MTAB-6386		ERR2632472	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632472	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632472	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632472	characteristic	individual	A
+E-MTAB-6386		ERR2632472	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632472	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632472	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632472	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632472	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632472	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632472	factor	single cell identifier	cell 107
+E-MTAB-6386		ERR2632473	characteristic	age	33 year
+E-MTAB-6386		ERR2632473	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632473	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632473	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632473	characteristic	individual	A
+E-MTAB-6386		ERR2632473	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632473	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632473	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632473	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632473	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632473	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632473	factor	single cell identifier	cell 108
+E-MTAB-6386		ERR2632474	characteristic	age	33 year
+E-MTAB-6386		ERR2632474	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632474	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632474	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632474	characteristic	individual	A
+E-MTAB-6386		ERR2632474	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632474	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632474	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632474	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632474	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632474	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632474	factor	single cell identifier	cell 109
+E-MTAB-6386		ERR2632475	characteristic	age	33 year
+E-MTAB-6386		ERR2632475	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632475	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632475	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632475	characteristic	individual	A
+E-MTAB-6386		ERR2632475	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632475	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632475	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632475	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632475	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632475	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632475	factor	single cell identifier	cell 110
+E-MTAB-6386		ERR2632476	characteristic	age	33 year
+E-MTAB-6386		ERR2632476	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632476	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632476	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632476	characteristic	individual	A
+E-MTAB-6386		ERR2632476	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632476	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632476	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632476	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632476	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632476	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632476	factor	single cell identifier	cell 111
+E-MTAB-6386		ERR2632477	characteristic	age	33 year
+E-MTAB-6386		ERR2632477	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632477	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632477	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632477	characteristic	individual	A
+E-MTAB-6386		ERR2632477	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632477	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632477	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632477	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632477	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632477	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632477	factor	single cell identifier	cell 112
+E-MTAB-6386		ERR2632478	characteristic	age	33 year
+E-MTAB-6386		ERR2632478	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632478	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632478	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632478	characteristic	individual	A
+E-MTAB-6386		ERR2632478	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632478	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632478	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632478	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632478	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632478	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632478	factor	single cell identifier	cell 113
+E-MTAB-6386		ERR2632479	characteristic	age	33 year
+E-MTAB-6386		ERR2632479	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632479	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632479	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632479	characteristic	individual	A
+E-MTAB-6386		ERR2632479	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632479	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632479	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632479	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632479	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632479	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632479	factor	single cell identifier	cell 114
+E-MTAB-6386		ERR2632480	characteristic	age	33 year
+E-MTAB-6386		ERR2632480	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632480	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632480	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632480	characteristic	individual	A
+E-MTAB-6386		ERR2632480	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632480	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632480	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632480	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632480	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632480	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632480	factor	single cell identifier	cell 115
+E-MTAB-6386		ERR2632481	characteristic	age	33 year
+E-MTAB-6386		ERR2632481	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632481	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632481	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632481	characteristic	individual	A
+E-MTAB-6386		ERR2632481	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632481	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632481	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632481	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632481	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632481	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632481	factor	single cell identifier	cell 116
+E-MTAB-6386		ERR2632482	characteristic	age	33 year
+E-MTAB-6386		ERR2632482	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632482	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632482	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632482	characteristic	individual	A
+E-MTAB-6386		ERR2632482	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632482	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632482	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632482	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632482	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632482	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632482	factor	single cell identifier	cell 117
+E-MTAB-6386		ERR2632483	characteristic	age	33 year
+E-MTAB-6386		ERR2632483	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632483	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632483	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632483	characteristic	individual	A
+E-MTAB-6386		ERR2632483	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632483	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632483	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632483	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632483	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632483	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632483	factor	single cell identifier	cell 37
+E-MTAB-6386		ERR2632484	characteristic	age	33 year
+E-MTAB-6386		ERR2632484	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632484	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632484	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632484	characteristic	individual	A
+E-MTAB-6386		ERR2632484	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632484	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632484	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632484	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632484	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632484	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632484	factor	single cell identifier	cell 38
+E-MTAB-6386		ERR2632485	characteristic	age	33 year
+E-MTAB-6386		ERR2632485	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632485	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632485	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632485	characteristic	individual	A
+E-MTAB-6386		ERR2632485	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632485	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632485	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632485	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632485	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632485	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632485	factor	single cell identifier	cell 39
+E-MTAB-6386		ERR2632486	characteristic	age	33 year
+E-MTAB-6386		ERR2632486	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632486	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632486	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632486	characteristic	individual	A
+E-MTAB-6386		ERR2632486	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632486	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632486	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632486	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632486	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632486	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632486	factor	single cell identifier	cell 40
+E-MTAB-6386		ERR2632487	characteristic	age	33 year
+E-MTAB-6386		ERR2632487	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632487	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632487	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632487	characteristic	individual	A
+E-MTAB-6386		ERR2632487	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632487	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632487	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632487	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632487	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632487	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632487	factor	single cell identifier	cell 41
+E-MTAB-6386		ERR2632488	characteristic	age	33 year
+E-MTAB-6386		ERR2632488	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632488	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632488	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632488	characteristic	individual	A
+E-MTAB-6386		ERR2632488	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632488	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632488	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632488	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632488	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632488	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632488	factor	single cell identifier	cell 42
+E-MTAB-6386		ERR2632489	characteristic	age	33 year
+E-MTAB-6386		ERR2632489	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632489	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632489	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632489	characteristic	individual	A
+E-MTAB-6386		ERR2632489	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632489	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632489	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632489	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632489	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632489	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632489	factor	single cell identifier	cell 43
+E-MTAB-6386		ERR2632490	characteristic	age	33 year
+E-MTAB-6386		ERR2632490	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632490	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632490	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632490	characteristic	individual	A
+E-MTAB-6386		ERR2632490	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632490	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632490	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632490	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632490	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632490	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632490	factor	single cell identifier	cell 44
+E-MTAB-6386		ERR2632491	characteristic	age	33 year
+E-MTAB-6386		ERR2632491	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632491	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632491	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632491	characteristic	individual	A
+E-MTAB-6386		ERR2632491	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632491	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632491	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632491	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632491	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632491	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632491	factor	single cell identifier	cell 45
+E-MTAB-6386		ERR2632492	characteristic	age	33 year
+E-MTAB-6386		ERR2632492	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632492	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632492	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632492	characteristic	individual	A
+E-MTAB-6386		ERR2632492	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632492	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632492	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632492	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632492	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632492	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632492	factor	single cell identifier	cell 46
+E-MTAB-6386		ERR2632493	characteristic	age	33 year
+E-MTAB-6386		ERR2632493	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632493	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632493	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632493	characteristic	individual	A
+E-MTAB-6386		ERR2632493	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632493	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632493	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632493	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632493	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632493	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632493	factor	single cell identifier	cell 47
+E-MTAB-6386		ERR2632494	characteristic	age	33 year
+E-MTAB-6386		ERR2632494	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632494	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632494	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632494	characteristic	individual	A
+E-MTAB-6386		ERR2632494	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632494	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632494	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632494	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632494	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632494	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632494	factor	single cell identifier	cell 48
+E-MTAB-6386		ERR2632495	characteristic	age	33 year
+E-MTAB-6386		ERR2632495	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632495	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632495	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632495	characteristic	individual	A
+E-MTAB-6386		ERR2632495	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632495	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632495	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632495	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632495	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632495	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632495	factor	single cell identifier	cell 64
+E-MTAB-6386		ERR2632496	characteristic	age	33 year
+E-MTAB-6386		ERR2632496	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632496	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632496	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632496	characteristic	individual	A
+E-MTAB-6386		ERR2632496	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632496	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632496	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632496	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632496	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632496	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632496	factor	single cell identifier	cell 65
+E-MTAB-6386		ERR2632497	characteristic	age	33 year
+E-MTAB-6386		ERR2632497	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632497	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632497	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632497	characteristic	individual	A
+E-MTAB-6386		ERR2632497	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632497	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632497	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632497	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632497	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632497	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632497	factor	single cell identifier	cell 66
+E-MTAB-6386		ERR2632498	characteristic	age	33 year
+E-MTAB-6386		ERR2632498	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632498	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632498	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632498	characteristic	individual	A
+E-MTAB-6386		ERR2632498	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632498	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632498	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632498	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632498	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632498	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632498	factor	single cell identifier	cell 67
+E-MTAB-6386		ERR2632499	characteristic	age	33 year
+E-MTAB-6386		ERR2632499	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632499	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632499	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632499	characteristic	individual	A
+E-MTAB-6386		ERR2632499	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632499	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632499	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632499	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632499	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632499	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632499	factor	single cell identifier	cell 68
+E-MTAB-6386		ERR2632500	characteristic	age	33 year
+E-MTAB-6386		ERR2632500	characteristic	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632500	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632500	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632500	characteristic	individual	A
+E-MTAB-6386		ERR2632500	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632500	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632500	characteristic	phenotype	CD19+ IgD- CD27++ CD38++
+E-MTAB-6386		ERR2632500	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632500	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632500	factor	cell type	plasmablast	http://purl.obolibrary.org/obo/CL_0000980
+E-MTAB-6386		ERR2632500	factor	single cell identifier	cell 69
+E-MTAB-6386		ERR2632501	characteristic	age	33 year
+E-MTAB-6386		ERR2632501	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632501	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632501	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632501	characteristic	individual	A
+E-MTAB-6386		ERR2632501	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632501	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632501	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632501	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632501	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632501	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632501	factor	single cell identifier	cell 100
+E-MTAB-6386		ERR2632502	characteristic	age	33 year
+E-MTAB-6386		ERR2632502	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632502	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632502	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632502	characteristic	individual	A
+E-MTAB-6386		ERR2632502	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632502	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632502	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632502	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632502	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632502	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632502	factor	single cell identifier	cell 101
+E-MTAB-6386		ERR2632503	characteristic	age	33 year
+E-MTAB-6386		ERR2632503	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632503	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632503	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632503	characteristic	individual	A
+E-MTAB-6386		ERR2632503	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632503	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632503	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632503	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632503	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632503	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632503	factor	single cell identifier	cell 102
+E-MTAB-6386		ERR2632504	characteristic	age	33 year
+E-MTAB-6386		ERR2632504	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632504	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632504	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632504	characteristic	individual	A
+E-MTAB-6386		ERR2632504	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632504	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632504	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632504	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632504	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632504	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632504	factor	single cell identifier	cell 103
+E-MTAB-6386		ERR2632505	characteristic	age	33 year
+E-MTAB-6386		ERR2632505	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632505	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632505	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632505	characteristic	individual	A
+E-MTAB-6386		ERR2632505	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632505	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632505	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632505	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632505	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632505	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632505	factor	single cell identifier	cell 104
+E-MTAB-6386		ERR2632506	characteristic	age	33 year
+E-MTAB-6386		ERR2632506	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632506	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632506	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632506	characteristic	individual	A
+E-MTAB-6386		ERR2632506	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632506	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632506	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632506	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632506	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632506	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632506	factor	single cell identifier	cell 105
+E-MTAB-6386		ERR2632507	characteristic	age	33 year
+E-MTAB-6386		ERR2632507	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632507	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632507	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632507	characteristic	individual	A
+E-MTAB-6386		ERR2632507	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632507	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632507	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632507	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632507	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632507	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632507	factor	single cell identifier	cell 25
+E-MTAB-6386		ERR2632508	characteristic	age	33 year
+E-MTAB-6386		ERR2632508	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632508	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632508	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632508	characteristic	individual	A
+E-MTAB-6386		ERR2632508	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632508	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632508	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632508	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632508	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632508	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632508	factor	single cell identifier	cell 26
+E-MTAB-6386		ERR2632509	characteristic	age	33 year
+E-MTAB-6386		ERR2632509	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632509	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632509	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632509	characteristic	individual	A
+E-MTAB-6386		ERR2632509	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632509	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632509	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632509	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632509	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632509	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632509	factor	single cell identifier	cell 27
+E-MTAB-6386		ERR2632510	characteristic	age	33 year
+E-MTAB-6386		ERR2632510	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632510	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632510	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632510	characteristic	individual	A
+E-MTAB-6386		ERR2632510	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632510	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632510	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632510	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632510	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632510	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632510	factor	single cell identifier	cell 28
+E-MTAB-6386		ERR2632511	characteristic	age	33 year
+E-MTAB-6386		ERR2632511	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632511	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632511	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632511	characteristic	individual	A
+E-MTAB-6386		ERR2632511	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632511	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632511	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632511	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632511	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632511	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632511	factor	single cell identifier	cell 29
+E-MTAB-6386		ERR2632512	characteristic	age	33 year
+E-MTAB-6386		ERR2632512	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632512	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632512	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632512	characteristic	individual	A
+E-MTAB-6386		ERR2632512	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632512	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632512	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632512	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632512	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632512	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632512	factor	single cell identifier	cell 30
+E-MTAB-6386		ERR2632513	characteristic	age	33 year
+E-MTAB-6386		ERR2632513	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632513	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632513	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632513	characteristic	individual	A
+E-MTAB-6386		ERR2632513	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632513	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632513	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632513	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632513	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632513	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632513	factor	single cell identifier	cell 31
+E-MTAB-6386		ERR2632514	characteristic	age	33 year
+E-MTAB-6386		ERR2632514	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632514	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632514	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632514	characteristic	individual	A
+E-MTAB-6386		ERR2632514	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632514	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632514	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632514	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632514	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632514	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632514	factor	single cell identifier	cell 32
+E-MTAB-6386		ERR2632515	characteristic	age	33 year
+E-MTAB-6386		ERR2632515	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632515	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632515	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632515	characteristic	individual	A
+E-MTAB-6386		ERR2632515	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632515	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632515	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632515	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632515	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632515	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632515	factor	single cell identifier	cell 33
+E-MTAB-6386		ERR2632516	characteristic	age	33 year
+E-MTAB-6386		ERR2632516	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632516	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632516	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632516	characteristic	individual	A
+E-MTAB-6386		ERR2632516	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632516	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632516	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632516	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632516	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632516	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632516	factor	single cell identifier	cell 34
+E-MTAB-6386		ERR2632517	characteristic	age	33 year
+E-MTAB-6386		ERR2632517	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632517	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632517	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632517	characteristic	individual	A
+E-MTAB-6386		ERR2632517	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632517	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632517	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632517	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632517	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632517	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632517	factor	single cell identifier	cell 35
+E-MTAB-6386		ERR2632518	characteristic	age	33 year
+E-MTAB-6386		ERR2632518	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632518	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632518	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632518	characteristic	individual	A
+E-MTAB-6386		ERR2632518	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632518	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632518	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632518	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632518	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632518	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632518	factor	single cell identifier	cell 36
+E-MTAB-6386		ERR2632519	characteristic	age	33 year
+E-MTAB-6386		ERR2632519	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632519	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632519	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632519	characteristic	individual	A
+E-MTAB-6386		ERR2632519	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632519	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632519	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632519	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632519	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632519	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632519	factor	single cell identifier	cell 61
+E-MTAB-6386		ERR2632520	characteristic	age	33 year
+E-MTAB-6386		ERR2632520	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632520	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632520	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632520	characteristic	individual	A
+E-MTAB-6386		ERR2632520	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632520	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632520	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632520	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632520	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632520	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632520	factor	single cell identifier	cell 62
+E-MTAB-6386		ERR2632521	characteristic	age	33 year
+E-MTAB-6386		ERR2632521	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632521	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632521	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632521	characteristic	individual	A
+E-MTAB-6386		ERR2632521	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632521	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632521	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632521	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632521	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632521	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632521	factor	single cell identifier	cell 63
+E-MTAB-6386		ERR2632522	characteristic	age	33 year
+E-MTAB-6386		ERR2632522	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632522	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632522	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632522	characteristic	individual	A
+E-MTAB-6386		ERR2632522	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632522	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632522	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632522	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632522	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632522	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632522	factor	single cell identifier	cell 94
+E-MTAB-6386		ERR2632523	characteristic	age	33 year
+E-MTAB-6386		ERR2632523	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632523	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632523	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632523	characteristic	individual	A
+E-MTAB-6386		ERR2632523	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632523	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632523	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632523	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632523	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632523	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632523	factor	single cell identifier	cell 95
+E-MTAB-6386		ERR2632524	characteristic	age	33 year
+E-MTAB-6386		ERR2632524	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632524	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632524	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632524	characteristic	individual	A
+E-MTAB-6386		ERR2632524	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632524	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632524	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632524	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632524	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632524	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632524	factor	single cell identifier	cell 96
+E-MTAB-6386		ERR2632525	characteristic	age	33 year
+E-MTAB-6386		ERR2632525	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632525	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632525	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632525	characteristic	individual	A
+E-MTAB-6386		ERR2632525	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632525	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632525	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632525	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632525	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632525	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632525	factor	single cell identifier	cell 97
+E-MTAB-6386		ERR2632526	characteristic	age	33 year
+E-MTAB-6386		ERR2632526	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632526	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632526	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632526	characteristic	individual	A
+E-MTAB-6386		ERR2632526	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632526	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632526	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632526	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632526	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632526	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632526	factor	single cell identifier	cell 98
+E-MTAB-6386		ERR2632527	characteristic	age	33 year
+E-MTAB-6386		ERR2632527	characteristic	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632527	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-6386		ERR2632527	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-6386		ERR2632527	characteristic	individual	A
+E-MTAB-6386		ERR2632527	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-6386		ERR2632527	characteristic	organism part	blood	http://purl.obolibrary.org/obo/UBERON_0000178
+E-MTAB-6386		ERR2632527	characteristic	phenotype	CD19+ IgD+ CD27- CD10+
+E-MTAB-6386		ERR2632527	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-6386		ERR2632527	characteristic	single cell quality	OK
+E-MTAB-6386		ERR2632527	factor	cell type	transitional stage B cell	http://purl.obolibrary.org/obo/CL_0000818
+E-MTAB-6386		ERR2632527	factor	single cell identifier	cell 99
