@@ -15,9 +15,9 @@
     </outputs>
     <tests>
         <test>
-            <param name="input_table" value="test_data/tool_perf_table.tsv" />
-            <param name="emp_dist_list" value="test_data/empirical_dist_list.rds" />
-            <output name="output_table" file="test_data/tool_perf_pvals.tsv" compare="sim_size" />
+            <param name="input_table" value="tool_perf_table.tsv" />
+            <param name="emp_dist_list" value="empirical_dist_list.rds" />
+            <output name="output_table" file="tool_perf_pvals.tsv" compare="sim_size" />
         </test>
     </tests>
     <help><![CDATA[

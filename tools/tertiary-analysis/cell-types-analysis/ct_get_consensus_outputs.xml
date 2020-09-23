@@ -54,14 +54,14 @@
     </outputs>
     <tests>
         <test>
-            <param name="input_tables" value="test_data/prod_combined_tools/scmap_combined.tsv,test_data/prod_combined_tools/scpred_combined.tsv" />
-            <param name="tool_table" value="test_data/tool_perf_pvals.tsv" />
-            <param name="exclusions" value="test_data/exclusions.yml" />
+            <param name="input_tables" value="prod_combined_tools/scmap_combined.tsv,prod_combined_tools/scpred_combined.tsv" />
+            <param name="tool_table" value="tool_perf_pvals.tsv" />
+            <param name="exclusions" value="exclusions.yml" />
             <param name="parallel" value="TRUE" />
-            <param name="lab_cl_mapping" value="test_data/label_cl_dict.rds" />
-            <param name="ontology_graph" value="test_data/cl-basic.obo" />
-            <output name="summary_table_output_path" file="test_data/summary_output_table.tsv" compare="sim_size" />
-            <output name="raw_table_output_path" file="test_data/raw_labels_table.tsv" compare="sim_size" />
+            <param name="lab_cl_mapping" value="label_cl_dict.rds" />
+            <param name="ontology_graph" value="cl-basic.obo" />
+            <output name="summary_table_output_path" file="summary_output_table.tsv" compare="sim_size" />
+            <output name="raw_table_output_path" file="raw_labels_table.tsv" compare="sim_size" />
         </test>
     </tests>
     <help><![CDATA[

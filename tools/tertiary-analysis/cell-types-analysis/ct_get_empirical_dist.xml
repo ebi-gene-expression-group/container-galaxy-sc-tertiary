@@ -37,7 +37,7 @@
         <param type="boolean" name="parallel" label="Parallel execution" checked="false" help="Should the table values be computed in parallel?" />
         <param type="integer" name="num_iter" value='5' label="Number of iterations" help="Number of simulations to generate empirical CDF" />
         <param type="integer" name="sample_labs" value='50' label="Number of labels to sample" help="Numbre of labels to sample for each permutation" />
-        <param type="data" name="ontology_graph" label="Ontology graph" format="obo" optional="true" help="Ontology graph to run semantic similarity computations" />
+        <param type="data" name="ontology_graph" label="Ontology graph" format="obo" optional="true" help="Ontology graph to run semantis similarity computations" />
         <expand macro="sem_siml_options" />
     </inputs>
     <outputs>
@@ -45,13 +45,13 @@
     </outputs>
     <tests>
         <test>
-            <param name="input_ref_file" value="test_data/reference_sdrf.tsv" />
+            <param name="input_ref_file" value="reference_sdrf.tsv" />
             <param name="label_col_ref" value="Sample.Characteristic.cell.type." />
-            <param name="ontology_graph" value="test_data/cl-basic.obo" />
-            <param name="exclusions" value="test_data/exclusions.yml" />
+            <param name="ontology_graph" value="cl-basic.obo" />
+            <param name="exclusions" value="exclusions.yml" />
             <param name="parallel" value="TRUE" />
-            <param name="lab_cl_mapping" value="test_data/label_cl_dict.rds" />
-            <output name="output_list_path" file="test_data/empirical_dist_list.rds" compare="sim_size" />
+            <param name="lab_cl_mapping" value="label_cl_dict.rds" />
+            <output name="output_list_path" file="empirical_dist_list.rds" compare="sim_size" />
         </test>
     </tests>
     <help><![CDATA[
