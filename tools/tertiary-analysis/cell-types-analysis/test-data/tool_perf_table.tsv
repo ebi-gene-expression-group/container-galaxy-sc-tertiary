@@ -1,0 +1,5 @@
+"Tool"	"Unlab_ref"	"Unlab_pred"	"Unlab_delta"	"Exact_match_prop"	"Mean_partial_match"	"Med_F1"	"Accuracy"	"CL_similarity"	"Combined_score"
+"scmap-cluster"	"0"	"0.744"	"0.744"	"0.256"	"0.256"	"0"	"1"	"0"	"0.768"
+"garnett"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"
+"scmap-cell"	"0"	"0.479"	"0.479"	"0.496"	"0.424"	"0.904"	"0.951"	"0"	"2.345"
+"scpred"	"0"	"0.47"	"0.47"	"0.521"	"0.437"	"0.962"	"0.984"	"0"	"2.45"
