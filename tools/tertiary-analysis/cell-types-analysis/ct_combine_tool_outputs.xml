@@ -27,10 +27,10 @@
     </outputs>
     <tests>
         <test>
-            <param name="input_tables" value="prod_outputs_scpred/E-MTAB-6386_scpred_final-labs.tsv,prod_outputs_scpred/OTHER-DATASET_scpred_final-labs.tsv" />
+            <param name="input_tables" value="test_data/prod_outputs_scpred/E-MTAB-6386_scpred_final-labs.tsv,test_data/prod_outputs_scpred/OTHER-DATASET_scpred_final-labs.tsv" />
             <param name="scores" value="TRUE" />
             <param name="exclusions" value="exclusions.yml" />
-            <output name="output_table" file="combined_results.tsv" compare="sim_size" />
+            <output name="output_table" file="test_data/combined_results.tsv" compare="sim_size" />
         </test>
     </tests>
     <help><![CDATA[

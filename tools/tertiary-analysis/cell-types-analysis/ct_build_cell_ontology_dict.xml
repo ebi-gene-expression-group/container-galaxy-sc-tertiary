@@ -37,9 +37,9 @@
     </outputs>
     <tests>
         <test>
-            <param name="input_sdrfs" value="SDRFs/ref_condensed_sdrf.tsv,SDRFs/ref_condensed_sdrf_1.tsv" />
+            <param name="input_sdrfs" value="test_data/SDRFs/ref_condensed_sdrf.tsv,SDRFs/ref_condensed_sdrf_1.tsv" />
             <param name="condensed_sdrf" value="TRUE" />
-            <output name="output_dict_path" file="label_cl_dict.rds" compare="sim_size" />
+            <output name="output_dict_path" file="test_data/label_cl_dict.rds" compare="sim_size" />
         </test>
     </tests>
     <help><![CDATA[

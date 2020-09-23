@@ -64,17 +64,17 @@
     </outputs>
     <tests>
         <test>
-            <param name="input_files" value="results_dir/garnett_output.txt,results_dir/scmap-cell_output.txt,results_dir/scmap-cluster_output.txt,results_dir/scpred_output.txt" />
-            <param name="ref_file" value="reference_sdrf.tsv" />
-            <param name="ontology_graph" value="cl-basic.obo" />
-            <param name="lab_cl_mapping" value="label_cl_dict.rds" />
+            <param name="input_files" value="test_data/results_dir/garnett_output.txt,test_data/results_dir/scmap-cell_output.txt,test_data/results_dir/scmap-cluster_output.txt,test_data/results_dir/scpred_output.txt" />
+            <param name="ref_file" value="test_data/reference_sdrf.tsv" />
+            <param name="ontology_graph" value="test_data/cl-basic.obo" />
+            <param name="lab_cl_mapping" value="test_data/label_cl_dict.rds" />
             <param name="parallel" value="TRUE" />
-            <param name="exclusions" value="exclusions.yml" />
+            <param name="exclusions" value="test_data/exclusions.yml" />
             <param name="barcode_col_ref" value="Assay" />
             <param name="barcode_col_pred" value="cell_id" />
             <param name="label_col_ref" value="Sample.Characteristic.cell.type." />
             <param name="label_col_pred" value="predicted_label" />
-            <output name="output_path" file="tool_perf_table.tsv" compare="sim_size" />
+            <output name="output_path" file="test_data/tool_perf_table.tsv" compare="sim_size" />
         </test>
     </tests>
     <help><![CDATA[
