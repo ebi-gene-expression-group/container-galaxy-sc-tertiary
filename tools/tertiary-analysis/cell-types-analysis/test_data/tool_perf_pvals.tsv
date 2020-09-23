@@ -1,4 +1,0 @@
-"Tool"	"Unlab_ref"	"Unlab_pred"	"Unlab_delta"	"Exact_match_prop"	"Mean_partial_match"	"Med_F1"	"Accuracy"	"CL_similarity"	"Combined_score"	"Exact_match_prop_pval"	"Mean_partial_match_pval"	"Med_F1_pval"	"Accuracy_pval"	"CL_similarity_pval"
-"scmap-cluster"	0	0.744	0.744	0.256	0.256	0	1	0.985	1.753	0.4	1	1	0	1
-"scmap-cell"	0	0.479	0.479	0.496	0.424	0.904	0.951	0.985	3.33	0	0	0	0	1
-"scpred"	0	0.47	0.47	0.521	0.437	0.962	0.984	0.985	3.435	0	0	0	0	1
