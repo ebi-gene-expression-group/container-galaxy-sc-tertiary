@@ -6,9 +6,10 @@
   </macros>
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
-#from pathlib import Path
 #if $settings.resolution_file
-    #set resolution = Path($settings.resolution_file.__str__).read_text().strip()
+    #set f = open($settings.resolution_file.__str__)
+    #set resolution = f.read().strip()
+    #silent f.close
 #elif $settings.resolution
     #set resolution = $settings.resolution.__str__.strip()
 #end if
@@ -89,6 +90,17 @@ PYTHONIOENCODING=utf-8 scanpy-find-cluster
   </outputs>
 
   <tests>
+    <test>
+      <param name="input_obj_file" value="compute_graph.h5"/>
+      <param name="input_format" value="anndata"/>
+      <param name="output_format" value="anndata"/>
+      <param name="output_txt" value="true"/>
+      <param name="default" value="false"/>
+      <param name="resolution_file" value="resolution.txt"/>
+      <param name="random_seed" value="0"/>
+      <output name="output_h5" file="find_cluster.h5" ftype="h5" compare="sim_size"/>
+      <output name="output_txt" file="find_cluster.tsv" ftype="tsv"/>
+    </test>
     <test>
       <param name="input_obj_file" value="compute_graph.h5"/>
       <param name="input_format" value="anndata"/>
