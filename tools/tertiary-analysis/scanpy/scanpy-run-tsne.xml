@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_run_tsne" name="Scanpy RunTSNE" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
+<tool id="scanpy_run_tsne" name="Scanpy RunTSNE" version="@TOOL_VERSION@+galaxy2" profile="@PROFILE@">
   <description>visualise cell clusters using tSNE</description>
   <macros>
     <import>scanpy_macros2.xml</import>
   </macros>
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
-#from pathlib import Path
 #set embeddings_tsv='embeddings.tsv'
 ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-run-tsne
@@ -18,7 +17,9 @@ PYTHONIOENCODING=utf-8 scanpy-run-tsne
 #end if
 #if $settings.default == "false"
     #if $settings.perplexity_file
-        #set perplexity = Path($settings.perplexity_file.__str__).read_text().strip()
+        #set f = open($settings.perplexity_file.__str__)
+        #set perplexity = f.read().strip()
+        #silent f.close
     #elif $settings.perplexity
         #set perplexity = $settings.perplexity.__str__.strip()
     #end if      
@@ -100,6 +101,22 @@ PYTHONIOENCODING=utf-8 scanpy-run-tsne
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
       <param name="default" value="false"/>
+      <param name="perplexity_file" value="perplexity.txt"/>
+      <param name="embeddings" value="true"/>
+      <param name="random_seed" value="0"/>
+      <output name="output_h5" file="run_tsne.h5" ftype="h5" compare="sim_size"/>
+      <output name="output_embed" file="run_tsne.embeddings.tsv" ftype="tabular" compare="sim_size">
+        <assert_contents>
+          <has_n_columns n="3"/>
+        </assert_contents>
+      </output>
+    </test>
+    <test>
+      <param name="input_obj_file" value="find_cluster.h5"/>
+      <param name="input_format" value="anndata"/>
+      <param name="output_format" value="anndata"/>
+      <param name="default" value="false"/>
+      <param name="perplexity" value="30"/>
       <param name="embeddings" value="true"/>
       <param name="random_seed" value="0"/>
       <output name="output_h5" file="run_tsne.h5" ftype="h5" compare="sim_size"/>

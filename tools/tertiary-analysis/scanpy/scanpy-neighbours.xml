@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_compute_graph" name="Scanpy ComputeGraph" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
+<tool id="scanpy_compute_graph" name="Scanpy ComputeGraph" version="@TOOL_VERSION@+galaxy2" profile="@PROFILE@">
   <description>to derive kNN graph</description>
   <macros>
     <import>scanpy_macros2.xml</import>
   </macros>
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
-#from pathlib import Path
 #if $settings.n_neighbors_file
-    #set n_neighbors = Path($settings.n_neighbors_file.__str__).read_text().strip()
+    #set f = open($settings.n_neighbors_file.__str__)
+    #set n_neighbors = f.read().strip()
+    #silent f.close
 #elif $settings.n_neighbors
     #set n_neighbors = $settings.n_neighbors.__str__.strip()
 #end if
@@ -101,6 +102,18 @@ PYTHONIOENCODING=utf-8 scanpy-neighbors
   </outputs>
 
   <tests>
+    <test>
+      <param name="input_obj_file" value="run_pca.h5"/>
+      <param name="input_format" value="anndata"/>
+      <param name="output_format" value="anndata"/>
+      <param name="default" value="false"/>
+      <param name="n_neighbors_file" value="n_neighbors.txt"/>
+      <param name="n_pcs" value="50"/>
+      <param name="knn" value="true"/>
+      <param name="random_seed" value="0"/>
+      <param name="method" value="umap"/>
+      <output name="output_h5" file="compute_graph.h5" ftype="h5" compare="sim_size"/>
+    </test>
     <test>
       <param name="input_obj_file" value="run_pca.h5"/>
       <param name="input_format" value="anndata"/>
