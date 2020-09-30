@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="anndata_ops" name="AnnData Operations" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="anndata_ops" name="AnnData Operations" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
   <description>modifies metadata and flags genes</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -68,9 +68,13 @@ if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
   #for $j, $o_key in enumerate($copy_o.obs_keys):
   keys_to_copy = (k for k in ad_s.obs.keys() if "${o_key.contains}" in k)
   for k_to_copy in keys_to_copy:
-    adata.obs[[k_to_copy+"_${i}"]] = ad_s.obs[[k_to_copy]]
+    suffix=''
+    if k_to_copy in adata.obs:
+        suffix = "_${i}" 
+    
+    adata.obs[[k_to_copy+suffix]] = ad_s.obs[[k_to_copy]]
     if k_to_copy in ad_s.uns.keys():
-      adata.uns[k_to_copy+"_${i}"] = ad_s.uns[k_to_copy]
+      adata.uns[k_to_copy+suffix] = ad_s.uns[k_to_copy]
   #end for
 else:
   logging.warning("Observation source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
@@ -85,7 +89,10 @@ if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
   #for $j, $e_key in enumerate($copy_e.embedding_keys):
   keys_to_copy = (k for k in ad_s.obsm.keys() if "${e_key.contains}" in k)
   for k_to_copy in keys_to_copy:
-    adata.obsm[k_to_copy+"_${i}"] = ad_s.obsm[k_to_copy]
+    suffix = ''
+    if k_to_copy in adata.obsm:
+        suffix = "_${i}"
+    adata.obsm[k_to_copy+suffix] = ad_s.obsm[k_to_copy]
   #end for
 else:
   logging.warning("Embedding source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
@@ -99,7 +106,10 @@ if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
   #for $j, $u_key in enumerate($copy_u.uns_keys):
   keys_to_copy = (k for k in ad_s.uns.keys() if "${u_key.contains}" in k)
   for k_to_copy in keys_to_copy:
-    adata.uns[k_to_copy+"_${i}"] = ad_s.uns[k_to_copy]
+    suffix=''
+    if k_to_copy in adata.uns:
+        suffix="_${i}"
+    adata.uns[k_to_copy+suffix] = ad_s.uns[k_to_copy]
   #end for
 else:
   logging.warning("Uns source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
