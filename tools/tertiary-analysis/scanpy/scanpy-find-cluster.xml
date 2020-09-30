@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_find_cluster" name="Scanpy FindCluster" version="@TOOL_VERSION@+galaxy2" profile="@PROFILE@">
+<tool id="scanpy_find_cluster" name="Scanpy FindCluster" version="@TOOL_VERSION@+galaxy3" profile="@PROFILE@">
   <description>based on community detection on KNN graph</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -111,6 +111,19 @@ PYTHONIOENCODING=utf-8 scanpy-find-cluster
       <param name="random_seed" value="0"/>
       <output name="output_h5" file="find_cluster.h5" ftype="h5" compare="sim_size"/>
       <output name="output_txt" file="find_cluster.tsv" ftype="tsv"/>
+    </test>
+    <test>
+      <param name="input_obj_file" value="compute_graph.h5"/>
+      <param name="input_format" value="anndata"/>
+      <param name="output_format" value="anndata"/>
+      <param name="output_txt" value="true"/>
+      <param name="default" value="false"/>
+      <param name="method" value="louvain"/>
+      <param name="resolution" value="1.0"/>
+      <param name="key_added" value="METHOD_RESOLUTION"/>
+      <param name="random_seed" value="0"/>
+      <output name="output_h5" file="louvain_1.0" ftype="h5" compare="sim_size"/>
+      <output name="output_txt" file="louvain_1.0.tsv" ftype="tsv"/>
     </test>
   </tests>
 
