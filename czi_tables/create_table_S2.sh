@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 
 write_rows_for_modules() {
-  local cli_link="[$cli](https://github.com/ebi-gene-expression-group/$cli/tree/master)"
+  if [[ $cli != "None" ]]; then
+    local cli_link="[$cli](https://github.com/ebi-gene-expression-group/$cli/tree/master)"
+  else
+    local cli_link="None"
+  fi
   for mod in $(ls $path/*.xml | grep -v macro); do
     local desc=$(xpath -q -e /tool/description $mod | sed -E 's+</?description>++g')
-    local mod_id=$(xpath -q -e /tool/@id $mod | sed -E 's+(id=)?"++g' | sed 's/ *//g')
+    local mod_id=$(xpath -q -e /tool/@id $mod | sed -E 's+(id=)?"++g' | sed 's/ *//g' | tr '[:upper:]' '[:lower:]')
     local mod_instance_link=https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2F$mod_id%2F$mod_id
     local mod_ts_link=https://toolshed.g2.bx.psu.edu/view/ebi-gxa/$mod_id
     echo "| [$mod_id]($mod_instance_link)<sup>[TS]($mod_ts_link) | $desc | $cli_link | ${mappings[$mod_id]} |" >> S2_modules_aut.md
@@ -32,12 +36,12 @@ write_rows_for_modules
 
 # Seurat
 path=$tertiary_path/seurat
-cli=seurat-scripts
+cli=r-seurat-scripts
 write_rows_for_modules
 
 # SC3
 path=$tertiary_path/sc3
-cli=sc3-scripts
+cli=bioconductor-sc3-scripts
 write_rows_for_modules
 
 # scMap
@@ -47,7 +51,7 @@ write_rows_for_modules
 
 # scater
 path=$tertiary_path/scater
-cli=scater-scripts
+cli=bioconductor-scater-scripts
 write_rows_for_modules
 
 # Monocle3
@@ -81,7 +85,7 @@ cli=None
 write_rows_for_modules
 
 # droplet-utils
-path=$tertiray_path/dropletutils
+path=$tertiary_path/dropletutils
 cli=dropletutils-scripts
 write_rows_for_modules
 
