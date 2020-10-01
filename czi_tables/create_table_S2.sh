@@ -8,9 +8,10 @@ write_rows_for_modules() {
   fi
   for mod in $(ls $path/*.xml | grep -v macro); do
     local desc=$(xpath -q -e /tool/description $mod | sed -E 's+</?description>++g')
-    local mod_id=$(xpath -q -e /tool/@id $mod | sed -E 's+(id=)?"++g' | sed 's/ *//g' | tr '[:upper:]' '[:lower:]')
-    local mod_instance_link=https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2F$mod_id%2F$mod_id
-    local mod_ts_link=https://toolshed.g2.bx.psu.edu/view/ebi-gxa/$mod_id
+    local mod_id=$(xpath -q -e /tool/@id $mod | sed -E 's+(id=)?"++g' | sed 's/ *//g')
+    local mod_id_lc=$(echo $mod_id  | tr '[:upper:]' '[:lower:]')
+    local mod_instance_link=https://humancellatlas.usegalaxy.eu/tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Febi-gxa%2F$mod_id_lc%2F$mod_id
+    local mod_ts_link=https://toolshed.g2.bx.psu.edu/view/ebi-gxa/$mod_id_lc
     echo "| [$mod_id]($mod_instance_link)<sup>[TS]($mod_ts_link) | $desc | $cli_link | ${mappings[$mod_id]} |" >> S2_modules_aut.md
   done
 }
