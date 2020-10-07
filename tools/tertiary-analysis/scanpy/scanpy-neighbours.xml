@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_compute_graph" name="Scanpy ComputeGraph" version="@TOOL_VERSION@+galaxy3" profile="@PROFILE@">
+<tool id="scanpy_compute_graph" name="Scanpy ComputeGraph" version="@TOOL_VERSION@+galaxy4" profile="@PROFILE@">
   <description>to derive kNN graph</description>
   <macros>
     <import>scanpy_macros2.xml</import>
   </macros>
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
-#if $settings.n_neighbors_file
-    #set f = open($settings.n_neighbors_file.__str__)
-    #set n_neighbors = f.read().strip()
-    #silent f.close
-#elif $settings.n_neighbors
-    #set n_neighbors = $settings.n_neighbors.__str__.strip()
-#end if
-
 ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-neighbors
 #if $settings.default == "false"
+    #if $settings.n_neighbors_file
+        #set f = open($settings.n_neighbors_file.__str__)
+        #set n_neighbors = f.read().strip()
+        #silent f.close
+    #elif $settings.n_neighbors
+        #set n_neighbors = $settings.n_neighbors.__str__.strip()
+    #end if
+
     #if $n_neighbors
         --n-neighbors $n_neighbors
     #end if
