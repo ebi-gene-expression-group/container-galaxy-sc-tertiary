@@ -10,7 +10,7 @@ Table S3 below gives a summary of example workflows where different tools are de
 
 To run the Galaxy workflows, the easiest is to create an account in https://humancellatlas.usegalaxy.eu/ (if you already have an account in https://usegalaxy.eu/, it is the same account). To create that account go to https://usegalaxy.eu/login and click on `Register here`.
 
-**Table S3**: Workflows with links to  Galaxy instance and to their source definition, assigned to one or more of the relevant analysis areas: Clustering (**C**), Differential expression/Marker detection (**DE-MD**), Trajectories (**T**), Cell type alignment (**CT**) and Dimensionality reduction (**DR**). All the workflow source files are available [here](https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/workflows).
+**Table S3**: Workflows with links to  Galaxy instance and to their source definition, assigned to one or more of the relevant analysis areas: Clustering (**C**), Differential expression (**DE**), Trajectories (**T**), Cell type alignment (**CT**), Dimensionality reduction (**DR**), and Interactive Viewer (**IV**). All the workflow source files are available [here](https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/workflows).
 
 | Workflow | Description | Analysis areas |
 |----------|-------------|----------------|
@@ -20,6 +20,7 @@ To run the Galaxy workflows, the easiest is to create an account in https://huma
 | [HCA-Scanpy-CellBrowser](https://humancellatlas.usegalaxy.eu/u/pmoreno/w/hca-scanpy-cellbrowser) | Retrieves data from Human Cell Atlas for a given accession, filters, normalise, clusterise, marker genes and calculate dimensional reduction with Scanpy. Visualise interactively with UCSC CellBrowser | C DR DE IV |
 | [Atlas-Scanpy-SCCAF](https://humancellatlas.usegalaxy.eu/u/pmoreno/w/atlas-scanpy-sccaf)* | Retrieves data from Single Cell Expression Atlas, preprocess and clusterise with Scanpy at two different resolutions and search for best clustering with SCCAF after batch correcting. | C DR DE BC |
 | [Atlas-Scanpy-SCMap](https://humancellatlas.usegalaxy.eu/u/pmoreno/w/atlas-scanpy-scmap)* | Retrieves data from Single Cell Expression Atlas, preprocess and map to an SCMap cell index | C CT |
+| [FASTQ-Alevin-Scanpy](https://humancellatlas.usegalaxy.eu/u/wendi.bacon.training/w/ebi---fastq---gt-cluster-plots)* | Processes input fastq files from the user into a cell matrix, complete with experimental metadata. Post-processing performed and plotted using Scanpy. | C DR DE |
 
 ### Atlas Scanpy CellBrowser
 
@@ -102,6 +103,23 @@ To run this workflow:
 This workflow does the downstream analysis with Scanpy for one Atlas dataset and projects it through SCMap at the level of cells and clusters to cell and clusters indexes provided in a format that SCMap can read. The scanpy analysis is exported as Loom file and transformed into SingleCellExperiment by the SCEasy conversion module.
 
 ![Screenshot-2020-01-09-at-16.11.10](img/Screenshot-2020-01-09-at-16.11.10.png)
+
+### FASTQ Alevin Scanpy
+
+This workflow allows users to input 2 sets of fastq files (Reads 1 and 2 for each droplet-based run) for processing into a combined and annotated cell matrix. Pre-processing is performed with Alevin, whilst post-processing takes place using an AnnData object and Scanpy, similar to the above workflows. Both gene_id and gene_symbols are carried through to allow for comprehensive interpretation. Both QC plots and cluster plots are generated within Galaxy. Metadata characteristics and parameter choices can be to suit the users.
+
+![Screenshot 2020-10-14 at 13.00.36](img/Screenshot 2020-10-14 at 13.00.36.png)
+
+To run this workflow:
+
+- Import some test data: [Click here](https://humancellatlas.usegalaxy.eu/u/wendi.bacon.training/h/ebi-parts-1-3---input) and then click on the + (plus) button next to "About this history", to import it
+- Import the workflow: [Click here](https://humancellatlas.usegalaxy.eu/u/wendi.bacon.training/w/ebi---fastq---gt-cluster-plots) and then click on the + (plus) button next to "About this workflow", to import it.
+- On the next window click on `Start using this workflow`.
+- From the Workflows view, locate the new workflow (it will be called "imported: EBI-Single-Cell-FASTQ-Alevin-Scanpy") and click on `Run` or `Edit`. `Edit` will allow you to make changes on the workflow.
+- If pressed `Run`, on the next screen click on the arrows to select the appropriate datasets from the history (this should go from 1 to 6, so fasta file (#1) first, and ~N702.s_1.r_2 (#6) last
+- Click on the blue button `Run Workflow`. Results will start to appear on the right panel (History), unless that you selected to create a new history with the results.
+- You can also see our example history [here](https://humancellatlas.usegalaxy.eu/u/wendi.bacon.training/h/ebi-part-1-3---example-history).
+
 
 ## Nextflow
 
