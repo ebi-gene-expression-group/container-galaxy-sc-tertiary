@@ -10,7 +10,7 @@ Table S3 below gives a summary of example workflows where different tools are de
 
 To run the Galaxy workflows, the easiest is to create an account in https://humancellatlas.usegalaxy.eu/ (if you already have an account in https://usegalaxy.eu/, it is the same account). To create that account go to https://usegalaxy.eu/login and click on `Register here`.
 
-**Table S3**: Workflows with links to  Galaxy instance and to their source definition, assigned to one or more of the relevant analysis areas: Clustering (**C**), Differential expression (**DE**), Trajectories (**T**), Cell type alignment (**CT**), Dimensionality reduction (**DR**), and Interactive Viewer (**IV**). All the workflow source files are available [here](https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/workflows).
+**Table S3**: Workflows with links to  Galaxy instance and to their source definition, assigned to one or more of the relevant analysis areas: Clustering (**C**), Differential expression (**DE**), Trajectories (**T**), Cell type alignment (**CT**), Dimensionality reduction (**DR**), and Interactive viewer (**IV**). All the workflow source files are available [here](https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/workflows).
 
 | Workflow | Description | Analysis areas |
 |----------|-------------|----------------|
