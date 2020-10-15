@@ -108,7 +108,7 @@ This workflow does the downstream analysis with Scanpy for one Atlas dataset and
 
 This workflow allows users to input 2 sets of fastq files (Reads 1 and 2 for each droplet-based run) for processing into a combined and annotated cell matrix. Pre-processing is performed with Alevin, whilst post-processing takes place using an AnnData object and Scanpy, similar to the above workflows. Both gene_id and gene_symbols are carried through to allow for comprehensive interpretation. Both QC plots and cluster plots are generated within Galaxy. Metadata characteristics and parameter choices can be to suit the users.
 
-![Screenshot 2020-10-14 at 13.00.36](img/Screenshot 2020-10-14 at 13.00.36.png)
+![Screenshot 2020-10-14 at 13.00.36](img/Screenshot-2020-10-14-at-13.00.36.png)
 
 To run this workflow:
 
