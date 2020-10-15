@@ -1,4 +1,4 @@
-<tool id="ct_get_consensus_outputs" name="Cell types - get consensus outputs" version="@TOOL_VERSION@+galaxy3" profile="@PROFILE@">
+<tool id="ct_get_consensus_outputs" name="Cell types - get consensus outputs" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
     <description>Get consensus outputs across multiple tools</description>
     <macros>
         <import>ct_macros.xml</import>
@@ -35,17 +35,21 @@
         #if $sem_siml_metric
         --semantic-sim-metric "${sem_siml_metric}" 
         #end if
+        #if $true_labels
+        --true-labels "${true_labels}" 
+        #end if
          ]]></command>
     <inputs>
         <param type="data" name="input_tables" label="Aggregated tables" format="txt" multiple="true" help="Aggregated prediction tables from multiple tools" />
         <param type="data" name="tool_table" format="txt" optional="true" label="Tool performance table" help="Table with tools performance metrics" />
-        <param type="boolean" name="parallel" label="Parallel execution" checked="false" help="Should the table values be computed in parallel?" />
+        <param type="boolean" name="parallel" label="Parallel execution" checked="true" help="Should the table values be computed in parallel?" />
         <param type="text" name="tmpdir" label="Tmpdir for caching" optional="true" help="Temporary directory for caching" />
         <param type="boolean" name="include_sem_siml" label="Include Semantic Similarity" checked="false" help="Should semantic similarity be included in calculation of combined score?" />
         <param type="boolean" name="sort_by_agg_score" label="Sort by aggregated score" checked="true" help="Should the cells be ordered by aggregated score?" />
         <param type="data" name="exclusions" label="Exclusions file" format="yml" optional="true" help="Yaml file with trivial terms and unlabelled cells" />
         <param type="data" name="lab_cl_mapping" format="rdata" label="cl terms mapping" help="Label - CL term mapping" />
         <param type="data" name="ontology_graph" format="obo" label="Ontology graph" optional="true" help="Ontology graph to run similairty calculations" />
+        <param type="data" name="true_labels" format="txt" optional="true" label="True Labels" help="Path to the true labels tsv file in case tool performance is evaluated. Expected columns: cell_id, true_label, ontology_term" />
         <expand macro="sem_siml_options" />
     </inputs>
     <outputs>

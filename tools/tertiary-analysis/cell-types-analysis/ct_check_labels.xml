@@ -1,0 +1,35 @@
+<tool id="ct_check_labels" name="Cell types - check labels" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+     <description>Filter non-alphanumeric characters from labels</description>
+    <macros>
+        <import>ct_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+
+        check_labels.R --input-file "${input_file}"  --condensed "${condensed}" --attribute-type-col-num "${attribute_type_col_num}" --variable-col-num "${variable_col_num}" --avoid-lowercase "${avoid_lowercase}" --output-path "${output_path}"
+
+        #if $label_field
+        --label-field "${label_field}"
+        #end if
+
+        ]]></command>
+        <inputs>
+            
+            <param type="data" name="input_file" label="Input File" multiple="true" format="txt" help="Input metadta file" />
+            <param type="text" name="label_field" label="Label Field" optional="true" help="Name of label field in metadata file" />
+            <param type="boolean" name="condensed" checked="false" label="Condensed Metadata File" help="Are the supplied metadata files of condensed format?" /> 
+            <param type="integer" name="attribute_type_col_num" value='5' label="Number of Attribute Type Column" help="Number of the attribute type field in condensed metadata file. Default: 5" />
+            <param type="integer" name="variable_col_num" value='6' label="Number of Label Column" help="Number of the label field in condensed metadata file. Default: 6" />
+            <param type="boolean" name="avoid_lowercase" checked="false" label="Avoid Lowercaase" help="Should setting the labels to lowercase be skipped? Default: False" /> 
+
+        </inputs>
+        <outputs>
+            <data name="output_path" format="txt" />
+        </outputs>
+        <help><![CDATA[
+    @HELP@
+    
+    @VERSION_HISTORY@
+    ]]></help>
+    <expand macro="citations" />
+</tool>
