@@ -1,4 +1,4 @@
-<tool id="scanpy_parameter_iterator" name="Scanpy ParameterIterator" version="0.0.1+galaxy2">
+<tool id="scanpy_parameter_iterator" name="Scanpy ParameterIterator" version="0.0.1+galaxy3">
     <description>produce an iteration over a defined parameter</description>
     <macros>
       <import>scanpy_macros.xml</import>
@@ -20,11 +20,7 @@
 	    ]]></command>
 
     <inputs>
-      <param type="select" name="parameter_name" label="Parameter name" help="Select a type of parameter">
-        <option value="perplexity" selected="True">Perplexity</option>
-        <option value="resolution">Resolution</option>
-        <option value="n_neighbors">Number of neighbors</option>
-      </param> 
+      <param type="text" name="parameter_name" value='perplexity' label="Parameter type" help="This is a value that will be prefixed to output file names" />
       <conditional name="input_type">    
         <param type="select" name="parameter_values" label="Choose the format of the input values" help="step increase values or list of all the parameter values">
           <option value="list_comma_separated_values" selected="True">List of all parameter values to be iterated</option>
