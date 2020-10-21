@@ -13,7 +13,7 @@ jobs:
       before_install: skip
       before_script: skip
       install:
-        - pip install planemo==0.70 gxformat2==0.11.1
+        - pip install planemo==0.72.0
         - planemo --version
         - git diff --quiet "$TRAVIS_COMMIT_RANGE" -- ; GIT_DIFF_EXIT_CODE=$?
         - |
@@ -32,7 +32,7 @@ jobs:
         - |
           if [ "$TRAVIS_PULL_REQUEST" == "false" -a "$TRAVIS_BRANCH" == "develop" ]; then
               # while read -r DIR; do planemo shed_update --shed_target testtoolshed --shed_key "$TEST_SHED_KEY" --force_repository_creation "$DIR" || exit 1; done < changed_repositories.list
-              while read -r DIR; do 
+              while read -r DIR; do
                 if [ -d "$DIR/test-data" ]; then
                     max_test_file_size=$(du $DIR/test-data/$(ls -S $DIR/test-data | head -n 1) | awk '{print $1}')
                     if [ $max_test_file_size -gt 10000 ]; then
@@ -41,7 +41,7 @@ jobs:
                     fi
                 fi
 
-                planemo shed_update --shed_target toolshed --shed_key "$SHED_KEY" --force_repository_creation "$DIR" || exit 1 
+                planemo shed_update --shed_target toolshed --shed_key "$SHED_KEY" --force_repository_creation "$DIR" || exit 1
               done < changed_repositories.list
           fi
 
@@ -72,7 +72,7 @@ before_script:
 - tar -xf helm.tar.gz
 - sudo mv linux-amd64/helm /usr/local/bin/
 - rm -rf linux-amd64
-- sudo -H pip install planemo==0.70 gxformat2==0.11.1
+- pip install planemo==0.72.0
 # Record which repositories are changed in these commits
 - git diff --quiet "$TRAVIS_COMMIT_RANGE" -- ; GIT_DIFF_EXIT_CODE=$?
 - |
