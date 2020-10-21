@@ -54,7 +54,7 @@ To run this workflow:
 ### SC Atlas Production
 
 This workflow was used for releases 4, 5 and 6 of the EBI Single Cell Expression Atlas. Currently it relies mostly on Scanpy steps, but as interoperability improves, some of the analysis
-steps could be changed to other software providers. It distributes generation of tSNE plots across different persplexity values and clusters through a set of resolutions. This workflow mostly generates text files that are loaded into databases and indexes for expression atlas, so no interactive modules or plots are generated, and is provided to enable reproducibility of our results.
+steps could be changed to other software providers. It distributes generation of tSNE plots across different perplexity values and clusters through a set of resolutions. This workflow mostly generates text files that are loaded into databases and indexes for expression atlas, so no interactive modules or plots are generated, and is provided to enable reproducibility of our results.
 
 ![Screenshot-2020-01-09-at-15.41.42](img/Screenshot-2020-01-09-at-15.41.42.png)
 
@@ -66,7 +66,7 @@ To run this workflow:
 - If pressed `Run`, make sure that the matrix input points to the Matrix file in the history, the genes input to the `E-HCAD-5.genes` file in the history, the barcode input to the `E-HCAD-5.barcodes` file in the history and the GTF input to the GTF file available in the history.
 - Click on the blue button `Run Workflow`. Results will start to appear on the right panel (History).
 
-Datasets can be downloaded through the EBI SCXA Data Retrieval or from the [EBI FTP](http://ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/sc_experiments). For the species of the studies, retrieve the GTF (no chr) file from [ENSEMBL](https://www.ensembl.org/info/data/ftp/index.html). In the future, the GTF download will be facilitated.
+Datasets can be downloaded through the EBI SCXA Data Retrieval or from the [EBI FTP](http://ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/sc_experiments). For the species of the studies, retrieve the GTF (no chr) file from [ENSEMBL](https://www.ensembl.org/info/data/ftp/index.html). In the future, the GTF download will be facilitated. All EBI Single Cell Atlas tertiary analysis workflows (different versions) are listed in the landing page of https://humancellatlas.usegalaxy.eu/.
 
 ### Human cell atlas Scanpy CellBrowser
 
@@ -120,6 +120,7 @@ To run this workflow:
 - Click on the blue button `Run Workflow`. Results will start to appear on the right panel (History), unless that you selected to create a new history with the results.
 - You can also see our example history [here](https://humancellatlas.usegalaxy.eu/u/wendi.bacon.training/h/ebi-part-1-3---example-history).
 
+**Note:** The Alevin wrapper for Galaxy was not contributed as part of this work, but it is used here to show how the user can run reads mapping and connect that result with the downstream analysis tools. Alevin is both available on https://humancellatlas.usegalaxy.eu/ and on self installed instances of SCiAp. A similar result can be achieved by using the RNAStarSolo mapping tool, also contributed externally but available in the instance.
 
 ## Nextflow
 
