@@ -26,6 +26,14 @@
         <outputs>
             <data name="output_path" format="txt" />
         </outputs>
+        <tests>
+        <test>
+            <param name="input_file" value="SDRFs/E-ENAD-27.condensed-sdrf.tsv" />
+            <param name="label_field" value="inferred cell type" />
+            <param name="condensed" value="TRUE" />
+            <output name="output_path" file="checked_SDRF.tsv" compare="sim_size" />
+        </test>
+    </tests>
         <help><![CDATA[
     @HELP@
     

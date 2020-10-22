@@ -58,7 +58,7 @@
     </outputs>
     <tests>
         <test>
-            <param name="input_tables" value="prod_combined_tools/scmap_combined.tsv,prod_combined_tools/scpred_combined.tsv" />
+            <param name="input_tables" value="prod_combined_tools/scmap-cell.txt,prod_combined_tools/scmap-cluster.txt,prod_combined_tools/scpred.txt" />
             <param name="tool_table" value="tool_perf_pvals.tsv" />
             <param name="exclusions" value="exclusions.yml" />
             <param name="parallel" value="TRUE" />

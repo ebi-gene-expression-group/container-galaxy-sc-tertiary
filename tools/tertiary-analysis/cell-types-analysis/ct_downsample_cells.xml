@@ -5,12 +5,10 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        mkdir expression_data &&
-        ln -s '${matrix}' expression_data/matrix.mtx &&
-        ln -s '${genes}' expression_data/genes.tsv &&
-        ln -s '${barcodes}' expression_data/barcodes.tsv &&
-        
-        downsample_cells.R --expression-data expression_data --metadata "${metadata}" --cell-id-field "${cell_id_field}" --cell-type-field "${cell_type_field}" --array-size-limit "${array_size_limit}" --output-dir "${output_dir}" --metadata-upd "${metadata_upd}"
+        ln -s "${matrix}" matrix.mtx &&
+        ln -s "${genes}" genes.tsv &&
+        ln -s "${barcodes}" barcodes.tsv &&
+        downsample_cells.R --expression-data . --metadata "${metadata}" --cell-id-field "${cell_id_field}" --cell-type-field "${cell_type_field}" --array-size-limit "${array_size_limit}" --output-dir "${output_dir}" --metadata-upd "${metadata_upd}"
 
         #if $exclusions
         --exclusions "${exclusions}"
@@ -24,13 +22,28 @@
         <param type="data" name="metadata" format="txt" label="Metadata Table" help="Metadata file mapping cells to cell types" />
         <param type="text" name="cell_id_field" label="Cell ID Field" optional="true" value="id" help="Cell ID field" />
         <param type="text" name="cell_type_field" label="Cell Type Field" optional="true" value="inferred.cell.type" help="Name of cell type column in metada file" />
+        <param type="data" name="exclusions" label="Exclusions file" format="yml" optional="true" help="Yaml file with trivial terms and unlabelled cells" />
         <param type="integer" name="array_size_limit" value='2000000000' label="Array Size Limit" help="Maximum length of R array" />
     </inputs>
     
     <outputs>
-        <collection name="output_dir" type="list" />
-        <data name="metadata_upd" format="txt" />
+        <collection name="output_dir" type="list" label="Updated matrix data">
+            <data name="matrix" from_work_dir="matrix.mtx" />
+            <data name="barcodes" from_work_dir="barcodes.tsv" />
+            <data name="genes" from_work_dir="genes.tsv" />
+        </collection>
+        <data name="metadata_upd" format="txt" label="Updated metadata" />
     </outputs>
+    <tests>
+        <test>
+            <param name="matrix" value="10x_data/matrix.mtx" />
+            <param name="genes" value="10x_data/genes.tsv" />
+            <param name="barcodes" value="10x_data/barcodes.tsv" />
+            <param name="metadata" value="E-GEOD-83139.sdrf.txt" />
+            <output name="output_dir" file="10x_data_sampled" compare="sim_size" />
+            <output name="metadata_upd" file="checked_SDRF.tsv" compare="sim_size"/>
+        </test>
+    </tests>
 
     <help><![CDATA[
     @HELP@
