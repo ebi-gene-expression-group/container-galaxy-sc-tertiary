@@ -1,0 +1,638 @@
+# tool scmap-cell 
+# dataset E-GEOD-81608
+"cell_id"	"predicted_label"	"score"
+"AAJF122_12730"	"pancreatic A cell"	"0.910529477949815"
+"AAJF122_12731"	"pancreatic A cell"	"0.905913069022508"
+"AAJF122_12732"	"unassigned"	NA
+"AAJF122_12733"	"pancreatic A cell"	"0.846541499159095"
+"AAJF122_12734"	"unassigned"	NA
+"AAJF122_12735"	"pancreatic A cell"	"0.867007683465668"
+"AAJF122_12736"	"unassigned"	NA
+"AAJF122_12737"	"pancreatic A cell"	"0.913563357489918"
+"AAJF122_12738"	"unassigned"	NA
+"AAJF122_12739"	"unassigned"	NA
+"AAJF122_12740"	"unassigned"	NA
+"AAJF122_12741"	"pancreatic A cell"	"0.867161210862337"
+"AAJF122_12742"	"pancreatic A cell"	"0.893917649490508"
+"AAJF122_12743"	"pancreatic A cell"	"0.882549860796656"
+"AAJF122_12744"	"unassigned"	NA
+"AAJF122_12745"	"pancreatic A cell"	"0.853856486184382"
+"AAJF122_12747"	"type B pancreatic cell"	"0.526465622339636"
+"AAJF122_12748"	"pancreatic A cell"	"0.897110458728175"
+"AAJF122_12749"	"pancreatic A cell"	"0.896226244106657"
+"AAJF122_12750"	"unassigned"	NA
+"AAJF122_12751"	"unassigned"	NA
+"AAJF122_12752"	"pancreatic A cell"	"0.81821829963695"
+"AAJF122_12753"	"pancreatic A cell"	"0.881058078355656"
+"AAJF122_12755"	"unassigned"	NA
+"AAJF122_12756"	"unassigned"	NA
+"AAJF122_12757"	"type B pancreatic cell"	"0.920985412065406"
+"AAJF122_12758"	"unassigned"	NA
+"AAJF122_12759"	"pancreatic A cell"	"0.882279716353719"
+"AAJF122_12761"	"pancreatic A cell"	"0.90269911046915"
+"AAJF122_12762"	"pancreatic A cell"	"0.918908799650373"
+"AAJF122_12763"	"type B pancreatic cell"	"0.883406700408126"
+"AAJF122_12764"	"pancreatic A cell"	"0.857562919581778"
+"AAJF122_12765"	"unassigned"	NA
+"AAJF122_12767"	"unassigned"	NA
+"AAJF122_12768"	"pancreatic A cell"	"0.909677746907744"
+"AAJF122_12769"	"unassigned"	NA
+"AAJF122_12770"	"pancreatic A cell"	"0.908587455931496"
+"AAJF122_12771"	"pancreatic A cell"	"0.904471172993006"
+"AAJF122_12772"	"unassigned"	NA
+"AAJF122_12773"	"pancreatic A cell"	"0.754742701872283"
+"AAJF122_12774"	"type B pancreatic cell"	"0.821677985575892"
+"AAJF122_12775"	"unassigned"	NA
+"AAJF122_12776"	"pancreatic A cell"	"0.881095875199826"
+"AAJF122_13778"	"pancreatic A cell"	"0.884324875672344"
+"AAJF122_13779"	"pancreatic A cell"	"0.924710156182403"
+"AAJF122_13780"	"pancreatic A cell"	"0.891315280695146"
+"AAJF122_13781"	"pancreatic A cell"	"0.89391001980412"
+"AAJF122_13782"	"pancreatic A cell"	"0.900544085646671"
+"AAJF122_13783"	"pancreatic A cell"	"0.857314248813929"
+"AAJF122_13784"	"pancreatic A cell"	"0.849162853481177"
+"AAJF122_13785"	"unassigned"	NA
+"AAJF122_13788"	"unassigned"	NA
+"AAJF122_13789"	"unassigned"	NA
+"AAJF122_13791"	"pancreatic A cell"	"0.847991257998918"
+"AAJF122_13794"	"pancreatic A cell"	"0.794637576945373"
+"AAJF122_13796"	"unassigned"	NA
+"ABAF490_16085"	"pancreatic A cell"	"0.860445158218803"
+"ABAF490_16086"	"unassigned"	NA
+"ABAF490_16087"	"pancreatic A cell"	"0.899512314872047"
+"ABAF490_16088"	"type B pancreatic cell"	"0.847870333247366"
+"ABAF490_16089"	"unassigned"	NA
+"ABAF490_16095"	"pancreatic A cell"	"0.754599530168196"
+"ABAF490_16096"	"type B pancreatic cell"	"0.838889277009299"
+"ABAF490_16097"	"unassigned"	NA
+"ABAF490_16098"	"pancreatic A cell"	"0.875206659516674"
+"ABAF490_16099"	"type B pancreatic cell"	"0.870041395146409"
+"ABAF490_16101"	"pancreatic A cell"	"0.690854905047899"
+"ABAF490_16102"	"unassigned"	NA
+"ABAF490_16103"	"pancreatic A cell"	"0.836785714964459"
+"ABAF490_16104"	"pancreatic A cell"	"0.917644664712407"
+"ABAF490_16105"	"unassigned"	NA
+"ABAF490_16106"	"type B pancreatic cell"	"0.86771123888582"
+"ABAF490_16107"	"unassigned"	NA
+"ABAF490_16108"	"type B pancreatic cell"	"0.85065981674503"
+"ABAF490_16109"	"pancreatic A cell"	"0.818898657628133"
+"ABAF490_16110"	"type B pancreatic cell"	"0.783651383856659"
+"ABAF490_16111"	"pancreatic A cell"	"0.929292560690149"
+"ABAF490_16112"	"type B pancreatic cell"	"0.809422924263651"
+"ABAF490_16113"	"type B pancreatic cell"	"0.824022839790674"
+"ABAF490_16114"	"pancreatic A cell"	"0.827296244742113"
+"ABAF490_16115"	"type B pancreatic cell"	"0.772770696781033"
+"ABAF490_16116"	"type B pancreatic cell"	"0.893855471857774"
+"ABAF490_16117"	"unassigned"	NA
+"ABAF490_16118"	"pancreatic A cell"	"0.91893903453183"
+"ABAF490_16119"	"type B pancreatic cell"	"0.819421487506162"
+"ABAF490_16120"	"type B pancreatic cell"	"0.792664515047906"
+"ABAF490_16124"	"type B pancreatic cell"	"0.836826997645417"
+"ABAF490_16125"	"unassigned"	NA
+"ABAF490_16126"	"pancreatic A cell"	"0.876483040076653"
+"ABAF490_16127"	"pancreatic A cell"	"0.921097529039033"
+"ABAF490_16129"	"unassigned"	NA
+"ABAF490_16130"	"pancreatic A cell"	"0.908705566769647"
+"ABAF490_16132"	"unassigned"	NA
+"ABAF490_16133"	"type B pancreatic cell"	"0.780164038045632"
+"ABAF490_16134"	"type B pancreatic cell"	"0.904823173181084"
+"ABAF490_16135"	"type B pancreatic cell"	"0.792988626076908"
+"ABAF490_16136"	"unassigned"	NA
+"ABAF490_16139"	"pancreatic A cell"	"0.886649062650809"
+"ABAF490_16140"	"pancreatic A cell"	"0.91622997871999"
+"ABAF490_16141"	"unassigned"	NA
+"ICRH80_29357"	"pancreatic A cell"	"0.882916738523859"
+"ICRH80_29358"	"unassigned"	NA
+"ICRH80_29359"	"unassigned"	NA
+"ICRH80_29360"	"type B pancreatic cell"	"0.824103870527049"
+"ICRH80_29361"	"unassigned"	NA
+"ICRH80_29362"	"type B pancreatic cell"	"0.687763326002839"
+"ICRH80_29364"	"unassigned"	NA
+"ICRH80_29365"	"unassigned"	NA
+"ICRH80_29367"	"unassigned"	NA
+"ICRH80_29370"	"unassigned"	NA
+"ICRH80_29371"	"unassigned"	NA
+"ICRH80_29372"	"unassigned"	NA
+"ICRH80_29373"	"unassigned"	NA
+"ICRH80_29374"	"unassigned"	NA
+"ICRH80_29375"	"pancreatic A cell"	"0.932589853331414"
+"ICRH80_29376"	"unassigned"	NA
+"ICRH80_29377"	"unassigned"	NA
+"ICRH80_29379"	"type B pancreatic cell"	"0.85047883737083"
+"ICRH80_29380"	"pancreatic A cell"	"0.920476122982534"
+"ICRH80_29381"	"type B pancreatic cell"	"0.580667103250167"
+"ICRH80_29382"	"unassigned"	NA
+"ICRH80_29383"	"unassigned"	NA
+"ICRH80_29384"	"unassigned"	NA
+"ICRH80_29385"	"type B pancreatic cell"	"0.871150155989548"
+"ICRH80_29386"	"pancreatic A cell"	"0.903411079873402"
+"ICRH80_29388"	"unassigned"	NA
+"ICRH80_29389"	"type B pancreatic cell"	"0.888460266355922"
+"ICRH80_29390"	"type B pancreatic cell"	"0.871531356578901"
+"ICRH80_29391"	"pancreatic D cell"	"0.600384873678349"
+"ICRH80_29392"	"pancreatic A cell"	"0.874298960450355"
+"ICRH80_29393"	"unassigned"	NA
+"ICRH80_29394"	"unassigned"	NA
+"ICRH80_29400"	"type B pancreatic cell"	"0.873205652253108"
+"ICRH80_29405"	"unassigned"	NA
+"ICRH80_29406"	"unassigned"	NA
+"ABAF490_16142"	"type B pancreatic cell"	"0.82861455883648"
+"ABAF490_16143"	"pancreatic A cell"	"0.880945979699944"
+"ABAF490_16144"	"type B pancreatic cell"	"0.808076241841649"
+"ABAF490_16145"	"pancreatic A cell"	"0.907028092323665"
+"ABAF490_16147"	"unassigned"	NA
+"ABAF490_16148"	"pancreatic A cell"	"0.850084250170775"
+"ABAF490_16150"	"type B pancreatic cell"	"0.88284390097649"
+"ABAF490_16151"	"pancreatic A cell"	"0.909251972412844"
+"ABAF490_16152"	"pancreatic A cell"	"0.916018187514229"
+"ABAF490_16153"	"type B pancreatic cell"	"0.890417085767667"
+"ABAF490_16154"	"type B pancreatic cell"	"0.822184845659729"
+"ABAF490_16158"	"pancreatic A cell"	"0.930426201581854"
+"ABAF490_16159"	"type B pancreatic cell"	"0.834245320563071"
+"ABAF490_16161"	"pancreatic A cell"	"0.871714442235102"
+"ABAF490_16162"	"type B pancreatic cell"	"0.87081226776596"
+"ABAF490_16163"	"pancreatic A cell"	"0.919755965731742"
+"ABAF490_16164"	"unassigned"	NA
+"ABAF490_16165"	"unassigned"	NA
+"ABAF490_16166"	"pancreatic A cell"	"0.909663450030214"
+"ABAF490_16167"	"pancreatic A cell"	"0.877947450609974"
+"ABAF490_16169"	"type B pancreatic cell"	"0.862180485733206"
+"ABAF490_16170"	"unassigned"	NA
+"ABAF490_16171"	"pancreatic A cell"	"0.883640756400676"
+"ABAF490_16173"	"type B pancreatic cell"	"0.856544431578688"
+"ABAF490_16174"	"pancreatic A cell"	"0.874750580886285"
+"ABAF490_16175"	"pancreatic A cell"	"0.924162534782949"
+"ABAF490_16176"	"type B pancreatic cell"	"0.871322835137077"
+"ABAF490_16177"	"pancreatic A cell"	"0.801086204175127"
+"ABAF490_16179"	"type B pancreatic cell"	"0.873170774538232"
+"ABAF490_16180"	"unassigned"	NA
+"ACAP236_22209"	"pancreatic A cell"	"0.647868976043866"
+"ACAP236_22210"	"pancreatic A cell"	"0.624374698477448"
+"ACAP236_22211"	"type B pancreatic cell"	"0.617168813296476"
+"ACAP236_22212"	"type B pancreatic cell"	"0.819775732812695"
+"ACAP236_22213"	"unassigned"	NA
+"ACAP236_22214"	"pancreatic A cell"	"0.73161100489363"
+"ACAP236_22215"	"pancreatic A cell"	"0.793457945778841"
+"ACAP236_22216"	"pancreatic A cell"	"0.746176523228082"
+"ACAP236_22217"	"pancreatic A cell"	"0.696414962000958"
+"ACAP236_22218"	"type B pancreatic cell"	"0.868350304613917"
+"ACAP236_22219"	"unassigned"	NA
+"ACAP236_22220"	"type B pancreatic cell"	"0.701670054362431"
+"ACAP236_22221"	"unassigned"	NA
+"ACAP236_22222"	"pancreatic A cell"	"0.776780963905434"
+"ACAP236_22223"	"unassigned"	NA
+"ACAP236_22224"	"pancreatic A cell"	"0.727602622504619"
+"ACAP236_22225"	"type B pancreatic cell"	"0.742044390568634"
+"ACAP236_22226"	"pancreatic A cell"	"0.660577235397848"
+"ACAP236_22227"	"unassigned"	NA
+"ACAP236_22228"	"type B pancreatic cell"	"0.826951173514609"
+"ACAP236_22229"	"pancreatic A cell"	"0.790593314410244"
+"ACAP236_22230"	"pancreatic A cell"	"0.729169429858016"
+"ACAP236_22231"	"unassigned"	NA
+"ACAP236_22232"	"pancreatic A cell"	"0.804830386463008"
+"ACAP236_22233"	"type B pancreatic cell"	"0.739320234403357"
+"ACAP236_22234"	"unassigned"	NA
+"ACAP236_22235"	"pancreatic A cell"	"0.660813488177072"
+"ACAP236_22236"	"pancreatic A cell"	"0.783482412003271"
+"ACAP236_22237"	"unassigned"	NA
+"ACAP236_22238"	"unassigned"	NA
+"ACAP236_22239"	"unassigned"	NA
+"ACAP236_22240"	"pancreatic A cell"	"0.553297199920252"
+"ACAP236_22242"	"pancreatic A cell"	"0.780166942499829"
+"ACAP236_22243"	"unassigned"	NA
+"ACAP236_22244"	"unassigned"	NA
+"ACAP236_22245"	"pancreatic A cell"	"0.758730481527617"
+"ACAP236_22246"	"type B pancreatic cell"	"0.785047344200474"
+"ACAP236_22247"	"pancreatic A cell"	"0.797868838231583"
+"ACAP236_22248"	"pancreatic A cell"	"0.771391538477623"
+"ACAP236_22250"	"pancreatic A cell"	"0.779819319837834"
+"ACAP236_22251"	"unassigned"	NA
+"ACAP236_22252"	"pancreatic A cell"	"0.838528552230762"
+"ACAP236_22253"	"type B pancreatic cell"	"0.785233653427744"
+"ACAP236_22254"	"pancreatic A cell"	"0.661906448183449"
+"ACAP236_22255"	"pancreatic A cell"	"0.679064448997358"
+"ACAP236_22256"	"unassigned"	NA
+"ACAP236_22257"	"unassigned"	NA
+"ACAP236_22258"	"unassigned"	NA
+"ACAP236_22259"	"type B pancreatic cell"	"0.848815178933804"
+"ACAP236_22260"	"unassigned"	NA
+"ACAP236_22261"	"type B pancreatic cell"	"0.895941120103986"
+"ACAP236_22262"	"unassigned"	NA
+"ACAP236_22263"	"pancreatic A cell"	"0.909031756466121"
+"ACAP236_22264"	"pancreatic A cell"	"0.883870662096813"
+"ACAP236_22265"	"pancreatic A cell"	"0.883903035415159"
+"ACAP236_22266"	"pancreatic A cell"	"0.910783248105457"
+"ACAP236_22267"	"unassigned"	NA
+"ACAP236_22268"	"pancreatic A cell"	"0.896403732998327"
+"ACAP236_22269"	"pancreatic A cell"	"0.924769671388994"
+"ACAP236_22270"	"pancreatic A cell"	"0.853251798014856"
+"ACAP236_22272"	"pancreatic A cell"	"0.832894234520867"
+"ACAP236_22273"	"type B pancreatic cell"	"0.851010365053892"
+"ACAP236_22274"	"unassigned"	NA
+"ACAP236_22275"	"pancreatic A cell"	"0.915070520045198"
+"ACAP236_22276"	"unassigned"	NA
+"ACAP236_22277"	"pancreatic A cell"	"0.699169807633083"
+"ACAP236_22278"	"pancreatic A cell"	"0.838923539031188"
+"ACAP236_22279"	"pancreatic A cell"	"0.764297622478179"
+"ACAP236_22280"	"pancreatic A cell"	"0.795762598036977"
+"ACAP236_22281"	"pancreatic A cell"	"0.836876034145645"
+"ACGI428_29490"	"unassigned"	NA
+"ACGI428_29491"	"unassigned"	NA
+"ACGI428_29492"	"unassigned"	NA
+"ACGI428_29493"	"unassigned"	NA
+"ACGI428_29494"	"unassigned"	NA
+"ACGI428_29495"	"unassigned"	NA
+"ACGI428_29497"	"unassigned"	NA
+"ACGI428_29498"	"unassigned"	NA
+"ACGI428_29499"	"unassigned"	NA
+"ACGI428_29500"	"unassigned"	NA
+"ACGI428_29501"	"unassigned"	NA
+"ACGI428_29502"	"unassigned"	NA
+"ACGI428_29503"	"type B pancreatic cell"	"0.795166838948198"
+"HP_15041_22907"	"unassigned"	NA
+"HP_15041_22909"	"type B pancreatic cell"	"0.876935989437416"
+"HP_15041_22912"	"pancreatic A cell"	"0.780008510457012"
+"HP_15041_22914"	"pancreatic A cell"	"0.605472106986965"
+"HP_15041_22916"	"unassigned"	NA
+"HP_15041_22918"	"unassigned"	NA
+"HP_15041_22919"	"unassigned"	NA
+"HP_15041_22920"	"pancreatic A cell"	"0.529234454164335"
+"HP_15041_22921"	"unassigned"	NA
+"HP_15041_22922"	"pancreatic A cell"	"0.770052044613211"
+"HP_15041_22925"	"pancreatic A cell"	"0.759364004533435"
+"HP_15041_22926"	"type B pancreatic cell"	"0.762189337420831"
+"HP_15041_22935"	"type B pancreatic cell"	"0.816473605312941"
+"HP_15041_22936"	"type B pancreatic cell"	"0.788200590941722"
+"HP_15041_22938"	"pancreatic A cell"	"0.788055294659684"
+"HP_15041_22939"	"pancreatic A cell"	"0.855604732160562"
+"HP_15041_22940"	"pancreatic A cell"	"0.895650347920729"
+"HP_15041_22941"	"pancreatic A cell"	"0.850185044540799"
+"HP_15041_22942"	"pancreatic A cell"	"0.900190215987969"
+"HP_15041_22943"	"pancreatic A cell"	"0.905348801308644"
+"HP_15041_22944"	"pancreatic A cell"	"0.824587413991541"
+"HP_15041_22945"	"pancreatic A cell"	"0.918820802344569"
+"HP_15041_22946"	"pancreatic A cell"	"0.889068407145761"
+"HP_15041_22947"	"pancreatic A cell"	"0.919608039712797"
+"HP_15041_22948"	"pancreatic A cell"	"0.858651221063039"
+"HP_15041_22949"	"pancreatic A cell"	"0.788206428684548"
+"HP_15041_22950"	"pancreatic A cell"	"0.888618090575005"
+"HP_15041_22952"	"pancreatic A cell"	"0.822235190669498"
+"HP_15041_22953"	"pancreatic A cell"	"0.834267712965983"
+"HP_15041_22954"	"unassigned"	NA
+"HP_15041_22955"	"pancreatic A cell"	"0.788606813441602"
+"HP_15041_22956"	"unassigned"	NA
+"HP_15041_22957"	"unassigned"	NA
+"HP_15041_22958"	"pancreatic A cell"	"0.890091911860737"
+"HP_15041_22959"	"pancreatic A cell"	"0.911683511540267"
+"HP_15041_22960"	"pancreatic A cell"	"0.923597624307711"
+"HP_15041_22962"	"pancreatic A cell"	"0.891192306877248"
+"HP_15041_22963"	"pancreatic A cell"	"0.812192026061339"
+"HP_15041_22964"	"pancreatic A cell"	"0.851389747707082"
+"HP_15041_22965"	"pancreatic A cell"	"0.85297301889695"
+"HP_15041_22966"	"pancreatic A cell"	"0.878552972610838"
+"HP_15041_22967"	"pancreatic A cell"	"0.919929694517091"
+"HP_15041_22968"	"unassigned"	NA
+"HP_15041_22969"	"pancreatic A cell"	"0.892033450846784"
+"HP_15041_22970"	"unassigned"	NA
+"HP_15041_22971"	"unassigned"	NA
+"HP_15041_22972"	"pancreatic A cell"	"0.925038635011896"
+"HP_15041_22973"	"pancreatic A cell"	"0.808586345133455"
+"HP_15041_22974"	"pancreatic A cell"	"0.705420533131749"
+"HP_15041_22975"	"pancreatic A cell"	"0.84722136590921"
+"HP_15041_22976"	"pancreatic A cell"	"0.698914065466559"
+"HP_15041_22977"	"pancreatic A cell"	"0.851175360881403"
+"HP_15041_22978"	"pancreatic A cell"	"0.885238914342187"
+"HP_15041_22979"	"unassigned"	NA
+"HP_15041_22980"	"pancreatic A cell"	"0.819369750997265"
+"HP_15041_22982"	"pancreatic A cell"	"0.889354739886452"
+"HP_15041_22983"	"pancreatic A cell"	"0.891242875524542"
+"HP_15041_22984"	"pancreatic A cell"	"0.935630212131531"
+"HP_15041_22985"	"pancreatic A cell"	"0.860230678699109"
+"HP_15041_22986"	"pancreatic A cell"	"0.907620378217836"
+"HP_15041_22987"	"pancreatic A cell"	"0.882281387907202"
+"HP_15041_22988"	"pancreatic A cell"	"0.83979443851119"
+"HP_15041_22989"	"pancreatic A cell"	"0.928612016863501"
+"HP_15041_22990"	"pancreatic A cell"	"0.823184178919106"
+"HP_15041_22991"	"pancreatic A cell"	"0.909619071134703"
+"HP_15041_22992"	"type B pancreatic cell"	"0.822106421503733"
+"HP_15041_22993"	"pancreatic A cell"	"0.869063236996658"
+"HP_15041_22994"	"pancreatic A cell"	"0.855132686982164"
+"HP_15041_22995"	"unassigned"	NA
+"HP_15041_22996"	"pancreatic A cell"	"0.912730073140912"
+"HP_15041_22997"	"pancreatic A cell"	"0.794231138649182"
+"HP_15041_22998"	"pancreatic A cell"	"0.789785524841752"
+"HP_15041_23000"	"pancreatic A cell"	"0.845205221117239"
+"HP_15041_23001"	"pancreatic A cell"	"0.824504287266346"
+"HP_15041_23002"	"unassigned"	NA
+"HP_15085_01T2D__8dcult_26031"	"pancreatic A cell"	"0.702468088156244"
+"HP_15085_01T2D__8dcult_26032"	"type B pancreatic cell"	"0.858064172376608"
+"HP_15085_01T2D__8dcult_26033"	"pancreatic A cell"	"0.88469495572599"
+"HP_15085_01T2D__8dcult_26034"	"unassigned"	NA
+"HP_15085_01T2D__8dcult_26035"	"pancreatic A cell"	"0.684129097959034"
+"HP_15085_01T2D__8dcult_26036"	"type B pancreatic cell"	"0.87811083322288"
+"HP_15085_01T2D__8dcult_26038"	"type B pancreatic cell"	"0.77669449507079"
+"HP_15085_01T2D__8dcult_26039"	"type B pancreatic cell"	"0.816155527279464"
+"HP_15085_01T2D__8dcult_26040"	"type B pancreatic cell"	"0.886050380943762"
+"HP_15085_01T2D__8dcult_26041"	"unassigned"	NA
+"HP_15085_01T2D__8dcult_26042"	"type B pancreatic cell"	"0.857252609069055"
+"HP_15085_01T2D__8dcult_26043"	"pancreatic A cell"	"0.883472817417037"
+"ACAP236_22282"	"unassigned"	NA
+"ACAP236_22283"	"pancreatic A cell"	"0.853003180960331"
+"ACAP236_22284"	"unassigned"	NA
+"ACAP236_22285"	"type B pancreatic cell"	"0.837374892578622"
+"ACAP236_22286"	"pancreatic A cell"	"0.843212260159111"
+"ACAP236_22287"	"pancreatic A cell"	"0.860410410927986"
+"ACAP236_22288"	"pancreatic A cell"	"0.912588860757131"
+"ACAP236_22289"	"pancreatic A cell"	"0.854832354982601"
+"ACAP236_22290"	"pancreatic A cell"	"0.912275657937805"
+"ACAP236_22291"	"pancreatic A cell"	"0.900881671065535"
+"ACAP236_22292"	"pancreatic A cell"	"0.897022976278749"
+"ACAP236_22293"	"type B pancreatic cell"	"0.880048205888444"
+"ACAP236_22294"	"unassigned"	NA
+"ACAP236_22295"	"pancreatic A cell"	"0.86504993018226"
+"ACAP236_22297"	"pancreatic A cell"	"0.856472557370714"
+"ACAP236_22298"	"pancreatic A cell"	"0.914768369125477"
+"ACAP236_22299"	"pancreatic A cell"	"0.878340888368443"
+"ACAP236_22300"	"unassigned"	NA
+"ACAP236_22301"	"unassigned"	NA
+"ACAP236_22302"	"unassigned"	NA
+"ACAP236_22303"	"pancreatic A cell"	"0.864699682306776"
+"ACAP236_22304"	"pancreatic A cell"	"0.805748528209966"
+"ACGI428_29408"	"unassigned"	NA
+"ACGI428_29410"	"unassigned"	NA
+"ACGI428_29412"	"pancreatic A cell"	"0.873892789117219"
+"ACGI428_29414"	"unassigned"	NA
+"ACGI428_29415"	"unassigned"	NA
+"ACGI428_29416"	"unassigned"	NA
+"ACGI428_29417"	"pancreatic A cell"	"0.795077252036758"
+"ACGI428_29418"	"unassigned"	NA
+"ACGI428_29419"	"unassigned"	NA
+"ACGI428_29420"	"unassigned"	NA
+"ACGI428_29421"	"unassigned"	NA
+"ACGI428_29422"	"unassigned"	NA
+"ACGI428_29423"	"unassigned"	NA
+"ACGI428_29424"	"unassigned"	NA
+"ACGI428_29425"	"unassigned"	NA
+"ACGI428_29426"	"type B pancreatic cell"	"0.79996510122869"
+"ACGI428_29427"	"unassigned"	NA
+"ACGI428_29428"	"unassigned"	NA
+"ACGI428_29429"	"unassigned"	NA
+"ACGI428_29430"	"unassigned"	NA
+"ACGI428_29431"	"type B pancreatic cell"	"0.863097007549525"
+"ACGI428_29432"	"unassigned"	NA
+"ACGI428_29433"	"pancreatic A cell"	"0.891634998053524"
+"ACGI428_29434"	"unassigned"	NA
+"ACGI428_29435"	"unassigned"	NA
+"ACGI428_29436"	"unassigned"	NA
+"ACGI428_29437"	"unassigned"	NA
+"ACGI428_29438"	"pancreatic A cell"	"0.817692369022115"
+"ACGI428_29439"	"unassigned"	NA
+"ACGI428_29440"	"unassigned"	NA
+"ACGI428_29441"	"unassigned"	NA
+"ACGI428_29442"	"unassigned"	NA
+"ACGI428_29443"	"unassigned"	NA
+"ACGI428_29444"	"type B pancreatic cell"	"0.863376056791267"
+"ACGI428_29445"	"unassigned"	NA
+"ACGI428_29446"	"pancreatic A cell"	"0.85995326088975"
+"ACGI428_29447"	"unassigned"	NA
+"ACGI428_29448"	"unassigned"	NA
+"ACGI428_29449"	"unassigned"	NA
+"ACGI428_29450"	"pancreatic A cell"	"0.827460677858256"
+"ACGI428_29451"	"unassigned"	NA
+"ACGI428_29452"	"unassigned"	NA
+"ACGI428_29453"	"unassigned"	NA
+"ACGI428_29454"	"unassigned"	NA
+"ACGI428_29455"	"unassigned"	NA
+"ACGI428_29456"	"unassigned"	NA
+"ACGI428_29457"	"unassigned"	NA
+"ACGI428_29458"	"unassigned"	NA
+"ACGI428_29459"	"type B pancreatic cell"	"0.87825453405839"
+"ACGI428_29460"	"unassigned"	NA
+"ACGI428_29461"	"unassigned"	NA
+"ACGI428_29462"	"type B pancreatic cell"	"0.818294326269849"
+"ACGI428_29463"	"unassigned"	NA
+"ACGI428_29464"	"unassigned"	NA
+"ACGI428_29465"	"unassigned"	NA
+"ACGI428_29466"	"unassigned"	NA
+"ACGI428_29467"	"unassigned"	NA
+"ACGI428_29469"	"unassigned"	NA
+"ACGI428_29470"	"unassigned"	NA
+"ACGI428_29471"	"unassigned"	NA
+"ACGI428_29472"	"unassigned"	NA
+"ACGI428_29473"	"type B pancreatic cell"	"0.897242750160121"
+"ACGI428_29474"	"unassigned"	NA
+"ACGI428_29475"	"unassigned"	NA
+"ACGI428_29476"	"unassigned"	NA
+"ACGI428_29477"	"unassigned"	NA
+"ACGI428_29478"	"unassigned"	NA
+"ACGI428_29479"	"unassigned"	NA
+"ACGI428_29480"	"unassigned"	NA
+"ACGI428_29481"	"unassigned"	NA
+"ACGI428_29482"	"unassigned"	NA
+"ACGI428_29483"	"unassigned"	NA
+"ACGI428_29484"	"unassigned"	NA
+"ACGI428_29485"	"unassigned"	NA
+"ACGI428_29486"	"unassigned"	NA
+"ACGI428_29487"	"unassigned"	NA
+"ACGI428_29488"	"unassigned"	NA
+"ACGI428_29489"	"unassigned"	NA
+"HP_15085_01T2D__8dcult_26045"	"unassigned"	NA
+"HP_15085_01T2D__8dcult_26046"	"pancreatic A cell"	"0.925726724576361"
+"HP_15085_01T2D__8dcult_26047"	"pancreatic A cell"	"0.874372681313913"
+"HP_15085_01T2D__8dcult_26048"	"unassigned"	NA
+"HP_15085_01T2D__8dcult_26049"	"unassigned"	NA
+"HP_15085_01T2D__8dcult_26050"	"unassigned"	NA
+"HP_15085_01T2D__8dcult_26052"	"unassigned"	NA
+"HP_15085_01T2D__8dcult_26053"	"unassigned"	NA
+"HP_15085_01T2D__8dcult_26054"	"unassigned"	NA
+"HP_15085_01T2D__8dcult_26055"	"type B pancreatic cell"	"0.895086046737156"
+"HP_15085_01T2D__8dcult_26056"	"pancreatic A cell"	"0.861644832551149"
+"HP_15085_01T2D__8dcult_26057"	"type B pancreatic cell"	"0.820701398174203"
+"HP_15085_01T2D__8dcult_26059"	"type B pancreatic cell"	"0.679574003191426"
+"HP_15085_01T2D__8dcult_26060"	"unassigned"	NA
+"HP_15085_01T2D__8dcult_26061"	"unassigned"	NA
+"HP_15085_01T2D__8dcult_26062"	"pancreatic A cell"	"0.887377422400562"
+"HP_15085_01T2D__8dcult_26063"	"pancreatic A cell"	"0.728797890487175"
+"HP_15085_01T2D__8dcult_26064"	"type B pancreatic cell"	"0.779805448383102"
+"HP_15085_01T2D__8dcult_26066"	"type B pancreatic cell"	"0.731778647857162"
+"HP_15085_01T2D__8dcult_26067"	"pancreatic A cell"	"0.899125833873384"
+"HP_15085_01T2D__8dcult_26068"	"pancreatic A cell"	"0.885447869195578"
+"HP_15085_01T2D__8dcult_26069"	"unassigned"	NA
+"HP_15085_01T2D__8dcult_26070"	"type B pancreatic cell"	"0.815417360204219"
+"HP_15085_01T2D__8dcult_26071"	"unassigned"	NA
+"HP_15085_01T2D__8dcult_26073"	"unassigned"	NA
+"HP_15085_01T2D__8dcult_26074"	"type B pancreatic cell"	"0.820160414318211"
+"HP_15085_01T2D__8dcult_26075"	"unassigned"	NA
+"HP_15085_01T2D__8dcult_26076"	"unassigned"	NA
+"HP_15085_01T2D__8dcult_26077"	"unassigned"	NA
+"HP_15085_01T2D__8dcult_26078"	"pancreatic A cell"	"0.60919381187185"
+"HP_15085_01T2D__8dcult_26079"	"type B pancreatic cell"	"0.541709851284021"
+"HP_15085_01T2D__8dcult_26080"	"pancreatic A cell"	"0.875493524506881"
+"HP_15085_01T2D__8dcult_26081"	"unassigned"	NA
+"HP_15085_01T2D__8dcult_26082"	"unassigned"	NA
+"HP_15085_01T2D__8dcult_26083"	"unassigned"	NA
+"HP_15085_01T2D__8dcult_26084"	"pancreatic A cell"	"0.898146504669239"
+"HP_15085_01T2D__fresh_25937"	"type B pancreatic cell"	"0.757487004305946"
+"HP_15085_01T2D__fresh_25938"	"pancreatic A cell"	"0.763740378217685"
+"HP_15085_01T2D__fresh_25939"	"pancreatic A cell"	"0.907756312218296"
+"HP_15085_01T2D__fresh_25940"	"type B pancreatic cell"	"0.853498016532578"
+"HP_15085_01T2D__fresh_25942"	"unassigned"	NA
+"HP_15085_01T2D__fresh_25943"	"pancreatic A cell"	"0.912474979882192"
+"HP_15085_01T2D__fresh_25944"	"type B pancreatic cell"	"0.836316839973743"
+"HP_15085_01T2D__fresh_25945"	"unassigned"	NA
+"HP_15085_01T2D__fresh_25946"	"pancreatic A cell"	"0.899886817199754"
+"HP_15085_01T2D__fresh_25948"	"pancreatic A cell"	"0.836548097812805"
+"HP_15085_01T2D__fresh_25950"	"pancreatic A cell"	"0.828706463982067"
+"HP_15085_01T2D__fresh_25951"	"pancreatic A cell"	"0.911769792665619"
+"HP_15085_01T2D__fresh_25952"	"unassigned"	NA
+"HP_15085_01T2D__fresh_25953"	"pancreatic A cell"	"0.851131110019893"
+"HP_15085_01T2D__fresh_25954"	"pancreatic A cell"	"0.881542973975307"
+"HP_15085_01T2D__fresh_25955"	"unassigned"	NA
+"HP_15085_01T2D__fresh_25956"	"pancreatic A cell"	"0.878421052189558"
+"HP_15085_01T2D__fresh_25957"	"pancreatic A cell"	"0.891309304910202"
+"HP_15085_01T2D__fresh_25958"	"pancreatic A cell"	"0.896794805211875"
+"HP_15085_01T2D__fresh_25959"	"type B pancreatic cell"	"0.770446749921068"
+"HP_15085_01T2D__fresh_25960"	"pancreatic A cell"	"0.819600361342854"
+"HP_15085_01T2D__fresh_25961"	"pancreatic A cell"	"0.800587008175655"
+"HP_15085_01T2D__fresh_25962"	"pancreatic A cell"	"0.669245121240793"
+"HP_15085_01T2D__fresh_25963"	"type B pancreatic cell"	"0.836622088599904"
+"HP_15085_01T2D__fresh_25964"	"pancreatic A cell"	"0.856199821927467"
+"HP_15085_01T2D__fresh_25965"	"type B pancreatic cell"	"0.837314141901073"
+"HP_15085_01T2D__fresh_25966"	"unassigned"	NA
+"HP_15085_01T2D__fresh_25967"	"pancreatic A cell"	"0.88912672066494"
+"HP_15085_01T2D__fresh_25969"	"pancreatic A cell"	"0.686977351120082"
+"HP_15085_01T2D__fresh_25970"	"pancreatic A cell"	"0.857944639060834"
+"HP_15085_01T2D__fresh_25971"	"unassigned"	NA
+"HP_15085_01T2D__fresh_25972"	"pancreatic A cell"	"0.827845863078566"
+"HP_15085_01T2D__fresh_25973"	"pancreatic A cell"	"0.812941225250834"
+"HP_15085_01T2D__fresh_25974"	"pancreatic A cell"	"0.775795692568024"
+"HP_15085_01T2D__fresh_25975"	"unassigned"	NA
+"HP_15085_01T2D__fresh_25976"	"pancreatic A cell"	"0.894765141246896"
+"HP_15085_01T2D__fresh_25977"	"type B pancreatic cell"	"0.879117483769579"
+"HP_15085_01T2D__fresh_25978"	"unassigned"	NA
+"HP_15085_01T2D__fresh_25979"	"unassigned"	NA
+"HP_15085_01T2D__fresh_25980"	"unassigned"	NA
+"HP_15085_01T2D__fresh_25981"	"pancreatic A cell"	"0.916539456703949"
+"HP_15085_01T2D__fresh_25982"	"pancreatic A cell"	"0.939084772275752"
+"HP_15085_01T2D__fresh_25984"	"pancreatic A cell"	"0.850849947709485"
+"HP_15085_01T2D__fresh_25986"	"unassigned"	NA
+"HP_15085_01T2D__fresh_25987"	"pancreatic A cell"	"0.894599123074812"
+"HP_15085_01T2D__fresh_25988"	"unassigned"	NA
+"HP_15085_01T2D__fresh_25989"	"unassigned"	NA
+"HP_15085_01T2D__fresh_25990"	"pancreatic A cell"	"0.813738024310291"
+"HP_15085_01T2D__fresh_25991"	"pancreatic A cell"	"0.863257255608625"
+"HP_15085_01T2D__fresh_25992"	"unassigned"	NA
+"HP_15085_01T2D__fresh_25993"	"pancreatic A cell"	"0.893753680516727"
+"HP_15085_01T2D__fresh_25994"	"pancreatic A cell"	"0.872100983924085"
+"HP_15085_01T2D__fresh_26007"	"unassigned"	NA
+"HP_15085_01T2D__fresh_26008"	"unassigned"	NA
+"HP_15085_01T2D__fresh_26009"	"pancreatic A cell"	"0.553902547757598"
+"HP_15085_01T2D__fresh_26010"	"unassigned"	NA
+"HP_15085_01T2D__fresh_26011"	"unassigned"	NA
+"HP_15085_01T2D__fresh_26012"	"type B pancreatic cell"	"0.858510229748187"
+"HP_15085_01T2D__fresh_26013"	"unassigned"	NA
+"HP_15085_01T2D__fresh_26014"	"pancreatic A cell"	"0.87512961661481"
+"HP_15085_01T2D__fresh_26015"	"pancreatic A cell"	"0.883376731105591"
+"HP_15085_01T2D__fresh_26016"	"unassigned"	NA
+"HP_15085_01T2D__fresh_26018"	"pancreatic A cell"	"0.884271742498025"
+"HP_15085_01T2D__fresh_26019"	"pancreatic A cell"	"0.819291373557364"
+"HP_15085_01T2D__fresh_26021"	"unassigned"	NA
+"HP_15085_01T2D__fresh_26022"	"pancreatic A cell"	"0.698450104997712"
+"HP_15085_01T2D__fresh_26023"	"unassigned"	NA
+"HP_15085_01T2D__fresh_26024"	"pancreatic A cell"	"0.853481371417641"
+"HP_15085_01T2D__fresh_26025"	"pancreatic A cell"	"0.893822254804984"
+"HP_15085_01T2D__fresh_26026"	"pancreatic A cell"	"0.93568997981235"
+"HP_15085_01T2D__fresh_26027"	"pancreatic A cell"	"0.882391717551601"
+"HP_15085_01T2D__fresh_26028"	"pancreatic A cell"	"0.892731315883402"
+"HP_15085_01T2D__fresh_26029"	"pancreatic A cell"	"0.857018668252842"
+"HP_15085_01T2D__fresh_26030"	"type B pancreatic cell"	"0.859506437263272"
+"HP_15085_01T2D__fresh_26037"	"unassigned"	NA
+"HP_15085_01T2D__fresh_26044"	"pancreatic A cell"	"0.888069937400102"
+"HP_15085_01T2D__fresh_26051"	"unassigned"	NA
+"HP_15085_01T2D__fresh_26058"	"type B pancreatic cell"	"0.870942009635676"
+"HP_15085_01T2D__fresh_26065"	"pancreatic A cell"	"0.911648544050859"
+"HP_15085_01T2D__fresh_28175"	"pancreatic A cell"	"0.813797168364679"
+"HP_15085_01T2D__fresh_28179"	"pancreatic A cell"	"0.921795793622612"
+"HP_15085_01T2D__fresh_28180"	"unassigned"	NA
+"HP_15085_01T2D__fresh_28181"	"unassigned"	NA
+"HP_15085_01T2D__fresh_28182"	"unassigned"	NA
+"HP_15085_01T2D__fresh_28183"	"pancreatic A cell"	"0.892808476353867"
+"HP_15085_01T2D__fresh_28184"	"pancreatic A cell"	"0.852177342964255"
+"HP_15085_01T2D__fresh_28185"	"type B pancreatic cell"	"0.881824291294269"
+"ICRH76_26086"	"pancreatic A cell"	"0.872563656580081"
+"ICRH76_26087"	"type B pancreatic cell"	"0.88380736384231"
+"ICRH76_26088"	"unassigned"	NA
+"ICRH76_26090"	"unassigned"	NA
+"ICRH76_26091"	"unassigned"	NA
+"ICRH76_26092"	"pancreatic A cell"	"0.731698555612911"
+"ICRH76_26093"	"pancreatic A cell"	"0.857580210303457"
+"ICRH76_26094"	"unassigned"	NA
+"ICRH76_26095"	"type B pancreatic cell"	"0.746552776994451"
+"ICRH76_26096"	"type B pancreatic cell"	"0.507124358721666"
+"ICRH76_26097"	"pancreatic A cell"	"0.581852021707096"
+"ICRH76_26098"	"pancreatic A cell"	"0.911946841338587"
+"ICRH76_26099"	"unassigned"	NA
+"ICRH76_26100"	"pancreatic A cell"	"0.663207008634626"
+"ICRH76_26101"	"unassigned"	NA
+"ICRH76_26102"	"pancreatic A cell"	"0.836162217393405"
+"ICRH76_26103"	"unassigned"	NA
+"ICRH76_26104"	"pancreatic A cell"	"0.790925515076671"
+"ICRH76_26105"	"type B pancreatic cell"	"0.777831962468866"
+"ICRH76_26106"	"unassigned"	NA
+"ICRH76_26107"	"unassigned"	NA
+"ICRH76_26109"	"pancreatic A cell"	"0.854948046601811"
+"ICRH76_26110"	"pancreatic A cell"	"0.564656291960958"
+"ICRH76_26111"	"unassigned"	NA
+"ICRH76_26112"	"unassigned"	NA
+"ICRH76_26114"	"pancreatic A cell"	"0.868193023689915"
+"ICRH76_26116"	"unassigned"	NA
+"ICRH76_26117"	"pancreatic A cell"	"0.893449231389188"
+"ICRH76_26119"	"unassigned"	NA
+"ICRH76_26120"	"unassigned"	NA
+"ICRH76_26122"	"pancreatic A cell"	"0.85341165259713"
+"ICRH76_26123"	"type B pancreatic cell"	"0.899123405587744"
+"ICRH76_26124"	"unassigned"	NA
+"ICRH76_26125"	"unassigned"	NA
+"ICRH76_26126"	"pancreatic A cell"	"0.67888459682082"
+"ICRH76_26127"	"unassigned"	NA
+"ICRH76_26129"	"type B pancreatic cell"	"0.845998129984228"
+"ICRH76_26130"	"pancreatic A cell"	"0.806033513383422"
+"ICRH76_26131"	"unassigned"	NA
+"ICRH76_26132"	"unassigned"	NA
+"ICRH80_29312"	"type B pancreatic cell"	"0.898083649835521"
+"ICRH80_29314"	"unassigned"	NA
+"ICRH80_29315"	"type B pancreatic cell"	"0.889350913534317"
+"ICRH80_29316"	"unassigned"	NA
+"ICRH80_29317"	"unassigned"	NA
+"ICRH80_29318"	"pancreatic A cell"	"0.904487732011619"
+"ICRH80_29319"	"unassigned"	NA
+"ICRH80_29320"	"type B pancreatic cell"	"0.819931932163784"
+"ICRH80_29321"	"type B pancreatic cell"	"0.869458240165603"
+"ICRH80_29323"	"unassigned"	NA
+"ICRH80_29324"	"unassigned"	NA
+"ICRH80_29325"	"type B pancreatic cell"	"0.892228832106978"
+"ICRH80_29326"	"type B pancreatic cell"	"0.914359326359345"
+"ICRH80_29327"	"unassigned"	NA
+"ICRH80_29328"	"unassigned"	NA
+"ICRH80_29329"	"type B pancreatic cell"	"0.903724607722094"
+"ICRH80_29330"	"type B pancreatic cell"	"0.888115150268008"
+"ICRH80_29333"	"unassigned"	NA
+"ICRH80_29334"	"pancreatic A cell"	"0.88782565135466"
+"ICRH80_29336"	"unassigned"	NA
+"ICRH80_29337"	"unassigned"	NA
+"ICRH80_29338"	"unassigned"	NA
+"ICRH80_29339"	"unassigned"	NA
+"ICRH80_29340"	"unassigned"	NA
+"ICRH80_29341"	"unassigned"	NA
+"ICRH80_29343"	"unassigned"	NA
+"ICRH80_29344"	"unassigned"	NA
+"ICRH80_29345"	"unassigned"	NA
+"ICRH80_29347"	"unassigned"	NA
+"ICRH80_29348"	"unassigned"	NA
+"ICRH80_29349"	"unassigned"	NA
+"ICRH80_29350"	"type B pancreatic cell"	"0.725687263105387"
+"ICRH80_29351"	"pancreatic A cell"	"0.911986665728923"
+"ICRH80_29352"	"unassigned"	NA
+"ICRH80_29353"	"unassigned"	NA
+"ICRH80_29354"	"unassigned"	NA
+"ICRH80_29356"	"unassigned"	NA
