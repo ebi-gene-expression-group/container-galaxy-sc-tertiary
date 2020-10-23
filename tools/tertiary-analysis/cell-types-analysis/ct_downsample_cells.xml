@@ -24,23 +24,24 @@
         <param type="text" name="cell_type_field" label="Cell Type Field" optional="true" value="inferred.cell.type" help="Name of cell type column in metada file" />
         <param type="data" name="exclusions" label="Exclusions file" format="yml" optional="true" help="Yaml file with trivial terms and unlabelled cells" />
         <param type="integer" name="array_size_limit" value='2000000000' label="Array Size Limit" help="Maximum length of R array" />
+        <param type="text" name="output_dir" value="10x_data_sampled" label="Sampled Data" help="Name of the directory for sampled data" />
     </inputs>
-    
     <outputs>
-        <collection name="output_dir" type="list" label="Updated matrix data">
-            <data name="matrix" from_work_dir="matrix.mtx" />
-            <data name="barcodes" from_work_dir="barcodes.tsv" />
-            <data name="genes" from_work_dir="genes.tsv" />
-        </collection>
+        <data name="matrix_upd" from_work_dir="${output_dir}/matrix.mtx" />
+        <data name="barcodes_upd" from_work_dir="${output_dir}/barcodes.tsv" />
+        <data name="genes_upd" from_work_dir="${output_dir}/genes.tsv" />
         <data name="metadata_upd" format="txt" label="Updated metadata" />
     </outputs>
     <tests>
         <test>
             <param name="matrix" value="10x_data/matrix.mtx" />
-            <param name="genes" value="10x_data/genes.tsv" />
+            <param name="genes" value="10x_data/genes.tsv"  />
+            <param name="array_size_limit" value='3000000' />
             <param name="barcodes" value="10x_data/barcodes.tsv" />
-            <param name="metadata" value="E-GEOD-83139.sdrf.txt" />
-            <output name="output_dir" file="10x_data_sampled" compare="sim_size" />
+            <param name="metadata" value="E-MTAB-7249_unmelted_sdrf.tsv"  />
+            <output name="matrix_upd" file="10x_data_upd/matrix.mtx" compare="sim_size" />
+            <output name="barcodes_upd" file="10x_data_upd/barcodes.tsv" compare="sim_size" />
+            <output name="genes_upd" file="10x_data_upd/genes.tsv" compare="sim_size" />
             <output name="metadata_upd" file="checked_SDRF.tsv" compare="sim_size"/>
         </test>
     </tests>
