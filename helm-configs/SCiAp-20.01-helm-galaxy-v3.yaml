@@ -1,0 +1,261 @@
+image:
+  repository: quay.io/ebigxa/galaxy-hisciap
+  tag: 20.01_v3
+  pullPolicy: IfNotPresent
+
+# Use with helm 2,
+# Repo from:
+# helm repo add galaxy-gvl https://raw.githubusercontent.com/cloudve/helm-charts/master
+# Install using version 3.4
+# helm install -f SCiAp-20.01-helm-galaxy-v3.yaml --version 3.4.2 galaxy-gvl/galaxy
+
+webHandlers:
+  replicaCount: 1
+
+jobHandlers:
+  replicaCount: 1
+
+#persistence:
+  # TODO change this to the name of the Persistent volume claim for the shared file system.
+  # existingClaim: galaxy-pvc-nfs
+  # alternatively, you might have a ReadWriteMany (RWM) storage class, if that is
+  # comment the existingClaim var above and uncomment and change below storaClass
+  #storaClass: <nameOfYourRWMStorageClass>
+
+# TODO minimal resources for running on minikube, increase or delete for a
+# larger deployment in a cloud provider.
+resources:
+  requests:
+    cpu: 0.3
+    memory: 1G
+  limits:
+    cpu: 1
+    memory: 2G
+
+cvmfs:
+  enabled: false
+
+service:
+  type: NodePort
+  nodePort: 30700
+
+# TODO change to the emails of your administrators for the Galaxy instance
+# in configs: galaxy.yml: admin_users
+configs:
+  galaxy.yml:
+    galaxy:
+      admin_users: you-email-user@your-email-domain.edu,other-admin@email.co.uk
+      tool_config_file: "/galaxy/server/config/mutable/editable_shed_tool_conf.xml,/galaxy/server/config/tool_conf_ebi-gxa.xml,/galaxy/server/config/tool_conf.xml"
+      database_connection: postgresql://unused:because@overridden_by_envvar
+      integrated_tool_panel_config: "/galaxy/server/config/mutable/integrated_tool_panel.xml"
+      sanitize_whitelist_file: "/galaxy/server/config/mutable/sanitize_whitelist.txt"
+      shed_tool_config_file: "/galaxy/server/config/mutable/editable_shed_tool_conf.xml"
+      tool_dependency_dir: "{{.Values.persistence.mountPath}}/deps"
+      job_config_file: "/galaxy/server/config/job_conf.xml"
+      containers_resolvers_config_file: "/galaxy/server/config/container_resolvers_conf.xml"
+      workflow_schedulers_config_file: "/galaxy/server/config/workflow_schedulers_conf.xml"
+      build_sites_config_file: "/galaxy/server/config/build_sites.yml"
+      builds_file_path: "{{.Values.persistence.mountPath}}/tool-data/shared/ucsc/builds.txt"
+      shed_data_manager_config_file: "/galaxy/server/config/mutable/shed_data_manager_conf.xml"
+      shed_tool_data_table_config: "/galaxy/server/config/mutable/shed_tool_data_table_conf.xml"
+      enable_data_manager_user_view: true
+      tool_data_path: "{{.Values.persistence.mountPath}}/tool-data"
+      tool_data_table_config_path: "/galaxy/server/config/tool_data_table_conf.xml.sample"
+      conda_auto_init: false
+  job_conf.xml: |
+    <job_conf>
+        <plugins>
+            <plugin id="local" type="runner" load="galaxy.jobs.runners.local:LocalJobRunner" workers="4" />
+            <plugin id="k8s" type="runner" load="galaxy.jobs.runners.kubernetes:KubernetesJobRunner">
+              <param id="k8s_use_service_account">true</param>
+              <param id="k8s_persistent_volume_claims">{{ template "galaxy.pvcname" . }}:{{.Values.persistence.mountPath}}</param>
+              <param id="k8s_namespace">{{ .Release.Namespace }}</param>
+              <!-- Must be DNS friendly and less than 20 characters -->
+              <param id="k8s_galaxy_instance_id">{{ .Release.Name }}</param>
+              <param id="k8s_run_as_user_id">101</param>
+              <param id="k8s_run_as_group_id">101</param>
+              <param id="k8s_fs_group_id">101</param>
+              <param id="k8s_supplemental_group_id">101</param>
+              <param id="k8s_pull_policy">IfNotPresent</param>
+              <param id="k8s_cleanup_job">always</param>
+              <param id="k8s_pod_priority_class">{{ include "galaxy.fullname" . }}-job-priority</param>
+            </plugin>
+        </plugins>
+        <destinations default="dynamic-k8s-small">
+            <destination id="local" runner="local"/>
+            <destination id="dynamic-k8s-dispatcher" runner="dynamic">
+              <param id="type">python</param>
+              <param id="function">k8s_container_mapper</param>
+              <param id="docker_default_container_id">{{ .Values.image.repository }}:{{ .Values.image.tag }}</param>
+              <param id="docker_enabled">true</param>
+              <param id="shared_home_dir">$_GALAXY_JOB_HOME_DIR</param>
+            </destination>
+            <destination id="dynamic-k8s-tiny" runner="dynamic">
+              <param id="type">python</param>
+              <param id="function">k8s_wrapper_tiny</param>
+              <param id="no_docker_default_destination_id">local</param>
+              <param id="docker_default_container_id">busybox:ubuntu-14.04</param>
+              <param id="docker_enabled">true</param>
+              <param id="shared_home_dir">$_GALAXY_JOB_HOME_DIR</param>
+              <resubmit condition="memory_limit_reached" destination="dynamic-k8s-small"/>
+            </destination>
+            <destination id="dynamic-k8s-small" runner="dynamic">
+              <param id="type">python</param>
+              <param id="function">k8s_wrapper_small</param>
+              <param id="no_docker_default_destination_id">local</param>
+              <param id="docker_default_container_id">busybox:ubuntu-14.04</param>
+              <param id="docker_enabled">true</param>
+              <param id="shared_home_dir">$_GALAXY_JOB_HOME_DIR</param>
+              <resubmit condition="memory_limit_reached" destination="dynamic-k8s-medium"/>
+            </destination>
+            <destination id="dynamic-k8s-medium" runner="dynamic">
+              <param id="type">python</param>
+              <param id="function">k8s_wrapper_medium</param>
+              <param id="no_docker_default_destination_id">local</param>
+              <param id="docker_default_container_id">busybox:ubuntu-14.04</param>
+              <param id="docker_enabled">true</param>
+              <param id="shared_home_dir">$_GALAXY_JOB_HOME_DIR</param>
+              <resubmit condition="memory_limit_reached" destination="dynamic-k8s-large"/>
+            </destination>
+            <destination id="dynamic-k8s-large" runner="dynamic">
+              <param id="type">python</param>
+              <param id="function">k8s_wrapper_large</param>
+              <param id="no_docker_default_destination_id">local</param>
+              <param id="docker_default_container_id">busybox:ubuntu-14.04</param>
+              <param id="docker_enabled">true</param>
+              <param id="shared_home_dir">$_GALAXY_JOB_HOME_DIR</param>
+              <resubmit condition="memory_limit_reached" destination="dynamic-k8s-xlarge"/>
+            </destination>
+            <destination id="dynamic-k8s-xlarge" runner="dynamic">
+              <param id="type">python</param>
+              <param id="function">k8s_wrapper_xlarge</param>
+              <param id="no_docker_default_destination_id">local</param>
+              <param id="docker_default_container_id">busybox:ubuntu-14.04</param>
+              <param id="shared_home_dir">$_GALAXY_JOB_HOME_DIR</param>
+              <param id="docker_enabled">true</param>
+            </destination>
+            <destination id="dynamic-k8s-xxlarge" runner="dynamic">
+              <param id="type">python</param>
+              <param id="function">k8s_wrapper_xxlarge</param>
+              <param id="no_docker_default_destination_id">local</param>
+              <param id="docker_default_container_id">busybox:ubuntu-14.04</param>
+              <param id="shared_home_dir">$_GALAXY_JOB_HOME_DIR</param>
+              <param id="docker_enabled">true</param>
+            </destination>
+        </destinations>
+        <limits>
+            <limit type="registered_user_concurrent_jobs">5</limit>
+            <limit type="anonymous_user_concurrent_jobs">2</limit>
+        </limits>
+    </job_conf>
+  tool_conf_ebi-gxa.xml: |
+    <?xml version='1.0' encoding='utf-8'?>
+    <toolbox>
+    <label id="single_cell" text="Single Cell RNA-Seq Tools"/>
+    <section id="hca_sc_get-scrna" name="Get scRNAseq data">
+     </section>
+     <section id="hca_sc_seurat_tools" name="Seurat">
+     </section>
+     <section id="hca_sc_sc3_tools" name="SC3">
+     </section>
+     <section id="hca_sc_scanpy_tools" name="Scanpy">
+     </section>
+     <section id="hca_sc_scater_tools" name="Scater">
+     </section>
+     <section id="hca_sc_monocle3_tools" name="Monocl3">
+     </section>
+     <section id="hca_sc_scmap_tools" name="SCMap">
+     </section>
+     <section id="hca_sc_scpred_tools" name="SCPred">
+     </section>
+     <section id="hca_sc_garnett_tools" name="Garnett">
+     </section>
+     <section id="hca_sc_label_analysis_tools" name="Cell Type Labeling">
+     </section>
+     <section id="hca_sc_sccaf_tools" name="SCCAF">
+     </section>
+     <section id="hca_sc_utils_viz" name="Single Cell Utils and Viz">
+     </section>
+     <label id="rna_seq_label" text="Bulk RNA-Seq Tools"/>
+     <section id="rna_seq" name="RNA-Seq">
+     </section>
+     <section id="gxa_util" name="Util">
+     </section>
+    </toolbox>
+
+jobs:
+  rules:
+    # TODO here you could change memory boundaries to fit your kubernetes cluster.
+    resource_bins.yaml: |
+      ---
+      resource_bins:
+        tiny:
+          requests_cpu: 0.1
+          limits_cpu: 0.5
+          requests_memory: 0.3
+          limits_memory: 0.6
+          dest_id: "dynamic-k8s-tiny"
+        small:
+          requests_cpu: 0.4
+          limits_cpu: 0.8
+          requests_memory: 1
+          limits_memory: 2
+          dest_id: "dynamic-k8s-small"
+        medium:
+          requests_cpu: 0.7
+          limits_cpu: 2
+          requests_memory: 2
+          limits_memory: 4
+          dest_id: "dynamic-k8s-medium"
+        large:
+          requests_cpu: 1.5
+          limits_cpu: 4
+          requests_memory: 3
+          limits_memory: 6
+          dest_id: "dynamic-k8s-large"
+        xlarge:
+          requests_cpu: 4
+          limits_cpu: 8
+          requests_memory: 8
+          limits_memory: 16
+          dest_id: "dynamic-k8s-xlarge"
+        xxlarge:
+          requests_cpu: 4
+          limits_cpu: 8
+          requests_memory: 16
+          limits_memory: 32
+          dest_id: "dynamic-k8s-xxlarge"
+      unit_suffix:
+        memory: "Gi"
+    tools2container.yaml: |
+      global:
+        docker_repo:
+        max_pod_retrials: 3
+      assignment:
+        #- tools_id:
+        #   - seurat-read10x
+        #  docker_repo_override: quay.io
+        #  docker_owner_override: ebigxa
+        #  docker_image_override: r-seurat-scripts
+        #  docker_tag_override: 0.0.1--0
+        #  max_pod_retrials: 3
+        #- tools_id:
+        #   - ucsc-cell-browser
+        #  docker_repo_override: quay.io
+        #  docker_owner_override: ebigxa
+        #  docker_image_override: ucsc-cell-browser
+        #  docker_tag_override: 0.25--0
+        #  max_pod_retrials: 3
+
+extraFileMappings: Null
+
+influxdb:
+  enabled: false
+
+postgresql:
+  # TODO set the password for Galaxy in the database. This is relevant to make
+  # the installation portable
+  galaxyDatabasePassword: yourPostgresPassword
+  # TODO define either an existing claim for postgresql or the RWO storageClass to use.
+  #persistence:
+  #  existingClaim: postgres-pvc-nfs
