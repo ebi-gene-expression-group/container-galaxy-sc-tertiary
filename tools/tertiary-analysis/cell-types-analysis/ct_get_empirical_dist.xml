@@ -49,7 +49,7 @@
             <param name="label_col_ref" value="Sample.Characteristic.cell.type." />
             <param name="ontology_graph" value="cl-basic.obo" />
             <param name="exclusions" value="exclusions.yml" />
-            <param name="parallel" value="FALSE" />
+            <param name="parallel" value="TRUE" />
             <param name="num_cores" value="1" />
             <param name="lab_cl_mapping" value="label_cl_dict.rds" />
             <output name="output_list_path" file="empirical_dist_list.rds" compare="sim_size" />
