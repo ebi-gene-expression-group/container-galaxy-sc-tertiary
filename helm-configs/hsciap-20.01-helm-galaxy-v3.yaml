@@ -3,30 +3,49 @@ image:
   tag: 20.01_v3
   pullPolicy: IfNotPresent
 
+# Use with helm 2,
+# Repo from:
+# helm repo add galaxy-gvl https://raw.githubusercontent.com/cloudve/helm-charts/master
+# Install using version 3.4
+# helm install -f hsciap-20.01-helm-galaxy-v3.yaml --version 3.4.2 galaxy-gvl/galaxy
+
 webHandlers:
   replicaCount: 1
 
 jobHandlers:
   replicaCount: 1
 
-persistence:
+#persistence:
   # TODO change this to the name of the Persistent volume claim for the shared file system.
-  existingClaim: galaxy-pvc-nfs
-  # alternatively, you might have a ReadWriteMany (RWM) storage class, if that is the hca_sc_seurat_tools
+  # existingClaim: galaxy-pvc-nfs
+  # alternatively, you might have a ReadWriteMany (RWM) storage class, if that is
   # comment the existingClaim var above and uncomment and change below storaClass
   #storaClass: <nameOfYourRWMStorageClass>
 
+# TODO minimal resources for running on minikube, increase or delete for a
+# larger deployment in a cloud provider.
+resources:
+  requests:
+    cpu: 0.3
+    memory: 1G
+  limits:
+    cpu: 1
+    memory: 2G
+
+cvmfs:
+  enabled: false
+
 service:
   type: NodePort
+  nodePort: 30700 
+
+# TODO add the emails of your administrators for the Galaxy instance
 
 configs:
   galaxy.yml:
     galaxy:
-      # TODO add the emails of your administrators for the Galaxy instance
       admin_users: you-email-user@your-email-domain.edu,other-admin@email.co.uk
       tool_config_file: "/galaxy/server/config/mutable/editable_shed_tool_conf.xml,/galaxy/server/config/tool_conf_ebi-gxa.xml,/galaxy/server/config/tool_conf.xml"
-      # ^^ MODIFIED ^^
-      # vv ORIGINAL vv
       database_connection: postgresql://unused:because@overridden_by_envvar
       integrated_tool_panel_config: "/galaxy/server/config/mutable/integrated_tool_panel.xml"
       sanitize_whitelist_file: "/galaxy/server/config/mutable/sanitize_whitelist.txt"
@@ -36,10 +55,12 @@ configs:
       containers_resolvers_config_file: "/galaxy/server/config/container_resolvers_conf.xml"
       workflow_schedulers_config_file: "/galaxy/server/config/workflow_schedulers_conf.xml"
       build_sites_config_file: "/galaxy/server/config/build_sites.yml"
+      builds_file_path: "{{.Values.persistence.mountPath}}/tool-data/shared/ucsc/builds.txt"
       shed_data_manager_config_file: "/galaxy/server/config/mutable/shed_data_manager_conf.xml"
       shed_tool_data_table_config: "/galaxy/server/config/mutable/shed_tool_data_table_conf.xml"
       enable_data_manager_user_view: true
       tool_data_path: "{{.Values.persistence.mountPath}}/tool-data"
+      tool_data_table_config_path: "/galaxy/server/config/tool_data_table_conf.xml.sample"
       conda_auto_init: false
   job_conf.xml: |
     <job_conf>
@@ -236,5 +257,5 @@ postgresql:
   # the installation portable
   galaxyDatabasePassword: yourPostgresPassword
   # TODO define either an existing claim for postgresql or the RWO storageClass to use.
-  persistence:
-    existingClaim: postgres-pvc-nfs
+  #persistence:
+  #  existingClaim: postgres-pvc-nfs
