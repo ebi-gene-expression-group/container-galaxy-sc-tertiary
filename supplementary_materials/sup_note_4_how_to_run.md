@@ -1,6 +1,6 @@
 # Running Hinxton Singe Cell Galaxy Setup
 
-The most up-to-date version of this document is available [here](https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/blob/develop/supplementary_materials/sup_note_how_to_run.md).
+The most up-to-date version of this document is available [here](https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/blob/develop/supplementary_materials/sup_note_4_how_to_run.md).
 
 Running the galaxy setup with our tools and workflows can be done in various ways, from easier to more complex (but more powerful):
 
@@ -13,7 +13,7 @@ Running the galaxy setup with our tools and workflows can be done in various way
   - (Optionally) Deploy a file system that can be accessible at least from one node for Postgresql, or make sure that you have access to a storage class for this. This will give rise to a Postgresql PVC or storage class.
   - Obtain authentication (usually a `kube-config.yaml` file) for the k8s cluster so that you can use `kubectl`.
   - Deploy the Galaxy helm chart against that cluster.
-    - Download [this config file](helm-configs/hsciap-20.01-helm-galaxy-v3.yaml) and modify it following the instructions in all the **TODO** comments inside (so, Galaxy PVC, admin email and Postgresql PVC). You can find more variables to adjust [here](https://github.com/galaxyproject/galaxy-helm/blob/master/README.md).
+    - Download [this config file](https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/blob/develop/helm-configs/SCiAp-20.01-helm-galaxy-v3.yaml) and modify it following the instructions in all the **TODO** comments inside (so, Galaxy PVC, admin email and Postgresql PVC). You can find more variables to adjust [here](https://github.com/galaxyproject/galaxy-helm/blob/master/README.md).
     - Make sure that you have helm and kubectl binaries installed.
     - Obtain the helm chart by running:
       ```
@@ -21,8 +21,8 @@ Running the galaxy setup with our tools and workflows can be done in various way
       ```
     - Install the chart with your modified config:
       ```
-      helm install -f hsciap-20.01-helm-galaxy-v3-modified.yaml galaxy-gvl/galaxy
+      helm install -f hsciap-20.01-helm-galaxy-v3-modified.yaml --version 3.4.2 galaxy-gvl/galaxy
       ```
     - Galaxy will be available at any of the k8s nodes public IPs, at port 30700. Go there, register with one of the set administrator emails and in the user preferences, generate an API key, to be used in the next step for loading tools.
-  - Deploy the tools as per [instructions](https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/blob/develop/supplementary_materials/sup_note_direct_tools_install.md).
+  - Deploy the tools as per [instructions](https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/blob/develop/supplementary_materials/sup_note_3_direct_tools_install.md).
   As an example of the above, [these instructions](https://github.com/ebi-gene-expression-group/galaxy-kubernetes/tree/develop/deployment-guides/AWS-EKS-EFS) allow to deploy the setup in AWS.

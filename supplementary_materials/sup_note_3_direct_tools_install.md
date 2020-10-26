@@ -4,7 +4,7 @@ This part of the setup explains how to deploy all of our latest tools and workfl
 
 These instructions also adds third party tools that we have considered useful through the time that we have used this setup for production, exploratory analysis and trainings.
 
-The most up-to-date version of this supplementary material will be available [here](https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/blob/develop/supplementary_materials/sup_note_direct_tools_install.md).
+The most up-to-date version of this supplementary material will be available [here](https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/blob/develop/supplementary_materials/sup_note_3_direct_tools_install.md).
 
 ## Tools installation
 

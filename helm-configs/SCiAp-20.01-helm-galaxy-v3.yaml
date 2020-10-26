@@ -7,7 +7,7 @@ image:
 # Repo from:
 # helm repo add galaxy-gvl https://raw.githubusercontent.com/cloudve/helm-charts/master
 # Install using version 3.4
-# helm install -f hsciap-20.01-helm-galaxy-v3.yaml --version 3.4.2 galaxy-gvl/galaxy
+# helm install -f SCiAp-20.01-helm-galaxy-v3.yaml --version 3.4.2 galaxy-gvl/galaxy
 
 webHandlers:
   replicaCount: 1
@@ -37,10 +37,10 @@ cvmfs:
 
 service:
   type: NodePort
-  nodePort: 30700 
+  nodePort: 30700
 
-# TODO add the emails of your administrators for the Galaxy instance
-
+# TODO change to the emails of your administrators for the Galaxy instance
+# in configs: galaxy.yml: admin_users
 configs:
   galaxy.yml:
     galaxy:

@@ -8,7 +8,7 @@ provided by that their adherence to exchange formats, or intermediate converters
 Tables contain all the tools currently wrapped, with links to their sorce codes and our wrappers.
 The following section goes through each tool and the steps that we extracted.
 
-The most up-to-date version of this supplementary material will be available [here](https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/blob/develop/supplementary_materials/sup_note_tools.md).
+The most up-to-date version of this supplementary material will be available [here](https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/blob/develop/supplementary_materials/sup_note_2_tools.md).
 
 # Scanpy
 

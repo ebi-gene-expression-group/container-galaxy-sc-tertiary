@@ -2,7 +2,7 @@
 
 Tools can be run in any workflow environment, but here we focus on Galaxy and Nextflow examples.
 
-The most up-to-date version of this supplementary material is available [here](https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/blob/develop/supplementary_materials/sup_note_workflows.md).
+The most up-to-date version of this supplementary material is available [here](https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/blob/develop/supplementary_materials/sup_note_1_workflows.md).
 
 ## Galaxy
 
