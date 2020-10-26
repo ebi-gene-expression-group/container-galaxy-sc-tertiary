@@ -1,0 +1,15 @@
+unlabelled:
+  - unassigned
+  - unknown
+  - rand
+  - node
+  - ambiguous
+  - NA
+  - ''
+  - 'not available'
+trivial_terms:
+  - cell
+  - of
+  - tissue 
+  - entity 
+  - type
