@@ -15,6 +15,14 @@
     <outputs>
         <data name="output_table" format="txt" />
     </outputs>
+    <tests>
+        <test>
+            <param name="predictions_object" value="predicted_data.rds" />
+            <param name="get_scores" value="True" />
+            <param name="classifier" value="scPred_trained.rds" />
+            <output name="output_table" file="scpred_output_tbl.txt" compare="sim_size" />
+        </test>
+    </tests>
     <help><![CDATA[
     @HELP@
     

@@ -4,7 +4,7 @@
     <token name="@PROFILE@">18.01</token>
     <xml name="requirements">
       <requirements>
-        <requirement type="package" version="0.1.6">cell-types-analysis</requirement>
+        <requirement type="package" version="0.1.9">cell-types-analysis</requirement>
             <yield/>
       </requirements>
     </xml>

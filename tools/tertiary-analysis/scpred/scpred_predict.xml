@@ -5,7 +5,7 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        scpred_predict.R --input-object "${input_object}" --pred-data "${pred_data}" --normalise-data "${normalise_data}"       --recompute-alignment "${recompute_alignment}" --reference-scaling "${reference_scaling}" --output-path "${output_tbl_path}"  
+        scpred_predict.R --input-object "${input_object}" --pred-data "${pred_data}" --normalise-data "${normalise_data}"       --recompute-alignment "${recompute_alignment}" --reference-scaling "${reference_scaling}" --output-path "${output_path}"  
 
         #if $normalisation_method
         --normalisation-method "${normalisation_method}"
@@ -19,9 +19,6 @@
         #if $max_iter_harmony
         --max-iter-harmony "${max_iter_harmony}"
         #end if
-        #if $plot_path
-        --plot-path "${plot_path}"
-        #end if
 
         ]]></command>
     <inputs>
@@ -30,7 +27,7 @@
         <param type="data" name="pred_data" label="Query Data Matrix" format="rdata" help="Path to the input prediction matrix in .rds format"/>
         <param type="boolean" checked="false" name="normalise_data" label="Normalise Data"  help="Should the predicted expression data be normalised? Default: False"/>
         <param type="text" name="normalisation_method" optional="true" value="LogNormalize" label="Normalisation Method" help="What normalisation method should be applied to predicted data? Default: LogNormalize"  />
-        <param type="integer" name="scale_factor" optional="true" value="1e6" label="Scale Factor" help="What scale factor should be applied? Note: for CPM normalisation, 1e6 is selected by default"  />
+        <param type="integer" name="scale_factor" optional="true" value="1000000" label="Scale Factor" help="What scale factor should be applied? Note: for CPM normalisation, 1e6 is selected by default"  />
         <param type="float" name="threshold_level" optional="true" value="0.8" label="Threshold Level" help="Classification threshold value"  />
         <param type="integer" name="max_iter_harmony" optional="true" value="20" label="Max Iterations" help="Maximum number of rounds to run Harmony. One round of Harmony involves one clustering and one correction step"  />
         <param type="boolean" checked="true" name="recompute_alignment" label="Recompute Alignment" help="Recompute alignment? Useful if scPredict() has already been run. Default: True"/>
@@ -38,14 +35,14 @@
 
     </inputs>
     <outputs>
-        <data name="output_tbl_path" format="txt" />
-        <data name="plot_path" format="png" />
+        <data name="output_path" format="rdata" />
     </outputs>
     <tests>
         <test>
             <param name="input_object" value="scPred_trained.rds" />
-            <param name="pred_data" value="test_matrix.mtx" />
-            <output name="output_tbl_path" file="predictions_table.txt" compare="sim_size"/>
+            <param name="normalise_data" value="True" />
+            <param name="pred_data" value="query_pbmc.rds" />
+            <output name="output_path" file="predicted_data.rds" compare="sim_size" delta="10000000"/>
         </test>
     </tests>
      <help><![CDATA[

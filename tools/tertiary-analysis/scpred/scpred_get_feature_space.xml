@@ -21,7 +21,7 @@
         ]]></command>
     <inputs>
         <param type='data' name='input_object' label='Input Seurat object' format='rdata' help='Input Seurat object in .rds format' />
-        <param type='text' name='prediction_column' label='Prediction Column' help='Name of the metadata column that contains training labels' />
+        <param type='text' name='prediction_column' optional="true" value="cell_type" label='Prediction Column' help='Name of the metadata column that contains training labels' />
         <param type='text' name='correction_method' label='Correction Method' optional='true' value="fdr" help='Method for mulpiple testing correction' />
         <param type='float' name='significance_threshold' label='Significance Threshold' optional='true' value="1.0" help='Significance threshold for principal components explaining class identity' />
         <param type='text' name='reduction_parameter' label='Reduction Parameter' optional='true' value="pca" help='Name of reduction in Seurat objet to be used to determine the feature space. Default: "pca"' />
@@ -32,8 +32,7 @@
     </outputs>
      <tests>
         <test>
-            <param name="input_object" value="scPred_object.rds" />
-            <param name="prediction_column" value="cell_type2" />
+            <param name="input_object" value="reference_pbmc.rds" />
             <output name="output_obj_path" file="scPred_feat_space.rds" compare="sim_size" />
         </test>
     </tests>
