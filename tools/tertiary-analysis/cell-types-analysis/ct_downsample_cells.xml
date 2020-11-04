@@ -37,7 +37,7 @@
             <param name="matrix" value="10x_data/matrix.mtx" />
             <param name="genes" value="10x_data/genes.tsv"  />
             <param name="array_size_limit" value='3955000' />
-            <param name="cell_type_field" value="inferred.cell.type...authors.labels" />
+            <param name="cell_type_field" value="inferred cell type - authors labels"  />
             <param name="barcodes" value="10x_data/barcodes.tsv" />
             <param name="metadata" value="E-MTAB-7249_unmelted_sdrf.tsv"  />
             <output name="matrix_upd" file="10x_data_upd/matrix.mtx" compare="sim_size" />

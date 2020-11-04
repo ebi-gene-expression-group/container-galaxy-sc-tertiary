@@ -27,9 +27,15 @@
     <inputs>
         <param type="data" name="input_sdrfs" label="Input SDRF tables" multiple="true" format="txt" help="Input SDRF tables" />
         <param type="boolean" name="condensed_sdrf" checked="false" label="Condensed SDRF" help="Are the supplied SDRFs of condensed format?" />
-        <param type="text" name="barcode_col_name" label="Barcode column name" value="id" help="Name of the barcode field in provided SDRF files" />
-        <param type="text" name="cell_label_col_name" label="Cell label column name" value="inferred cell type" help="Name of the cell label field name in provided SDRF files" />
-        <param type="text" name="cell_ontology_col_name" label="Cell ontology column name" value="cell.type.ontology" help="Name of the cell ontology terms column in SDRF files (must be identical across all files)" />
+        <param type="text" name="barcode_col_name" label="Barcode column name" value="id" help="Name of the barcode field in provided SDRF files">
+            <expand macro="sanitize_strings" />
+        </param>
+        <param type="text" name="cell_label_col_name" label="Cell label column name" value="inferred cell type" help="Name of the cell label field name in provided SDRF files">
+            <expand macro="sanitize_strings" />
+        </param>
+        <param type="text" name="cell_ontology_col_name" label="Cell ontology column name" value="cell.type.ontology" help="Name of the cell ontology terms column in SDRF files (must be identical across all files)">
+            <expand macro="sanitize_strings" />
+        </param>
     </inputs>
     <outputs>
         <data name="output_dict_path" format="rdata" />

@@ -53,10 +53,18 @@
         <param type="data" name="ontology_graph" label="Ontology graph" optional="true" format="obo" help="Ontology graph to run semantis similarity computations" />
         <param type="text" name="tmpdir" label="Tmpdir for caching" optional="true" help="Temporary directory for caching" />
         <param type="data" name="lab_cl_mapping" label="Label - CL term mapping" format="rdata" help="Mapping between cell labels and ontology terms" />
-        <param type="text" name="barcode_col_ref" label="Reference file barcode field" value='cell_id' help="Name of barcode field in reference metadata file" />
-        <param type="text" name="barcode_col_pred" label="Predicted file barcode field" value="cell_id" help="Name of barcode field in predictions file" />
-        <param type="text" name="label_col_ref" label="Reference label column" value="cell_type" help="Label column in reference file" />
-        <param type="text" name="label_col_pred" label="Predicted file label column" value="predicted_label" help="Name of label field in predictions file" />
+        <param type="text" name="barcode_col_ref" label="Reference file barcode field" value='cell_id' help="Name of barcode field in reference metadata file">
+            <expand macro="sanitize_strings" />
+        </param>
+        <param type="text" name="barcode_col_pred" label="Predicted file barcode field" value="cell_id" help="Name of barcode field in predictions file">
+            <expand macro="sanitize_strings" />
+        </param>
+        <param type="text" name="label_col_ref" label="Reference label column" value="cell_type" help="Label column in reference file">
+            <expand macro="sanitize_strings" />
+        </param>
+        <param type="text" name="label_col_pred" label="Predicted file label column" value="predicted_label" help="Name of label field in predictions file">
+            <expand macro="sanitize_strings" />
+        </param>
         <expand macro="sem_siml_options" />
     </inputs>
     <outputs>
@@ -66,14 +74,13 @@
         <test>
             <param name="input_files" value="results_dir/garnett_output.txt,results_dir/scmap-cell_output.txt,results_dir/scmap-cluster_output.txt,results_dir/scpred_output.txt" />
             <param name="ref_file" value="reference_sdrf.tsv" />
-            <param name="ontology_graph" value="cl-basic.obo" />
             <param name="lab_cl_mapping" value="label_cl_dict.rds" />
             <param name="parallel" value="TRUE" />
             <param name="num_cores" value="1" />
             <param name="exclusions" value="exclusions.yml" />
             <param name="barcode_col_ref" value="Assay" />
             <param name="barcode_col_pred" value="cell_id" />
-            <param name="label_col_ref" value="Sample.Characteristic.cell.type." />
+            <param name="label_col_ref" value="Sample Characteristic[cell type]"  />
             <param name="label_col_pred" value="predicted_label" />
             <output name="output_path" file="tool_perf_table.tsv" compare="sim_size" />
         </test>

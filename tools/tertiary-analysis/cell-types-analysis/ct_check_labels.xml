@@ -16,7 +16,9 @@
         <inputs>
             
             <param type="data" name="input_file" label="Input File" multiple="true" format="txt" help="Input metadta file" />
-            <param type="text" name="label_field" label="Label Field" optional="true" help="Name of label field in metadata file" />
+            <param type="text" name="label_field" label="Label Field" optional="true" help="Name of label field in metadata file">
+                <expand macro="sanitize_strings" />
+            </param>
             <param type="boolean" name="condensed" checked="false" label="Condensed Metadata File" help="Are the supplied metadata files of condensed format?" /> 
             <param type="integer" name="attribute_type_col_num" value='5' label="Number of Attribute Type Column" help="Number of the attribute type field in condensed metadata file. Default: 5" />
             <param type="integer" name="variable_col_num" value='6' label="Number of Label Column" help="Number of the label field in condensed metadata file. Default: 6" />
