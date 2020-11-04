@@ -20,8 +20,12 @@
         <param name="genes" type="data" format="tsv,tabular" label="Gene table"/>
         <param name="barcodes" type="data" format="tsv,tabular" label="Barcode/cell table"/>
         <param type="data" name="metadata" format="txt" label="Metadata Table" help="Metadata file mapping cells to cell types" />
-        <param type="text" name="cell_id_field" label="Cell ID Field" optional="true" value="id" help="Cell ID field" />
-        <param type="text" name="cell_type_field" label="Cell Type Field" optional="true" value="inferred.cell.type" help="Name of cell type column in metada file" />
+        <param type="text" name="cell_id_field" label="Cell ID Field" optional="true" value="id" help="Cell ID field">
+            <expand macro="sanitize_strings" />
+        </param>
+        <param type="text" name="cell_type_field" label="Cell Type Field" optional="true" value="inferred cell type" help="Name of cell type column in metada file">
+            <expand macro="sanitize_strings" />
+        </param>
         <param type="data" name="exclusions" label="Exclusions file" format="yml" optional="true" help="Yaml file with trivial terms and unlabelled cells" />
         <param type="integer" name="array_size_limit" value='2000000000' label="Array Size Limit" help="Maximum length of R array" />
         <param type="text" name="output_dir" value="10x_data_sampled" label="Sampled Data" help="Name of the directory for sampled data" />

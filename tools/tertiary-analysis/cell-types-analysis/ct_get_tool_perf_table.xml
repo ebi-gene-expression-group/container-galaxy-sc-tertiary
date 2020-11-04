@@ -76,6 +76,7 @@
             <param name="ref_file" value="reference_sdrf.tsv" />
             <param name="lab_cl_mapping" value="label_cl_dict.rds" />
             <param name="parallel" value="TRUE" />
+            <param name="ontology_graph" value="cl-basic.obo" />
             <param name="num_cores" value="1" />
             <param name="exclusions" value="exclusions.yml" />
             <param name="barcode_col_ref" value="Assay" />

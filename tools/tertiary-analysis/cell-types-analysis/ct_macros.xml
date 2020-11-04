@@ -35,6 +35,17 @@
             <option value="resnik">resnik</option>
         </param>
     </xml>
+    <xml name="sanitize_strings">
+        <sanitizer invalid_char="">
+        <valid initial="string.ascii_letters,string.digits">
+            <add value="_" />
+            <add value="-" />
+            <add value="[" />
+            <add value="]" />
+            <add value=" " />
+            </valid>
+    </sanitizer>
+    </xml>
     <xml name="citations">
       <citations>
         <citation type="bibtex">

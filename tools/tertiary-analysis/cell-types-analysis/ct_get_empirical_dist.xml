@@ -51,6 +51,7 @@
 
             <param name="label_col_ref" value='Sample Characteristic[cell type]' />
             <param name="exclusions" value="exclusions.yml" />
+            <param name="ontology_graph" value="cl-basic.obo" />
             <param name="parallel" value="TRUE" />
             <param name="num_cores" value="1" />
             <param name="lab_cl_mapping" value="label_cl_dict.rds" />

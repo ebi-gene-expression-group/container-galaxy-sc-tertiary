@@ -33,7 +33,7 @@
         <param type="text" name="cell_label_col_name" label="Cell label column name" value="inferred cell type" help="Name of the cell label field name in provided SDRF files">
             <expand macro="sanitize_strings" />
         </param>
-        <param type="text" name="cell_ontology_col_name" label="Cell ontology column name" value="cell.type.ontology" help="Name of the cell ontology terms column in SDRF files (must be identical across all files)">
+        <param type="text" name="cell_ontology_col_name" label="Cell ontology column name" value="cell type ontology" help="Name of the cell ontology terms column in SDRF files (must be identical across all files)">
             <expand macro="sanitize_strings" />
         </param>
     </inputs>
