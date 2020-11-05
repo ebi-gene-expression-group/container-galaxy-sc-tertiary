@@ -63,7 +63,8 @@
             <param name="exclusions" value="exclusions.yml" />
             <param name="parallel" value="TRUE" />
             <param name="lab_cl_mapping" value="label_cl_dict.rds" />
-            <param name="ontology_graph" value="cl-basic.obo" />
+            <param name="ontology_graph" value="https://raw.githubusercontent.com/obophenotype/cell-ontology/master/cl-basic.obo" />
+            <param name="tmpdir" value="./tmp_dir" />
             <output name="summary_table_output_path" file="summary_output_table.tsv" compare="sim_size" />
             <output name="raw_table_output_path" file="raw_labels_table.tsv" compare="sim_size" />
         </test>
