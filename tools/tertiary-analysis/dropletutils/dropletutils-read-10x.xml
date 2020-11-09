@@ -43,7 +43,7 @@
       <param name="matrix" value="matrix.mtx"/>
       <param name="genes" value="genes.tsv"/>
       <param name="barcodes" value="barcodes.tsv"/>
-      <output name="output_rds" file="read_10x.rds" ftype="rdata" compare="sim_size"/>
+      <output name="output_rds" file="raw_sce.rds" ftype="rdata" compare="sim_size" delta="1000000"/>
     </test>
   </tests>
 
