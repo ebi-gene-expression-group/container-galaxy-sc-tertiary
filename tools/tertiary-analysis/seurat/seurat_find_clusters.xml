@@ -78,8 +78,9 @@
     <tests>
         <!-- Ensure count matrix input works -->
         <test>
-            <param name="input" ftype="rdata" value="out_runpca.rds"/>
-            <output name="rds_seurat_file" ftype="rdata" value="out_findclust.rds" compare="sim_size"/>
+            <param name="input" ftype="rdata" value="neighbours_seurat.rds"/>
+            <output name="rds_seurat_file" ftype="rdata" value="cluster_seurat.rds" compare="sim_size"/>
+            <output name="output_tab" value="clusters.txt" compare="sim_size" delta="1000000" />
         </test>
     </tests>
     <help><![CDATA[

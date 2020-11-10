@@ -58,8 +58,9 @@ seurat-find-variable-genes.R
 
     <tests>
         <test>
-            <param name="input" ftype="rdata" value="out_norm.rds"/>
-            <output name="rds_seurat_file" ftype="rdata" value="out_findvar.rds" compare="sim_size"/>
+            <param name="input" ftype="rdata" value="normalised_seurat.rds"/>
+            <output name="rds_seurat_file" ftype="rdata" value="variable_genes_seurat.rds" compare="sim_size" delta="1000000" />
+            <output name="output_tab" value="filtered_genes.txt" compare="sim_size" delta="1000000" />
         </test>
     </tests>
     <help><![CDATA[

@@ -1,4 +1,4 @@
-<tool id="seurat_read10x" name="Seurat Read10x" version="@SEURAT_VERSION@+galaxy1">
+<tool id="seurat_read10x" name="Seurat Read10x" version="@SEURAT_VERSION@+galaxy0">
 <description>Loads Tabular or 10x data into a serialized seurat R object</description>
   <macros>
       <import>seurat_macros.xml</import>
@@ -60,10 +60,10 @@ seurat-read-10x.R
 
 <tests>
     <test>
-       <param name="matrix" ftype="txt" value="test_matrix.txt"/>
-       <param name="genes" ftype="txt" value="test_genes.txt"/>
-       <param name="barcodes" ftype="txt" value="test_barcodes.txt"/>
-       <output name="rds_seurat_file" ftype="rdata" value="out_scale.rds" compare="sim_size"/>
+       <param name="matrix" ftype="txt" value="test_data/matrix.mtx"/>
+       <param name="genes" ftype="txt" value="test_data/genes.tsv"/>
+       <param name="barcodes" ftype="txt" value="test_data/barcodes.tsv"/>
+       <output name="rds_seurat_file" ftype="rdata" value="raw_seurat.rds" compare="sim_size" delta="1000000" />
     </test>
 </tests>
 

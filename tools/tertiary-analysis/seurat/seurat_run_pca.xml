@@ -46,8 +46,11 @@ seurat-run-pca.R
 
     <tests>
         <test>
-            <param name="input" ftype="rdata" value="out_scale.rds"/>
-            <output name="rds_seurat_file" ftype="rdata" value="out_runpca.rds" compare="sim_size"/>
+            <param name="input" ftype="rdata" value="scaled_seurat.rds"/>
+            <output name="rds_seurat_file" ftype="rdata" value="pca_seurat.rds" compare="sim_size"/>
+            <output name="output_embed" value="pca_embeddings.csv" compare="sim_size" delta="1000000" />
+            <output name="output_load" value="pca_loadings.csv" compare="sim_size" delta="1000000" />
+            <output name="output_sdev" value="pca_stdev.txt" compare="sim_size" delta="1000000" />
         </test>
     </tests>
     <help><![CDATA[

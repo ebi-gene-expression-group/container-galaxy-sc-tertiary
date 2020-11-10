@@ -42,8 +42,8 @@ seurat-filter-cells.R
 
     <tests>
         <test>
-            <param name="input" ftype="rdata" value="seurat.rds"/>
-            <output name="rds_seurat_file" ftype="rdata" value="out_filter.rds" compare="sim_size"/>
+            <param name="input" ftype="rdata" value="raw_seurat.rds"/>
+            <output name="rds_seurat_file" ftype="rdata" value="filtered_seurat.rds" compare="sim_size" delta="1000000" />
         </test>
     </tests>
     <help><![CDATA[
