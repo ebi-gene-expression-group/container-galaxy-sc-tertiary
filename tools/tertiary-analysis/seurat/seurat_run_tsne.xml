@@ -66,7 +66,7 @@ seurat-run-tsne.R
 
     <tests>
         <test>
-            <param name="input" ftype="rdata" value="pca_seurat.rds"/>
+            <param name="rds_seurat_file" ftype="rdata" value="pca_seurat.rds"/>
             <output name="rds_seurat_file" ftype="rdata" value="tsne_seurat.rds" compare="sim_size" delta="1000000" />
         </test>
     </tests>

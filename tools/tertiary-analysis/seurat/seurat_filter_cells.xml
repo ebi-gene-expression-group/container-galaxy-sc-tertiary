@@ -42,7 +42,8 @@ seurat-filter-cells.R
 
     <tests>
         <test>
-            <param name="input" ftype="rdata" value="raw_seurat.rds"/>
+            <param name="name" value="nCount_RNA" />
+            <param name="rds_seurat_file" ftype="rdata" value="raw_seurat.rds" />
             <output name="rds_seurat_file" ftype="rdata" value="filtered_seurat.rds" compare="sim_size" delta="1000000" />
         </test>
     </tests>

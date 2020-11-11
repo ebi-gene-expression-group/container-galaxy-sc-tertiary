@@ -33,7 +33,7 @@ cd output_html && tar -cf '$output' *;
 
     <tests>
         <test>
-            <param name="rds_input" ftype="rdata" value="tsne_seurat.rds"/>
+            <param name="rds_seurat_file" ftype="rdata" value="tsne_seurat.rds"/>
             <output name="output" value="html_out" compare="sim_size" delta="1000000"/>
         </test>
     </tests>

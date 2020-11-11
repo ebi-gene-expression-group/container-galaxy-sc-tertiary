@@ -41,7 +41,7 @@ seurat-normalise-data.R
 
     <tests>
         <test>
-            <param name="input" ftype="rdata" value="filtered_seurat.rds"/>
+            <param name="rds_seurat_file" ftype="rdata" value="filtered_seurat.rds"/>
             <output name="rds_seurat_file" ftype="rdata" value="normalised_seurat.rds" compare="sim_size" delta="1000000"/>
         </test>
     </tests>
