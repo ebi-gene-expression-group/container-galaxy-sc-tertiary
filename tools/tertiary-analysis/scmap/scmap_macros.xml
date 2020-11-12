@@ -1,5 +1,5 @@
 <macros>
-    <token name="@TOOL_VERSION@">1.6.2</token>
+    <token name="@TOOL_VERSION@">1.6.3</token>
     <token name="@HELP@">More information can be found at https://bioconductor.org/packages/release/bioc/html/scmap.html</token>
     <token name="@PROFILE@">18.01</token>
     <xml name="requirements">
