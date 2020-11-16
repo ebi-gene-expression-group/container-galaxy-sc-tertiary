@@ -1,5 +1,5 @@
 <tool id="ct_get_consensus_outputs" name="Cell types - get consensus outputs" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
-    <description>Get consensus outputs across multiple tools</description>
+    <description>across multiple tools</description>
     <macros>
         <import>ct_macros.xml</import>
     </macros>
