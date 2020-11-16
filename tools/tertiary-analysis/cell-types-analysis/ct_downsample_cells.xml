@@ -1,5 +1,5 @@
 <tool id="ct_downsample_cells" name="Cell types - Downsample Cells" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
-    <description>Down-sample cells to avoid memory issues</description>
+    <description>to avoid memory issues</description>
     <macros>
         <import>ct_macros.xml</import>
     </macros>
