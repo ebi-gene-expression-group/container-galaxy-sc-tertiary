@@ -1,5 +1,5 @@
 <tool id="ct_check_labels" name="Cell types - check labels" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
-     <description>Filter non-alphanumeric characters from labels</description>
+     <description>filters non-alphanumeric characters from labels</description>
     <macros>
         <import>ct_macros.xml</import>
     </macros>
