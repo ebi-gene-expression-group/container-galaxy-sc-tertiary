@@ -1,5 +1,5 @@
 <tool id="ct_combine_tool_outputs" name="Cell types - combine tools outputs" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
-    <description>Combine predictions for single tool from multiple datasets</description>
+    <description>for single tool from multiple datasets</description>
     <macros>
         <import>ct_macros.xml</import>
     </macros>
