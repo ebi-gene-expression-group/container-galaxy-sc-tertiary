@@ -78,7 +78,7 @@
         <test>
             <param name="rds_seurat_file" value="cluster_seurat.rds" ftype="rdata" />
             <param name="do_bare" value="True" />
-            <output name="output_image_file" file="pcatest.png" compare="sim_size" delta="1000000" />
+            <output name="output_image_file" file="pcatest.png" compare="sim_size" delta="5000000" />
         </test>
     </tests>
     <help><![CDATA[
