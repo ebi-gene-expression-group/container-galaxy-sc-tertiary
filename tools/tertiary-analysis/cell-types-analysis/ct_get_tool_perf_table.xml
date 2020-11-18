@@ -77,7 +77,7 @@
             <param name="lab_cl_mapping" value="label_cl_dict.rds" />
             <param name="parallel" value="TRUE" />
             <param name="ontology_graph" value="https://raw.githubusercontent.com/obophenotype/cell-ontology/master/cl-basic.obo" />
-            <param name="tmpdir" value="./tmp_dir" />
+            <param name="tmpdir" value="./" />
             <param name="exclusions" value="exclusions.yml" />
             <param name="barcode_col_ref" value="Assay" />
             <param name="barcode_col_pred" value="cell_id" />

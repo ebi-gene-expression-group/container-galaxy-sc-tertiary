@@ -51,12 +51,8 @@
 
             <param name="label_col_ref" value='Sample Characteristic[cell type]' />
             <param name="exclusions" value="exclusions.yml" />
-<<<<<<< HEAD
-            <param name="ontology_graph" value="cl-basic.obo" />
-=======
             <param name="ontology_graph" value="https://raw.githubusercontent.com/obophenotype/cell-ontology/master/cl-basic.obo" />
-            <param name="tmpdir" value="./tmp_dir" />
->>>>>>> specify tmpdir
+            <param name="tmpdir" value="./" />
             <param name="parallel" value="TRUE" />
             <param name="lab_cl_mapping" value="label_cl_dict.rds" />
             <output name="output_list_path" file="empirical_dist_list.rds" compare="sim_size" />
