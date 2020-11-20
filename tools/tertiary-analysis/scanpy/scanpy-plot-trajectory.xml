@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_plot_trajectory" name="Scanpy PlotTrajectory" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scanpy_plot_trajectory" name="Scanpy PlotTrajectory" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
   <description>visualise cell trajectories</description>
   <macros>
     <import>scanpy_macros2.xml</import>
