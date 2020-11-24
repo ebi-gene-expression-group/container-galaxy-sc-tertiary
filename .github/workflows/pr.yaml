@@ -66,19 +66,19 @@ jobs:
       with:
         fetch-depth: 0
     # The range of commits to check for changes is:
-    # - `origin/master...` for all events happening on a feature branch
-    # - for events on the master branch we compare against the sha before the event
+    # - `origin/develop...` for all events happening on a feature branch
+    # - for events on the develop branch we compare against the sha before the event
     #   (note that this does not work for feature branch events since we want all
     #   commits on the feature branch and not just the commits of the last event)
     # - for pull requests we compare against the 1st ancestor, given the current
     #   HEAD is the merge between the PR branch and the base branch
     - name: Set commit range (push to the feature branch)
-      if: github.ref != 'refs/heads/master' && github.event_name == 'push'
+      if: github.ref != 'refs/heads/develop' && github.event_name == 'push'
       run: |
-        git fetch origin master
-        echo "COMMIT_RANGE=origin/master..." >> $GITHUB_ENV
-    - name: Set commit range (push to the master branch, e.g. merge)
-      if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        git fetch origin develop
+        echo "COMMIT_RANGE=origin/develop..." >> $GITHUB_ENV
+    - name: Set commit range (push to the develop branch, e.g. merge)
+      if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
       run: echo "COMMIT_RANGE=${{ github.event.before }}.." >> $GITHUB_ENV
     - name: Set commit range (pull request)
       if: github.event_name == 'pull_request'
@@ -86,7 +86,7 @@ jobs:
     - id: get-commit-range
       run: echo "::set-output name=commit_range::$COMMIT_RANGE"
     - name: Planemo ci_find_repos
-      run: planemo ci_find_repos --changed_in_commit_range $COMMIT_RANGE --exclude packages --exclude deprecated --exclude_from .tt_skip --output changed_repositories.list
+      run: planemo ci_find_repos --changed_in_commit_range $COMMIT_RANGE --exclude packages --exclude deprecated --output changed_repositories.list
     - name: Show repo list
       run: cat changed_repositories.list
     - uses: actions/upload-artifact@v2
@@ -153,7 +153,7 @@ jobs:
             planemo shed_lint --tools --ensure_metadata --urls --report_level warn --fail_level error --recursive "$DIR";
         done < ../workflow_artifacts/changed_repositories.list
     - name: Planemo ci_find_tools for the commit range
-      run: planemo ci_find_tools --changed_in_commit_range ${{ needs.setup.outputs.commit_range }} --exclude packages --exclude deprecated --exclude_from .tt_skip --output changed_tools.list
+      run: planemo ci_find_tools --changed_in_commit_range ${{ needs.setup.outputs.commit_range }} --exclude packages --exclude deprecated --output changed_tools.list
     - name: Check if each changed tool is in the list of changed repositories
       run: |
         set -e
