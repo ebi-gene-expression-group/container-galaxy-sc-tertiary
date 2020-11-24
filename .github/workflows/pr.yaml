@@ -69,6 +69,7 @@ jobs:
       commit_range: ${{ steps.get-commit-range.outputs.commit_range }}
       nchunks: ${{ steps.get-chunks.outputs.nchunks }}
       chunk_list: ${{ steps.get-chunks.outputs.chunk_list }}
+    steps:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
