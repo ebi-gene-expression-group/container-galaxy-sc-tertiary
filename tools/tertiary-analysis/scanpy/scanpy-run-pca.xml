@@ -51,7 +51,6 @@ PYTHONIOENCODING=utf-8 scanpy-run-pca
     <param name="extra_outputs" type="select" multiple="true" display="checkboxes" optional="true" label="Export extra output">
       <option value="embeddings">PCA embeddings</option>
     </param>
-
   </inputs>
 
   <outputs>
