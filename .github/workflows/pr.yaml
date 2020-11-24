@@ -1,5 +1,5 @@
-name: Galaxy Tool Linting and Tests for push and PR
-on: [push, pull_request]
+name: Galaxy Tool Linting for PR
+on: [pull_request]
 env:
   GALAXY_REPO: https://github.com/galaxyproject/galaxy
   GALAXY_RELEASE: release_20.09
@@ -79,20 +79,8 @@ jobs:
       with:
         fetch-depth: 0
     # The range of commits to check for changes is:
-    # - `origin/develop...` for all events happening on a feature branch
-    # - for events on the develop branch we compare against the sha before the event
-    #   (note that this does not work for feature branch events since we want all
-    #   commits on the feature branch and not just the commits of the last event)
     # - for pull requests we compare against the 1st ancestor, given the current
     #   HEAD is the merge between the PR branch and the base branch
-    - name: Set commit range (push to the feature branch)
-      if: github.ref != 'refs/heads/develop' && github.event_name == 'push'
-      run: |
-        git fetch origin develop
-        echo "COMMIT_RANGE=origin/develop..." >> $GITHUB_ENV
-    - name: Set commit range (push to the develop branch, e.g. merge)
-      if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
-      run: echo "COMMIT_RANGE=${{ github.event.before }}.." >> $GITHUB_ENV
     - name: Set commit range (pull request)
       if: github.event_name == 'pull_request'
       run: echo "COMMIT_RANGE=HEAD~.." >> $GITHUB_ENV
@@ -196,39 +184,3 @@ jobs:
                 exit 1
             fi
         done < changed_tools.list
-
-  # deploy the tools to the toolshed
-  deploy:
-    name: Deploy
-    needs: [setup, find_changed, lint]
-    strategy:
-      matrix:
-        python-version: [3.7]
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop' && github.repository_owner == 'ebi-gene-expression-group'
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 1
-    - uses: actions/setup-python@v1
-      with:
-        python-version: ${{ matrix.python-version }}
-    - uses: actions/download-artifact@v2
-      with:
-        name: Workflow artifacts
-        path: ../workflow_artifacts/
-    - name: Cache .cache/pip
-      uses: actions/cache@v2
-      id: cache-pip
-      with:
-        path: ~/.cache/pip
-        key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy_head_sha }}
-    - name: Install Planemo
-      run: pip install planemo
-    - name: Deploy on toolshed
-      env:
-        SHED_KEY: ${{ secrets.TS_API_KEY }}
-      run: |
-        while read -r DIR; do
-            planemo shed_update --shed_target toolshed --shed_key "${{ env.SHED_KEY }}" --force_repository_creation "$DIR" || exit 1;
-        done < ../workflow_artifacts/changed_repositories.list
