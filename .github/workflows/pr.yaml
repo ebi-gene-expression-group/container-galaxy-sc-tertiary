@@ -64,6 +64,7 @@ jobs:
 
   find_changed:
     name: Determine changed repositories
+    runs-on: ubuntu-latest
     outputs:
       commit_range: ${{ steps.get-commit-range.outputs.commit_range }}
       nchunks: ${{ steps.get-chunks.outputs.nchunks }}
