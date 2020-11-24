@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_run_pca" name="Scanpy RunPCA" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scanpy_run_pca" name="Scanpy RunPCA" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
   <description>for dimensionality reduction</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -8,7 +8,9 @@
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-run-pca
+#if $n_pcs
     --n-comps '${n_pcs}'
+#end if    
 #if $run_mode.chunked
     --chunked
     --chunk-size '${run_mode.chunk_size}'
@@ -31,7 +33,7 @@ PYTHONIOENCODING=utf-8 scanpy-run-pca
   <inputs>
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
-    <param name="n_pcs" argument="--n-comps" type="integer" min="2" value="50" label="Number of PCs to produce"/>
+    <param name="n_pcs" argument="--n-comps" type="integer" optional="true" min="2" value="" label="Number of PCs to produce"/>
     <conditional name="run_mode">
       <param name="chunked" argument="--chunked" type="boolean" checked="false" label="Perform incremental PCA by chunks"/>
       <when value="true">
