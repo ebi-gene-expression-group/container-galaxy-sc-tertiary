@@ -1,11 +1,13 @@
 name: Galaxy Tool Linting and Tests for push and PR
-on: [pull_request]
+on: [push, pull_request]
 env:
   GALAXY_REPO: https://github.com/galaxyproject/galaxy
   GALAXY_RELEASE: release_20.09
   MAX_CHUNKS: 4
 jobs:
-  # the setup job does two things:
+  # This is a setup modified from that at
+  # https://github.com/galaxyproject/tools-iuc/blob/master/.github/workflows/pr.yaml
+  # The setup job does two things:
   # 1. cache the pip cache and .planemo
   # 2. determine the list of changed repositories
   # it produces one artifact which contains
@@ -172,3 +174,39 @@ jobs:
                 exit 1
             fi
         done < changed_tools.list
+
+  # deploy the tools to the toolshed
+  deploy:
+    name: Deploy
+    needs: [setup, lint]
+    strategy:
+      matrix:
+        python-version: [3.7]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop' && github.repository_owner == 'ebi-gene-expression-group'
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 1
+    - uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - uses: actions/download-artifact@v2
+      with:
+        name: Workflow artifacts
+        path: ../workflow_artifacts/
+    - name: Cache .cache/pip
+      uses: actions/cache@v2
+      id: cache-pip
+      with:
+        path: ~/.cache/pip
+        key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy_head_sha }}
+    - name: Install Planemo
+      run: pip install planemo
+    - name: Deploy on toolshed
+      env:
+        SHED_KEY: ${{ secrets.TS_API_KEY }}
+      run: |
+        while read -r DIR; do
+            planemo shed_update --shed_target toolshed --shed_key "${{ env.SHED_KEY }}" --force_repository_creation "$DIR" || exit 1;
+        done < ../workflow_artifacts/changed_repositories.list
