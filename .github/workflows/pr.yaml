@@ -55,8 +55,8 @@ jobs:
     # are not available as wheels, pip will build a wheel for them, which can be cached.
     - name: Install wheel
       run: pip install wheel
-    - name: Install Planemo and flake8
-      run: pip install planemo flake8 flake8-import-order
+    - name: Install Planemo 
+      run: pip install planemo
     - name: Fake a Planemo run to update cache
       if: steps.cache-pip.outputs.cache-hit != 'true' || steps.cache-planemo.outputs.cache-hit != 'true'
       run: |
