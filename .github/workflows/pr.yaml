@@ -15,13 +15,10 @@ jobs:
   # - a file containing the list of changed repositories
   # which are needed in subsequent steps.
   setup:
-    name: Setup cache and determine changed repositories
+    name: Setup cache and Planemo
     runs-on: ubuntu-latest
     outputs:
       galaxy_head_sha: ${{ steps.get-galaxy-sha.outputs.galaxy_head_sha }}
-      commit_range: ${{ steps.get-commit-range.outputs.commit_range }}
-      nchunks: ${{ steps.get-chunks.outputs.nchunks }}
-      chunk_list: ${{ steps.get-chunks.outputs.chunk_list }}
     strategy:
       matrix:
         python-version: [3.7]
@@ -64,6 +61,13 @@ jobs:
       run: |
         touch tool.xml
         PIP_QUIET=1 planemo test --galaxy_python_version ${{ matrix.python-version }} --no_conda_auto_init --galaxy_source $GALAXY_REPO --galaxy_branch $GALAXY_RELEASE
+
+  find_changed:
+    name: Determine changed repositories
+    outputs:
+      commit_range: ${{ steps.get-commit-range.outputs.commit_range }}
+      nchunks: ${{ steps.get-chunks.outputs.nchunks }}
+      chunk_list: ${{ steps.get-chunks.outputs.chunk_list }}
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
@@ -121,7 +125,7 @@ jobs:
   # Planemo lint the changed repositories
   lint:
     name: Lint tools
-    needs: setup
+    needs: [setup, find_changed]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -155,7 +159,7 @@ jobs:
             planemo shed_lint --tools --ensure_metadata --urls --report_level warn --fail_level error --recursive "$DIR";
         done < ../workflow_artifacts/changed_repositories.list
     - name: Planemo ci_find_tools for the commit range
-      run: planemo ci_find_tools --changed_in_commit_range ${{ needs.setup.outputs.commit_range }} --exclude packages --exclude deprecated --output changed_tools.list
+      run: planemo ci_find_tools --changed_in_commit_range ${{ needs.find_changed.outputs.commit_range }} --exclude packages --exclude deprecated --output changed_tools.list
     - name: Check if each changed tool is in the list of changed repositories
       run: |
         set -e
@@ -178,7 +182,7 @@ jobs:
   # deploy the tools to the toolshed
   deploy:
     name: Deploy
-    needs: [setup, lint]
+    needs: [setup, find_changed, lint]
     strategy:
       matrix:
         python-version: [3.7]
