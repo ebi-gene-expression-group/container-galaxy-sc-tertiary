@@ -32,7 +32,7 @@ jobs:
         echo 'base_ref: ${{ github.base_ref }}'
         echo 'event.before: ${{ github.event.before }}'
         echo 'event.after: ${{ github.event.after }}'
-    - uses: actions/setup-python@v1
+    - uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
     - name: Determine latest commit in the Galaxy repo
