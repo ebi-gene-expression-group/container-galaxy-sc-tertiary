@@ -65,8 +65,8 @@ jobs:
     - name: Fake a Planemo run to update cache
       if: steps.cache-pip.outputs.cache-hit != 'true' || steps.cache-planemo.outputs.cache-hit != 'true'
       run: |
-        touch tool.xml
-        PIP_QUIET=1 planemo test --galaxy_python_version ${{ matrix.python-version }} --no_conda_auto_init --galaxy_source $GALAXY_REPO --galaxy_branch $GALAXY_RELEASE
+        echo "<tool " > tool.xml
+        PIP_QUIET=1 planemo test --galaxy_python_version ${{ matrix.python-version }} --no_conda_auto_init --galaxy_source $GALAXY_REPO --galaxy_branch $GALAXY_RELEASE tool.xml
 
   find_changed:
     name: Determine changed repositories
@@ -167,5 +167,12 @@ jobs:
         SHED_KEY: ${{ secrets.TS_API_KEY }}
       run: |
         while read -r DIR; do
+            if [ -d "$DIR/test-data" ]; then
+                max_test_file_size=$(du $DIR/test-data/$(ls -S $DIR/test-data | head -n 1) | awk '{print $1}')
+                if [ $max_test_file_size -gt 10000 ]; then
+                    echo "Deleting test files, found one > 10Mb" 1>&2
+                    rm -rf $DIR/test-data
+                fi
+            fi
             planemo shed_update --shed_target toolshed --shed_key "${{ env.SHED_KEY }}" --force_repository_creation "$DIR" || exit 1;
         done < ../workflow_artifacts/changed_repositories.list
