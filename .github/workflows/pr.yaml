@@ -16,7 +16,7 @@ jobs:
   # which are needed in subsequent steps.
   setup:
     name: Setup cache and Planemo
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     outputs:
       galaxy_head_sha: ${{ steps.get-galaxy-sha.outputs.galaxy_head_sha }}
     strategy:
@@ -65,7 +65,7 @@ jobs:
   find_changed:
     name: Determine changed repositories
     needs: [setup]
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     strategy:
       fail-fast: false
       matrix:
@@ -132,7 +132,7 @@ jobs:
   lint:
     name: Lint tools
     needs: [setup, find_changed]
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     strategy:
       fail-fast: false
       matrix:
