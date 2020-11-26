@@ -10,7 +10,7 @@
           cp '$table' input_dir/;
         #end for
         
-        get_consensus_output.R --input-dir input_dir --parallel "TRUE" --num-cores \${GALAXY_SLOTS:-1} --cl-dictionary "${lab_cl_mapping}"   --summary-table-output-path "${summary_table_output_path}" --raw-table-output-path --tmpdir ./ "${raw_table_output_path}"
+        get_consensus_output.R --input-dir input_dir --parallel "TRUE" --num-cores \${GALAXY_SLOTS:-1} --cl-dictionary "${lab_cl_mapping}"   --summary-table-output-path "${summary_table_output_path}" --raw-table-output-path "${raw_table_output_path}" --tmpdir ./
         #if $tool_table
         --tool-table "${tool_table}"
         #end if
