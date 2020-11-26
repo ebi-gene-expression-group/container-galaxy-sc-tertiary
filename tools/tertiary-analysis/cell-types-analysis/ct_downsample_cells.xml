@@ -27,7 +27,7 @@
             <expand macro="sanitize_strings" />
         </param>
         <param type="data" name="exclusions" label="Exclusions file" format="yml" optional="true" help="YAML file with trivial terms and unlabelled cells" />
-        <param type="integer" name="array_size_limit" value='2000000000' label="Array Size Limit" help="Maximum length of R array" />
+        <param type="integer" name="array_size_limit" value='2000000000' label="Array Size Limit" help="Maximum length of R array that is allowed in the system" />
         <param type="text" name="output_dir" value="10x_data_sampled" label="Sampled Data" help="Name of the directory for sampled data" />
     </inputs>
     <outputs>

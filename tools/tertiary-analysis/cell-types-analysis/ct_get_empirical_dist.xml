@@ -6,17 +6,11 @@
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
 
-        get_empirical_dist.R --input-ref-file "${input_ref_file}" --label-column-ref "${label_col_ref}" --lab-cl-mapping "${lab_cl_mapping}" --num-iterations "${num_iter}" --num-cores \${GALAXY_SLOTS:-1}  --output-path "${output_list_path}" 
+        get_empirical_dist.R --input-ref-file "${input_ref_file}" --label-column-ref "${label_col_ref}" --lab-cl-mapping "${lab_cl_mapping}" --num-iterations "${num_iter}"  --parallel "TRUE" --num-cores \${GALAXY_SLOTS:-1} --tmpdir ./  --output-path "${output_list_path}" 
 
-        #if $parallel
-        --parallel "${parallel}"
-        #end if
         #if $ontology_graph
         --ontology-graph "${ontology_graph}"
         #end if 
-        #if $tmpdir
-        --tmpdir "${tmpdir}"
-        #end if
         #if $sample_labs
         --sample-labs "${sample_labs}"
         #end if
@@ -34,9 +28,7 @@
         <param type="text" name="label_col_ref" label="Reference label column" value="cell_type" help="Label column in reference file">
         <expand macro="sanitize_strings" />
         </param>
-        <param type="text" name="tmpdir" label="Tmpdir for caching" value="./" optional="true" help="Temporary directory for caching" />
         <param type="data" name="lab_cl_mapping" label="Label - CL term mapping" format="rdata" help="Mapping between cell labels and ontology terms" />
-        <param type="boolean" name="parallel" label="Parallel execution" checked="false" help="Should the table values be computed in parallel?" />
         <param type="integer" name="num_iter" value='5' label="Number of iterations" help="Number of simulations to generate empirical CDF" />
         <param type="integer" name="sample_labs" value='50' label="Number of labels to sample" help="Number of labels to sample for each permutation" />
         <param type="data" name="ontology_graph" label="Ontology graph" format="obo" optional="true" help="Ontology graph to run semantis similarity computations" />
@@ -51,9 +43,6 @@
 
             <param name="label_col_ref" value='Sample Characteristic[cell type]' />
             <param name="exclusions" value="exclusions.yml" />
-            <param name="ontology_graph" value="https://raw.githubusercontent.com/obophenotype/cell-ontology/master/cl-basic.obo" />
-            <param name="tmpdir" value="./" />
-            <param name="parallel" value="TRUE" />
             <param name="lab_cl_mapping" value="label_cl_dict.rds" />
             <output name="output_list_path" file="empirical_dist_list.rds" compare="sim_size" />
         </test>
