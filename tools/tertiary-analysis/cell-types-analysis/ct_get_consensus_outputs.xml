@@ -1,5 +1,5 @@
-<tool id="ct_get_consensus_outputs" name="Cell types - get consensus outputs" version="@TOOL_VERSION@+galaxy3" profile="@PROFILE@">
-    <description>Get consensus outputs across multiple tools</description>
+<tool id="ct_get_consensus_outputs" name="Cell types - get consensus outputs" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+    <description>across multiple tools</description>
     <macros>
         <import>ct_macros.xml</import>
     </macros>
@@ -10,21 +10,15 @@
           cp '$table' input_dir/;
         #end for
         
-        get_consensus_output.R --input-dir input_dir --num-cores \${GALAXY_SLOTS:-1} --cl-dictionary "${lab_cl_mapping}"   --summary-table-output-path "${summary_table_output_path}" --raw-table-output-path "${raw_table_output_path}"
+        get_consensus_output.R --input-dir input_dir --parallel "TRUE" --num-cores \${GALAXY_SLOTS:-1} --cl-dictionary "${lab_cl_mapping}"   --summary-table-output-path "${summary_table_output_path}" --raw-table-output-path "${raw_table_output_path}" --tmpdir ./
         #if $tool_table
         --tool-table "${tool_table}"
         #end if
         #if $ontology_graph
         --ontology-graph "${ontology_graph}"
         #end if
-        #if $tmpdir
-        --tmpdir "${tmpdir}"
-        #end if
         #if $include_sem_siml
         --include-sem-siml "${include_sem_siml}"
-        #end if
-        #if $parallel
-        --parallel "${parallel}"
         #end if
         #if $sort_by_agg_score
         --sort-by-agg-score "${sort_by_agg_score}"
@@ -35,17 +29,19 @@
         #if $sem_siml_metric
         --semantic-sim-metric "${sem_siml_metric}" 
         #end if
+        #if $true_labels
+        --true-labels "${true_labels}" 
+        #end if
          ]]></command>
     <inputs>
         <param type="data" name="input_tables" label="Aggregated tables" format="txt" multiple="true" help="Aggregated prediction tables from multiple tools" />
         <param type="data" name="tool_table" format="txt" optional="true" label="Tool performance table" help="Table with tools performance metrics" />
-        <param type="boolean" name="parallel" label="Parallel execution" checked="false" help="Should the table values be computed in parallel?" />
-        <param type="text" name="tmpdir" label="Tmpdir for caching" optional="true" help="Temporary directory for caching" />
         <param type="boolean" name="include_sem_siml" label="Include Semantic Similarity" checked="false" help="Should semantic similarity be included in calculation of combined score?" />
         <param type="boolean" name="sort_by_agg_score" label="Sort by aggregated score" checked="true" help="Should the cells be ordered by aggregated score?" />
         <param type="data" name="exclusions" label="Exclusions file" format="yml" optional="true" help="Yaml file with trivial terms and unlabelled cells" />
         <param type="data" name="lab_cl_mapping" format="rdata" label="cl terms mapping" help="Label - CL term mapping" />
         <param type="data" name="ontology_graph" format="obo" label="Ontology graph" optional="true" help="Ontology graph to run similairty calculations" />
+        <param type="data" name="true_labels" format="txt" optional="true" label="True Labels" help="Path to the true labels tsv file in case tool performance is evaluated. Expected columns: cell_id, true_label, ontology_term" />
         <expand macro="sem_siml_options" />
     </inputs>
     <outputs>
@@ -54,12 +50,10 @@
     </outputs>
     <tests>
         <test>
-            <param name="input_tables" value="prod_combined_tools/scmap_combined.tsv,prod_combined_tools/scpred_combined.tsv" />
+            <param name="input_tables" value="prod_combined_tools/scmap-cell.txt,prod_combined_tools/scmap-cluster.txt,prod_combined_tools/scpred.txt" />
             <param name="tool_table" value="tool_perf_pvals.tsv" />
             <param name="exclusions" value="exclusions.yml" />
-            <param name="parallel" value="TRUE" />
             <param name="lab_cl_mapping" value="label_cl_dict.rds" />
-            <param name="ontology_graph" value="cl-basic.obo" />
             <output name="summary_table_output_path" file="summary_output_table.tsv" compare="sim_size" />
             <output name="raw_table_output_path" file="raw_labels_table.tsv" compare="sim_size" />
         </test>

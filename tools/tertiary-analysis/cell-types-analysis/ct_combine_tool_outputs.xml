@@ -1,5 +1,5 @@
-<tool id="ct_combine_tool_outputs" name="Cell types - combine tools outputs" version="@TOOL_VERSION@+galaxy2" profile="@PROFILE@">
-    <description>Combine predictions for single tool from multiple datasets</description>
+<tool id="ct_combine_tool_outputs" name="Cell types - combine tools outputs" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+    <description>for single tool from multiple datasets</description>
     <macros>
         <import>ct_macros.xml</import>
     </macros>
@@ -27,7 +27,7 @@
     </outputs>
     <tests>
         <test>
-            <param name="input_tables" value="prod_outputs_scpred/E-MTAB-6386_scpred_final-labs.tsv,prod_outputs_scpred/OTHER-DATASET_scpred_final-labs.tsv" />
+            <param name="input_tables" value="prod_outputs_scpred/E-ENAD-27_scpred.txt,prod_outputs_scpred/E-GEOD-81608_scpred.txt" />
             <param name="scores" value="TRUE" />
             <param name="exclusions" value="exclusions.yml" />
             <output name="output_table" file="combined_results.tsv" compare="sim_size" />

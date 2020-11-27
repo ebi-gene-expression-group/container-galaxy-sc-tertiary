@@ -86,8 +86,10 @@ $force_recalc
 
     <tests>
         <test>
-            <param name="input" ftype="rdata" value="seurat.rds"/>
-            <output name="rds_seurat_file" ftype="rdata" value="out_filter.rds" compare="sim_size"/>
+            <param name="rds_seurat_file" ftype="rdata" value="pca_seurat.rds"/>
+            <param name="compute_snn" value="True" />
+            <param name="reduction" value="pca" />
+            <output name="rds_seurat_file" ftype="rdata" value="neighbours_seurat.rds" compare="sim_size" delta="10000000" />
         </test>
     </tests>
     <help><![CDATA[

@@ -81,6 +81,9 @@ jobs:
     # The range of commits to check for changes is:
     # - for pull requests we compare against the 1st ancestor, given the current
     #   HEAD is the merge between the PR branch and the base branch
+    - uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
     - name: Set commit range (pull request)
       if: github.event_name == 'pull_request'
       run: echo "COMMIT_RANGE=HEAD~.." >> $GITHUB_ENV
@@ -162,7 +165,7 @@ jobs:
       run: |
         set -e
         while read -r DIR; do
-            planemo shed_lint --tools --ensure_metadata --urls --report_level warn --fail_level error --recursive "$DIR";
+            planemo shed_lint --tools --ensure_metadata --report_level warn --fail_level error --recursive "$DIR";
         done < ../workflow_artifacts/changed_repositories.list
     - name: Planemo ci_find_tools for the commit range
       run: planemo ci_find_tools --changed_in_commit_range ${{ needs.find_changed.outputs.commit_range }} --exclude packages --exclude deprecated --output changed_tools.list

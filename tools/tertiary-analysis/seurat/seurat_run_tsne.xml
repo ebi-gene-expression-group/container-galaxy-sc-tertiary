@@ -1,4 +1,4 @@
-<tool id="seurat_run_tsne" name="Seurat RunTSNE" version="@SEURAT_VERSION@+galaxy1">
+<tool id="seurat_run_tsne" name="Seurat RunTSNE" version="@SEURAT_VERSION@+galaxy0">
     <description>run t-SNE dimensionality reduction</description>
     <macros>
         <import>seurat_macros.xml</import>
@@ -66,8 +66,8 @@ seurat-run-tsne.R
 
     <tests>
         <test>
-            <param name="input" ftype="rdata" value="out_findclust.rds"/>
-            <output name="rds_seurat_file" ftype="rdata" value="out_runtsne.rds" compare="sim_size"/>
+            <param name="rds_seurat_file" ftype="rdata" value="pca_seurat.rds"/>
+            <output name="rds_seurat_file" ftype="rdata" value="tsne_seurat.rds" compare="sim_size" delta="1000000" />
         </test>
     </tests>
     <help><![CDATA[

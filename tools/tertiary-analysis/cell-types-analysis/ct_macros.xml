@@ -1,10 +1,10 @@
 <macros>
-    <token name="@TOOL_VERSION@">1.1.0</token>
+    <token name="@TOOL_VERSION@">1.1.1</token>
     <token name="@HELP@">More information can be found at https://github.com/ebi-gene-expression-group/cell-types-analysis</token>
     <token name="@PROFILE@">18.01</token>
     <xml name="requirements">
       <requirements>
-        <requirement type="package" version="0.1.1">cell-types-analysis</requirement>
+        <requirement type="package" version="0.1.9">cell-types-analysis</requirement>
             <yield/>
       </requirements>
     </xml>
@@ -15,6 +15,7 @@
     </xml>
     <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
+0.1.6+galaxy0: Add removing non-alphanumeric characters from labels in metadata files
 0.0.5+galaxy0: Initial contribution. Andrey Solovyev, Expression Atlas team https://www.ebi.ac.uk/gxa/home at EMBL-EBI https://www.ebi.ac.uk/.
 0.0.5+galaxy1: Standardise input/output format into .txt. 
     ]]></token>
@@ -33,6 +34,17 @@
             <option value="edge_li">edge_li</option>
             <option value="resnik">resnik</option>
         </param>
+    </xml>
+    <xml name="sanitize_strings">
+        <sanitizer invalid_char="">
+        <valid initial="string.ascii_letters,string.digits">
+            <add value="_" />
+            <add value="-" />
+            <add value="[" />
+            <add value="]" />
+            <add value=" " />
+            </valid>
+    </sanitizer>
     </xml>
     <xml name="citations">
       <citations>
