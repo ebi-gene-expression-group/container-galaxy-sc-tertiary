@@ -16,7 +16,7 @@ jobs:
   # which are needed in subsequent steps.
   setup:
     name: Setup cache and Planemo
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     outputs:
       galaxy_head_sha: ${{ steps.get-galaxy-sha.outputs.galaxy_head_sha }}
     strategy:
@@ -32,7 +32,7 @@ jobs:
         echo 'base_ref: ${{ github.base_ref }}'
         echo 'event.before: ${{ github.event.before }}'
         echo 'event.after: ${{ github.event.after }}'
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
     - name: Determine latest commit in the Galaxy repo
@@ -65,7 +65,7 @@ jobs:
   find_changed:
     name: Determine changed repositories
     needs: [setup]
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -81,6 +81,9 @@ jobs:
     # The range of commits to check for changes is:
     # - for pull requests we compare against the 1st ancestor, given the current
     #   HEAD is the merge between the PR branch and the base branch
+    - uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
     - name: Set commit range (pull request)
       if: github.event_name == 'pull_request'
       run: echo "COMMIT_RANGE=HEAD~.." >> $GITHUB_ENV
@@ -132,7 +135,7 @@ jobs:
   lint:
     name: Lint tools
     needs: [setup, find_changed]
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -143,7 +146,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
     - uses: actions/download-artifact@v2
