@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="dropletutils_read_10x" name="DropletUtils Read10x" version="@TOOL_VERSION@+galaxy0">
+<tool id="dropletutils_read_10x" name="DropletUtils Read10x" version="@TOOL_VERSION@+galaxy2">
   <description>into SingleCellExperiment object</description>
   <macros>
     <import>dropletutils_macros.xml</import>
@@ -43,7 +43,7 @@
       <param name="matrix" value="matrix.mtx"/>
       <param name="genes" value="genes.tsv"/>
       <param name="barcodes" value="barcodes.tsv"/>
-      <output name="output_rds" file="raw_sce.rds" ftype="rdata" compare="sim_size" delta="1000000"/>
+      <output name="output_rds" file="read_10x.rds" ftype="rdata" compare="sim_size"/>
     </test>
   </tests>
 

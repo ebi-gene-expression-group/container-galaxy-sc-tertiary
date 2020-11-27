@@ -1,4 +1,4 @@
-<tool id="ct_build_cell_ontology_dict" name="Cell types - build cell ontology map" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="ct_build_cell_ontology_dict" name="Cell types - build cell ontology map" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
     <description>Create a mapping from labels to CL terms</description>
     <macros>
         <import>ct_macros.xml</import>
@@ -27,15 +27,9 @@
     <inputs>
         <param type="data" name="input_sdrfs" label="Input SDRF tables" multiple="true" format="txt" help="Input SDRF tables" />
         <param type="boolean" name="condensed_sdrf" checked="false" label="Condensed SDRF" help="Are the supplied SDRFs of condensed format?" />
-        <param type="text" name="barcode_col_name" label="Barcode column name" value="id" help="Name of the barcode field in provided SDRF files">
-            <expand macro="sanitize_strings" />
-        </param>
-        <param type="text" name="cell_label_col_name" label="Cell label column name" value="inferred cell type" help="Name of the cell label field name in provided SDRF files">
-            <expand macro="sanitize_strings" />
-        </param>
-        <param type="text" name="cell_ontology_col_name" label="Cell ontology column name" value="cell type ontology" help="Name of the cell ontology terms column in SDRF files (must be identical across all files)">
-            <expand macro="sanitize_strings" />
-        </param>
+        <param type="text" name="barcode_col_name" label="Barcode column name" value="id" help="Name of the barcode field in provided SDRF files" />
+        <param type="text" name="cell_label_col_name" label="Cell label column name" value="inferred cell type" help="Name of the cell label field name in provided SDRF files" />
+        <param type="text" name="cell_ontology_col_name" label="Cell ontology column name" value="cell.type.ontology" help="Name of the cell ontology terms column in SDRF files (must be identical across all files)" />
     </inputs>
     <outputs>
         <data name="output_dict_path" format="rdata" />
@@ -43,7 +37,7 @@
     </outputs>
     <tests>
         <test>
-            <param name="input_sdrfs" value="SDRFs/E-ENAD-27.condensed-sdrf.tsv,SDRFs/ref_condensed_sdrf.tsv,SDRFs/E-GEOD-81608.condensed-sdrf.tsv" />
+            <param name="input_sdrfs" value="SDRFs/ref_condensed_sdrf.tsv,SDRFs/ref_condensed_sdrf_1.tsv" />
             <param name="condensed_sdrf" value="TRUE" />
             <output name="output_dict_path" file="label_cl_dict.rds" compare="sim_size" />
         </test>

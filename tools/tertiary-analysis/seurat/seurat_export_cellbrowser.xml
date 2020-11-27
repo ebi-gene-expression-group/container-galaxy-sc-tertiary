@@ -24,7 +24,7 @@ cd output_html && tar -cf '$output' *;
 
     <inputs>
         <expand macro="input_object_params"/>
-        <param name="markers_file" type="data" optional="True" format="txt" label="Marker genes file from Seurat" />
+        <param name="markers_file" type="data" format="txt" label="Marker genes file from Seurat" />
     </inputs>
 
     <outputs>
@@ -33,8 +33,9 @@ cd output_html && tar -cf '$output' *;
 
     <tests>
         <test>
-            <param name="rds_seurat_file" ftype="rdata" value="tsne_seurat.rds"/>
-            <output name="output" value="html_out" compare="sim_size" delta="1000000"/>
+            <param name="rds_input" ftype="rdata" value="out_runtsne.rds"/>
+            <param name="markers_file" ftype="txt" value="out_markers.csv"/>
+            <output name="output" ftype="tar" value="out_cellbrowser_bundle.tar"/>
         </test>
     </tests>
     <help><![CDATA[

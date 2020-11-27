@@ -162,7 +162,7 @@ jobs:
       run: |
         set -e
         while read -r DIR; do
-            planemo shed_lint --tools --ensure_metadata --report_level warn --fail_level error --recursive "$DIR";
+            planemo shed_lint --tools --ensure_metadata --urls --report_level warn --fail_level error --recursive "$DIR";
         done < ../workflow_artifacts/changed_repositories.list
     - name: Planemo ci_find_tools for the commit range
       run: planemo ci_find_tools --changed_in_commit_range ${{ needs.find_changed.outputs.commit_range }} --exclude packages --exclude deprecated --output changed_tools.list

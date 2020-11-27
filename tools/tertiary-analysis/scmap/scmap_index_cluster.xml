@@ -6,14 +6,12 @@
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         scmap-preprocess-sce.R --input-object "${input_single_cell_experiment}" --output-sce-object sce_object_preprocessed.rds && scmap-index-cluster.R --input-object-file sce_object_preprocessed.rds --cluster-col '$cluster_col' --output-object-file '$output_single_cell_experiment' --output-plot-file '$plot'
-        --remove-mat '${remove_mat}'
         #if $train_id
         --train-id '${train_id}' 
         #end if
     ]]></command>
     <inputs>
         <param type="data" name="input_single_cell_experiment" label="SingleCellExperiment object" format="rdata" help="File with serialized SingleCellExperiment object as produced by 'scmap select features'" />
-        <param type="boolean" name="remove_mat" checked="false" label="Remove Matrix" help="Should the expression data be removed after classifier is trained?" />
         <param type="text" name="train_id" label="Dataset ID" help="ID of the training dataset" />
         <param name="cluster_col" type="text" label="Cluster column" value="cell_type1" help="Column name in the 'colData' slot of the SingleCellExperiment object containing the cell classification information." />
     </inputs>
@@ -24,9 +22,8 @@
     <tests>
         <test>
             <param name="input_single_cell_experiment" value="select_features.rds" ftype="rdata"/>
-            <param name="remove_mat" value="true" />
-            <output name="output_single_cell_experiment" file="index_cluster.rds" compare="sim_size" delta="1000000000"/>
-            <output name="plot" file="index_cluster.png" compare="sim_size" delta="1000000000"/>
+            <output name="output_single_cell_experiment" file="index_cluster.rds" compare="sim_size"/>
+            <output name="plot" file="index_cluster.png"/>
         </test>
     </tests>
     <help><![CDATA[

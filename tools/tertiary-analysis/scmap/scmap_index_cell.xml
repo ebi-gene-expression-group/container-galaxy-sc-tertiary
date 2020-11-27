@@ -6,7 +6,7 @@
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         scmap-preprocess-sce.R --input-object "${input_single_cell_experiment}" --output-sce-object sce_object_preprocessed.rds &&
-        scmap-index-cell.R --input-object-file sce_object_preprocessed.rds --output-object-file '$output_single_cell_experiment' --random-seed '$random_seed' --remove-mat '${remove_mat}'
+        scmap-index-cell.R --input-object-file sce_object_preprocessed.rds --output-object-file '$output_single_cell_experiment' --random-seed '$random_seed'
         #if $train_id
         --train-id '${train_id}' 
         #end if
@@ -23,7 +23,6 @@
         <param name="n_chunks" type="integer" label="Number of chunks" optional="true" value="0" help="Number of chunks into which the expr matrix is split" />
         <param name="n_clusters" type="integer" label="Number of clusters" optional="true" value="0" help="Number of clusters per group for k-means clustering" />
         <param type="text" name="train_id" label="Dataset ID" help="ID of the training dataset" />
-        <param type="boolean" name="remove_mat" checked="false" label="Remove Matrix" help="Should the expression data be removed after classifier is trained?" />
         <param name="random_seed" type="integer" label="Random seed" value='1' help="scmap-cell contains k-means step which makes it stochastic, i.e. running it multiple times will provide slightly different results. A fixed random seed ensures reproducibility." />
     </inputs>
     <outputs>
@@ -32,8 +31,7 @@
     <tests>
         <test>
             <param name="input_single_cell_experiment" value="select_features.rds" ftype="rdata"/>
-            <param name="remove_mat" value="true" />
-            <output name="output_single_cell_experiment" file="index_cell.rds" compare="sim_size" delta="10000000"/>
+            <output name="output_single_cell_experiment" file="index_cell.rds" compare="sim_size"/>
         </test>
     </tests>
     <help><![CDATA[

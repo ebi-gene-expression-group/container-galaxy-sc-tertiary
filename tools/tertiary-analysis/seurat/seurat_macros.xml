@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <macros>
-    <token name="@VERSION@">0.0.8</token>
-    <token name="@SEURAT_VERSION@">3.1.2</token>
+    <token name="@VERSION@">0.0.7</token>
+    <token name="@SEURAT_VERSION@">3.1.1</token>
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="@VERSION@">seurat-scripts</requirement>
@@ -96,7 +96,6 @@ types of single cell data.
 
     <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
-3.1.2_0.0.8: Upd ate metadata parsing
 
 3.1.1_0.0.7: Exposes perplexity and enables tab input.
 

@@ -21,6 +21,7 @@
       <param type="data" name="index_single_cell_experiment" label="Index SingleCellExperiment object" format="rdata" help="File with serialized SingleCellExperiment object as produced by 'scmap select features' and 'scmap index clusters', onto which another dataset will be projected." />
       <param type="data" name="project_single_cell_experiment" label="SingleCellExperiment object to project" format="rdata" help="File with serialized SingleCellExperiment object to project onto the index'" />
       <param name="n_nearest_neighbours" type="integer" label="Number of nearest neighbours" value='5' help="A positive integer specifying the number of nearest neighbours to find" />
+      
      <conditional name="cluster_projection">
         <param name="do_cluster_projection" type="boolean" checked="false" label="Annotate cells of the projection dataset using labels of the reference?" help="If cell cluster annotation is available for the reference datasets, in addition to finding top 10 nearest neighbours scmap-cell also allows to annotate cells of the projection dataset using labels of the reference."/>
         <when value="true" >
@@ -42,12 +43,12 @@
     <tests>
         <test>
             <param name="index_single_cell_experiment" value="index_cell.rds" ftype="rdata"/>
-            <param name="project_single_cell_experiment" value="test_sce_processed.rds" ftype="rdata"/>
-            <param name="cluster_projection" value="true" />
+            <param name="project_single_cell_experiment" value="test_sce.rds" ftype="rdata"/>
+            <param name="cluster_projection" value="true" ftype="rdata"/>
             <output name="output_single_cell_experiment" file="closest_cells_clusters.rds" compare="sim_size"/>
-            <output name="closest_cells_clusters_csv" file="closest_cells_clusters.tsv" compare="sim_size" />
-            <output name="closest_cells_text_file" file="closest_cells.tsv" compare="sim_size"/>
-            <output name="closest_cells_similarities_text_file" file="closest_cells_similarities.tsv" compare="sim_size"/>
+            <output name="closest_cells_clusters_csv" file="closest_cells_clusters.csv" compare="sim_size" />
+            <output name="closest_cells_text_file" file="closest_cells.csv" compare="sim_size"/>
+            <output name="closest_cells_similarities_text_file" file="closest_cells_similarities.csv" compare="sim_size"/>
         </test>
     </tests>
     <help><![CDATA[

@@ -1,0 +1,39 @@
+<tool id="scpred_eigen_decompose" name="Scpred eigen-decompose" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+    <description>Perform matrix eigen-decomposition; initialize object of scPred class</description>
+    <macros>
+         <import>scpred_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        scpred_eigen_decomp.R --training-matrix "${training_matrix}" --training-labels "${training_labels}"  --output-path "${output_object_path}"
+
+        #if $log_transform
+        --log-transform "${log_transform}" 
+        #end if
+        #if $principal_components
+        --principal-comps "${principal_components}"
+        #end if
+         ]]></command>
+    <inputs>
+        <param type="data" name="training_matrix" label="Training matrix" format="rdata" help="Training matrix obtained from train/test split step" />
+        <param type="boolean" name="log_transform" label="log-transform" checked="True" help="Should log-transform be performed on training data?" />
+        <param type="data" name="training_labels" label="training labels file" format="txt" help="Path to training labels in text format" />
+        <param type="integer" name="principal_components" label="Number of pincipal components" value="10" help="Number of principal components" />
+    </inputs>
+    <outputs>
+        <data name="output_object_path" format="rdata" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="training_matrix" value="train_matrix.mtx" />
+            <param name="training_labels" value="train_metadata.txt" />
+            <output name="output_object_path" file="scPred_object.rds" compare="sim_size" />
+        </test>
+    </tests>
+    <help><![CDATA[
+    @HELP@
+    
+    @VERSION_HISTORY@
+    ]]></help>
+    <expand macro="citations" />
+</tool>

@@ -5,42 +5,24 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        scpred_train_model.R --input-object "${input_object}" --model "${model}" --output-path "${output_obj_path}" --iter-num "${iter_num}" --num-cores \${GALAXY_SLOTS:-1} --tune-length "${tune_length}" --metric "${metric}" --preprocess "${preprocess}" --return-data "${return_data}" --save-predictions "${save_predictions}" 
-        
+        scpred_train_model.R --input-object "${input_object}" --model "${model}" --output-path "${output_obj_path}" --train-probs-plot "${train_probs_plot}"
         #if $train_id
         --train-id '${train_id}' 
         #end if
-        #if $resample_method
-        --resample-method '${resample_method}' 
-        #end if
-        #if $reclassify
-        --reclassify "${reclassify}" 
-        #end if
-        
         ]]></command>
     <inputs>
-
         <param type="data" name="input_object" label="Input SCE object" format="rdata" help="Input SCE object in .rds format"/>
         <param type="text" name="train_id" optional="true" label="Dataset ID" help="ID of the training dataset" />
         <param type="text" name="model" label="Model type to train" value="svmRadial" help="Model type used for training. Must be one of the models supported by Caret package. Default: svmRadial" />
-        <param type="text" name="resample_method" optional="true" value="cv" label="Resample Method" help="Resampling method used for model fit evaluation" />
-        <param type="integer" name="iter_num" optional="true" value="5" label="Number of Iterations" help="Number of resampling iterations. Default: 5"  />
-        <param type="integer" name="tune_length" optional="true" value="3" label="Tune Length" help="An integer denoting the amount of granularity in the tuning parameter grid"  />
-        <param type="text" name="metric" optional="true" value="ROC,PR,Accuracy,Kappa" label="Performance Metric" help="Performance metric to be used to select best model" />
-        <param type="text" name="preprocess" optional="true" value="center,scale" label="Pre-processing Method" help="A string vector that defines a pre-processing of the predictor data. Enter values as comma-separated string. Current possibilities are 'BoxCox', 'YeoJohnson', 'expoTrans', 'center', 'scale', 'range', 'knnImpute', 'bagImpute', 'medianImpute', 'pca', 'ica' and 'spatialSign'. The default is 'center' and 'scale'." />
-        <param type="boolean" checked="false" name="return_data" label="Return Data"  help="If TRUE, training data is returned within scPred object. Default: False"/>
-        <param type="text" name="save_predictions" optional="true" value="final" label="Save Predictions" help="Specifies the set of hold-out predictions for each resample that should be returned. Values can be either 'all', 'final' or 'none'." />
-        <param type="text" name="reclassify" optional="true" label="Cells to Reclassify" help="Cell types to reclassify using a different model" />
-
     </inputs>
     <outputs>
         <data name="output_obj_path" format="rdata" />
+        <data name="train_probs_plot" format="png" />
     </outputs>
      <tests>
         <test>
             <param name="input_object" value="scPred_feat_space.rds" />
-            <param name="train_id" value="E-ENAD-16" />
-            <output name="output_obj_path" file="scPred_trained.rds" compare="sim_size" delta="10000000"/>
+            <output name="output_obj_path" file="scPred_trained.rds" compare="sim_size" />
         </test>
     </tests>
      <help><![CDATA[
