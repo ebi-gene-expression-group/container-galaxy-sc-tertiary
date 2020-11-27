@@ -32,7 +32,7 @@ jobs:
         echo 'base_ref: ${{ github.base_ref }}'
         echo 'event.before: ${{ github.event.before }}'
         echo 'event.after: ${{ github.event.after }}'
-    - uses: actions/setup-python@v1
+    - uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
     - name: Determine latest commit in the Galaxy repo
@@ -81,7 +81,7 @@ jobs:
     # The range of commits to check for changes is:
     # - for pull requests we compare against the 1st ancestor, given the current
     #   HEAD is the merge between the PR branch and the base branch
-    - uses: actions/setup-python@v1
+    - uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
     - name: Set commit range (pull request)
@@ -146,7 +146,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - uses: actions/setup-python@v1
+    - uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
     - uses: actions/download-artifact@v2
