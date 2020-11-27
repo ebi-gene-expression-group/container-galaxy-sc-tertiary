@@ -5,12 +5,15 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        scmap_get_std_output.R --predictions-file "${input_predictions_file}" --output-table "${output_predictions_file}" --include-scores "${include_scores}" --index '${index}' --tool '${tool}' --sim-col-name "${sim_col_name}"
+        scmap_get_std_output.R --predictions-file "${input_predictions_file}" --output-table "${output_predictions_file}" --include-scores "${include_scores}"  --tool '${tool}' --sim-col-name "${sim_col_name}"
+        #if $index
+          --index "${index}"
+        #end if   
     ]]></command>
     <inputs>
         <param type="data" name="input_predictions_file" label="Scmap predictions file in text format" format="txt" help="Path to the predictions file in text format" />
         <param type="boolean" name="include_scores" checked="false"  label="Should prediction scores be included?" help="Boolean indicating whether similarity scores should be included in the final output" />
-        <param type="data" name="index" label="Scmap index object" format="rdata" help="Scmap index object in rdata format" />
+        <param type="data" name="index" label="Scmap index object" optional="true" format="rdata" help="Scmap index object in rdata format" />
         <param type="select" name="tool" label="Tool used (cell/cluster)"  help="What tool was used - scmap-cell or scmap-cluster?">
             <option value="scmap-cell">Scmap-cell</option>
             <option value="scmap-cluster">Scmap-cluster</option>
@@ -22,7 +25,7 @@
     </outputs>
     <tests>
         <test>
-            <param name="input_predictions_file" value="project_cluster.csv" />
+            <param name="input_predictions_file" value="closest_cells_clusters.tsv" />
             <param name="include_scores" value="TRUE" />
             <output name="output_predictions_file" value="scmap_output_tbl.txt" compare="sim_size" />
         </test>

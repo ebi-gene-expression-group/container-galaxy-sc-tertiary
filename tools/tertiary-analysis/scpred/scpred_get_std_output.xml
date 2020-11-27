@@ -5,10 +5,10 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[ 
-        scpred_get_std_output.R --predictions-file "${predictions_file}" --get-scores "${get_scores}" --classifier '${classifier}' --output-table "${output_table}" 
+        scpred_get_std_output.R --predictions-object "${predictions_object}" --get-scores "${get_scores}" --classifier '${classifier}' --output-table "${output_table}" 
         ]]></command>
     <inputs>
-        <param type="data" name="predictions_file" label="Predictions file" format="txt" help="Path to the predictions file in text format" />
+        <param type="data" name="predictions_object" label="Predictions Object" format="rdata" help="Path to the predictions file in text format" />
         <param type="data" name="classifier" label="Classifier object" format="rdata" help="Path to the classifier object used to obtain predictions" />
         <param type="boolean" checked="false" name="get_scores" label="Get scores" help="Boolean: should the prediction scores be included? default: FALSE" />
     </inputs>
@@ -17,12 +17,13 @@
     </outputs>
     <tests>
         <test>
-            <param name="predictions_file" value="predictions_table.txt" />
-            <param name="get_scores" value="TRUE" />
-            <output name="output_table" file="scpred_output_tbl.txt" compare="sim_size"/>
+            <param name="predictions_object" value="predicted_data.rds" />
+            <param name="get_scores" value="True" />
+            <param name="classifier" value="scPred_trained.rds" />
+            <output name="output_table" file="scpred_output_tbl.txt" compare="sim_size" />
         </test>
     </tests>
-     <help><![CDATA[
+    <help><![CDATA[
     @HELP@
     
     @VERSION_HISTORY@

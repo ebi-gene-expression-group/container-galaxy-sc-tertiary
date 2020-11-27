@@ -79,8 +79,8 @@ seurat-find-markers.R
 
     <tests>
         <test>
-            <param name="input" ftype="rdata" value="out_runtsne.rds"/>
-            <output name="output" ftype="txt" value="out_findmark.txt"/>
+            <param name="rds_seurat_file" ftype="rdata" value="cluster_seurat.rds"/>
+            <output name="output" value="markers.csv" compare="sim_size" delta="1000000"/>
         </test>
     </tests>
     <help><![CDATA[
