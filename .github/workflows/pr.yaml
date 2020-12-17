@@ -54,7 +54,7 @@ jobs:
     # are not available as wheels, pip will build a wheel for them, which can be cached.
     - name: Install wheel
       run: pip install wheel
-    - name: Install Planemo 
+    - name: Install Planemo
       run: pip install planemo
     - name: Fake a Planemo run to update cache
       if: steps.cache-pip.outputs.cache-hit != 'true' || steps.cache-planemo.outputs.cache-hit != 'true'
@@ -187,3 +187,95 @@ jobs:
                 exit 1
             fi
         done < changed_tools.list
+
+  # Planemo test the changed repositories, each chunk creates an artifact
+  # containing HTML and JSON reports for the executed tests
+  test:
+    name: Test tools
+    # This job runs on Linux
+    runs-on: self-hosted
+    needs: setup
+    strategy:
+      fail-fast: false
+      matrix:
+        chunk: ${{ fromJson(needs.setup.outputs.chunk_list) }}
+        python-version: [3.7]
+    services:
+      postgres:
+        image: postgres:11
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+    steps:
+    # checkout the repository
+    # and use it as the current working directory
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 1
+    - uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - uses: actions/download-artifact@v2
+      with:
+        name: Workflow artifacts
+        path: ../workflow_artifacts/
+    - name: Cache .cache/pip
+      uses: actions/cache@v2
+      id: cache-pip
+      with:
+        path: ~/.cache/pip
+        key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy_head_sha }}
+    - name: Cache .planemo
+      uses: actions/cache@v2
+      id: cache-planemo
+      with:
+        path: ~/.planemo
+        key: planemo_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy_head_sha }}
+    - name: Install Planemo
+      run: pip install planemo
+    - name: Planemo ci_find_tools for the change repos, chunked
+      run: |
+        touch changed_tools_chunk.list
+        if [ -s ../workflow_artifacts/changed_repositories.list ]; then
+          planemo ci_find_tools --chunk_count ${{ needs.setup.outputs.nchunks }} --chunk ${{ matrix.chunk }} --group_tools --output changed_tools_chunk.list $(cat ../workflow_artifacts/changed_repositories.list)
+        fi
+    - name: Show changed tools chunk list
+      run: cat changed_tools_chunk.list
+    - name: Planemo test tools
+      run: |
+        mkdir json_output
+        while read -r TOOL_GROUP; do
+            # Check if any of the lines in .tt_biocontainer_skip is a substring of $TOOL_GROUP
+            if echo $TOOL_GROUP | grep -qf .tt_biocontainer_skip; then
+                PLANEMO_OPTIONS=""
+            else
+                PLANEMO_OPTIONS="--biocontainers --no_dependency_resolution --no_conda_auto_init"
+            fi
+            json=$(mktemp -u -p json_output --suff .json)
+            PIP_QUIET=1 planemo test --database_connection postgresql://postgres:postgres@localhost:5432/galaxy $PLANEMO_OPTIONS --galaxy_source $GALAXY_REPO --galaxy_branch $GALAXY_RELEASE --galaxy_python_version ${{ matrix.python-version }} --test_output_json "$json" $TOOL_GROUP || true
+            docker system prune --all --force --volumes || true
+        done < changed_tools_chunk.list
+        if [ ! -s changed_tools_chunk.list ]; then
+            echo '{"tests":[]}' > "$(mktemp -u -p json_output --suff .json)"
+        fi
+    - name: Merge tool_test_output.json files
+      run: planemo merge_test_reports json_output/*.json tool_test_output.json
+    - name: Create tool_test_output.html
+      run: planemo test_reports tool_test_output.json --test_output tool_test_output.html
+    - name: Copy artifacts into place
+      run: |
+        mkdir upload
+        mv tool_test_output.json tool_test_output.html upload/
+    - uses: actions/upload-artifact@v2
+      with:
+        name: 'Tool test output ${{ matrix.chunk  }}'
+        path: upload
+
+
+#    repo=$(basename "$DIR")
+#    wget http://ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/github_test_data/"$repo".tar.gz
+#    tar zxvf "$repo".tar.gz && mv "$repo" "$repo"_test_data
+#    planemo test --galaxy_python_version 3.7 "$DIR" --test_data "$repo"_test_data
