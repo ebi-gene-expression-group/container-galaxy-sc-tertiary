@@ -21,7 +21,7 @@ Running the galaxy setup with our tools and workflows can be done in various way
       ```
     - Install the chart with your modified config:
       ```
-      helm install -f hsciap-20.01-helm-galaxy-v3-modified.yaml --version 3.4.2 galaxy-gvl/galaxy
+      helm install -f SCiAp-20.01-helm-galaxy-v3-modified.yaml --version 3.4.2 galaxy-gvl/galaxy
       ```
     - Galaxy will be available at any of the k8s nodes public IPs, at port 30700. Go there, register with one of the set administrator emails and in the user preferences, generate an API key, to be used in the next step for loading tools.
   - Deploy the tools as per [instructions](https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/blob/develop/supplementary_materials/sup_note_3_direct_tools_install.md).
