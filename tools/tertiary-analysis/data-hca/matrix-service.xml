@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="hca_matrix_downloader" name="Human Cell Atlas Matrix Downloader" version="v0.0.3+galaxy0">
+<tool id="hca_matrix_downloader" name="Human Cell Atlas Matrix Downloader" version="v0.0.4+galaxy0">
   <description>retrieves expression matrices and metadata from the Human Cell Atlas.</description>
   <requirements>
-    <requirement type="package" version="0.0.3">hca-matrix-downloader</requirement>
+    <requirement type="package" version="0.0.4">hca-matrix-downloader</requirement>
   </requirements>
   <command detect_errors="exit_code"><![CDATA[
 
 hca-matrix-downloader -p '${project}' -o out -f '${matrix_format}'
 
+#if $species:
+  -s ${species}
+#end if
 #if $matrix_format == "mtx":
   && hca-mtx-to-10x out.mtx .
   && gunzip -c out.mtx/cells.tsv.gz > exp_design.tsv
@@ -21,6 +24,7 @@ hca-matrix-downloader -p '${project}' -o out -f '${matrix_format}'
       <option value="mtx" selected="true">Matrix Market</option>
       <option value="loom">Loom</option>
     </param>
+    <param name="species" argument="--species" optional="true" type="text" label="Species to use" help="Certain studies will contain more than one species, in that case, one should be given as input. If you try to download data from such a study, the tool will fail and give you a list in the Std. out of what are the potential species to paste here. This is not needed for most studies that have a single species."/>
   </inputs>
 
   <outputs>
@@ -43,12 +47,18 @@ hca-matrix-downloader -p '${project}' -o out -f '${matrix_format}'
 
   <tests>
     <test>
-      <param name="project" value="Single cell transcriptome analysis of human pancreas"/>
+      <param name="project" value="cddab57b-6868-4be4-806f-395ed9dd635a"/>
       <param name="matrix_format" value="mtx"/>
-      <output name="matrix_mtx" file="matrix.mtx" ftype="txt"/>
-      <output name="genes_tsv" file="genes.tsv" ftype="tsv"/>
-      <output name="barcode_tsv" file="barcodes.tsv" ftype="tsv"/>
-      <output name="cells_meta_tsv" file="exp_design.tsv" ftype="tsv"/>
+      <output name="matrix_mtx" md5="0549fc0260eb6974affb115ac80b6e85" ftype="txt"/>
+      <output name="genes_tsv" md5="7e131ba105f713d2f9766d61c246d0da" ftype="tsv"/>
+      <output name="barcode_tsv" md5="327926a684ad8eaee5de8243c32b415c" ftype="tsv"/>
+      <output name="cells_meta_tsv" md5="defa674847e3e1877ab1957a3291b28d" ftype="tsv"/>
+    </test>
+    <test>
+      <param name="project" value="f8aa201c-4ff1-45a4-890e-840d63459ca2"/>
+      <param name="matrix_format" value="loom"/>
+      <param name="species" value="homo_sapiens"/>
+      <output name="matrix_loom" md5="9ba6bd109ec271c338251c5519ea9f5d" ftype="h5"/>
     </test>
   </tests>
 
@@ -61,7 +71,7 @@ The data retrieval tool presented here allows the user to retrieve expression ma
 and metadata for any public experiment available at Human Cell Atlas data portal.
 
 To use it, simply set the name, or label, or ID for the desired project, which can be
-found at the HCA data browser (https://prod.data.humancellatlas.org/explore/projects),
+found at the HCA data browser (https://data.humancellatlas.org/explore/projects),
 and select the desired matrix format (Matrix Market or Loom).
 
 Outputs will be:
@@ -97,6 +107,8 @@ Outputs will be:
      in http://linnarssonlab.org/loompy/format/index.html.
 
 **Version history**
+
+     0.0.4+galaxy0: Retrieves data from EBI FTP until an equivalent Matrix service for DCP 2.0 is established. Deals with multi organisms studies.
 
      0.0.2+galaxy0: Initial contribution. Ni Huang and Pablo Moreno, Teichmann Lab at Wellcome Sanger Institute and
      Expression Atlas team https://www.ebi.ac.uk/gxa/home  at EMBL-EBI https://www.ebi.ac.uk/.
