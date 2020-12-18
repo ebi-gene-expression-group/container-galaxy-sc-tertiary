@@ -274,6 +274,49 @@ jobs:
         name: 'Tool test output ${{ matrix.chunk  }}'
         path: upload
 
+  combine_outputs:
+    name: Combine chunked test results
+    needs: [setup, test]
+    strategy:
+      matrix:
+        python-version: [3.8]
+    # This job runs on Linux
+    runs-on: self-hosted
+    steps:
+    - uses: actions/download-artifact@v2
+      with:
+        path: artifacts
+    - uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Cache .cache/pip
+      uses: actions/cache@v2
+      id: cache-pip
+      with:
+        path: ~/.cache/pip
+        key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy_head_sha }}
+    - name: Install Planemo
+      run: pip install planemo
+    - name: Install jq
+      run: sudo apt-get install jq
+    - name: Combine outputs
+      run: find artifacts/ -name tool_test_output.json -exec sh -c 'planemo merge_test_reports "$@" tool_test_output.json' sh {} +
+    - name: Create tool_test_output.html
+      run: planemo test_reports tool_test_output.json --test_output tool_test_output.html
+    - name: Copy artifacts into place
+      run: |
+        mkdir upload
+        mv tool_test_output.json tool_test_output.html upload/
+    - uses: actions/upload-artifact@v2
+      with:
+        name: 'All tool test results'
+        path: upload
+    - name: Check status of combined outputs
+      run: |
+        if jq '.["tests"][]["data"]["status"]' upload/tool_test_output.json | grep -v "success"; then
+            echo "Unsuccessful tests found, inspect the 'All tool test results' artifact for details."
+            exit 1
+        fi
 
 #    repo=$(basename "$DIR")
 #    wget http://ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/github_test_data/"$repo".tar.gz
