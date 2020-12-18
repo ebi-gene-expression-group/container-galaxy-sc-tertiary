@@ -305,6 +305,7 @@ jobs:
       run: planemo test_reports tool_test_output.json --test_output tool_test_output.html
     - name: Copy artifacts into place
       run: |
+        rm -rf upload
         mkdir upload
         mv tool_test_output.json tool_test_output.html upload/
     - uses: actions/upload-artifact@v2
