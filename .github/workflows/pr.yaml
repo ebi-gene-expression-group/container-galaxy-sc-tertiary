@@ -21,7 +21,7 @@ jobs:
       galaxy_head_sha: ${{ steps.get-galaxy-sha.outputs.galaxy_head_sha }}
     strategy:
       matrix:
-        python-version: [3.7]
+        python-version: [3.8]
     steps:
     - name: Print github context properties
       run: |
@@ -69,7 +69,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.7]
+        python-version: [3.8]
     outputs:
       commit_range: ${{ steps.get-commit-range.outputs.commit_range }}
       nchunks: ${{ steps.get-chunks.outputs.nchunks }}
@@ -139,7 +139,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.7]
+        python-version: [3.8]
     steps:
     # checkout the repository
     # and use it as the current working directory
@@ -199,7 +199,7 @@ jobs:
       fail-fast: false
       matrix:
         chunk: ${{ fromJson(needs.setup.outputs.chunk_list) }}
-        python-version: [3.7]
+        python-version: [3.8]
     services:
       postgres:
         image: postgres:11
@@ -278,4 +278,4 @@ jobs:
 #    repo=$(basename "$DIR")
 #    wget http://ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/github_test_data/"$repo".tar.gz
 #    tar zxvf "$repo".tar.gz && mv "$repo" "$repo"_test_data
-#    planemo test --galaxy_python_version 3.7 "$DIR" --test_data "$repo"_test_data
+#    planemo test --galaxy_python_version 3.8 "$DIR" --test_data "$repo"_test_data

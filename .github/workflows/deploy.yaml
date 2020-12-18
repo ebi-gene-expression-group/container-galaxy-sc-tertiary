@@ -27,7 +27,7 @@ jobs:
       galaxy_head_sha: ${{ steps.get-galaxy-sha.outputs.galaxy_head_sha }}
     strategy:
       matrix:
-        python-version: [3.7]
+        python-version: [3.8]
     steps:
     - name: Print github context properties
       run: |
@@ -60,7 +60,7 @@ jobs:
     # are not available as wheels, pip will build a wheel for them, which can be cached.
     - name: Install wheel
       run: pip install wheel
-    - name: Install Planemo 
+    - name: Install Planemo
       run: pip install planemo
     - name: Fake a Planemo run to update cache
       if: steps.cache-pip.outputs.cache-hit != 'true' || steps.cache-planemo.outputs.cache-hit != 'true'
@@ -75,7 +75,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.7]
+        python-version: [3.8]
     outputs:
       commit_range: ${{ steps.get-commit-range.outputs.commit_range }}
       nchunks: ${{ steps.get-chunks.outputs.nchunks }}
@@ -140,7 +140,7 @@ jobs:
     needs: [setup, find_changed]
     strategy:
       matrix:
-        python-version: [3.7]
+        python-version: [3.8]
     runs-on: self-hosted
     if: github.ref == 'refs/heads/develop' && github.repository_owner == 'ebi-gene-expression-group'
     steps:
