@@ -194,7 +194,7 @@ jobs:
     name: Test tools
     # This job runs on Linux
     runs-on: self-hosted
-    needs: setup
+    needs: [setup, find_changed]
     strategy:
       fail-fast: false
       matrix:
