@@ -198,7 +198,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        chunk: ${{ fromJson(needs.setup.outputs.chunk_list) }}
+        #chunk: ${{ fromJson(needs.setup.outputs.chunk_list) }}
         python-version: [3.8]
     services:
       postgres:
