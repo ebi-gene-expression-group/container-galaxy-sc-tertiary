@@ -74,6 +74,10 @@ To use it, simply set the name, or label, or ID for the desired project, which c
 found at the HCA data browser (https://data.humancellatlas.org/explore/projects),
 and select the desired matrix format (Matrix Market or Loom).
 
+For projects that have more than one organism, one needs to be specified. If none
+is specified, then the job will fail and the available options to be specified
+will be listed in the stdout of the job.
+
 Outputs will be:
 
 - *When "Matrix Market" is seleted, outputs are in 10X-compatible Matrix Market format:*
