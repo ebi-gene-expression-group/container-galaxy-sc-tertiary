@@ -49,6 +49,7 @@ PYTHONIOENCODING=utf-8 scanpy-cli plot paga
       <option value="fa">ForceAtlas2</option>
       <option value="fr" selected="true">Fruchterman-Reingold</option>
       <option value="rt">Reingold-Tilford</option>
+    </param>
     <param name="legend_loc" argument="--legend-loc" type="select" label="Location of legend">
       <option value="right margin" selected="true">Right margin</option>
       <option value="on data">On data</option>
