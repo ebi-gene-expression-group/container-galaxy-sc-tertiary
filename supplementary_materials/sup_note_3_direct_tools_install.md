@@ -1,4 +1,4 @@
-# Galaxy tools
+# Supplementary Note 3: Direct tools installation
 
 This part of the setup explains how to deploy all of our latest tools and workflows on a living Galaxy instance, for which you will need to know its URL, port and have an API key from an admin user that can install tools in the instance. This could have been achieved in different ways, but once the Galaxy instance is up, it becomes irrelevant how it was provisioned for the sake of adding our tools and workflows.
 

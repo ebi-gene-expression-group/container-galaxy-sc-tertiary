@@ -1,4 +1,4 @@
-# Available Tools
+# Supplementary Note 2: Tools
 
 SCiAp relies on published analysis tools for single downstream analysis, starting
 from a quantified matrix (usually in 10x format). In the process of wrapping
