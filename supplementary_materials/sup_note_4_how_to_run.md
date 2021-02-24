@@ -1,4 +1,4 @@
-# Running Hinxton Singe Cell Galaxy Setup
+# Supplementary Note 4: Running the SCiAp setup
 
 The most up-to-date version of this document is available [here](https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/blob/develop/supplementary_materials/sup_note_4_how_to_run.md).
 

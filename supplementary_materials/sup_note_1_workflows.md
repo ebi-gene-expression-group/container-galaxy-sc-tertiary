@@ -1,4 +1,4 @@
-# Available workflows
+# Supplementary Note 1: Workflows
 
 Tools can be run in any workflow environment, but here we focus on Galaxy and Nextflow examples.
 
