@@ -1,5 +1,4 @@
-FROM quay.io/ebigxa/galaxy-k8s:20.01_200206
-#FROM galaxy/galaxy-k8s:20.01-feb26
+FROM galaxy/galaxy-k8s:20.09
 
 # All config files are now injected at the helm level.
 
