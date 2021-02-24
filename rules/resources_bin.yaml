@@ -1,0 +1,40 @@
+---
+resource_bins:
+  tiny:
+    requests_cpu: 0.1
+    limits_cpu: 0.5
+    requests_memory: 0.3
+    limits_memory: 0.6
+    dest_id: "dynamic-k8s-tiny"
+  small:
+    requests_cpu: 0.4
+    limits_cpu: 0.8
+    requests_memory: 1
+    limits_memory: 2
+    dest_id: "dynamic-k8s-small"
+  medium:
+    requests_cpu: 0.7
+    limits_cpu: 2
+    requests_memory: 2
+    limits_memory: 4
+    dest_id: "dynamic-k8s-medium"
+  large:
+    requests_cpu: 1.5
+    limits_cpu: 4
+    requests_memory: 3
+    limits_memory: 6
+    dest_id: "dynamic-k8s-large"
+  xlarge:
+    requests_cpu: 4
+    limits_cpu: 8
+    requests_memory: 8
+    limits_memory: 16
+    dest_id: "dynamic-k8s-xlarge"
+  xxlarge:
+    requests_cpu: 4
+    limits_cpu: 8
+    requests_memory: 16
+    limits_memory: 32
+    dest_id: "dynamic-k8s-xxlarge"
+unit_suffix:
+  memory: "Gi"
