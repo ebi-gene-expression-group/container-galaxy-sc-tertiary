@@ -33,8 +33,8 @@ PYTHONIOENCODING=utf-8 scanpy-find-markers
     #end if
     --reference '${settings.reference}'
     --filter-params 'min_in_group_fraction:${settings.min_in_group_fraction},max_out_group_fraction:${settings.max_out_group_fraction},min_fold_change:${settings.min_fold_change}'
-    #end if
     $settings.pts $settings.tie_correct
+    #end if
     @INPUT_OPTS@
     @OUTPUT_OPTS@
 ]]></command>
