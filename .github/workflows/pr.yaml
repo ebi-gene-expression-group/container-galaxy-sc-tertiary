@@ -298,7 +298,7 @@ jobs:
     - name: Install Planemo
       run: pip install planemo
     - name: Install jq
-      run: sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq jq
+      run: sudo apt-get install -yq jq
     - name: Combine outputs
       run: find artifacts/ -name tool_test_output.json -exec sh -c 'planemo merge_test_reports "$@" tool_test_output.json' sh {} +
     - name: Create tool_test_output.html
