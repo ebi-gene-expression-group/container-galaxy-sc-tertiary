@@ -12,6 +12,8 @@ PYTHONIOENCODING=utf-8 scanpy-cli plot paga
     --use-key '${use_key}'
 #end if
     --layout ${layout}
+#end
+    --layout-loc ${layout-loc}
 #if $basis
     --basis ${basis}
 #end if
