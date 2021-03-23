@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_run_fdg" name="Scanpy RunFDG" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scanpy_run_fdg" name="Scanpy RunFDG" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
   <description>visualise cell clusters using force-directed graph</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -47,9 +47,7 @@ PYTHONIOENCODING=utf-8 scanpy-cli embed fdg
         <param name="neighbors_key" argument="--neighbors-key" value="neighbors" type="text"
                label="Name of the slot that holds the KNN graph"/>
         <param name="obsp" type="boolean" checked="false" label="Use .obsp[obsp] as adjacency" help="You can’t specify both obsp and neighbors-key at the same time."/>
-        <param name="init_pos" argument="--init-pos" type="text" label="Method to initialise embedding, any key for adata.obsm or choose from the preset methods">
-          <option value="paga">paga</option>
-        </param>
+        <param name="init_pos" argument="--init-pos" type="text" label="Method to initialise embedding, any key for adata.obsm or choose from the preset methods"/>
         <param name="layout" argument="--layout" type="select" label="Graph layout">
           <option value="fa">fa</option>
           <option value="fr" selected="true">fr</option>
