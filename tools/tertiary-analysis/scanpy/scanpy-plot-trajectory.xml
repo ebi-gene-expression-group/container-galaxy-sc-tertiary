@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_plot_trajectory" name="Scanpy PlotTrajectory" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scanpy_plot_trajectory" name="Scanpy PlotTrajectory" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
   <description>visualise cell trajectories</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -12,6 +12,7 @@ PYTHONIOENCODING=utf-8 scanpy-cli plot paga
     --use-key '${use_key}'
 #end if
     --layout ${layout}
+    --legend-loc '${legend_loc}'
 #if $basis
     --basis ${basis}
 #end if
@@ -49,6 +50,10 @@ PYTHONIOENCODING=utf-8 scanpy-cli plot paga
       <option value="fa">ForceAtlas2</option>
       <option value="fr" selected="true">Fruchterman-Reingold</option>
       <option value="rt">Reingold-Tilford</option>
+    </param>
+    <param name="legend_loc" argument="--legend-loc" type="select" label="Location of legend">
+      <option value="right margin" selected="true">Right margin</option>
+      <option value="on data">On data</option>
     </param>
     <param name="basis" argument="--basis" type="text" optional="true" label="Name of the embedding to plot"
            help="Must be a key of `.obsm` without the prefix 'X_', e.g. 'umap'."/>
