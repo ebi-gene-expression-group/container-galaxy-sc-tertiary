@@ -12,7 +12,7 @@ PYTHONIOENCODING=utf-8 scanpy-cli plot paga
     --use-key '${use_key}'
 #end if
     --layout ${layout}
-    --legend-loc ${legend_loc}
+    --legend-loc '${legend_loc}'
 #if $basis
     --basis ${basis}
 #end if
