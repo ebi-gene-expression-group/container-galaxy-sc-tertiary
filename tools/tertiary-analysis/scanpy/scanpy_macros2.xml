@@ -1,5 +1,5 @@
 <macros>
-  <token name="@TOOL_VERSION@">1.6.0</token>
+  <token name="@TOOL_VERSION@">1.6.1</token>
   <token name="@HELP@">More information can be found at https://scanpy.readthedocs.io</token>
   <token name="@PROFILE@">18.01</token>
   <token name="@VERSION_HISTORY@"><![CDATA[
@@ -49,7 +49,7 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
 
   <xml name="requirements">
     <requirements>
-      <requirement type="package" version="0.3.2">scanpy-scripts</requirement>
+      <requirement type="package" version="0.3.3">scanpy-scripts</requirement>
       <yield/>
     </requirements>
   </xml>
