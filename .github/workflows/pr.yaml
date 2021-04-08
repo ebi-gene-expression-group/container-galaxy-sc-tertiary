@@ -194,12 +194,13 @@ jobs:
     name: Test tools
     # This job runs on Linux
     runs-on: self-hosted
-    needs: [setup, find_changed]
+    needs: setup
+    if: needs.setup.outputs.repository-list != ''
     strategy:
       fail-fast: false
       matrix:
-        chunk: ${{ fromJson(needs.find_changed.outputs.chunk_list) }}
-        python-version: [3.8]
+        chunk: ${{ fromJson(needs.setup.outputs.chunk-list) }}
+        python-version: ['3.7']
     services:
       postgres:
         image: postgres:11
@@ -215,63 +216,34 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 1
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
-    - uses: actions/download-artifact@v2
-      with:
-        name: Workflow artifacts
-        path: ../workflow_artifacts/
     - name: Cache .cache/pip
       uses: actions/cache@v2
       id: cache-pip
       with:
         path: ~/.cache/pip
-        key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy_head_sha }}
+        key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy-head-sha }}
     - name: Cache .planemo
       uses: actions/cache@v2
       id: cache-planemo
       with:
         path: ~/.planemo
-        key: planemo_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy_head_sha }}
-    - name: Install Planemo
-      run: pip install planemo
-    - name: Planemo ci_find_tools for the change repos, chunked
-      run: |
-        touch changed_tools_chunk.list
-        if [ -s ../workflow_artifacts/changed_repositories.list ]; then
-          planemo ci_find_tools --chunk_count ${{ needs.find_changed.outputs.nchunks }} --chunk ${{ matrix.chunk }} --group_tools --output changed_tools_chunk.list $(cat ../workflow_artifacts/changed_repositories.list)
-        fi
-    - name: Show changed tools chunk list
-      run: cat changed_tools_chunk.list
-    - name: Planemo test tools
-      run: |
-        mkdir json_output
-        while read -r TOOL_GROUP; do
-            # Check if any of the lines in .tt_biocontainer_skip is a substring of $TOOL_GROUP
-            if echo $TOOL_GROUP | grep -qf .tt_biocontainer_skip; then
-                PLANEMO_OPTIONS=""
-            else
-                PLANEMO_OPTIONS="--biocontainers --no_dependency_resolution --no_conda_auto_init --docker_extra_volume /tmp"
-            fi
-            json=$(mktemp -u -p json_output --suff .json)
-            PIP_QUIET=1 planemo test --database_connection postgresql://postgres:postgres@localhost:5432/galaxy $PLANEMO_OPTIONS --galaxy_source $GALAXY_REPO --galaxy_branch $GALAXY_RELEASE --galaxy_python_version ${{ matrix.python-version }} --test_output_json "$json" $TOOL_GROUP || true
-            docker system prune --all --force --volumes || true
-        done < changed_tools_chunk.list
-        if [ ! -s changed_tools_chunk.list ]; then
-            echo '{"tests":[]}' > "$(mktemp -u -p json_output --suff .json)"
-        fi
-    - name: Merge tool_test_output.json files
-      run: planemo merge_test_reports json_output/*.json tool_test_output.json
-    - name: Create tool_test_output.html
-      run: planemo test_reports tool_test_output.json --test_output tool_test_output.html
-    - name: Copy artifacts into place
-      run: |
-        mkdir upload
-        mv tool_test_output.json tool_test_output.html upload/
+        key: planemo_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy-head-sha }}
+    - name: Planemo test
+      uses: galaxyproject/planemo-ci-action@v1
+      id: test
+      with:
+        mode: test
+        repository-list: ${{ needs.setup.outputs.repository-list }}
+        galaxy-fork: ${{ env.GALAXY_FORK }}
+        galaxy-branch: ${{ env.GALAXY_BRANCH }}
+        chunk: ${{ matrix.chunk }}
+        chunk-count: ${{ needs.setup.outputs.chunk-count }}
     - uses: actions/upload-artifact@v2
       with:
-        name: 'Tool test output ${{ matrix.chunk  }}'
+        name: 'Tool test output ${{ matrix.chunk }}'
         path: upload
 
   combine_outputs:
@@ -281,7 +253,7 @@ jobs:
       matrix:
         python-version: ['3.7']
     # This job runs on Linux
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - uses: actions/download-artifact@v2
       with:
