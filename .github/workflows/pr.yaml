@@ -56,8 +56,8 @@ jobs:
     # are not available as wheels, pip will build a wheel for them, which can be cached.
     - name: Install wheel
       run: pip install wheel
-    - name: Install flake8
-      run: pip install flake8 flake8-import-order
+    - name: Install jq
+      run: sudo apt-get install -yq jq libjq1
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
