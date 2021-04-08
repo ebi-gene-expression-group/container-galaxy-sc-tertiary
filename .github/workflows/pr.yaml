@@ -43,7 +43,7 @@ jobs:
       id: cache-pip
       with:
         path: ~/.cache/pip
-        key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ steps.get-galaxy-sha.outputs.galaxy_head_sha }}
+        key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ steps.get-galaxy-sha.outputs.galaxy_head_sha }}_foo
     - name: Cache .planemo
       uses: actions/cache@v2
       id: cache-planemo
