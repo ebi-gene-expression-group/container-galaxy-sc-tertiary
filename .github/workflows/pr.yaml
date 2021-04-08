@@ -279,14 +279,14 @@ jobs:
     needs: [setup, test]
     strategy:
       matrix:
-        python-version: [3.8]
+        python-version: ['3.7']
     # This job runs on Linux
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/download-artifact@v2
       with:
         path: artifacts
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
     - name: Cache .cache/pip
@@ -294,30 +294,22 @@ jobs:
       id: cache-pip
       with:
         path: ~/.cache/pip
-        key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy_head_sha }}
-    - name: Install Planemo
-      run: pip install planemo
-    - name: Install jq
-      run: sudo apt-get install -yq jq
+        key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy-head-sha }}
     - name: Combine outputs
-      run: find artifacts/ -name tool_test_output.json -exec sh -c 'planemo merge_test_reports "$@" tool_test_output.json' sh {} +
-    - name: Create tool_test_output.html
-      run: planemo test_reports tool_test_output.json --test_output tool_test_output.html
-    - name: Copy artifacts into place
-      run: |
-        rm -rf upload
-        mkdir upload
-        mv tool_test_output.json tool_test_output.html upload/
+      uses: galaxyproject/planemo-ci-action@v1
+      id: combine
+      with:
+        mode: combine
+        html-report: true
     - uses: actions/upload-artifact@v2
       with:
         name: 'All tool test results'
         path: upload
-    - name: Check status of combined outputs
-      run: |
-        if jq '.["tests"][]["data"]["status"]' upload/tool_test_output.json | grep -v "success"; then
-            echo "Unsuccessful tests found, inspect the 'All tool test results' artifact for details."
-            exit 1
-        fi
+    - name: Check outputs
+      uses: galaxyproject/planemo-ci-action@v1
+      id: check
+      with:
+        mode: check
 
 #    repo=$(basename "$DIR")
 #    wget http://ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/github_test_data/"$repo".tar.gz
