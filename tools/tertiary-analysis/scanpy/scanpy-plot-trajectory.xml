@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_plot_trajectory" name="Scanpy PlotTrajectory" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
+<tool id="scanpy_plot_trajectory" name="Scanpy PlotTrajectory" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>visualise cell trajectories</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -38,12 +38,18 @@ PYTHONIOENCODING=utf-8 scanpy-cli plot paga
         --edge-width-scale ${settings.edge_width}
     #end if
 #end if
+    #if str($output_format).startswith('anndata')
+        --show-obj stdout --output-format anndata --output-obj output.h5
+    #else
+        --show-obj stdout --output-format loom --output-obj output.h5
+    #end if
     @INPUT_OPTS@
     @PLOT_OPTS@
 ]]></command>
 
   <inputs>
     <expand macro="input_object_params"/>
+    <expand macro="output_object_params"/>
     <param name="use_key" argument="--use-key" type="text" value="paga"
            label="The key in `.uns` that contains trajectory information"/>
     <param name="layout" argument="--layout" type="select" label="Layout functions">
@@ -85,6 +91,7 @@ PYTHONIOENCODING=utf-8 scanpy-cli plot paga
   </inputs>
 
   <outputs>
+    <expand macro="output_data_obj" description="Plotted PAGA"/>
     <data name="output_png" format="png" from_work_dir="output.png" label="${tool.name} on ${on_string}: trajectory plot"/>
   </outputs>
 
@@ -92,7 +99,9 @@ PYTHONIOENCODING=utf-8 scanpy-cli plot paga
     <test>
       <param name="input_obj_file" value="paga.h5"/>
       <param name="input_format" value="anndata"/>
+      <param name="output_format" value="anndata"/>
       <param name="type" value="paga_compare"/>
+      <output name="output_h5" file="plotted_paga.h5" ftype="h5" compare="sim_size"/>
       <output name="output_png" file="paga_compare.png" ftype="png" compare="sim_size"/>
     </test>
   </tests>

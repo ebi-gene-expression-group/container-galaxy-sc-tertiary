@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_integrate_mnn" name="Scanpy MNN" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
+<tool id="scanpy_integrate_mnn" name="Scanpy MNN" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>correct batch effects by matching mutual nearest neighbors</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -94,7 +94,7 @@
     <expand macro="output_data_obj" description="Batch-corrected for ${batch_key}"/>
   </outputs>
 
-  <tests>
+  <!--<tests>
     <test>
       <param name="input_obj_file" value="find_cluster.h5"/>
       <param name="input_format" value="anndata"/>
@@ -108,7 +108,7 @@
       <param name="output_format" value="anndata"/>
       <output name="output_h5" file="mnn_copy.h5" ftype="h5" compare="sim_size"/>
     </test>
-  </tests>
+  </tests>-->
 
   <help><![CDATA[
     .. class:: infomark

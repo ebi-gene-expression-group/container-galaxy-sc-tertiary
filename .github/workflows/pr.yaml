@@ -1,13 +1,11 @@
-name: Galaxy Tool Linting for PR
+name: Galaxy Tool Linting and Tests for push and PR
 on: [pull_request]
 env:
-  GALAXY_REPO: https://github.com/galaxyproject/galaxy
-  GALAXY_RELEASE: release_20.09
+  GALAXY_FORK: galaxyproject
+  GALAXY_BRANCH: release_21.01
   MAX_CHUNKS: 4
 jobs:
-  # This is a setup modified from that at
-  # https://github.com/galaxyproject/tools-iuc/blob/master/.github/workflows/pr.yaml
-  # The setup job does two things:
+  # the setup job does two things:
   # 1. cache the pip cache and .planemo
   # 2. determine the list of changed repositories
   # it produces one artifact which contains
@@ -15,13 +13,17 @@ jobs:
   # - a file containing the list of changed repositories
   # which are needed in subsequent steps.
   setup:
-    name: Setup cache and Planemo
+    name: Setup cache and determine changed repositories
     runs-on: self-hosted
     outputs:
-      galaxy_head_sha: ${{ steps.get-galaxy-sha.outputs.galaxy_head_sha }}
+      galaxy-head-sha: ${{ steps.get-galaxy-sha.outputs.galaxy-head-sha }}
+      repository-list: ${{ steps.discover.outputs.repository-list }}
+      tool-list: ${{ steps.discover.outputs.tool-list }}
+      chunk-count: ${{ steps.discover.outputs.chunk-count }}
+      chunk-list: ${{ steps.discover.outputs.chunk-list }}
     strategy:
       matrix:
-        python-version: [3.8]
+        python-version: ['3.8']
     steps:
     - name: Print github context properties
       run: |
@@ -32,161 +34,86 @@ jobs:
         echo 'base_ref: ${{ github.base_ref }}'
         echo 'event.before: ${{ github.event.before }}'
         echo 'event.after: ${{ github.event.after }}'
+    - name: Determine latest commit in the Galaxy repo
+      id: get-galaxy-sha
+      run: echo "::set-output name=galaxy-head-sha::$(git ls-remote https://github.com/${{ env.GALAXY_FORK }}/galaxy refs/heads/${{ env.GALAXY_BRANCH }} | cut -f1)"
     - uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Determine latest commit in the Galaxy repo
-      id: get-galaxy-sha
-      run: echo "::set-output name=galaxy_head_sha::$(git ls-remote ${{ env.GALAXY_REPO }} refs/heads/${{ env.GALAXY_RELEASE }} | cut -f1)"
     - name: Cache .cache/pip
       uses: actions/cache@v2
       id: cache-pip
       with:
         path: ~/.cache/pip
-        key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ steps.get-galaxy-sha.outputs.galaxy_head_sha }}
+        key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ steps.get-galaxy-sha.outputs.galaxy-head-sha }}-${{ secrets.CACHE_VERSION }}
     - name: Cache .planemo
       uses: actions/cache@v2
       id: cache-planemo
       with:
         path: ~/.planemo
-        key: planemo_cache_py_${{ matrix.python-version }}_gxy_${{ steps.get-galaxy-sha.outputs.galaxy_head_sha }}
+        key: planemo_cache_py_${{ matrix.python-version }}_gxy_${{ steps.get-galaxy-sha.outputs.galaxy-head-sha }}-${{ secrets.CACHE_VERSION }}
     # Install the `wheel` package so that when installing other packages which
     # are not available as wheels, pip will build a wheel for them, which can be cached.
     - name: Install wheel
       run: pip install wheel
-    - name: Install Planemo
-      run: pip install planemo
-    - name: Fake a Planemo run to update cache
-      if: steps.cache-pip.outputs.cache-hit != 'true' || steps.cache-planemo.outputs.cache-hit != 'true'
-      run: |
-        echo "<tool " > tool.xml
-        PIP_QUIET=1 planemo test --galaxy_python_version ${{ matrix.python-version }} --no_conda_auto_init --galaxy_source $GALAXY_REPO --galaxy_branch $GALAXY_RELEASE tool.xml
-
-  find_changed:
-    name: Determine changed repositories
-    needs: [setup]
-    runs-on: self-hosted
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: [3.8]
-    outputs:
-      commit_range: ${{ steps.get-commit-range.outputs.commit_range }}
-      nchunks: ${{ steps.get-chunks.outputs.nchunks }}
-      chunk_list: ${{ steps.get-chunks.outputs.chunk_list }}
-    steps:
+    - name: Install jq
+      run: sudo apt-get install -yq jq libjq1
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    # The range of commits to check for changes is:
-    # - for pull requests we compare against the 1st ancestor, given the current
-    #   HEAD is the merge between the PR branch and the base branch
-    - uses: actions/setup-python@v2
+    - name: Fake a Planemo run to update cache and determine commit range, repositories, and chunks
+      uses: galaxyproject/planemo-ci-action@v1
+      id: discover
       with:
+        create-cache: ${{ steps.cache-pip.outputs.cache-hit != 'true' || steps.cache-planemo.outputs.cache-hit != 'true' }}
+        galaxy-fork: ${{ env.GALAXY_FORK }}
+        galaxy-branch: ${{ env.GALAXY_BRANCH }}
+        max-chunks: ${{ env.MAX_CHUNKS }}
         python-version: ${{ matrix.python-version }}
-    - name: Set commit range (pull request)
-      if: github.event_name == 'pull_request'
-      run: echo "COMMIT_RANGE=HEAD~.." >> $GITHUB_ENV
-    - id: get-commit-range
-      run: echo "::set-output name=commit_range::$COMMIT_RANGE"
-    - uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Cache .cache/pip
-      uses: actions/cache@v2
-      id: cache-pip
-      with:
-        path: ~/.cache/pip
-        key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy_head_sha }}
-    - name: Install Planemo
-      run: pip install planemo
-    - name: Planemo ci_find_repos
-      run: planemo ci_find_repos --changed_in_commit_range $COMMIT_RANGE --exclude packages --exclude deprecated --output changed_repositories.list
-    - name: Show repo list
-      run: cat changed_repositories.list
-    - uses: actions/upload-artifact@v2
-      with:
-        name: Workflow artifacts
-        path: changed_repositories.list
-    - name: Planemo ci_find_tools for the changed repos
-      run: |
-        touch changed_tools.list
-        if [ -s changed_repositories.list ]; then
-            planemo ci_find_tools --output changed_tools.list $(cat changed_repositories.list)
-        fi
+    - name: Show commit range
+      run: echo '${{ steps.discover.outputs.commit-range }}'
+    - name: Show repository list
+      run: echo '${{ steps.discover.outputs.repository-list }}'
     - name: Show tool list
-      run: cat changed_tools.list
-    - name: Compute chunks
-      id: get-chunks
-      run: |
-        nchunks=$(wc -l < changed_tools.list)
-        if [ "$nchunks" -gt "$MAX_CHUNKS" ]; then
-            nchunks=$MAX_CHUNKS
-        elif [ "$nchunks" -eq 0 ]; then
-            nchunks=1
-        fi
-        echo "::set-output name=nchunks::$nchunks"
-        echo "::set-output name=chunk_list::[$(seq -s ", " 0 $(($nchunks - 1)))]"
+      run: echo '${{ steps.discover.outputs.tool-list }}'
     - name: Show chunks
       run: |
-        echo 'Using ${{ steps.get-chunks.outputs.nchunks }} chunks (${{ steps.get-chunks.outputs.chunk_list }})'
+        echo 'Using ${{ steps.discover.outputs.chunk-count }} chunks (${{ steps.discover.outputs.chunk-list }})'
 
   # Planemo lint the changed repositories
   lint:
-    name: Lint tools
-    needs: [setup, find_changed]
+    name: Lint tool-list
+    needs: setup
+    if: needs.setup.outputs.repository-list != ''
     runs-on: self-hosted
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.8]
+        python-version: ['3.8']
     steps:
     # checkout the repository
     # and use it as the current working directory
     - uses: actions/checkout@v2
       with:
-        fetch-depth: 0
+        fetch-depth: 1
     - uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-    - uses: actions/download-artifact@v2
-      with:
-        name: Workflow artifacts
-        path: ../workflow_artifacts/
     - name: Cache .cache/pip
       uses: actions/cache@v2
       id: cache-pip
       with:
         path: ~/.cache/pip
-        key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy_head_sha }}
-    - name: Install Planemo
-      run: pip install planemo
+        key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy-head-sha }}-${{ secrets.CACHE_VERSION }}
+    - name: Install jq
+      run: sudo apt-get install -yq jq libjq1
     - name: Planemo lint
-      run: |
-        set -e
-        while read -r DIR; do
-            planemo shed_lint --tools --ensure_metadata --report_level warn --fail_level error --recursive "$DIR";
-        done < ../workflow_artifacts/changed_repositories.list
-    - name: Planemo ci_find_tools for the commit range
-      run: planemo ci_find_tools --changed_in_commit_range ${{ needs.find_changed.outputs.commit_range }} --exclude packages --exclude deprecated --output changed_tools.list
-    - name: Check if each changed tool is in the list of changed repositories
-      run: |
-        set -e
-        while read -r TOOL; do
-            match_found=false;
-            while read -r REPO; do
-                case "$TOOL" in
-                    "$REPO"*)
-                        match_found=true
-                        break
-                        ;;
-                esac
-            done < ../workflow_artifacts/changed_repositories.list
-            if [ "$match_found" != 'true' ]; then
-                echo "Tool $TOOL not in changed repositories list: .shed.yml file missing" >&2
-                exit 1
-            fi
-        done < changed_tools.list
+      uses: galaxyproject/planemo-ci-action@v1
+      id: lint
+      with:
+        mode: lint
+        repository-list: ${{ needs.setup.outputs.repository-list }}
+        tool-list: ${{ needs.setup.outputs.tool-list }}
 
   # Planemo test the changed repositories, each chunk creates an artifact
   # containing HTML and JSON reports for the executed tests
@@ -194,12 +121,13 @@ jobs:
     name: Test tools
     # This job runs on Linux
     runs-on: self-hosted
-    needs: [setup, find_changed]
+    needs: setup
+    if: needs.setup.outputs.repository-list != ''
     strategy:
       fail-fast: false
       matrix:
-        chunk: ${{ fromJson(needs.find_changed.outputs.chunk_list) }}
-        python-version: [3.8]
+        chunk: ${{ fromJson(needs.setup.outputs.chunk-list) }}
+        python-version: ['3.8']
     services:
       postgres:
         image: postgres:11
@@ -218,68 +146,46 @@ jobs:
     - uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-    - uses: actions/download-artifact@v2
-      with:
-        name: Workflow artifacts
-        path: ../workflow_artifacts/
     - name: Cache .cache/pip
       uses: actions/cache@v2
       id: cache-pip
       with:
         path: ~/.cache/pip
-        key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy_head_sha }}
+        key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy-head-sha }}-${{ secrets.CACHE_VERSION }}
     - name: Cache .planemo
       uses: actions/cache@v2
       id: cache-planemo
       with:
         path: ~/.planemo
-        key: planemo_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy_head_sha }}
-    - name: Install Planemo
-      run: pip install planemo
-    - name: Planemo ci_find_tools for the change repos, chunked
-      run: |
-        touch changed_tools_chunk.list
-        if [ -s ../workflow_artifacts/changed_repositories.list ]; then
-          planemo ci_find_tools --chunk_count ${{ needs.find_changed.outputs.nchunks }} --chunk ${{ matrix.chunk }} --group_tools --output changed_tools_chunk.list $(cat ../workflow_artifacts/changed_repositories.list)
-        fi
-    - name: Show changed tools chunk list
-      run: cat changed_tools_chunk.list
-    - name: Planemo test tools
-      run: |
-        mkdir json_output
-        while read -r TOOL_GROUP; do
-            # Check if any of the lines in .tt_biocontainer_skip is a substring of $TOOL_GROUP
-            if echo $TOOL_GROUP | grep -qf .tt_biocontainer_skip; then
-                PLANEMO_OPTIONS=""
-            else
-                PLANEMO_OPTIONS="--biocontainers --no_dependency_resolution --no_conda_auto_init --docker_extra_volume /tmp"
-            fi
-            json=$(mktemp -u -p json_output --suff .json)
-            PIP_QUIET=1 planemo test --database_connection postgresql://postgres:postgres@localhost:5432/galaxy $PLANEMO_OPTIONS --galaxy_source $GALAXY_REPO --galaxy_branch $GALAXY_RELEASE --galaxy_python_version ${{ matrix.python-version }} --test_output_json "$json" $TOOL_GROUP || true
-            docker system prune --all --force --volumes || true
-        done < changed_tools_chunk.list
-        if [ ! -s changed_tools_chunk.list ]; then
-            echo '{"tests":[]}' > "$(mktemp -u -p json_output --suff .json)"
-        fi
-    - name: Merge tool_test_output.json files
-      run: planemo merge_test_reports json_output/*.json tool_test_output.json
-    - name: Create tool_test_output.html
-      run: planemo test_reports tool_test_output.json --test_output tool_test_output.html
-    - name: Copy artifacts into place
-      run: |
-        mkdir upload
-        mv tool_test_output.json tool_test_output.html upload/
+        key: planemo_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy-head-sha }}-${{ secrets.CACHE_VERSION }}
+    - name: Install jq
+      run: sudo apt-get install -yq jq libjq1
+    - name: Planemo test
+      uses: galaxyproject/planemo-ci-action@v1
+      id: test
+      with:
+        mode: test
+        repository-list: ${{ needs.setup.outputs.repository-list }}
+        galaxy-fork: ${{ env.GALAXY_FORK }}
+        galaxy-branch: ${{ env.GALAXY_BRANCH }}
+        chunk: ${{ matrix.chunk }}
+        chunk-count: ${{ needs.setup.outputs.chunk-count }}
     - uses: actions/upload-artifact@v2
       with:
-        name: 'Tool test output ${{ matrix.chunk  }}'
+        name: 'Tool test output ${{ matrix.chunk }}'
         path: upload
 
+  # - combine the results of the test chunks (which will never fail due
+  #   to `|| true`) and create a global test report as json and html which
+  #   is provided as artifact
+  # - check if any tool test actually failed (by lookup in the combined json)
+  #   and fail this step if this is the case
   combine_outputs:
     name: Combine chunked test results
     needs: [setup, test]
     strategy:
       matrix:
-        python-version: [3.8]
+        python-version: ['3.8']
     # This job runs on Linux
     runs-on: self-hosted
     steps:
@@ -294,32 +200,19 @@ jobs:
       id: cache-pip
       with:
         path: ~/.cache/pip
-        key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy_head_sha }}
-    - name: Install Planemo
-      run: pip install planemo
-    - name: Install jq
-      run: sudo apt-get install -yq jq
+        key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy-head-sha }}-${{ secrets.CACHE_VERSION }}
     - name: Combine outputs
-      run: find artifacts/ -name tool_test_output.json -exec sh -c 'planemo merge_test_reports "$@" tool_test_output.json' sh {} +
-    - name: Create tool_test_output.html
-      run: planemo test_reports tool_test_output.json --test_output tool_test_output.html
-    - name: Copy artifacts into place
-      run: |
-        rm -rf upload
-        mkdir upload
-        mv tool_test_output.json tool_test_output.html upload/
+      uses: galaxyproject/planemo-ci-action@v1
+      id: combine
+      with:
+        mode: combine
+        html-report: true
     - uses: actions/upload-artifact@v2
       with:
         name: 'All tool test results'
         path: upload
-    - name: Check status of combined outputs
-      run: |
-        if jq '.["tests"][]["data"]["status"]' upload/tool_test_output.json | grep -v "success"; then
-            echo "Unsuccessful tests found, inspect the 'All tool test results' artifact for details."
-            exit 1
-        fi
-
-#    repo=$(basename "$DIR")
-#    wget http://ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/github_test_data/"$repo".tar.gz
-#    tar zxvf "$repo".tar.gz && mv "$repo" "$repo"_test_data
-#    planemo test --galaxy_python_version 3.8 "$DIR" --test_data "$repo"_test_data
+    - name: Check outputs
+      uses: galaxyproject/planemo-ci-action@v1
+      id: check
+      with:
+        mode: check
