@@ -94,7 +94,7 @@
     <expand macro="output_data_obj" description="Batch-corrected for ${batch_key}"/>
   </outputs>
 
-  <tests>
+  <!--<tests>
     <test>
       <param name="input_obj_file" value="find_cluster.h5"/>
       <param name="input_format" value="anndata"/>
@@ -108,7 +108,7 @@
       <param name="output_format" value="anndata"/>
       <output name="output_h5" file="mnn_copy.h5" ftype="h5" compare="sim_size"/>
     </test>
-  </tests>
+  </tests>-->
 
   <help><![CDATA[
     .. class:: infomark
