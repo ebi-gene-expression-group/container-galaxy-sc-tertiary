@@ -167,7 +167,7 @@ jobs:
           if [ -f get_test_data.sh ]; then
             mkdir -p test-data
             chmod u+x get_test_data.sh
-            ./get_data.sh
+            ./get_test_data.sh
           fi
           popd
         done
