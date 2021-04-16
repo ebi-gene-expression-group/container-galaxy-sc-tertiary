@@ -162,7 +162,7 @@ jobs:
       run: sudo apt-get install -yq jq libjq1
     - name: Get test-data for changed repos
       run: |
-        for repo in $(cat ${{ needs.setup.outputs.repository-list }}); do
+        for repo in ${{ needs.setup.outputs.repository-list }}; do
           pushd $repo
           if [ -f get_test_data.sh ]; then
             mkdir -p test-data
