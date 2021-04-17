@@ -18,7 +18,8 @@
    cbBuild -i cellbrowser.conf -o "$html_file.extra_files_path";
 
    ## "sample" is used as name, so no change needed.
-   cp '$__tool_directory__/redirect.html' '$html_file';
+   # cp '$__tool_directory__/redirect.html' '$html_file';
+   mv '$redirect_html' '$html_file';
 
 #else if $input_type.expression_source == "cell-browser-tar":
 
@@ -28,7 +29,8 @@
    ## we need to adapt redirect to use the study name used in cellbrowser.conf
    study=\$(grep '^name=' cellbrowser.conf | awk -F'=' '{ print $2 }' | sed s/\"//g ) &&
    echo "Study to replace: "\$study &&
-   sed "s/ds=sample/ds=\$study/" '$__tool_directory__/redirect.html' > '$html_file';
+   ## sed "s/ds=sample/ds=\$study/" '$__tool_directory__/redirect.html' > '$html_file';
+   sed "s/ds=sample/ds=\$study/" '$redirect_html' > '$html_file';
 
 #else if $input_type.expression_source == "scanpy":
 
@@ -48,13 +50,30 @@
 
 
      -o outdir -n sample --htmlDir '$html_file.extra_files_path';
-   pwd;
-   echo '$__tool_directory__';
-   ls -l '$__tool_directory__';
-   cp '$__tool_directory__/redirect.html' '$html_file';
+   ## cp '$__tool_directory__/redirect.html' '$html_file';
+   mv '$redirect_html' '$html_file';
 
 #end if
 ]]></command>
+<configfiles>
+    <configfile name="redirect_html"><![CDATA[
+      <!DOCTYPE HTML>
+      <html lang="en-US">
+          <head>
+              <meta charset="UTF-8">
+              <meta http-equiv="refresh" content="0; url=index.html?ds=sample">
+              <script type="text/javascript">
+                  window.location.href = "index.html?ds=sample"
+              </script>
+              <title>Page Redirection</title>
+          </head>
+          <body>
+              <!-- Note: don't tell people to `click` the link, just tell them that it is a link. -->
+              If you are not redirected automatically, follow this <a href='index.html?ds=sample'>link to example</a>.
+          </body>
+      </html>
+    ]]></configfile>
+</configfiles>
 <inputs>
   <conditional name="input_type">
     <param type="select" name="expression_source" label="Choose the format of the expression data" help="Use compressed txt, Scanpy or Seurat objects">
