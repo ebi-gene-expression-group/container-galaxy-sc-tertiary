@@ -49,6 +49,7 @@
 
      -o outdir -n sample --htmlDir '$html_file.extra_files_path';
    pwd;
+   echo '$__tool_directory__';
    ls -l '$__tool_directory__';
    cp '$__tool_directory__/redirect.html' '$html_file';
 
