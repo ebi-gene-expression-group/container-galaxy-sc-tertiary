@@ -1,7 +1,7 @@
-<tool id="ucsc_cell_browser" name="UCSC Cell Browser" version="0.7.10+galaxy0" profile="18.01">
+<tool id="ucsc_cell_browser" name="UCSC Cell Browser" version="1.0.0+galaxy0" profile="18.01">
   <description>displays single-cell clusterized data in an interactive web application.</description>
   <requirements>
-    <requirement type="package" version="0.7.10">ucsc-cell-browser</requirement>
+    <requirement type="package" version="1.0.0">ucsc-cell-browser</requirement>
   </requirements>
 <stdio>
 <exit_code range="1:" />
@@ -18,7 +18,8 @@
    cbBuild -i cellbrowser.conf -o "$html_file.extra_files_path";
 
    ## "sample" is used as name, so no change needed.
-   cp '$__tool_directory__/redirect.html' '$html_file';
+   # cp '$__tool_directory__/redirect.html' '$html_file';
+   mv '$redirect_html' '$html_file';
 
 #else if $input_type.expression_source == "cell-browser-tar":
 
@@ -28,7 +29,8 @@
    ## we need to adapt redirect to use the study name used in cellbrowser.conf
    study=\$(grep '^name=' cellbrowser.conf | awk -F'=' '{ print $2 }' | sed s/\"//g ) &&
    echo "Study to replace: "\$study &&
-   sed "s/ds=sample/ds=\$study/" '$__tool_directory__/redirect.html' > '$html_file';
+   ## sed "s/ds=sample/ds=\$study/" '$__tool_directory__/redirect.html' > '$html_file';
+   sed "s/ds=sample/ds=\$study/" '$redirect_html' > '$html_file';
 
 #else if $input_type.expression_source == "scanpy":
 
@@ -48,10 +50,30 @@
 
 
      -o outdir -n sample --htmlDir '$html_file.extra_files_path';
-   cp '$__tool_directory__/redirect.html' '$html_file';
+   ## cp '$__tool_directory__/redirect.html' '$html_file';
+   mv '$redirect_html' '$html_file';
 
 #end if
 ]]></command>
+<configfiles>
+    <configfile name="redirect_html"><![CDATA[
+      <!DOCTYPE HTML>
+      <html lang="en-US">
+          <head>
+              <meta charset="UTF-8">
+              <meta http-equiv="refresh" content="0; url=index.html?ds=sample">
+              <script type="text/javascript">
+                  window.location.href = "index.html?ds=sample"
+              </script>
+              <title>Page Redirection</title>
+          </head>
+          <body>
+              <!-- Note: don't tell people to `click` the link, just tell them that it is a link. -->
+              If you are not redirected automatically, follow this <a href='index.html?ds=sample'>link to example</a>.
+          </body>
+      </html>
+    ]]></configfile>
+</configfiles>
 <inputs>
   <conditional name="input_type">
     <param type="select" name="expression_source" label="Choose the format of the expression data" help="Use compressed txt, Scanpy or Seurat objects">
@@ -69,8 +91,8 @@
     </when>
     <when value="scanpy">
       <param name="input_anndata_file" type="data" format="h5,h5ad" label="Input object in AnnData hdf5 format" help="Scanpy serialized output is by default produced as an AnnData hdf5 file."/>
-      <param name="marker_field" argument="--markerField" type="text" value="rank_genes_groups" label="Marker genes field" help="Scanpy marker genes field to use, optional, if not set 'rank_genes_groups' will be used."/>
-      <param name="cluster_field" argument="--clusterField" type="text" label="Cluster field" help="Scanpy cluster field to use. Optional, if not set 'louvain' will be used. If the AnnData object doesn't not have 'louvain' among its clustering fields, then this NEEDS to be set or UCSC CellBrowser will fail."/>
+      <param name="marker_field" argument="--markerField" type="text" value="rank_genes_groups" label="Marker genes field" help="Scanpy marker genes field to use (part of uns), optional, if not set 'rank_genes_groups' will be used."/>
+      <param name="cluster_field" argument="--clusterField" type="text" label="Cluster field" help="Scanpy cluster field to use in obs. Optional, if not set 'louvain' will be used. If the AnnData object doesn't not have 'louvain' among its clustering fields in obs, then this NEEDS to be set or UCSC CellBrowser will fail."/>
     </when>
   </conditional>
 </inputs>
@@ -78,10 +100,22 @@
     <data format="html" name="html_file" label="${tool.name} on ${on_string}: Interactive Viewer"/>
 </outputs>
 
+<!-- Test data not included due to size, to obtain it execute get_test_data.sh -->
 <tests>
   <test>
-    <param name="input_anndata_file" ftype="data" value="anndata.h5"/>
-    <output name="html_file" ftype="data" value="cellbrowser.html" compare="sim_size"/>
+    <conditional name="input_type">
+      <param name="expression_source" value="scanpy"/>
+      <param name="input_anndata_file" ftype="h5ad" value="E-MTAB-6077.project.h5ad"/>
+      <param name="marker_field" value="markers_louvain_resolution_0.7"/>
+      <param name="cluster_field" value="louvain_resolution_0.7"/>
+    </conditional>
+    <output name="html_file">
+      <!-- mostly checking that execution doesn't fail, we cannot access the files
+      with relevant content to check it -->
+      <assert_contents>
+          <has_text text="If you are not redirected automatically" />
+      </assert_contents>
+    </output>
   </test>
 </tests>
 
@@ -103,7 +137,14 @@ Usage
 
 After choosing the inputs and executing the tool, once the history item becomes
 green, press the View data (eye icon) button, which will open the generated UCSC Cell Browser
-interactive site. Press the white on blue "Open Dataset" button.
+interactive site.
+
+For EBI Single Cell Expression Atlas AnnData files (available from http://ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/sc_experiments/
+<accession> / <accession>.project.h5ad ), use `markers_louvain_resolution_<value>`
+for Marker genes fields and `louvain_resolution_<value>` for Cluster field. There will be different
+resolution values available, you can see them by executing `Inspect AnnData` tool, select
+and set "What to inspect" to "General information about the object". Then look in the results under
+obs and uns.
 
 Troubleshooting
 ---------------
@@ -126,6 +167,9 @@ EMBL-EBI https://www.ebi.ac.uk/.
 
 0.5.38+galaxy0: Update UCSC CellBrowser version to 0.5.43. Fixes bugs and improves usage of gene symbols in AnnData objects. Pablo Moreno, Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
 EMBL-EBI https://www.ebi.ac.uk/.
+
+1.0.0+galaxy0: Update UCSC CellBrowser version to 1.0.0. Fixes bugs and improves support for AnnData objects. Pablo Moreno, Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
+EMBL-EBI https://www.ebi.ac.uk/.
 ]]></help>
 <citations>
  <citation type="bibtex">
@@ -138,6 +182,7 @@ EMBL-EBI https://www.ebi.ac.uk/.
   url = {https://github.com/maximilianh/cellBrowser},
  }
  </citation>
- <citation type="doi">10.1101/2020.04.08.032698</citation>
+ <citation type="doi">10.1038/s41592-021-01102-w</citation>
+ <citation type="doi">10.1101/2020.10.30.361162</citation>
 </citations>
 </tool>

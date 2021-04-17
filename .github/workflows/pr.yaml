@@ -160,6 +160,17 @@ jobs:
         key: planemo_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy-head-sha }}-${{ secrets.CACHE_VERSION }}
     - name: Install jq
       run: sudo apt-get install -yq jq libjq1
+    - name: Get test-data for changed repos
+      run: |
+        for repo in ${{ needs.setup.outputs.repository-list }}; do
+          pushd $repo
+          if [ -f get_test_data.sh ]; then
+            mkdir -p test-data
+            chmod u+x get_test_data.sh
+            ./get_test_data.sh
+          fi
+          popd
+        done
     - name: Planemo test
       uses: galaxyproject/planemo-ci-action@v1
       id: test
@@ -170,6 +181,7 @@ jobs:
         galaxy-branch: ${{ env.GALAXY_BRANCH }}
         chunk: ${{ matrix.chunk }}
         chunk-count: ${{ needs.setup.outputs.chunk-count }}
+        html-report: true
     - uses: actions/upload-artifact@v2
       with:
         name: 'Tool test output ${{ matrix.chunk }}'
