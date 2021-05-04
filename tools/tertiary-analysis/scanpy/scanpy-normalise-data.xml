@@ -21,10 +21,10 @@ PYTHONIOENCODING=utf-8 scanpy-normalise-data
         #if $settings.exclude.exclude_highly_expressed
             --exclude-highly-expressed --max-fraction '${settings.exclude.max_fraction}'
         #end if
-    	@SAVE_MATRIX_OPTS@
     #end if
     @INPUT_OPTS@
     @OUTPUT_OPTS@
+    @SAVE_MATRIX_OPTS@
     @EXPORT_MTX_OPTS@
 ]]></command>
 
@@ -32,6 +32,7 @@ PYTHONIOENCODING=utf-8 scanpy-normalise-data
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
     <expand macro="export_mtx_params"/>
+    <expand macro="save_matrix_params"/>
      <conditional name="settings">
       <param name="default" type="boolean" checked="true" label="Use programme defaults"/>
       <when value="true"/>
@@ -58,7 +59,6 @@ PYTHONIOENCODING=utf-8 scanpy-normalise-data
  
         <param name="key_added" argument="--key-added" type="text" optional="true"
              label="Name of the field in adata.obs where the normalization factor is stored. Default: don't store."/>
-	<expand macro="save_matrix_params"/>
       </when>
     </conditional>
   </inputs>
