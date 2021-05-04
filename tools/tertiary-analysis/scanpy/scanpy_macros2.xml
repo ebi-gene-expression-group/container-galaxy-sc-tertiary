@@ -30,6 +30,14 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
   <token name="@INPUT_OPTS@">
     --input-format '${input_format}' input.h5
   </token>
+  <token name="@SAVE_MATRIX_OPTS@">
+    #if $settings.save_raw
+      --save-raw
+    #end if
+    #if $settings.save_layer
+      --save-layer ${settings.save_layer}
+    #end if
+  </token>
   <token name="@OUTPUT_OPTS@">
 #if str($output_format).startswith('anndata')
     --show-obj stdout --output-format anndata output.h5
@@ -121,6 +129,13 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
       <filter>output_format == 'loom'</filter>
     </data>
   </xml>
+
+  <xml name="save_matrix_params">
+    <param name="save_raw" argument="--save-raw" type="boolean" truevalue="yes" falsevalue="no" checked="true"
+      label="Save adata to adata.raw before processing?" />
+    <param name="save_layer" argument="--save-layer" type="text" optional="true"
+      label="Save adata.X to the specified layer before processing."/>
+  </xml>  
 
   <xml name="output_plot_params">
     <param name="fig_title" argument="--title" type="text" label="Figure title"/>

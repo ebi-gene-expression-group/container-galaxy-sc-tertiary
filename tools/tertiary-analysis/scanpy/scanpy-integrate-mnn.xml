@@ -41,6 +41,7 @@
     #if $settings.svd_mode
         --svd-mode '${settings.svd_mode}'
     #end if
+    @SAVE_MATRIX_OPTS@
   #end if
 #end if
   @INPUT_OPTS@
@@ -87,6 +88,7 @@
           <option value="irlb">irlb</option>
         </param>
       </when>
+      <expand macro="save_matrix_params"/>
     </conditional>
   </inputs>
 

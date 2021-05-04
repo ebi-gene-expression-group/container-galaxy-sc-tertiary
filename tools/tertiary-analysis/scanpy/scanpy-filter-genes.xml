@@ -28,6 +28,7 @@ PYTHONIOENCODING=utf-8 scanpy-filter-genes
     ${subs}
 #end if
 $force_recalc
+    @SAVE_MATRIX_OPTS@
     @INPUT_OPTS@
     @OUTPUT_OPTS@
     @EXPORT_MTX_OPTS@
@@ -57,6 +58,7 @@ $force_recalc
       <param name="subset" type="data" format="tabular" label="List of values to keep" help="A one-column headerless text file is required"/>
     </repeat>
     <param name="force_recalc" label="Force recalculation of QC vars" type="boolean" truevalue="--force-recalc" falsevalue="" help="If set, it will recalculate pcts and other existing QC vars, overwriting existing ones."/>
+    <expand macro="save_matrix_params"/>
     <expand macro="export_mtx_params"/>
   </inputs>
 
