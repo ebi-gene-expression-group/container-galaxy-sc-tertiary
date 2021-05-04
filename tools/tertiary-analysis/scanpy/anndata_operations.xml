@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="anndata_ops" name="AnnData Operations" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
+<tool id="anndata_ops" name="AnnData Operations" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>modifies metadata and flags genes</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -7,6 +7,10 @@
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_obj_file}' input.h5 &&
+
+#if $copy_r.default:
+ln -s '${copy_r.r_source}' r_source.h5 &&
+#end if
 
 #if $copy_x.default:
 #for $i, $xs in enumerate($copy_x.xlayers):
@@ -72,6 +76,15 @@ if k_cat.sum() > 0:
 else:
     logging.warning('No genes starting with {} found, skip calculating expression of {} genes'.format('${flag.startswith}', '${flag.flag}'))
 #end for
+
+#if $copy_r.default and $copy_r.r_source:
+ad_s = sc.read('r_source.h5')
+if not all(adata.obs.index.isin(ad_s.obs.index)):
+  logging.error("Specified object for .raw must contain all .obs from main object.")
+  sys.exit()
+else:
+  adata.raw = ad_s[adata.obs.index]
+#end if
 
 #if $copy_x.default and len($copy_x.xlayers) > 0:
 #for $i, $x_s in enumerate($copy_x.xlayers):
@@ -202,6 +215,13 @@ adata.write('output.h5', compression='gzip')
       <param name="flag" type="text" label="Var name" help="Name of the column in var.names where this boolean flag is stored, for example 'mito' for mitochondrial genes."/>
     </repeat>
     <param name="top_genes" label="Number of top genes" value='50' help="to calculate percentage of the flagged genes in that number of top genes. Used by sc.pp.calculate_qc_metrics (integer)." type="integer"/>
+    <conditional name="copy_r">
+      <param name="default" type="boolean" checked="false" label="Copy adata.X to adata.raw"/>
+      <when value="true">
+        <param name="r_source" type="data" label="AnnData object with to copy to .raw" help="Copies adata (subset to matching obs) from this AnnData object into the main input as .raw. Make sure to use an AnnData object containing all .obs in the main input." format="h5,h5ad" />
+      </when>
+      <when value="false"/>
+    </conditional>
     <conditional name="copy_x">
       <param name="default" type="boolean" checked="false" label="Copy .X to layers"/>
       <when value="true">
