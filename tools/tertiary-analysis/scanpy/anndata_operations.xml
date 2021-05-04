@@ -68,17 +68,18 @@ else:
 #end for
 
 #if $copy_l.default and len($copy_l.layers) > 0:
-#for $i, $layer_s in enumerate($copy_l.layers_sources):
+#for $i, $layer_s in enumerate($copy_l.layer_sources):
 ad_s = sc.read('layer_source_${i}.h5')
-if adata.n_obs == ad_l.n_obs and all(adata.obs_names == ad_l.obs_names):
+if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
   #for $j, $l_key in enumerate($copy_l.layers):
   layers_to_copy = (k for k in ad_s.layers.keys() if "${l_key.contains}" in k)
   for l_to_copy in layers_to_copy:
+    print('l to copy: %s' % l_to_copy)
     suffix=''
     if l_to_copy in adata.layers:
         suffix = "_${i}" 
     
-    adata.layers[[l_to_copy+suffix]] = ad_s.layers[[l_to_copy]]
+    adata.layers[l_to_copy+suffix] = ad_s.layers[l_to_copy]
   #end for
 else:
   logging.warning("Layer source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
