@@ -223,7 +223,7 @@ adata.write('output.h5', compression='gzip')
     <conditional name="copy_r">
       <param name="default" type="boolean" checked="false" label="Copy adata.X to adata.raw"/>
       <when value="true">
-        <param name="r_source" type="data" label="AnnData object with to copy to .raw" help="Copies adata (subset to matching obs) from this AnnData object into the main input as .raw. Make sure to use an AnnData object containing all .obs in the main input." format="h5,h5ad" />
+        <param name="r_source" type="data" label="AnnData object .X with to copy to .raw" help="Copies adata (subset to matching obs) from this AnnData object into the main input as .raw. Make sure to use an AnnData object containing all .obs in the main input." format="h5,h5ad" />
       </when>
       <when value="false"/>
     </conditional>
