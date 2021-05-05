@@ -292,6 +292,18 @@ adata.write('output.h5', compression='gzip')
       <param name="color_by" value="louvain"/>
       <output name="output_h5ad" file="anndata_ops.h5" ftype="h5ad" compare="sim_size"/>
     </test>
+    <test>
+      <param name="input_obj_file" value="find_cluster.h5"/>
+      <param name="input_format" value="anndata"/>
+      <conditional name="copy_r">
+        <param name="default" value="true"/>
+        <param name="r_source" value="read_10x.h5"/>
+      </conditional>
+      <output name="output_h5ad" file="anndata_ops_raw.h5" ftype="h5ad" compare="sim_size"/>
+        <assert_contents>
+          <has_h5_keys keys="raw/X" />
+	</assert_contents>
+    </test>
   </tests>
 
   <help><![CDATA[
