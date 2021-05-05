@@ -81,7 +81,7 @@ else:
 ad_s = sc.read('r_source.h5')
 if not all(adata.obs.index.isin(ad_s.obs.index)):
   logging.error("Specified object for .raw must contain all .obs from main object.")
-  sys.exit()
+  sys.exit(1)
 else:
   adata.raw = ad_s[adata.obs.index]
 #end if
@@ -96,7 +96,8 @@ if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
     sys.exit(1)
   adata.layers["${xs.dest}"] = ad_s.X
 else:
-  logging.warning("X source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
+  logging.error("X source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
+  sys.exit(1)
 #end for
 #end if
 
@@ -114,7 +115,8 @@ if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
     adata.layers[l_to_copy+suffix] = ad_s.layers[l_to_copy]
   #end for
 else:
-  logging.warning("Layer source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
+  logging.error("Layer source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
+  sys.exit(1)
 #end for
 #end if
 
@@ -134,7 +136,8 @@ if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
       adata.uns[k_to_copy+suffix] = ad_s.uns[k_to_copy]
   #end for
 else:
-  logging.warning("Observation source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
+  logging.error("Observation source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
+  sys.exit(1)
 #end for
 #end if
 
@@ -152,7 +155,8 @@ if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
     adata.obsm[k_to_copy+suffix] = ad_s.obsm[k_to_copy]
   #end for
 else:
-  logging.warning("Embedding source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
+  logging.error("Embedding source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
+  sys.exit(1)
 #end for
 #end if
 
@@ -169,7 +173,8 @@ if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
     adata.uns[k_to_copy+suffix] = ad_s.uns[k_to_copy]
   #end for
 else:
-  logging.warning("Uns source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
+  logging.error("Uns source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
+  sys.exit(1)
 #end for
 #end if
 
