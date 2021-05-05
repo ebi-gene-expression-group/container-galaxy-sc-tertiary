@@ -1,0 +1,33 @@
+<tool id="atlas_import_sdrf_files" name="Atlas import: get sdrf files" version="@TOOL_VERSION@+galaxy0"  profile="@PROFILE@">
+    <description>Import sdrf files from Single Cell Expression Atlas</description>
+    <macros>
+         <import>atlas_import_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        import_sdrf_files.R --sdrf-output-dir "${sdrf_output_dir}"
+
+        #if $config_file 
+        --config-file "${config_file}" 
+        #end if
+        #if $get_condensed_sdrf 
+        --get-condensed-sdrf "${get_condensed_sdrf}" 
+        #end if
+
+    ]]></command>
+    <inputs>
+        <param type="data" name="config_file" label="Config file" format="yml" help="Config file with user-provided parameters" />
+        <param type="boolean" name="get_condensed_sdrf" checked="false"  label="Get condensed sdrf files" help="Boolean indicating whether condensed SDRF files should be imported" />
+    </inputs>
+    <outputs>
+        <collection name="imported_sdrf_files" type="list" label="Collection of imported classifiers">
+            <discover_datasets pattern="__name_and_ext__" directory="${sdrf_output_dir}" />
+        </collection>
+    </outputs>
+    <help><![CDATA[
+    @HELP@
+    
+    @VERSION_HISTORY@
+    ]]></help>
+    <expand macro="citations" />
+</tool>
