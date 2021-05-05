@@ -12,6 +12,7 @@ PYTHONIOENCODING=utf-8 scanpy-scale-data
         --max-value '${scale_max}'
     #end if
     ${zero_center}
+    @SAVE_MATRIX_OPTS@
     @INPUT_OPTS@
     @OUTPUT_OPTS@
 ]]></command>
@@ -22,6 +23,7 @@ PYTHONIOENCODING=utf-8 scanpy-scale-data
     <param name="zero_center" type="boolean" checked="true" truevalue="" falsevalue="--no-zero-center"
            label="Zero center data before scaling"/>
     <param name="scale_max" argument="--max-value" type="float" min="0" optional="true" label="Truncate to this value after scaling"/>
+    <expand macro="save_matrix_params"/>
   </inputs>
 
   <outputs>

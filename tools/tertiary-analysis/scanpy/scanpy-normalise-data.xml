@@ -21,12 +21,10 @@ PYTHONIOENCODING=utf-8 scanpy-normalise-data
         #if $settings.exclude.exclude_highly_expressed
             --exclude-highly-expressed --max-fraction '${settings.exclude.max_fraction}'
         #end if
-        #if $settings.save_raw
-             --save-raw ${settings.save_raw}
-        #end if
     #end if
     @INPUT_OPTS@
     @OUTPUT_OPTS@
+    @SAVE_MATRIX_OPTS@
     @EXPORT_MTX_OPTS@
 ]]></command>
 
@@ -34,6 +32,7 @@ PYTHONIOENCODING=utf-8 scanpy-normalise-data
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
     <expand macro="export_mtx_params"/>
+    <expand macro="save_matrix_params"/>
      <conditional name="settings">
       <param name="default" type="boolean" checked="true" label="Use programme defaults"/>
       <when value="true"/>
@@ -42,8 +41,6 @@ PYTHONIOENCODING=utf-8 scanpy-normalise-data
             label="Target number to normalise to" help="Aimed counts per cell after normalisation."/>
         <param name="log_transform" argument="--no-log-transform" type="boolean" truevalue="" falsevalue="--no-log-transform" checked="True"
              label="Apply log transform?" help="If enabled, will apply a log transformation following normalisation."/>
-        <param name="save_raw" argument="--save-raw" type="boolean" truevalue="yes" falsevalue="no" checked="true"
-             label="Save normalised data in `.raw`" help="The saved normalised data are log1p transformed."/>
         <conditional name="exclude">
          <param name="exclude_highly_expressed" argument="--exclude-highly-expressed" type="boolean" checked="False" 
              label="Exclude highly expressed genes?" help="Exclude (very) highly expressed genes for the computation of the normalization factor (size factor) for each cell. A gene is considered highly expressed, if it has more than max_fraction of the total counts in at least one cell. The not-excluded genes will sum up to the number specified by --normalize-to."/>

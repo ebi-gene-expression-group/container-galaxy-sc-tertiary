@@ -42,6 +42,7 @@
         --svd-mode '${settings.svd_mode}'
     #end if
   #end if
+  @SAVE_MATRIX_OPTS@
 #end if
   @INPUT_OPTS@
   @OUTPUT_OPTS@
@@ -53,6 +54,7 @@
   <inputs>
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
+    <expand macro="save_matrix_params"/>
     <param name="batch_key" type="text" argument="--batch-key" label="The name of the column in adata.obs that differentiates among experiments/batches.">
       <sanitizer>
         <valid initial="string.printable"/>

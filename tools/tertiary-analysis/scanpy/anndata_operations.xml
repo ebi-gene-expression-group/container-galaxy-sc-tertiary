@@ -8,6 +8,22 @@
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_obj_file}' input.h5 &&
 
+#if $copy_r.default:
+ln -s '${copy_r.r_source}' r_source.h5 &&
+#end if
+
+#if $copy_x.default:
+#for $i, $xs in enumerate($copy_x.xlayers):
+  ln -s '${xs.x_source}' x_source_${i}.h5 &&
+#end for
+#end if
+
+#if $copy_l.default:
+#for $i, $ls in enumerate($copy_l.layer_sources):
+  ln -s '${ls}' layer_source_${i}.h5 &&
+#end for
+#end if
+
 #if $copy_o.default:
 #for $i, $os in enumerate($copy_o.obs_sources):
   ln -s '${os}' obs_source_${i}.h5 &&
@@ -61,6 +77,52 @@ else:
     logging.warning('No genes starting with {} found, skip calculating expression of {} genes'.format('${flag.startswith}', '${flag.flag}'))
 #end for
 
+#if $copy_r.default and $copy_r.r_source:
+ad_s = sc.read('r_source.h5')
+if not all(adata.obs.index.isin(ad_s.obs.index)):
+  logging.error("Specified object for .raw must contain all .obs from main object.")
+  sys.exit(1)
+else:
+  adata.raw = ad_s[adata.obs.index]
+del ad_s
+#end if
+
+#if $copy_x.default and len($copy_x.xlayers) > 0:
+#for $i, $x_s in enumerate($copy_x.xlayers):
+ad_s = sc.read('x_source_${i}.h5')
+if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
+  #set xs=$copy_x.xlayers[$i]
+  if "${xs.dest}" == '': 
+    logging.error("%sth destination layer for %sth X source not specified" % ("${i}", "${i}"))
+    sys.exit(1)
+  adata.layers["${xs.dest}"] = ad_s.X
+else:
+  logging.error("X source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
+  sys.exit(1)
+del ad_s
+#end for
+#end if
+
+#if $copy_l.default and len($copy_l.layers) > 0:
+#for $i, $layer_s in enumerate($copy_l.layer_sources):
+ad_s = sc.read('layer_source_${i}.h5')
+if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
+  #for $j, $l_key in enumerate($copy_l.layers):
+  layers_to_copy = (k for k in ad_s.layers.keys() if "${l_key.contains}" in k)
+  for l_to_copy in layers_to_copy:
+    suffix=''
+    if l_to_copy in adata.layers:
+        suffix = "_${i}" 
+    
+    adata.layers[l_to_copy+suffix] = ad_s.layers[l_to_copy]
+  #end for
+else:
+  logging.error("Layer source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
+  sys.exit(1)
+del ad_s
+#end for
+#end if
+
 #if $copy_o.default and len($copy_o.obs_keys) > 0:
 #for $i, $obs_s in enumerate($copy_o.obs_sources):
 ad_s = sc.read('obs_source_${i}.h5')
@@ -77,7 +139,9 @@ if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
       adata.uns[k_to_copy+suffix] = ad_s.uns[k_to_copy]
   #end for
 else:
-  logging.warning("Observation source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
+  logging.error("Observation source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
+  sys.exit(1)
+del ad_s
 #end for
 #end if
 
@@ -95,7 +159,9 @@ if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
     adata.obsm[k_to_copy+suffix] = ad_s.obsm[k_to_copy]
   #end for
 else:
-  logging.warning("Embedding source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
+  logging.error("Embedding source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
+  sys.exit(1)
+del ad_s
 #end for
 #end if
 
@@ -112,7 +178,9 @@ if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
     adata.uns[k_to_copy+suffix] = ad_s.uns[k_to_copy]
   #end for
 else:
-  logging.warning("Uns source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
+  logging.error("Uns source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
+  sys.exit(1)
+del ad_s
 #end for
 #end if
 
@@ -158,6 +226,33 @@ adata.write('output.h5', compression='gzip')
       <param name="flag" type="text" label="Var name" help="Name of the column in var.names where this boolean flag is stored, for example 'mito' for mitochondrial genes."/>
     </repeat>
     <param name="top_genes" label="Number of top genes" value='50' help="to calculate percentage of the flagged genes in that number of top genes. Used by sc.pp.calculate_qc_metrics (integer)." type="integer"/>
+    <conditional name="copy_r">
+      <param name="default" type="boolean" checked="false" label="Copy adata.X to adata.raw"/>
+      <when value="true">
+        <param name="r_source" type="data" label="AnnData object .X with to copy to .raw" help="Copies adata (subset to matching obs) from this AnnData object into the main input as .raw. Make sure to use an AnnData object containing all .obs in the main input." format="h5,h5ad" />
+      </when>
+      <when value="false"/>
+    </conditional>
+    <conditional name="copy_x">
+      <param name="default" type="boolean" checked="false" label="Copy .X to layers"/>
+      <when value="true">
+        <repeat name="xlayers" title="Source objects for .X and paired destination layers in the main AnnData object" help="make sure to use AnnData objects that are compatible in terms of genes, cells and expression data." min="1">
+          <param name="x_source" type="data" label="AnnData objects with .X to copy" help="Extracts .X from these AnnData objects and merges them into the main input as layers. Make sure to use AnnData objects that are compatible in terms of genes, cells and expression data." format="h5,h5ad" />
+          <param name="dest" type="text" label="Destination layer" />
+        </repeat>
+      </when>
+      <when value="false"/>
+    </conditional>
+    <conditional name="copy_l">
+      <param name="default" type="boolean" checked="false" label="Copy layers"/>
+      <when value="true">
+        <repeat name="layers" title="Layers from which matrices will be copied" help="will copy all layers in the given AnnData object to the main AnnData object. Make sure to use AnnData objects that are compatible in terms of genes, cells and expression data." min="1">
+          <param name="contains" type="text" label="Key contains" help="Keys to be copied need to contain the text set here."/>
+        </repeat>
+        <param name="layer_sources" type="data" label="AnnData objects with layers to copy" help="Extracts layers from these AnnData objects and merges them into the main input. Make sure to use AnnData objects that are compatible in terms of genes, cells and expression data." format="h5,h5ad" multiple="true"/>
+      </when>
+      <when value="false"/>
+    </conditional>
     <conditional name="copy_o">
       <param name="default" type="boolean" checked="false" label="Copy observations (such as clusters)"/>
       <when value="true">
@@ -202,6 +297,51 @@ adata.write('output.h5', compression='gzip')
       <param name="input_format" value="anndata"/>
       <param name="color_by" value="louvain"/>
       <output name="output_h5ad" file="anndata_ops.h5" ftype="h5ad" compare="sim_size"/>
+    </test>
+    <test>
+      <param name="input_obj_file" value="find_cluster.h5"/>
+      <param name="input_format" value="anndata"/>
+      <conditional name="copy_r">
+        <param name="default" value="true"/>
+        <param name="r_source" value="read_10x.h5"/>
+      </conditional>
+      <output name="output_h5ad" file="anndata_ops_raw.h5" ftype="h5ad" compare="sim_size">
+        <assert_contents>
+          <has_h5_keys keys="raw/X" />
+	</assert_contents>
+      </output>
+    </test>
+    <test>
+      <param name="input_obj_file" value="normalise_data.h5"/>
+      <param name="input_format" value="anndata"/>
+      <conditional name="copy_x">
+        <param name="default" value="true"/>
+        <repeat name="xlayers">
+	  <param name="x_source" value='filter_genes.h5'/>
+	  <param name="dest" value='filtered'/>
+	</repeat>
+      </conditional>
+      <output name="output_h5ad" file="anndata_ops_xlayer.h5" ftype="h5ad" compare="sim_size">
+        <assert_contents>
+          <has_h5_keys keys="layers/filtered" />
+	</assert_contents>
+      </output>
+    </test>
+    <test>
+      <param name="input_obj_file" value="find_cluster.h5"/>
+      <param name="input_format" value="anndata"/>
+      <conditional name="copy_l">
+        <param name="default" value="true"/>
+        <repeat name="layers">
+	  <param name="contains" value='filtered'/>
+	</repeat>
+	<param name="layer_sources" value='anndata_ops_xlayer.h5'/>
+      </conditional>
+      <output name="output_h5ad" file="anndata_ops_layer.h5" ftype="h5ad" compare="sim_size">
+        <assert_contents>
+          <has_h5_keys keys="layers/filtered" />
+	</assert_contents>
+      </output>
     </test>
   </tests>
 

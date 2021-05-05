@@ -10,6 +10,7 @@
   ln -s '${input_obj_file}' input.h5 &&
   PYTHONIOENCODING=utf-8 scanpy-regress
       --keys '${variable_keys}'
+      @SAVE_MATRIX_OPTS@
       @INPUT_OPTS@
       @OUTPUT_OPTS@
 #else
@@ -25,6 +26,7 @@
         <valid initial="string.printable"/>
       </sanitizer>
     </param>
+    <expand macro="save_matrix_params"/>
   </inputs>
 
   <outputs>
