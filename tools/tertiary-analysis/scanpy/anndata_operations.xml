@@ -93,7 +93,7 @@ if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
   #set xs=$copy_x.xlayers[$i]
   if "${xs.dest}" == '': 
     logging.error("%sth destination layer for %sth X source not specified" % ("${i}", "${i}"))
-    sys.exit()
+    sys.exit(1)
   adata.layers["${xs.dest}"] = ad_s.X
 else:
   logging.warning("X source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
