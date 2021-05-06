@@ -1,8 +1,10 @@
-<tool id="" name="" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="build_config_file" name="Build Config File" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
     <description>Build yaml config file</description>
+    <macros>
+        <import>ct_macros.xml</import>
+    </macros>
     <requirements>
-        <requirement type="package" version="">package</requirement>
-            <yield/>
+        <requirement type="package" version="">pyyaml</requirement>
       </requirements>
     <command detect_errors="exit_code"><![CDATA[
         python $operations
@@ -12,7 +14,7 @@
 import yaml 
 params = {'sdrf':'${sdrf}',
             'condensed_sdrf':'${condensed_sdrf}',
-            'datasets':'${datasets}'.split(" "),
+            'datasets':'${datasets}'.split(","),
             'scxa_classifiers_prefix':'${scxa_classifiers_prefix}',
             'scxa_experiments_prefix':'${scxa_experiments_prefix}',
             'tool_perf_table':'${tool_perf_table}'
@@ -26,7 +28,7 @@ with open('${output_yml_config}', 'w') as dest_file:
     <inputs>
         <param name="sdrf" type="text" label="Name of SDRF file" value="sdrf.txt" help="Basename of SDRF file" />
         <param name="condensed_sdrf" type="text" label="Name of condensed SDRF file" value="condensed-sdrf.tsv" help="Basename of SDRF file" />
-        <param name="datasets" type="text" label="IDs of datasets used for prediction" value="E-ENAD-27 E-GEOD-81608 E-GEOD-81547 E-CURD-46 E-GEOD-114530 E-GEOD-125970 E-GEOD-71585 E-GEOD-83139 E-GEOD-94641 E-HCAD-10 E-HCAD-11 E-HCAD-6 E-MTAB-5061 E-MTAB-6678 E-MTAB-6701 E-MTAB-6912 E-MTAB-6925 E-MTAB-7249" help="A space-separated list of datasets to run predicitons against" />
+        <param name="datasets" type="text" label="IDs of datasets used for prediction" value="E-ENAD-27,E-GEOD-81608,E-GEOD-81547,E-CURD-46,E-GEOD-114530,E-GEOD-125970,E-GEOD-71585,E-GEOD-83139,E-GEOD-94641,E-HCAD-10,E-HCAD-11,E-HCAD-6,E-MTAB-5061,E-MTAB-6678,E-MTAB-6701,E-MTAB-6912,E-MTAB-6925,E-MTAB-7249" help="A comma-separated list of datasets to run predictions against" />
         <param name="scxa_classifiers_prefix" type="text" label="Classifiers prefix" value="ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/sc_experiments_classifiers" help="Prefix for the path to classifiers directory on FTP server" />
         <param name="scxa_experiments_prefix" type="text" label="Experiments prefix" value="ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/sc_experiments" help="Prefix for the path to experiment data on FTP server" />
         <param name="tool_perf_table" type="text" label="Tool performance table" value="https://www.ebi.ac.uk/~a_solovyev/prod_testing_data/tool_perf_pvals.tsv" help="Path to the tool performance table" />
@@ -36,7 +38,7 @@ with open('${output_yml_config}', 'w') as dest_file:
     </outputs>
     <tests>
         <test>
-            <output name="" file="" compare="sim_size"/>
+            <output name="output_yml_config" file="config.yml" compare="sim_size"/>
         </test>
 
     </tests>
