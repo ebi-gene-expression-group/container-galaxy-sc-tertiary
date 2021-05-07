@@ -1,4 +1,4 @@
-<tool id="scpred_predict_labels" name="Scpred predict" version="@TOOL_VERSION@+galaxy0">
+<tool id="scpred_predict_labels" name="Scpred predict" version="@TOOL_VERSION@+galaxy1">
     <description>Make cell type predictions using trained model.</description>
      <macros>
         <import>scpred_macros.xml</import>
@@ -25,7 +25,7 @@
 
         <param type="data" name="input_object" label="Input Seurat Object" format="rdata" help="Input Seurat object in .rds format" />
         <param type="data" name="pred_data" label="Query Data Matrix" format="rdata" help="Path to the input prediction matrix in .rds format"/>
-        <param type="boolean" checked="false" name="normalise_data" label="Normalise Data"  help="Should the predicted expression data be normalised? Default: False"/>
+        <param type="boolean" checked="true" name="normalise_data" label="Normalise Data"  help="Should the predicted expression data be normalised? Default: True"/>
         <param type="text" name="normalisation_method" optional="true" value="LogNormalize" label="Normalisation Method" help="What normalisation method should be applied to predicted data? Default: LogNormalize"  />
         <param type="integer" name="scale_factor" optional="true" value="1000000" label="Scale Factor" help="What scale factor should be applied? Note: for CPM normalisation, 1e6 is selected by default"  />
         <param type="float" name="threshold_level" optional="true" value="0.8" label="Threshold Level" help="Classification threshold value"  />
