@@ -58,6 +58,7 @@ PYTHONIOENCODING=utf-8 scanpy-neighbors
         <param name="use_rep" type="select" label="Use the indicated representation">
           <option value="X_pca" selected="true">X_pca, use PCs</option>
           <option value="X">X, use normalised expression values</option>
+          <option value="X_diffmap"> X_diffmap, use diffusion map</option>
         </param>
         <param name="n_pcs" argument="--n-pcs" type="integer" value="50" optional="true" label="Number of PCs to use"/>
         <param name="knn" argument="--knn" type="boolean" truevalue="" falsevalue="--no-knn" checked="true"
