@@ -10,7 +10,7 @@
           ln -s "${accession_code}_${expression_data_params.matrix_type}/10x_data/genes.tsv" genes.tsv &&
           ln -s "${accession_code}_${expression_data_params.matrix_type}/10x_data/barcodes.tsv" barcodes.tsv &&
 
-          get_experiment_data.R --accession-code "${accession_code}" --get-expression-data "${expression_data_params.get_expression_data}" --matrix-type "${expression_data_params.matrix_type}" 
+          get_experiment_data.R --accession-code "${accession_code}" --get-expression-data "${expression_data_params.get_expression_data}" --matrix-type "${expression_data_params.matrix_type}" &&
         #end if 
 
         #if $metadata_params.get_metadata
@@ -20,32 +20,17 @@
           ln -s "${accession_code}_${metadata_params.matrix_type}/marker_genes_${metadata_params.markers_cell_grouping}.tsv" marker_genes_${metadata_params.markers_cell_grouping}.tsv &&
           ln -s "${accession_code}_${metadata_params.matrix_type}/exp_design.tsv" exp_design.tsv &&
 
-          get_experiment_data.R --accession-code "${accession_code}" --get-expression-data "FALSE" --matrix-type "${metadata_params.matrix_type}" --get-sdrf --get-condensed-sdrf --get-idf --get-marker-genes --get-exp-design 
-
-          #if $metadata_params.markers_cell_grouping
-          --markers-cell-grouping "${metadata_params.markers_cell_grouping}"
-          #end if 
-
+          get_experiment_data.R --accession-code "${accession_code}" --get-expression-data "FALSE" --matrix-type "${metadata_params.matrix_type}" --get-sdrf --get-condensed-sdrf --get-idf --get-marker-genes --get-exp-design --markers-cell-grouping "${metadata_params.markers_cell_grouping}" &&
         #end if
 
         #if $classifier_params.get_classifiers
-          import_classification_data.R --tool "${classifier_params.tool}" 
+          import_classification_data.R --tool "${classifier_params.tool}" --get-sdrf --condensed-sdrf  --get-tool-perf-table
 
-          #if classifier_params.classifier_accession_code
-            --accession-code "${classifier_params.classifier_accession_code}"
+          #if $classifier_params.classifier_accession_code
+            --accession-code "${classifier_params.classifier_accession_code}" &&
           #end if 
-
-          #if $classifier_params.get_sdrf
-            --get-sdrf "${classifier_params.get_sdrf}"
-            --condensed-sdrf
-          #end if
-
-          #if $classifier_params.get_tool_perf_table
-            --get-tool-perf-table "${classifier_params.get_tool_perf_table}"
-          #end if 
-
         #end if 
-
+        echo "DONE"
     ]]></command>
     <inputs>
       <param type="text" name="accession_code" label="SC-Atlas experiment accession" help="EBI Single Cell Atlas accession for the experiment that you want to retrieve." />
@@ -74,18 +59,14 @@
         </when>
       </conditional>
       <conditional name="classifier_params">
-        <param name="get_classifiers" type="boolean" checked="false" label="Import Classifiers" help="If specified, classifiers for a range of datasets will be imported." /> 
+        <param name="get_classifiers" type="boolean" checked="false" label="Import Classifiers" help="If specified, classifiers for a range of datasets will be imported alongside corresponding SDRF files and a tool performance table." /> 
         <when value="true">
           <param type="text" name="tool" label="Tool" help="For which tool should the classifiers be imported?" />
-          <param type="text" name="classifier_accession_code" label="SC-Atlas Classifier Accession" optional="true" help="EBI Single Cell Atlas accession (or comma-separated string) for the experiment(s) which classifiers you want to retrieve. By default, all classifiers are imported." />
-          <param name="get_sdrf" type="boolean" checked="false" label="Import Condensed SDRF Files?" help="If specified, condensed SDRF files will be imported for corresponding experiments. This information might be needed for downstream cell type classification tasks."/>
-          <param name="get_tool_perf_table" type="boolean" checked="false" label="Import tool performance table" help="If specified, tool performance table will be imported."/>
+          <param type="text" name="classifier_accession_code" label="SC-Atlas Classifier Accession(s)" optional="true" help="EBI Single Cell Atlas accession (or comma-separated string) for the experiment(s) which classifiers you want to retrieve. By default, all classifiers are imported." />
         </when>
         <when value="false">
           <param name="tool" type="hidden" value="NULL" />
           <param name="classifier_accession_code" type="hidden" value="NULL" />
-          <param name="get_sdrf" type="hidden" value="NULL"/>
-          <param name="get_tool_perf_table" type="hidden" value="NULL" />
         </when>
       </conditional>
     </inputs>
@@ -108,7 +89,7 @@
         <data name="idf" format="txt" from_work_dir="idf.txt" label="${tool.name} on ${on_string} ${accession_code} idf.txt">
             <filter>metadata_params['get_metadata']</filter>
         </data>
-        <data name="marker_genes" from_work_dir="marker_genes_${markers_cell_grouping}.tsv" format="txt" label="${tool.name} on ${on_string} ${accession_code} ${accession_code}.marker_genes_${metadata_params.markers_cell_grouping}.tsv">
+        <data name="marker_genes" from_work_dir="marker_genes_${metadata_params.markers_cell_grouping}.tsv" format="tsv" label="${tool.name} on ${on_string} ${accession_code} ${accession_code}.marker_genes_${metadata_params.markers_cell_grouping}.tsv">
             <filter>metadata_params['get_metadata']</filter>
         </data>
         <data name="exp_design" from_work_dir="exp_design.tsv" format="txt" label="${tool.name} on ${on_string} ${accession_code} experiment_design.tsv">
@@ -120,10 +101,10 @@
         </collection>
         <collection name="imported_sdrfs" type="list" label="Collection of imported SDRF files">
             <discover_datasets pattern="__name_and_ext__" directory="imported_SDRFs" />
-            <filter>classifier_params['get_classifiers']['get_sdrf']</filter>
+            <filter>classifier_params['get_classifiers']</filter>
           </collection>
-          <data name="tool_perf_table" from_work_dir="tool_perf_pvals.tsv" format="tsv">
-            <filter>classifier_params['get_classifiers']['get_tool_perf_table']</filter>
+          <data name="tool_perf_table" from_work_dir="tool_perf_pvals.tsv" format="tsv" label="Tool performance table">
+            <filter>classifier_params['get_classifiers']</filter>
         </data>
     </outputs>
     <help><![CDATA[
