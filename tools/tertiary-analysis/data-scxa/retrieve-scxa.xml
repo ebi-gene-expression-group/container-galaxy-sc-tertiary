@@ -27,8 +27,9 @@
           import_classification_data.R --tool "${classifier_params.tool}" --get-sdrf --condensed-sdrf  --get-tool-perf-table
 
           #if $classifier_params.classifier_accession_code
-            --accession-code "${classifier_params.classifier_accession_code}" &&
-          #end if 
+            --accession-code "${classifier_params.classifier_accession_code}"
+          #end if
+          ;
         #end if 
         echo "DONE"
     ]]></command>
