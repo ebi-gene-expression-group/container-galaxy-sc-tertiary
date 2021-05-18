@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <tool id="retrieve_scxa" name="Atlas import: get experiment data" version="@TOOL_VERSION@+galaxy0"  profile="@PROFILE@">
     <description>Retrieve expression matrices and metadata from EBI Single Cell Expression Atlas (SCXA)</description>
     <macros>
@@ -6,32 +7,31 @@
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         #if $expression_data_params.get_expression_data
-          ln -s "${accession_code}_${expression_data_params.matrix_type}/10x_data/matrix.mtx" matrix.mtx &&
-          ln -s "${accession_code}_${expression_data_params.matrix_type}/10x_data/genes.tsv" genes.tsv &&
-          ln -s "${accession_code}_${expression_data_params.matrix_type}/10x_data/barcodes.tsv" barcodes.tsv &&
+          get_experiment_data.R --accession-code "${accession_code}" --get-expression-data "${expression_data_params.get_expression_data}" --matrix-type "${expression_data_params.matrix_type}";
 
-          get_experiment_data.R --accession-code "${accession_code}" --get-expression-data "${expression_data_params.get_expression_data}" --matrix-type "${expression_data_params.matrix_type}" &&
+          mv "${accession_code}_${expression_data_params.matrix_type}/10x_data/matrix.mtx" matrix.mtx;
+          mv "${accession_code}_${expression_data_params.matrix_type}/10x_data/genes.tsv" genes.tsv;
+          mv "${accession_code}_${expression_data_params.matrix_type}/10x_data/barcodes.tsv" barcodes.tsv;
         #end if 
 
         #if $metadata_params.get_metadata
-          ln -s "${accession_code}_${metadata_params.matrix_type}/sdrf.txt" sdrf.txt &&
-          ln -s "${accession_code}_${metadata_params.matrix_type}/condensed-sdrf.tsv" condensed-sdrf.tsv &&
-          ln -s "${accession_code}_${metadata_params.matrix_type}/idf.txt" idf.txt &&
-          ln -s "${accession_code}_${metadata_params.matrix_type}/marker_genes_${metadata_params.markers_cell_grouping}.tsv" marker_genes_${metadata_params.markers_cell_grouping}.tsv &&
-          ln -s "${accession_code}_${metadata_params.matrix_type}/exp_design.tsv" exp_design.tsv &&
+          get_experiment_data.R --accession-code "${accession_code}" --get-expression-data "FALSE" --matrix-type "${metadata_params.matrix_type}" --get-sdrf --get-condensed-sdrf --get-idf --get-marker-genes --get-exp-design --markers-cell-grouping "${metadata_params.markers_cell_grouping}";
 
-          get_experiment_data.R --accession-code "${accession_code}" --get-expression-data "FALSE" --matrix-type "${metadata_params.matrix_type}" --get-sdrf --get-condensed-sdrf --get-idf --get-marker-genes --get-exp-design --markers-cell-grouping "${metadata_params.markers_cell_grouping}" &&
+          mv "${accession_code}_${metadata_params.matrix_type}/sdrf.txt" sdrf.txt;
+          mv "${accession_code}_${metadata_params.matrix_type}/condensed-sdrf.tsv" condensed-sdrf.tsv;
+          mv "${accession_code}_${metadata_params.matrix_type}/idf.txt" idf.txt;
+          mv "${accession_code}_${metadata_params.matrix_type}/marker_genes_${metadata_params.markers_cell_grouping}.tsv" marker_genes_${metadata_params.markers_cell_grouping}.tsv;
+          mv "${accession_code}_${metadata_params.matrix_type}/exp_design.tsv" exp_design.tsv;
         #end if
 
         #if $classifier_params.get_classifiers
-          import_classification_data.R --tool "${classifier_params.tool}" --get-sdrf --condensed-sdrf  --get-tool-perf-table
+          import_classification_data.R --tool "${classifier_params.tool}" --get-sdrf --condensed-sdrf --get-tool-perf-table
 
           #if $classifier_params.classifier_accession_code
             --accession-code "${classifier_params.classifier_accession_code}"
           #end if
           ;
-        #end if 
-        echo "DONE"
+        #end if
     ]]></command>
     <inputs>
       <param type="text" name="accession_code" label="SC-Atlas experiment accession" help="EBI Single Cell Atlas accession for the experiment that you want to retrieve." />
@@ -39,7 +39,7 @@
         <param name="get_expression_data" type="boolean" checked="false" label="Get Expression Data" help="If specified, expression data will be imported"/>
         <when value="true">
           <param type="select" name="matrix_type" label="Choose the type of matrix to download" help="Type of matrix to be imported">
-              <option value="RAW">Raw</option>
+              <option value="RAW">Raw Counts</option>
               <option value="FILTERED">Filtered Counts</option>
               <option value="TPM">TPM-normalised</option>
               <option value="CPM">CPM-normalised</option>
@@ -180,6 +180,12 @@ Optional outputs:
   
 :Marker gene file (txt):
   File containing information on marker genes that differentiate cell types present in the sequencing experiment. 
+
+:Classifiers (collection): 
+  Collection of pre-trained classifiers for specified tool/dataset combination. 
+
+:SDRF files for classifiers (collection):
+  Collection of SDRF files for imported classifiers (convenient outptut for donwstream processes)
 
 @HELP@
 @VERSION_HISTORY@
