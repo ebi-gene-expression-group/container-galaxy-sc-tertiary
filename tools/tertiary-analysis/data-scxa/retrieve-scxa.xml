@@ -9,19 +9,19 @@
         #if $expression_data_params.get_expression_data
           get_experiment_data.R --accession-code '${accession_code}' --get-expression-data '${expression_data_params.get_expression_data}' --matrix-type '${expression_data_params.matrix_type}' --get-marker-genes 'TRUE' --markers-cell-grouping '${expression_data_params.markers_cell_grouping}' &&
 
-          mv '${accession_code}_${expression_data_params.matrix_type}/10x_data/matrix.mtx' matrix.mtx &&
-          mv '${accession_code}_${expression_data_params.matrix_type}/10x_data/genes.tsv' genes.tsv &&
-          mv '${accession_code}_${expression_data_params.matrix_type}/10x_data/barcodes.tsv' barcodes.tsv &&
-          mv '${accession_code}_${expression_data_params.matrix_type}/marker_genes_${expression_data_params.markers_cell_grouping}.tsv' marker_genes_${expression_data_params.markers_cell_grouping}.tsv &&
+          mv '${accession_code}_${expression_data_params.matrix_type}/10x_data/matrix.mtx' ${expr_mtx} &&
+          mv '${accession_code}_${expression_data_params.matrix_type}/10x_data/genes.tsv' ${genes} &&
+          mv '${accession_code}_${expression_data_params.matrix_type}/10x_data/barcodes.tsv' ${barcodes} &&
+          mv '${accession_code}_${expression_data_params.matrix_type}/marker_genes_${expression_data_params.markers_cell_grouping}.tsv' ${marker_genes} &&
         #end if 
 
         #if $metadata_params.get_metadata
           get_experiment_data.R --accession-code '${accession_code}' --get-expression-data 'FALSE' --matrix-type '${metadata_params.matrix_type}' --get-sdrf 'TRUE' --get-condensed-sdrf 'TRUE' --get-idf 'TRUE' --get-exp-design 'TRUE' &&
 
-          mv '${accession_code}_${metadata_params.matrix_type}/sdrf.txt' sdrf.txt &&
-          mv '${accession_code}_${metadata_params.matrix_type}/condensed-sdrf.tsv' condensed-sdrf.tsv &&
-          mv '${accession_code}_${metadata_params.matrix_type}/idf.txt' idf.txt &&
-          mv '${accession_code}_${metadata_params.matrix_type}/exp_design.tsv' exp_design.tsv &&
+          mv '${accession_code}_${metadata_params.matrix_type}/sdrf.txt' ${sdrf} &&
+          mv '${accession_code}_${metadata_params.matrix_type}/condensed-sdrf.tsv' ${condensed_sdrf} &&
+          mv '${accession_code}_${metadata_params.matrix_type}/idf.txt' ${idf} &&
+          mv '${accession_code}_${metadata_params.matrix_type}/exp_design.tsv' ${exp_design} &&
         #end if
 
         #if $classifier_params.get_classifiers
@@ -71,28 +71,28 @@
       </conditional>
     </inputs>
     <outputs>
-        <data name='expr_mtx' format='txt' from_work_dir='matrix.mtx' label='${tool.name} on ${on_string} ${accession_code} matrix.mtx (${expression_data_params.matrix_type.value_label})'>
+        <data name='expr_mtx' format='txt' label='${tool.name} on ${on_string} ${accession_code} matrix.mtx (${expression_data_params.matrix_type.value_label})'>
           <filter>expression_data_params['get_expression_data']</filter>
         </data>
-        <data name='barcodes' format='txt' from_work_dir='barcodes.tsv' label='${tool.name} on ${on_string} ${accession_code} barcodes.tsv (${expression_data_params.matrix_type.value_label})'>
+        <data name='barcodes' format='txt' label='${tool.name} on ${on_string} ${accession_code} barcodes.tsv (${expression_data_params.matrix_type.value_label})'>
           <filter>expression_data_params['get_expression_data']</filter>
         </data>
-        <data name='genes' format='txt' from_work_dir='genes.tsv' label='${tool.name} on ${on_string} ${accession_code} genes.tsv (${expression_data_params.matrix_type.value_label})'>
+        <data name='genes' format='txt' label='${tool.name} on ${on_string} ${accession_code} genes.tsv (${expression_data_params.matrix_type.value_label})'>
           <filter>expression_data_params['get_expression_data']</filter>
         </data>
-        <data name='marker_genes' from_work_dir='marker_genes_${expression_data_params.markers_cell_grouping}.tsv' format='tsv' label='${tool.name} on ${on_string} ${accession_code} ${accession_code}.marker_genes_${expression_data_params.markers_cell_grouping}.tsv'>
+        <data name='marker_genes' format='tsv' label='${tool.name} on ${on_string} ${accession_code} ${accession_code}.marker_genes_${expression_data_params.markers_cell_grouping}.tsv'>
           <filter>expression_data_params['get_expression_data']</filter>
         </data>
-        <data name='sdrf' format='txt' from_work_dir='sdrf.txt' label='${tool.name} on ${on_string} ${accession_code} sdrf.txt' >
+        <data name='sdrf' format='txt' label='${tool.name} on ${on_string} ${accession_code} sdrf.txt' >
             <filter>metadata_params['get_metadata']</filter>
         </data>
-        <data name='condensed_sdrf' format='txt' from_work_dir='condensed-sdrf.tsv' label='${tool.name} on ${on_string} ${accession_code} condensed-sdrf.tsv' >
+        <data name='condensed_sdrf' format='txt' label='${tool.name} on ${on_string} ${accession_code} condensed-sdrf.tsv' >
             <filter>metadata_params['get_metadata']</filter>
         </data>
-        <data name='idf' format='txt' from_work_dir='idf.txt' label='${tool.name} on ${on_string} ${accession_code} idf.txt'>
+        <data name='idf' format='txt' label='${tool.name} on ${on_string} ${accession_code} idf.txt'>
             <filter>metadata_params['get_metadata']</filter>
         </data>
-        <data name='exp_design' from_work_dir='exp_design.tsv' format='txt' label='${tool.name} on ${on_string} ${accession_code} experiment_design.tsv'>
+        <data name='exp_design' format='txt' label='${tool.name} on ${on_string} ${accession_code} experiment_design.tsv'>
             <filter>metadata_params['get_metadata']</filter>
         </data>
         <collection name='imported_classifiers' type='list' label='Collection of imported classifiers'>
@@ -103,10 +103,80 @@
             <discover_datasets pattern='__name_and_ext__' directory='imported_SDRFs' />
             <filter>classifier_params['get_classifiers']</filter>
           </collection>
-          <data name='tool_perf_table' from_work_dir='tool_perf_pvals.tsv' format='tsv' label='Tool performance table'>
+          <data name='tool_perf_table' format='tsv' label='Tool performance table'>
             <filter>classifier_params['get_classifiers']</filter>
         </data>
     </outputs>
+    <tests>
+      <test>
+        <param name="expression_data_params.get_expression_data" value="true" />
+        <param name="metadata_params.get_metadata" value="true" />
+        <param name="classifier_params.get_classifiers" value="true" />
+        <param name="accession_code" value="E-MTAB-7249" />
+        <param name="expression_data_params.matrix_type" value="CPM" />
+        <param name="classifier_params.tool" value="scpred" />
+        <param name="classifier_params.classifier_accession_code" value="E-MTAB-7249" />
+        <output name="expr_mtx">
+          <assert_contents>
+            <has_line_matching expression="%%MatrixMarket.*" />
+         </assert_contents>
+        </output>
+        <output name="barcodes">
+          <assert_contents>
+             <has_line_matching expression="ERR.*" />
+          </assert_contents>
+        </output>
+        <output name="genes">
+          <assert_contents>
+            <has_line_matching expression="ENSG000000.*" />
+          </assert_contents>
+        </output>
+        <output name="marker_genes">
+          <assert_contents>
+            <has_line_matching expression="pvals_adj" />
+          </assert_contents>
+        </output>
+        <output name="sdrf">
+          <assert_contents>
+            <has_text text="Characteristics[organism]" />
+          </assert_contents>
+        </output>
+        <output name="condensed_sdrf">
+          <assert_contents>
+            <has_text text="characteristic" />
+          </assert_contents>
+        </output>
+        <output name="idf">
+          <assert_contents>
+            <has_text text="Comment[Submitted Name]" />
+          </assert_contents>
+        </output>
+        <output name="exp_design">
+          <assert_contents>
+            <has_text text="Sample Characteristic[organism]" />
+          </assert_contents>
+        </output>
+        <output name="tool_perf_table">
+          <assert_contents>
+            <has_text text="Tool" />
+          </assert_contents>
+        </output>
+        <output_collection name="imported_classifiers" type="list">
+          <element name="E-MTAB-7249_scpred.rds">
+            <assert_contents>
+              <has_size value="976000" delta="500000" />
+            </assert_contents>
+          </element>
+        </output_collection>
+        <output_collection name="imported_sdrfs" type="list">
+          <element name="E-MTAB-7249.condensed-sdrf.tsv">
+            <assert_contents>
+              <has_text text="characteristic" />
+            </assert_contents>
+          </element>
+        </output_collection>
+      </test>
+    </tests>
     <help><![CDATA[
 =================================================================================
 Gene expression analysis in single cells across species and biological conditions
@@ -115,7 +185,7 @@ Gene expression analysis in single cells across species and biological condition
 Single Cell Expression Atlas supports research in single cell transcriptomics.
 The Atlas annotates publicly available single cell RNA-Seq experiments with
 ontology identifiers and re-analyses them using standardised pipelines available
-through iRAP, our RNA-Seq analysis toolkit. The browser enables visualisation of
+throrugh iRAP, our RNA-Seq analysis toolkit. The browser enables visualisation of
 clusters of cells, their annotations and supports searches for gene expression
 within and across studies.
 
