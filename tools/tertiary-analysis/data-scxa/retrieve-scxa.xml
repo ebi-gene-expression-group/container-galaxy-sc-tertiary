@@ -1,110 +1,109 @@
-<?xml version="1.0" encoding="utf-8"?>
-<tool id="retrieve_scxa" name="Atlas import: get experiment data" version="@TOOL_VERSION@+galaxy0"  profile="@PROFILE@">
+<?xml version='1.0' encoding='utf-8'?>
+<tool id='retrieve_scxa' name='Atlas import: get experiment data' version='@TOOL_VERSION@+galaxy0'  profile='@PROFILE@'>
     <description>Retrieve expression matrices and metadata from EBI Single Cell Expression Atlas (SCXA)</description>
     <macros>
          <import>atlas-retrieve-macros.xml</import>
     </macros>
-    <expand macro="requirements" />
-    <command detect_errors="exit_code"><![CDATA[
+    <expand macro='requirements' />
+    <command detect_errors='exit_code'><![CDATA[
         #if $expression_data_params.get_expression_data
-          get_experiment_data.R --accession-code "${accession_code}" --get-expression-data "${expression_data_params.get_expression_data}" --matrix-type "${expression_data_params.matrix_type}";
+          get_experiment_data.R --accession-code '${accession_code}' --get-expression-data '${expression_data_params.get_expression_data}' --matrix-type '${expression_data_params.matrix_type}' --get-marker-genes 'TRUE' --markers-cell-grouping '${expression_data_params.markers_cell_grouping}' &&
 
-          mv "${accession_code}_${expression_data_params.matrix_type}/10x_data/matrix.mtx" matrix.mtx;
-          mv "${accession_code}_${expression_data_params.matrix_type}/10x_data/genes.tsv" genes.tsv;
-          mv "${accession_code}_${expression_data_params.matrix_type}/10x_data/barcodes.tsv" barcodes.tsv;
+          mv '${accession_code}_${expression_data_params.matrix_type}/10x_data/matrix.mtx' matrix.mtx &&
+          mv '${accession_code}_${expression_data_params.matrix_type}/10x_data/genes.tsv' genes.tsv &&
+          mv '${accession_code}_${expression_data_params.matrix_type}/10x_data/barcodes.tsv' barcodes.tsv &&
+          mv '${accession_code}_${expression_data_params.matrix_type}/marker_genes_${expression_data_params.markers_cell_grouping}.tsv' marker_genes_${expression_data_params.markers_cell_grouping}.tsv &&
         #end if 
 
         #if $metadata_params.get_metadata
-          get_experiment_data.R --accession-code "${accession_code}" --get-expression-data "FALSE" --matrix-type "${metadata_params.matrix_type}" --get-sdrf --get-condensed-sdrf --get-idf --get-marker-genes --get-exp-design --markers-cell-grouping "${metadata_params.markers_cell_grouping}";
+          get_experiment_data.R --accession-code '${accession_code}' --get-expression-data 'FALSE' --matrix-type '${metadata_params.matrix_type}' --get-sdrf 'TRUE' --get-condensed-sdrf 'TRUE' --get-idf 'TRUE' --get-exp-design 'TRUE' &&
 
-          mv "${accession_code}_${metadata_params.matrix_type}/sdrf.txt" sdrf.txt;
-          mv "${accession_code}_${metadata_params.matrix_type}/condensed-sdrf.tsv" condensed-sdrf.tsv;
-          mv "${accession_code}_${metadata_params.matrix_type}/idf.txt" idf.txt;
-          mv "${accession_code}_${metadata_params.matrix_type}/marker_genes_${metadata_params.markers_cell_grouping}.tsv" marker_genes_${metadata_params.markers_cell_grouping}.tsv;
-          mv "${accession_code}_${metadata_params.matrix_type}/exp_design.tsv" exp_design.tsv;
+          mv '${accession_code}_${metadata_params.matrix_type}/sdrf.txt' sdrf.txt &&
+          mv '${accession_code}_${metadata_params.matrix_type}/condensed-sdrf.tsv' condensed-sdrf.tsv &&
+          mv '${accession_code}_${metadata_params.matrix_type}/idf.txt' idf.txt &&
+          mv '${accession_code}_${metadata_params.matrix_type}/exp_design.tsv' exp_design.tsv &&
         #end if
 
         #if $classifier_params.get_classifiers
-          import_classification_data.R --tool "${classifier_params.tool}" --get-sdrf --condensed-sdrf --get-tool-perf-table
+          import_classification_data.R --tool '${classifier_params.tool}' --get-sdrf --condensed-sdrf --get-tool-perf-table
 
           #if $classifier_params.classifier_accession_code
-            --accession-code "${classifier_params.classifier_accession_code}"
+            --accession-code '${classifier_params.classifier_accession_code}'
           #end if
           ;
         #end if
+        echo 'DONE'
     ]]></command>
     <inputs>
-      <param type="text" name="accession_code" label="SC-Atlas experiment accession" help="EBI Single Cell Atlas accession for the experiment that you want to retrieve." />
-      <conditional name="expression_data_params">
-        <param name="get_expression_data" type="boolean" checked="false" label="Get Expression Data" help="If specified, expression data will be imported"/>
-        <when value="true">
-          <param type="select" name="matrix_type" label="Choose the type of matrix to download" help="Type of matrix to be imported">
-              <option value="RAW">Raw Counts</option>
-              <option value="FILTERED">Filtered Counts</option>
-              <option value="TPM">TPM-normalised</option>
-              <option value="CPM">CPM-normalised</option>
+      <param type='text' name='accession_code' label='SC-Atlas experiment accession' help='EBI Single Cell Atlas accession for the experiment that you want to retrieve.' />
+      <conditional name='expression_data_params'>
+        <param name='get_expression_data' type='boolean' checked='false' label='Get Expression Data' help='If specified, expression data will be imported'/>
+        <when value='true'>
+          <param type='select' name='matrix_type' label='Choose the type of matrix to download' help='Type of matrix to be imported'>
+              <option value='RAW'>Raw Counts</option>
+              <option value='FILTERED'>Filtered Counts</option>
+              <option value='TPM'>TPM-normalised</option>
+              <option value='CPM'>CPM-normalised</option>
           </param>
+          <param type='text' name='markers_cell_grouping' label='Markers Cell Grouping' value='inferred_cell_type_-_ontology_labels' help='What cell grouping should be used for marker genes? By default, marker genes for inferred cell types (ontology labels) are imported. When providing an integer value, marker genes for a corresponding number of clusters will be imported.' />
         </when>
-        <when value="false">
-          <param name="matrix_type" type="hidden" value="NULL" />
-        </when>
-      </conditional>
-      <conditional name="metadata_params">
-        <param name="get_metadata" type="boolean" checked="false" label="Get Metadata" help="If specified, metadata for given experiment will be imported"/>
-        <when value="true">
-          <param name="matrix_type" type="hidden" value="CPM" />
-          <param type="text" name="markers_cell_grouping" label="Markers Cell Grouping" value="inferred_cell_type_-_ontology_labels" help="What cell grouping should be used for marker genes? By default, marker genes for inferred cell types (ontology labels) are imported. When providing an integer value, marker genes for a corresponding number of clusters will be imported." />
-        </when>
-        <when value="false">
-          <param name="markers_cell_grouping" type="hidden" value="NULL" />
+        <when value='false'>
+          <param name='matrix_type' type='hidden' value='NULL' />
+          <param name='markers_cell_grouping' type='hidden' value='NULL' />
         </when>
       </conditional>
-      <conditional name="classifier_params">
-        <param name="get_classifiers" type="boolean" checked="false" label="Import Classifiers" help="If specified, classifiers for a range of datasets will be imported alongside corresponding SDRF files and a tool performance table." /> 
-        <when value="true">
-          <param type="text" name="tool" label="Tool" help="For which tool should the classifiers be imported?" />
-          <param type="text" name="classifier_accession_code" label="SC-Atlas Classifier Accession(s)" optional="true" help="EBI Single Cell Atlas accession (or comma-separated string) for the experiment(s) which classifiers you want to retrieve. By default, all classifiers are imported." />
+      <conditional name='metadata_params'>
+        <param name='get_metadata' type='boolean' checked='false' label='Get Metadata' help='If specified, metadata for given experiment will be imported'/>
+        <when value='true'>
+          <param name='matrix_type' type='hidden' value='CPM' />
         </when>
-        <when value="false">
-          <param name="tool" type="hidden" value="NULL" />
-          <param name="classifier_accession_code" type="hidden" value="NULL" />
+      </conditional>
+      <conditional name='classifier_params'>
+        <param name='get_classifiers' type='boolean' checked='false' label='Import Classifiers' help='If specified, classifiers for a range of datasets will be imported alongside corresponding SDRF files and a tool performance table.' /> 
+        <when value='true'>
+          <param type='text' name='tool' label='Tool' help='For which tool should the classifiers be imported?' />
+          <param type='text' name='classifier_accession_code' label='SC-Atlas Classifier Accession(s)' optional='true' help='EBI Single Cell Atlas accession (or comma-separated string) for the experiment(s) which classifiers you want to retrieve. By default, all classifiers are imported.' />
+        </when>
+        <when value='false'>
+          <param name='tool' type='hidden' value='NULL' />
+          <param name='classifier_accession_code' type='hidden' value='NULL' />
         </when>
       </conditional>
     </inputs>
     <outputs>
-        <data name="expr_mtx" format="txt" from_work_dir="matrix.mtx" label="${tool.name} on ${on_string} ${accession_code} matrix.mtx (${expression_data_params.matrix_type.value_label})">
+        <data name='expr_mtx' format='txt' from_work_dir='matrix.mtx' label='${tool.name} on ${on_string} ${accession_code} matrix.mtx (${expression_data_params.matrix_type.value_label})'>
           <filter>expression_data_params['get_expression_data']</filter>
         </data>
-        <data name="barcodes" format="txt" from_work_dir="barcodes.tsv" label="${tool.name} on ${on_string} ${accession_code} barcodes.tsv (${expression_data_params.matrix_type.value_label})">
+        <data name='barcodes' format='txt' from_work_dir='barcodes.tsv' label='${tool.name} on ${on_string} ${accession_code} barcodes.tsv (${expression_data_params.matrix_type.value_label})'>
           <filter>expression_data_params['get_expression_data']</filter>
         </data>
-        <data name="genes" format="txt" from_work_dir="genes.tsv" label="${tool.name} on ${on_string} ${accession_code} genes.tsv (${expression_data_params.matrix_type.value_label})">
+        <data name='genes' format='txt' from_work_dir='genes.tsv' label='${tool.name} on ${on_string} ${accession_code} genes.tsv (${expression_data_params.matrix_type.value_label})'>
           <filter>expression_data_params['get_expression_data']</filter>
         </data>
-        <data name="sdrf" format="txt" from_work_dir="sdrf.txt" label="${tool.name} on ${on_string} ${accession_code} sdrf.txt" >
+        <data name='marker_genes' from_work_dir='marker_genes_${expression_data_params.markers_cell_grouping}.tsv' format='tsv' label='${tool.name} on ${on_string} ${accession_code} ${accession_code}.marker_genes_${expression_data_params.markers_cell_grouping}.tsv'>
+          <filter>expression_data_params['get_expression_data']</filter>
+        </data>
+        <data name='sdrf' format='txt' from_work_dir='sdrf.txt' label='${tool.name} on ${on_string} ${accession_code} sdrf.txt' >
             <filter>metadata_params['get_metadata']</filter>
         </data>
-        <data name="condensed_sdrf" format="txt" from_work_dir="condensed-sdrf.tsv" label="${tool.name} on ${on_string} ${accession_code} condensed-sdrf.tsv" >
+        <data name='condensed_sdrf' format='txt' from_work_dir='condensed-sdrf.tsv' label='${tool.name} on ${on_string} ${accession_code} condensed-sdrf.tsv' >
             <filter>metadata_params['get_metadata']</filter>
         </data>
-        <data name="idf" format="txt" from_work_dir="idf.txt" label="${tool.name} on ${on_string} ${accession_code} idf.txt">
+        <data name='idf' format='txt' from_work_dir='idf.txt' label='${tool.name} on ${on_string} ${accession_code} idf.txt'>
             <filter>metadata_params['get_metadata']</filter>
         </data>
-        <data name="marker_genes" from_work_dir="marker_genes_${metadata_params.markers_cell_grouping}.tsv" format="tsv" label="${tool.name} on ${on_string} ${accession_code} ${accession_code}.marker_genes_${metadata_params.markers_cell_grouping}.tsv">
+        <data name='exp_design' from_work_dir='exp_design.tsv' format='txt' label='${tool.name} on ${on_string} ${accession_code} experiment_design.tsv'>
             <filter>metadata_params['get_metadata']</filter>
         </data>
-        <data name="exp_design" from_work_dir="exp_design.tsv" format="txt" label="${tool.name} on ${on_string} ${accession_code} experiment_design.tsv">
-            <filter>metadata_params['get_metadata']</filter>
-        </data>
-        <collection name="imported_classifiers" type="list" label="Collection of imported classifiers">
-            <discover_datasets pattern="__name_and_ext__" directory="imported_classifiers" />
+        <collection name='imported_classifiers' type='list' label='Collection of imported classifiers'>
+            <discover_datasets pattern='__name_and_ext__' directory='imported_classifiers' />
             <filter>classifier_params['get_classifiers']</filter>
         </collection>
-        <collection name="imported_sdrfs" type="list" label="Collection of imported SDRF files">
-            <discover_datasets pattern="__name_and_ext__" directory="imported_SDRFs" />
+        <collection name='imported_sdrfs' type='list' label='Collection of imported SDRF files'>
+            <discover_datasets pattern='__name_and_ext__' directory='imported_SDRFs' />
             <filter>classifier_params['get_classifiers']</filter>
           </collection>
-          <data name="tool_perf_table" from_work_dir="tool_perf_pvals.tsv" format="tsv" label="Tool performance table">
+          <data name='tool_perf_table' from_work_dir='tool_perf_pvals.tsv' format='tsv' label='Tool performance table'>
             <filter>classifier_params['get_classifiers']</filter>
         </data>
     </outputs>
@@ -190,5 +189,5 @@ Optional outputs:
 @HELP@
 @VERSION_HISTORY@
     ]]></help>
-    <expand macro="citations" />
+    <expand macro='citations' />
 </tool>
