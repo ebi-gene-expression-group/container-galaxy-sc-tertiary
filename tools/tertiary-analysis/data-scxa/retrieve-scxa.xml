@@ -103,7 +103,7 @@
             <discover_datasets pattern='__name_and_ext__' directory='imported_SDRFs' />
             <filter>classifier_params['get_classifiers']</filter>
           </collection>
-          <data name='tool_perf_table' format='tsv' label='Tool performance table'>
+          <data name='tool_perf_table' from_work_dir="tool_perf_pvals.tsv" format='tsv' label='Tool performance table'>
             <filter>classifier_params['get_classifiers']</filter>
         </data>
     </outputs>
