@@ -163,11 +163,11 @@ jobs:
     - name: Get test-data for changed repos
       run: |
         repos=${{ needs.setup.outputs.repository-list }}
-        for repo in $(echo -e "$repos" | tr '\n' ' '); do
+        for repo in "$(echo -e "$repos" | tr '\n' ' ')"; do
           pushd $repo
           if [ -f get_test_data.sh ]; then
             mkdir -p test-data
-            chmod +x get_test_data.sh
+            chmod u+x get_test_data.sh
             ./get_test_data.sh
           fi
           popd
