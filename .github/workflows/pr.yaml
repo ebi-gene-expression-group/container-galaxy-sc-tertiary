@@ -164,6 +164,7 @@ jobs:
       run: |
         repos=${{ needs.setup.outputs.repository-list }}
         for repo in $(echo -e "$repos" | tr '\n' ' '); do
+          echo $repo
           pushd $repo
           if [ -f get_test_data.sh ]; then
             mkdir -p test-data
