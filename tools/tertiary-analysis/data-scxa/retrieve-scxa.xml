@@ -87,7 +87,7 @@
         <data name='exp_design' format='txt' label='${tool.name} on ${on_string} ${accession_code} experiment_design.tsv'>
             <filter>metadata_params['get_metadata']</filter>
         </data>
-        <collection name='imported_classifiers' type='list' label='Collection of imported classifiers'>
+        <collection name='imported_classifiers' type='list' format="rdata" label='Collection of imported classifiers'>
             <discover_datasets pattern='__name_and_ext__' directory='imported_classifiers' />
             <filter>classifier_params['get_classifiers']</filter>
         </collection>
@@ -101,13 +101,13 @@
     </outputs>
     <tests>
       <test>
-        <param name="expression_data_params.get_expression_data" value="true" />
-        <param name="metadata_params.get_metadata" value="true" />
-        <param name="classifier_params.get_classifiers" value="true" />
+        <param name="expression_data_params|get_expression_data" value="true" />
+        <param name="metadata_params|get_metadata" value="true" />
+        <param name="classifier_params|get_classifiers" value="true" />
         <param name="accession_code" value="E-MTAB-7249" />
-        <param name="expression_data_params.matrix_type" value="CPM" />
-        <param name="classifier_params.tool" value="scpred" />
-        <param name="classifier_params.classifier_accession_code" value="E-MTAB-7249" />
+        <param name="expression_data_params|matrix_type" value="CPM" />
+        <param name="classifier_params|tool" value="scpred" />
+        <param name="classifier_params|classifier_accession_code" value="E-MTAB-7249" />
         <output name="expr_mtx">
           <assert_contents>
             <has_line_matching expression="%%MatrixMarket.*" />
@@ -125,7 +125,7 @@
         </output>
         <output name="marker_genes">
           <assert_contents>
-            <has_line_matching expression="pvals_adj" />
+            <has_text text="pvals_adj" />
           </assert_contents>
         </output>
         <output name="sdrf">
