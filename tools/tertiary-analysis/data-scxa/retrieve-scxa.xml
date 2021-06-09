@@ -88,7 +88,7 @@
             <filter>metadata_params['get_metadata']</filter>
         </data>
         <collection name='imported_classifiers' type='list' format="rdata" label='Collection of imported classifiers'>
-            <discover_datasets pattern='__name_and_ext__' directory='imported_classifiers' />
+            <discover_datasets pattern='__name__' directory='imported_classifiers' />
             <filter>classifier_params['get_classifiers']</filter>
         </collection>
         <collection name='imported_sdrfs' type='list' label='Collection of imported SDRF files'>
