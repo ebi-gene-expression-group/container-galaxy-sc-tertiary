@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<tool id='retrieve_scxa' name='Atlas import: get experiment data' version='@TOOL_VERSION@+galaxy0'  profile='@PROFILE@'>
+<tool id='retrieve_scxa' name='Atlas import: get experiment data' version='@TOOL_VERSION@+galaxy1'  profile='@PROFILE@'>
     <description>Retrieve expression matrices and metadata from EBI Single Cell Expression Atlas (SCXA)</description>
     <macros>
          <import>atlas-retrieve-macros.xml</import>
