@@ -3,7 +3,6 @@
     <requirements>
       <requirement type="package" version="1.0.1">atlas-gene-annotation-manipulation</requirement>
     </requirements>
-    <requirements>
     <command detect_errors="exit_code"><![CDATA[
        ln -s '$gtf_input' input.gtf;
        gtf2featureAnnotation.R --gtf-file input.gtf
@@ -32,7 +31,7 @@
         <param name="noheader" type="boolean" checked="false" label="Suppress header line in output?"/>
         <param name="fields" type="text" optional='true' value="" label="Comma-separated list of field names to extract from the GTF (default: use all fields)"/>
         <param name="version_transcripts" type="boolean" checked="false" label="Append version to transcript identifiers?" help="For transcript feature type only: where the GTF contains transcript versions, should these be appended to transcript identifiers? Useful when generating transcript/gene mappings for use with transcriptomes"/>
-        <param name="fill_empty" type="text" optional='true' value="" label="Column to be used to fill empty values in other fields", help="Only when output fields are defined, useful when you need to guarantee a value, for example a gene ID for a transcript/gene mapping."/>
+        <param name="fill_empty" type="text" optional='true' value="" label="Column to be used to fill empty values in other fields" help="Only when output fields are defined, useful when you need to guarantee a value, for example a gene ID for a transcript/gene mapping."/>
         <conditional name="mito">
           <param name="mark_mito" type="boolean" checked="true" label="Flag mitochondrial features?"/>
           <when value="true">
