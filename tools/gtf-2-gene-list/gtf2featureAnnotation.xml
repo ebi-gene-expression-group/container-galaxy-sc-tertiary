@@ -1,4 +1,4 @@
-<tool id="_ensembl_gtf2gene_list" name="GTF2GeneList" version="1.0.1+galaxy0" profile="18.01">
+<tool id="_ensembl_gtf2gene_list" name="GTF2GeneList" version="1.42.1+galaxy6" profile="18.01">
     <description>extracts a complete annotation table or subsets thereof from an Ensembl GTF using rtracklayer</description>
     <requirements>
       <requirement type="package" version="1.0.1">atlas-gene-annotation-manipulation</requirement>
