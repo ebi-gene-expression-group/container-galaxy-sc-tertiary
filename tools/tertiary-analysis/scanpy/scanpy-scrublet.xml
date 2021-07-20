@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="scanpy_multiplet_scrublet" name="Scanpy Scrublet" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+  <description>remove multiplets from annData objects with Scrublet</description>
+  <macros>
+    <import>scanpy_macros2.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+
+ln -s '${input_obj_file}' input.h5 &&
+PYTHONIOENCODING=utf-8 scanpy-multiplet scrublet 
+#if $threshold
+    --threshold '${threshold}'
+#end if
+#if $n_neighbors
+    --n-neighbours '${n_neighbors}'
+#end if
+--sim-double-ratio '${sim_doublet_ratio}'
+--synthetic-doublet-umi-subsampling '${synthetic_doublet_umi_subsampling}'
+--expected-doublet-rate --stdev-doublet-rate
+--knn-dist-metric "${knn_dist_metric}"
+--n-pcs '${n_pcs}'
+--random-state '${random_state}'
+$filter $normalise_variance $log_transform $mean_center $approx $get_doublet_neighbor_parents
+]]></command>
+
+  <inputs>
+    <expand macro="input_object_params"/>
+    <expand macro="output_object_params"/>
+    <param name="threshold" argument="--threshold" type="float" optional="true" label="Doublet score threshold." help="Threshold for calling a transcriptome a doublet. If not set, this is set automatically by looking for the minimum between the two modes of the doublet_scores_sim_ histogram. It is best  practice to check the threshold visually using the doublet_scores_sim_ histogram and/or based on co-localization of predicted doublets in a 2-D embedding."/>
+    <param name="filter" argument="--filter" type="boolean" truevalue="--filter" falsevalue="" checked="False"
+         label="Remove predicted multiplets?" help="By default, the output object is annotated but not filtered according to the scrublet status."/>
+    <param name="sim_doublet_ratio" argument="--sim-doublet-ratio" type="float" value="2.0" label="Number of doublets to simulate relative to the number of observed transcriptomes."/>
+    <param name="synthetic_doublet_umi_subsampling" argument="--synthetic-doublet-umi-subsampling" type="float" value="1.0" label="Rate for sampling UMIs when creating synthetic doublets." help="If 1.0, each doublet is created by simply adding the UMI counts from two randomly sampled observed transcriptomes. For values less than 1, the UMI counts are added and then randomly sampled at the specified rate."/>    
+    <param name="expected_doublet_rate" argument="--expected-doublet-rate" type="float" value="0.05" label="Estimated doublet rate for the experiment."/>    
+    <param name="stdev_doublet_rate" argument="--stdev-doublet-rate" type="float" value="0.02" label="Uncertainty in the expected doublet rate."/>    
+    <param name="knn_dist_metric" argument="--knn-dist-metric" type="select" label="A known metric’s name.">
+      <option value="euclidean" selected="true">Euclidean</option>
+      <option value="angular">angular</option>
+      <option value="cityblock">cityblock</option>
+      <option value="cosine">cosine</option>
+      <option value="l1">l1</option>
+      <option value="l2">l2</option>
+      <option value="manhattan">manhattan</option>
+      <option value="braycurtis">braycurtis</option>
+      <option value="canberra">canberra</option>
+      <option value="chebyshev">chebyshev</option>
+      <option value="correlation">correlation</option>
+      <option value="dice">dice</option>
+      <option value="hamming">hamming</option>
+      <option value="jaccard">jaccard</option>
+      <option value="kulsinski">kulsinski</option>
+      <option value="mahalanobis">mahalanobis</option>
+      <option value="minkowski">minkowski</option>
+      <option value="rogerstanimoto">rogerstanimoto</option>
+      <option value="russelrao">russelrao</option>
+      <option value="seuclidan">seuclidian</option>
+      <option value="sokalmichener">sokalmichener</option>
+      <option value="sokalsneath">sokalsneath</option>
+      <option value="sqeuclidean">sqeuclidean</option>
+      <option value="yule">yule</option>
+    </param>
+    <param name="normalise_variance" argument="--no-normalize-variance" type="boolean" truevalue="" falsevalue="--no-normalize-variance" checked="True"
+        label="Normalize the data such that each gene has a variance of 1?" help="Note this step takes most computing time." help="klearn.decomposition.TruncatedSVD will be used for dimensionality reduction, if --no-mean-center is set. Use this flag to disable that behaviour." />
+    <param name="log_transform" argument="--log-transform" type="boolean" truevalue="--log-transform" falsevalue="" checked="False"
+         label="Apply log transform?" help="Whether to use :func:~scanpy.pp.log1p to log-transform the data prior to PCA."/>
+    <param name="mean_center" argument="--no-mean-center" type="boolean" truevalue="" falsevalue="--no-mean-center" checked="True"
+         label="center the data such that each gene has a mean of 0" help="sklearn.decomposition.PCA will be used for dimensionality reduction."/>
+    <param name="n_pcs" argument="--n-pcs" type="integer" value="30" optional="true" label="Number of principal components." help="Used to embed the transcriptomes prior to k-nearest-neighbor graph construction."/>
+    <param name="approx" argument="--no-approx" type="boolean" truevalue="" falsevalue="--no-approx" checked="True"
+         label="Use approximate nearest neighbor (annoy) method for the KNN classifier"/>
+    <param name="get_doublet_neighbor_parents" argument="--get-doublet-neighbor-parents" type="boolean" truevalue="--get-doublet-neighbor-parents " falsevalue="" checked="False"
+        label="Get doublet neighbor parents" help="Return (in .uns) the parent transcriptomes that generated the doublet neighbors of each observed transcriptome. This information can be used to infer the cell states that generated a given doublet state."/>
+    <param name="n_neighbors" argument="--n-neighbors" type="integer" optional="true" label="Number of neighbors." help="Used to construct the KNN graph of observed transcriptomes and simulated doublets. If not set, this is automatically set to np.round(0.5 * np.sqrt(n_obs))."/>
+    <param name="random_state" argument="--random-state" type="integer" value="0" label="Seed for random number generator." />
+  </inputs>
+
+  <outputs>
+    <expand macro="output_data_obj" description="Scrublet-processed annData"/>
+  </outputs>
+
+  <tests>
+  </tests>
+
+  <help><![CDATA[
+    .. class:: infomark
+
+    **What it does**
+
+    Predict cell doublets using a nearest-neighbor classifier of observed transcriptomes and simulated doublets. Works best if the input is a raw (unnormalized) counts matrix from a single sample or a collection of similar samples from the same experiment. This function is a wrapper around functions that pre-process using Scanpy and directly call functions of Scrublet(). 
+
+    @HELP@
+
+    @VERSION_HISTORY@
+]]></help>
+  <expand macro="citations"/>
+</tool>
