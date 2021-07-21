@@ -5,6 +5,8 @@
   <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
 
+1.8.1+galaxy0: Upate to scanpy-scripts 1.0.1 (running scanpy ==1.8.1), including Scrublet integration.
+
 1.7.2+galaxy0: Upate to scanpy-scripts 0.3.3 (running scanpy ==1.7.2) to incorporate fix for object output from PAGA plotting, to allow PAGA init of FDG.
 
 1.6.0+galaxy0: Update to scanpy-scripts 0.2.13 (running scanpy ==1.6.0) to incorporate new options, code simplifications, and batch integration methods. Jonathan Manning, Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
