@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="scanpy_plot_scrublet" name="Scanpy Plot Scrublet" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+  <description>visualise multiplet scoring distribution</description>
+  <macros>
+    <import>scanpy_macros2.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+ln -s '${input_obj_file}' input.h5 &&
+PYTHONIOENCODING=utf-8 scanpy-cli plot scrublet
+--scale-hist-obs '${scale_hist_obs}'
+--scale-hist-sim '${scale_hist_sim}'
+#if $settings.default == "false"
+    --fig-size '${settings.fig_size}'
+    --fig-dpi ${settings.fig_dpi}
+    --fig-fontsize ${settings.fig_fontsize}
+#end if    
+@INPUT_OPTS@
+./output.png
+]]></command>
+
+  <inputs>
+    <expand macro="input_object_params"/>
+    <param name="scale_hist_obs" argument="--scale-hist-obs" type="select" label="y axis scale transformation for observed transcriptome plot">
+      <option value="log" selected="true">log</option>
+      <option value="linear">linear</option>
+      <option value="symlog">symlog</option>
+      <option value="logit">logit</option>
+    </param>
+    <param name="scale_hist_sim" argument="--scale-hist-sim" type="select" label="y axis scale transformation for simulated transcriptome plot">
+      <option value="log">log</option>
+      <option value="linear" selected='true'>linear</option>
+      <option value="symlog">symlog</option>
+      <option value="logit">logit</option>
+    </param>
+    <conditional name="settings">
+      <param name="default" type="boolean" checked="true" label="Use plot defaults"/>
+      <when value="true"/>
+      <when value="false">
+        <param name="fig_size" argument="--fig-size" type="text" value="4,4" label="Figure size as 'width,height', e.g, '7,7'"/>
+        <param name="fig_dpi" argument="--fig-dpi" type="integer" min="1" value="80" label="Figure dpi"/>
+        <param name="fig_fontsize" argument="--fig-fontsize" type="integer" min="0" value="10" label="Figure font size"/>
+      </when>
+    </conditional>  
+  </inputs>
+
+  <outputs>
+    <data name="output_png" format="png" from_work_dir="output.png" label="${tool.name} on ${on_string}: Scrublet plot"/>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="input_obj_file" value="scrublet.h5"/>
+      <param name="input_format" value="anndata"/>
+      <param name="scale_hist_obs" value="linear"/>
+      <param name="scale_hist_sim" value="linear"/>
+      <output name="output_png" file="plot_scrublet.png" ftype="png" compare="sim_size"/>
+    </test>
+  </tests>
+
+  <help><![CDATA[
+Plot histogram of doublet scores for observed transcriptomes and simulated doublets.
+
+@HELP@
+
+@VERSION_HISTORY@
+]]></help>
+  <expand macro="citations"/>
+</tool>
