@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_run_tsne" name="Scanpy RunTSNE" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scanpy_run_tsne" name="Scanpy RunTSNE" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
   <description>visualise cell clusters using tSNE</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -9,7 +9,7 @@
 #set embeddings_tsv='embeddings.tsv'
 ln -s '${input_obj_file}' input.h5 &&
 PYTHONIOENCODING=utf-8 scanpy-run-tsne
-#if $use_rep != "auto"
+#if $use_rep
     --use-rep '${use_rep}'
 #end if
 #if $embeddings
@@ -64,11 +64,7 @@ PYTHONIOENCODING=utf-8 scanpy-run-tsne
     <expand macro="output_object_params"/>
     <param name="embeddings" type="boolean" checked="true" label="Output embeddings in tsv format"/>
 
-    <param name="use_rep" argument="--use-rep" type="select" label="Use the indicated representation">
-      <option value="X_pca">X_pca, use PCs</option>
-      <option value="X">X, use normalised expression values</option>
-      <option value="auto" selected="true">Automatically chosen based on problem size</option>
-    </param>
+    <param name="use_rep" argument="--use-rep" type="text" optional="true" label="Use the indicated representation" help="Use the indicated representation. 'X' (for the content of .X, usuaally normalised expression values) or any key for .obsm (e.g. X_pca for PCA) is valid. If not set, the representation is chosen automatically: For .n_vars < 50, .X is used, otherwise ‘X_pca’ is used. If ‘X_pca’ is not present, it’s computed with default parameters."/>
     <conditional name="settings">
       <param name="default" type="boolean" checked="true" label="Use programme defaults"/>
       <when value="true"/>
