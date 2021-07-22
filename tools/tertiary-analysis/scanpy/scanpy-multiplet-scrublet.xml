@@ -12,6 +12,9 @@ PYTHONIOENCODING=utf-8 scanpy-multiplet scrublet
 #if $threshold
     --threshold '${threshold}'
 #end if
+#if $batch_key
+  --batch-key '${batch_key}'
+#end if  
 $filter
 #if $settings.default == "false"
     #if $settings.n_neighbors
@@ -37,6 +40,7 @@ $filter
     <param name="threshold" argument="--threshold" type="float" optional="true" label="Doublet score threshold." help="Threshold for calling a transcriptome a doublet. If not set, this is set automatically by looking for the minimum between the two modes of the doublet_scores_sim_ histogram. It is best  practice to check the threshold visually using the doublet_scores_sim_ histogram and/or based on co-localization of predicted doublets in a 2-D embedding."/>
     <param name="filter" argument="--filter" type="boolean" truevalue="--filter" falsevalue="" checked="False"
          label="Remove predicted multiplets?" help="By default, the output object is annotated but not filtered according to the scrublet status."/>
+    <param name="batch_key" type="text" argument="--batch-key" optional="true" label="Where batches are present, the name of the column in adata.obs that differentiates among experiments/batches.">
     <conditional name="settings">
       <param name="default" type="boolean" checked="true" label="Use programme defaults"/>
       <when value="true"/>
