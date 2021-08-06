@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_find_variable_genes" name="Scanpy FindVariableGenes" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scanpy_find_variable_genes" name="Scanpy FindVariableGenes" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
   <description>based on normalised dispersion of expression</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -23,6 +23,9 @@ PYTHONIOENCODING=utf-8 scanpy-find-variable-genes
 #end if
     --n-bins '${n_bin}'
     ${filter}
+#if $batch_key
+    --batch-key ${batch_key}
+#end if
     @INPUT_OPTS@
     @OUTPUT_OPTS@
 ]]></command>
@@ -50,7 +53,7 @@ PYTHONIOENCODING=utf-8 scanpy-find-variable-genes
     <param name="n_bin" argument="--n-bins" type="integer" value="20" label="Number of bins for binning the mean expression"/>
     <param name="filter" argument="--subset" type="boolean" truevalue="--subset" falsevalue="" checked="false"
            label="Remove genes not marked as highly variable" help="When set, inplace subset to highly-variable genes, otherwise only flag highly-variable genes."/>
-    <param name="batch_key" argument="--batch-key" type="text" label="Batch key" help="If specified, highly-variable genes are selected within each batch separately and merged. This simple process avoids the selection of batch-specific genes and acts as a lightweight batch correction method. For all flavors, genes are first sorted by how many batches they are a HVG. For dispersion-based flavors ties are broken by normalized dispersion. If flavor = 'seurat_v3', ties are broken by the median (across batches) rank based on within-batch normalized variance."/>
+    <param name="batch_key" argument="--batch-key" type="text" label="Batch key" optional="true" help="If specified, highly-variable genes are selected within each batch separately and merged. This simple process avoids the selection of batch-specific genes and acts as a lightweight batch correction method. For all flavors, genes are first sorted by how many batches they are a HVG. For dispersion-based flavors ties are broken by normalized dispersion. If flavor = 'seurat_v3', ties are broken by the median (across batches) rank based on within-batch normalized variance."/>
   </inputs>
 
   <outputs>
