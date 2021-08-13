@@ -65,13 +65,13 @@ adata.obs['${s.to_obs}'] = adata.obs['${s.from_obs}']
 del adata.obs['${s.from_obs}']
 #end if
 #end for
-	    
+
 #for $i, $s in enumerate($var_modifications)
 adata.var['${s.to_var}'] = adata.var['${s.from_var}']
 #if not $s.keep_original:
 del adata.var['${s.from_var}']
 #end if
-#end for	    
+#end for
 
 gene_names = getattr(adata.var, gene_name)
 
@@ -99,7 +99,7 @@ del ad_s
 ad_s = sc.read('x_source_${i}.h5')
 if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
   #set xs=$copy_x.xlayers[$i]
-  if "${xs.dest}" == '': 
+  if "${xs.dest}" == '':
     logging.error("%sth destination layer for %sth X source not specified" % ("${i}", "${i}"))
     sys.exit(1)
   adata.layers["${xs.dest}"] = ad_s.X
@@ -119,8 +119,8 @@ if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
   for l_to_copy in layers_to_copy:
     suffix=''
     if l_to_copy in adata.layers:
-        suffix = "_${i}" 
-    
+        suffix = "_${i}"
+
     adata.layers[l_to_copy+suffix] = ad_s.layers[l_to_copy]
   #end for
 else:
@@ -139,8 +139,8 @@ if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
   for k_to_copy in keys_to_copy:
     suffix=''
     if k_to_copy in adata.obs:
-        suffix = "_${i}" 
-    
+        suffix = "_${i}"
+
     adata.obs[[k_to_copy+suffix]] = ad_s.obs[[k_to_copy]]
     if k_to_copy in ad_s.uns.keys():
       adata.uns[k_to_copy+suffix] = ad_s.uns[k_to_copy]
@@ -314,6 +314,13 @@ adata.write('output.h5', compression='gzip')
       <param name="color_by" value="louvain"/>
       <output name="output_h5ad" file="anndata_ops.h5" ftype="h5ad" compare="sim_size"/>
     </test>
+    <test>
+      <param name="input_obj_file" value="anndata_ops.h5"/>
+    <param name="from_var" value = "gene_symbols" />
+    <param name="to_var" value = "hello_all" />
+    <param name="keep_original" />
+    <output name = "output_h5ad" file="anndata_ops_hello.h5" ftype="h5ad"  />
+  </test>
     <test>
       <param name="input_obj_file" value="find_cluster.h5"/>
       <param name="input_format" value="anndata"/>
