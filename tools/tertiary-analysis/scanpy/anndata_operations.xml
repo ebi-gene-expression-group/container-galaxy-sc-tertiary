@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="anndata_ops" name="AnnData Operations" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="anndata_ops" name="AnnData Operations" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
   <description>modifies metadata and flags genes</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -66,6 +66,13 @@ del adata.obs['${s.from_obs}']
 #end if
 #end for
 
+#for $i, $s in enumerate($var_modifications)
+adata.var['${s.to_var}'] = adata.var['${s.from_var}']
+#if not $s.keep_original:
+del adata.var['${s.from_var}']
+#end if
+#end for
+
 gene_names = getattr(adata.var, gene_name)
 
 #for $i, $flag in enumerate($gene_flags)
@@ -92,7 +99,7 @@ del ad_s
 ad_s = sc.read('x_source_${i}.h5')
 if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
   #set xs=$copy_x.xlayers[$i]
-  if "${xs.dest}" == '': 
+  if "${xs.dest}" == '':
     logging.error("%sth destination layer for %sth X source not specified" % ("${i}", "${i}"))
     sys.exit(1)
   adata.layers["${xs.dest}"] = ad_s.X
@@ -112,8 +119,8 @@ if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
   for l_to_copy in layers_to_copy:
     suffix=''
     if l_to_copy in adata.layers:
-        suffix = "_${i}" 
-    
+        suffix = "_${i}"
+
     adata.layers[l_to_copy+suffix] = ad_s.layers[l_to_copy]
   #end for
 else:
@@ -132,8 +139,8 @@ if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
   for k_to_copy in keys_to_copy:
     suffix=''
     if k_to_copy in adata.obs:
-        suffix = "_${i}" 
-    
+        suffix = "_${i}"
+
     adata.obs[[k_to_copy+suffix]] = ad_s.obs[[k_to_copy]]
     if k_to_copy in ad_s.uns.keys():
       adata.uns[k_to_copy+suffix] = ad_s.uns[k_to_copy]
@@ -220,6 +227,15 @@ adata.write('output.h5', compression='gzip')
       <param name="to_obs" type="text" label="New name" help="New name in observations that you want to change"/>
       <param name="keep_original" type="boolean" label="Keep original" help="If activated, it will also keep the original column" checked="false"/>
     </repeat>
+    <repeat name="var_modifications" title="Change field names in AnnData var" min="0">
+      <param name="from_var" type="text" label="Original name" help="Name in var that you want to change">
+        <sanitizer>
+          <valid initial="string.printable"/>
+        </sanitizer>
+      </param>
+      <param name="to_var" type="text" label="New name" help="New name in var that you want to change"/>
+      <param name="keep_original" type="boolean" label="Keep original" help="If activated, it will also keep the original column" checked="false"/>
+    </repeat>
     <param name="gene_symbols_field" value='index' type="text" label="Gene symbols field in AnnData" help="Field inside var.params where the gene symbols are, normally 'index' or 'gene_symbols'"/>
     <repeat name="gene_flags" title="Flag genes that start with these names">
       <param name="startswith" type="text" label="Starts with" help="Text that you expect the genes to be flagged to start with, such as 'MT-' for mito genes"/>
@@ -299,6 +315,16 @@ adata.write('output.h5', compression='gzip')
       <output name="output_h5ad" file="anndata_ops.h5" ftype="h5ad" compare="sim_size"/>
     </test>
     <test>
+      <param name="input_obj_file" value="anndata_ops.h5"/>
+      <param name="from_var" value = "gene_symbols" />
+      <param name="to_var" value = "hello_all" />
+      <output name="output_h5ad" ftype="h5ad">
+        <assert_contents>
+          <has_h5_keys keys="var/hello_all" />
+        </assert_contents>
+      </output>
+    </test>
+    <test>
       <param name="input_obj_file" value="find_cluster.h5"/>
       <param name="input_format" value="anndata"/>
       <conditional name="copy_r">
@@ -352,7 +378,7 @@ Operations on AnnData objects
 
 Performs the following operations:
 
-* Change observation fields, mostly for downstreaming processes convenience. Multiple fields can be changed as one.
+* Change observation/var fields, mostly for downstreaming processes convenience. Multiple fields can be changed as one.
 * Flag genes that start with a certain text: useful for flagging mitochondrial, spikes or other groups of genes.
 * For the flags created, calculates qc metrics (pct_<flag>_counts).
 * Calculates `n_genes`, `n_counts` for cells and `n_cells`, `n_counts` for genes.
