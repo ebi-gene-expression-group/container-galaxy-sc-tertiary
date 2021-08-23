@@ -316,13 +316,13 @@ adata.write('output.h5', compression='gzip')
     </test>
     <test>
       <param name="input_obj_file" value="anndata_ops.h5"/>
-    <param name="from_var" value = "gene_symbols" />
-    <param name="to_var" value = "hello_all" />
-    <output name="output_h5ad" ftype="h5ad">
-    <assert_contents>
-      <has_h5_keys keys="hello_all" />
-  </assert_contents>
-    </output>
+      <param name="from_var" value = "gene_symbols" />
+      <param name="to_var" value = "hello_all" />
+      <output name="output_h5ad" ftype="h5ad">
+        <assert_contents>
+          <has_h5_keys keys="var/hello_all" />
+        </assert_contents>
+      </output>
     </test>
     <test>
       <param name="input_obj_file" value="find_cluster.h5"/>
