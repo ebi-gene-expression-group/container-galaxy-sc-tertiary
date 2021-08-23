@@ -331,7 +331,7 @@ adata.write('output.h5', compression='gzip')
         <param name="default" value="true"/>
         <param name="r_source" value="read_10x.h5"/>
       </conditional>
-      <output name="output_h5ad" ftype="h5ad">
+      <output name="output_h5ad" file="anndata_ops_raw.h5" ftype="h5ad" compare="sim_size">
         <assert_contents>
           <has_h5_keys keys="raw/X" />
 	</assert_contents>
