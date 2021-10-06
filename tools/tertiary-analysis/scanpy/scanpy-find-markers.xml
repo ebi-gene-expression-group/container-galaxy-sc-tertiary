@@ -68,7 +68,7 @@ PYTHONIOENCODING=utf-8 scanpy-find-markers
         <param name="groups" argument="--groups" optional="true" type="text" label="Subset of groups/clusters to which comparisons shell be restricted."/>
         <param name="reference" argument="--reference" type="text" value="rest" label="If 'rest', compare to the union of the rest of the group/cluster. If a group identifier, compare to that group"/>
         <conditional name="filter">
-          <param name="default" type="boolean" checked="true" label="Use filtering defaults"/>
+          <param name="default" type="boolean" checked="false" label="Use filtering defaults"/>
           <when value="true"/>
           <when value="false">
             <param name="min_in_group_fraction" type="float" min="0.0" max="1.0" value="0.25" label="Minimum in-group fraction"
