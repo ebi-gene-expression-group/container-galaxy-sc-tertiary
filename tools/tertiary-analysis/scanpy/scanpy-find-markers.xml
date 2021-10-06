@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_find_markers" name="Scanpy FindMarkers" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scanpy_find_markers" name="Scanpy FindMarkers" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
   <description>to find differentially expressed genes between groups</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -32,7 +32,9 @@ PYTHONIOENCODING=utf-8 scanpy-find-markers
         --groups '${settings.groups}'
     #end if
     --reference '${settings.reference}'
-    --filter-params 'min_in_group_fraction:${settings.min_in_group_fraction},max_out_group_fraction:${settings.max_out_group_fraction},min_fold_change:${settings.min_fold_change}'
+    #if $settings.filter.default == "false"
+      --filter-params 'min_in_group_fraction:${settings.filter.min_in_group_fraction},max_out_group_fraction:${settings.filter.max_out_group_fraction},min_fold_change:${settings.filter.min_fold_change}'
+    #end if
     $settings.pts $settings.tie_correct
     #end if
     @INPUT_OPTS@
@@ -65,12 +67,18 @@ PYTHONIOENCODING=utf-8 scanpy-find-markers
                label="Rank by absolute value of the scores instead of the scores"/>
         <param name="groups" argument="--groups" optional="true" type="text" label="Subset of groups/clusters to which comparisons shell be restricted."/>
         <param name="reference" argument="--reference" type="text" value="rest" label="If 'rest', compare to the union of the rest of the group/cluster. If a group identifier, compare to that group"/>
-        <param name="min_in_group_fraction" type="float" min="0.0" max="1.0" value="0.25" label="Minimum in-group fraction"
-               help="Post-test filtering to only keep genes expressed in at least this fraction of cells in the test group."/>
-        <param name="max_out_group_fraction" type="float" min="0.0" max="1.0" value="0.5" label="Maximum out-group fraction"
-               help="Post-test filtering to only keep genes expressed in at most this fraction of cells in the reference group."/>
-        <param name="min_fold_change" type="float" value="2" label="Minimum fold change"
-               help="Post-test filtering to only keep genes with at least this fold change of expression relative to the reference group."/>
+        <conditional name="filter">
+          <param name="default" type="boolean" checked="true" label="Use filtering defaults"/>
+          <when value="true"/>
+          <when value="false">
+            <param name="min_in_group_fraction" type="float" min="0.0" max="1.0" value="0.25" label="Minimum in-group fraction"
+                   help="Post-test filtering to only keep genes expressed in at least this fraction of cells in the test group."/>
+            <param name="max_out_group_fraction" type="float" min="0.0" max="1.0" value="0.5" label="Maximum out-group fraction"
+                   help="Post-test filtering to only keep genes expressed in at most this fraction of cells in the reference group."/>
+            <param name="min_fold_change" type="float" value="2" label="Minimum fold change"
+                   help="Post-test filtering to only keep genes with at least this fold change of expression relative to the reference group."/>
+          </when>
+        </conditional>
         <param name="pts" argument="--pts"  type="boolean" checked="false" label="Compute the fraction of cells expressing the genes?" truevalue="--pts" falsevalue="" />
         <param name="tie_correct" argument="--tie-correct"  type="boolean" checked="false" label="Use tie correction for 'wilcoxon' scores. Used only for 'wilcoxon'." truevalue="--tie-correct" falsevalue=""/>
       </when>
