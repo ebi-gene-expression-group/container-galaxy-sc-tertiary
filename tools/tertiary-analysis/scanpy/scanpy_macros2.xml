@@ -41,7 +41,7 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
       --save-raw
     #end if
     #if $save_layer
-      --save-layer ${settings.save_layer}
+      --save-layer ${save_layer}
     #end if
   </token>
   <token name="@OUTPUT_OPTS@">
