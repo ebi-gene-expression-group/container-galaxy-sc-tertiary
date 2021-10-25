@@ -76,7 +76,7 @@ seurat-convert.R
           <param name="format" value="rds_seurat"/>
           <output name="rds_seurat_file">
             <assert_contents>
-              <has_size value="2366603" delta="200000"/>
+              <has_size value="2965562" delta="200000"/>
             </assert_contents>
           </output>
         </test>
@@ -90,7 +90,7 @@ This tool uses Seurat 3 to convert formats. Possible inputs are:
 
     * Seurat 3
     * Loom (probably earlier than Loom 3.0)
-    * AnnData (contemporary versions to Seurat 3)
+    * AnnData (contemporary versions to Seurat 3, most likely up to AnnData 0.6.22.post1)
     * Single Cell Experiment
 
 Possible outputs are:
