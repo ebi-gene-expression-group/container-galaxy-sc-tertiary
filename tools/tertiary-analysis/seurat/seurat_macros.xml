@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <macros>
-    <token name="@VERSION@">0.0.8</token>
-    <token name="@SEURAT_VERSION@">3.1.2</token>
+    <token name="@VERSION@">0.0.9</token>
+    <token name="@SEURAT_VERSION@">3.2.3</token>
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="@VERSION@">seurat-scripts</requirement>
