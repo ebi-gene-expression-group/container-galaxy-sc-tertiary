@@ -79,8 +79,12 @@ seurat-find-markers.R
 
     <tests>
         <test>
-            <param name="rds_seurat_file" ftype="rdata" value="cluster_seurat.rds"/>
-            <output name="output" value="markers.csv" compare="sim_size" delta="1000000"/>
+            <param name="rds_seurat_file" ftype="rdata" value="E-MTAB-6077-3k_features_90_cells-clusters.rds"/>
+            <output name="output" >
+              <assert_contents>
+                <has_n_lines n="1038" />
+              </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[

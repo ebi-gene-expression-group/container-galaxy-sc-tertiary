@@ -43,8 +43,12 @@ seurat-filter-cells.R
     <tests>
         <test>
             <param name="name" value="nCount_RNA" />
-            <param name="rds_seurat_file" ftype="rdata" value="raw_seurat.rds" />
-            <output name="rds_seurat_file" ftype="rdata" value="filtered_seurat.rds" compare="sim_size" delta="1000000" />
+            <param name="rds_seurat_file" ftype="rdata" value="E-MTAB-6077-3k_features_90_cells.rds" />
+            <output name="rds_seurat_file" ftype="rdata">
+              <assert_contents>
+                <has_size value="2260044" delta="200000"/>
+              </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[

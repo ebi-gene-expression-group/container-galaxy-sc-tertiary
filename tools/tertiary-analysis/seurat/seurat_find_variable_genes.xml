@@ -58,9 +58,12 @@ seurat-find-variable-genes.R
 
     <tests>
         <test>
-            <param name="rds_seurat_file" ftype="rdata" value="normalised_seurat.rds"/>
-            <output name="rds_seurat_file" ftype="rdata" value="variable_genes_seurat.rds" compare="sim_size" delta="1000000" />
-            <output name="output_tab" value="filtered_genes.txt" compare="sim_size" delta="1000000" />
+            <param name="rds_seurat_file" ftype="rdata" value="E-MTAB-6077-3k_features_90_cells-normalised.rds"/>
+            <output name="rds_seurat_file" ftype="rdata">
+              <assert_contents>
+                <has_size value="2720178" delta="200000"/>
+              </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[

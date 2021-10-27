@@ -70,10 +70,14 @@ $check_for_norm
 
     <tests>
         <test>
-            <param name="rds_seurat_file" ftype="rdata" value="variable_genes_seurat.rds"/>
+            <param name="rds_seurat_file" ftype="rdata" value="E-MTAB-6077-3k_features_90_cells-fvg.rds"/>
             <param name="vars_to_regress" value="nCount_RNA" />
             <param name="use_umi" value="True" />
-            <output name="rds_seurat_file" ftype="rdata" value="scaled_seurat.rds" compare="sim_size" delta="1000000000" />
+            <output name="rds_seurat_file" ftype="rdata">
+              <assert_contents>
+                <has_size value="2720178" delta="200000"/>
+              </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[

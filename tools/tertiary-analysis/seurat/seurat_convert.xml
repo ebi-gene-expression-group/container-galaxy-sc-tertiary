@@ -47,7 +47,7 @@ seurat-convert.R
         <test>
           <conditional name="input">
             <param name="format" value="loom"/>
-            <param name="loom_file" value="E-MTAB-6077_3k_features_90_cells_loom.h5" ftype="h5"/>
+            <param name="loom_file" value="E-MTAB-6077-3k_features_90_cells_loom.h5" ftype="h5"/>
           </conditional>
           <param name="format" value="rds_sce"/>
           <output name="rds_sce_file">
@@ -59,7 +59,7 @@ seurat-convert.R
         <test>
           <conditional name="input">
             <param name="format" value="rds_sce"/>
-            <param name="rds_sce_file" value="E-MTAB-6077_3k_features_90_cells_sce.rds" ftype="rdata.sce"/>
+            <param name="rds_sce_file" value="E-MTAB-6077-3k_features_90_cells_sce.rds" ftype="rdata.sce"/>
           </conditional>
           <param name="format" value="rds_seurat"/>
           <output name="rds_seurat_file">
@@ -71,7 +71,7 @@ seurat-convert.R
         <test>
           <conditional name="input">
             <param name="format" value="anndata"/>
-            <param name="anndata_file" value="E-MTAB-6077_3k_features_90_cells.h5ad" ftype="h5ad"/>
+            <param name="anndata_file" value="E-MTAB-6077-3k_features_90_cells.h5ad" ftype="h5ad"/>
           </conditional>
           <param name="format" value="rds_seurat"/>
           <output name="rds_seurat_file">
