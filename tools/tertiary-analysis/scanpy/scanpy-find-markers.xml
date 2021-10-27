@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_find_markers" name="Scanpy FindMarkers" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
+<tool id="scanpy_find_markers" name="Scanpy FindMarkers" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>to find differentially expressed genes between groups</description>
   <macros>
     <import>scanpy_macros2.xml</import>
