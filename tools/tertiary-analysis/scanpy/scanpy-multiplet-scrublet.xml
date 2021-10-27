@@ -115,7 +115,7 @@ $filter
 
     **Note**
 
-    Sometimes a threshold cannot be estimated by Scrublet (if you don't provide one), and no doublet predictions are produced. There will be a warning, and no 'threshold' slot will be populated in .uns. The 'predicted_double'ts' slot in .obs will be set to False for all cells such that no filtering will occur if this column is supplied to filtering steps. You can use the 'Scanpy Plot Scrublet' tool to plot the distribution of scores yourself and estimate a threshold. 
+    Where a threshold is not provided, Scrublet will try to automatically set one based on simulations, but this does not always work. There will be a warning, and no 'threshold' slot will be populated in .uns['scrublet']. The 'predicted_doublets' slot in .obs will be set to False for all cells such that no filtering will occur if this column is supplied to filtering steps. You can use the 'Scanpy Plot Scrublet' tool to plot the distribution of scores yourself and estimate a threshold to override this behaviour. 
 
     @HELP@
 
