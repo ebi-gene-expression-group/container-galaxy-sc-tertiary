@@ -33,8 +33,13 @@ cd output_html && tar -cf '$output' *;
 
     <tests>
         <test>
-            <param name="rds_seurat_file" ftype="rdata" value="tsne_seurat.rds"/>
-            <output name="output" value="html_out" compare="sim_size" delta="1000000"/>
+            <param name="rds_seurat_file" ftype="rdata" value="E-MTAB-6077-3k_features_90_cells-tsne.rds"/>
+            <param name="markers_file" ftype="txt" value="E-MTAB-6077-3k_features_90_cells-markers.csv"/>
+            <output name="output" >
+              <assert_contents>
+                <has_size value="2182656" delta="200000"/>
+              </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[

@@ -75,7 +75,7 @@ $check_for_norm
             <param name="use_umi" value="True" />
             <output name="rds_seurat_file" ftype="rdata">
               <assert_contents>
-                <has_size value="2720178" delta="200000"/>
+                <has_size value="4233990" delta="200000"/>
               </assert_contents>
             </output>
         </test>

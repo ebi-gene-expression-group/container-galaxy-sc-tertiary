@@ -49,20 +49,20 @@ seurat-run-pca.R
             <param name="rds_seurat_file" ftype="rdata" value="E-MTAB-6077-3k_features_90_cells-scaled.rds"/>
             <output name="rds_seurat_file" ftype="rdata">
               <assert_contents>
-                <has_size value="2720178" delta="200000">
+                <has_size value="5052296" delta="200000"/>
               </assert_contents>
             </output>
-            <output name="output_embed" value="pca_embeddings.csv">
+            <output name="output_embed" >
               <assert_contents>
                 <has_n_lines n="92"/>
               </assert_contents>
             </output>
-            <output name="output_load" value="pca_loadings.csv">
+            <output name="output_load" >
               <assert_contents>
                 <has_n_lines n="2001"/>
               </assert_contents>
             </output>
-            <output name="output_sdev" value="pca_stdev.txt">
+            <output name="output_sdev" >
               <assert_contents>
                 <has_n_lines n="50"/>
               </assert_contents>

@@ -69,7 +69,7 @@ seurat-run-tsne.R
             <param name="rds_seurat_file" ftype="rdata" value="E-MTAB-6077-3k_features_90_cells-clusters.rds"/>
             <output name="rds_seurat_file" ftype="rdata" >
               <assert_contents>
-                <has_size value="2720178" delta="200000">
+                <has_size value="5067150" delta="200000"/>
               </assert_contents>
             </output>
         </test>

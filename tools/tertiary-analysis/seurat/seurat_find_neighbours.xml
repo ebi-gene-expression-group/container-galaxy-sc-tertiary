@@ -91,7 +91,7 @@ $force_recalc
             <param name="reduction" value="pca" />
             <output name="rds_seurat_file" ftype="rdata" >
               <assert_contents>
-                <has_size value="2720178" delta="200000"/>
+                <has_size value="5054400" delta="200000"/>
               </assert_contents>
             </output>
         </test>
