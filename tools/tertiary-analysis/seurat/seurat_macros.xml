@@ -18,6 +18,7 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
        <param type="select" name="format" label="Choose the format of the input" help="RData, Loom or AnnData">
          <option value="rds_seurat" selected="true">RDS with a Seurat object</option>
          <option value="loom">Loom</option>
+         <option value="h5seurat">Seurat HDF5</option>
          <option value="anndata">AnnData</option>
          <option value="rds_sce">RDS with a Single Cell Experiment object</option>
        </param>
@@ -33,18 +34,34 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
        <when value="rds_sce">
          <param type="data" name="rds_sce_file" label="RDS file" help="Input as RDS file with Single Cell Experiment object" format="rdata"/>
        </when>
+       <when value="h5seurat">
+         <param type="data" name="h5seurat_file" label="Seurat HDF5" help="Input as Seurat HDF5 object" format="h5"/>
+       </when>
      </conditional>
    </xml>
 
+   <token name="@INPUT_OBJ_PREAMBLE@">
+     #if $input.format == 'loom'
+     ln -s '$input.loom_file' input.loom;
+     #else if $input.format == 'h5seurat'
+     ln -s '$input.h5seurat_file' input.h5seurat;
+     #else if $input.format == 'anndata'
+     ## it complains when using links for AnnData...
+     cp '$input.anndata_file' input.h5ad;
+     #end if
+   </token>
+
    <token name="@INPUT_OBJECT@">
     #if $input.format == "anndata"
-        --input-object-file '$input.anndata_file' --input-format anndata
+        --input-object-file input.h5ad --input-format anndata
     #else if $input.format == "loom"
-        --input-object-file '$input.loom_file' --input-format loom
+        --input-object-file input.loom --input-format loom
     #else if $input.format == "rds_seurat"
         --input-object-file '$input.rds_seurat_file' --input-format seurat
     #else if $input.format == "rds_sce"
         --input-object-file '$input.rds_sce_file' --input-format singlecellexperiment
+    #else if $input.format == "h5seurat"
+        --input-object-file input.h5seurat --input-format h5seurat
     #end if
    </token>
 

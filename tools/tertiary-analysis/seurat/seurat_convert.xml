@@ -6,6 +6,7 @@
     <expand macro="requirements" />
     <expand macro="version" />
     <command detect_errors="exit_code"><![CDATA[
+@INPUT_OBJ_PREAMBLE@
 seurat-convert.R
 @INPUT_OBJECT@
 @OUTPUT_OBJECT@
@@ -76,7 +77,7 @@ seurat-convert.R
           <param name="format" value="rds_seurat"/>
           <output name="rds_seurat_file">
             <assert_contents>
-              <has_size value="2965562" delta="200000"/>
+              <has_size value="3761959" delta="200000"/>
             </assert_contents>
           </output>
         </test>
