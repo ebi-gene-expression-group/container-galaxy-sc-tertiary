@@ -1,4 +1,4 @@
-<tool id="seurat_export_cellbrowser" name="Seurat Export2CellBrowser" version="@SEURAT_VERSION@+galaxy0">
+<tool id="seurat_export_cellbrowser" name="Seurat Export2CellBrowser" profile="18.01" version="@SEURAT_VERSION@+galaxy0">
     <description>produces files for UCSC CellBrowser import.</description>
     <macros>
         <import>seurat_macros.xml</import>

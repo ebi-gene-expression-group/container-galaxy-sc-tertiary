@@ -1,4 +1,4 @@
-<tool id="seurat_find_clusters" name="Seurat FindClusters" version="@SEURAT_VERSION@+galaxy0">
+<tool id="seurat_find_clusters" name="Seurat FindClusters" profile="18.01" version="@SEURAT_VERSION@+galaxy0">
     <description>find clusters of cells</description>
     <macros>
         <import>seurat_macros.xml</import>

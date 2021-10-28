@@ -1,4 +1,4 @@
-<tool id="seurat_run_tsne" name="Seurat RunTSNE" version="@SEURAT_VERSION@+galaxy0">
+<tool id="seurat_run_tsne" name="Seurat RunTSNE" profile="18.01" version="@SEURAT_VERSION@+galaxy0">
     <description>run t-SNE dimensionality reduction</description>
     <macros>
         <import>seurat_macros.xml</import>
