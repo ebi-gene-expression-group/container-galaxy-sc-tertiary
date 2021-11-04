@@ -1,0 +1,19 @@
+---
+- option_group:
+    - input-object-file
+    - input-format
+  pre_command_macros:
+    - INPUT_OBJ_PREAMBLE
+  post_command_macros:
+    - INPUT_OBJECT
+  input_declaration_macros:
+    - input_object_params
+- option_group:
+    - output-object-file
+    - output-format
+  post_command_macros:
+    - OUTPUT_OBJECT
+  input_declaration_macros:
+    - output_object_params
+  output_declaration_macros:
+    - output_files
