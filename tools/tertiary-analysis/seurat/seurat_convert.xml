@@ -81,6 +81,18 @@ seurat-convert.R
             </assert_contents>
           </output>
         </test>
+        <!-- <test>
+          <conditional name="input">
+            <param name="format" value="anndata"/>
+            <param name="anndata_file" value="E-MTAB-6077-3k_features_90_cells_sc182.h5ad" ftype="h5ad"/>
+          </conditional>
+          <param name="format" value="rds_seurat"/>
+          <output name="rds_seurat_file">
+            <assert_contents>
+              <has_size value="3761959" delta="200000"/>
+            </assert_contents>
+          </output>
+        </test> -->
     </tests>
     <help><![CDATA[
 .. class:: infomark
