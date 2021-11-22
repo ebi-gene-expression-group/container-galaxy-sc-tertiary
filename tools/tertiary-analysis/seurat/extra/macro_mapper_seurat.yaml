@@ -17,3 +17,25 @@
     - output_object_params
   output_declaration_macros:
     - output_files
+- option_group:
+    - input-object-files
+    - input-format
+  pre_command_macros:
+    - INPUT_OBJS_PREAMBLE
+  post_command_macros:
+    - INPUT_OBJECTS
+  input_declaration_macros:
+    - input_object_params:
+        multiple: true
+- option_group:
+    - reference-object-files
+    - reference-format
+  pre_command_macros:
+    - REFERENCE_OBJS_PREAMBLE
+  post_command_macros:
+    - REFERENCE_OBJECTS
+  input_declaration_macros:
+    - input_object_params:
+        varname: reference
+        multiple: true
+        optional: true

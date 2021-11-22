@@ -13,9 +13,9 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
     ]]></version_command>
     </xml>
 
-   <xml name="input_object_params">
-     <conditional name="input" label="Input format">
-       <param type="select" name="format" label="Choose the format of the input" help="RData, Loom or AnnData">
+   <xml name="input_object_params" token_multiple="False" token_varname="input" token_optional="False">
+     <conditional name="@VARNAME@" label="Input format">
+       <param type="select" name="format" label="Choose the format of the @VARNAME@" help="Seurat RDS, Seurat H5, Single Cell Experiment RDS, Loom or AnnData">
          <option value="rds_seurat" selected="true">RDS with a Seurat object</option>
          <option value="loom">Loom</option>
          <option value="h5seurat">Seurat HDF5</option>
@@ -23,19 +23,19 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
          <option value="rds_sce">RDS with a Single Cell Experiment object</option>
        </param>
        <when value="anndata">
-         <param type="data" name="anndata_file" label="AnnData file" help="The AnnData format provided by Scanpy" format="h5,h5ad"/>
+         <param type="data" name="anndata_file" multiple="@MULTIPLE@" optional="@OPTIONAL@" label="AnnData file" help="Select AnnData files for @VARNAME@" format="h5,h5ad"/>
        </when>
        <when value="loom">
-         <param type="data" name="loom_file" label="Loom file" help="Input as Loom v? file" format="h5,h5loom"/>
+         <param type="data" name="loom_file" multiple="@MULTIPLE@" optional="@OPTIONAL@" label="Loom file" help="Select Loom file(s) for @VARNAME@" format="h5,h5loom"/>
        </when>
        <when value="rds_seurat">
-         <param type="data" name="rds_seurat_file" label="RDS file" help="Input as RDS file with Seurat 3 object" format="rdata"/>
+         <param type="data" name="rds_seurat_file" multiple="@MULTIPLE@" optional="@OPTIONAL@" label="RDS file" help="Select RDS file(s) with Seurat object for @VARNAME@" format="rdata"/>
        </when>
        <when value="rds_sce">
-         <param type="data" name="rds_sce_file" label="RDS file" help="Input as RDS file with Single Cell Experiment object" format="rdata"/>
+         <param type="data" name="rds_sce_file" multiple="@MULTIPLE@" optional="@OPTIONAL@" label="RDS file" help="Select RDS file(s) with Single Cell Experiment object for @VARNAME@" format="rdata"/>
        </when>
        <when value="h5seurat">
-         <param type="data" name="h5seurat_file" label="Seurat HDF5" help="Input as Seurat HDF5 object" format="h5"/>
+         <param type="data" name="h5seurat_file" multiple="@MULTIPLE@" optional="@OPTIONAL@" label="Seurat HDF5" help="Select Seurat HDF5 file(s) for @VARNAME" format="h5"/>
        </when>
      </conditional>
    </xml>
@@ -62,6 +62,116 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
         --input-object-file '$input.rds_sce_file' --input-format singlecellexperiment
     #else if $input.format == "h5seurat"
         --input-object-file input.h5seurat --input-format h5seurat
+    #end if
+   </token>
+
+   <token name="@INPUT_OBJS_PREAMBLE@">
+     #if $input.format == 'loom'
+     #for $i, $fh in enumerate($input.loom_file):
+     ln -s '$fh' input.${i}.loom;
+     #end for
+     #else if $input.format == 'h5seurat'
+     #for $i, $fh in enumerate($input.h5seurat_file):
+     ln -s '$fh' input.${i}.h5seurat;
+     #end for
+     #else if $input.format == 'anndata'
+     ## it complains when using links for AnnData...
+     #for $i, $fh in enumerate($input.anndata_file):
+     cp '$fh' input.${i}.h5ad;
+     #end for
+     #end if
+   </token>
+
+   <token name="@INPUT_OBJECTS@">
+    #if $input.format == "anndata"
+        --input-object-files
+    #set $sep = ''
+    #for $i, $fh in enumerate($input.anndata_file):
+        ${sep}input.${i}.h5ad
+    #set $sep = ','
+    #end for
+         --input-format anndata
+    #else if $input.format == "loom"
+        --input-object-files
+    #set $sep = ''
+    #for $i, $fh in enumerate($input.loom_file):
+        ${sep}input.${i}.loom
+    #set $sep = ','
+    #end for
+         --input-format loom
+    #else if $input.format == "rds_seurat"
+        --input-object-files
+    #set file_array = $input.rds_seurat_file
+    #set files = ",".join([ str($fh) for $fh in $file_array ])
+        ${files}
+        --input-format seurat
+    #else if $input.format == "rds_sce"
+        --input-object-files
+    #set file_array = $input.rds_sce_file
+    #set files = ",".join([ str($fh) for $fh in $file_array ])
+        ${files}
+        --input-format singlecellexperiment
+    #else if $input.format == "h5seurat"
+        --input-object-files
+    #set file_array = [ "input."+$i+".h5seurat" for $i, $fh in enumerate($input.h5seurat)]
+    #set files = ",".join($file_array)
+        ${files}
+        --input-format h5seurat
+    #end if
+   </token>
+
+   <token name="@REFERENCE_OBJS_PREAMBLE@">
+     #if $reference.format == 'loom'
+     #for $i, $fh in enumerate($reference.loom_file):
+     ln -s '$fh' reference.${i}.loom;
+     #end for
+     #else if $reference.format == 'h5seurat'
+     #for $i, $fh in enumerate($reference.h5seurat_file):
+     ln -s '$fh' reference.${i}.h5seurat;
+     #end for
+     #else if $reference.format == 'anndata'
+     ## it complains when using links for AnnData...
+     #for $i, $fh in enumerate($reference.anndata_file):
+     cp '$fh' reference.${i}.h5ad;
+     #end for
+     #end if
+   </token>
+
+   <token name="@REFERENCE_OBJECTS@">
+    #if $reference.format == "anndata" and $reference.anndata_file:
+        --reference-object-files
+    #set $sep = ''
+    #for $i, $fh in enumerate($reference.anndata_file):
+        ${sep}reference.${i}.h5ad
+    #set $sep = ','
+    #end for
+         --reference-format anndata
+    #else if $reference.format == "loom" and $reference.loom_file:
+        --reference-object-files
+    #set $sep = ''
+    #for $i, $fh in enumerate($reference.loom_file):
+        ${sep}reference.${i}.loom
+    #set $sep = ','
+    #end for
+         --reference-format loom
+    #else if $reference.format == "rds_seurat" and $reference.rds_seurat_file:
+        --reference-object-files
+    #set files = ",".join([ str($fh) for $fh in $reference.rds_seurat_file ])
+        ${files}
+        --reference-format seurat
+    #else if $reference.format == "rds_sce" and $reference.rds_sce_file:
+        --reference-object-files
+    #set files = ",".join([ str($fh) for $fh in $reference.rds_sce_file ])
+        ${files}
+        --reference-format singlecellexperiment
+    #else if $reference.format == "h5seurat" and $reference.h5seurat:
+        --reference-object-files
+    #set $sep = ''
+    #for $i, $fh in enumerate($reference.h5seurat):
+        ${sep}reference.${i}.h5seurat
+    #set $sep = ','
+    #end for
+        --reference-format h5seurat
     #end if
    </token>
 

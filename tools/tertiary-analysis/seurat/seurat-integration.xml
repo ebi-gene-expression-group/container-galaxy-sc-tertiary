@@ -1,0 +1,210 @@
+<tool id="seurat_integration" name="Seurat integration" profile="18.01" version="@SEURAT_VERSION@+galaxy0">
+    <description>merges datasets based on internal anchors or reference based</description>
+    <macros>
+        <import>seurat_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <expand macro="version" />
+    <command detect_errors="exit_code"><![CDATA[
+    @INPUT_OBJS_PREAMBLE@
+    @REFERENCE_OBJS_PREAMBLE@
+    seurat-integration.R
+    @OUTPUT_OBJECT@
+    @INPUT_OBJECTS@
+    @REFERENCE_OBJECTS@
+
+    #if $ident_for_adata
+    --ident_for_adata '$ident_for_adata'
+    #end if
+
+
+    #if $references_assay
+    --references-assay '$references_assay'
+    #end if
+
+    $update_seurat_object
+
+
+    #if $assay_list
+    --assay-list '$assay_list'
+    #end if
+
+
+    #if $anchor_features
+    --anchor-features '$anchor_features'
+    #end if
+
+    $scale
+
+
+    #if $normalization_method
+    --normalization-method '$normalization_method'
+    #end if
+
+
+    #if $sct_clip_range
+    --sct-clip-range '$sct_clip_range'
+    #end if
+
+
+    #if $reduction
+    --reduction '$reduction'
+    #end if
+
+    $l2_norm
+
+
+    #if $dims
+    --dims '$dims'
+    #end if
+
+
+    #if $k_anchor
+    --k-anchor '$k_anchor'
+    #end if
+
+
+    #if $k_filter
+    --k-filter '$k_filter'
+    #end if
+
+
+    #if $k_score
+    --k-score '$k_score'
+    #end if
+
+
+    #if $max_features
+    --max-features '$max_features'
+    #end if
+
+
+    #if $nn_method
+    --nn-method '$nn_method'
+    #end if
+
+
+    #if $n_trees
+    --n-trees '$n_trees'
+    #end if
+
+
+    #if $eps
+    --eps '$eps'
+    #end if
+
+    $verbose
+
+
+    #if $new_assay_name
+    --new-assay-name '$new_assay_name'
+    #end if
+
+
+    #if $normalization_method
+    --normalization-method '$normalization_method'
+    #end if
+
+
+    #if $integrate_features_pca
+    --integrate-features-pca '$integrate_features_pca'
+    #end if
+
+
+    #if $features_to_integrate
+    --features-to-integrate '$features_to_integrate'
+    #end if
+
+
+    #if $integrate_dims
+    --integrate-dims '$integrate_dims'
+    #end if
+
+
+    #if $k_weight
+    --k-weight '$k_weight'
+    #end if
+
+
+    #if $weight_reduction
+    --weight-reduction '$weight_reduction'
+    #end if
+
+
+    #if $sd_weight
+    --sd-weight '$sd_weight'
+    #end if
+
+
+    #if $sample_tree
+    --sample-tree '$sample_tree'
+    #end if
+
+    $preserve_order
+
+
+    #if $integrate_eps
+    --integrate-eps '$integrate_eps'
+    #end if
+
+    $verbose
+
+    
+    ]]></command>
+    <inputs>
+        <expand macro="output_object_params" />
+        <expand macro="input_object_params" multiple="True"  /> 
+        <expand macro="input_object_params" varname="reference"  multiple="True"  optional="True"  /> 
+        <param label="Ident for AnnData object" optional='true' value='louvain' name="ident_for_adata" argument="--ident_for_adata" type="text"   help="If using an AnnData as input, which identity should be used."/>
+        <param label="References assay" optional='true' value='RNA' name="references_assay" argument="--references-assay" type="text"   help="The Seurat assay used for references"/>
+        <param label="Update Seurat object" optional='true' value='false' name="update_seurat_object" argument="--update_seurat_object" type="boolean"  truevalue='--update_seurat_object' falsevalue='' checked='false' help="Whether the Seurat objects given should be passed by the Seurat updater method."/>
+        <param label="Assay-list" optional='true' name="assay_list" argument="--assay-list" type="text"   help="A vector of assay names specifying which assay to use when constructing anchors. If NULL, the current default assay for each object is used."/>
+        <param label="Anchor-features" optional='true' value='2000' name="anchor_features" argument="--anchor-features" type="integer"   help="A numeric value (this will call 'SelectIntegrationFeatures' to select the provided number of features to be used in anchor finding) or a vector of features to be used as input to the anchor finding process (comma separated)"/>
+        <param label="Scale" optional='true' value='true' name="scale" argument="--do-not-scale" type="boolean"  truevalue='' falsevalue='--do-not-scale' checked='true' help="Whether or not to scale the features provided. Only call if you have previously scaled the features you want to use for each object in the object.list"/>
+        <param label="Normalization method" name="normalization_method" argument="--normalization-method" type="select"  help="Name of normalization method used: LogNormalize or SCT">
+            <option value="LogNormalize" selected="true">LogNormalize</option>
+            <option value="SCT">SCT</option>
+        </param>
+        <param label="Sct clip range" optional='true' name="sct_clip_range" argument="--sct-clip-range" type="text"   help="Numeric of length two specifying the min and max values the Pearson residual will be clipped to"/>
+        <param label="Reduction" name="reduction" argument="--reduction" type="select"  help="Dimensional reduction to perform when finding anchors. Can be cca (Canonical correlation analysis) or rpca (Reciprocal PCA)">
+            <option value="cca" selected="true">Canonical correlation analysis</option>
+            <option value="rpca">Reciprocal PCA</option>
+        </param>
+        <param label="L2 norm" optional='true' value='true' name="l2_norm" argument="--do-not-l2-norm" type="boolean"  truevalue='' falsevalue='--do-not-l2-norm' checked='true' help="Perform L2 normalization on the CCA cell embeddings after dimensional reduction"/>
+        <param label="Dims" optional='true' value='1:30' name="dims" argument="--dims" type="text"   help="Which dimensions to use from the CCA to specify the neighbor search space"/>
+        <param label="K anchor" optional='true' value='5' name="k_anchor" argument="--k-anchor" type="integer"   help="How many neighbors (k) to use when picking anchors"/>
+        <param label="K filter" optional='true' value='200' name="k_filter" argument="--k-filter" type="integer"   help="How many neighbors (k) to use when filtering anchors"/>
+        <param label="K score" optional='true' value='30' name="k_score" argument="--k-score" type="integer"   help="How many neighbors (k) to use when scoring anchors"/>
+        <param label="Max features" optional='true' value='200' name="max_features" argument="--max-features" type="integer"   help="The maximum number of features to use when specifying the neighborhood search space in the anchor filtering"/>
+        <param label="Nn method" name="nn_method" argument="--nn-method" type="select"  help="Method for nearest neighbor finding. Options include: rann, annoy">
+            <option value="rann">rann</option>
+            <option value="annoy" selected="true">annoy</option>
+        </param>
+        <param label="N trees" optional='true' value='50' name="n_trees" argument="--n-trees" type="integer"   help="More trees gives higher precision when using annoy approximate nearest neighbor search"/>
+        <param label="Eps" optional='true' value='0' name="eps" argument="--eps" type="integer"   help="Error bound on the neighbor finding algorithm (from RANN)"/>
+        <param label="Verbose" optional='true' value='false' name="verbose" argument="--verbose" type="boolean"  truevalue='--verbose' falsevalue='' checked='false' help="Print progress bars and output"/>
+        <param label="New assay name" optional='true' value='integrated' name="new_assay_name" argument="--new-assay-name" type="text"   help="Name for the new assay containing the integrated data"/>
+        <param label="Normalization method" name="normalization_method" argument="--normalization-method" type="select"  help="Name of normalization method used: LogNormalize or SCT">
+            <option value="LogNormalize" selected="true">LogNormalize</option>
+            <option value="SCT">SCT</option>
+        </param>
+        <param label="Integrate-features-pca" optional='true' name="integrate_features_pca" argument="--integrate-features-pca" type="text"   help="Vector of features to use when computing the PCA to determine the weights. Only set if you want a different set from those used in the anchor finding process"/>
+        <param label="Features to integrate" optional='true' name="features_to_integrate" argument="--features-to-integrate" type="text"   help="Vector of features to integrate. By default, will use the features used in anchor finding."/>
+        <param label="Integrate-dims" optional='true' value='1:30' name="integrate_dims" argument="--integrate-dims" type="text"   help="Number of dimensions to use in the anchor weighting procedure"/>
+        <param label="K weight" optional='true' value='100' name="k_weight" argument="--k-weight" type="integer"   help="Number of neighbors to consider when weighting anchors"/>
+        <param label="Weight reduction" optional='true' name="weight_reduction" argument="--weight-reduction" type="text"   help="Dimension reduction to use when calculating anchor weights. This can be one of: A string, specifying the name of a dimension reduction present in all objects to be integrated; A vector of strings, specifying the name of a dimension reduction to use for each object to be integrated; A vector of DimReduc objects, specifying the object to use for each object in the integration; NULL, in which case a new PCA will be calculated and used to calculate anchor weights. Note that, if specified, the requested dimension reduction will only be used for calculating anchor weights in the first merge between reference and query, as the merged object will subsequently contain more cells than was in query, and weights will need to be calculated for all cells in the object."/>
+        <param label="Sd weight" optional='true' value='1' name="sd_weight" argument="--sd-weight" type="integer"   help="Controls the bandwidth of the Gaussian kernel for weighting"/>
+        <param label="Sample tree" optional='true' name="sample_tree" argument="--sample-tree" type="text"   help="Specify the order of integration. If NULL, will compute automatically."/>
+        <param label="Preserve order" optional='true' value='false' name="preserve_order" argument="--preserve-order" type="boolean"  truevalue='--preserve-order' falsevalue='' checked='false' help="Do not reorder objects based on size for each pairwise integration."/>
+        <param label="Integrate-eps" optional='true' value='0' name="integrate_eps" argument="--integrate-eps" type="integer"   help="Error bound on the neighbor finding algorithm (from 'RANN')"/>
+        <param label="Verbose" optional='true' value='false' name="verbose" argument="--verbose" type="boolean"  truevalue='--verbose' falsevalue='' checked='false' help="Print progress bars and output"/>
+ 
+    </inputs>
+    <outputs>
+        <expand macro="output_files"/>
+    </outputs>
+    <tests>
+    </tests>
+    <help><![CDATA[
+    ]]></help>
+</tool>
