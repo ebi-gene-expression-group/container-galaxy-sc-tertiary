@@ -85,19 +85,15 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
    <token name="@INPUT_OBJECTS@">
     #if $input.format == "anndata"
         --input-object-files
-    #set $sep = ''
-    #for $i, $fh in enumerate($input.anndata_file):
-        ${sep}input.${i}.h5ad
-    #set $sep = ','
-    #end for
+    #set file_array = [ "input."+str($i)+".h5ad" for $i, $fh in enumerate($input.anndata_file)]
+    #set files = ",".join($file_array)
+        ${files}
          --input-format anndata
     #else if $input.format == "loom"
         --input-object-files
-    #set $sep = ''
-    #for $i, $fh in enumerate($input.loom_file):
-        ${sep}input.${i}.loom
-    #set $sep = ','
-    #end for
+    #set file_array = [ "input."+str($i)+".loom" for $i, $fh in enumerate($input.loom_file)]
+    #set files = ",".join($file_array)
+        ${files}
          --input-format loom
     #else if $input.format == "rds_seurat"
         --input-object-files
@@ -113,7 +109,7 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
         --input-format singlecellexperiment
     #else if $input.format == "h5seurat"
         --input-object-files
-    #set file_array = [ "input."+$i+".h5seurat" for $i, $fh in enumerate($input.h5seurat)]
+    #set file_array = [ "input."+str($i)+".h5seurat" for $i, $fh in enumerate($input.h5seurat)]
     #set files = ",".join($file_array)
         ${files}
         --input-format h5seurat
@@ -140,19 +136,15 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
    <token name="@REFERENCE_OBJECTS@">
     #if $reference.format == "anndata" and $reference.anndata_file:
         --reference-object-files
-    #set $sep = ''
-    #for $i, $fh in enumerate($reference.anndata_file):
-        ${sep}reference.${i}.h5ad
-    #set $sep = ','
-    #end for
+    #set file_array = [ "reference."+str($i)+".h5ad" for $i, $fh in enumerate($reference.anndata_file)]
+    #set files = ",".join($file_array)
+        ${files}
          --reference-format anndata
     #else if $reference.format == "loom" and $reference.loom_file:
         --reference-object-files
-    #set $sep = ''
-    #for $i, $fh in enumerate($reference.loom_file):
-        ${sep}reference.${i}.loom
-    #set $sep = ','
-    #end for
+    #set file_array = [ "reference."+str($i)+".loom" for $i, $fh in enumerate($reference.loom_file)]
+    #set files = ",".join($file_array)
+        ${files}
          --reference-format loom
     #else if $reference.format == "rds_seurat" and $reference.rds_seurat_file:
         --reference-object-files
@@ -166,11 +158,9 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
         --reference-format singlecellexperiment
     #else if $reference.format == "h5seurat" and $reference.h5seurat:
         --reference-object-files
-    #set $sep = ''
-    #for $i, $fh in enumerate($reference.h5seurat):
-        ${sep}reference.${i}.h5seurat
-    #set $sep = ','
-    #end for
+    #set file_array = [ "reference."+str($i)+".h5seurat" for $i, $fh in enumerate($reference.h5seurat)]
+    #set files = ",".join($file_array)
+        ${files}
         --reference-format h5seurat
     #end if
    </token>
