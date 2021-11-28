@@ -158,6 +158,7 @@ $adv.verbose
 
 
 <tests>
+  <!-- MANUAL TESTS -->
   <test>
       <param name="rds_seurat_file" ftype="rdata" value="E-MTAB-6077-3k_features_90_cells-clusters.rds"/>
       <param name="dims" value="1:10"/>
@@ -167,11 +168,16 @@ $adv.verbose
         </assert_contents>
       </output>
   </test>
+  <!-- END MANUAL TESTS -->
 </tests>
-<help><![CDATA[
+<help>
+  <!-- MANUAL HELP -->
+  <![CDATA[
   .. class:: infomark
 
   **What it does**
-  ]]></help>
+  ]]>
+  <!-- END MANUAL HELP -->
+</help>
 <expand macro="citations" />
 </tool>

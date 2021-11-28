@@ -68,16 +68,16 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
    <token name="@INPUT_OBJS_PREAMBLE@">
      #if $input.format == 'loom'
      #for $i, $fh in enumerate($input.loom_file):
-     ln -s '$fh' input.${i}.loom;
+        ln -s '$fh' input.${i}.loom;
      #end for
      #else if $input.format == 'h5seurat'
      #for $i, $fh in enumerate($input.h5seurat_file):
-     ln -s '$fh' input.${i}.h5seurat;
+        ln -s '$fh' input.${i}.h5seurat;
      #end for
      #else if $input.format == 'anndata'
      ## it complains when using links for AnnData...
      #for $i, $fh in enumerate($input.anndata_file):
-     cp '$fh' input.${i}.h5ad;
+        cp '$fh' input.${i}.h5ad;
      #end for
      #end if
    </token>
@@ -119,16 +119,16 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
    <token name="@REFERENCE_OBJS_PREAMBLE@">
      #if $reference.format == 'loom'
      #for $i, $fh in enumerate($reference.loom_file):
-     ln -s '$fh' reference.${i}.loom;
+        ln -s '$fh' reference.${i}.loom;
      #end for
      #else if $reference.format == 'h5seurat'
      #for $i, $fh in enumerate($reference.h5seurat_file):
-     ln -s '$fh' reference.${i}.h5seurat;
+        ln -s '$fh' reference.${i}.h5seurat;
      #end for
      #else if $reference.format == 'anndata'
      ## it complains when using links for AnnData...
      #for $i, $fh in enumerate($reference.anndata_file):
-     cp '$fh' reference.${i}.h5ad;
+        cp '$fh' reference.${i}.h5ad;
      #end for
      #end if
    </token>

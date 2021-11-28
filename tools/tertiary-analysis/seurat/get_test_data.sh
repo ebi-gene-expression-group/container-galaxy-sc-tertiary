@@ -18,6 +18,12 @@ H5AD_LINK='https://drive.google.com/uc?export=download&id=1YpE0H_t_dkh17P-WBhPij
 H5AD_SC182_LINK='https://drive.google.com/uc?export=download&id=16PUJ2KAkXT8F1UkfqU-9LWoOJUkUG1rp'
 SCE_LINK='https://drive.google.com/uc?export=download&id=1UKdyf3M01uAt7oBg93JfmRvNVB_jlUKe'
 
+# Seurat v4 exclusives
+IFNB_BASE_FILE='ifnb_'
+
+IFNB_CTRL_INT_LINK='https://drive.google.com/uc?export=download&id=15E_MLz-UclJYInNaA7YKLhLo5W-qlykL'
+IFNB_STIM_INT_LINK='https://drive.google.com/uc?export=download&id=14iKgCJGPk16dEmpJJF-Gp_lBDcOdo-54'
+
 function get_data {
   local link=$1
   local fname=$2
@@ -51,3 +57,6 @@ get_data $LOOM_LINK $BASENAME_FILE"_loom.h5"
 get_data $SCE_LINK $BASENAME_FILE"_sce.rds"
 get_data $H5AD_LINK $BASENAME_FILE".h5ad"
 get_data $H5AD_SC182_LINK $BASENAME_FILE"_sc182.h5ad"
+
+get_data $IFNB_CTRL_INT_LINK $IFNB_BASE_FILE"ctrl_norm_fvg.rds"
+get_data $IFNB_STIM_INT_LINK $IFNB_BASE_FILE"stim_norm_fvg.rds"

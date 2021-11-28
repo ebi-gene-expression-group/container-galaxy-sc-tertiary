@@ -13,18 +13,6 @@
     @INPUT_OBJECTS@
     @REFERENCE_OBJECTS@
 
-    #if $ident_for_adata
-    --ident_for_adata '$ident_for_adata'
-    #end if
-
-
-    #if $references_assay
-    --references-assay '$references_assay'
-    #end if
-
-    $update_seurat_object
-
-
     #if $assay_list
     --assay-list '$assay_list'
     #end if
@@ -149,15 +137,12 @@
 
     $verbose
 
-    
+
     ]]></command>
     <inputs>
         <expand macro="output_object_params" />
-        <expand macro="input_object_params" multiple="True"  /> 
-        <expand macro="input_object_params" varname="reference"  multiple="True"  optional="True"  /> 
-        <param label="Ident for AnnData object" optional='true' value='louvain' name="ident_for_adata" argument="--ident_for_adata" type="text"   help="If using an AnnData as input, which identity should be used."/>
-        <param label="References assay" optional='true' value='RNA' name="references_assay" argument="--references-assay" type="text"   help="The Seurat assay used for references"/>
-        <param label="Update Seurat object" optional='true' value='false' name="update_seurat_object" argument="--update_seurat_object" type="boolean"  truevalue='--update_seurat_object' falsevalue='' checked='false' help="Whether the Seurat objects given should be passed by the Seurat updater method."/>
+        <expand macro="input_object_params" multiple="True"  />
+        <expand macro="input_object_params" varname="reference"  multiple="True"  optional="True"  />
         <param label="Assay-list" optional='true' name="assay_list" argument="--assay-list" type="text"   help="A vector of assay names specifying which assay to use when constructing anchors. If NULL, the current default assay for each object is used."/>
         <param label="Anchor-features" optional='true' value='2000' name="anchor_features" argument="--anchor-features" type="integer"   help="A numeric value (this will call 'SelectIntegrationFeatures' to select the provided number of features to be used in anchor finding) or a vector of features to be used as input to the anchor finding process (comma separated)"/>
         <param label="Scale" optional='true' value='true' name="scale" argument="--do-not-scale" type="boolean"  truevalue='' falsevalue='--do-not-scale' checked='true' help="Whether or not to scale the features provided. Only call if you have previously scaled the features you want to use for each object in the object.list"/>
@@ -198,13 +183,52 @@
         <param label="Preserve order" optional='true' value='false' name="preserve_order" argument="--preserve-order" type="boolean"  truevalue='--preserve-order' falsevalue='' checked='false' help="Do not reorder objects based on size for each pairwise integration."/>
         <param label="Integrate-eps" optional='true' value='0' name="integrate_eps" argument="--integrate-eps" type="integer"   help="Error bound on the neighbor finding algorithm (from 'RANN')"/>
         <param label="Verbose" optional='true' value='false' name="verbose" argument="--verbose" type="boolean"  truevalue='--verbose' falsevalue='' checked='false' help="Print progress bars and output"/>
- 
+
     </inputs>
     <outputs>
         <expand macro="output_files"/>
     </outputs>
     <tests>
+      <!-- MANUAL TESTS -->
+      <test>
+        <param name="rds_seurat_file" ftype="rdata" value="ifnb_ctrl_norm_fvg.rds,ifnb_stim_norm_fvg.rds"/>
+        <output name="rds_seurat_file" ftype="rdata" >
+          <assert_contents>
+            <has_size value="103786543" delta="10000000"/>
+          </assert_contents>
+        </output>
+      </test>
+      <!-- END MANUAL TESTS -->
     </tests>
-    <help><![CDATA[
-    ]]></help>
+<help>
+<!-- MANUAL HELP -->
+<![CDATA[
+.. class:: infomark
+
+**What it does**
+
+This tool aims to facilitate the first steps of the Seurat 4.0.4 https://satijalab.org/seurat/articles/integration_introduction.html
+tutorial, up to the "Perform integration" section.
+
+It will run the FindIntegrationAnchors method either using the inputs only
+or the reference set if given, and then run the IntegrateData method. All
+options are documented in-line.
+
+-----
+
+**Inputs**
+
+* A set of Seurat objects (can be given in other formats as well) to integrate. These objects should be at least normalised and have the find variable genes/features method applied.
+* All other inputs are optional (see above).
+
+-----
+
+**Outputs**
+
+* A Seurat (or other format depending on selection) with the integrated object.
+
+]]>
+<!-- END MANUAL HELP -->
+</help>
+    <expand macro="citations" />
 </tool>
