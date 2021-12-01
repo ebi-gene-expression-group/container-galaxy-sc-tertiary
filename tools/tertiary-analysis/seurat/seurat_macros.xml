@@ -65,6 +65,81 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
     #end if
    </token>
 
+   <token name="@QUERY_OBJ_PREAMBLE@">
+     #if $query.format == 'loom'
+     ln -s '$query.loom_file' query.loom;
+     #else if $query.format == 'h5seurat'
+     ln -s '$query.h5seurat_file' query.h5seurat;
+     #else if $query.format == 'anndata'
+     ## it complains when using links for AnnData...
+     cp '$query.anndata_file' query.h5ad;
+     #end if
+   </token>
+
+   <token name="@QUERY_OBJECT@">
+    #if $query.format == "anndata"
+        --query-object-file query.h5ad --query-format anndata
+    #else if $query.format == "loom"
+        --query-object-file query.loom --query-format loom
+    #else if $query.format == "rds_seurat"
+        --query-object-file '$query.rds_seurat_file' --query-format seurat
+    #else if $query.format == "rds_sce"
+        --query-object-file '$query.rds_sce_file' --query-format singlecellexperiment
+    #else if $query.format == "h5seurat"
+        --query-object-file query.h5seurat --query-format h5seurat
+    #end if
+  </token>
+
+  <token name="@ANCHORS_OBJ_PREAMBLE@">
+    #if $anchors.format == 'loom'
+    ln -s '$anchors.loom_file' anchors.loom;
+    #else if $anchors.format == 'h5seurat'
+    ln -s '$anchors.h5seurat_file' anchors.h5seurat;
+    #else if $anchors.format == 'anndata'
+    ## it complains when using links for AnnData...
+    cp '$anchors.anndata_file' anchors.h5ad;
+    #end if
+  </token>
+
+  <token name="@ANCHORS_OBJECT@">
+   #if $anchors.format == "anndata"
+       --anchors-object-file anchors.h5ad --anchors-format anndata
+   #else if $anchors.format == "loom"
+       --anchors-object-file anchors.loom --anchors-format loom
+   #else if $anchors.format == "rds_seurat"
+       --anchors-object-file '$anchors.rds_seurat_file' --anchors-format seurat
+   #else if $anchors.format == "rds_sce"
+       --anchors-object-file '$anchors.rds_sce_file' --anchors-format singlecellexperiment
+   #else if $anchors.format == "h5seurat"
+       --anchors-object-file anchors.h5seurat --anchors-format h5seurat
+   #end if
+ </token>
+
+ <token name="@REFERENCE_OBJ_PREAMBLE@">
+   #if $reference.format == 'loom'
+   ln -s '$reference.loom_file' reference.loom;
+   #else if $reference.format == 'h5seurat'
+   ln -s '$reference.h5seurat_file' reference.h5seurat;
+   #else if $reference.format == 'anndata'
+   ## it complains when using links for AnnData...
+   cp '$reference.anndata_file' reference.h5ad;
+   #end if
+ </token>
+
+ <token name="@REFERENCE_OBJECT@">
+  #if $reference.format == "anndata"
+      --reference-object-file reference.h5ad --reference-format anndata
+  #else if $reference.format == "loom"
+      --reference-object-file reference.loom --reference-format loom
+  #else if $reference.format == "rds_seurat"
+      --reference-object-file '$reference.rds_seurat_file' --reference-format seurat
+  #else if $reference.format == "rds_sce"
+      --reference-object-file '$reference.rds_sce_file' --reference-format singlecellexperiment
+  #else if $reference.format == "h5seurat"
+      --reference-object-file reference.h5seurat --reference-format h5seurat
+  #end if
+ </token>
+
    <token name="@INPUT_OBJS_PREAMBLE@">
      #if $input.format == 'loom'
      #for $i, $fh in enumerate($input.loom_file):

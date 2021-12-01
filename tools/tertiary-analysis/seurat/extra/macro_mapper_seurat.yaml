@@ -39,3 +39,33 @@
         varname: reference
         multiple: true
         optional: true
+- option_group:
+    - reference-object-file
+    - reference-format
+  pre_command_macros:
+    - REFERENCE_OBJ_PREAMBLE
+  post_command_macros:
+    - REFERENCE_OBJECT
+  input_declaration_macros:
+    - input_object_params:
+        varname: reference
+- option_group:
+    - anchors-object-file
+    - anchors-format
+  pre_command_macros:
+    - ANCHORS_OBJ_PREAMBLE
+  post_command_macros:
+    - ANCHORS_OBJECT
+  input_declaration_macros:
+    - input_object_params:
+        varname: anchors
+- option_group:
+    - query-object-file
+    - query-format
+  pre_command_macros:
+    - QUERY_OBJ_PREAMBLE
+  post_command_macros:
+    - QUERY_OBJECT
+  input_declaration_macros:
+    - input_object_params:
+        varname: query

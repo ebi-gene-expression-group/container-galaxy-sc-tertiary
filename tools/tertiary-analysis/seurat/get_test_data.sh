@@ -24,6 +24,12 @@ IFNB_BASE_FILE='ifnb_'
 IFNB_CTRL_INT_LINK='https://drive.google.com/uc?export=download&id=15E_MLz-UclJYInNaA7YKLhLo5W-qlykL'
 IFNB_STIM_INT_LINK='https://drive.google.com/uc?export=download&id=14iKgCJGPk16dEmpJJF-Gp_lBDcOdo-54'
 
+## Classify and UMAP mapping
+CLASSIFY_QUERY_LINK='https://drive.google.com/uc?export=download&id=1RFsHa_1EFD_n-19JH_cHGqxwO66QdmXN'
+CLASSIFY_RESULTS_ANCHORS_OBJECT_LINK='https://drive.google.com/uc?export=download&id=1Xtv4K_CxIU1cJ8RjJ7NTvzLQkLvc8a3i'
+UMAP_RESULT_OBJECT_LINK='https://drive.google.com/u/0/uc?export=download&confirm=zt9i&id=1Cod5OplwlZEJjeylgllbGZHULcFoopo_'
+
+
 function get_data {
   local link=$1
   local fname=$2
@@ -60,3 +66,7 @@ get_data $H5AD_SC182_LINK $BASENAME_FILE"_sc182.h5ad"
 
 get_data $IFNB_CTRL_INT_LINK $IFNB_BASE_FILE"ctrl_norm_fvg.rds"
 get_data $IFNB_STIM_INT_LINK $IFNB_BASE_FILE"stim_norm_fvg.rds"
+
+get_data $CLASSIFY_QUERY_LINK "Classify_query.rds"
+get_data $CLASSIFY_RESULTS_ANCHORS_OBJECT_LINK "Classify_anchors.rds"
+get_data $UMAP_RESULT_OBJECT_LINK "Umap_result_integrated.rds"
