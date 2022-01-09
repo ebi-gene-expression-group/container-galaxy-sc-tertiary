@@ -18,10 +18,11 @@
     #end if
 
 
-    #if $anchor_features
+    #if $anchor_features_file
+    --anchor-features '$anchor_features_file'
+    #elif $anchor_features
     --anchor-features '$anchor_features'
     #end if
-
     $scale
 
 
@@ -130,14 +131,15 @@
     --integrate-eps '$integrate_eps'
     #end if
 
-    
+
     ]]></command>
     <inputs>
         <expand macro="output_object_params" />
-        <expand macro="input_object_params" multiple="True"  /> 
-        <expand macro="input_object_params" varname="reference"  multiple="True"  optional="True"  /> 
+        <expand macro="input_object_params" multiple="True"  />
+        <expand macro="input_object_params" varname="reference"  multiple="True"  optional="True"  />
         <param label="Assay-list" optional='true' name="assay_list" argument="--assay-list" type="text"   help="A vector of assay names specifying which assay to use when constructing anchors. If NULL, the current default assay for each object is used."/>
-        <param label="Anchor-features" optional='true' value='2000' name="anchor_features" argument="--anchor-features" type="integer"   help="A numeric value (this will call 'SelectIntegrationFeatures' to select the provided number of features to be used in anchor finding) or a vector of features to be used as input to the anchor finding process (comma separated)"/>
+        <param label="Anchor-features_file" optional='true' value='2000' name="anchor_features_file" argument="--anchor-features_file" type="data" format='?'  help="File option for anchor-features. This overrides the string option if set."/>
+                    <param label="Anchor-features" optional='true' value='2000' name="anchor_features" argument="--anchor-features" type="text"   help="A numeric value (this will call 'SelectIntegrationFeatures' to select the provided number of features to be used in anchor finding) or a file with a vector of features to be used as input to the anchor finding process (comma separated)"/>
         <param label="Scale" optional='true' value='true' name="scale" argument="--do-not-scale" type="boolean"  truevalue='' falsevalue='--do-not-scale' checked='true' help="Whether or not to scale the features provided. Only call if you have previously scaled the features you want to use for each object in the object.list"/>
         <param label="Normalization method" name="normalization_method" argument="--normalization-method" type="select"  help="Name of normalization method used: LogNormalize or SCT">
             <option value="LogNormalize" selected="true">LogNormalize</option>
@@ -171,7 +173,7 @@
         <param label="Sample tree" optional='true' name="sample_tree" argument="--sample-tree" type="text"   help="Specify the order of integration. If NULL, will compute automatically."/>
         <param label="Preserve order" optional='true' value='false' name="preserve_order" argument="--preserve-order" type="boolean"  truevalue='--preserve-order' falsevalue='' checked='false' help="Do not reorder objects based on size for each pairwise integration."/>
         <param label="Integrate-eps" optional='true' value='0' name="integrate_eps" argument="--integrate-eps" type="integer"   help="Error bound on the neighbor finding algorithm (from 'RANN')"/>
- 
+
     </inputs>
     <outputs>
         <expand macro="output_files"/>
@@ -186,8 +188,8 @@
           </assert_contents>
         </output>
       </test>
-      <!-- END MANUAL TESTS -->             
-    </tests>            
+      <!-- END MANUAL TESTS -->
+    </tests>
 <help>
 <!-- MANUAL HELP -->
 <![CDATA[
@@ -216,7 +218,7 @@ options are documented in-line.
 * A Seurat (or other format depending on selection) with the integrated object.
 
 ]]>
-<!-- END MANUAL HELP -->             
-</help>            
+<!-- END MANUAL HELP -->
+</help>
     <expand macro="citations" />
 </tool>
