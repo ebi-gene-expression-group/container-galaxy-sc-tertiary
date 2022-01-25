@@ -1,0 +1,530 @@
+<tool id="seurat_plot" name="Plot" profile="18.01" version="@SEURAT_VERSION@+galaxy0">
+    <description>with Seurat</description>
+    <macros>
+        <import>seurat_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <expand macro="version" />
+    <command detect_errors="exit_code"><![CDATA[
+    @INPUT_OBJ_PREAMBLE@
+    seurat-plot.R
+    @INPUT_OBJECT@
+    --plot-type '$plot_type.plot_type_selector'
+
+    #if str($plot_type.plot_type_selector) == 'DimPlot':
+    
+    #if $plot_type.dims
+    --dims '$plot_type.dims'
+    #end if
+
+    
+    #if $plot_type.cells
+    --cells '$plot_type.cells'
+    #end if
+
+    
+    #if $plot_type.cols
+    --cols '$plot_type.cols'
+    #end if
+
+    
+    #if $plot_type.pt_size
+    --pt-size '$plot_type.pt_size'
+    #end if
+
+    
+    #if $plot_type.reduction
+    --reduction '$plot_type.reduction'
+    #end if
+
+    
+    #if $plot_type.group_by
+    --group-by '$plot_type.group_by'
+    #end if
+
+    
+    #if $plot_type.split_by
+    --split-by '$plot_type.split_by'
+    #end if
+
+    
+    #if $plot_type.shape_by
+    --shape-by '$plot_type.shape_by'
+    #end if
+
+    
+    #if $plot_type.order
+    --order '$plot_type.order'
+    #end if
+
+        $plot_type.shuffle
+
+    
+    --seed '$plot_type.seed'
+
+        $plot_type.label
+
+    
+    --label-size '$plot_type.label_size'
+
+    
+    --label-color '$plot_type.label_color'
+
+        $plot_type.label_box
+
+        $plot_type.repel
+
+    
+    #if $plot_type.cells_highlight
+    --cells-highlight '$plot_type.cells_highlight'
+    #end if
+
+    
+    #if $plot_type.cols_highlight
+    --cols-highlight '$plot_type.cols_highlight'
+    #end if
+
+    
+    #if $plot_type.sizes_highlight
+    --sizes-highlight '$plot_type.sizes_highlight'
+    #end if
+
+    
+    #if $plot_type.na_value
+    --na-value '$plot_type.na_value'
+    #end if
+
+    
+    #if $plot_type.ncol
+    --ncol '$plot_type.ncol'
+    #end if
+
+    #if str($plot_type.plot_type_selector) == 'RidgePlot':
+    
+    --features '$plot_type.features'
+
+    
+    #if $plot_type.cols_ridgplot
+    --cols-ridgplot '$plot_type.cols_ridgplot'
+    #end if
+
+    
+    #if $plot_type.idents
+    --idents '$plot_type.idents'
+    #end if
+
+        $plot_type.sort
+
+    
+    #if $plot_type.assay
+    --assay '$plot_type.assay'
+    #end if
+
+    
+    #if $plot_type.group_by
+    --group-by '$plot_type.group_by'
+    #end if
+
+        $plot_type.same_y_lims
+
+        $plot_type.log
+
+    
+    #if $plot_type.ncol
+    --ncol '$plot_type.ncol'
+    #end if
+
+    
+    #if $plot_type.slot
+    --slot '$plot_type.slot'
+    #end if
+
+        $plot_type.stack
+
+    
+    #if $plot_type.fill_by
+    --fill-by '$plot_type.fill_by'
+    #end if
+
+    #if str($plot_type.plot_type_selector) == 'FeaturePlot':
+    
+    --features '$plot_type.features'
+
+    
+    #if $plot_type.dims
+    --dims '$plot_type.dims'
+    #end if
+
+    
+    --cells '$plot_type.cells'
+
+    
+    #if $plot_type.cols_feature_plot
+    --cols-feature-plot '$plot_type.cols_feature_plot'
+    #end if
+
+    
+    #if $plot_type.pt_size
+    --pt-size '$plot_type.pt_size'
+    #end if
+
+        $plot_type.order
+
+    
+    #if $plot_type.min_cutoff
+    --min-cutoff '$plot_type.min_cutoff'
+    #end if
+
+    
+    #if $plot_type.max_cutoff
+    --max-cutoff '$plot_type.max_cutoff'
+    #end if
+
+    
+    #if $plot_type.reduction
+    --reduction '$plot_type.reduction'
+    #end if
+
+    
+    #if $plot_type.split_by
+    --split-by '$plot_type.split_by'
+    #end if
+
+    
+    --keep-scale '$plot_type.keep_scale'
+
+    
+    #if $plot_type.shape_by
+    --shape-by '$plot_type.shape_by'
+    #end if
+
+    
+    #if $plot_type.slot
+    --slot '$plot_type.slot'
+    #end if
+
+        $plot_type.blend
+
+    
+    #if $plot_type.blend_threshold
+    --blend-threshold '$plot_type.blend_threshold'
+    #end if
+
+        $plot_type.label
+
+    
+    #if $plot_type.label_size
+    --label-size '$plot_type.label_size'
+    #end if
+
+        $plot_type.repel
+
+    
+    #if $plot_type.ncol
+    --ncol '$plot_type.ncol'
+    #end if
+
+        $plot_type.coord_fixed
+
+        $plot_type.by_col
+
+    #if str($plot_type.plot_type_selector) == 'VlnPlot':
+    
+    --features '$plot_type.features'
+
+    
+    #if $plot_type.cols
+    --cols '$plot_type.cols'
+    #end if
+
+    
+    #if $plot_type.pt_size
+    --pt-size '$plot_type.pt_size'
+    #end if
+
+    
+    #if $plot_type.idents
+    --idents '$plot_type.idents'
+    #end if
+
+        $plot_type.sort
+
+    
+    #if $plot_type.assay
+    --assay '$plot_type.assay'
+    #end if
+
+    
+    #if $plot_type.group_by
+    --group-by '$plot_type.group_by'
+    #end if
+
+    
+    #if $plot_type.split_by
+    --split-by '$plot_type.split_by'
+    #end if
+
+    
+    #if $plot_type.adjust
+    --adjust '$plot_type.adjust'
+    #end if
+
+        $plot_type.same_y_lims
+
+        $plot_type.log
+
+    
+    #if $plot_type.ncol
+    --ncol '$plot_type.ncol'
+    #end if
+
+    
+    #if $plot_type.slot
+    --slot '$plot_type.slot'
+    #end if
+
+        $plot_type.split_plot
+
+        $plot_type.stack
+
+    
+    #if $plot_type.fill_by
+    --fill-by '$plot_type.fill_by'
+    #end if
+
+        $plot_type.flip
+
+    #if str($plot_type.plot_type_selector) == 'DotPlot':
+    
+    #if $plot_type.assay
+    --assay '$plot_type.assay'
+    #end if
+
+    
+    --features '$plot_type.features'
+
+    
+    #if $plot_type.cols_dot_plot
+    --cols-dot-plot '$plot_type.cols_dot_plot'
+    #end if
+
+    
+    #if $plot_type.col_min
+    --col-min '$plot_type.col_min'
+    #end if
+
+    
+    #if $plot_type.col_max
+    --col-max '$plot_type.col_max'
+    #end if
+
+    
+    #if $plot_type.dot_min
+    --dot-min '$plot_type.dot_min'
+    #end if
+
+    
+    #if $plot_type.dot_scale
+    --dot-scale '$plot_type.dot_scale'
+    #end if
+
+    
+    #if $plot_type.idents
+    --idents '$plot_type.idents'
+    #end if
+
+    
+    #if $plot_type.group_by
+    --group-by '$plot_type.group_by'
+    #end if
+
+    
+    #if $plot_type.split_by
+    --split-by '$plot_type.split_by'
+    #end if
+
+        $plot_type.cluster_idents
+
+        $plot_type.scale
+
+    
+    #if $plot_type.scale_by
+    --scale-by '$plot_type.scale_by'
+    #end if
+
+    #endif
+    None
+
+    #if $output_rds_file
+    --output-rds-file '$output_rds_file'
+    #end if
+
+
+    --plot-out '$plot_out'
+
+
+    --plot-format '$plot_format'
+
+
+    --units '$units'
+
+
+    --dpi '$dpi'
+
+    $limitsize
+
+
+    --bg '$bg'
+
+    
+    ]]></command>
+    <inputs>
+        <expand macro="input_object_params" />
+        <conditional name="plot_type">
+        <param label="Plot_type_selector" name="plot_type_selector" argument="--plot_type_selector" type="select"  help="Either FeaturePlot, RidgePlot, DimPlot, VlnPlot or DotPlot.">
+            <option value="DimPlot">DimPlot</option>
+            <option value="RidgePlot">RidgePlot</option>
+            <option value="FeaturePlot" selected="true">FeaturePlot</option>
+            <option value="VlnPlot">VlnPlot</option>
+            <option value="DotPlot">DotPlot</option>
+        </param>
+        <when value="DimPlot">
+            <param label="Dims" optional='true' value='1,2' name="dims" argument="--dims" type="text"   help="Dimensions to plot, must be a two-length numeric vector specifying x- and y-dimensions"/>
+            <param label="Cells" optional='true' name="cells" argument="--cells" type="text"   help="Vector of cells to plot (default is all cells)"/>
+            <param label="Cols" optional='true' name="cols" argument="--cols" type="text"   help="Vector of colors, each color corresponds to an identity class. This may also be a single character or numeric value corresponding to a palette as specified by brewer.pal.info. By default, ggplot2 assigns colors. We also include a number of palettes from the pals package. See 'DiscretePalette' for details."/>
+            <param label="Pt size" optional='true' name="pt_size" argument="--pt-size" type="integer"   help="Adjust point size for plotting"/>
+            <param label="Reduction" optional='true' name="reduction" argument="--reduction" type="text"   help="Which dimensionality reduction to use. If not specified, first searches for umap, then tsne, then pca"/>
+            <param label="Group by" optional='true' name="group_by" argument="--group-by" type="text"   help="Name of one or more metadata columns to group (color) cells by (for example, orig.ident); pass 'ident' to group by identity class"/>
+            <param label="Split by" optional='true' name="split_by" argument="--split-by" type="text"   help="Name of a metadata column to split plot by; see 'FetchData' for more details"/>
+            <param label="Shape by" optional='true' name="shape_by" argument="--shape-by" type="text"   help="If NULL, all points are circles (default). You can specify any cell attribute (that can be pulled with FetchData) allowing for both different colors and different shapes on cells.  Only applicable if raster is FALSE."/>
+            <param label="Order" optional='true' name="order" argument="--order" type="text"   help="Specify the order of plotting for the idents. This can be useful for crowded plots if points of interest are being buried. Provide either a full list of valid idents or a subset to be plotted last (on top)"/>
+            <param label="Shuffle" optional='true' value='false' name="shuffle" argument="--shuffle" type="boolean"  truevalue='--shuffle' falsevalue='' checked='false' help="Whether to randomly shuffle the order of points. This can be useful for crowded plots if points of interest are being buried. (default is FALSE)"/>
+            <param label="Seed" optional='true' value='1' name="seed" argument="--seed" type="integer"   help="Sets the seed if randomly shuffling the order of points."/>
+            <param label="Label" optional='true' value='false' name="label" argument="--label" type="boolean"  truevalue='--label' falsevalue='' checked='false' help="Whether to label the clusters"/>
+            <param label="Label size" optional='true' value='4' name="label_size" argument="--label-size" type="integer"   help="Sets size of labels"/>
+            <param label="Label color" optional='true' value='black' name="label_color" argument="--label-color" type="text"   help="Sets the color of the label text"/>
+            <param label="Label box" optional='true' value='false' name="label_box" argument="--label-box" type="boolean"  truevalue='--label-box' falsevalue='' checked='false' help="Whether to put a box around the label text (geom_text vs geom_label)"/>
+            <param label="Repel" optional='true' value='false' name="repel" argument="--repel" type="boolean"  truevalue='--repel' falsevalue='' checked='false' help="Repel labels"/>
+            <param label="Cells highlight" optional='true' name="cells_highlight" argument="--cells-highlight" type="text"   help="A list of character or numeric vectors of cells to highlight. If only one group of cells desired, can simply pass a vector instead of a list. If set, colors selected cells to the color(s) in  'cols.highlight'  and other cells black (white if dark.theme = TRUE); will also resize to the size(s) passed to 'sizes.highlight'."/>
+            <param label="Cols highlight" optional='true' value='#DE2D26' name="cols_highlight" argument="--cols-highlight" type="text"   help="A vector of colors to highlight the cells as; will repeat to the length groups in cells.highlight. Comma separated."/>
+            <param label="Sizes highlight" optional='true' value='1' name="sizes_highlight" argument="--sizes-highlight" type="integer"   help="Size of highlighted cells; will repeat to the length groups in cells.highlight"/>
+            <param label="Na value" optional='true' value='grey50' name="na_value" argument="--na-value" type="text"   help="Color value for NA points when using custom scale"/>
+            <param label="Ncol" optional='true' name="ncol" argument="--ncol" type="integer"   help="Number of columns for display when combining plots"/>
+        </when>
+        <when value="RidgePlot">
+            <param label="Features" optional='true' value='' name="features" argument="--features" type="text"   help="Features to plot (gene expression, metrics, PC scores, anything that can be retreived by FetchData)"/>
+            <param label="Cols-ridgplot" optional='true' name="cols_ridgplot" argument="--cols-ridgplot" type="text"   help="Colors to use for plotting, comma separated"/>
+            <param label="Idents" optional='true' name="idents" argument="--idents" type="text"   help="Which classes to include in the plot (default is all)"/>
+            <param label="Sort" optional='true' value='false' name="sort" argument="--sort" type="boolean"  truevalue='--sort' falsevalue='' checked='false' help="Sort identity classes (on the x-axis) by the average expression of the attribute being potted, can also pass 'increasing' or 'decreasing' to change sort direction"/>
+            <param label="Assay" optional='true' name="assay" argument="--assay" type="text"   help="Name of assay to use, defaults to the active assay"/>
+            <param label="Group by" optional='true' name="group_by" argument="--group-by" type="text"   help="Group (color) cells in different ways (for example, orig.ident)"/>
+            <param label="Same y lims" optional='true' value='false' name="same_y_lims" argument="--same-y-lims" type="boolean"  truevalue='--same-y-lims' falsevalue='' checked='false' help="Set all the y-axis limits to the same values"/>
+            <param label="Log" optional='true' value='false' name="log" argument="--log" type="boolean"  truevalue='--log' falsevalue='' checked='false' help="plot the feature axis on log scale"/>
+            <param label="Ncol" optional='true' name="ncol" argument="--ncol" type="integer"   help="Number of columns if multiple plots are displayed"/>
+            <param label="Slot" optional='true' value='data' name="slot" argument="--slot" type="text"   help="Use non-normalized counts data for plotting"/>
+            <param label="Stack" optional='true' value='false' name="stack" argument="--stack" type="boolean"  truevalue='--stack' falsevalue='' checked='false' help="Horizontally stack plots for each feature"/>
+            <param label="Fill by" optional='true' value='feature' name="fill_by" argument="--fill-by" type="text"   help="Color violins/ridges based on either 'feature' or 'ident'"/>
+        </when>
+        <when value="FeaturePlot">
+            <param label="Features"  name="features" argument="--features" type="text"   help="Vector of features to plot. Features can come from: an assay feature (e.g. a gene name - MS4A1), a column name from meta.data (e.g. mitochondrial percentage - percent.mito), a column name from a DimReduc object corresponding to the cell embedding values (e.g. the PC 1 scores - PC_1)."/>
+            <param label="Dims" optional='true' value='1,2' name="dims" argument="--dims" type="text"   help="Dimensions to plot, must be a two-length numeric vector specifying x- and y-dimensions"/>
+            <param label="Cells"  name="cells" argument="--cells" type="text"   help="Vector of cells to plot (default is all cells)"/>
+            <param label="Cols-feature-plot" optional='true' value='lightgrey,blue' name="cols_feature_plot" argument="--cols-feature-plot" type="text"   help="The two colors to form the gradient over. Provide as string vector with the first color corresponding to low values, the second to high. Also accepts a Brewer color scale or vector of colors."/>
+            <param label="Pt size" optional='true' name="pt_size" argument="--pt-size" type="integer"   help="Adjust point size for plotting"/>
+            <param label="Order" optional='true' value='false' name="order" argument="--order" type="boolean"  truevalue='--order' falsevalue='' checked='false' help="Boolean determining whether to plot cells in order of expression. Can be useful if cells expressing given feature are getting buried."/>
+            <param label="Min cutoff" optional='true' value='NA' name="min_cutoff" argument="--min-cutoff" type="text"   help="Vector of minimum cutoff values for each feature, may specify quantile in the form of 'q##' where '##' is the quantile (eg, 'q1', 'q10')"/>
+            <param label="Max cutoff" optional='true' value='NA' name="max_cutoff" argument="--max-cutoff" type="text"   help="Vector of maximum cutoff values for each feature, may specify quantile in the form of 'q##' where '##' is the quantile (eg, 'q1', 'q10')"/>
+            <param label="Reduction" optional='true' name="reduction" argument="--reduction" type="text"   help="Which dimensionality reduction to use. If not specified, first searches for umap, then tsne, then pca"/>
+            <param label="Split by" optional='true' name="split_by" argument="--split-by" type="text"   help="A factor in object metadata to split the feature plot by, pass ident to split by cell identity; similar to the old FeatureHeatmap."/>
+            <param label="Keep scale" name="keep_scale" argument="--keep-scale" type="select"  help="How to handle the color scale across multiple plots.">
+            <option value="feature" selected="true">By row/feature scaling: The plots for each individual feature are scaled to the maximum expression of the feature across the conditions provided to 'split.by'.</option>
+            <option value="all">Universal scaling: The plots for all features and conditions are scaled to the maximum expression value for the feature with the highest overall expression.</option>
+            <option value="None">No scaling: Each individual plot is scaled to the maximum expression value of the feature in the condition provided to 'split.by'. Be aware setting NULL will result in color scales that are not comparable between plots.</option>
+        </param>
+            <param label="Shape by" optional='true' name="shape_by" argument="--shape-by" type="text"   help="If NULL, all points are circles (default). You can specify any cell attribute (that can be pulled with FetchData) allowing for both different colors and different shapes on cells.  Only applicable if 'raster' is FALSE) ."/>
+            <param label="Slot" optional='true' value='data' name="slot" argument="--slot" type="text"   help="Which slot to pull expression data from?"/>
+            <param label="Blend" optional='true' value='false' name="blend" argument="--blend" type="boolean"  truevalue='--blend' falsevalue='' checked='false' help="Scale and blend expression values to visualize coexpression of two features"/>
+            <param label="Blend threshold" optional='true' value='0' name="blend_threshold" argument="--blend-threshold" type="integer"   help="The color cutoff from weak signal to strong signal; ranges from 0 to 1."/>
+            <param label="Label" optional='true' value='false' name="label" argument="--label" type="boolean"  truevalue='--label' falsevalue='' checked='false' help="Whether to label the clusters"/>
+            <param label="Label size" optional='true' value='4' name="label_size" argument="--label-size" type="integer"   help="Sets size of labels"/>
+            <param label="Repel" optional='true' value='false' name="repel" argument="--repel" type="boolean"  truevalue='--repel' falsevalue='' checked='false' help="Repel labels"/>
+            <param label="Ncol" optional='true' name="ncol" argument="--ncol" type="integer"   help="Number of columns to combine multiple feature plots to, ignored if split.by is not NULL"/>
+            <param label="Coord fixed" optional='true' value='false' name="coord_fixed" argument="--coord-fixed" type="boolean"  truevalue='--coord-fixed' falsevalue='' checked='false' help="Plot cartesian coordinates with fixed aspect ratio"/>
+            <param label="By col" optional='true' value='true' name="by_col" argument="--do-not-by-col" type="boolean"  truevalue='' falsevalue='--do-not-by-col' checked='true' help="If splitting by a factor, plot the splits per column with the features as rows; ignored if blend = TRUE."/>
+        </when>
+        <when value="VlnPlot">
+            <param label="Features" optional='true' value='' name="features" argument="--features" type="text"   help="Features to plot (gene expression, metrics, PC scores, anything that can be retreived by FetchData)"/>
+            <param label="Cols" optional='true' name="cols" argument="--cols" type="text"   help="Colors to use for plotting, comma separated."/>
+            <param label="Pt size" optional='true' name="pt_size" argument="--pt-size" type="integer"   help="Point size for geom_violin"/>
+            <param label="Idents" optional='true' name="idents" argument="--idents" type="text"   help="Which classes to include in the plot (default is all)"/>
+            <param label="Sort" optional='true' value='false' name="sort" argument="--sort" type="boolean"  truevalue='--sort' falsevalue='' checked='false' help="Sort identity classes (on the x-axis) by the average expression of the attribute being potted, can also pass 'increasing' or 'decreasing' to change sort direction"/>
+            <param label="Assay" optional='true' name="assay" argument="--assay" type="text"   help="Name of assay to use, defaults to the active assay"/>
+            <param label="Group by" optional='true' name="group_by" argument="--group-by" type="text"   help="Group (color) cells in different ways (for example, orig.ident)"/>
+            <param label="Split by" optional='true' name="split_by" argument="--split-by" type="text"   help="A variable to split the violin plots by,"/>
+            <param label="Adjust" optional='true' value='1' name="adjust" argument="--adjust" type="integer"   help="Adjust parameter for geom_violin"/>
+            <param label="Same y lims" optional='true' value='false' name="same_y_lims" argument="--same-y-lims" type="boolean"  truevalue='--same-y-lims' falsevalue='' checked='false' help="Set all the y-axis limits to the same values"/>
+            <param label="Log" optional='true' value='false' name="log" argument="--log" type="boolean"  truevalue='--log' falsevalue='' checked='false' help="plot the feature axis on log scale"/>
+            <param label="Ncol" optional='true' name="ncol" argument="--ncol" type="integer"   help="Number of columns if multiple plots are displayed"/>
+            <param label="Slot" optional='true' value='data' name="slot" argument="--slot" type="text"   help="Use non-normalized counts data for plotting"/>
+            <param label="Split plot" optional='true' value='false' name="split_plot" argument="--split-plot" type="boolean"  truevalue='--split-plot' falsevalue='' checked='false' help="plot each group of the split violin plots by multiple or single violin shapes."/>
+            <param label="Stack" optional='true' value='false' name="stack" argument="--stack" type="boolean"  truevalue='--stack' falsevalue='' checked='false' help="Horizontally stack plots for each feature"/>
+            <param label="Fill by" optional='true' value='feature' name="fill_by" argument="--fill-by" type="text"   help="Color violins/ridges based on either 'feature' or 'ident'"/>
+            <param label="Flip" optional='true' value='false' name="flip" argument="--flip" type="boolean"  truevalue='--flip' falsevalue='' checked='false' help="flip plot orientation (identities on x-axis)"/>
+        </when>
+        <when value="DotPlot">
+            <param label="Assay" optional='true' name="assay" argument="--assay" type="text"   help="Name of assay to use, defaults to the active assay"/>
+            <param label="Features" optional='true' value='' name="features" argument="--features" type="text"   help="Input vector of features, or named list of feature vectors if feature-grouped panels are desired (replicates the functionality of the old SplitDotPlotGG)"/>
+            <param label="Cols-dot-plot" optional='true' value='yellow,lightgrey,blue' name="cols_dot_plot" argument="--cols-dot-plot" type="text"   help="Colors to plot: the name of a palette from RColorBrewer::brewer.pal.info , a pair of colors defining a gradient, or 3+ colors defining multiple gradients (if split.by is set)"/>
+            <param label="Col min" optional='true' value='-2' name="col_min" argument="--col-min" type="integer"   help="Minimum scaled average expression threshold (everything smaller will be set to this)"/>
+            <param label="Col max" optional='true' value='2' name="col_max" argument="--col-max" type="integer"   help="Maximum scaled average expression threshold (everything larger will be set to this)"/>
+            <param label="Dot min" optional='true' value='0' name="dot_min" argument="--dot-min" type="integer"   help="The fraction of cells at which to draw the smallest dot (default is 0). All cell groups with less than this expressing the given gene will have no dot drawn."/>
+            <param label="Dot scale" optional='true' value='6' name="dot_scale" argument="--dot-scale" type="integer"   help="Scale the size of the points, similar to cex"/>
+            <param label="Idents" optional='true' name="idents" argument="--idents" type="text"   help="Identity classes to include in plot (default is all)"/>
+            <param label="Group by" optional='true' name="group_by" argument="--group-by" type="text"   help="Factor to group the cells by"/>
+            <param label="Split by" optional='true' name="split_by" argument="--split-by" type="text"   help="Factor to split the groups by (replicates the functionality of the old SplitDotPlotGG); see  'FetchData' for more details."/>
+            <param label="Cluster idents" optional='true' value='false' name="cluster_idents" argument="--cluster-idents" type="boolean"  truevalue='--cluster-idents' falsevalue='' checked='false' help="Whether to order identities by hierarchical clusters based on given features, default is FALSE"/>
+            <param label="Scale" optional='true' value='true' name="scale" argument="--do-not-scale" type="boolean"  truevalue='' falsevalue='--do-not-scale' checked='true' help="Determine whether the data is scaled, will be done by default"/>
+            <param label="Scale by" name="scale_by" argument="--scale-by" type="select"  help="Scale the size of the points by 'size' or by 'radius'">
+            <option value="size">Size</option>
+            <option value="radius" selected="true">Radius</option>
+        </param>
+        </when>
+    </conditional>
+        <param label="Plot-format" name="plot_format" argument="--plot-format" type="select"  help="Format to use, either PNG, EPS, PostScript, TeX, PDF, JPEG, TIFF or SVG">
+            <option value="png" selected="true">PNG</option>
+            <option value="eps">EPS</option>
+            <option value="ps">PostScript</option>
+            <option value="tex">TeX (pictex)</option>
+            <option value="pdf">PDF</option>
+            <option value="jpeg">JPEG</option>
+            <option value="tiff">TIFF</option>
+            <option value="svg">SVG</option>
+        </param>
+        <param label="Units" name="units" argument="--units" type="select"  help="Units for the plot dimensions.">
+            <option value="cm" selected="true">Centimeters</option>
+            <option value="in">Inches</option>
+            <option value="mm">Milimeters</option>
+            <option value="px">Pixels</option>
+        </param>
+        <param label="Dpi" name="dpi" argument="--dpi" type="select"  help="Plot resolution. Also accepts a string input: retina (320), print (300), or screen (72). Applies only to raster output types.">
+            <option value="320">Retina</option>
+            <option value="300" selected="true">Print</option>
+            <option value="72">screen</option>
+        </param>
+        <param label="Limitsize" optional='true' value='true' name="limitsize" argument="--do-not-limitsize" type="boolean"  truevalue='' falsevalue='--do-not-limitsize' checked='true' help="When TRUE (the default) ggsave() will not save images larger than 50x50 inches, to prevent the common error of specifying dimensions in pixels."/>
+        <param label="Bg"  name="bg" argument="--bg" type="text"   help="Background colour. If NULL, uses the plot.background fill value from the plot theme."/>
+ 
+    </inputs>
+    <outputs>
+    
+        <data label="${tool.name} on ${on_string}: Output-rds-file" name="output_rds_file" format='?' />
+        <data label="${tool.name} on ${on_string}: Plot-out" name="plot_out" format='?' />
+    </outputs>
+    <tests>
+ 
+    </tests>            
+<help>
+ 
+</help>            
+    <expand macro="citations" />
+</tool>
