@@ -11,6 +11,7 @@
     @INPUT_OBJECT@
     --plot-type '$plot_type.plot_type_selector'
 
+
     #if str($plot_type.plot_type_selector) == 'DimPlot':
     
     #if $plot_type.dims
@@ -99,7 +100,7 @@
     --ncol '$plot_type.ncol'
     #end if
 
-    #if str($plot_type.plot_type_selector) == 'RidgePlot':
+    #elif str($plot_type.plot_type_selector) == 'RidgePlot':
     
     --features '$plot_type.features'
 
@@ -146,7 +147,7 @@
     --fill-by '$plot_type.fill_by'
     #end if
 
-    #if str($plot_type.plot_type_selector) == 'FeaturePlot':
+    #elif str($plot_type.plot_type_selector) == 'FeaturePlot':
     
     --features '$plot_type.features'
 
@@ -228,7 +229,7 @@
 
         $plot_type.by_col
 
-    #if str($plot_type.plot_type_selector) == 'VlnPlot':
+    #elif str($plot_type.plot_type_selector) == 'VlnPlot':
     
     --features '$plot_type.features'
 
@@ -294,7 +295,7 @@
 
         $plot_type.flip
 
-    #if str($plot_type.plot_type_selector) == 'DotPlot':
+    #elif str($plot_type.plot_type_selector) == 'DotPlot':
     
     #if $plot_type.assay
     --assay '$plot_type.assay'
@@ -352,10 +353,10 @@
     --scale-by '$plot_type.scale_by'
     #end if
 
-    #endif
+    #end if
     None
 
-    #if $output_rds_file
+    #if $enable_output_rds_file
     --output-rds-file '$output_rds_file'
     #end if
 
@@ -375,6 +376,7 @@
 
 
     --bg '$bg'
+
 
     
     ]]></command>
@@ -513,18 +515,57 @@
         </param>
         <param label="Limitsize" optional='true' value='true' name="limitsize" argument="--do-not-limitsize" type="boolean"  truevalue='' falsevalue='--do-not-limitsize' checked='true' help="When TRUE (the default) ggsave() will not save images larger than 50x50 inches, to prevent the common error of specifying dimensions in pixels."/>
         <param label="Bg"  name="bg" argument="--bg" type="text"   help="Background colour. If NULL, uses the plot.background fill value from the plot theme."/>
+        <param label="Enable_output_rds_file" optional='true' value='false' name="enable_output_rds_file" argument="--enable_output_rds_file" type="boolean"  truevalue='--enable_output_rds_file' falsevalue='' checked='false' help="Enable output output_rds_file"/>
  
     </inputs>
     <outputs>
     
-        <data label="${tool.name} on ${on_string}: Output-rds-file" name="output_rds_file" format='?' />
+        <data label="${tool.name} on ${on_string}: Output-rds-file" name="output_rds_file" format='?'>
+        <filter>enable_output_rds_file</filter>
+    </data>     
         <data label="${tool.name} on ${on_string}: Plot-out" name="plot_out" format='?' />
     </outputs>
     <tests>
- 
+      <!-- MANUAL TESTS -->
+      <test>
+        <param name="rds_seurat_file" ftype="rdata" value="E-MTAB-6077-3k_features_90_cells-umap.rds"/>
+        <param name="plot_type.plot_type_selector" value="FeaturePlot"/>
+        <output name="plot_out" ftype="png" >
+          <assert_contents>
+            <has_size value="103786543" delta="10000000"/>
+          </assert_contents>
+        </output>
+      </test>
+      <!-- END MANUAL TESTS -->                          
     </tests>            
 <help>
- 
+<!-- MANUAL HELP -->
+<![CDATA[
+.. class:: infomark
+
+**What it does**
+
+This tool produces the different plots available on Seurat.
+
+-----
+
+**Inputs**
+
+* Seurat object or compatible (can be specified in different formats)
+* Plot type (can be specified in different formats)
+* Potential compulsory options for each plot type
+
+All the rest of the parameters are optional.
+
+-----
+
+**Outputs**
+
+* A plot in the specified format
+* Optionally, an RDS object with the ggplo2 plot.
+
+]]>
+<!-- END MANUAL HELP -->                          
 </help>            
     <expand macro="citations" />
 </tool>
