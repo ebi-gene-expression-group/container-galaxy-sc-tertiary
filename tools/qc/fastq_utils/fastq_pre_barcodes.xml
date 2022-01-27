@@ -1,0 +1,145 @@
+<tool id="fastq_pre_barcodes" name="FASTQ barcodes preprocessor" profile="10" version="conda-package-version+galaxy0">
+    <description>Preprocesses the reads to move the barcodes (UMI, Cell, ...) to the respective readname, optionally discarding reads with bases in the barcode regions below a given threshold.</description>
+    <command detect_errors="exit_code"><![CDATA[
+    #set params_optional = []
+
+    #if $read2:
+        ${params_optional}.append($read2)
+    #end if
+
+    #if $index1: 
+        ${params_optional}.append($index1)
+    #end if
+
+    #if $index2: 
+        ${params_optional}.append($index2)
+    #end if
+
+    #if $index3: 
+        ${params_optional}.append($index3)
+    #end if
+
+    #if $phred_encoding: 
+        ${params_optional}.append($phred_encoding)
+    #end if
+
+    #if $min_qual: 
+        ${params_optional}.append($min_qual)
+    #end if
+
+    #if $outfile2: 
+        ${params_optional}.append($outfile2)
+    #end if
+
+    #if $outfile3: 
+        ${params_optional}.append($outfile3)
+    #end if
+
+    #if $interleaved: 
+        ${params_optional}.append($interleaved)
+    #end if
+
+    #if $umi_read: 
+        ${params_optional}.append($umi_read)
+    #end if
+
+    #if $umi_offset: 
+        ${params_optional}.append($umi_offset)
+    #end if
+
+    #if $umi_size: 
+        ${params_optional}.append($umi_size)
+    #end if
+
+    #if $Cell_read: 
+        ${params_optional}.append($Cell_read)
+    #end if
+
+    #if $Cell_offset: 
+        ${params_optional}.append($Cell_offset)
+    #end if
+
+    #if $Cell_size: 
+        ${params_optional}.append($Cell_size)
+    #end if
+
+    #if $sample_read: 
+        ${params_optional}.append($sample_read)
+    #end if
+
+    #if $sample_offset: 
+        ${params_optional}.append($sample_offset)
+    #end if
+
+    #if $sample_size: 
+        ${params_optional}.append($sample_size)
+    #end if
+
+    #if $read1_offset: 
+        ${params_optional}.append($read1_offset)
+    #end if
+
+    #if $read1_size: 
+        ${params_optional}.append($read1_size)
+    #end if
+
+    #if $read2_offset: 
+        ${params_optional}.append($read2_offset)
+    #end if
+
+    #if $read2_offset: 
+        ${params_optional}.append($read2_offset)
+    #end if
+
+    #if $use_10x: 
+        ${params_optional}.append($use_10x)
+    #end if
+
+    #if $brief: 
+        ${params_optional}.append($brief)
+    #elif $verbose:
+        ${params_optional}.append($verbose)
+    #end if
+
+    # set params_optional_str = " ".join($params_optional)
+
+    fastq_pre_barcodes --read1 $read1 --outfile $outfile1 $params_optional_str
+    
+    ]]></command>
+    <inputs>
+        <param label="Verbose" optional='true' value='false' name="verbose" argument="--verbose" type="boolean"  truevalue='--verbose' falsevalue='' checked='true' help="Increase level of messages printed to stderr"/>
+        <param label="Brief" optional='true' value='true' name="brief" argument="--brief" type="boolean"  truevalue='--brief' falsevalue='' checked='true' help="Decrease level of messages printed to stderr"/>
+        <param label="Read1"  name="read1" argument="--read1" type="data" format='?'  help="fastq (optional gzipped) file name"/>
+        <param label="Read2"  name="read2" argument="--read2" type="data" format='?'  help="fastq (optional gzipped) file name"/>
+        <param label="Index1"  name="index1" argument="--index1" type="data" format='?'  help="fastq (optional gzipped) file name"/>
+        <param label="Index2"  name="index2" argument="--index2" type="data" format='?'  help="fastq (optional gzipped) file name"/>
+        <param label="Index3"  name="index3" argument="--index3" type="data" format='?'  help="fastq (optional gzipped) file name"/>
+        <param label="PHRED Encoding" name="phred_encoding" argument="--phred_encoding" type="select"  help="PHRED encoding used in the input files">
+            <option value="33" selected="true">33</option>
+            <option value="64">64</option>
+        </param>
+        <param label="Minimum Quality" optional='true' value='' name="min_qual" argument="--min_qual" type="integer" min="0" max="40"   help="[0-40]. Defines the minimum quality that all bases in the UMI, Cell or Sample should have (reads that do not pass the criteria are discarded). 0 disables the filter."/>
+        <param label="Interleaved Data"  name="interleaved" argument="--interleaved" type="text"   help="Interleaved data, in this format: (read1|read2|index1|index2|index3),(read1|read2|index1|index2|index3)"/>
+        <param label="UMI read"  name="umi_read" argument="--umi_read" type="text"   help="File in which UMI read can be found, in this format: (read1|read2|index1|index2|index3)"/>
+        <param label="UMI offset"  name="umi_offset" argument="--umi_offset" type="integer"   help="Offset (integer)"/>
+        <param label="UMI Size"  name="umi_size" argument="--umi_size" type="integer"   help="Number of bases after the offset"/>
+        <param label="Cell Read"  name="Cell_read" argument="--Cell_read" type="text"   help="File in which Cell can be found, in this format: (read1|read2|index1|index2|index3)"/>
+        <param label="Cell Offset"  name="Cell_offset" argument="--Cell_offset" type="integer"   help="Offset"/>
+        <param label="Cell Size"  name="Cell_size" argument="--Cell_size" type="integer"   help="Number of bases after the offset"/>
+        <param label="Sample Read"  name="sample_read" argument="--sample_read" type="text"   help="File in which sample barcode can be found, in this format: (read1|read2|index1|index2|index3)"/>
+        <param label="Sample Offset"  name="sample_offset" argument="--sample_offset" type="integer"   help="Offset"/>
+        <param label="Sample Size"  name="sample_size" argument="--sample_size" type="integer"   help="Number of bases after the offset"/>
+        <param label="read1 Offset"  name="read1_offset" argument="--read1_offset" type="integer"   help="None"/>
+        <param label="read1 Size"  name="read1_size" argument="--read1_size" type="integer"   help="None"/>
+        <param label="read2 Offset"  name="read2_offset" argument="--read2_offset" type="integer"   help="None"/>
+        <param label="read2 Size"  name="read2_size" argument="--read2_size" type="integer"   help="None"/>
+        <param label="Use 10x tags"  name="use_10x" argument="--10x" type="text"   help="Use 10X UMI tags (UB and UY) instead of the default tags defined in the SAM specification"/>
+    </inputs>
+    <outputs>
+        <data label="${tool.name} on ${on_string}: Output file 1" name="outfile1" format='?' />
+        <data label="${tool.name} on ${on_string}: Output file 2" name="outfile2" format='?' />
+        <data label="${tool.name} on ${on_string}: Output file 3" name="outfile3" format='?' />
+    </outputs>
+    <tests></tests>
+<help></help>
+</tool>
