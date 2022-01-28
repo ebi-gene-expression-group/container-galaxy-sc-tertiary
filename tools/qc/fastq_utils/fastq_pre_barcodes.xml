@@ -208,7 +208,7 @@
             <param name="sample_size" value="4"/>
             <param name="read1" value="test-data/barcode_test2_2.fastq.gz"/>
             <param name="read2" value="test-data/barcode_test2_2.fastq.gz"/>
-            <param name="sam" value="sam"/> # replace this with dash-dash-sam
+            <param name="sam" value="sam"/>
             <output name="outfile1" value="test_1.fastq.gz"/>
             <output name="outfile2" value="test_2.fastq.gz"/>
         </test>
