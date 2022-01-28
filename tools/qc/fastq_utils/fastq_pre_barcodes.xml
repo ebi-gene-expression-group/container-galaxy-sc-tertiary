@@ -1,4 +1,4 @@
-<tool id="fastq_pre_barcodes" name="FASTQ barcodes preprocessor" profile="18.1" version="conda-package-version+galaxy0">
+<tool id="fastq_pre_barcodes" name="FASTQ barcodes preprocessor" profile="18.01" version="0.25.1+galaxy0">
     <description>Preprocesses the reads to move the barcodes (UMI, Cell, ...) to the respective readname, optionally discarding reads with bases in the barcode regions below a given threshold.</description>
     <requirements>
         <requirement type="package" version="0.25.1">fastq_utils</requirement>
@@ -146,7 +146,7 @@
     </outputs>
     <tests>
         <test>
-            <param name="index1" value="tests/barcode_test_1.fastq.gz"/>
+            <param name="index1" value="test-data/barcode_test_1.fastq.gz"/>
             <param name="phred_encoding" value="33"/>
             <param name="min_qual" value="10"/>
             <param name="umi_read" value="index1"/>
@@ -154,11 +154,11 @@
             <param name="umi_size" value="16"/>
             <param name="read1_offset" value="0"/>
             <param name="read1_size" value="-1"/>
-            <param name="read1" value="tests/barcode_test_2.fastq.gz"/>
+            <param name="read1" value="test-data/barcode_test_2.fastq.gz"/>
             <output name="outfile1" file="test.fastq.gz"/>
         </test>
         <test>
-            <param name="index1" value="tests/barcode_test2_1.fastq.gz"/>
+            <param name="index1" value="test-data/barcode_test2_1.fastq.gz"/>
             <param name="phred_encoding" value="33"/>
             <param name="min_qual" value="10"/>
             <param name="umi_read" value="index1"/>
@@ -166,13 +166,13 @@
             <param name="umi_size" value="16"/>
             <param name="read1_offset" value="0"/>
             <param name="read1_size" value="-1"/>
-            <param name="read1" value="tests/barcode_test2_2.fastq.gz"/>
+            <param name="read1" value="test-data/barcode_test2_2.fastq.gz"/>
             <output name="outfile1" file="test.fastq.gz"/>
         </test>
         <test>
-            <param name="index1" value="tests/barcode_test2_1.fastq.gz"/>
-            <param name="index2" value="tests/barcode_test2_1.fastq.gz"/>
-            <param name="index3" value="tests/barcode_test2_1.fastq.gz"/>
+            <param name="index1" value="test-data/barcode_test2_1.fastq.gz"/>
+            <param name="index2" value="test-data/barcode_test2_1.fastq.gz"/>
+            <param name="index3" value="test-data/barcode_test2_1.fastq.gz"/>
             <param name="phred_encoding" value="33"/>
             <param name="min_qual" value="1"/>
             <param name="umi_read" value="index1"/>
@@ -186,13 +186,13 @@
             <param name="sample_read" value="read3"/>
             <param name="sample_offset" value="0"/>
             <param name="sample_size" value="4"/>
-            <param name="read1" value="tests/barcode_test2_2.fastq.gz"/>
+            <param name="read1" value="test-data/barcode_test2_2.fastq.gz"/>
             <output name="outfile1" file="test.fastq.gz"/>
         </test>
         <test>
-            <param name="index1" value="tests/barcode_test2_1.fastq.gz"/>
-            <param name="index2" value="tests/barcode_test2_1.fastq.gz"/>
-            <param name="index3" value="tests/barcode_test2_1.fastq.gz"/>
+            <param name="index1" value="test-data/barcode_test2_1.fastq.gz"/>
+            <param name="index2" value="test-data/barcode_test2_1.fastq.gz"/>
+            <param name="index3" value="test-data/barcode_test2_1.fastq.gz"/>
             <param name="phred_encoding" value="33"/>
             <param name="min_qual" value="1"/>
             <param name="umi_read" value="index1"/>
@@ -206,9 +206,9 @@
             <param name="sample_read" value="index3"/>
             <param name="sample_offset" value="0"/>
             <param name="sample_size" value="4"/>
-            <param name="read1" value="tests/barcode_test2_2.fastq.gz"/>
-            <param name="read2" value="tests/barcode_test2_2.fastq.gz"/>
-            <param name="sam" value="--sam"/>
+            <param name="read1" value="test-data/barcode_test2_2.fastq.gz"/>
+            <param name="read2" value="test-data/barcode_test2_2.fastq.gz"/>
+            <param name="sam" value="sam"/> # replace this with dash-dash-sam
             <output name="outfile1" value="test_1.fastq.gz"/>
             <output name="outfile2" value="test_2.fastq.gz"/>
         </test>
@@ -231,4 +231,16 @@ In the above command, the UMIs (starting in the base 12 and with a length of 8 b
 where [cell], [umi], and [sample] will have the value of the barcode (if available) and [ORIGINAL_READ_NAME] is, as the name suggest, the read name found in the input fastq file.
 
 ]]></help>
+    <citations>
+        <citation type="bibtex"><![CDATA[
+            @ARTICLE{Fonseca2017,
+            author = {Fonseca, N.},
+            title = {fastq_utils},
+            year = {2017},
+            publisher = {GitHub},
+            journal = {GitHub repository},
+            howpublished = {\url{https://github.com/nunofonseca/fastq_utils}},
+            commit = {c6cf3f954c5286e62fbe36bb9ffecd89d7823b07}
+}]]></citation>
+    </citations>
 </tool>
