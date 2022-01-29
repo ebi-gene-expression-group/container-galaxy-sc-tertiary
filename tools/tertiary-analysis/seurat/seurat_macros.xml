@@ -272,6 +272,30 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
     #end if
    </token>
 
+   <xml name="plot_output_files_format" token_format="png">
+     <data label="Seurat ${plot_type.plot_type_selector} on ${on_string}: ${plot_format} plot" name="plot_out_@FORMAT@" format='@FORMAT@' >
+       <filter>plot_format == '@FORMAT@'</filter>
+     </data>
+   </xml>
+
+   <token name="@OUTPUT_PLOT@">
+    #if $plot_format == "png"
+        --plot-out '$plot_out_png'
+    #else if $plot_format == "pdf"
+        --plot-out '$plot_out_pdf'
+    #else if $plot_format == "eps"
+        --plot-out '$plot_out_eps'
+    #else if $plot_format == "ps"
+        --plot-out '$plot_out_ps'
+    #else if $plot_format == "jpg"
+        --plot-out '$plot_out_jpg'
+    #else if $plot_format == "tiff"
+        --plot-out '$plot_out_tiff'
+    #else if $plot_format == "svg"
+        --plot-out '$plot_out_svg'
+    #end if
+   </token>
+
     <xml name="genes-use-input">
       <param name="genes_use" argument="--genes-use" optional="true" type="data" format="tsv,txt,tabular" label="Genes to use" help="A file with gene names to use in construction of SNN graph if building directly based on expression data rather than a dimensionally reduced representation (i.e. PCs)."/>
     </xml>

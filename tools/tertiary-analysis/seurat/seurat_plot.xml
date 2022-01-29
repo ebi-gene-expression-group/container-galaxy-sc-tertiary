@@ -9,6 +9,7 @@
     @INPUT_OBJ_PREAMBLE@
     seurat-plot.R
     @INPUT_OBJECT@
+    @OUTPUT_PLOT@
     --plot-type '$plot_type.plot_type_selector'
 
 
@@ -157,7 +158,9 @@
     #end if
 
     
+    #if $plot_type.cells
     --cells '$plot_type.cells'
+    #end if
 
     
     #if $plot_type.cols_feature_plot
@@ -354,14 +357,11 @@
     #end if
 
     #end if
-    None
+
 
     #if $enable_output_rds_file
     --output-rds-file '$output_rds_file'
     #end if
-
-
-    --plot-out '$plot_out'
 
 
     --plot-format '$plot_format'
@@ -375,7 +375,9 @@
     $limitsize
 
 
+    #if $bg
     --bg '$bg'
+    #end if
 
 
     
@@ -430,12 +432,12 @@
         <when value="FeaturePlot">
             <param label="Features"  name="features" argument="--features" type="text"   help="Vector of features to plot. Features can come from: an assay feature (e.g. a gene name - MS4A1), a column name from meta.data (e.g. mitochondrial percentage - percent.mito), a column name from a DimReduc object corresponding to the cell embedding values (e.g. the PC 1 scores - PC_1)."/>
             <param label="Dims" optional='true' value='1,2' name="dims" argument="--dims" type="text"   help="Dimensions to plot, must be a two-length numeric vector specifying x- and y-dimensions"/>
-            <param label="Cells"  name="cells" argument="--cells" type="text"   help="Vector of cells to plot (default is all cells)"/>
+            <param label="Cells" optional='true' name="cells" argument="--cells" type="text"   help="Vector of cells to plot (default is all cells)"/>
             <param label="Cols-feature-plot" optional='true' value='lightgrey,blue' name="cols_feature_plot" argument="--cols-feature-plot" type="text"   help="The two colors to form the gradient over. Provide as string vector with the first color corresponding to low values, the second to high. Also accepts a Brewer color scale or vector of colors."/>
             <param label="Pt size" optional='true' name="pt_size" argument="--pt-size" type="integer"   help="Adjust point size for plotting"/>
             <param label="Order" optional='true' value='false' name="order" argument="--order" type="boolean"  truevalue='--order' falsevalue='' checked='false' help="Boolean determining whether to plot cells in order of expression. Can be useful if cells expressing given feature are getting buried."/>
-            <param label="Min cutoff" optional='true' value='NA' name="min_cutoff" argument="--min-cutoff" type="text"   help="Vector of minimum cutoff values for each feature, may specify quantile in the form of 'q##' where '##' is the quantile (eg, 'q1', 'q10')"/>
-            <param label="Max cutoff" optional='true' value='NA' name="max_cutoff" argument="--max-cutoff" type="text"   help="Vector of maximum cutoff values for each feature, may specify quantile in the form of 'q##' where '##' is the quantile (eg, 'q1', 'q10')"/>
+            <param label="Min cutoff" optional='true' name="min_cutoff" argument="--min-cutoff" type="text"   help="Vector of minimum cutoff values for each feature, may specify quantile in the form of 'q##' where '##' is the quantile (eg, 'q1', 'q10')"/>
+            <param label="Max cutoff" optional='true' name="max_cutoff" argument="--max-cutoff" type="text"   help="Vector of maximum cutoff values for each feature, may specify quantile in the form of 'q##' where '##' is the quantile (eg, 'q1', 'q10')"/>
             <param label="Reduction" optional='true' name="reduction" argument="--reduction" type="text"   help="Which dimensionality reduction to use. If not specified, first searches for umap, then tsne, then pca"/>
             <param label="Split by" optional='true' name="split_by" argument="--split-by" type="text"   help="A factor in object metadata to split the feature plot by, pass ident to split by cell identity; similar to the old FeatureHeatmap."/>
             <param label="Keep scale" name="keep_scale" argument="--keep-scale" type="select"  help="How to handle the color scale across multiple plots.">
@@ -498,7 +500,7 @@
             <option value="ps">PostScript</option>
             <option value="tex">TeX (pictex)</option>
             <option value="pdf">PDF</option>
-            <option value="jpeg">JPEG</option>
+            <option value="jpg">JPG</option>
             <option value="tiff">TIFF</option>
             <option value="svg">SVG</option>
         </param>
@@ -514,16 +516,22 @@
             <option value="72">screen</option>
         </param>
         <param label="Limitsize" optional='true' value='true' name="limitsize" argument="--do-not-limitsize" type="boolean"  truevalue='' falsevalue='--do-not-limitsize' checked='true' help="When TRUE (the default) ggsave() will not save images larger than 50x50 inches, to prevent the common error of specifying dimensions in pixels."/>
-        <param label="Bg"  name="bg" argument="--bg" type="text"   help="Background colour. If NULL, uses the plot.background fill value from the plot theme."/>
+        <param label="Bg" optional='true' name="bg" argument="--bg" type="text"   help="Background colour. If NULL, uses the plot.background fill value from the plot theme."/>
         <param label="Enable_output_rds_file" optional='true' value='false' name="enable_output_rds_file" argument="--enable_output_rds_file" type="boolean"  truevalue='--enable_output_rds_file' falsevalue='' checked='false' help="Enable output output_rds_file"/>
  
     </inputs>
     <outputs>
+        <expand macro="plot_output_files_format" format="png"  /> 
+        <expand macro="plot_output_files_format" format="pdf"  /> 
+        <expand macro="plot_output_files_format" format="eps"  /> 
+        <expand macro="plot_output_files_format" format="jpg"  /> 
+        <expand macro="plot_output_files_format" format="ps"  /> 
+        <expand macro="plot_output_files_format" format="tiff"  /> 
+        <expand macro="plot_output_files_format" format="svg"  /> 
     
         <data label="${tool.name} on ${on_string}: Output-rds-file" name="output_rds_file" format='?'>
         <filter>enable_output_rds_file</filter>
     </data>     
-        <data label="${tool.name} on ${on_string}: Plot-out" name="plot_out" format='?' />
     </outputs>
     <tests>
       <!-- MANUAL TESTS -->
@@ -536,7 +544,7 @@
           </assert_contents>
         </output>
       </test>
-      <!-- END MANUAL TESTS -->                          
+      <!-- END MANUAL TESTS -->                                                    
     </tests>            
 <help>
 <!-- MANUAL HELP -->
@@ -565,7 +573,7 @@ All the rest of the parameters are optional.
 * Optionally, an RDS object with the ggplo2 plot.
 
 ]]>
-<!-- END MANUAL HELP -->                          
+<!-- END MANUAL HELP -->                                                    
 </help>            
     <expand macro="citations" />
 </tool>

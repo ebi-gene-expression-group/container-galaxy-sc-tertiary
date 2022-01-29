@@ -69,3 +69,22 @@
   input_declaration_macros:
     - input_object_params:
         varname: query
+- option_group:
+    - plot-out
+  post_command_macros:
+    - OUTPUT_PLOT
+  output_declaration_macros:
+    - plot_output_files_format:
+        format: png
+    - plot_output_files_format:
+        format: pdf
+    - plot_output_files_format:
+        format: eps
+    - plot_output_files_format:
+        format: jpg
+    - plot_output_files_format:
+        format: ps
+    - plot_output_files_format:
+        format: tiff
+    - plot_output_files_format:
+        format: svg
