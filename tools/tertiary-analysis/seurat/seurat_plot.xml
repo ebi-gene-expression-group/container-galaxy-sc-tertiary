@@ -14,115 +14,115 @@
 
 
     #if str($plot_type.plot_type_selector) == 'DimPlot':
-    
+
     #if $plot_type.dims
     --dims '$plot_type.dims'
     #end if
 
-    
+
     #if $plot_type.cells
     --cells '$plot_type.cells'
     #end if
 
-    
+
     #if $plot_type.cols
     --cols '$plot_type.cols'
     #end if
 
-    
+
     #if $plot_type.pt_size
     --pt-size '$plot_type.pt_size'
     #end if
 
-    
+
     #if $plot_type.reduction
     --reduction '$plot_type.reduction'
     #end if
 
-    
+
     #if $plot_type.group_by
     --group-by '$plot_type.group_by'
     #end if
 
-    
+
     #if $plot_type.split_by
     --split-by '$plot_type.split_by'
     #end if
 
-    
+
     #if $plot_type.shape_by
     --shape-by '$plot_type.shape_by'
     #end if
 
-    
+
     #if $plot_type.order
     --order '$plot_type.order'
     #end if
 
         $plot_type.shuffle
 
-    
+
     --seed '$plot_type.seed'
 
         $plot_type.label
 
-    
+
     --label-size '$plot_type.label_size'
 
-    
+
     --label-color '$plot_type.label_color'
 
         $plot_type.label_box
 
         $plot_type.repel
 
-    
+
     #if $plot_type.cells_highlight
     --cells-highlight '$plot_type.cells_highlight'
     #end if
 
-    
+
     #if $plot_type.cols_highlight
     --cols-highlight '$plot_type.cols_highlight'
     #end if
 
-    
+
     #if $plot_type.sizes_highlight
     --sizes-highlight '$plot_type.sizes_highlight'
     #end if
 
-    
+
     #if $plot_type.na_value
     --na-value '$plot_type.na_value'
     #end if
 
-    
+
     #if $plot_type.ncol
     --ncol '$plot_type.ncol'
     #end if
 
     #elif str($plot_type.plot_type_selector) == 'RidgePlot':
-    
+
     --features '$plot_type.features'
 
-    
+
     #if $plot_type.cols_ridgplot
     --cols-ridgplot '$plot_type.cols_ridgplot'
     #end if
 
-    
+
     #if $plot_type.idents
     --idents '$plot_type.idents'
     #end if
 
         $plot_type.sort
 
-    
+
     #if $plot_type.assay
     --assay '$plot_type.assay'
     #end if
 
-    
+
     #if $plot_type.group_by
     --group-by '$plot_type.group_by'
     #end if
@@ -131,99 +131,99 @@
 
         $plot_type.log
 
-    
+
     #if $plot_type.ncol
     --ncol '$plot_type.ncol'
     #end if
 
-    
+
     #if $plot_type.slot
     --slot '$plot_type.slot'
     #end if
 
         $plot_type.stack
 
-    
+
     #if $plot_type.fill_by
     --fill-by '$plot_type.fill_by'
     #end if
 
     #elif str($plot_type.plot_type_selector) == 'FeaturePlot':
-    
+
     --features '$plot_type.features'
 
-    
+
     #if $plot_type.dims
     --dims '$plot_type.dims'
     #end if
 
-    
+
     #if $plot_type.cells
     --cells '$plot_type.cells'
     #end if
 
-    
+
     #if $plot_type.cols_feature_plot
     --cols-feature-plot '$plot_type.cols_feature_plot'
     #end if
 
-    
+
     #if $plot_type.pt_size
     --pt-size '$plot_type.pt_size'
     #end if
 
         $plot_type.order
 
-    
+
     #if $plot_type.min_cutoff
     --min-cutoff '$plot_type.min_cutoff'
     #end if
 
-    
+
     #if $plot_type.max_cutoff
     --max-cutoff '$plot_type.max_cutoff'
     #end if
 
-    
+
     #if $plot_type.reduction
     --reduction '$plot_type.reduction'
     #end if
 
-    
+
     #if $plot_type.split_by
     --split-by '$plot_type.split_by'
     #end if
 
-    
+
     --keep-scale '$plot_type.keep_scale'
 
-    
+
     #if $plot_type.shape_by
     --shape-by '$plot_type.shape_by'
     #end if
 
-    
+
     #if $plot_type.slot
     --slot '$plot_type.slot'
     #end if
 
         $plot_type.blend
 
-    
+
     #if $plot_type.blend_threshold
     --blend-threshold '$plot_type.blend_threshold'
     #end if
 
         $plot_type.label
 
-    
+
     #if $plot_type.label_size
     --label-size '$plot_type.label_size'
     #end if
 
         $plot_type.repel
 
-    
+
     #if $plot_type.ncol
     --ncol '$plot_type.ncol'
     #end if
@@ -233,42 +233,42 @@
         $plot_type.by_col
 
     #elif str($plot_type.plot_type_selector) == 'VlnPlot':
-    
+
     --features '$plot_type.features'
 
-    
+
     #if $plot_type.cols
     --cols '$plot_type.cols'
     #end if
 
-    
+
     #if $plot_type.pt_size
     --pt-size '$plot_type.pt_size'
     #end if
 
-    
+
     #if $plot_type.idents
     --idents '$plot_type.idents'
     #end if
 
         $plot_type.sort
 
-    
+
     #if $plot_type.assay
     --assay '$plot_type.assay'
     #end if
 
-    
+
     #if $plot_type.group_by
     --group-by '$plot_type.group_by'
     #end if
 
-    
+
     #if $plot_type.split_by
     --split-by '$plot_type.split_by'
     #end if
 
-    
+
     #if $plot_type.adjust
     --adjust '$plot_type.adjust'
     #end if
@@ -277,12 +277,12 @@
 
         $plot_type.log
 
-    
+
     #if $plot_type.ncol
     --ncol '$plot_type.ncol'
     #end if
 
-    
+
     #if $plot_type.slot
     --slot '$plot_type.slot'
     #end if
@@ -291,7 +291,7 @@
 
         $plot_type.stack
 
-    
+
     #if $plot_type.fill_by
     --fill-by '$plot_type.fill_by'
     #end if
@@ -299,50 +299,50 @@
         $plot_type.flip
 
     #elif str($plot_type.plot_type_selector) == 'DotPlot':
-    
+
     #if $plot_type.assay
     --assay '$plot_type.assay'
     #end if
 
-    
+
     --features '$plot_type.features'
 
-    
+
     #if $plot_type.cols_dot_plot
     --cols-dot-plot '$plot_type.cols_dot_plot'
     #end if
 
-    
+
     #if $plot_type.col_min
     --col-min '$plot_type.col_min'
     #end if
 
-    
+
     #if $plot_type.col_max
     --col-max '$plot_type.col_max'
     #end if
 
-    
+
     #if $plot_type.dot_min
     --dot-min '$plot_type.dot_min'
     #end if
 
-    
+
     #if $plot_type.dot_scale
     --dot-scale '$plot_type.dot_scale'
     #end if
 
-    
+
     #if $plot_type.idents
     --idents '$plot_type.idents'
     #end if
 
-    
+
     #if $plot_type.group_by
     --group-by '$plot_type.group_by'
     #end if
 
-    
+
     #if $plot_type.split_by
     --split-by '$plot_type.split_by'
     #end if
@@ -351,7 +351,7 @@
 
         $plot_type.scale
 
-    
+
     #if $plot_type.scale_by
     --scale-by '$plot_type.scale_by'
     #end if
@@ -380,7 +380,7 @@
     #end if
 
 
-    
+
     ]]></command>
     <inputs>
         <expand macro="input_object_params" />
@@ -518,34 +518,69 @@
         <param label="Limitsize" optional='true' value='true' name="limitsize" argument="--do-not-limitsize" type="boolean"  truevalue='' falsevalue='--do-not-limitsize' checked='true' help="When TRUE (the default) ggsave() will not save images larger than 50x50 inches, to prevent the common error of specifying dimensions in pixels."/>
         <param label="Bg" optional='true' name="bg" argument="--bg" type="text"   help="Background colour. If NULL, uses the plot.background fill value from the plot theme."/>
         <param label="Enable_output_rds_file" optional='true' value='false' name="enable_output_rds_file" argument="--enable_output_rds_file" type="boolean"  truevalue='--enable_output_rds_file' falsevalue='' checked='false' help="Enable output output_rds_file"/>
- 
+
     </inputs>
     <outputs>
-        <expand macro="plot_output_files_format" format="png"  /> 
-        <expand macro="plot_output_files_format" format="pdf"  /> 
-        <expand macro="plot_output_files_format" format="eps"  /> 
-        <expand macro="plot_output_files_format" format="jpg"  /> 
-        <expand macro="plot_output_files_format" format="ps"  /> 
-        <expand macro="plot_output_files_format" format="tiff"  /> 
-        <expand macro="plot_output_files_format" format="svg"  /> 
-    
+        <expand macro="plot_output_files_format" format="png"  />
+        <expand macro="plot_output_files_format" format="pdf"  />
+        <expand macro="plot_output_files_format" format="eps"  />
+        <expand macro="plot_output_files_format" format="jpg"  />
+        <expand macro="plot_output_files_format" format="ps"  />
+        <expand macro="plot_output_files_format" format="tiff"  />
+        <expand macro="plot_output_files_format" format="svg"  />
+
         <data label="${tool.name} on ${on_string}: Output-rds-file" name="output_rds_file" format='?'>
         <filter>enable_output_rds_file</filter>
-    </data>     
+    </data>
     </outputs>
     <tests>
       <!-- MANUAL TESTS -->
       <test>
-        <param name="rds_seurat_file" ftype="rdata" value="E-MTAB-6077-3k_features_90_cells-umap.rds"/>
-        <param name="plot_type.plot_type_selector" value="FeaturePlot"/>
-        <output name="plot_out" ftype="png" >
+        <param name="rds_seurat_file" ftype="rdata" value="UMAP_result_integrated.rds"/>
+        <param name="plot_type_selector" value="FeaturePlot"/>
+        <param name="features" value="GPC5-AS1,MAFB,FAP,PPY"/>
+        <output name="plot_out_png" ftype="png" >
           <assert_contents>
-            <has_size value="103786543" delta="10000000"/>
+            <has_size value="323890" delta="32000"/>
           </assert_contents>
         </output>
       </test>
-      <!-- END MANUAL TESTS -->                                                    
-    </tests>            
+      <test>
+        <param name="rds_seurat_file" ftype="rdata" value="UMAP_result_integrated.rds"/>
+        <param name="plot_type_selector" value="VlnPlot"/>
+        <param name="features" value="GPC5-AS1,MAFB,FAP,PPY"/>
+        <param name="plot_format" value="pdf"/>
+        <output name="plot_out_pdf" ftype="pdf" >
+          <assert_contents>
+            <has_size value="1239200" delta="123000"/>
+          </assert_contents>
+        </output>
+      </test>
+      <test>
+        <param name="rds_seurat_file" ftype="rdata" value="UMAP_result_integrated.rds"/>
+        <param name="plot_type_selector" value="RidgePlot"/>
+        <param name="features" value="GPC5-AS1,MAFB,FAP,PPY"/>
+        <param name="plot_format" value="eps"/>
+        <output name="plot_out_eps" ftype="eps" >
+          <assert_contents>
+            <has_size value="84892" delta="8400"/>
+          </assert_contents>
+        </output>
+      </test>
+      <test>
+        <param name="rds_seurat_file" ftype="rdata" value="UMAP_result_integrated.rds"/>
+        <param name="plot_type_selector" value="DotPlot"/>
+        <param name="features" value="GPC5-AS1,MAFB,FAP,PPY"/>
+        <param name="plot_format" value="ps"/>
+        <output name="plot_out_ps" ftype="ps" >
+          <assert_contents>
+            <has_size value="16615" delta="1600"/>
+          </assert_contents>
+        </output>
+      </test>
+    -->
+      <!-- END MANUAL TESTS -->
+    </tests>
 <help>
 <!-- MANUAL HELP -->
 <![CDATA[
@@ -573,7 +608,7 @@ All the rest of the parameters are optional.
 * Optionally, an RDS object with the ggplo2 plot.
 
 ]]>
-<!-- END MANUAL HELP -->                                                    
-</help>            
+<!-- END MANUAL HELP -->
+</help>
     <expand macro="citations" />
 </tool>

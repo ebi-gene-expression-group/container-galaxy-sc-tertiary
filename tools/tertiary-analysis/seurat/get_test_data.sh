@@ -27,7 +27,7 @@ IFNB_STIM_INT_LINK='https://drive.google.com/uc?export=download&id=14iKgCJGPk16d
 ## Classify and UMAP mapping
 CLASSIFY_QUERY_LINK='https://drive.google.com/uc?export=download&id=1RFsHa_1EFD_n-19JH_cHGqxwO66QdmXN'
 CLASSIFY_RESULTS_ANCHORS_OBJECT_LINK='https://drive.google.com/uc?export=download&id=1Xtv4K_CxIU1cJ8RjJ7NTvzLQkLvc8a3i'
-UMAP_RESULT_OBJECT_LINK='https://drive.google.com/u/0/uc?export=download&confirm=zt9i&id=1Cod5OplwlZEJjeylgllbGZHULcFoopo_'
+UMAP_RESULT_OBJECT_LINK='https://oc.ebi.ac.uk/s/k4MdM07y9DAnurp/download'
 
 
 function get_data {
@@ -69,4 +69,4 @@ get_data $IFNB_STIM_INT_LINK $IFNB_BASE_FILE"stim_norm_fvg.rds"
 
 get_data $CLASSIFY_QUERY_LINK "Classify_query.rds"
 get_data $CLASSIFY_RESULTS_ANCHORS_OBJECT_LINK "Classify_anchors.rds"
-get_data $UMAP_RESULT_OBJECT_LINK "Umap_result_integrated.rds"
+get_data $UMAP_RESULT_OBJECT_LINK "UMAP_result_integrated.rds"
