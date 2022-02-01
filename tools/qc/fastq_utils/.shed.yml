@@ -1,8 +1,10 @@
 name: fastq_utils
 owner: ebi-gxa
-description: "scanpy-scripts, command-line wrapper scripts around Scanpy."
+description: "Set of tools for handling fastq files"
 long_description: |
-    Please add some description.
+    fastq_utils is a set of Linux utilities to validate and manipulate fastq files. 
+    It also includes a set of programs to preprocess barcodes (namely UMIs, 
+    cells and samples), add the barcodes as tags in BAM files and count UMIs.
 homepage_url: https://github.com/nunofonseca/fastq_utils
 remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/tools/qc/fastq_utils
 type: unrestricted
@@ -11,11 +13,11 @@ categories:
 - RNA
 auto_tool_repositories:
     name_template: "{{ tool_id }}"
-    description_template: "Wrapper for the fastq tool suite: {{ tool_name }}"
+    description_template: "Set of tools for handling fastq files: {{ tool_name }}"
 suite:
-    name: "fastq_utils"
-    description: "Please add one"
+    name: "suite_fastq_utils"
+    description: "Set of tools for handling fastq files"
     long_description: |
-        Set of Linux utilities to validate and manipulate fastq files. 
-        It also includes a set of programs to preprocess barcodes (namely UMIs, 
-        cells and samples), add the barcodes as tags in BAM files and count UMIs.
+    fastq_utils is a set of Linux utilities to validate and manipulate fastq files. 
+    It also includes a set of programs to preprocess barcodes (namely UMIs, 
+    cells and samples), add the barcodes as tags in BAM files and count UMIs.
