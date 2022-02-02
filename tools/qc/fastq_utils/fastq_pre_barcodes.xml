@@ -6,7 +6,7 @@
         <requirement type="package" version="1.40">bioconductor-zlibbioc</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-    fastq_pre_barcodes --read1 '$read1' --outfile '$outfile1'
+    fastq_pre_barcodes --read1 '$read1' --outfile1 '$outfile1'
 
     #if $read2:
         --read2 '$read2'
@@ -92,8 +92,8 @@
         --read2_offset '$read2_offset'
     #end if
 
-    #if $read3_offset: 
-        --read3_offset '$read3_offset'
+    #if $read2_size: 
+        --read2_size '$read2_size'
     #end if
 
     #if $use_10x:
@@ -113,11 +113,11 @@
     <inputs>
         <param name="verbose" label="Verbose" optional="true" value='false' argument="--verbose" type="boolean"  truevalue='--verbose' falsevalue='' checked="true" help="Increase level of messages printed to stderr"/>
         <param name="brief" label="Brief" optional="true" value="true" argument="--brief" type="boolean"  truevalue='--brief' falsevalue='' checked="true" help="Decrease level of messages printed to stderr"/>
-        <param name="read1" label="Read1"  argument="--read1" type="data" format="fastq,fastqsanger" optional="false" help="fastq (optional gzipped) file name"/>
-        <param name="read2" label="Read2"  argument="--read2" type="data" format="fastq,fastqsanger" optional="true" help="fastq (optional gzipped) file name"/>
-        <param name="index1" label="Index1" argument="--index1" type="data" format="fastq,fastqsanger" optional="true" help="fastq (optional gzipped) file name"/>
-        <param name="index2" label="Index2" argument="--index2" type="data" format="fastq,fastqsanger" optional="true" help="fastq (optional gzipped) file name"/>
-        <param name="index3" label="Index3" argument="--index3" type="data" format="fastq,fastqsanger" optional="true" help="fastq (optional gzipped) file name"/>
+        <param name="read1" label="Read1"  argument="--read1" type="data" format="fastqsanger" optional="false" help="fastq (optional gzipped) file name"/>
+        <param name="read2" label="Read2"  argument="--read2" type="data" format="fastqsanger" optional="true" help="fastq (optional gzipped) file name"/>
+        <param name="index1" label="Index1" argument="--index1" type="data" format="fastqsanger" optional="true" help="fastq (optional gzipped) file name"/>
+        <param name="index2" label="Index2" argument="--index2" type="data" format="fastqsanger" optional="true" help="fastq (optional gzipped) file name"/>
+        <param name="index3" label="Index3" argument="--index3" type="data" format="fastqsanger" optional="true" help="fastq (optional gzipped) file name"/>
         <param name="phred_encoding" label="PHRED Encoding" argument="--phred_encoding" type="select" optional="true" help="PHRED encoding used in the input files">
             <option value="33" selected="true">33</option>
             <option value="64">64</option>
@@ -141,13 +141,13 @@
         <param label="sam" name="sam" argument="--sam" type="text" optional="true" help="No available description"/>
     </inputs>
     <outputs>
-        <data label="${tool.name} on ${on_string}: Output file 1" name="outfile1" format="fastq,fastqsanger" />
-        <data label="${tool.name} on ${on_string}: Output file 2" name="outfile2" format="fastq,fastqsanger" />
-        <data label="${tool.name} on ${on_string}: Output file 3" name="outfile3" format="fastq,fastqsanger" />
+        <data label="${tool.name} on ${on_string}: Output file 1" name="outfile1" format="fastqsanger" />
+        <data label="${tool.name} on ${on_string}: Output file 2" name="outfile2" format="fastqsanger" />
+        <data label="${tool.name} on ${on_string}: Output file 3" name="outfile3" format="fastqsanger" />
     </outputs>
     <tests>
         <test>
-            <param name="index1" value="test-data/barcode_test_1.fastq.gz"/>
+            <param name="index1" value="barcode_test_1.fastq.gz"/>
             <param name="phred_encoding" value="33"/>
             <param name="min_qual" value="10"/>
             <param name="umi_read" value="index1"/>
@@ -155,10 +155,10 @@
             <param name="umi_size" value="16"/>
             <param name="read1_offset" value="0"/>
             <param name="read1_size" value="-1"/>
-            <param name="read1" value="test-data/barcode_test_2.fastq.gz"/>
+            <param name="read1" value="barcode_test_2.fastq.gz"/>
             <output name="outfile1" file="test.fastq.gz"/>
         </test>
-        <test>
+        <!--test>
             <param name="index1" value="test-data/barcode_test2_1.fastq.gz"/>
             <param name="phred_encoding" value="33"/>
             <param name="min_qual" value="10"/>
@@ -212,7 +212,7 @@
             <param name="sam" value="sam"/>
             <output name="outfile1" value="test_1.fastq.gz"/>
             <output name="outfile2" value="test_2.fastq.gz"/>
-        </test>
+        </test-->
     </tests>
     <help><![CDATA[
 =======================================================
