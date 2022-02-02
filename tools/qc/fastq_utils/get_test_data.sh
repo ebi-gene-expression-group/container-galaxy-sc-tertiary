@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-BASE_LINK="https://raw.githubusercontent.com/nunofonseca/fastq_utils/tree/master/tests"
+BASE_LINK="https://raw.githubusercontent.com/nunofonseca/fastq_utils/master/tests"
 
 BAR11_FILE="barcode_test_1.fastq.gz"
 BAR12_FILE="barcode_test_2.fastq.gz"
