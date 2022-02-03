@@ -24,7 +24,7 @@ function get_data {
   fi
 }
 
-# Get test data data
+# Get test data
 pushd test-data
 
 get_data $BAR11_LINK $BAR11_FILE

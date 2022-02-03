@@ -1,9 +1,7 @@
 <tool id="fastq_pre_barcodes" name="FASTQ barcodes preprocessor" profile="18.01" version="0.16.3+galaxy0">
     <description>Preprocesses the reads to move the barcodes (UMI, Cell, ...) to the respective readname, optionally discarding reads with bases in the barcode regions below a given threshold.</description>
     <requirements>
-        <requirement type="package" version="0.16.3">fastq_utils</requirement>
-        <requirement type="package" version="0.1.19">samtools</requirement>
-        <requirement type="package" version="1.40">bioconductor-zlibbioc</requirement>
+        <requirement type="package" version="0.25.1">fastq_utils</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
     fastq_pre_barcodes --read1 '$read1' --outfile1 '$outfile1'
