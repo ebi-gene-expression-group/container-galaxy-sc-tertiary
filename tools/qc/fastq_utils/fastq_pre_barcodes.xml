@@ -159,7 +159,7 @@
             <param name="read1_offset" value="0"/>
             <param name="read1_size" value="-1"/>
             <param name="read1" value="barcode_test_2.fastq.gz"/>
-            <output name="outfile1" file="test.fastq.gz"/>
+            <output name="outfile1" file="test.fastq.gz" md5="e4ab7532f32c14ff5bce10c021422f3f"/>
         </test>
         <test>
             <param name="index1" value="barcode_test2_1.fastq.gz"/>
@@ -181,8 +181,8 @@
             <param name="read1" value="barcode_test2_2.fastq.gz"/>
             <param name="read2" value="barcode_test2_2.fastq.gz"/>
             <param name="sam" value="--sam"/>
-            <output name="outfile1" file="test_1.fastq.gz"/>
-            <output name="outfile2" file="test_2.fastq.gz"/>
+            <output name="outfile1" file="test_1.fastq.gz" md5="d41d8cd98f00b204e9800998ecf8427e"/>
+            <output name="outfile2" file="test_2.fastq.gz" md5="d41d8cd98f00b204e9800998ecf8427e"/>
         </test>
         <test expect_failure="true">
             <param name="interleaved" value="read1"/>
