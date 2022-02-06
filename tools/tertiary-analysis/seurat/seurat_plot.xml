@@ -101,13 +101,87 @@
     --ncol '$plot_type.ncol'
     #end if
 
+    #elif str($plot_type.plot_type_selector) == 'DoHeatmap':
+
+    #if $plot_type.features
+    --features '$plot_type.features'
+    #end if
+
+
+    #if $plot_type.cells
+    --cells '$plot_type.cells'
+    #end if
+
+
+    #if $plot_type.group_by
+    --group-by '$plot_type.group_by'
+    #end if
+
+        $plot_type.group_bar
+
+
+    #if $plot_type.group_colors
+    --group-colors '$plot_type.group_colors'
+    #end if
+
+
+    #if $plot_type.disp_min
+    --disp-min '$plot_type.disp_min'
+    #end if
+
+
+    #if $plot_type.disp_max
+    --disp-max '$plot_type.disp_max'
+    #end if
+
+
+    --slot '$plot_type.slot'
+
+
+    #if $plot_type.assay
+    --assay '$plot_type.assay'
+    #end if
+
+        $plot_type.label
+
+
+    #if $plot_type.size
+    --size '$plot_type.size'
+    #end if
+
+
+    #if $plot_type.hjust
+    --hjust '$plot_type.hjust'
+    #end if
+
+
+    #if $plot_type.angle
+    --angle '$plot_type.angle'
+    #end if
+
+        $plot_type.raster
+
+        $plot_type.draw_lines
+
+
+    #if $plot_type.lines_width
+    --lines-width '$plot_type.lines_width'
+    #end if
+
+
+    #if $plot_type.group_bar_height
+    --group-bar-height '$plot_type.group_bar_height'
+    #end if
+
+        $plot_type.combine
+
     #elif str($plot_type.plot_type_selector) == 'RidgePlot':
 
     --features '$plot_type.features'
 
 
-    #if $plot_type.cols_ridgplot
-    --cols-ridgplot '$plot_type.cols_ridgplot'
+    #if $plot_type.cols_ridgeplot
+    --cols-ridgeplot '$plot_type.cols_ridgeplot'
     #end if
 
 
@@ -387,6 +461,7 @@
         <conditional name="plot_type">
         <param label="Plot_type_selector" name="plot_type_selector" argument="--plot_type_selector" type="select"  help="Either FeaturePlot, RidgePlot, DimPlot, VlnPlot or DotPlot.">
             <option value="DimPlot">DimPlot</option>
+            <option value="DoHeatmap">DoHeatmap</option>
             <option value="RidgePlot">RidgePlot</option>
             <option value="FeaturePlot" selected="true">FeaturePlot</option>
             <option value="VlnPlot">VlnPlot</option>
@@ -415,9 +490,33 @@
             <param label="Na value" optional='true' value='grey50' name="na_value" argument="--na-value" type="text"   help="Color value for NA points when using custom scale"/>
             <param label="Ncol" optional='true' name="ncol" argument="--ncol" type="integer"   help="Number of columns for display when combining plots"/>
         </when>
+        <when value="DoHeatmap">
+            <param label="Features" optional='true' name="features" argument="--features" type="text"   help="A vector of features to plot, defaults to VariableFeatures of the object."/>
+            <param label="Cells" optional='true' name="cells" argument="--cells" type="text"   help="A vector of cells to plot, comma separated"/>
+            <param label="Group by" optional='true' value='ident' name="group_by" argument="--group-by" type="text"   help="A vector of variables to group cells by; pass 'ident' to group by cell identity classes"/>
+            <param label="Group bar" optional='true' value='true' name="group_bar" argument="--do-not-group-bar" type="boolean"  truevalue='' falsevalue='--do-not-group-bar' checked='true' help="Add a color bar showing group status for cells"/>
+            <param label="Group colors" optional='true' name="group_colors" argument="--group-colors" type="text"   help="Colors to use for the color bar, comma separated."/>
+            <param label="Disp min" optional='true' value='-2' name="disp_min" argument="--disp-min" type="integer"   help="Minimum display value (all values below are clipped)"/>
+            <param label="Disp max" optional='true' name="disp_max" argument="--disp-max" type="integer"   help="Maximum display value (all values above are clipped); defaults to 2.5 if slot is 'scale.data', 6 otherwise"/>
+            <param label="Slot" name="slot" argument="--slot" type="select"  help="Data slot to use, choose from raw.data, data, or scale.data">
+            <option value="scale.data" selected="true">Scale data</option>
+            <option value="data">Data</option>
+            <option value="raw.data">Raw data</option>
+        </param>
+            <param label="Assay" optional='true' name="assay" argument="--assay" type="text"   help="Assay to pull from"/>
+            <param label="Label" optional='true' value='true' name="label" argument="--do-not-label" type="boolean"  truevalue='' falsevalue='--do-not-label' checked='true' help="Label the cell identies above the color bar"/>
+            <param label="Size" optional='true' value='5' name="size" argument="--size" type="integer"   help="Size of text above color bar"/>
+            <param label="Hjust" optional='true' value='0' name="hjust" argument="--hjust" type="integer"   help="Horizontal justification of text above color bar"/>
+            <param label="Angle" optional='true' value='45' name="angle" argument="--angle" type="integer"   help="Angle of text above color bar"/>
+            <param label="Raster" optional='true' value='true' name="raster" argument="--do-not-raster" type="boolean"  truevalue='' falsevalue='--do-not-raster' checked='true' help="If true, plot with geom_raster, else use geom_tile. geom_raster may look blurry on some viewing applications such as Preview due to how the raster is interpolated. Set this to FALSE if you are encountering that issue (note that plots may take longer to produce/render)."/>
+            <param label="Draw lines" optional='true' value='true' name="draw_lines" argument="--do-not-draw-lines" type="boolean"  truevalue='' falsevalue='--do-not-draw-lines' checked='true' help="Include white lines to separate the groups"/>
+            <param label="Lines width" optional='true' name="lines_width" argument="--lines-width" type="integer"   help="Integer number to adjust the width of the separating white lines. Corresponds to the number of cells between each group."/>
+            <param label="Group bar height" optional='true' value='0' name="group_bar_height" argument="--group-bar-height" type="integer"   help="Scale the height of the color bar"/>
+            <param label="Combine" optional='true' value='true' name="combine" argument="--do-not-combine" type="boolean"  truevalue='' falsevalue='--do-not-combine' checked='true' help="Combine plots into a single patchwork or ed ggplot object. If FALSE return a list of ggplot objects."/>
+        </when>
         <when value="RidgePlot">
             <param label="Features" optional='true' value='' name="features" argument="--features" type="text"   help="Features to plot (gene expression, metrics, PC scores, anything that can be retreived by FetchData)"/>
-            <param label="Cols-ridgplot" optional='true' name="cols_ridgplot" argument="--cols-ridgplot" type="text"   help="Colors to use for plotting, comma separated"/>
+            <param label="Cols-ridgeplot" optional='true' name="cols_ridgeplot" argument="--cols-ridgeplot" type="text"   help="Colors to use for plotting, comma separated"/>
             <param label="Idents" optional='true' name="idents" argument="--idents" type="text"   help="Which classes to include in the plot (default is all)"/>
             <param label="Sort" optional='true' value='false' name="sort" argument="--sort" type="boolean"  truevalue='--sort' falsevalue='' checked='false' help="Sort identity classes (on the x-axis) by the average expression of the attribute being potted, can also pass 'increasing' or 'decreasing' to change sort direction"/>
             <param label="Assay" optional='true' name="assay" argument="--assay" type="text"   help="Name of assay to use, defaults to the active assay"/>
@@ -578,7 +677,16 @@
           </assert_contents>
         </output>
       </test>
-    -->
+      <test>
+        <param name="rds_seurat_file" ftype="rdata" value="UMAP_result_integrated.rds"/>
+        <param name="plot_type_selector" value="DoHeatmap"/>
+        <param name="features" value="GPC5-AS1,MAFB,FAP,PPY"/>
+        <output name="plot_out_png" ftype="png" >
+          <assert_contents>
+            <has_size value="176978" delta="17600"/>
+          </assert_contents>
+        </output>
+      </test>
       <!-- END MANUAL TESTS -->
     </tests>
 <help>
