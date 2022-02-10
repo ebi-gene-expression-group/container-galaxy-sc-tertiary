@@ -1,0 +1,15 @@
+name: fastq_pair
+owner: ebi-gxa
+description: "Paired-end fastq pairer"
+long_description: "Match up paired end fastq files quickly and efficiently. Rewrite paired-end fastq files to make sure that all reads have a mate and to separate out singletons."
+homepage_url: https://github.com/linsalrob/fastq-pair
+remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/tools/qc/fastq_pair
+type: unrestricted
+categories:
+- Transcriptomics
+- Genomics
+- RNA
+- DNA
+auto_tool_repositories:
+    name_template: "{{ tool_id }}"
+    description_template: "Paired-end fastq pairer: {{ tool_name }}"
