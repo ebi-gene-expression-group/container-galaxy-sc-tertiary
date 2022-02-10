@@ -1,0 +1,63 @@
+<tool id="fastq_pair" name="Paired-end fastq pairer" profile="18.01" version="1.0+galaxy0">
+    <description>Rewrite paired-end fastq files to make sure that all reads have a mate and to separate out singletons.</description>
+    <requirements>
+        <requirement type="package" version="1.0">fastq-pair</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+    fastq_pair
+
+    #if $table_size:
+        -t '$table_size'
+    #end if
+
+    #if $print_elements:
+        -p '$print_elements'
+
+    #if $verbose:
+        '$verbose'
+    #end if
+
+    '$fastq1' '$fastq2'
+    ]]></command>
+    <inputs>
+        <param name="verbose" label="Verbose" optional="true" value="false" argument="-v" type="boolean" truevalue="-v" falsevalue="" checked="true" help="Verbose output. This is mainly for debugging." />
+        <param name="fastq1" label="FASTQ file 1" type="data" format="fastqsanger" optional="false" help="FASTQ file input, file 1 of pair" />
+        <param name="fastq2" label="FASTQ file 2" type="data" format="fastqsanger" optional="false" help="FASTQ file input, file 2 of pair" />
+        <param name="table_size" label="Table size" argument="-t" optional="true" value="100003" type="integer" help="Table size (default 100003)" />
+        <param name="print_elements" label="Number elements to print" argument="-p" type="integer" optional="true" help="Print this number of elements in each bucket in the table." />
+    </inputs>
+    <outputs>
+        <data label="${tool.name} on ${on_string}: FASTQ 1, paired" name="fastq1_paired" format="fastqsanger" />
+        <data label="${tool.name} on ${on_string}: FASTQ 1, single" name="fastq1_single" format="fastqsanger" />
+        <data label="${tool.name} on ${on_string}: FASTQ 2, paired" name="fastq2_paired" format="fastqsanger" />
+        <data label="${tool.name} on ${on_string}: FASTQ 2, single" name="fastq2_single" format="fastqsanger" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="table_size" value="1000"/>
+            <param name="fastq1" value="left.fastq"/>
+            <param name="fastq2" value="right.fastq"/>
+            <output name="fastq1_paired" md5="f04ccb1f12815305cbcb21f2ceb5f8e8"/>
+            <output name="fastq1_single" md5="96953b10cc8a3fc9bb5dced72a98020c"/>
+            <output name="fastq2_paired" md5="18e5b494f784f0c1effcfba2e006961e"/>
+            <output name="fastq2_single" md5="b98d26176085583e68c0a01ef96dfd06"/>
+        </test>
+    <help><![CDATA[
+=======================================================
+Paired-end fastq pairer (fastq_pair)
+=======================================================
+
+Match up paired end fastq files quickly and efficiently. 
+
+fastq_pair [options] [fastq file 1] [fastq file 2]
+
+OPTIONS
+-t table size (default 100003)
+-p print the number of elements in each bucket in the table
+-v verbose output. This is mainly for debugging
+
+]]></help>
+    <citations>
+        <citation type="doi">10.1101/552885</citation>
+    </citations>
+</tool>
