@@ -12,6 +12,7 @@
 
     #if $print_elements:
         -p '$print_elements'
+    #end if
 
     #if $verbose:
         '$verbose'
@@ -42,6 +43,7 @@
             <output name="fastq2_paired" md5="18e5b494f784f0c1effcfba2e006961e"/>
             <output name="fastq2_single" md5="b98d26176085583e68c0a01ef96dfd06"/>
         </test>
+    </tests>
     <help><![CDATA[
 =======================================================
 Paired-end fastq pairer (fastq_pair)
@@ -55,7 +57,6 @@ OPTIONS
 -t table size (default 100003)
 -p print the number of elements in each bucket in the table
 -v verbose output. This is mainly for debugging
-
 ]]></help>
     <citations>
         <citation type="doi">10.1101/552885</citation>
