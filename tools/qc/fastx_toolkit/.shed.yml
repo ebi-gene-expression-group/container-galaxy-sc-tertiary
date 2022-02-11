@@ -1,0 +1,19 @@
+name: fastx_toolkit
+owner: ebi-gxa
+description: "Suite of FASTQ/A preprocessing tools"
+long_description: "The FASTX-Toolkit is a collection of command line tools for Short-Reads FASTA/FASTQ files preprocessing."
+homepage_url: https://github.com/agordon/fastx_toolkit
+remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/tools/qc/fastx_toolkit
+type: unrestricted
+categories:
+- Transcriptomics
+- Genomics
+- RNA
+- DNA
+auto_tool_repositories:
+    name_template: "{{ tool_id }}"
+    description_template: "Suite of FASTQ/A preprocessing tools: {{ tool_name }}"
+suite:
+    name: "suite_fastx_toolkit"
+    description: "Suite of FASTQ/A preprocessing tools"
+    long_description: "The FASTX-Toolkit is a collection of command line tools for Short-Reads FASTA/FASTQ files preprocessing."
