@@ -1,0 +1,56 @@
+<tool id="fastq_trim_poly_at" name="FASTQ poly-A|T trimmer" profile="18.01" version="0.25.1+galaxy0">
+    <description>Trims poly-A stretches at the 3'-end and poly-T at 5'-end of each read, optionally discarding reads with a length below the given threshold.</description>
+    <requirements>
+        <requirement type="package" version="0.25.1">fastq_utils</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+    fastq_trim_poly_at --file '$file' --outfile '$outfile'
+
+    #if '$min_poly_at_len':
+        --min_poly_at_len '$min_poly_at_len'
+    #end if
+
+    #if '$min_len':
+        --min_len '$min_len'
+    #end if
+    ]]></command>
+    <inputs>
+        <param name="file" label="Input file"  argument="--file" type="data" format="fastqsanger.gz" optional="false" help="Fastq (optional gzipped) file name"/>
+        <param name="min_poly_at_len" label="Minimum Poly-AT Length" argument="--min_poly_at_len" optional="true" type="integer" min="0" help="Minimum length of poly-A|T sequence to remove"/>
+        <param name="min_len" label="Minimum Quality" optional="true" value="" argument="--min_qual" type="integer" help="Minimum read length"/>
+    </inputs>
+    <outputs>
+        <data label="${tool.name} on ${on_string}: Output file" name="outfile" format="fastqsanger.gz" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="file" value="poly_at.fastq.gz"/>
+            <param name="min_poly_at_len" value="3"/>
+            <output name="outfile" file="poly_at_len3.fastq.gz" compare="sim_size" delta_frac="0.1"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+=======================================================
+FASTQ poly-A|T trimmer (fastq_trim_poly_at)
+=======================================================
+
+Minimum Poly-AT Length - The terminal poly-A|T sequence
+    should be at least this long to be removed
+
+Minimum Length - Reads with post-trimming length less
+    than this setting will be removed
+
+     ]]></help>
+    <citations>
+        <citation type="bibtex"><![CDATA[
+            @ARTICLE{Fonseca2017,
+            author = {Fonseca, N.},
+            title = {fastq_utils},
+            year = {2017},
+            publisher = {GitHub},
+            journal = {GitHub repository},
+            howpublished = {\url{https://github.com/nunofonseca/fastq_utils}},
+            commit = {c6cf3f954c5286e62fbe36bb9ffecd89d7823b07}
+            }]]></citation>
+    </citations>
+</tool>
