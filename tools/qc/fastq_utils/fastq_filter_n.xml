@@ -1,0 +1,48 @@
+<tool id="fastq_filter_n" name="FASTQ filterer" profile="18.01" version="0.25.1+galaxy0">
+    <description>Discards reads with more than x% of uncalled bases (N)</description>
+    <requirements>
+        <requirement type="package" version="0.25.1">fastq_utils</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+    fastq_filter_n -n '$threshold' '$file' > $outfile
+    ]]></command>
+    <inputs>
+        <param name="file" label="Input file" type="data" format="fastqsanger.gz" optional="false" help="Fastq (optional gzipped) file name"/>
+        <param name="threshold" label="Filter threshold" argument="-n" optional="true" value="0" type="integer" min="0" max="100" help="[0-100] Maximum percentage of uncalled bases in a read. Default is 0."/>
+    </inputs>
+    <outputs>
+        <data label="${tool.name} on ${on_string}: Output file" name="outfile" format="fastqsanger.gz" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="file" value="test_21_2.fastq.gz"/>
+            <param name="threshold" value="5"/>
+            <output name="outfile" md5="019ce04559162b973e13a514a5c01595"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+============================================================
+FASTQ filterer (fastq_filter_n)
+============================================================
+
+Outputs a gzipped fastq file where reads with more than the
+maximum number of allowed uncalled bases are not included.
+
+Threshold is the maximum percentage (ranging from 0 to 100)
+of uncalled bases that a read can have. Default value is 0,
+which means that a read with a single N would be discarded.
+
+     ]]></help>
+    <citations>
+        <citation type="bibtex"><![CDATA[
+            @ARTICLE{Fonseca2017,
+            author = {Fonseca, N.},
+            title = {fastq_utils},
+            year = {2017},
+            publisher = {GitHub},
+            journal = {GitHub repository},
+            howpublished = {\url{https://github.com/nunofonseca/fastq_utils}},
+            commit = {c6cf3f954c5286e62fbe36bb9ffecd89d7823b07}
+            }]]></citation>
+    </citations>
+</tool>
