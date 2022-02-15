@@ -1,0 +1,227 @@
+<tool id="fastq_pre_barcodes" name="FASTQ barcodes preprocessor" profile="18.01" version="0.16.3+galaxy0">
+    <description>Preprocesses the reads to move the barcodes (UMI, Cell, ...) to the respective readname, optionally discarding reads with bases in the barcode regions below a given threshold.</description>
+    <requirements>
+        <requirement type="package" version="0.25.1">fastq_utils</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+    fastq_pre_barcodes --read1 '$read1' --outfile1 '$outfile1'
+
+    #if $read2:
+        --read2 '$read2'
+    #end if
+
+    #if $index1:
+        --index1 '$index1'
+    #end if
+
+    #if $index2:
+        --index2 '$index2'
+    #end if
+
+    #if $index3:
+        --index3 '$index3'
+    #end if
+
+    #if $phred_encoding:
+        --phred_encoding '$phred_encoding'
+    #end if
+
+    #if $min_qual:
+        --min_qual '$min_qual'
+    #end if
+
+    #if $outfile2:
+        --outfile2 '$outfile2'
+    #end if
+
+    #if $outfile3:
+        --outfile3 '$outfile3'
+    #end if
+
+    #if $interleaved:
+        --interleaved '$interleaved'
+    #end if
+
+    #if $umi_read:
+        --umi_read '$umi_read'
+    #end if
+
+    #if $umi_offset:
+        --umi_offset '$umi_offset'
+    #end if
+
+    #if $umi_size:
+        --umi_size '$umi_size'
+    #end if
+
+    #if $cell_read:
+        --cell_read '$cell_read'
+    #end if
+
+    #if $cell_offset:
+        --cell_offset '$cell_offset'
+    #end if
+
+    #if $cell_size:
+        --cell_size '$cell_size'
+    #end if
+
+    #if $sample_read: 
+        --sample_read '$sample_read'
+    #end if
+
+    #if $sample_offset:
+        --sample_offset '$sample_offset'
+    #end if
+
+    #if $sample_size:
+        --sample_size '$sample_size'
+    #end if
+
+    #if $read1_offset:
+        --read1_offset '$read1_offset'
+    #end if
+
+    #if $read1_size:
+        --read1_size '$read1_size'
+    #end if
+
+    #if $read2_offset:
+        --read2_offset '$read2_offset'
+    #end if
+
+    #if $read2_size: 
+        --read2_size '$read2_size'
+    #end if
+
+    #if $use_10x:
+        '$use_10x'
+    #end if
+
+    #if $sam:
+        '$sam'
+    #end if
+
+    #if $x:
+        '$x'
+    #end if
+
+    #if $brief: 
+        '$brief'
+    #elif $verbose:
+        '$verbose'
+    #end if
+    ]]></command>
+    <inputs>
+        <param name="verbose" label="Verbose" optional="true" value='false' argument="--verbose" type="boolean"  truevalue='--verbose' falsevalue='' checked="true" help="Increase level of messages printed to stderr"/>
+        <param name="brief" label="Brief" optional="true" value="true" argument="--brief" type="boolean"  truevalue='--brief' falsevalue='' checked="true" help="Decrease level of messages printed to stderr"/>
+        <param name="read1" label="Read1"  argument="--read1" type="data" format="fastqsanger,fastqsanger.gz" optional="false" help="fastq (optional gzipped) file name"/>
+        <param name="read2" label="Read2"  argument="--read2" type="data" format="fastqsanger,fastqsanger.gz" optional="true" help="fastq (optional gzipped) file name"/>
+        <param name="index1" label="Index1" argument="--index1" type="data" format="fastqsanger,fastqsanger.gz" optional="true" help="fastq (optional gzipped) file name"/>
+        <param name="index2" label="Index2" argument="--index2" type="data" format="fastqsanger,fastqsanger.gz" optional="true" help="fastq (optional gzipped) file name"/>
+        <param name="index3" label="Index3" argument="--index3" type="data" format="fastqsanger,fastqsanger.gz" optional="true" help="fastq (optional gzipped) file name"/>
+        <param name="phred_encoding" label="PHRED Encoding" argument="--phred_encoding" type="select" optional="true" help="PHRED encoding used in the input files">
+            <option value="33" selected="true">33</option>
+            <option value="64">64</option>
+        </param>
+        <param name="min_qual" label="Minimum Quality" optional="true" value='' argument="--min_qual" type="integer" min="0" max="40"   help="[0-40]. Defines the minimum quality that all bases in the UMI, Cell or Sample should have (reads that do not pass the criteria are discarded). 0 disables the filter."/>
+        <param name="interleaved" label="Interleaved Data" argument="--interleaved" type="text" optional="true" help="Interleaved data, in this format: (read1|read2|index1|index2|index3),(read1|read2|index1|index2|index3)"/>
+        <param name="umi_read" label="UMI read" argument="--umi_read" type="text" optional="true" help="File in which UMI read can be found, in this format: (read1|read2|index1|index2|index3)"/>
+        <param name="umi_offset" label="UMI offset" argument="--umi_offset" type="integer" optional="true" help="Offset (integer)"/>
+        <param name="umi_size" label="UMI Size" argument="--umi_size" type="integer" optional="true" help="Number of bases after the offset"/>
+        <param name="cell_read" label="Cell Read" argument="--cell_read" type="text" optional="true" help="File in which Cell can be found, in this format: (read1|read2|index1|index2|index3)"/>
+        <param name="cell_offset" label="Cell Offset" argument="--cell_offset" type="integer" optional="true" help="Offset"/>
+        <param name="cell_size" label="Cell Size" argument="--cell_size" type="integer" optional="true" help="Number of bases after the offset"/>
+        <param name="sample_read" label="Sample Read" argument="--sample_read" type="text" optional="true" help="File in which sample barcode can be found, in this format: (read1|read2|index1|index2|index3)"/>
+        <param name="sample_offset" label="Sample Offset" argument="--sample_offset" type="integer" optional="true" help="Offset"/>
+        <param name="sample_size" label="Sample Size" argument="--sample_size" type="integer" optional="true" help="Number of bases after the offset"/>
+        <param name="read1_offset" label="read1 Offset" argument="--read1_offset" type="integer" optional="true" help="None"/>
+        <param name="read1_size" label="read1 Size" argument="--read1_size" type="integer" optional="true" help="None"/>
+        <param name="read2_offset" label="read2 Offset" argument="--read2_offset" type="integer" optional="true" help="None"/>
+        <param name="read2_size" label="read2 Size" argument="--read2_size" type="integer" optional="true" help="None"/>
+        <param name="use_10x" label="Use 10x tags" argument="--10x" type="text" optional="true" help="Use 10X UMI tags (UB and UY) instead of the default tags defined in the SAM specification"/>
+        <param name="sam" label="SAMM" argument="--sam" type="text" optional="true" help="No documentation"/>
+        <param name="x" label="X" argument="-X" type="text" optional="true" help="No documentation"/>
+    </inputs>
+    <outputs>
+        <data label="${tool.name} on ${on_string}: Output file 1" name="outfile1" format="fastqsanger,fastqsanger.gz" />
+        <data label="${tool.name} on ${on_string}: Output file 2" name="outfile2" format="fastqsanger,fastqsanger.gz" />
+        <data label="${tool.name} on ${on_string}: Output file 3" name="outfile3" format="fastqsanger,fastqsanger.gz" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="index1" value="barcode_test_1.fastq.gz"/>
+            <param name="phred_encoding" value="33"/>
+            <param name="min_qual" value="10"/>
+            <param name="umi_read" value="index1"/>
+            <param name="umi_offset" value="0"/>
+            <param name="umi_size" value="16"/>
+            <param name="read1_offset" value="0"/>
+            <param name="read1_size" value="-1"/>
+            <param name="read1" value="barcode_test_2.fastq.gz"/>
+            <output name="outfile1" file="test.fastq.gz" md5="e4ab7532f32c14ff5bce10c021422f3f"/>
+        </test>
+        <test>
+            <param name="index1" value="barcode_test2_1.fastq.gz"/>
+            <param name="index2" value="barcode_test2_1.fastq.gz"/>
+            <param name="index3" value="barcode_test2_1.fastq.gz"/>
+            <param name="phred_encoding" value="33"/>
+            <param name="min_qual" value="1"/>
+            <param name="umi_read" value="index1"/>
+            <param name="umi_offset" value="0"/>
+            <param name="umi_size" value="16"/>
+            <param name="read1_offset" value="0"/>
+            <param name="read1_size" value="-1"/>
+            <param name="cell_read" value="index2"/>
+            <param name="cell_offset" value="0"/>
+            <param name="cell_size" value="8"/>
+            <param name="sample_read" value="index3"/>
+            <param name="sample_offset" value="0"/>
+            <param name="sample_size" value="4"/>
+            <param name="read1" value="barcode_test2_2.fastq.gz"/>
+            <param name="read2" value="barcode_test2_2.fastq.gz"/>
+            <param name="sam" value="--sam"/>
+            <output name="outfile1" file="test_1.fastq.gz" md5="d41d8cd98f00b204e9800998ecf8427e"/>
+            <output name="outfile2" file="test_2.fastq.gz" md5="d41d8cd98f00b204e9800998ecf8427e"/>
+        </test>
+        <test expect_failure="true">
+            <param name="interleaved" value="read1"/>
+            <param name="read1" value="inter.fastq.gz"/>
+            <param name="index1" value="inter.fastq.gz"/>
+            <param name="umi_read" value="index1"/>
+            <param name="umi_offset" value="0"/>
+            <param name="umi_size" value="16"/>
+            <param name="sam" value="--sam"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+=======================================================
+Preprocess barcodes of fstq files (fastq_pre_barcodes)
+=======================================================
+
+Preprocess the reads to move the barcodes (UMI, Cell, ...) to the respective readname, optionally discarding reads with bases in the barcode regions below a given threshold.
+
+Example:
+
+fastq_pre_barcodes  --read1 my.umi.fastq.gz   --outfile1 tmp.fastq.gz --phred_encoding 33 --read1_offset 22 --read1_size -1 --umi_read read1 --umi_size=8 --umi_offset 12
+
+In the above command, the UMIs (starting in the base 12 and with a length of 8 bases) are extracted from the sequences and inserted in the respective read name. The read sequences in the output file includes the bases starting in position 22 until the end of the sequence. The modified readname will have the following format
+
+@STAGS_CELL=[cell]_UMI=[umi]_SAMPLE=[sample]_ETAGS_[ORIGINAL READ NAME]
+
+where [cell], [umi], and [sample] will have the value of the barcode (if available) and [ORIGINAL_READ_NAME] is, as the name suggest, the read name found in the input fastq file.
+
+]]></help>
+    <citations>
+        <citation type="bibtex"><![CDATA[
+            @ARTICLE{Fonseca2017,
+            author = {Fonseca, N.},
+            title = {fastq_utils},
+            year = {2017},
+            publisher = {GitHub},
+            journal = {GitHub repository},
+            howpublished = {\url{https://github.com/nunofonseca/fastq_utils}},
+            commit = {c6cf3f954c5286e62fbe36bb9ffecd89d7823b07}
+}]]></citation>
+    </citations>
+</tool>
