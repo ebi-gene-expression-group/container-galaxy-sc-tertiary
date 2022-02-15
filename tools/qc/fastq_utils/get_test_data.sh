@@ -35,11 +35,11 @@ function get_data {
 # Get test data
 pushd test-data
 
-# get_data $BAR11_LINK $BAR11_FILE
-# get_data $BAR12_LINK $BAR12_FILE
-# get_data $BAR21_LINK $BAR21_FILE
-# get_data $BAR22_LINK $BAR22_FILE
-# get_data $INTER_LINK $INTER_FILE
-# get_data $A1_LINK $A1_FILE
-# get_data $POLYAT_LINK $POLYAT_FILE
+get_data $BAR11_LINK $BAR11_FILE
+get_data $BAR12_LINK $BAR12_FILE
+get_data $BAR21_LINK $BAR21_FILE
+get_data $BAR22_LINK $BAR22_FILE
+get_data $INTER_LINK $INTER_FILE
+get_data $A1_LINK $A1_FILE
+get_data $POLYAT_LINK $POLYAT_FILE
 get_data $TEST212_LINK $TEST212_FILE
