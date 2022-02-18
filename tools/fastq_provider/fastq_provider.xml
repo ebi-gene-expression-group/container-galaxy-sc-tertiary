@@ -1,0 +1,33 @@
+<tool id="fastq_provider" name="Atlas FASTQ provider" version="0.1.0" python_template_version="3.5">
+    <description>Scripts and utilities for providing fastqs to workflows.</description>
+    <requirements>
+        <requirement type="package">fetchFastq.sh</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        fetchFastq.sh -f ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR188/006/ERR1888646/ERR1888646_1.fastq.gz -t ERR1888646_1.fastq.gz
+    ]]></command>
+    <inputs>
+    </inputs>
+    <outputs>
+    </outputs>
+    <tests>
+        <test>
+        </test>
+    </tests>
+    <help><![CDATA[
+    
+        Usage: fetchFastq.sh [-f <file or uri>] [-t <target file>] [-s <source resource or directory, default 'auto'>] [-m <retrieval method, default 'wget'>] [-p <public or private, default public>] [-l <library, by default inferred from file name>] [-c <config file to override defaults>] [-v <validate only, don't download>] [-d <download type, fastq or srr>]
+
+    ]]></help>
+    <citations>
+        <citation type="bibtex">
+@misc{githubatlas-fastq-provider,
+  author = {Jonathan Manning, EBI Gene Expression Team},
+  year = {2021},
+  title = {atlas-fastq-provider},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  url = {https://github.com/ebi-gene-expression-group/atlas-fastq-provider},
+}</citation>
+    </citations>
+</tool>
