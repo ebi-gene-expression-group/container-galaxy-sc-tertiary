@@ -1,0 +1,65 @@
+<tool id="seurat_hover_locator" name="Seurat Hover Locator" profile="18.01" version="@SEURAT_VERSION@+galaxy0">
+    <description>produces an interactive plot with data overlay</description>
+    <macros>
+        <import>seurat_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <expand macro="version" />
+    <command detect_errors="exit_code"><![CDATA[
+    seurat-hover-locator.R
+
+    --plot-rds '$plot_rds'
+
+
+    #if $information_table
+    --information-table '$information_table'
+    #end if
+
+    $stringsAsFactors
+
+
+    #if $key
+    --key '$key'
+    #end if
+
+    $keepLeadingZeros
+
+    $axes
+
+    $dark_theme
+
+
+    --output-html '$output_html'
+
+    $selfcontained
+
+
+    #if $libdir
+    --libdir '$libdir'
+    #end if
+
+    
+    ]]></command>
+    <inputs>
+        <param label="RDS with ggplot2 object from Seurat 4"  name="plot_rds" argument="--plot-rds" type="data" format='?'  help="None"/>
+        <param label="Information-table" optional='true' name="information_table" argument="--information-table" type="data" format='txt,tabular,csv'  help="Table with information for overlaying on the plot. Usually the result of calling FetchData on the original Seurat object."/>
+        <param label="Stringsasfactors" optional='true' value='true' name="stringsAsFactors" argument="--do-not-stringsAsFactors" type="boolean"  truevalue='' falsevalue='--do-not-stringsAsFactors' checked='true' help="Load strings as factors."/>
+        <param label="Key" optional='true' name="key" argument="--key" type="text"   help="Key (index) for the information table"/>
+        <param label="Keepleadingzeros" optional='true' value='true' name="keepLeadingZeros" argument="--do-not-keepLeadingZeros" type="boolean"  truevalue='' falsevalue='--do-not-keepLeadingZeros' checked='true' help="If TRUE a column containing numeric data with leading zeros will be read as character, otherwise leading zeros will be removed and converted to numeric."/>
+        <param label="Axes" optional='true' value='true' name="axes" argument="--do-not-axes" type="boolean"  truevalue='' falsevalue='--do-not-axes' checked='true' help="Display x- and y-axes"/>
+        <param label="Dark theme" optional='true' value='false' name="dark_theme" argument="--dark-theme" type="boolean"  truevalue='--dark-theme' falsevalue='' checked='false' help="Plot using a dark theme?"/>
+        <param label="Selfcontained" optional='true' value='true' name="selfcontained" argument="--do-not-selfcontained" type="boolean"  truevalue='' falsevalue='--do-not-selfcontained' checked='true' help="Whether to save the HTML as a single self-contained file (with external resources base64 encoded) or a file with external resources placed in an adjacent directory."/>
+        <param label="Libdir" optional='true' name="libdir" argument="--libdir" type="text"   help="Directory to copy HTML dependencies into (defaults to filename_files)."/>
+ 
+    </inputs>
+    <outputs>
+        <data label="${tool.name} on ${on_string}: Output-html" name="output_html" format='html' />
+    </outputs>
+    <tests>
+ 
+    </tests>            
+<help>
+ 
+</help>            
+    <expand macro="citations" />
+</tool>
