@@ -4,6 +4,8 @@
         <requirement type="package" version="1.0">fastq-pair</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
+
+    ## Run fastq_pair
     fastq_pair
 
     #if $table_size:
@@ -19,6 +21,7 @@
     #end if
 
     '$fastq1' '$fastq2'
+
     ]]></command>
     <inputs>
         <param name="verbose" label="Verbose" optional="true" value="false" argument="-v" type="boolean" truevalue="-v" falsevalue="" checked="true" help="Verbose output. This is mainly for debugging." />
@@ -28,37 +31,52 @@
         <param name="print_elements" label="Number elements to print" argument="-p" type="integer" optional="true" help="Print this number of elements in each bucket in the table." />
     </inputs>
     <outputs>
-        <data name="processed" format="fastqsanger" label="Processed fastq files">
-            <discover_datasets pattern="__designation_and_ext__" />
-        </data>
+        <data name="fastq1_paired" type="data" format_source="fastq1" from_work_dir="*.paired.fq" />
+        <data name="fastq2_paired" type="data" format_source="fastq2" from_work_dir="*.paired.fq" />
+        <data name="fastq1_single" type="data" format_source="fastq1" from_work_dir="*.single.fq" />
+        <data name="fastq2_single" type="data" format_source="fastq2" from_work_dir="*.single.fq" />
+        <!--collection name="f" type="list" format_source="fastq1" label="${tool.name} on ${on_string}: Paired reads">
+            <data name="paired" from_work_dir="*.paired.fq" />
+            <data name="single" from_work_dir="*.single.fq" />
+        </collection>
+        <collection name="r" type="list" format_source="fastq2" label="${tool.name} on ${on_string}: Singletons">
+            <data name="paired" from_work_dir="*.paired.fq" />
+            <data name="single" from_work_dir="*.single.fq" />
+        </collection-->
     </outputs>
     <tests>
         <test>
             <param name="table_size" value="1000"/>
             <param name="fastq1" value="left.fastq"/>
             <param name="fastq2" value="right.fastq"/>
-            <output name="processed">
-                <discovered_dataset designation="left.fastq.paired" ftype="fastqsanger">
-                    <assert_contents>
-                        <has_line_matching expression="^@GFH7CG303GRT2I/1[ -~]+" />
-                    </assert_contents>
-                </discovered_dataset>
-                <discovered_dataset designation="right.fastq.paired" ftype="fastqsanger">
-                    <assert_contents>
-                        <has_line_matching expression="^@GFH7CG303GRT2I/2[ -~]+" />
-                    </assert_contents>
-                </discovered_dataset>
-                <discovered_dataset designation="left.fastq.single" ftype="fastqsanger">
-                    <assert_contents>
-                        <has_line_matching expression="^@GFH7CG303GGIBL/1[ -~]+" />
-                    </assert_contents>
-                </discovered_dataset>
-                <discovered_dataset designation="right.fastq.single" ftype="fastqsanger">
-                    <assert_contents>
-                        <has_line_matching expression="^@GFH7CG303GSASH/2[ -~]+" />
-                    </assert_contents>
-                </discovered_dataset>
+            <output name="fastq1_paired">
+                <assert_contents><has_line_matching expression="^@GFH7CG303GRT2I/1[ -~]+" /></assert_contents>
             </output>
+            <output name="fastq2_paired">
+                <assert_contents><has_line_matching expression="^@GFH7CG303GRT2I/2[ -~]+" /></assert_contents>
+            </output>
+            <output name="fastq1_single">
+                <assert_contents><has_line_matching expression="^@GFH7CG303GGIBL/1[ -~]+" /></assert_contents>
+            </output>
+            <output name="fastq2_single">
+                <assert_contents><has_line_matching expression="^@GFH7CG303GSASH/2[ -~]+" /></assert_contents>
+            </output>
+            <!--output_collection name="f" type="list" count="2">
+                <element name="paired" ftype="fq">
+                    <assert_contents><has_line_matching expression="^@GFH7CG303GRT2I/1[ -~]+" /></assert_contents>
+                </element>
+                <element name="single" ftype="fq">
+                    <assert_contents><has_line_matching expression="^@GFH7CG303GGIBL/1[ -~]+" /></assert_contents>
+                </element>
+            </output_collection>
+            <output_collection name="r" type="list" count="2">
+                <element name="paired" ftype="fq">
+                    <assert_contents><has_line_matching expression="^@GFH7CG303GRT2I/2[ -~]+" /></assert_contents>
+                </element>
+                <element name="single" ftype="fq">
+                    <assert_contents><has_line_matching expression="^@GFH7CG303GSASH/2[ -~]+" /></assert_contents>
+                </element>
+            </output_collection-->
         </test>
     </tests>
     <help><![CDATA[
