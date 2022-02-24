@@ -56,18 +56,18 @@
             <param name="fastq1" value="left.fastq"/>
             <param name="fastq2" value="right.fastq"/>
             <output_collection name="paired" type="list" count="2">
-                <element name="forward" file="1.paired.fq" ftype="fq">
+                <element name="forward" ftype="fastqsanger">
                     <assert_contents><has_line_matching expression="^@GFH7CG303GRT2I/1[ -~]+" /></assert_contents>
                 </element>
-                <element name="reverse" file="2.paired.fq" ftype="fq">
+                <element name="reverse" ftype="fastqsanger">
                     <assert_contents><has_line_matching expression="^@GFH7CG303GRT2I/2[ -~]+" /></assert_contents>
                 </element>
             </output_collection>
             <output_collection name="singletons" type="list" count="2">
-                <element name="forward" file="1.single.fq" ftype="fq">
+                <element name="forward" ftype="fastqsanger">
                     <assert_contents><has_line_matching expression="^@GFH7CG303GGIBL/1[ -~]+" /></assert_contents>
                 </element>
-                <element name="reverse" file="2.single.fq" ftype="fq">
+                <element name="reverse" ftype="fastqsanger">
                     <assert_contents><has_line_matching expression="^@GFH7CG303GSASH/2[ -~]+" /></assert_contents>
                 </element>
             </output_collection>
