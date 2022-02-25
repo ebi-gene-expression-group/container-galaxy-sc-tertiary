@@ -4,9 +4,13 @@ BASE_LINK="https://raw.githubusercontent.com/linsalrob/fastq-pair/master/test"
 
 LEFT_FILE="left.fastq"
 RIGHT_FILE="right.fastq"
+LEFTGZ_FILE="left.fastq.gz"
+RIGHTGZ_FILE="right.fastq.gz"
 
 LEFT_LINK=$BASE_LINK"/"$LEFT_FILE
 RIGHT_LINK=$BASE_LINK"/"$RIGHT_FILE
+LEFTGZ_LINK=$BASE_LINK"/"$LEFTGZ_FILE
+RIGHTGZ_LINK=$BASE_LINK"/"$RIGHTGZ_FILE
 
 function get_data {
   local link=$1
@@ -23,3 +27,5 @@ pushd test-data
 
 get_data $LEFT_LINK $LEFT_FILE
 get_data $RIGHT_LINK $RIGHT_FILE
+get_data $LEFTGZ_LINK $LEFTGZ_FILE
+get_data $RIGHTGZ_LINK $RIGHTGZ_FILE
