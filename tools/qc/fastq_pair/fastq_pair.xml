@@ -6,17 +6,14 @@
     <command detect_errors="exit_code"><![CDATA[
 
     ## Unzip gzipped inputs
-    #set fastq1_lw = str($fastq1).lower()
-    #set fastq2_lw = str($fastq2).lower()
-
-    #if fastq1_lw.endswith((".gz", ".gzip")):
-        gzip -d -c $fastq1 > 1.fq &&
+    #if $fastq1.is_of_type("fastqsanger.gz"):
+        gzip -d -c '$fastq1' > 1.fq &&
     #else:
         mv '$fastq1' 1.fq &&
     #end if
 
-    #if fastq2_lw.endswith((".gz", ".gzip")):
-         gzip -d -c $fastq2 > 2.fq &&
+    #if $fastq2.is_of_type("fastqsanger.gz"):
+        gzip -d -c '$fastq2' > 2.fq &&
     #else:
         mv '$fastq2' 2.fq &&
     #end if
@@ -37,7 +34,7 @@
         '$verbose'
     #end if
 
-    1.fq 2.fq 
+    1.fq 2.fq
 
     ]]></command>
     <inputs>
@@ -84,18 +81,18 @@
             <param name="fastq1" value="left.fastq.gz"/>
             <param name="fastq2" value="right.fastq.gz"/>
             <output_collection name="paired" type="list" count="2">
-                <element name="forward" ftype="fastqsanger">
+                <element name="forward" ftype="fastqsanger.gz">
                     <assert_contents><has_line_matching expression="^@GFH7CG303GRT2I/1[ -~]+" /></assert_contents>
                 </element>
-                <element name="reverse" ftype="fastqsanger">
+                <element name="reverse" ftype="fastqsanger.gz">
                     <assert_contents><has_line_matching expression="^@GFH7CG303GRT2I/2[ -~]+" /></assert_contents>
                 </element>
             </output_collection>
             <output_collection name="singletons" type="list" count="2">
-                <element name="forward" ftype="fastqsanger">
+                <element name="forward" ftype="fastqsanger.gz">
                     <assert_contents><has_line_matching expression="^@GFH7CG303GGIBL/1[ -~]+" /></assert_contents>
                 </element>
-                <element name="reverse" ftype="fastqsanger">
+                <element name="reverse" ftype="fastqsanger.gz">
                     <assert_contents><has_line_matching expression="^@GFH7CG303GSASH/2[ -~]+" /></assert_contents>
                 </element>
             </output_collection>
