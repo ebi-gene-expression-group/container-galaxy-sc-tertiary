@@ -5,6 +5,24 @@
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
 
+
+    ## Unzip gzipped inputs
+    #set fastq1_lw = str($fastq1).lower()
+    #set fastq2_lw = str($fastq2).lower()
+
+    #if fastq1_lw.endswith((".gz", ".gzip")):
+        gzip -d -c $fastq1 > 1.fq &&
+    #else:
+        mv '$fastq1' 1.fq &&
+    #end if
+
+    #if fastq2_lw.endswith((".gz", ".gzip")):
+         gzip -d -c $fastq2 > 2.fq &&
+    #else:
+        mv '$fastq2' 2.fq &&
+    #end if
+
+
     ## Run fastq_pair
     fastq_pair
 
@@ -20,17 +38,7 @@
         '$verbose'
     #end if
 
-    '$fastq1' '$fastq2' &&
-
-    #set fq1paired=str($fastq1)+".paired.fq"
-    #set fq2paired=str($fastq2)+".paired.fq"
-    #set fq1single=str($fastq1)+".single.fq"
-    #set fq2single=str($fastq2)+".single.fq"
-
-    mv '$fq1paired' 1.paired.fq &&
-    mv '$fq2paired' 2.paired.fq &&
-    mv '$fq1single' 1.single.fq &&
-    mv '$fq2single' 2.single.fq
+    1.fq 2.fq 
 
     ]]></command>
     <inputs>
@@ -42,19 +50,40 @@
     </inputs>
     <outputs>        
         <collection name="paired" type="list" format_source="fastq1" label="${tool.name} on ${on_string}: Paired reads">
-            <data name="forward" from_work_dir="1.paired.fq" />
-            <data name="reverse" from_work_dir="2.paired.fq" />
+            <data name="forward" from_work_dir="1.fq.paired.fq" />
+            <data name="reverse" from_work_dir="2.fq.paired.fq" />
         </collection>
         <collection name="singletons" type="list" format_source="fastq1" label="${tool.name} on ${on_string}: Singletons">
-            <data name="forward" from_work_dir="1.single.fq" />
-            <data name="reverse" from_work_dir="2.single.fq" />
+            <data name="forward" from_work_dir="1.fq.single.fq" />
+            <data name="reverse" from_work_dir="2.fq.single.fq" />
         </collection>
     </outputs>
     <tests>
-        <test>
+        <!--test>
             <param name="table_size" value="1000"/>
             <param name="fastq1" value="left.fastq"/>
             <param name="fastq2" value="right.fastq"/>
+            <output_collection name="paired" type="list" count="2">
+                <element name="forward" ftype="fastqsanger">
+                    <assert_contents><has_line_matching expression="^@GFH7CG303GRT2I/1[ -~]+" /></assert_contents>
+                </element>
+                <element name="reverse" ftype="fastqsanger">
+                    <assert_contents><has_line_matching expression="^@GFH7CG303GRT2I/2[ -~]+" /></assert_contents>
+                </element>
+            </output_collection>
+            <output_collection name="singletons" type="list" count="2">
+                <element name="forward" ftype="fastqsanger">
+                    <assert_contents><has_line_matching expression="^@GFH7CG303GGIBL/1[ -~]+" /></assert_contents>
+                </element>
+                <element name="reverse" ftype="fastqsanger">
+                    <assert_contents><has_line_matching expression="^@GFH7CG303GSASH/2[ -~]+" /></assert_contents>
+                </element>
+            </output_collection>
+        </test-->
+        <test>
+            <param name="table_size" value="1000"/>
+            <param name="fastq1" value="left.fastq.gz"/>
+            <param name="fastq2" value="right.fastq.gz"/>
             <output_collection name="paired" type="list" count="2">
                 <element name="forward" ftype="fastqsanger">
                     <assert_contents><has_line_matching expression="^@GFH7CG303GRT2I/1[ -~]+" /></assert_contents>
