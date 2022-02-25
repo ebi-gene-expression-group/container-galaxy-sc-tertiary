@@ -5,7 +5,6 @@
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
 
-
     ## Unzip gzipped inputs
     #set fastq1_lw = str($fastq1).lower()
     #set fastq2_lw = str($fastq2).lower()
@@ -43,8 +42,8 @@
     ]]></command>
     <inputs>
         <param name="verbose" label="Verbose" optional="true" value="false" argument="-v" type="boolean" truevalue="-v" falsevalue="" checked="true" help="Verbose output. This is mainly for debugging." />
-        <param name="fastq1" label="FASTQ file 1" type="data" format="fastqsanger" optional="false" help="FASTQ file input, file 1 of pair" />
-        <param name="fastq2" label="FASTQ file 2" type="data" format="fastqsanger" optional="false" help="FASTQ file input, file 2 of pair" />
+        <param name="fastq1" label="FASTQ file 1" type="data" format="fastqsanger,fastqsanger.gz" optional="false" help="FASTQ file input, file 1 of pair" />
+        <param name="fastq2" label="FASTQ file 2" type="data" format="fastqsanger,fastqsanger.gz" optional="false" help="FASTQ file input, file 2 of pair" />
         <param name="table_size" label="Table size" argument="-t" optional="true" value="100003" type="integer" help="Table size (default 100003)" />
         <param name="print_elements" label="Number elements to print" argument="-p" type="integer" optional="true" help="Print this number of elements in each bucket in the table." />
     </inputs>
@@ -59,7 +58,7 @@
         </collection>
     </outputs>
     <tests>
-        <!--test>
+        <test>
             <param name="table_size" value="1000"/>
             <param name="fastq1" value="left.fastq"/>
             <param name="fastq2" value="right.fastq"/>
@@ -79,7 +78,7 @@
                     <assert_contents><has_line_matching expression="^@GFH7CG303GSASH/2[ -~]+" /></assert_contents>
                 </element>
             </output_collection>
-        </test-->
+        </test>
         <test>
             <param name="table_size" value="1000"/>
             <param name="fastq1" value="left.fastq.gz"/>
@@ -108,8 +107,7 @@ Paired-end fastq pairer (fastq_pair)
 =======================================================
 
 Match up paired end fastq files quickly and efficiently. 
-
-fastq_pair [options] [fastq file 1] [fastq file 2]
+This galaxy tool can accept gzipped fastq files.
 
 OPTIONS
 -t table size (default 100003)
