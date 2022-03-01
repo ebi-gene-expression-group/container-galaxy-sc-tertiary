@@ -108,9 +108,9 @@ types of single cell data.
   Find clusters: removed dims-use, k-param, prune-snn.
 
 2.3.1+galaxy0: Improved documentation and further exposition of all script's options. Pablo Moreno, Jonathan Manning and Ni Huang, Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
-EMBL-EBI https://www.ebi.ac.uk/. Parts obtained from wrappers from Christophe Antoniewski(https://github.com/drosofff) and Lea Bellenger(https://github.com/bellenger-l).
+EMBL-EBI https://www.ebi.ac.uk/. Parts obtained from wrappers from Christophe Antoniewski(github.com/drosofff) and Lea Bellenger(github.com/bellenger-l).
 
-0.0.1: Initial contribution. Maria Doyle, https://github.com/mblue9.
+0.0.1: Initial contribution. Maria Doyle (github.com/mblue9).
       ]]></token>
 
 
