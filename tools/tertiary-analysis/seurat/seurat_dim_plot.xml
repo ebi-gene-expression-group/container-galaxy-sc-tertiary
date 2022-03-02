@@ -69,7 +69,7 @@
             <param name="rds_seurat_file" value="E-MTAB-6077-3k_features_90_cells-tsne.rds" ftype="rdata" />
             <output name="output_image_file" >
               <assert_contents>
-                <has_size value="39143" delta="4000"/>
+                <has_size value="18122" delta="2000"/>
               </assert_contents>
             </output>
         </test>
