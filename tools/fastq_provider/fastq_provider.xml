@@ -13,26 +13,29 @@
     <inputs>
         <param name="source" argument="-f" type="text" label="file or uri" help="file or uri" />
         <param name="target" argument="-t" type="text"  label="target file" help="target file" />
-        <param name="resource" argument="-s" type="select"  label="resource or directory, default 'auto' " help="It uses this variable to decide how to fetch the file, e.g. there’s a specific method for getting results from hca. " optional='true' />
+        <param name="resource" argument="-s" type="select"  label="resource or directory, default 'auto' " help="It uses this variable to decide how to fetch the file, e.g. there’s a specific method for getting results from hca. " optional='true' >
             <option value="auto" selected="true">auto</option>
             <option value="ena">ena</option>
             <option value="sra">sra</option>
             <option value="hca">hca</option>
             <option value="dir">dir</option>
+	</param>
         <param name="retrieval_method" argument="-m" type="text"  label="retrieval method, default 'wget' " value='wget' help="retrieval method, default 'wget' "  optional='true'/>
-        <param name="type" argument="-p" type="select" format="select" label="public or private, default public" help="public or private, default public" optional='true'/>
+        <param name="mode" argument="-p" type="select" format="select" label="public or private, default public" help="public or private, default public" optional='true'>
             <option value="public" selected="true">public</option>
-            <option value="private">ena</option>
+            <option value="private">private</option>
+	</param>
         <param name="library" argument="-l" type="text"  label="library, by default inferred from file name" help="library, by default inferred from file name" optional='true'/>
         <param name="config_file" argument="-c" type="data" format="atlas-fastq-provider-config.sh" label="config file to override defaults" help="config file to override defaults" optional='true'/>
-        <param name="validate_only" argument="-v"  label="validate only, don't download" help="validate only, don't download" optional='true'/>
-        <param name="download_type" argument="-d" type="select" label="download type, fastq or srr" help="download type, fastq or srr" optional='true'/>
+        <param name="validate_only" argument="-v" type="boolean" label="validate only, don't download" help="validate only, don't download" optional='true'/>
+        <param name="download_type" argument="-d" type="select" label="download type, fastq or srr" help="download type, fastq or srr" optional='true'>
             <option value="fastq" selected="true">fastq</option>
             <option value="srr">srr</option>
+	</param>
     </inputs>
 
     <outputs>
-        <data name="outfile" label="${tool.name} on ${on_string}: fastq file" format="fastq.gz">
+        <data name="outfile" label="${tool.name} on ${on_string}: fastq file" format="fastq.gz"/>
     </outputs>
 
     <tests>
