@@ -36,6 +36,15 @@
 
     1.fq 2.fq
 
+
+    ## Compress outputs
+    #if $compress == "yes":
+        && gzip 1.fq.paired.fq
+        && gzip 2.fq.paired.fq
+        && gzip 1.fq.single.fq
+        && gzip 2.fq.single.fq
+    #end if
+
     ]]></command>
     <inputs>
         <param name="verbose" label="Verbose" optional="true" value="false" argument="-v" type="boolean" truevalue="-v" falsevalue="" checked="true" help="Verbose output. This is mainly for debugging." />
@@ -43,16 +52,33 @@
         <param name="fastq2" label="FASTQ file 2" type="data" format="fastqsanger,fastqsanger.gz" optional="false" help="FASTQ file input, file 2 of pair" />
         <param name="table_size" label="Table size" argument="-t" optional="true" value="100003" type="integer" help="Table size (default 100003)" />
         <param name="print_elements" label="Number elements to print" argument="-p" type="integer" optional="true" help="Print this number of elements in each bucket in the table." />
+        <param name="compress" label="Compress outputs?" optional="true" value="false" type="boolean" truevalue="yes" falsevalue="no" checked="true" help="Check if outputs should be compressed (.gz)" />
+        <!-- Find a way to compress the data after processing -->
+        <!-- Use conditionals or change_format when -->
     </inputs>
-    <outputs>        
-        <collection name="paired" type="list" format_source="fastq1" label="${tool.name} on ${on_string}: Paired reads">
-            <data name="forward" from_work_dir="1.fq.paired.fq" />
+    <outputs>
+        <!--conditional name="compress">
+            <when value="no"></when>
+            <when> value="yes"</when>
+        </conditional-->
+        <collection name="paired" type="list" format="fastqsanger" label="${tool.name} on ${on_string}: Paired reads">
+            <data name="forward" from_work_dir="1.fq.paired.fq">
+                <actions>
+                    <conditional name="compress">
+                        <when value="no">
+                            <action></action>
+                            <!-- come back here, look for appropriate actions -->
+                        </when>
+                        <when value="yes"></when>
+                    </conditional>
+            </data>
             <data name="reverse" from_work_dir="2.fq.paired.fq" />
         </collection>
-        <collection name="singletons" type="list" format_source="fastq1" label="${tool.name} on ${on_string}: Singletons">
+        <collection name="singletons" type="list" format="fastqsanger" label="${tool.name} on ${on_string}: Singletons">
             <data name="forward" from_work_dir="1.fq.single.fq" />
             <data name="reverse" from_work_dir="2.fq.single.fq" />
         </collection>
+        
     </outputs>
     <tests>
         <test>
@@ -81,18 +107,18 @@
             <param name="fastq1" value="left.fastq.gz"/>
             <param name="fastq2" value="right.fastq.gz"/>
             <output_collection name="paired" type="list" count="2">
-                <element name="forward" ftype="fastqsanger.gz">
+                <element name="forward" ftype="fastqsanger">
                     <assert_contents><has_line_matching expression="^@GFH7CG303GRT2I/1[ -~]+" /></assert_contents>
                 </element>
-                <element name="reverse" ftype="fastqsanger.gz">
+                <element name="reverse" ftype="fastqsanger">
                     <assert_contents><has_line_matching expression="^@GFH7CG303GRT2I/2[ -~]+" /></assert_contents>
                 </element>
             </output_collection>
             <output_collection name="singletons" type="list" count="2">
-                <element name="forward" ftype="fastqsanger.gz">
+                <element name="forward" ftype="fastqsanger">
                     <assert_contents><has_line_matching expression="^@GFH7CG303GGIBL/1[ -~]+" /></assert_contents>
                 </element>
-                <element name="reverse" ftype="fastqsanger.gz">
+                <element name="reverse" ftype="fastqsanger">
                     <assert_contents><has_line_matching expression="^@GFH7CG303GSASH/2[ -~]+" /></assert_contents>
                 </element>
             </output_collection>
