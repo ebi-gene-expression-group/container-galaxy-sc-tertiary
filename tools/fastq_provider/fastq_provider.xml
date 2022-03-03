@@ -1,19 +1,48 @@
-<tool id="fastq_provider" name="Atlas FASTQ provider" version="0.1.0" python_template_version="3.5">
-    <description>Scripts and utilities for providing fastqs to workflows.</description>
+<tool id="fastq_provider" name="Atlas FASTQ provider" version="@TOOL_VERSION@+galaxy" python_template_version="3.5" profile="20.01">
+    <description> Scripts and utilities for providing fastqs to workflows. </description>
+    <macros>
+        <token name="@TOOL_VERSION@">0.4.1</token>
+    </macros>
     <requirements>
-        <requirement type="package">fetchFastq.sh</requirement>
+        <requirement type="package" version="@TOOL_VERSION@">atlas-fastq-provider</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         fetchFastq.sh -f ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR188/006/ERR1888646/ERR1888646_1.fastq.gz -t ERR1888646_1.fastq.gz
-    ]]></command>
+    ]]></command> 
+
     <inputs>
+        <param name="source" argument="-f" type="text" label="file or uri" help="file or uri" />
+        <param name="target" argument="-t" type="text"  label="target file" help="target file" />
+        <param name="resource" argument="-s" type="select"  label="resource or directory, default 'auto' " help="It uses this variable to decide how to fetch the file, e.g. there’s a specific method for getting results from hca. " optional='true' />
+            <option value="auto" selected="true">auto</option>
+            <option value="ena">ena</option>
+            <option value="sra">sra</option>
+            <option value="hca">hca</option>
+            <option value="dir">dir</option>
+        <param name="retrieval_method" argument="-m" type="text"  label="retrieval method, default 'wget' " value='wget' help="retrieval method, default 'wget' "  optional='true'/>
+        <param name="type" argument="-p" type="select" format="select" label="public or private, default public" help="public or private, default public" optional='true'/>
+            <option value="public" selected="true">public</option>
+            <option value="private">ena</option>
+        <param name="library" argument="-l" type="text"  label="library, by default inferred from file name" help="library, by default inferred from file name" optional='true'/>
+        <param name="config_file" argument="-c" type="data" format="atlas-fastq-provider-config.sh" label="config file to override defaults" help="config file to override defaults" optional='true'/>
+        <param name="validate_only" argument="-v"  label="validate only, don't download" help="validate only, don't download" optional='true'/>
+        <param name="download_type" argument="-d" type="select" label="download type, fastq or srr" help="download type, fastq or srr" optional='true'/>
+            <option value="fastq" selected="true">fastq</option>
+            <option value="srr">srr</option>
     </inputs>
+
     <outputs>
+        <data name="outfile" label="${tool.name} on ${on_string}: fastq file" format="fastq.gz">
     </outputs>
+
     <tests>
-        <test>
+        <test expect_num_outputs="1">
+            <param name="source" value="ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR188/006/ERR1888646/ERR1888646_1.fastq.gz"/>
+            <param name="target" value="ERR1888646_1.fastq.gz"/>
+            <output name="outfile" file="ERR1888646_1.fastq.gz" />
         </test>
     </tests>
+
     <help><![CDATA[
     
         Usage: fetchFastq.sh [-f <file or uri>] [-t <target file>] [-s <source resource or directory, default 'auto'>] [-m <retrieval method, default 'wget'>] [-p <public or private, default public>] [-l <library, by default inferred from file name>] [-c <config file to override defaults>] [-v <validate only, don't download>] [-d <download type, fastq or srr>]
@@ -21,13 +50,14 @@
     ]]></help>
     <citations>
         <citation type="bibtex">
-@misc{githubatlas-fastq-provider,
-  author = {Jonathan Manning, EBI Gene Expression Team},
-  year = {2021},
-  title = {atlas-fastq-provider},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  url = {https://github.com/ebi-gene-expression-group/atlas-fastq-provider},
-}</citation>
+            @misc{githubatlas-fastq-provider,
+            author = {Jonathan Manning, EBI Gene Expression Team},
+            year = {2021},
+            title = {atlas-fastq-provider},
+            publisher = {GitHub},
+            journal = {GitHub repository},
+            url = {https://github.com/ebi-gene-expression-group/atlas-fastq-provider},
+        }</citation>
     </citations>
 </tool>
+
