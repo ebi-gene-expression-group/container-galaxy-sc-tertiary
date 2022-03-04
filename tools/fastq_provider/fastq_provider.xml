@@ -42,7 +42,7 @@
         <test expect_num_outputs="1">
             <param name="source" value="ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR035/ERR035229/ERR035229.fastq.gz"/>
             <param name="target" value="ERR035229.fastq.gz"/>
-            <output name="outfile" file="ERR035229.fastq.gz" />
+            <output name="outfile" file="ERR035229.fastq.gz" ftype="fastq.gz"/>
         </test>
     </tests>
 
