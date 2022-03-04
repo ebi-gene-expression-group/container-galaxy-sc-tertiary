@@ -7,7 +7,7 @@
         <requirement type="package" version="@TOOL_VERSION@">atlas-fastq-provider</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-        fetchFastq.sh -f ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR188/006/ERR1888646/ERR1888646_1.fastq.gz -t ERR1888646_1.fastq.gz
+        fetchFastq.sh -f ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR035/ERR035229/ERR035229.fastq.gz -t ERR035229.fastq.gz
     ]]></command> 
 
     <inputs>
@@ -40,9 +40,9 @@
 
     <tests>
         <test expect_num_outputs="1">
-            <param name="source" value="ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR188/006/ERR1888646/ERR1888646_1.fastq.gz"/>
-            <param name="target" value="ERR1888646_1.fastq.gz"/>
-            <output name="outfile" file="ERR1888646_1.fastq.gz" />
+            <param name="source" value="ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR035/ERR035229/ERR035229.fastq.gz"/>
+            <param name="target" value="ERR035229.fastq.gz"/>
+            <output name="outfile" file="ERR035229.fastq.gz" />
         </test>
     </tests>
 
