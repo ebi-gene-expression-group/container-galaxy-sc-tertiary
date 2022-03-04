@@ -7,36 +7,56 @@
         <requirement type="package" version="@TOOL_VERSION@">atlas-fastq-provider</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-        fetchFastq.sh -f ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR035/ERR035229/ERR035229.fastq.gz -t ERR035229.fastq.gz
+        fetchFastq.sh -f '$source' -t '$target'  
+        #if $resource
+        -s '$resource' 
+        #end if
+    #    #if $retrieval_method
+    #    -m '$retrieval_method'
+    #    #end if
+        #if $mode
+        -p '$mode'
+        #end if
+        #if $library
+        -l '$library'
+        #end if
+        #if $config_file
+        -c '$config_file'
+        #end if
+        #if $validate_only
+        -v '$validate_only'
+        #end if
+        #if $download_type
+        -d '$download_type' 
+        #end if
     ]]></command> 
     <inputs>
         <param name="source" argument="-f" type="text" label="file or uri" help="file or uri" />
         <param name="target" argument="-t" type="text"  label="target file" help="target file. E.g 'ERR035229.fastq.gz' " />
-        <param name="resource" argument="-s" type="select"  label="resource or directory, default 'auto' " help="It uses this variable to decide how to fetch the file, e.g. there’s a specific method for getting results from hca. " optional='true' >
+        <param name="resource" argument="-s" type="select"  label="resource or directory, default 'auto' " help="How to fetch the file, e.g. there’s a specific method for getting results from the Human Cell Atlas' 'Azul' resource. " optional='true' >
             <option value="auto" selected="true">auto</option>
-            <option value="ena">ena</option>
-            <option value="sra">sra</option>
-            <option value="hca">hca</option>
-            <option value="dir">dir</option>
+            <option value="ena">ENA</option>
+            <option value="sra">SRA file</option>
+            <option value="hca">Human Cell Atlas</option>
+            <option value="dir">Local directory</option>
 	    </param>
         <param name="retrieval_method" argument="-m" type="text"  label="retrieval method, default 'wget' " value='wget' help="retrieval method, default 'auto'. Files with hca source will use the 'hca' download method regardless (-m has no effect). Private ENA files will be fetched via 'ssh' (-m has no effect). The 'http' method refers to an HTTP endpoint in the EBI Fire resource. "  optional='true'>
             <option value="auto" selected="true">auto</option>
-            <option value="wget">ena</option>
-            <option value="hca">sra</option>
-            <option value="ssh">hca</option>
-            <option value="http">dir</option>
-            <option value="dir">dir</option>
+            <option value="wget">wget</option>
+            <option value="dir">Local directory</option>
+            <option value="ssh">SSH (ENA files, for EBI only)</option>
+            <option value="http">HTTP endpoint (ENA files, EBI only)</option>
         </param>
-        <param name="mode" argument="-p" type="select" format="select" label="public or private, default public" help="public or private, default 'public' " optional='true'>
+        <param name="mode" argument="-p" type="select" format="select" label="public or private, default public. Private usable by EBI staff only" help="public or private, default 'public' " optional='true'>
             <option value="public" selected="true">public</option>
             <option value="private">private</option>
 	    </param>
-        <param name="library" argument="-l" type="text"  label="library, by default inferred from file name" help="library, by default inferred from file name. E.g. -l ERR1888646 " optional='true'/>
+        <param name="library" argument="-l" type="text"  label="ENA library (ENA source files only), by default inferred from file name" help="library, by default inferred from file name. E.g. -l ERR1888646 " optional='true'/>
         <param name="config_file" argument="-c" type="data" format="atlas-fastq-provider-config.sh" label="config file to override defaults" help="config file to override defaults" optional='true'/>
-        <param name="validate_only" argument="-v" type="boolean" label="validate only, don't download" help="validate only, don't download" optional='true'/>
-        <param name="download_type" argument="-d" type="select" label="download type, fastq or srr" help="download type, fastq or srr" optional='true'>
+        <param name="validate_only" argument="-v" type="boolean" label="validate only to check a source URI is valid, don't download" help="validate only, don't download" optional='true'/>
+        <param name="download_type" argument="-d" type="select" label="download type, fastq or SRA file" help="download type, fastq or srr" optional='true'>
             <option value="fastq" selected="true">fastq</option>
-            <option value="srr">srr</option>
+            <option value="srr">SRA</option>
 	    </param>
     </inputs>
     <outputs>
