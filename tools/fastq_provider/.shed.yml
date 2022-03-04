@@ -1,7 +1,10 @@
 name: atlas_fastq_provider
 owner: ebi-gxa
-description: Scripts and utilities for providing fastqs to workflows
-long_description: Generic utility to provide FASTQ files for use in pipelines, etc. At the most basic level files can be downloaded from links. For ENA, there are three methods FTP, SSH and HTTP
+description: Retrieval and download of FASTQ files from ENA and other repositories such as HCA or SRA.
+long_description: Retrieval and download of FASTQ files from ENA and other repositories such as HCA or SRA. The tool is used in production pipelines of EMBL-EBI Expression Atlas and Single Cell Expression Atlas. At the most basic level files can be downloaded from links. For ENA, there are three methods FTP, SSH and HTTP.
 homepage_url: https://github.com/ebi-gene-expression-group/atlas-fastq-provider
 remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/tools/fastq_provider
-categories: [Sequence Analysis]
+categories:
+- Data Source
+- RNA
+- Transcriptomics
