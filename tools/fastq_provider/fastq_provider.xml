@@ -1,5 +1,5 @@
 <tool id="fastq_provider" name="Atlas FASTQ provider" version="@TOOL_VERSION@+galaxy" python_template_version="3.5" profile="20.01">
-    <description> Scripts and utilities for providing fastqs to workflows. </description>
+    <description> Retrieval and download of FASTQ files from ENA and other repositories such as HCA or SRA. The tool is used in production pipelines of EMBL-EBI Expression Atlas and Single Cell Expression Atlas.  </description>
     <macros>
         <token name="@TOOL_VERSION@">0.4.1</token>
     </macros>
