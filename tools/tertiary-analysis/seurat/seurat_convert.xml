@@ -1,0 +1,114 @@
+<tool id="seurat_convert" name="Seurat 3 converter" profile="18.01" version="@SEURAT_VERSION@+galaxy0">
+    <description>translates different single cell formats</description>
+    <macros>
+        <import>seurat_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <expand macro="version" />
+    <command detect_errors="exit_code"><![CDATA[
+seurat-convert.R
+@INPUT_OBJECT@
+@OUTPUT_OBJECT@
+]]></command>
+    <inputs>
+      <expand macro="input_object_params"/>
+      <expand macro="output_object_params"/>
+    </inputs>
+
+    <outputs>
+      <expand macro="output_files"/>
+    </outputs>
+
+    <tests>
+        <test>
+          <conditional name="input">
+            <param name="format" value="rds_seurat"/>
+            <param name="rds_seurat_file" value="E-MTAB-6077-3k_features_90_cells.rds"/>
+          </conditional>
+          <param name="format" value="loom"/>
+          <output name="loom_file">
+            <assert_contents>
+              <has_h5_keys keys="layers,matrix,row_attrs"/>
+            </assert_contents>
+          </output>
+        </test>
+        <test>
+          <conditional name="input">
+            <param name="format" value="rds_seurat"/>
+            <param name="rds_seurat_file" value="E-MTAB-6077-3k_features_90_cells.rds"/>
+          </conditional>
+          <param name="format" value="rds_sce"/>
+          <output name="rds_sce_file">
+            <assert_contents>
+              <has_size value="2368166" delta="200000"/>
+            </assert_contents>
+          </output>
+        </test>
+        <test>
+          <conditional name="input">
+            <param name="format" value="loom"/>
+            <param name="loom_file" value="E-MTAB-6077-3k_features_90_cells_loom.h5" ftype="h5"/>
+          </conditional>
+          <param name="format" value="rds_sce"/>
+          <output name="rds_sce_file">
+            <assert_contents>
+              <has_size value="2432700" delta="200000"/>
+            </assert_contents>
+          </output>
+        </test>
+        <test>
+          <conditional name="input">
+            <param name="format" value="rds_sce"/>
+            <param name="rds_sce_file" value="E-MTAB-6077-3k_features_90_cells_sce.rds" ftype="rdata.sce"/>
+          </conditional>
+          <param name="format" value="rds_seurat"/>
+          <output name="rds_seurat_file">
+            <assert_contents>
+              <has_size value="2366603" delta="200000"/>
+            </assert_contents>
+          </output>
+        </test>
+        <test>
+          <conditional name="input">
+            <param name="format" value="anndata"/>
+            <param name="anndata_file" value="E-MTAB-6077-3k_features_90_cells.h5ad" ftype="h5ad"/>
+          </conditional>
+          <param name="format" value="rds_seurat"/>
+          <output name="rds_seurat_file">
+            <assert_contents>
+              <has_size value="2965562" delta="200000"/>
+            </assert_contents>
+          </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+
+This tool uses Seurat 3 to convert formats. Possible inputs are:
+
+    * Seurat 3
+    * Loom (probably earlier than Loom 3.0)
+    * AnnData (contemporary versions to Seurat 3, most likely up to AnnData 0.6.22.post1)
+    * Single Cell Experiment
+
+Possible outputs are:
+
+    * Seurat 3
+    * Loom (as produced by loomR package)
+    * Single Cell Experiment
+
+For newer versions of AnnData and Loom, please try the Seurat 4 version of this tool.
+
+@SEURAT_INTRO@
+
+
+.. _Seurat: https://www.nature.com/articles/nbt.4096
+.. _Satija Lab: https://satijalab.org/seurat/
+
+@VERSION_HISTORY@
+
+]]></help>
+      <expand macro="citations" />
+</tool>

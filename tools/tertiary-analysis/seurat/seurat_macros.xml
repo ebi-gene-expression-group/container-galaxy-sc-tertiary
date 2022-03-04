@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <macros>
-    <token name="@VERSION@">0.0.8</token>
-    <token name="@SEURAT_VERSION@">3.1.2</token>
+    <token name="@VERSION@">0.3.0</token>
+    <token name="@SEURAT_VERSION@">3.2.3</token>
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="@VERSION@">seurat-scripts</requirement>
@@ -96,7 +96,10 @@ types of single cell data.
 
     <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
-3.1.2_0.0.8: Upd ate metadata parsing
+
+3.2.3+galaxy0: Moves to Seurat 3.2.3 and introduce convert method, improving format interconversion support.
+
+3.1.2_0.0.8: Update metadata parsing
 
 3.1.1_0.0.7: Exposes perplexity and enables tab input.
 
@@ -105,9 +108,9 @@ types of single cell data.
   Find clusters: removed dims-use, k-param, prune-snn.
 
 2.3.1+galaxy0: Improved documentation and further exposition of all script's options. Pablo Moreno, Jonathan Manning and Ni Huang, Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
-EMBL-EBI https://www.ebi.ac.uk/. Parts obtained from wrappers from Christophe Antoniewski(https://github.com/drosofff) and Lea Bellenger(https://github.com/bellenger-l).
+EMBL-EBI https://www.ebi.ac.uk/. Parts obtained from wrappers from Christophe Antoniewski(github.com/drosofff) and Lea Bellenger(github.com/bellenger-l).
 
-0.0.1: Initial contribution. Maria Doyle, https://github.com/mblue9.
+0.0.1: Initial contribution. Maria Doyle (github.com/mblue9).
       ]]></token>
 
 
@@ -124,7 +127,7 @@ EMBL-EBI https://www.ebi.ac.uk/. Parts obtained from wrappers from Christophe An
               url = {https://github.com/ebi-gene-expression-group/r-seurat-scripts.git},
             }
             </citation>
-            <citation type="doi">10.1101/2020.04.08.032698</citation>
+            <citation type="doi">10.1038/s41592-021-01102-w</citation>
         </citations>
     </xml>
 </macros>

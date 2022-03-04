@@ -1,4 +1,4 @@
-<tool id="seurat_find_neighbours" name="Seurat FindNeighbours" version="@SEURAT_VERSION@+galaxy0">
+<tool id="seurat_find_neighbours" name="Seurat FindNeighbours" profile="18.01" version="@SEURAT_VERSION@+galaxy0">
     <description>constructs a Shared Nearest Neighbor (SNN) Graph</description>
     <macros>
         <import>seurat_macros.xml</import>
@@ -86,10 +86,14 @@ $force_recalc
 
     <tests>
         <test>
-            <param name="rds_seurat_file" ftype="rdata" value="pca_seurat.rds"/>
+            <param name="rds_seurat_file" ftype="rdata" value="E-MTAB-6077-3k_features_90_cells-pca.rds"/>
             <param name="compute_snn" value="True" />
             <param name="reduction" value="pca" />
-            <output name="rds_seurat_file" ftype="rdata" value="neighbours_seurat.rds" compare="sim_size" delta="10000000" />
+            <output name="rds_seurat_file" ftype="rdata" >
+              <assert_contents>
+                <has_size value="5054400" delta="200000"/>
+              </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[

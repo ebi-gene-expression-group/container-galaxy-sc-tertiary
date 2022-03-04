@@ -1,4 +1,4 @@
-<tool id="seurat_dim_plot" name="Seurat Plot dimension reduction" version="@SEURAT_VERSION@+galaxy0">
+<tool id="seurat_dim_plot" name="Seurat Plot dimension reduction" profile="18.01" version="@SEURAT_VERSION@+galaxy0">
     <description>graphs the output of a dimensional reduction technique (PCA by default). Cells are colored by their identity class.</description>
     <macros>
         <import>seurat_macros.xml</import>
@@ -27,22 +27,16 @@
         --label-size $label_size
         #end if
         --do-label $do_label
+        --repel $repel
         #if $group_by
         --group-by $group_by
         #end if
-        #if $plot_title
-        --plot-title '$plot_title'
-        #end if
-        --do-bare $do_bare
         #if $cols_use
         --cols-use '$cols_use'
         #end if
         #if $pt_shape
         --pt-shape '$pt_shape'
         #end if
-        --coord-fixed $coord_fixed
-        --no-axes $no_axes
-        --dark-theme $dark_theme
         #if $plot_order
         --plot-order '$plot_order'
         #end if
@@ -59,14 +53,10 @@
         <param type="float" name="pt_size" value='1' label="Point size" help='Adjust point size for plotting' />
         <param type="float" name="label_size" value='4' label="Label size" help='Sets size of labels'/>
         <param type="boolean" name="do_label" checked="false" label='Label clusters' truevalue="TRUE" falsevalue="FALSE" />
+        <param type="boolean" name="repel" checked="false" label='Repel labels' truevalue="TRUE" falsevalue="FALSE" />
         <param type="text" name="group_by" value='ident' label='Group by' help='Group (color) cells in different ways' />
-        <param type="text" name="plot_title" format="text" label='Plot title' />
-        <param type="boolean" name="do_bare" checked="false" label='Do only minimal formatting' truevalue="TRUE" falsevalue="FALSE" />
         <param type="text" name="cols_use" format="text" label="Colors" help='Comma-separated list of colors, each color corresponds to an identity class. By default, ggplot assigns colors.' />
         <param type="text" name="pt_shape" format="text" label="Cell attribute for shape" help='If NULL, all points are circles (default). You can specify any cell attribute (that can be pulled with FetchData) allowing for both different colors and different shapes on cells.' />
-        <param type="boolean" name="coord_fixed" checked="false" label="Fixed-scaled coordinate system" help='Use a fixed scale coordinate system (for spatial coordinates). Default is FALSE.' truevalue="TRUE" falsevalue="FALSE" />
-        <param type="boolean" name="no_axes" checked="false" label="Remove Axes" help='Setting to TRUE will remove the axes.' truevalue="TRUE" falsevalue="FALSE" />
-        <param type="boolean" name="dark_theme" checked="false" label='Use a dark theme for the plot..' truevalue="TRUE" falsevalue="FALSE" />
         <param type="text" name="plot_order" format="text" label="Ident (clusters) order" help='Comma-separated string specifying the order of plotting for the idents (clusters). This can be useful for crowded plots if points of interest are being buried. Provide either a full list of valid idents or a subset to be plotted last (on top).' />
         <param type="integer" name="png_width" value='1000' label="Figure width" help='Width of png in pixels.' />
         <param type="integer" name="png_height" value='1000' label="Figure height" help='Height of png in pixels.'/>
@@ -76,9 +66,12 @@
     </outputs>
     <tests>
         <test>
-            <param name="rds_seurat_file" value="cluster_seurat.rds" ftype="rdata" />
-            <param name="do_bare" value="True" />
-            <output name="output_image_file" file="pcatest.png" compare="sim_size" delta="5000000" />
+            <param name="rds_seurat_file" value="E-MTAB-6077-3k_features_90_cells-tsne.rds" ftype="rdata" />
+            <output name="output_image_file" >
+              <assert_contents>
+                <has_size value="18122" delta="2000"/>
+              </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[

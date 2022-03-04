@@ -1,4 +1,4 @@
-<tool id="seurat_find_clusters" name="Seurat FindClusters" version="@SEURAT_VERSION@+galaxy0">
+<tool id="seurat_find_clusters" name="Seurat FindClusters" profile="18.01" version="@SEURAT_VERSION@+galaxy0">
     <description>find clusters of cells</description>
     <macros>
         <import>seurat_macros.xml</import>
@@ -78,9 +78,17 @@
     <tests>
         <!-- Ensure count matrix input works -->
         <test>
-            <param name="rds_seurat_file" ftype="rdata" value="neighbours_seurat.rds"/>
-            <output name="rds_seurat_file" ftype="rdata" value="cluster_seurat.rds" compare="sim_size"/>
-            <output name="output_tab" value="clusters.txt" compare="sim_size" delta="1000000" />
+            <param name="rds_seurat_file" ftype="rdata" value="E-MTAB-6077-3k_features_90_cells-neighbours.rds"/>
+            <output name="rds_seurat_file" ftype="rdata" >
+              <assert_contents>
+                <has_size value="5064329" delta="200000"/>
+              </assert_contents>
+            </output>
+            <output name="output_tab" >
+              <assert_contents>
+                <has_n_lines n="92" />
+              </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[
