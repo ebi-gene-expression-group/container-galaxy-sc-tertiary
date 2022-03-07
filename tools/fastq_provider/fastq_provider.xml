@@ -11,9 +11,9 @@
         #if $resource
         -s '$resource' 
         #end if
-    #    #if $retrieval_method
-    #    -m '$retrieval_method'
-    #    #end if
+        #if $retrieval_method
+        -m '$retrieval_method'
+        #end if
         #if $mode
         -p '$mode'
         #end if
@@ -40,14 +40,14 @@
             <option value="hca">Human Cell Atlas</option>
             <option value="dir">Local directory</option>
 	    </param>
-        <param name="retrieval_method" argument="-m" type="text"  label="retrieval method, default 'wget' " value='wget' help="retrieval method, default 'auto'. Files with hca source will use the 'hca' download method regardless (-m has no effect). Private ENA files will be fetched via 'ssh' (-m has no effect). The 'http' method refers to an HTTP endpoint in the EBI Fire resource. "  optional='true'>
+        <param name="retrieval_method" argument="-m" type="select"  label="retrieval method, default 'wget' "  help="retrieval method, default 'auto'. Files with hca source will use the 'hca' download method regardless (-m has no effect). Private ENA files will be fetched via 'ssh' (-m has no effect). The 'http' method refers to an HTTP endpoint in the EBI Fire resource. "  optional='true'>
             <option value="auto" selected="true">auto</option>
             <option value="wget">wget</option>
             <option value="dir">Local directory</option>
             <option value="ssh">SSH (ENA files, for EBI only)</option>
             <option value="http">HTTP endpoint (ENA files, EBI only)</option>
         </param>
-        <param name="mode" argument="-p" type="select" format="select" label="public or private, default public. Private usable by EBI staff only" help="public or private, default 'public' " optional='true'>
+        <param name="mode" argument="-p" type="select" label="public or private, default public. Private usable by EBI staff only" help="public or private, default 'public' " optional='true'>
             <option value="public" selected="true">public</option>
             <option value="private">private</option>
 	    </param>
@@ -60,13 +60,13 @@
 	    </param>
     </inputs>
     <outputs>
-        <data name="outfile" label="${tool.name} on ${on_string}: compressed fastq file" format="fastq.gz"/>
+        <data name="outfile" label="${tool.name} on ${on_string}: compressed fastq file" format="fastq.gz" />
     </outputs>
     <tests>
         <test expect_num_outputs="1">
             <param name="source" value="ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR035/ERR035229/ERR035229.fastq.gz"/>
             <param name="target" value="ERR035229.fastq.gz"/>
-            <output name="outfile"  ftype="fastq.gz" md5="d41d8cd98f00b204e9800998ecf8427e"/>
+            <output name="outfile"  file="ERR035229.fastq.gz" md5="c9482e89552630084997112787a5d796" />   
         </test>
     </tests>
     <help><![CDATA[
