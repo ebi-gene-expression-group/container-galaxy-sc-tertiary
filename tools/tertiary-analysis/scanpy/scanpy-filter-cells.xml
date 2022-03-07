@@ -106,6 +106,7 @@ PYTHONIOENCODING=utf-8 scanpy-filter-cells
         <param name="min" value="0"/>
         <param name="max" value="1e9"/>
       </repeat>
+      <output name="output_h5" file="filter_cells.h5" ftype="h5" compare="sim_size"/>
       <output_collection name="mtx_gzip" type="list" count="3">
         <element name="matrix_10x_gzip" ftype="gzip" />
         <element name="genes_10x_gzip" ftype="gzip"/>
