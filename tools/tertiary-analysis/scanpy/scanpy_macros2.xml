@@ -157,7 +157,7 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
   <xml name="export_mtx_params">
     <conditional name="export_mtx_inputs">
       <param name="export_mtx" argument="--export-mtx" type="boolean" truevalue="--export-mtx ./" falsevalue="" checked="false" label="Save to 10x mtx format" help="If enabled, it will generate in addition to the main output in Loom or AnnData an export in 10x format."/>
-      <when value="true">
+      <when value="--export-mtx ./">
         <param name="mtx_compression" argument="--mtx-compression" type="select" label="" help="Compression type for MTX output.">
           <option value="None" selected="true">No compression</option>
           <option value="zip">zip</option>
@@ -166,6 +166,7 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
           <option value="zstd">zstd</option>
         </param>
       </when>
+      <when value=""/>
     </conditional>
   </xml>
 
