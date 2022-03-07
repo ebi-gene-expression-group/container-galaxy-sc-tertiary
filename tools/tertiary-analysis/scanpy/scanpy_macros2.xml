@@ -170,55 +170,36 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
   </xml>
 
   <xml name="export_mtx_outputs">
-    <!-- 10x matrix -->
-    <data name="matrix_10x" label="${tool.name} on ${on_string}: 10x matrix" format="txt" from_work_dir="matrix.mtx">
-      <filter>export_mtx == True and mtx_compression == "None"</filter>
-    </data>
-    <data name="matrix_10x" label="${tool.name} on ${on_string}: 10x matrix" format="zip" from_work_dir="matrix.mtx.zip">
+    <collection name="mtx_raw" type="list">
+      <filter>export_mtx == True and (mtx_compression == "None" or mtx_compression == None)</filter>
+          <data name="matrix_10x" label="${tool.name} on ${on_string}: 10x matrix" format="txt" from_work_dir="matrix.mtx"/>
+          <data name="genes_10x" label="${tool.name} on ${on_string}: 10x genes" format="tsv" from_work_dir="genes.tsv"/>
+          <data name="barcodes_10x" label="${tool.name} on ${on_string}: 10x barcodes" format="tsv" from_work_dir="barcodes.tsv">
+    </collection>
+    <collection name="mtx_zip" type="list" format="zip" >
       <filter>export_mtx == True and mtx_compression == "zip"</filter>
-    </data>
-    <data name="matrix_10x" label="${tool.name} on ${on_string}: 10x matrix" format="gzip" from_work_dir="matrix.mtx.gz">
+          <data name="matrix_10x_zip" label="${tool.name} on ${on_string}: 10x matrix (zip)" from_work_dir="matrix.mtx.zip"/>
+          <data name="genes_10x_zip" label="${tool.name} on ${on_string}: 10x genes (zip)" from_work_dir="genes.tsv.zip"/>
+          <data name="barcodes_10x_zip" label="${tool.name} on ${on_string}: 10x barcodes (zip)" from_work_dir="barcodes.tsv.zip">
+    </collection>
+    <collection name="mtx_gzip" type="list" format="gzip" >
       <filter>export_mtx == True and mtx_compression == "gzip"</filter>
-    </data>
-    <data name="matrix_10x" label="${tool.name} on ${on_string}: 10x matrix" format="bz2" from_work_dir="matrix.mtx.bz2">
+          <data name="matrix_10x_gzip" label="${tool.name} on ${on_string}: 10x matrix (gzip)" from_work_dir="matrix.mtx.gz"/>
+          <data name="genes_10x_gzip" label="${tool.name} on ${on_string}: 10x genes (gzip)" from_work_dir="genes.tsv.gz"/>
+          <data name="barcodes_10x_gzip" label="${tool.name} on ${on_string}: 10x barcodes (gzip)" from_work_dir="barcodes.tsv.gz">
+    </collection>
+    <collection name="mtx_bz2" type="list" format="bz2" >
       <filter>export_mtx == True and mtx_compression == "bz2"</filter>
-    </data>
-    <data name="matrix_10x" label="${tool.name} on ${on_string}: 10x matrix" format="zstd" from_work_dir="matrix.mtx.zst">
+          <data name="matrix_10x_bz2" label="${tool.name} on ${on_string}: 10x matrix (bz2)" from_work_dir="matrix.mtx.bz2"/>
+          <data name="genes_10x_bz2" label="${tool.name} on ${on_string}: 10x genes (bz2)" from_work_dir="genes.tsv.bz2"/>
+          <data name="barcodes_10x_bz2" label="${tool.name} on ${on_string}: 10x barcodes (bz2)" from_work_dir="barcodes.tsv.bz2">
+    </collection>
+    <collection name="mtx_zstd" type="list" format="zstd" >
       <filter>export_mtx == True and mtx_compression == "zstd"</filter>
-    </data>
-    <!-- 10x genes -->
-    <data name="genes_10x" label="${tool.name} on ${on_string}: 10x genes" format="tsv" from_work_dir="genes.tsv">
-      <filter>export_mtx == True and mtx_compression == "None"</filter>
-    </data>
-    <data name="genes_10x" label="${tool.name} on ${on_string}: 10x genes" format="zip" from_work_dir="genes.tsv.zip">
-      <filter>export_mtx == True and mtx_compression == "zip"</filter>
-    </data>
-    <data name="genes_10x" label="${tool.name} on ${on_string}: 10x genes" format="gzip" from_work_dir="genes.tsv.gz">
-      <filter>export_mtx == True and mtx_compression == "gzip"</filter>
-    </data>
-    <data name="genes_10x" label="${tool.name} on ${on_string}: 10x genes" format="bz2" from_work_dir="genes.tsv.bz2">
-      <filter>export_mtx == True and mtx_compression == "bz2"</filter>
-    </data>
-    <data name="genes_10x" label="${tool.name} on ${on_string}: 10x genes" format="zst" from_work_dir="genes.tsv.zst">
-      <filter>export_mtx == True and mtx_compression == "zstd"</filter>
-    </data>
-    <!-- 10x barcodes -->
-    </data>
-    <data name="barcodes_10x" label="${tool.name} on ${on_string}: 10x barcodes" format="tsv" from_work_dir="barcodes.tsv">
-      <filter>export_mtx and mtx_compression == "None"</filter>
-    </data>
-    <data name="barcodes_10x" label="${tool.name} on ${on_string}: 10x barcodes" format="zip" from_work_dir="barcodes.tsv.zip">
-      <filter>export_mtx and mtx_compression == "zip"</filter>
-    </data>
-    <data name="barcodes_10x" label="${tool.name} on ${on_string}: 10x barcodes" format="gzip" from_work_dir="barcodes.tsv.gz">
-      <filter>export_mtx and mtx_compression == "gzip"</filter>
-    </data>
-    <data name="barcodes_10x" label="${tool.name} on ${on_string}: 10x barcodes" format="bz2" from_work_dir="barcodes.tsv.bz2">
-      <filter>export_mtx and mtx_compression == "bz2"</filter>
-    </data>
-    <data name="barcodes_10x" label="${tool.name} on ${on_string}: 10x barcodes" format="zstd" from_work_dir="barcodes.tsv.zst">
-      <filter>export_mtx and mtx_compression == "zstd"</filter>
-    </data>
+          <data name="matrix_10x_zstd" label="${tool.name} on ${on_string}: 10x matrix (zstd)" from_work_dir="matrix.mtx.zst"/>
+          <data name="genes_10x_zstd" label="${tool.name} on ${on_string}: 10x genes (zstd)" from_work_dir="genes.tsv.zst"/>
+          <data name="barcodes_10x_zstd" label="${tool.name} on ${on_string}: 10x barcodes (zstd)" from_work_dir="barcodes.tsv.zst">
+    </collection>
   </xml>
 
 </macros>
