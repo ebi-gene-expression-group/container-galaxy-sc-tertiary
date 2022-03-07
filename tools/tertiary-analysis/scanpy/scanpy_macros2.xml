@@ -158,8 +158,8 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
     <conditional name="export_mtx_inputs">
       <param name="export_mtx" argument="--export-mtx" type="boolean" truevalue="--export-mtx ./" falsevalue="" checked="false" label="Save to 10x mtx format" help="If enabled, it will generate in addition to the main output in Loom or AnnData an export in 10x format."/>
       <when value="true">
-        <param name="mtx_compression" argument="--mtx-compression" type="select" value="None" label="" help="Compression type for MTX output.">
-          <option value="None">No compression</option>
+        <param name="mtx_compression" argument="--mtx-compression" type="select" label="" help="Compression type for MTX output.">
+          <option value="None" selected="true">No compression</option>
           <option value="zip">zip</option>
           <option value="gzip">gzip</option>
           <option value="bz2">bz2</option>
@@ -170,102 +170,55 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
   </xml>
 
   <xml name="export_mtx_outputs">
-    <data name="matrix_10x" label="${tool.name} on ${on_string}: 10x matrix">
-      <filter>export_mtx</filter>
-      <actions>
-        <conditional name="mtx_compression">
-          <when value="None">
-            <action type="format">
-              <!-- I want to update data "matrix_10x" with format="txt" from_work_dir="matrix.mtx" -->
-            </action>
-          </when>
-          <when value="zip">
-            <action type="format">
-              <!-- I want to update data "matrix_10x" with format="zip" from_work_dir="matrix.mtx.zip" -->
-            </action>
-          </when>
-          <when value="gzip">
-            <action type="format">
-              <!-- I want to update data "matrix_10x" with format="gzip" from_work_dir="matrix.mtx.gz" -->
-            </action>
-          </when>
-          <when value="bz2">
-            <action type="format">
-              <!-- I want to update data "matrix_10x" with format="bz2" from_work_dir="matrix.mtx.bz2" -->
-            </action>
-          </when>
-          <when value="zstd">
-            <action type="format">
-              <!-- I want to update data "matrix_10x" with format="zstd" from_work_dir="matrix.mtx.zst" -->
-            </action>
-          </when>
-        </conditional>
-      </actions>
+    <!-- 10x matrix -->
+    <data name="matrix_10x" label="${tool.name} on ${on_string}: 10x matrix" format="txt" from_work_dir="matrix.mtx">
+      <filter>export_mtx == True and mtx_compression == "None"</filter>
     </data>
-    <data name="genes_10x" label="${tool.name} on ${on_string}: 10x genes">
-      <filter>export_mtx</filter>
-      <actions>
-        <conditional name="mtx_compression">
-          <when value="None">
-            <action type="format">
-              <!-- I want to update data "genes_10x" with format="tsv" from_work_dir="genes.tsv" -->
-            </action>
-          </when>
-          <when value="zip">
-            <action type="format">
-              <!-- I want to update data "genes_10x" with format="zip" from_work_dir="genes.tsv.zip" -->
-            </action>
-          </when>
-          <when value="gzip">
-            <action type="format">
-              <!-- I want to update data "genes_10x" with format="gzip" from_work_dir="genes.tsv.gz" -->
-            </action>
-          </when>
-          <when value="bz2">
-            <action type="format">
-              <!-- I want to update data "genes_10x" with format="bz2" from_work_dir="genes.tsv.bz2" -->
-            </action>
-          </when>
-          <when value="zstd">
-            <action type="format">
-              <!-- I want to update data "genes_10x" with format="zst" from_work_dir="genes.tsv.zst" -->
-            </action>
-          </when>
-        </conditional>
-      </actions>
+    <data name="matrix_10x" label="${tool.name} on ${on_string}: 10x matrix" format="zip" from_work_dir="matrix.mtx.zip">
+      <filter>export_mtx == True and mtx_compression == "zip"</filter>
     </data>
-    <data name="barcodes_10x" label="${tool.name} on ${on_string}: 10x barcodes">
-      <filter>export_mtx</filter>
-      <actions>
-        <conditional name="mtx_compression">
-          <when value="None">
-            <action type="format">
-              <!-- I want to update data "barcodes_10x" with  format="tsv" from_work_dir="barcodes.tsv -->
-            </action>
-          </when>
-          <when value="zip">
-            <action type="format">
-              <!-- I want to update data "barcodes_10x" with  format="zip" from_work_dir="barcodes.tsv.zip" -->
-            </action>
-          </when>
-          <when value="gzip">
-            <action type="format">
-              <!-- I want to update data "barcodes_10x" with  format="gzip" from_work_dir="barcodes.tsv.gz" -->
-            </action>
-          </when>
-          <when value="bz2">
-            <action type="format">
-              <!-- I want to update data "barcodes_10x" with  format="bz2" from_work_dir="barcodes.tsv.bz2" -->
-            </action>
-          </when>
-          <when value="zstd">
-            <action type="format">
-              <!-- I want to update data "barcodes_10x" with  format="zstd" from_work_dir="barcodes.tsv.zst" -->
-            </action>
-          </when>
-        </conditional>
-      </actions>
+    <data name="matrix_10x" label="${tool.name} on ${on_string}: 10x matrix" format="gzip" from_work_dir="matrix.mtx.gz">
+      <filter>export_mtx == True and mtx_compression == "gzip"</filter>
+    </data>
+    <data name="matrix_10x" label="${tool.name} on ${on_string}: 10x matrix" format="bz2" from_work_dir="matrix.mtx.bz2">
+      <filter>export_mtx == True and mtx_compression == "bz2"</filter>
+    </data>
+    <data name="matrix_10x" label="${tool.name} on ${on_string}: 10x matrix" format="zstd" from_work_dir="matrix.mtx.zst">
+      <filter>export_mtx == True and mtx_compression == "zstd"</filter>
+    </data>
+    <!-- 10x genes -->
+    <data name="genes_10x" label="${tool.name} on ${on_string}: 10x genes" format="tsv" from_work_dir="genes.tsv">
+      <filter>export_mtx == True and mtx_compression == "None"</filter>
+    </data>
+    <data name="genes_10x" label="${tool.name} on ${on_string}: 10x genes" format="zip" from_work_dir="genes.tsv.zip">
+      <filter>export_mtx == True and mtx_compression == "zip"</filter>
+    </data>
+    <data name="genes_10x" label="${tool.name} on ${on_string}: 10x genes" format="gzip" from_work_dir="genes.tsv.gz">
+      <filter>export_mtx == True and mtx_compression == "gzip"</filter>
+    </data>
+    <data name="genes_10x" label="${tool.name} on ${on_string}: 10x genes" format="bz2" from_work_dir="genes.tsv.bz2">
+      <filter>export_mtx == True and mtx_compression == "bz2"</filter>
+    </data>
+    <data name="genes_10x" label="${tool.name} on ${on_string}: 10x genes" format="zst" from_work_dir="genes.tsv.zst">
+      <filter>export_mtx == True and mtx_compression == "zstd"</filter>
+    </data>
+    <!-- 10x barcodes -->
+    </data>
+    <data name="barcodes_10x" label="${tool.name} on ${on_string}: 10x barcodes" format="tsv" from_work_dir="barcodes.tsv">
+      <filter>export_mtx and mtx_compression == "None"</filter>
+    </data>
+    <data name="barcodes_10x" label="${tool.name} on ${on_string}: 10x barcodes" format="zip" from_work_dir="barcodes.tsv.zip">
+      <filter>export_mtx and mtx_compression == "zip"</filter>
+    </data>
+    <data name="barcodes_10x" label="${tool.name} on ${on_string}: 10x barcodes" format="gzip" from_work_dir="barcodes.tsv.gz">
+      <filter>export_mtx and mtx_compression == "gzip"</filter>
+    </data>
+    <data name="barcodes_10x" label="${tool.name} on ${on_string}: 10x barcodes" format="bz2" from_work_dir="barcodes.tsv.bz2">
+      <filter>export_mtx and mtx_compression == "bz2"</filter>
+    </data>
+    <data name="barcodes_10x" label="${tool.name} on ${on_string}: 10x barcodes" format="zstd" from_work_dir="barcodes.tsv.zst">
+      <filter>export_mtx and mtx_compression == "zstd"</filter>
     </data>
   </xml>
-  
+
 </macros>
