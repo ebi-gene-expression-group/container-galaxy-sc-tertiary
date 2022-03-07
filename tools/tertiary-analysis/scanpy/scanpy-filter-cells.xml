@@ -94,7 +94,7 @@ PYTHONIOENCODING=utf-8 scanpy-filter-cells
       <param name="input_obj_file" value="read_10x.h5"/>
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
-      <param name="export_mtx" value="true"/>
+      <param name="export_mtx" value="--export-mtx ./"/>
       <param name="mtx_compression" value="gzip"/>
       <repeat name="parameters">
         <param name="name" value="n_genes"/>
