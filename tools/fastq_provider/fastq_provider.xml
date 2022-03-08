@@ -60,13 +60,15 @@
 	    </param>
     </inputs>
     <outputs>
-        <data name="outfile" label="${tool.name} on ${on_string}: compressed fastq file" format="fastq.gz" />
+        <data name="outfile" label="${tool.name} on ${on_string}: compressed fastq file" format="fastq.gz"   >
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.fastq.gz" assign_primary_output="true" visible="true" />
+        </data>
     </outputs>
     <tests>
         <test expect_num_outputs="1">
             <param name="source" value="ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR035/ERR035229/ERR035229.fastq.gz"/>
             <param name="target" value="ERR035229.fastq.gz"/>
-            <output name="outfile"  file="ERR035229.fastq.gz" md5="c9482e89552630084997112787a5d796" />   
+            <output name="outfile"  md5="c9482e89552630084997112787a5d796" />   
         </test>
     </tests>
     <help><![CDATA[
