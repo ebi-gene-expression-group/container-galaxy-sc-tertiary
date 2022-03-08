@@ -61,8 +61,8 @@
     </inputs>
     <outputs>
         <data name="outfile" label="${tool.name} on ${on_string}: compressed fastq file" format="fastq.gz"   >
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.fastq.gz" assign_primary_output="true" visible="true" />
-        </data>
+            <discover_datasets pattern="(?P&lt;designation&gt;.*)" assign_primary_output="true" visible="true" />
+        </data> 
     </outputs>
     <tests>
         <test expect_num_outputs="1">
