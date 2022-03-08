@@ -63,7 +63,9 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
     ${fig_frame}
     ./output.png
   </token>
-  <token name="@EXPORT_MTX_OPTS@">${export_mtx}</token>
+  <token name="@EXPORT_MTX_OPTS@">
+    ${export_mtx} ${mtx_compression}
+  </token>
 
   <xml name="requirements">
     <requirements>
