@@ -94,7 +94,7 @@ PYTHONIOENCODING=utf-8 scanpy-filter-cells
       <param name="input_obj_file" value="read_10x.h5"/>
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
-      <param name="export_mtx" value="--export-mtx ./"/>
+      <param name="export_mtx" value="true"/>
       <param name="mtx_compression" value="gzip"/>
       <repeat name="parameters">
         <param name="name" value="n_genes"/>
@@ -108,9 +108,21 @@ PYTHONIOENCODING=utf-8 scanpy-filter-cells
       </repeat>
       <output name="output_h5" file="filter_cells.h5" ftype="h5" compare="sim_size"/>
       <output_collection name="mtx_gzip" type="list" count="3">
-        <element name="matrix_10x_gzip" ftype="gzip" />
-        <element name="genes_10x_gzip" ftype="gzip"/>
-        <element name="barcodes_10x_gzip" ftype="gzip" />
+        <element name="matrix_10x_gzip" ftype="gz">
+          <assert_contents>
+            <has_size max="58"/>
+          </assert_contents>
+        </element>
+        <element name="genes_10x_gzip" ftype="gz">
+          <assert_contents>
+            <has_size max="961k"/>
+          </assert_contents>
+        </element>
+        <element name="barcodes_10x_gzip" ftype="gz">
+          <assert_contents>
+            <has_size value="0"/>
+          </assert_contents>
+        </element>
       </output_collection>
     </test>
   </tests>
