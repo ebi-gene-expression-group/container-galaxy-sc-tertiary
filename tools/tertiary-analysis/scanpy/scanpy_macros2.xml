@@ -64,7 +64,8 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
     ./output.png
   </token>
   <token name="@EXPORT_MTX_OPTS@">
-    ${export_mtx} ${mtx_compression}
+    '${export_mtx_inputs.export_mtx}' 
+    --mtx-compression '${export_mtx_inputs.mtx_compression}'
   </token>
 
   <xml name="requirements">
@@ -159,46 +160,51 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
   <xml name="export_mtx_params">
     <conditional name="export_mtx_inputs">
       <param name="export_mtx" argument="--export-mtx" type="boolean" truevalue="--export-mtx ./" falsevalue="" checked="false" label="Save to 10x mtx format" help="If enabled, it will generate in addition to the main output in Loom or AnnData an export in 10x format."/>
-      <when value="--export-mtx ./">
+      <when value="true">
         <param name="mtx_compression" argument="--mtx-compression" type="select" label="" help="Compression type for MTX output.">
-          <option value="None" selected="true">No compression</option>
+          <option value="" selected="true">No compression</option>
           <option value="zip">zip</option>
           <option value="gzip">gzip</option>
           <option value="bz2">bz2</option>
           <option value="zstd">zstd</option>
         </param>
       </when>
-      <when value=""/>
+      <when value="false"/>
     </conditional>
   </xml>
 
   <xml name="export_mtx_outputs">
     <collection name="mtx_raw" type="list">
-      <filter>export_mtx == True and (mtx_compression == "None" or mtx_compression == None)</filter>
+      <filter>export_mtx_inputs[export_mtx] == True and 
+        export_mtx_inputs[mtx_compression] == ""</filter>
           <data name="matrix_10x" label="${tool.name} on ${on_string}: 10x matrix" format="txt" from_work_dir="matrix.mtx"/>
           <data name="genes_10x" label="${tool.name} on ${on_string}: 10x genes" format="tsv" from_work_dir="genes.tsv"/>
           <data name="barcodes_10x" label="${tool.name} on ${on_string}: 10x barcodes" format="tsv" from_work_dir="barcodes.tsv"/>
     </collection>
-    <collection name="mtx_zip" type="list" format="zip" >
-      <filter>export_mtx == True and mtx_compression == "zip"</filter>
+    <collection name="mtx_zip" type="list" format="zip">
+      <filter>export_mtx_inputs[export_mtx] == True and 
+        export_mtx_inputs[mtx_compression] == "zip"</filter>
           <data name="matrix_10x_zip" label="${tool.name} on ${on_string}: 10x matrix (zip)" from_work_dir="matrix.mtx.zip"/>
           <data name="genes_10x_zip" label="${tool.name} on ${on_string}: 10x genes (zip)" from_work_dir="genes.tsv.zip"/>
           <data name="barcodes_10x_zip" label="${tool.name} on ${on_string}: 10x barcodes (zip)" from_work_dir="barcodes.tsv.zip"/>
     </collection>
-    <collection name="mtx_gzip" type="list" format="gzip" >
-      <filter>export_mtx == True and mtx_compression == "gzip"</filter>
+    <collection name="mtx_gzip" type="list" format="gz">
+      <filter>export_mtx_inputs[export_mtx] == True and 
+        export_mtx_inputs[mtx_compression] == "gzip"</filter>
           <data name="matrix_10x_gzip" label="${tool.name} on ${on_string}: 10x matrix (gzip)" from_work_dir="matrix.mtx.gz"/>
           <data name="genes_10x_gzip" label="${tool.name} on ${on_string}: 10x genes (gzip)" from_work_dir="genes.tsv.gz"/>
           <data name="barcodes_10x_gzip" label="${tool.name} on ${on_string}: 10x barcodes (gzip)" from_work_dir="barcodes.tsv.gz"/>
     </collection>
-    <collection name="mtx_bz2" type="list" format="bz2" >
-      <filter>export_mtx == True and mtx_compression == "bz2"</filter>
+    <collection name="mtx_bz2" type="list" format="bz2">
+      <filter>export_mtx_inputs[export_mtx] == True and 
+        export_mtx_inputs[mtx_compression] == "bz2"</filter>
           <data name="matrix_10x_bz2" label="${tool.name} on ${on_string}: 10x matrix (bz2)" from_work_dir="matrix.mtx.bz2"/>
           <data name="genes_10x_bz2" label="${tool.name} on ${on_string}: 10x genes (bz2)" from_work_dir="genes.tsv.bz2"/>
           <data name="barcodes_10x_bz2" label="${tool.name} on ${on_string}: 10x barcodes (bz2)" from_work_dir="barcodes.tsv.bz2"/>
     </collection>
-    <collection name="mtx_zstd" type="list" format="zstd" >
-      <filter>export_mtx == True and mtx_compression == "zstd"</filter>
+    <collection name="mtx_zstd" type="list" format="zst">
+      <filter>export_mtx_inputs[export_mtx] == True and 
+        export_mtx_inputs[mtx_compression] == "zstd"</filter>
           <data name="matrix_10x_zstd" label="${tool.name} on ${on_string}: 10x matrix (zstd)" from_work_dir="matrix.mtx.zst"/>
           <data name="genes_10x_zstd" label="${tool.name} on ${on_string}: 10x genes (zstd)" from_work_dir="genes.tsv.zst"/>
           <data name="barcodes_10x_zstd" label="${tool.name} on ${on_string}: 10x barcodes (zstd)" from_work_dir="barcodes.tsv.zst"/>
