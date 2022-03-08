@@ -109,19 +109,13 @@ PYTHONIOENCODING=utf-8 scanpy-filter-cells
       <output name="output_h5" file="filter_cells.h5" ftype="h5" compare="sim_size"/>
       <output_collection name="mtx_gzip" type="list" count="3">
         <element name="matrix_10x_gzip" ftype="gz">
-          <assert_contents>
-            <has_size max="58"/>
-          </assert_contents>
+          <assert_contents><has_size value="3300000" delta="300000"/></assert_contents>
         </element>
         <element name="genes_10x_gzip" ftype="gz">
-          <assert_contents>
-            <has_size max="961k"/>
-          </assert_contents>
+          <assert_contents><has_size value="126000" delta="13000"/></assert_contents>
         </element>
         <element name="barcodes_10x_gzip" ftype="gz">
-          <assert_contents>
-            <has_size value="0"/>
-          </assert_contents>
+          <assert_contents><has_size value="207" delta="21"/></assert_contents>
         </element>
       </output_collection>
     </test>
