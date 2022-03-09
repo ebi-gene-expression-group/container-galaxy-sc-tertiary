@@ -74,7 +74,7 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
 
   <xml name="requirements">
     <requirements>
-      <requirement type="package" version=">=1.1.5">scanpy-scripts</requirement>
+      <requirement type="package" version="1.1.5">scanpy-scripts</requirement>
       <yield/>
     </requirements>
   </xml>
