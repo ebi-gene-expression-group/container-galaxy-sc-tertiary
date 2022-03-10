@@ -7,9 +7,4 @@ remote_repository_url: https://github.com/ebi-gene-expression-group/container-ga
 type: unrestricted
 categories:
 - Transcriptomics
-- Genomics
 - RNA
-- DNA
-auto_tool_repositories:
-    name_template: "{{ tool_id }}"
-    description_template: "Paired-end fastq pairer: {{ tool_name }}"
