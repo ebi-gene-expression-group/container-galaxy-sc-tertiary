@@ -7,15 +7,20 @@
         <requirement type="package" version="@TOOL_VERSION@">atlas-fastq-provider</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-        fetchFastq.sh -f '$source' -t '$target'  
+        #if $mode:
+            #if $mode == "library_wise":
+            fetchEnaLibraryFastqs.sh -f '$source' -t '$target' -p '$mode'
+            #else:
+            fetchFastq.sh -f '$source' -t '$target' -p '$mode'
+            #end if
+        #else:
+            fetchFastq.sh -f '$source' -t '$target'  
+        #end if
         #if $resource
         -s '$resource' 
         #end if
         #if $retrieval_method
         -m '$retrieval_method'
-        #end if
-        #if $mode
-        -p '$mode'
         #end if
         #if $library
         -l '$library'
@@ -48,9 +53,11 @@
             <option value="ssh">SSH (ENA files, for EBI only)</option>
             <option value="http">HTTP endpoint (ENA files, EBI only)</option>
         </param>
-        <param name="mode" argument="-p" type="select" label="public or private, default public. Private usable by EBI staff only" help="public or private, default 'public' " optional='true'>
+        <param name="mode" argument="-p" type="select" label="public, private, or library_wise (default public). Private usable by EBI staff only" help="public, private or library_wise, default 'public' " optional='true'>
             <option value="public" selected="true">public</option>
             <option value="private">private</option>
+            <option value="library_wise">library_wise</option>
+
 	    </param>
         <param name="library" argument="-l" type="text"  label="ENA library (ENA source files only), by default inferred from file name" help="library, by default inferred from file name. E.g. -l ERR1888646 " optional='true'/>
         <param name="config_file" argument="-c" type="data" format="atlas-fastq-provider-config.sh" label="config file to override defaults" help="config file to override defaults" optional='true'/>
