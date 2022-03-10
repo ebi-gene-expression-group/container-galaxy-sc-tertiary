@@ -61,7 +61,7 @@
 	    </param>
     </inputs>
     <outputs>
-        <data name="outfile" label="${tool.name} on ${on_string}: compressed fastq file" format="fastq.gz"  />
+        <data name="outfile" label="${tool.name} on ${on_string}: compressed fastq file" format="fastqsanger.gz"  />
     </outputs>
     <tests>
         <test expect_num_outputs="1">
