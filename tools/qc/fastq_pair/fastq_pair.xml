@@ -51,7 +51,7 @@
         <param name="fastq2" label="FASTQ file 2" type="data" format="fastqsanger,fastqsanger.gz" optional="false" help="FASTQ file input, file 2 of pair" />
         <param name="table_size" label="Table size" argument="-t" optional="true" value="100003" type="integer" help="Table size (default 100003)" />
         <param name="print_elements" label="Number elements to print" argument="-p" type="integer" optional="true" help="Print this number of elements in each bucket in the table." />
-        <param name="compress" label="Compress outputs?" type="boolean" optional="true" value="false" truevalue="yes" falsevalue="no" checked="false" help="Check if outputs should be compressed (.gz)" />
+        <param name="compress" label="Compress outputs?" type="boolean" optional="true" value="true" truevalue="yes" falsevalue="no" checked="false" help="Check if outputs should be compressed (.gz)" />
     </inputs>
     <outputs>
         <collection name="uncompressed" type="list" format="fastqsanger" label="${tool.name} on ${on_string}: Paired reads and singletons">
