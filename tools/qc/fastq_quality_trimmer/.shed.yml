@@ -1,10 +1,10 @@
 name: fastq_quality_trimmer
 owner: ebi-gxa
-description: "Suite of FASTQ/A preprocessing tools"
-long_description: "The FASTX-Toolkit is a collection of command line tools for Short-Reads FASTA/FASTQ files preprocessing."
+description: "FASTQ trimmer based on quality"
+long_description: "Trims reads at the 3'-end based on quality, discarding reads with trimmed length less than threshold."
 homepage_url: https://github.com/agordon/fastx_toolkit
 remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/tools/qc/fastq_quality_trimmer
 type: unrestricted
 categories:
-- Transcriptomics
-- RNA
+- Fastq Manipulation
+
