@@ -1,5 +1,5 @@
 <tool id="cshl_fastq_quality_trimmer" name="Trim By Quality" profile="18.01" version="0.0.14+galaxy0">
-	<description></description>
+	<description>Trims reads at the 3'-end based on quality, discarding reads with trimmed length less than threshold.</description>
     <requirements>
         <requirement type="package" version="0.0.14">fastx_toolkit</requirement>
     </requirements>
