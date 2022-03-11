@@ -6,5 +6,4 @@ homepage_url: https://github.com/linsalrob/fastq-pair
 remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/tools/qc/fastq_pair
 type: unrestricted
 categories:
-- Transcriptomics
-- RNA
+- Fastq Manipulation
