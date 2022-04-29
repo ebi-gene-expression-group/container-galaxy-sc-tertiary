@@ -640,7 +640,7 @@
         <param name="features" value="GPC5-AS1,MAFB,FAP,PPY"/>
         <output name="plot_out_png" ftype="png" >
           <assert_contents>
-            <has_size value="323890" delta="32000"/>
+            <has_size value="195414" delta="32000"/>
           </assert_contents>
         </output>
       </test>
@@ -683,7 +683,7 @@
         <param name="features" value="GPC5-AS1,MAFB,FAP,PPY"/>
         <output name="plot_out_png" ftype="png" >
           <assert_contents>
-            <has_size value="176978" delta="17600"/>
+            <has_size value="83227" delta="8600"/>
           </assert_contents>
         </output>
       </test>
