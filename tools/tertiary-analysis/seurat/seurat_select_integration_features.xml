@@ -59,6 +59,8 @@
 
 **What it does**
 
+@SEURAT_INTRO@
+
 This tool aims to facilitate the first steps of the Seurat 4.0.4 https://satijalab.org/seurat/articles/integration_introduction.html
 tutorial, to select features for integration of different datasets. This features can be used then with the integration tool.
 
@@ -77,6 +79,7 @@ All options are documented in-line.
 
 * A Seurat (or other format depending on selection) with the integrated object.
 
+@VERSION_HISTORY@
 ]]>
 <!-- END MANUAL HELP -->
 </help>

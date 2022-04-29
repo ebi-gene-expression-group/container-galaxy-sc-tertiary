@@ -189,6 +189,12 @@ $adv.verbose
   .. class:: infomark
 
   **What it does**
+
+  @SEURAT_INTRO@
+
+  For more details on this method, please see the individual in-line documentation or the same method's Seurat 4 documentation.
+
+  @VERSION_HISTORY@
   ]]>
   <!-- END MANUAL HELP -->
 </help>

@@ -197,6 +197,8 @@
 
 **What it does**
 
+@SEURAT_INTRO@
+
 This tool aims to facilitate the first steps of the Seurat 4.0.4 https://satijalab.org/seurat/articles/integration_introduction.html
 tutorial, up to the "Perform integration" section.
 
@@ -216,6 +218,10 @@ options are documented in-line.
 **Outputs**
 
 * A Seurat (or other format depending on selection) with the integrated object.
+
+For more details on this method, please see the individual in-line documentation or the same method's Seurat 4 documentation.
+
+@VERSION_HISTORY@
 
 ]]>
 <!-- END MANUAL HELP -->

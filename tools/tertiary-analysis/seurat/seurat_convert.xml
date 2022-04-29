@@ -1,4 +1,4 @@
-<tool id="seurat_convert" name="Seurat 3 converter" profile="18.01" version="@SEURAT_VERSION@+galaxy0">
+<tool id="seurat_convert" name="Seurat 4 converter" profile="18.01" version="@SEURAT_VERSION@+galaxy0">
     <description>translates different single cell formats</description>
     <macros>
         <import>seurat_macros.xml</import>
@@ -99,17 +99,17 @@ seurat-convert.R
 
 **What it does**
 
-This tool uses Seurat 3 to convert formats. Possible inputs are:
+This tool uses Seurat 4 to convert formats. Possible inputs are:
 
-    * Seurat 3
-    * Loom (probably earlier than Loom 3.0)
-    * AnnData (contemporary versions to Seurat 3, most likely up to AnnData 0.6.22.post1)
+    * Seurat 3/4
+    * Loom (versions contemporary to Seurat 4)
+    * AnnData (contemporary versions to Seurat 4)
     * Single Cell Experiment
 
 Possible outputs are:
 
-    * Seurat 3
-    * Loom (as produced by loomR package)
+    * Seurat 4
+    * Loom
     * Single Cell Experiment
 
 For newer versions of AnnData and Loom, please try the Seurat 4 version of this tool.

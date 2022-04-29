@@ -696,6 +696,8 @@
 
 **What it does**
 
+@SEURAT_INTRO@
+
 This tool produces the different plots available on Seurat.
 
 -----
@@ -714,6 +716,8 @@ All the rest of the parameters are optional.
 
 * A plot in the specified format
 * Optionally, an RDS object with the ggplo2 plot.
+
+@VERSION_HISTORY@
 
 ]]>
 <!-- END MANUAL HELP -->
