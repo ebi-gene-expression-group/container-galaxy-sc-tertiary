@@ -1,0 +1,90 @@
+<tool id="fastq_provider" name="Atlas FASTQ provider" version="@TOOL_VERSION@+galaxy" python_template_version="3.5" profile="20.01">
+    <description> Retrieval and download of FASTQ files from ENA and other repositories such as HCA. The tool is used in production pipelines of EMBL-EBI Expression Atlas and Single Cell Expression Atlas.  </description>
+    <macros>
+        <token name="@TOOL_VERSION@">0.4.2</token>
+    </macros>
+    <requirements>
+        <requirement type="package" version="@TOOL_VERSION@">atlas-fastq-provider</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        fetchFastq.sh -f '$source' -t '$target'  
+        #if $resource
+        -s '$resource' 
+        #end if
+        #if $retrieval_method
+        -m '$retrieval_method'
+        #end if
+        #if $mode
+        -p '$mode'
+        #end if
+        #if $library
+        -l '$library'
+        #end if
+        #if $config_file
+        -c '$config_file'
+        #end if
+        #if $validate_only
+        -v '$validate_only'
+        #end if
+        #if $download_type
+        -d '$download_type' 
+        #end if
+        ; mv -f '$target' '$outfile' 
+    ]]></command> 
+    <inputs>
+        <param name="source" argument="-f" type="text" label="file or uri" help="file or uri" />
+        <param name="target" argument="-t" type="text"  label="target file" help="target file. E.g 'ERR035229.fastq.gz' " />
+        <param name="resource" argument="-s" type="select"  label="resource or directory, default 'auto' " help="How to fetch the file, e.g. there’s a specific method for getting results from the Human Cell Atlas' 'Azul' resource. " optional='true' >
+            <option value="auto" selected="true">auto</option>
+            <option value="ena">ENA</option>
+            <option value="sra">SRA file</option>
+            <option value="hca">Human Cell Atlas</option>
+            <option value="dir">Local directory</option>
+	    </param>
+        <param name="retrieval_method" argument="-m" type="select"  label="retrieval method, default 'wget' "  help="retrieval method, default 'auto'. Files with hca source will use the 'hca' download method regardless (-m has no effect). Private ENA files will be fetched via 'ssh' (-m has no effect). The 'http' method refers to an HTTP endpoint in the EBI Fire resource. "  optional='true'>
+            <option value="auto" selected="true">auto</option>
+            <option value="wget">wget</option>
+            <option value="dir">Local directory</option>
+            <option value="ssh">SSH (ENA files, for EBI only)</option>
+            <option value="http">HTTP endpoint (ENA files, EBI only)</option>
+        </param>
+        <param name="mode" argument="-p" type="select" label="public or private, default public. Private usable by EBI staff only" help="public or private, default 'public' " optional='true'>
+            <option value="public" selected="true">public</option>
+            <option value="private">private</option>
+	    </param>
+        <param name="library" argument="-l" type="text"  label="ENA library (ENA source files only), by default inferred from file name" help="library, by default inferred from file name. E.g. -l ERR1888646 " optional='true'/>
+        <param name="config_file" argument="-c" type="data" format="atlas-fastq-provider-config.sh" label="config file to override defaults" help="config file to override defaults" optional='true'/>
+        <param name="validate_only" argument="-v" type="boolean" label="validate only to check a source URI is valid, don't download" help="validate only, don't download" optional='true'/>
+        <param name="download_type" argument="-d" type="select" label="download type, fastq or SRA file" help="download type, fastq or srr" optional='true'>
+            <option value="fastq" selected="true">fastq</option>
+            <option value="srr">SRA</option>
+	    </param>
+    </inputs>
+    <outputs>
+        <data name="outfile" label="${tool.name} on ${on_string}: compressed fastq file" format="fastq.gz"  />
+    </outputs>
+    <tests>
+        <test expect_num_outputs="1">
+            <param name="source" value="ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR035/ERR035229/ERR035229.fastq.gz"/>
+            <param name="target" value="ERR035229.fastq.gz"/>
+            <output name="outfile"  md5="c9482e89552630084997112787a5d796" />   
+        </test>
+    </tests>
+    <help><![CDATA[
+    
+        Usage: fetchFastq.sh [-f <file or uri>] [-t <target file>] [-s <source resource or directory, default 'auto'>] [-m <retrieval method, default 'auto'>] [-p <public or private, default 'public'>] [-l <library, by default inferred from file name>] [-c <config file to override defaults>] [-v <validate only, don't download>] [-d <download type, 'fastq' or 'srr'>]
+
+    ]]></help>
+    <citations>
+        <citation type="bibtex">
+            @misc{githubatlas-fastq-provider,
+            author = {Jonathan Manning, EBI Gene Expression Team},
+            year = {2021},
+            title = {atlas-fastq-provider},
+            publisher = {GitHub},
+            journal = {GitHub repository},
+            url = {https://github.com/ebi-gene-expression-group/atlas-fastq-provider},
+        }</citation>
+    </citations>
+</tool>
+

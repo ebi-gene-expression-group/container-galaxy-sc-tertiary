@@ -1,9 +1,11 @@
 <macros>
-  <token name="@TOOL_VERSION@">1.8.1+2</token>
+  <token name="@TOOL_VERSION@">1.8.1+3</token>
   <token name="@HELP@">More information can be found at https://scanpy.readthedocs.io</token>
   <token name="@PROFILE@">18.01</token>
   <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
+
+1.8.1+3+galaxy0: Upate to scanpy-scripts 1.1.3 (running scanpy ==1.8.1), including a fix to MTX output and a bugfix for the Scrublet wrapper.
 
 1.8.1+2+galaxy0: Upate to scanpy-scripts 1.1.2 (running scanpy ==1.8.1), including improved boolean handling for mito etc.
 
@@ -65,7 +67,7 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
 
   <xml name="requirements">
     <requirements>
-      <requirement type="package" version="1.1.2">scanpy-scripts</requirement>
+      <requirement type="package" version="1.1.3">scanpy-scripts</requirement>
       <yield/>
     </requirements>
   </xml>
