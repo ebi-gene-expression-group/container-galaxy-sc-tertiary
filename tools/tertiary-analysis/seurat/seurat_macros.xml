@@ -19,7 +19,7 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
          <option value="rds_seurat" selected="true">RDS with a Seurat object</option>
          <option value="loom">Loom</option>
          <option value="h5seurat">Seurat HDF5</option>
-         <!-- Not supported in Seurat 4 conversion for input <option value="anndata">AnnData</option> -->
+         <option value="anndata">AnnData</option>
          <option value="rds_sce">RDS with a Single Cell Experiment object</option>
        </param>
        <when value="anndata">
