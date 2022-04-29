@@ -19,7 +19,7 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
          <option value="rds_seurat" selected="true">RDS with a Seurat object</option>
          <option value="loom">Loom</option>
          <option value="h5seurat">Seurat HDF5</option>
-         <option value="anndata">AnnData</option>
+         <!-- Not supported in Seurat 4 conversion for input <option value="anndata">AnnData</option> -->
          <option value="rds_sce">RDS with a Single Cell Experiment object</option>
        </param>
        <when value="anndata">
@@ -241,8 +241,9 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
    </token>
 
    <xml name="output_object_params">
-     <param type="select" name="format" label="Choose the format of the output" help="Seurat, Single Cell Experiment or Loom">
+     <param type="select" name="format" label="Choose the format of the output" help="Seurat, Single Cell Experiment, AnnData or Loom">
        <option value="rds_seurat" selected="true">RDS with a Seurat object</option>
+       <option value="anndata">AnnData written by Seurat</option>
        <option value="loom">Loom</option>
        <option value="rds_sce">RDS with a Single Cell Experiment object</option>
      </param>
@@ -254,6 +255,9 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
     </data>
     <data name="rds_seurat_file" format="rdata" label="${tool.name} on ${on_string}: Seurat RDS">
       <filter>format == 'rds_seurat'</filter>
+    </data>
+    <data name="anndata_file" format="h5ad" label="${tool.name} on ${on_string}: AnnData from Seurat">
+        <filter>format == 'anndata'</filter>
     </data>
     <data name="rds_sce_file" format="rdata" label="${tool.name} on ${on_string}: Seurat Single Cell Experiment RDS">
       <filter>format == 'rds_sce'</filter>
