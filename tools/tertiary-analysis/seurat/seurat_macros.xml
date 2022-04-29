@@ -312,6 +312,7 @@ types of single cell data.
 
     <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
+4.0.0: Moves to Seurat 4.0.0, introducing a number of methods for merging datasets, plus the whole suite of Seurat plots. Pablo Moreno with funding from AstraZeneca.
 
 3.2.3+galaxy0: Moves to Seurat 3.2.3 and introduce convert method, improving format interconversion support.
 
@@ -324,9 +325,9 @@ types of single cell data.
   Find clusters: removed dims-use, k-param, prune-snn.
 
 2.3.1+galaxy0: Improved documentation and further exposition of all script's options. Pablo Moreno, Jonathan Manning and Ni Huang, Expression Atlas team https://www.ebi.ac.uk/gxa/home  at
-EMBL-EBI https://www.ebi.ac.uk/. Parts obtained from wrappers from Christophe Antoniewski(https://github.com/drosofff) and Lea Bellenger(https://github.com/bellenger-l).
+EMBL-EBI https://www.ebi.ac.uk/. Parts obtained from wrappers from Christophe Antoniewski (GitHub drosofff) and Lea Bellenger (GitHub bellenger-l).
 
-0.0.1: Initial contribution. Maria Doyle, https://github.com/mblue9.
+0.0.1: Initial contribution. Maria Doyle (GitHub mblue9).
       ]]></token>
 
 
