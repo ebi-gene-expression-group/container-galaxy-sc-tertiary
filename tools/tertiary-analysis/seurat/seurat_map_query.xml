@@ -35,19 +35,19 @@
     #end if
 
 
-    #if $transferdata_args
-    --transferdata-args '$transferdata_args'
-    #end if
+    ## #if $transferdata_args
+    ## --transferdata-args '$transferdata_args'
+    ## #end if
 
 
-    #if $integrated_embedding_args
-    --integrated-embedding-args '$integrated_embedding_args'
-    #end if
+    ## #if $integrated_embedding_args
+    ## --integrated-embedding-args '$integrated_embedding_args'
+    ## #end if
 
 
-    #if $project_umap_args
-    --project-umap-args '$project_umap_args'
-    #end if
+    ## #if $project_umap_args
+    ## --project-umap-args '$project_umap_args'
+    ## #end if
 
 
     ]]></command>
@@ -56,14 +56,17 @@
         <expand macro="input_object_params" varname="reference"  />
         <expand macro="input_object_params" varname="anchors"  />
         <expand macro="input_object_params" varname="query"  />
-        <param label="Refdata-field-or-assay" optional='true' name="refdata_field_or_assay" argument="--refdata-field-or-assay" type="text"   help="The name of the metadata field or assay from the reference object provided. This requires the reference parameter to be specified."/>
+        <param label="Refdata-field-or-assay" optional='true' name="refdata_field_or_assay" argument="--refdata-field-or-assay" type="text"   help="The name of the metadata field or assay from the reference object provided. This requires the reference parameter to be specified.">
+          <validator type="regex" message="Value may only include R variable allowed characters: alphanumeric, underscores and period.">^[A-Za-z0-9_\.]+$</validator>
+        </param>
         <param label="New-reduction-name" optional='true' name="new_reduction_name" argument="--new-reduction-name" type="text"   help="Name for new integrated dimensional reduction."/>
         <param label="Reference-reduction" optional='true' name="reference_reduction" argument="--reference-reduction" type="text"   help="Name of reduction to use from the reference for neighbor finding"/>
         <param label="Reduction-model" optional='true' name="reduction_model" argument="--reduction-model" type="text"   help="DimReduc object name that contains the umap model"/>
-        <param label="Transferdata-args" optional='true' name="transferdata_args" argument="--transferdata-args" type="text"   help="A named list of additional arguments to TransferData, written in R syntax .ie list( argument = 'value' )"/>
-        <param label="Integrated-embedding-args" optional='true' name="integrated_embedding_args" argument="--integrated-embedding-args" type="text"   help="A named list of additional arguments to IntegrateEmbeddings, written in R syntax .ie list( argument = 'value' )"/>
-        <param label="Project-umap-args" optional='true' name="project_umap_args" argument="--project-umap-args" type="text"   help="A named list of additional arguments to ProjectUMAP, written in R syntax .ie list( argument = 'value' )"/>
-
+        <!-- these params could pose an injection danger and their handling should be improved before being enabled 
+          <param label="Transferdata-args" optional='true' name="transferdata_args" argument="transferdata-args" type="text"   help="A named list of additional arguments to TransferData, written in R syntax .ie list( argument = 'value' )"/>
+          <param label="Integrated-embedding-args" optional='true' name="integrated_embedding_args" argument="integrated-embedding-args" type="text"   help="A named list of additional arguments to IntegrateEmbeddings, written in R syntax .ie list( argument = 'value' )"/>
+          <param label="Project-umap-args" optional='true' name="project_umap_args" argument="project-umap-args" type="text"   help="A named list of additional arguments to ProjectUMAP, written in R syntax .ie list( argument = 'value' )"/>
+        -->
     </inputs>
     <outputs>
         <expand macro="output_files"/>

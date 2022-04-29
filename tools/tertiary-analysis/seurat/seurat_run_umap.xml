@@ -99,9 +99,9 @@ $adv.uwot_sgd
 --seed.use '$seed_use'
 #end if
 
-#if $adv.metric_kwds
---metric.kwds '$adv.metric_kwds'
-#end if
+##if $adv.metric_kwds
+## --metric.kwds '$adv.metric_kwds'
+##end if
 $adv.angular_rp_forest
 $adv.verbose
 
@@ -119,7 +119,9 @@ $adv.verbose
 <inputs>
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
-    <param label="Dims" optional='true' name="dims" argument="--dims" type="text"   help="Which dimensions to use as input features, used only if list('features')  is NULL"/>
+    <param label="Dims" optional='true' name="dims" argument="--dims" type="text"   help="Which dimensions to use as input features, used only if list('features')  is NULL">
+      <validator type="regex" message="Value may only include numbers, colon, 'c', commas and parenthesis, to do things such as 1:10 or c(1,2,3).">^[c0-9:,)(]+$</validator>
+    </param>
     <param label="Reduction" optional='true' value='pca' name="reduction" argument="--reduction" type="text"   help="Which dimensional reduction (PCA or ICA) to use for the UMAP input. Default is PCA"/>
     <param label="Assay" optional='true' name="assay" argument="--assay" type="text"   help="Assay to pull data for when using  list('features') , or assay used to construct Graph if running UMAP on a Graph"/>
     <param label="N neighbors" optional='true' value='30' name="n_neighbors" argument="--n.neighbors" type="integer"   help="This determines the number of neighboring points used in local approximations of manifold structure. Larger values will result in more global structure being preserved at the loss of detailed local structure. In general this parameter should often be in the range 5 to 50."/>
@@ -145,7 +147,9 @@ $adv.verbose
         <param label="A" optional='true' name="a" argument="--a" type="text"   help="More specific parameters controlling the embedding. If NULL, these values are set automatically as determined by min. dist and spread. Parameter of differentiable approximation of right adjoint functor."/>
         <param label="B" optional='true' name="b" argument="--b" type="text"   help="More specific parameters controlling the embedding. If NULL, these values are set automatically as determined by min. dist and spread. Parameter of differentiable approximation of right adjoint functor."/>
         <param label="Uwot sgd" optional='true' value='false' name="uwot_sgd" argument="--uwot.sgd" type="boolean"  truevalue='--uwot.sgd' falsevalue='' checked='false' help="Set list('uwot::umap(fast_sgd = TRUE)') ; see  list('umap')  for more details"/>
-        <param label="Metric kwds" optional='true' name="metric_kwds" argument="--metric.kwds" type="text"   help="A dictionary of arguments to pass on to the metric, such as the p value for Minkowski distance. If NULL then no arguments are passed on."/>
+        <!-- Potential injection concern, needs to be handled better before being enabled.
+          <param label="Metric kwds" optional='true' name="metric_kwds" argument="metric.kwds" type="text"   help="A dictionary of arguments to pass on to the metric, such as the p value for Minkowski distance. If NULL then no arguments are passed on."/> 
+        -->
         <param label="Angular rp forest" optional='true' value='false' name="angular_rp_forest" argument="--angular.rp.forest" type="boolean"  truevalue='--angular.rp.forest' falsevalue='' checked='false' help="Whether to use an angular random projection forest to initialise the approximate nearest neighbor search. This can be faster, but is mostly on useful for metric that use an angular style distance such as cosine, correlation etc. In the case of those metrics angular forests will be chosen automatically."/>
         <param label="Verbose" optional='true' value='true' name="verbose" argument="--do-not-verbose" type="boolean"  truevalue='' falsevalue='--do-not-verbose' checked='true' help="Controls verbosity"/>
     </section>
@@ -168,6 +172,15 @@ $adv.verbose
         </assert_contents>
       </output>
   </test>
+  <test>
+    <param name="rds_seurat_file" ftype="rdata" value="E-MTAB-6077-3k_features_90_cells-clusters.rds"/>
+    <param name="dims" value="c(1,2,3,4,5,6,7,8,9,10)"/>
+    <output name="rds_seurat_file" ftype="rdata" >
+      <assert_contents>
+        <has_size value="5067150" delta="200000"/>
+      </assert_contents>
+    </output>
+</test>
   <!-- END MANUAL TESTS -->
 </tests>
 <help>
