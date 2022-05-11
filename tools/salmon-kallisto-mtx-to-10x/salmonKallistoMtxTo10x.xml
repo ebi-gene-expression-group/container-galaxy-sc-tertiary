@@ -1,4 +1,4 @@
-<tool id="_salmon_kallisto_mtx_to_10x" name="salmonKallistoMtxTo10x" version="0.0.1+galaxy5" profile="18.01">
+<tool id="_salmon_kallisto_mtx_to_10x" name="salmonKallistoMtxTo10x" version="0.0.1+galaxy6" profile="18.01">
     <description>Transforms .mtx matrix and associated labels into a format compatible with tools expecting old-style 10X data</description>
     <requirements>
       <requirement type="package" version="1.4.1">scipy</requirement>
@@ -8,9 +8,9 @@
     <command detect_errors="exit_code"><![CDATA[
         file $mtx_file | grep 'gzip compressed' > /dev/null;
         if [ $? -eq 0 ]; then
-            matrixfile=matrix.mtx.gz;
+            matrixfile=matrix-in.mtx.gz;
         else
-            matrixfile=matrix.mtx;
+            matrixfile=matrix-in.mtx;
         fi;
         ln -s ${mtx_file} \$matrixfile;
         $__tool_directory__/salmonKallistoMtxTo10x.py --cell_prefix "${cell_prefix}" "\${matrixfile}" "${genes_file}" "${barcodes_file}" ./
