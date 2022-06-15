@@ -7,14 +7,22 @@
         <requirement type="package" version="@TOOL_VERSION@">atlas-fastq-provider</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-        #if $mode:
-            #if $mode == "library_wise":
-            fetchEnaLibraryFastqs.sh -f '$source' -t '$target' -p '$mode'
-            #else:
-            fetchFastq.sh -f '$source' -t '$target' -p '$mode'
+        #if $main_source == 'file_or_uri':
+        fetchFastq.sh -f '$source' -t '$target'
+            #if $validate_only:
+            -v '$validate_only'
+            #end if
+            #if $download_type:
+            -d '$download_type'
             #end if
         #else:
-            fetchFastq.sh -f '$source' -t '$target'  
+        fetchEnaLibraryFastqs.sh -l '$library' -d '$output_directory'
+            #if $sepe:
+            -n '$sepe'
+            #end if
+            #if $download_type:
+            -t '$download_type'
+            #end if
         #end if
         #if $resource
         -s '$resource' 
@@ -28,17 +36,43 @@
         #if $config_file
         -c '$config_file'
         #end if
-        #if $validate_only
-        -v '$validate_only'
+        #if $mode
+        -p '$mode'
         #end if
-        #if $download_type
-        -d '$download_type' 
-        #end if
+        #if $main_source == 'file_or_uri':
         ; mv -f '$target' '$outfile' 
+        #end if
     ]]></command> 
     <inputs>
-        <param name="source" argument="-f" type="text" label="file or uri" help="file or uri" />
-        <param name="target" argument="-t" type="text"  label="target file" help="target file. E.g 'ERR035229.fastq.gz' " />
+
+        <conditional name="fetchFastq">
+            <param name="main_source" argument="-a" type="select" label="file_or_uri or library" help="file_or_uri or library" >
+                <option value="library" selected="true">public</option>
+                <option value="file_or_uri">private</option>
+            </param>
+            <when value="file_or_uri">
+                <param name="source" argument="-f" type="text" label="file or uri" help="file or uri" />
+                <param name="target" argument="-t" type="text"  label="target file" help="target file. E.g 'ERR035229.fastq.gz' " />
+                <param name="validate_only" argument="-v" type="boolean" label="validate only to check a source URI is valid, don't download" help="validate only, don't download" optional='true'/>
+                <param name="download_type" argument="-d" type="select" label="download type, fastq or SRA file" help="download type, fastq or srr" optional='true'>
+                    <option value="fastq" selected="true">fastq</option>
+                    <option value="srr">SRA</option>
+                </param>
+            </when>
+            <when value="library">
+                <param name="library" argument="-l" type="text" label="library" help="library" />
+                <param name="output_directory" argument="-d" type="text" label="output directory" help="output directory" />
+                <param name="download_type" argument="-t" type="select" label="download type, fastq or SRA file" help="download type, fastq or srr" optional='true'>
+                    <option value="fastq" selected="true">fastq</option>
+                    <option value="srr">SRA</option>
+                </param>
+                <param name="sepe" argument="-n" type="select" label="SINGLE-end or PAIRED-end, default PAIRED" help="SINGLE-end or PAIRED-end, default PAIRED" optional='true'>
+                    <option value="PAIRED" selected="true">PAIRED</option>
+                    <option value="SINGLE">SINGLE</option>
+                </param>
+            </when>
+        </conditional>
+
         <param name="resource" argument="-s" type="select"  label="resource or directory, default 'auto' " help="How to fetch the file, e.g. there’s a specific method for getting results from the Human Cell Atlas' 'Azul' resource. " optional='true' >
             <option value="auto" selected="true">auto</option>
             <option value="ena">ENA</option>
@@ -56,30 +90,31 @@
         <param name="mode" argument="-p" type="select" label="public or private, default public. Private usable by EBI staff only" help="public or private, default 'public' " optional='true'>
             <option value="public" selected="true">public</option>
             <option value="private">private</option>
-            <option value="library_wise">library_wise</option>
-
 	    </param>
         <param name="library" argument="-l" type="text"  label="ENA library (ENA source files only), by default inferred from file name" help="library, by default inferred from file name. E.g. -l ERR1888646 " optional='true'/>
         <param name="config_file" argument="-c" type="data" format="atlas-fastq-provider-config.sh" label="config file to override defaults" help="config file to override defaults" optional='true'/>
-        <param name="validate_only" argument="-v" type="boolean" label="validate only to check a source URI is valid, don't download" help="validate only, don't download" optional='true'/>
-        <param name="download_type" argument="-d" type="select" label="download type, fastq or SRA file" help="download type, fastq or srr" optional='true'>
-            <option value="fastq" selected="true">fastq</option>
-            <option value="srr">SRA</option>
-	    </param>
+
     </inputs>
     <outputs>
         <data name="outfile" label="${tool.name} on ${on_string}: compressed fastq file" format="fastqsanger.gz"  />
     </outputs>
     <tests>
         <test expect_num_outputs="1">
+            <param name="main_source" value="file_or_uri"/>
             <param name="source" value="ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR035/ERR035229/ERR035229.fastq.gz"/>
             <param name="target" value="ERR035229.fastq.gz"/>
             <output name="outfile"  md5="c9482e89552630084997112787a5d796" />   
         </test>
     </tests>
     <help><![CDATA[
-    
-        Usage: fetchFastq.sh [-f <file or uri>] [-t <target file>] [-s <source resource or directory, default 'auto'>] [-m <retrieval method, default 'auto'>] [-p <public or private, default 'public'>] [-l <library, by default inferred from file name>] [-c <config file to override defaults>] [-v <validate only, don't download>] [-d <download type, 'fastq' or 'srr'>]
+        
+        Usage (<file or uri>  as main source): 
+
+            fetchFastq.sh -f <file or uri> -t <target file> [-s <source resource or directory, default 'auto'>] [-m <retrieval method, default 'auto'>] [-p <public or private, default 'public'>] [-l <library, by default inferred from file name>] [-c <config file to override defaults>] [-v <validate only, don't download>] [-d <download type, 'fastq' or 'srr'>]
+        
+        Usage (<library> as main source): 
+
+            fetchEnaLibraryFastqs.sh -l <library> -d <output directory> [-m <retrieval method, default 'wget'>] [-s <source directory for method 'dir'>] [-p <public or private, default public>] [-c <config file to override defaults>] [-t <download type, fastq or srr>] [-n <SINGLE or PAIRED, default PAIRED>]
 
     ]]></help>
     <citations>
