@@ -117,7 +117,9 @@
             fetchEnaLibraryFastqs.sh -l <library> -d <output directory> [-m <retrieval method, default 'wget'>] [-s <source directory for method 'dir'>] [-p <public or private, default public>] [-c <config file to override defaults>] [-t <download type, fastq or srr>] [-n <SINGLE or PAIRED, default PAIRED>]
 
     ]]></help>
+
     <citations>
+
         <citation type="bibtex">
             @misc{githubatlas-fastq-provider,
             author = {Jonathan Manning, EBI Gene Expression Team},
@@ -127,6 +129,8 @@
             journal = {GitHub repository},
             url = {https://github.com/ebi-gene-expression-group/atlas-fastq-provider},
         }</citation>
+        
     </citations>
+
 </tool>
 
