@@ -98,12 +98,12 @@
     <outputs>
         <conditional name="main_source">
             <when value="file_or_uri">
-                <data name="outfile" label="${tool.name} on ${on_string}: compressed fastq file" format="fastqsanger.gz"  />
+                <data name="outfile" label="${tool.name} on ${on_string}: compressed fastq file" format="fastqsanger.gz" />
             </when>
-            <when value="file_or_uri">
+            <when value="library">
                 <conditional name="sepe">
                     <when value="SINGLE">
-                        <data name="outfile" label="${tool.name} on ${on_string}: compressed fastq file" format="fastqsanger.gz"  />
+                        <data name="outfile" label="${tool.name} on ${on_string}: compressed fastq file" format="fastqsanger.gz" />
                     </when>
                     <when value="PAIRED">
                         <data name="outfile_1" label="${tool.name} on ${on_string}: compressed fastq file _1" format="fastqsanger.gz" />
