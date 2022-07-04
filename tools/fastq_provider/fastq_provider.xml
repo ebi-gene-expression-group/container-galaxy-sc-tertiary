@@ -96,7 +96,22 @@
     </inputs>
 
     <outputs>
-        <data name="outfile" label="${tool.name} on ${on_string}: compressed fastq file" format="fastqsanger.gz"  />
+        <conditional name="main_source">
+            <when value="file_or_uri">
+                <data name="outfile" label="${tool.name} on ${on_string}: compressed fastq file" format="fastqsanger.gz"  />
+            </when>
+            <when value="file_or_uri">
+                <conditional name="sepe">
+                    <when value="SINGLE">
+                        <data name="outfile" label="${tool.name} on ${on_string}: compressed fastq file" format="fastqsanger.gz"  />
+                    </when>
+                    <when value="PAIRED">
+                        <data name="outfile_1" label="${tool.name} on ${on_string}: compressed fastq file _1" format="fastqsanger.gz" />
+                        <data name="outfile_2" label="${tool.name} on ${on_string}: compressed fastq file _2" format="fastqsanger.gz" />
+                    </when>
+                </conditional>
+            </when>
+        </conditional>
     </outputs>
 
     <tests>
@@ -106,7 +121,15 @@
             <param name="target" value="ERR035229.fastq.gz"/>
             <output name="outfile"  md5="c9482e89552630084997112787a5d796" />   
         </test>
+        <test expect_num_outputs="1">
+            <param name="main_source" value="library"/>
+            <param name="library" value="SRR18315788"/>
+            <param name="download_type" value="fastq"/>
+            <param name="sepe" value="SINGLE"/>
+            <output name="outfile"  md5="5723e87046f61643803a9a3b99e138cb" />   
+        </test>
     </tests>
+
     <help><![CDATA[
         
         Usage (<file or uri>  as main source): 
