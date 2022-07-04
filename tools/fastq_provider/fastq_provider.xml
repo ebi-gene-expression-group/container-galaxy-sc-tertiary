@@ -16,7 +16,7 @@
             -d '$download_type'
             #end if
         #else:
-        fetchEnaLibraryFastqs.sh -l '$library' -d '$output_directory'
+        fetchEnaLibraryFastqs.sh -l '$library' -d ./
             #if $sepe:
             -n '$sepe'
             #end if
@@ -61,7 +61,6 @@
             </when>
             <when value="library">
                 <param name="library" argument="-l" type="text" label="library" help="library" />
-                <param name="output_directory" argument="-d" type="text" label="output directory" help="output directory" />
                 <param name="download_type" argument="-t" type="select" label="download type, fastq or SRA file" help="download type, fastq or srr" optional='true'>
                     <option value="fastq" selected="true">fastq</option>
                     <option value="srr">SRA</option>
@@ -95,9 +94,11 @@
         <param name="config_file" argument="-c" type="data" format="atlas-fastq-provider-config.sh" label="config file to override defaults" help="config file to override defaults" optional='true'/>
 
     </inputs>
+
     <outputs>
         <data name="outfile" label="${tool.name} on ${on_string}: compressed fastq file" format="fastqsanger.gz"  />
     </outputs>
+
     <tests>
         <test expect_num_outputs="1">
             <param name="main_source" value="file_or_uri"/>
