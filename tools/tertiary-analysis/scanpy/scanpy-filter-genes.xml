@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_filter_genes" name="Scanpy FilterGenes" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scanpy_filter_genes" name="Scanpy FilterGenes" version="@TOOL_VERSION@+galaxy10" profile="@PROFILE@">
   <description>based on counts and numbers of cells expressed</description>
   <macros>
     <import>scanpy_macros2.xml</import>
