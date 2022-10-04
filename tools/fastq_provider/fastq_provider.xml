@@ -42,25 +42,33 @@
         #if $main_source == 'file_or_uri':
         ; mv -f '$target' '$outfile' 
         #end if
-    ]]></command> 
-    <inputs>
+    ]]></command>
 
-        <conditional name="fetchFastq">
-            <param name="main_source" argument="-a" type="select" label="file_or_uri or library" help="file_or_uri or library" >
-                <option value="library" selected="true">public</option>
-                <option value="file_or_uri">private</option>
+    <inputs>
+        <conditional name="fetch_type">
+            <param name="script" argument="-a" type="select" label="Use file/URI or library" help="Download using a path (file or URI) or library ID" refresh_on_change="true">
+                <option value="fetchFastq">File or URI</option>
+                <option value="fetchEnaLibraryFastqs" selected="true">Library</option>
             </param>
-            <when value="file_or_uri">
-                <param name="source" argument="-f" type="text" label="file or uri" help="file or uri" />
-                <param name="target" argument="-t" type="text"  label="target file" help="target file. E.g 'ERR035229.fastq.gz' " />
-                <param name="validate_only" argument="-v" type="boolean" label="validate only to check a source URI is valid, don't download" help="validate only, don't download" optional='true'/>
-                <param name="download_type" argument="-d" type="select" label="download type, fastq or SRA file" help="download type, fastq or srr" optional='true'>
-                    <option value="fastq" selected="true">fastq</option>
-                    <option value="srr">SRA</option>
+            <when value="fetchFastq">
+                <param name="path" argument="-f" type="text" label="File or URI" help="File path or URI" optional="false" />
+                <param name="target" argument="-t" type="text"  label="target file" help="target file. E.g 'ERR035229.fastq.gz'" optional="false" />
+                <param name="validate_only" argument="-v" type="boolean" label="validate only to check a source URI is valid, don't download" help="Validate only, don't download" optional='true' />
+                <param name="retrieval_method" argument="-m" type="select"  label="retrieval method, default 'wget' "  help="retrieval method, default 'auto'. Files with hca source will use the 'hca' download method regardless (-m has no effect). Private ENA files will be fetched via 'ssh' (-m has no effect). The 'http' method refers to an HTTP endpoint in the EBI Fire resource. "  optional='true'>
+                    <option value="auto" selected="true">auto</option>
+                    <option value="wget">wget</option>
+                    <option value="dir">Local directory</option>
+                    <option value="hca">Human Cell Atlas</option>
+                    <option value="ssh">SSH (ENA files, for EBI only)</option>
+                    <option value="ftp">FTP (ENA files, for EBI only)</option>
+                    <option value="http">HTTP endpoint (ENA files, EBI only)</option>
                 </param>
+                <param name="library" argument="-l" type="text"  label="ENA library (ENA source files only), by default inferred from file name" help="library, by default inferred from file name. E.g. -l ERR1888646" optional="true"/>
             </when>
-            <when value="library">
-                <param name="library" argument="-l" type="text" label="library" help="library" />
+            <when value="fetchEnaLibraryFastqs">
+                <param name="library" argument="-l" type="text"  label="ENA library (ENA source files only), by default inferred from file name" help="library, by default inferred from file name. E.g. -l ERR1888646" optional="false" />
+                <!-- Below possibly not needed if added to the command -->
+                <param name="output_dir" argument="-d" type="text" label="Output directory" help="Where files are saved" optional="false" />
                 <param name="download_type" argument="-t" type="select" label="download type, fastq or SRA file" help="download type, fastq or srr" optional='true'>
                     <option value="fastq" selected="true">fastq</option>
                     <option value="srr">SRA</option>
@@ -69,30 +77,28 @@
                     <option value="PAIRED" selected="true">PAIRED</option>
                     <option value="SINGLE">SINGLE</option>
                 </param>
+                <param name="retrieval_method" argument="-m" type="select"  label="retrieval method, default 'wget' "  help="retrieval method, default 'auto'. Files with hca source will use the 'hca' download method regardless (-m has no effect). Private ENA files will be fetched via 'ssh' (-m has no effect). The 'http' method refers to an HTTP endpoint in the EBI Fire resource. "  optional='true'>
+                    <option value="auto">auto</option>
+                    <option value="wget" selected="true">wget</option>
+                    <option value="dir">Local directory</option>
+                    <option value="hca">Human Cell Atlas</option>
+                    <option value="ssh">SSH (ENA files, for EBI only)</option>
+                    <option value="ftp">FTP (ENA files, for EBI only)</option>
+                    <option value="http">HTTP endpoint (ENA files, EBI only)</option>
+                </param>
             </when>
         </conditional>
-
         <param name="resource" argument="-s" type="select"  label="resource or directory, default 'auto' " help="How to fetch the file, e.g. there’s a specific method for getting results from the Human Cell Atlas' 'Azul' resource. " optional='true' >
             <option value="auto" selected="true">auto</option>
             <option value="ena">ENA</option>
             <option value="sra">SRA file</option>
             <option value="hca">Human Cell Atlas</option>
-            <option value="dir">Local directory</option>
-	    </param>
-        <param name="retrieval_method" argument="-m" type="select"  label="retrieval method, default 'wget' "  help="retrieval method, default 'auto'. Files with hca source will use the 'hca' download method regardless (-m has no effect). Private ENA files will be fetched via 'ssh' (-m has no effect). The 'http' method refers to an HTTP endpoint in the EBI Fire resource. "  optional='true'>
-            <option value="auto" selected="true">auto</option>
-            <option value="wget">wget</option>
-            <option value="dir">Local directory</option>
-            <option value="ssh">SSH (ENA files, for EBI only)</option>
-            <option value="http">HTTP endpoint (ENA files, EBI only)</option>
         </param>
         <param name="mode" argument="-p" type="select" label="public or private, default public. Private usable by EBI staff only" help="public or private, default 'public' " optional='true'>
             <option value="public" selected="true">public</option>
             <option value="private">private</option>
-	    </param>
-        <param name="library" argument="-l" type="text"  label="ENA library (ENA source files only), by default inferred from file name" help="library, by default inferred from file name. E.g. -l ERR1888646 " optional='true'/>
+        </param>
         <param name="config_file" argument="-c" type="data" format="atlas-fastq-provider-config.sh" label="config file to override defaults" help="config file to override defaults" optional='true'/>
-
     </inputs>
 
     <outputs>
