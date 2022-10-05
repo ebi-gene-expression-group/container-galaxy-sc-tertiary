@@ -68,7 +68,7 @@
             <when value="fetchEnaLibraryFastqs">
                 <param name="library" argument="-l" type="text"  label="ENA library (ENA source files only), by default inferred from file name" help="library, by default inferred from file name. E.g. -l ERR1888646" optional="false" />
                 <!-- Below possibly not needed if added to the command -->
-                <param name="output_dir" argument="-d" type="text" label="Output directory" help="Where files are saved" optional="false" />
+                <!-- <param name="output_dir" argument="-d" type="text" label="Output directory" help="Where files are saved" optional="false" /> -->
                 <param name="download_type" argument="-t" type="select" label="download type, fastq or SRA file" help="download type, fastq or srr" optional='true'>
                     <option value="fastq" selected="true">fastq</option>
                     <option value="srr">SRA</option>
@@ -130,23 +130,36 @@
         <collection name="dl_from_lib_paired" type="list">
           <filter>fetch_type[script] == "fetchEnaLibraryFastqs" and sepe == "PAIRED"</filter>
               <data name="lib_pair_1" label="Downloaded library, pair read 1" format="fastqsanger.gz" from_work_dir="lib_pair_1.fastq.gz"/>
-              <data name="lib_pair_2" label="Downloaded library, pair read 2" format="fastqsanger.gz" from_work_dir="lib_pair_1.fastq.gz"/>
+              <data name="lib_pair_2" label="Downloaded library, pair read 2" format="fastqsanger.gz" from_work_dir="lib_pair_2.fastq.gz"/>
         </collection>
     </outputs>
 
     <tests>
         <test expect_num_outputs="1">
-            <param name="main_source" value="file_or_uri"/>
-            <param name="source" value="ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR035/ERR035229/ERR035229.fastq.gz"/>
+            <param name="script" value="fetchFastq"/>
+            <param name="path" value="ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR035/ERR035229/ERR035229.fastq.gz"/>
             <param name="target" value="ERR035229.fastq.gz"/>
-            <output name="outfile"  md5="c9482e89552630084997112787a5d796" />   
+            <output name="dl_from_path" md5="c9482e89552630084997112787a5d796" />   
         </test>
         <test expect_num_outputs="1">
-            <param name="main_source" value="library"/>
+            <param name="script" value="fetchEnaLibraryFastqs"/>
             <param name="library" value="SRR18315788"/>
+            <!-- <param name="output_dir" value=""/> -->
             <param name="download_type" value="fastq"/>
             <param name="sepe" value="SINGLE"/>
-            <output name="outfile"  md5="5723e87046f61643803a9a3b99e138cb" />   
+            <output name="dl_from_lib_single" md5="5723e87046f61643803a9a3b99e138cb" />   
+        </test>
+        <test expect_num_outputs="2">
+            <param name="script" value="fetchEnaLibraryFastqs"/>
+            <param name="library" value="ERR2896350"/>
+            <!-- <param name="output_dir" value=""/> -->
+            <param name="download_type" value="fastq"/>
+            <param name="sepe" value="PARIED"/>
+            <output_collection name="dl_from_lib_paired" type="list">
+                <!-- md5 values are from https://www.ebi.ac.uk/ena/browser/api/xml/ERR2896350 -->
+                <element name="lib_pair_1" file="lib_pair_1.fastq.gz" md5="81ab2de51c3f1a2e28dc3aede000ed82"/>
+                <element name="lib_pair_2" file="lib_pair_2.fastq.gz" md5="b3bee670606ec4f0d8024ff97363e450"/>
+            </output_collection> 
         </test>
     </tests>
 
