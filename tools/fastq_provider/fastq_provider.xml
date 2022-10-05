@@ -7,40 +7,50 @@
         <requirement type="package" version="@TOOL_VERSION@">atlas-fastq-provider</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-        #if $main_source == 'file_or_uri':
-        fetchFastq.sh -f '$source' -t '$target'
-            #if $validate_only:
-            -v '$validate_only'
-            #end if
-            #if $download_type:
-            -d '$download_type'
-            #end if
-        #else:
-        fetchEnaLibraryFastqs.sh -l '$library' -d ./
-            #if $sepe:
-            -n '$sepe'
-            #end if
-            #if $download_type:
-            -t '$download_type'
-            #end if
+        ${fetch_type.script}.sh 
+
+        #if $path
+        -f '${path}' 
         #end if
-        #if $resource
-        -s '$resource' 
+
+        #if $target
+        -t '${target}' 
         #end if
-        #if $retrieval_method
-        -m '$retrieval_method'
-        #end if
+
         #if $library
-        -l '$library'
+        -l '${library}' 
         #end if
+
+        #if $retrieval_method
+        -m '${retrieval_method}'
+        #end if
+
         #if $config_file
-        -c '$config_file'
+        -c '${config_file}'
         #end if
+
+        #if $resource
+        -s '${resource}' 
+        #end if
+
         #if $mode
-        -p '$mode'
+        -p '${mode}'
         #end if
-        #if $main_source == 'file_or_uri':
-        ; mv -f '$target' '$outfile' 
+
+        #if $download_type
+        -t '${download_type}' 
+        #end if
+
+        #if $sepe
+        -n '${sepe}' 
+        #end if
+
+        #if $fetch_type.script == "fetchFastq":
+            #if $validate_only
+            -v
+            #end if
+        #else if $fetch_type.script == "fetchEnaLibraryFastqs":
+            -d ''
         #end if
     ]]></command>
 
@@ -129,8 +139,8 @@
         </data>
         <collection name="dl_from_lib_paired" type="list">
           <filter>fetch_type[script] == "fetchEnaLibraryFastqs" and sepe == "PAIRED"</filter>
-              <data name="lib_pair_1" label="Downloaded library, pair read 1" format="fastqsanger.gz" from_work_dir="lib_pair_1.fastq.gz"/>
-              <data name="lib_pair_2" label="Downloaded library, pair read 2" format="fastqsanger.gz" from_work_dir="lib_pair_2.fastq.gz"/>
+              <data name="lib_pair_1" label="Downloaded library, pair read 1" format="fastqsanger.gz" from_work_dir="*_1.fastq.gz"/>
+              <data name="lib_pair_2" label="Downloaded library, pair read 2" format="fastqsanger.gz" from_work_dir="*_2.fastq.gz"/>
         </collection>
     </outputs>
 
@@ -157,8 +167,8 @@
             <param name="sepe" value="PARIED"/>
             <output_collection name="dl_from_lib_paired" type="list">
                 <!-- md5 values are from https://www.ebi.ac.uk/ena/browser/api/xml/ERR2896350 -->
-                <element name="lib_pair_1" file="lib_pair_1.fastq.gz" md5="81ab2de51c3f1a2e28dc3aede000ed82"/>
-                <element name="lib_pair_2" file="lib_pair_2.fastq.gz" md5="b3bee670606ec4f0d8024ff97363e450"/>
+                <element name="lib_pair_1" md5="81ab2de51c3f1a2e28dc3aede000ed82"/>
+                <element name="lib_pair_2" md5="b3bee670606ec4f0d8024ff97363e450"/>
             </output_collection> 
         </test>
     </tests>
