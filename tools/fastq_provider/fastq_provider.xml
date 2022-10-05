@@ -46,7 +46,7 @@
 
     <inputs>
         <conditional name="fetch_type">
-            <param name="script" argument="-a" type="select" label="Use file/URI or library" help="Download using a path (file or URI) or library ID" refresh_on_change="true">
+            <param name="script" argument="-a" type="select" label="Use file/URI or library" help="Download using a path (file or URI) or library ID" refresh_on_change="true" optional="false">
                 <option value="fetchFastq">File or URI</option>
                 <option value="fetchEnaLibraryFastqs" selected="true">Library</option>
             </param>
@@ -101,7 +101,7 @@
         <param name="config_file" argument="-c" type="data" format="atlas-fastq-provider-config.sh" label="config file to override defaults" help="config file to override defaults" optional='true'/>
     </inputs>
 
-    <outputs>
+<!--     <outputs>
         <conditional name="main_source">
             <when value="file_or_uri">
                 <data name="outfile" label="${tool.name} on ${on_string}: compressed fastq file" format="fastqsanger.gz" />
@@ -118,6 +118,20 @@
                 </conditional>
             </when>
         </conditional>
+    </outputs> -->
+
+    <outputs>
+        <data name="dl_from_path" label="Downloaded from path" format="fastqsanger.gz">
+            <filter>fetch_type[script] == "fetchFastq"</filter>
+        </data>
+        <data name="dl_from_lib_single" label="Downloaded library, single-end" format="fastqsanger.gz">
+            <filter>fetch_type[script] == "fetchEnaLibraryFastqs" and sepe == "SINGLE"</filter>
+        </data>
+        <collection name="dl_from_lib_paired" type="list">
+          <filter>fetch_type[script] == "fetchEnaLibraryFastqs" and sepe == "PAIRED"</filter>
+              <data name="lib_pair_1" label="Downloaded library, pair read 1" format="fastqsanger.gz" from_work_dir="lib_pair_1.fastq.gz"/>
+              <data name="lib_pair_2" label="Downloaded library, pair read 2" format="fastqsanger.gz" from_work_dir="lib_pair_1.fastq.gz"/>
+        </collection>
     </outputs>
 
     <tests>
