@@ -151,7 +151,7 @@
         
         Usage (<library> as main source): 
 
-            fetchEnaLibraryFastqs.sh -l <library> -d <output directory> [-m <retrieval method, default 'wget'>] [-s <source directory for method 'dir'>] [-p <public or private, default public>] [-c <config file to override defaults>] [-t <download type, fastq or srr>] [-n <SINGLE or PAIRED, default PAIRED>]
+            fetchEnaLibraryFastqs.sh -l <library> -d <output directory> [-m <retrieval method, default 'auto'>] [-s <source directory for method 'dir'>] [-p <public or private, default public>] [-c <config file to override defaults>] [-t <download type, fastq or srr>] [-n <SINGLE or PAIRED, default PAIRED>]
 
     ]]></help>
     <citations>
@@ -166,4 +166,3 @@
         }</citation>
     </citations>
 </tool>
-
