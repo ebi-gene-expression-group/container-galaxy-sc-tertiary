@@ -76,8 +76,6 @@
             </when>
             <when value="fetchEnaLibraryFastqs">
                 <param name="library" argument="-l" type="text" label="ENA library (ENA source files only), by default inferred from file name" help="The library ID, which, by default, is inferred from file name. E.g. -l ERR1888646" optional="false"/>
-                <!-- Below possibly not needed if added to the command -->
-                <!-- <param name="output_dir" argument="-d" type="text" label="Output directory" help="Where files are saved" optional="false" /> -->
                 <param name="download_type" argument="-t" type="select" label="download type, fastq or SRA file" help="download type, fastq or srr" optional="true">
                     <option value="fastq" selected="true">fastq</option>
                     <option value="srr">SRA</option>
@@ -90,7 +88,6 @@
         </conditional>
         <param name="retrieval_method" argument="-m" type="select" label="Retrieval method" help="Retrieval method, default 'auto'. Files with HCA source will use the 'hca' download method regardless (-m will have no effect). Private ENA files will be fetched via 'ssh' (-m will have has no effect). The 'http' method refers to an HTTP endpoint in the EBI Fire resource." optional="true">
             <option value="auto" selected="true">auto</option>
-            <option value="wget">wget</option>
             <option value="dir">Local directory</option>
             <option value="ssh">SSH (ENA files, for EBI only)</option>
             <option value="ftp">FTP (ENA files, for EBI only)</option>
@@ -117,32 +114,21 @@
         </data>
         <collection name="dl_from_lib_paired" type="paired">
           <filter>fetch_type["script"] == "fetchEnaLibraryFastqs" and fetch_type["sepe"] == "PAIRED"</filter>
-              <data name="dl_from_lib_pair_1" label="Downloaded library, pair read 1" format="fastqsanger.gz" from_work_dir="dl_from_lib_pair_1.fastq.gz"/>
-              <data name="dl_from_lib_pair_2" label="Downloaded library, pair read 2" format="fastqsanger.gz" from_work_dir="dl_from_lib_pair_2.fastq.gz"/>
+              <data name="forward" label="Downloaded library, pair read 1" format="fastqsanger.gz" from_work_dir="dl_from_lib_pair_1.fastq.gz"/>
+              <data name="reverse" label="Downloaded library, pair read 2" format="fastqsanger.gz" from_work_dir="dl_from_lib_pair_2.fastq.gz"/>
         </collection>
     </outputs>
     <tests>
-        <test>
-            <param name="script" value="fetchFastq"/>
-            <param name="path" value="ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR035/ERR035229/ERR035229.fastq.gz"/>
-            <param name="target" value="ERR035229.fastq.gz"/>
-            <output name="dl_from_path" md5="c9482e89552630084997112787a5d796" />   
-        </test>
-        <test>
-            <param name="script" value="fetchEnaLibraryFastqs"/>
-            <param name="library" value="SRR18315788"/>
-            <param name="download_type" value="fastq"/>
-            <param name="sepe" value="SINGLE"/>
-            <output name="dl_from_lib_single" md5="5723e87046f61643803a9a3b99e138cb" />   
-        </test>
         <test>
             <param name="script" value="fetchEnaLibraryFastqs"/>
             <param name="library" value="ERR2890000"/>
             <param name="download_type" value="fastq"/>
             <param name="sepe" value="PAIRED"/>
+            <!-- <param name="retrieval_method" value="wget"/> -->
+            <!-- <param name="resource" value="ena"/> -->
             <output_collection name="dl_from_lib_paired" type="paired">
-                <element name="dl_from_lib_pair_1" md5="6ef420b74010b4f3918476909967fd18"/>
-                <element name="dl_from_lib_pair_2" md5="f70d8209cf8b0617f4adc75c0a13713a"/>
+                <element name="forward" md5="6ef420b74010b4f3918476909967fd18"/>
+                <element name="reverse" md5="f70d8209cf8b0617f4adc75c0a13713a"/>
             </output_collection> 
         </test>
     </tests>
