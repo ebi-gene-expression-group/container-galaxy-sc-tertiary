@@ -1,78 +1,158 @@
-<tool id="fastq_provider" name="Atlas FASTQ provider" version="@TOOL_VERSION@+galaxy" python_template_version="3.5" profile="20.01">
+<tool id="fastq_provider" name="Atlas FASTQ provider" version="@TOOL_VERSION@+galaxy0" python_template_version="3.5" profile="20.01">
     <description> Retrieval and download of FASTQ files from ENA and other repositories such as HCA. The tool is used in production pipelines of EMBL-EBI Expression Atlas and Single Cell Expression Atlas.  </description>
     <macros>
-        <token name="@TOOL_VERSION@">0.4.2</token>
+        <token name="@TOOL_VERSION@">0.4.4</token>
     </macros>
     <requirements>
         <requirement type="package" version="@TOOL_VERSION@">atlas-fastq-provider</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-        fetchFastq.sh -f '$source' -t '$target'  
-        #if $resource
-        -s '$resource' 
+
+        ${fetch_type.script}.sh 
+
+        #if $fetch_type.script == "fetchFastq":
+            -f "${fetch_type.path}"
+            -t "${fetch_type.target}"
+
+            #if $fetch_type.library:
+                -l ${fetch_type.library}
+            #end if
+            
+            #if $fetch_type.validate_only:
+                -v
+            #end if
+        
+        #else if $fetch_type.script == "fetchEnaLibraryFastqs":
+            -l ${fetch_type.library}
+            -d "./"
+        
+            #if $fetch_type.download_type:
+                -t ${fetch_type.download_type}
+            #end if
+        
+            #if $fetch_type.sepe:
+                -n ${fetch_type.sepe}
+            #end if
         #end if
-        #if $retrieval_method
-        -m '$retrieval_method'
+
+        #if $retrieval_method:
+            -m ${retrieval_method}
         #end if
-        #if $mode
-        -p '$mode'
+
+        #if $config_file:
+            -c ${config_file}
         #end if
-        #if $library
-        -l '$library'
+
+        #if $resource:
+            -s ${resource}
         #end if
-        #if $config_file
-        -c '$config_file'
+
+        #if $mode:
+            -p ${mode}
         #end if
-        #if $validate_only
-        -v '$validate_only'
+
+        #if $fetch_type.script == "fetchFastq":
+            ; mv -f "${fetch_type.target}" dl_from_path.fastq.gz
+        #else if $fetch_type.script == "fetchEnaLibraryFastqs":
+            #if $fetch_type.sepe == "SINGLE":
+                ; mv -f "${fetch_type.library}.fastq.gz" dl_from_lib_single.fastq.gz
+            #else if $fetch_type.sepe == "PAIRED":
+                ; mv -f "${fetch_type.library}_1.fastq.gz" dl_from_lib_pair_1.fastq.gz
+                ; mv -f "${fetch_type.library}_2.fastq.gz" dl_from_lib_pair_2.fastq.gz
+            #end if
         #end if
-        #if $download_type
-        -d '$download_type' 
-        #end if
-        ; mv -f '$target' '$outfile' 
-    ]]></command> 
+    ]]></command>
     <inputs>
-        <param name="source" argument="-f" type="text" label="file or uri" help="file or uri" />
-        <param name="target" argument="-t" type="text"  label="target file" help="target file. E.g 'ERR035229.fastq.gz' " />
-        <param name="resource" argument="-s" type="select"  label="resource or directory, default 'auto' " help="How to fetch the file, e.g. there’s a specific method for getting results from the Human Cell Atlas' 'Azul' resource. " optional='true' >
+        <conditional name="fetch_type">
+            <param name="script" argument="-a" type="select" label="Use file/URI or library" help="Download using a path (file or URI) or library ID." refresh_on_change="true" optional="false">
+                <option value="fetchFastq">File or URI</option>
+                <option value="fetchEnaLibraryFastqs" selected="true">Library</option>
+            </param>
+            <when value="fetchFastq">
+                <param name="path" argument="-f" type="text" label="File or URI" help="Use a file path or URI." optional="false" />
+                <param name="target" argument="-t" type="text" label="Target file" help="Provide the target file name, e.g. 'ERR035229.fastq.gz'" optional="false" />
+                <param name="validate_only" argument="-v" type="boolean" label="Validate only, don't download" help="Check if you don't want to download and you only want to validate that a source URI is valid." checked="false" optional="true"/>
+                <param name="library" argument="-l" type="text" label="ENA library (ENA source files only), by default inferred from file name" help="The library ID, which, by default, is inferred from file name. E.g. -l ERR1888646" optional="true"/>
+            </when>
+            <when value="fetchEnaLibraryFastqs">
+                <param name="library" argument="-l" type="text" label="ENA library (ENA source files only), by default inferred from file name" help="The library ID, which, by default, is inferred from file name. E.g. -l ERR1888646" optional="false"/>
+                <param name="download_type" argument="-t" type="select" label="download type, fastq or SRA file" help="download type, fastq or srr" optional="true">
+                    <option value="fastq" selected="true">fastq</option>
+                    <option value="srr">SRA</option>
+                </param>
+                <param name="sepe" argument="-n" type="select" label="SINGLE-end or PAIRED-end" help="SINGLE-end or PAIRED-end, default PAIRED" optional="true">
+                    <option value="PAIRED" selected="true">PAIRED</option>
+                    <option value="SINGLE">SINGLE</option>
+                </param>
+            </when>
+        </conditional>
+        <param name="retrieval_method" argument="-m" type="select" label="Retrieval method" help="Retrieval method, default 'auto'. Files with HCA source will use the 'hca' download method regardless (-m will have no effect). Private ENA files will be fetched via 'ssh' (-m will have has no effect). The 'http' method refers to an HTTP endpoint in the EBI Fire resource." optional="true">
+            <option value="auto" selected="true">auto</option>
+            <option value="dir">Local directory</option>
+            <option value="ssh">SSH (ENA files, for EBI only)</option>
+            <option value="ftp">FTP (ENA files, for EBI only)</option>
+            <option value="http">HTTP endpoint (ENA files, EBI only)</option>
+        </param>
+        <param name="resource" argument="-s" type="select" label="Resource or directory" help="How to fetch the file, e.g. there’s a specific method for getting results from the Human Cell Atlas' 'Azul' resource. Default: 'auto'." optional="true" >
             <option value="auto" selected="true">auto</option>
             <option value="ena">ENA</option>
             <option value="sra">SRA file</option>
             <option value="hca">Human Cell Atlas</option>
-            <option value="dir">Local directory</option>
-	    </param>
-        <param name="retrieval_method" argument="-m" type="select"  label="retrieval method, default 'wget' "  help="retrieval method, default 'auto'. Files with hca source will use the 'hca' download method regardless (-m has no effect). Private ENA files will be fetched via 'ssh' (-m has no effect). The 'http' method refers to an HTTP endpoint in the EBI Fire resource. "  optional='true'>
-            <option value="auto" selected="true">auto</option>
-            <option value="wget">wget</option>
-            <option value="dir">Local directory</option>
-            <option value="ssh">SSH (ENA files, for EBI only)</option>
-            <option value="http">HTTP endpoint (ENA files, EBI only)</option>
         </param>
-        <param name="mode" argument="-p" type="select" label="public or private, default public. Private usable by EBI staff only" help="public or private, default 'public' " optional='true'>
+        <param name="mode" argument="-p" type="select" label="Public or private" help="Public or private, defaults to public. Private usable by EBI staff only." optional="true">
             <option value="public" selected="true">public</option>
             <option value="private">private</option>
-	    </param>
-        <param name="library" argument="-l" type="text"  label="ENA library (ENA source files only), by default inferred from file name" help="library, by default inferred from file name. E.g. -l ERR1888646 " optional='true'/>
-        <param name="config_file" argument="-c" type="data" format="atlas-fastq-provider-config.sh" label="config file to override defaults" help="config file to override defaults" optional='true'/>
-        <param name="validate_only" argument="-v" type="boolean" label="validate only to check a source URI is valid, don't download" help="validate only, don't download" optional='true'/>
-        <param name="download_type" argument="-d" type="select" label="download type, fastq or SRA file" help="download type, fastq or srr" optional='true'>
-            <option value="fastq" selected="true">fastq</option>
-            <option value="srr">SRA</option>
-	    </param>
+        </param>
+        <param name="config_file" argument="-c" type="data" format="text" label="Config file to override defaults" help="Config file to override defaults." optional="true"/>
     </inputs>
     <outputs>
-        <data name="outfile" label="${tool.name} on ${on_string}: compressed fastq file" format="fastq.gz"  />
+        <data name="dl_from_path" label="Downloaded from path" format="fastqsanger.gz" from_work_dir="dl_from_path.fastq.gz">
+            <filter>fetch_type["script"] == "fetchFastq"</filter>
+        </data>
+        <data name="dl_from_lib_single" label="Downloaded library, single-end" format="fastqsanger.gz" from_work_dir="dl_from_lib_single.fastq.gz">
+            <filter>fetch_type["script"] == "fetchEnaLibraryFastqs" and fetch_type["sepe"] == "SINGLE"</filter>
+        </data>
+        <collection name="dl_from_lib_paired" type="paired">
+          <filter>fetch_type["script"] == "fetchEnaLibraryFastqs" and fetch_type["sepe"] == "PAIRED"</filter>
+              <data name="forward" label="Downloaded library, pair read 1" format="fastqsanger.gz" from_work_dir="dl_from_lib_pair_1.fastq.gz"/>
+              <data name="reverse" label="Downloaded library, pair read 2" format="fastqsanger.gz" from_work_dir="dl_from_lib_pair_2.fastq.gz"/>
+        </collection>
     </outputs>
     <tests>
-        <test expect_num_outputs="1">
-            <param name="source" value="ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR035/ERR035229/ERR035229.fastq.gz"/>
+        <test>
+            <param name="script" value="fetchFastq"/>
+            <param name="path" value="ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR035/ERR035229/ERR035229.fastq.gz"/>
             <param name="target" value="ERR035229.fastq.gz"/>
-            <output name="outfile"  md5="c9482e89552630084997112787a5d796" />   
+            <output name="dl_from_path" md5="c9482e89552630084997112787a5d796" />   
+        </test>
+        <test>
+            <param name="script" value="fetchEnaLibraryFastqs"/>
+            <param name="library" value="SRR18315788"/>
+            <param name="download_type" value="fastq"/>
+            <param name="sepe" value="SINGLE"/>
+            <output name="dl_from_lib_single" md5="5723e87046f61643803a9a3b99e138cb" />   
+        </test>
+        <test>
+            <param name="script" value="fetchEnaLibraryFastqs"/>
+            <param name="library" value="ERR2890000"/>
+            <param name="download_type" value="fastq"/>
+            <param name="sepe" value="PAIRED"/>
+            <param name="resource" value="ena"/>
+            <output_collection name="dl_from_lib_paired" type="paired">
+                <element name="forward" md5="6ef420b74010b4f3918476909967fd18"/>
+                <element name="reverse" md5="f70d8209cf8b0617f4adc75c0a13713a"/>
+            </output_collection> 
         </test>
     </tests>
     <help><![CDATA[
-    
-        Usage: fetchFastq.sh [-f <file or uri>] [-t <target file>] [-s <source resource or directory, default 'auto'>] [-m <retrieval method, default 'auto'>] [-p <public or private, default 'public'>] [-l <library, by default inferred from file name>] [-c <config file to override defaults>] [-v <validate only, don't download>] [-d <download type, 'fastq' or 'srr'>]
+        
+        Usage (<file or uri>  as main source): 
+
+            fetchFastq.sh -f <file or uri> -t <target file> [-s <source resource or directory, default 'auto'>] [-m <retrieval method, default 'auto'>] [-p <public or private, default 'public'>] [-l <library, by default inferred from file name>] [-c <config file to override defaults>] [-v <validate only, don't download>] [-d <download type, 'fastq' or 'srr'>]
+        
+        Usage (<library> as main source): 
+
+            fetchEnaLibraryFastqs.sh -l <library> -d <output directory> [-m <retrieval method, default 'auto'>] [-s <source directory for method 'dir'>] [-p <public or private, default public>] [-c <config file to override defaults>] [-t <download type, fastq or srr>] [-n <SINGLE or PAIRED, default PAIRED>]
 
     ]]></help>
     <citations>
@@ -87,4 +167,3 @@
         }</citation>
     </citations>
 </tool>
-
