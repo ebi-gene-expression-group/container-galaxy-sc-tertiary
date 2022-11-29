@@ -310,8 +310,6 @@ adata.write('output.h5', compression='gzip')
   <tests>
     <test>
       <param name="input_obj_file" value="find_cluster.h5"/>
-      <param name="input_format" value="anndata"/>
-      <param name="color_by" value="louvain"/>
       <output name="output_h5ad" file="anndata_ops.h5" ftype="h5ad" compare="sim_size"/>
     </test>
     <test>
@@ -326,7 +324,6 @@ adata.write('output.h5', compression='gzip')
     </test>
     <test>
       <param name="input_obj_file" value="find_cluster.h5"/>
-      <param name="input_format" value="anndata"/>
       <conditional name="copy_r">
         <param name="default" value="true"/>
         <param name="r_source" value="read_10x.h5"/>
@@ -339,7 +336,6 @@ adata.write('output.h5', compression='gzip')
     </test>
     <test>
       <param name="input_obj_file" value="normalise_data.h5"/>
-      <param name="input_format" value="anndata"/>
       <conditional name="copy_x">
         <param name="default" value="true"/>
         <repeat name="xlayers">
@@ -355,7 +351,6 @@ adata.write('output.h5', compression='gzip')
     </test>
     <test>
       <param name="input_obj_file" value="find_cluster.h5"/>
-      <param name="input_format" value="anndata"/>
       <conditional name="copy_l">
         <param name="default" value="true"/>
         <repeat name="layers">

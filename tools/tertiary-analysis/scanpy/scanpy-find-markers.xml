@@ -97,7 +97,6 @@ PYTHONIOENCODING=utf-8 scanpy-find-markers
       <param name="input_obj_file" value="louvain_1.0"/>
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
-      <param name="output_tsv" value="true"/>
       <param name="n_genes" value="50"/>
       <param name="output_markers" value="true"/>
       <param name="default" value="false"/>
@@ -112,7 +111,6 @@ PYTHONIOENCODING=utf-8 scanpy-find-markers
       <param name="input_obj_file" value="louvain_1.0"/>
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
-      <param name="output_tsv" value="true"/>
       <param name="n_genes" value="50"/>
       <param name="output_markers" value="true"/>
       <param name="default" value="false"/>
