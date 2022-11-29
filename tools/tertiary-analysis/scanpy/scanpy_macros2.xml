@@ -4,7 +4,7 @@
   <token name="@PROFILE@">18.01</token>
   <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
-1.8.1+galaxy4: Simply fixes version label to get versions sorted properly on Galaxy.
+1.8.1+galaxy10: Simply fixes version label to get versions sorted properly on Galaxy.
 
 1.8.1+3+galaxy0: Upate to scanpy-scripts 1.1.3 (running scanpy ==1.8.1), including a fix to MTX output and a bugfix for the Scrublet wrapper.
 
