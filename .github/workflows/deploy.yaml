@@ -66,7 +66,7 @@ jobs:
       if: steps.cache-pip.outputs.cache-hit != 'true' || steps.cache-planemo.outputs.cache-hit != 'true'
       run: |
         echo "<tool " > tool.xml
-        PIP_QUIET=1 planemo test --galaxy_python_version ${{ matrix.python-version }} --no_conda_auto_init --galaxy_source $GALAXY_REPO --galaxy_branch $GALAXY_RELEASE tool.xml
+        PIP_QUIET=1 planemo test --galaxy_python_version ${{ matrix.python-version }} --no_conda_auto_init --galaxy_source https://github.com/${{ env.GALAXY_FORK }}/galaxy --galaxy_branch ${{ env.GALAXY_BRANCH }} tool.xml
 
   find_changed:
     name: Determine changed repositories
