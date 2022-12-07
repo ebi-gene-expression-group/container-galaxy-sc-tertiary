@@ -71,6 +71,7 @@ jobs:
         galaxy-branch: ${{ env.GALAXY_BRANCH }}
         max-chunks: ${{ env.MAX_CHUNKS }}
         python-version: ${{ matrix.python-version }}
+
   find_changed:
     name: Determine changed repositories
     needs: [setup]
