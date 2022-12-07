@@ -63,10 +63,14 @@ jobs:
     - name: Install Planemo
       run: pip install planemo
     - name: Fake a Planemo run to update cache
-      if: steps.cache-pip.outputs.cache-hit != 'true' || steps.cache-planemo.outputs.cache-hit != 'true'
-      run: |
-        echo "<tool> </tool> " > tool.xml
-        PIP_QUIET=1 planemo test --galaxy_python_version ${{ matrix.python-version }} --no_conda_auto_init --galaxy_source https://github.com/${{ env.GALAXY_FORK }}/galaxy --galaxy_branch ${{ env.GALAXY_BRANCH }} tool.xml
+      uses: galaxyproject/planemo-ci-action@v1
+      id: discover
+      with:
+        create-cache: ${{ steps.cache-pip.outputs.cache-hit != 'true' || steps.cache-planemo.outputs.cache-hit != 'true' }}
+        galaxy-fork: ${{ env.GALAXY_FORK }}
+        galaxy-branch: ${{ env.GALAXY_BRANCH }}
+        max-chunks: ${{ env.MAX_CHUNKS }}
+        python-version: ${{ matrix.python-version }}
 
   find_changed:
     name: Determine changed repositories
