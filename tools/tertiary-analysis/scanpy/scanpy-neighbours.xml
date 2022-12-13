@@ -132,7 +132,7 @@ Compute a neighborhood graph of observations (`pp.neighbors`)
 
 The neighbor search efficiency of this heavily relies on UMAP (McInnes et al, 2018),
 which also provides a method for estimating connectivities of data points -
-the connectivity of the manifold (`method=='umap'`). If `method=='diffmap'`,
+the connectivity of the manifold (`method=='umap'`). If `method=='Gaussian'`,
 connectivities are computed according to Coifman et al (2005), in the adaption of
 Haghverdi et al (2016).
 
