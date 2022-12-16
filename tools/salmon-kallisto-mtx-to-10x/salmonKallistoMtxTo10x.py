@@ -5,13 +5,13 @@
 # must be transposed, and gene indentifier columns duplicated
 
 from __future__ import print_function
-import os
+
 import argparse
+import os
 import pathlib
+import sys
 
 import pandas as pd
-
-import sys
 
 from scipy.io import mmread, mmwrite
 
