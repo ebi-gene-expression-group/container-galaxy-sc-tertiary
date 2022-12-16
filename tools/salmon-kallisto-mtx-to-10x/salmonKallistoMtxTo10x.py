@@ -5,16 +5,16 @@
 # must be transposed, and gene indentifier columns duplicated
 
 from __future__ import print_function
+import os
+import argparse
+import pathlib
 
 import pandas as pd
-import os
+
 import sys
 
 from scipy.io import mmread, mmwrite
 
-import pathlib
-
-import argparse
 
 parser = argparse.ArgumentParser(
             description='Convert Alevin or Kallisto MTX outputs to 10X .mtx.'
