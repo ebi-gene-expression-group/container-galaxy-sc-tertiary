@@ -48,6 +48,7 @@ PYTHONIOENCODING=utf-8 scanpy-normalise-data
              <param name="max_fraction" argument="--max-fraction" type="float" value="0.05" min="0" max="1" 
                  label="Consider cells as highly expressed that have more counts than max_fraction of the original total counts in at least one cell." />      
             </when>
+            <when value="false" />
         </conditional>
         <param name="layers" argument="--layers" type="text" optional="true"
              label="Comma-separated list of layers to normalize. Set to 'all' to normalize all layers."/>
