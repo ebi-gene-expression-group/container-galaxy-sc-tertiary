@@ -85,6 +85,26 @@ else:
     logging.warning('No genes starting with {} found, skip calculating expression of {} genes'.format('${flag.startswith}', '${flag.flag}'))
 #end for
 
+#if $field_unique:
+def rn(df, field, suffix = '-duplicate-'):
+  appendents = (suffix + df.groupby(field).cumcount().astype(str).replace('0','')).replace(suffix, '')
+  df[f"{field}_u"] = df[field].astype(str) + appendents.astype(str)
+  return df
+
+field_unique = '${field_unique}'
+made_unique = 0
+if field_unique in adata.var_keys(): 	    
+  adata.var = rn(adata.var, field_unique, suffix = "_d")
+  made_unique += 1
+if field_unique in adata.obs_keys():
+  adata.obs = rn(adata.obs, field_unique, suffix = "_d")
+  made_unique += 1
+	 
+if made_unique == 0:
+  logging.error("Specified field to be made unique is not in var or obs.")
+  sys.exit(1)  
+#end if	
+	    
 #if $copy_r.default and $copy_r.r_source:
 ad_s = sc.read('r_source.h5')
 if not all(adata.obs.index.isin(ad_s.obs.index)):
@@ -123,7 +143,6 @@ if adata.n_obs == ad_s.n_obs and all(adata.obs_names == ad_s.obs_names):
     suffix=''
     if l_to_copy in adata.layers:
         suffix = "_${i}"
-
     adata.layers[l_to_copy+suffix] = ad_s.layers[l_to_copy]
   #end for
 else:
@@ -231,7 +250,7 @@ adata.write('output.h5', compression='gzip')
           <valid initial="string.printable"/>
         </sanitizer>
       </param>
-      <param name="to_obs" type="text" label="New name" help="New name in observations that you want to change"/>
+      <param name="to_obs" type="text" label="New name" help="New name in observations that you want to change to"/>
       <param name="keep_original" type="boolean" label="Keep original" help="If activated, it will also keep the original column" checked="false"/>
     </repeat>
     <repeat name="var_modifications" title="Change field names in AnnData var" min="0">
@@ -249,6 +268,7 @@ adata.write('output.h5', compression='gzip')
       <param name="flag" type="text" label="Var name" help="Name of the column in var.names where this boolean flag is stored, for example 'mito' for mitochondrial genes."/>
     </repeat>
     <param name="top_genes" label="Number of top genes" value='50' help="to calculate percentage of the flagged genes in that number of top genes. Used by sc.pp.calculate_qc_metrics (integer)." type="integer"/>
+    <param name="field_unique" type="text" optional="true" label="Field in var or obs to make unique" help="Field inside var or obs to be made unique by appending a suffix (useful for gene symbols in var). A new field will be added with the '_u' suffix. It happens after all the above operations."/>
     <conditional name="copy_r">
       <param name="default" type="boolean" checked="false" label="Copy adata.X to adata.raw"/>
       <when value="true">
@@ -330,6 +350,15 @@ adata.write('output.h5', compression='gzip')
       </output>
     </test>
     <test>
+      <param name="input_obj_file" value="anndata_ops.h5"/>
+      <param name="field_unique" value = "gene_symbols" />
+      <output name="output_h5ad" ftype="h5ad">
+	<assert_contents>
+          <has_h5_keys keys="var/gene_symbols_u" />
+        </assert_contents>
+      </output>
+    </test>
+    <test>
       <param name="input_obj_file" value="find_cluster.h5"/>
       <conditional name="copy_r">
         <param name="default" value="true"/>
@@ -380,11 +409,12 @@ Operations on AnnData objects
 
 Performs the following operations:
 
-* Change observation/var fields, mostly for downstreaming processes convenience. Multiple fields can be changed as one.
+* Change observation/var fields, mostly for downstreaming processes convenience. Multiple fields can be changed at once.
 * Flag genes that start with a certain text: useful for flagging mitochondrial, spikes or other groups of genes.
 * For the flags created, calculates qc metrics (pct_<flag>_counts).
 * Calculates `n_genes`, `n_counts` for cells and `n_cells`, `n_counts` for genes.
 * For top <N> genes specified, calculate qc metrics (pct_counts_in_top_<N>_genes).
+* Make a specified column of var or obs unique (normally useful for gene symbols).
 * Copy from a set of compatible AnnData objects (same cells and genes):
   * Observations, such as clustering results.
   * Embeddings, such as tSNE or UMAPs.
@@ -394,6 +424,7 @@ This functionality will probably be added in the future to a larger package.
 
 History
 -------
+1.8.1+galaxy10: Adds field to be made unique in obs or var.
 
 1.6.0+galaxy0: Moves to Scanpy Scripts 0.3.0 (Scanpy 1.6.0), versioning switched to track Scanpy as other tools.
 
