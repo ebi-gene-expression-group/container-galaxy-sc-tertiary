@@ -45,6 +45,7 @@ python $operations
 ]]></command>
   <configfiles>
     <configfile name="operations">
+import gc
 import scanpy as sc
 import anndata
 from numpy import all
@@ -92,6 +93,7 @@ if not all(adata.obs.index.isin(ad_s.obs.index)):
 else:
   adata.raw = ad_s[adata.obs.index]
 del ad_s
+gc.collect()
 #end if
 
 #if $copy_x.default and len($copy_x.xlayers) > 0:
@@ -107,6 +109,7 @@ else:
   logging.error("X source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
   sys.exit(1)
 del ad_s
+gc.collect()
 #end for
 #end if
 
@@ -127,6 +130,7 @@ else:
   logging.error("Layer source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
   sys.exit(1)
 del ad_s
+gc.collect()
 #end for
 #end if
 
@@ -149,6 +153,7 @@ else:
   logging.error("Observation source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
   sys.exit(1)
 del ad_s
+gc.collect()
 #end for
 #end if
 
@@ -169,6 +174,7 @@ else:
   logging.error("Embedding source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
   sys.exit(1)
 del ad_s
+gc.collect()
 #end for
 #end if
 
@@ -188,6 +194,7 @@ else:
   logging.error("Uns source ${i} AnnData file is not compatible to be merged to main AnnData file, different cell names.")
   sys.exit(1)
 del ad_s
+gc.collect()
 #end for
 #end if
 
