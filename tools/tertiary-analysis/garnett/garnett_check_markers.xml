@@ -35,8 +35,8 @@
         <param type="text" name="classifier_gene_id_type"  label="Classifier gene ID type" value="ENSEMBL" help="The type of gene ID that will be used in the classifier. If possible for your organism, this should be 'ENSEMBL', which is the default." />
     </inputs>
     <outputs>
-        <data name="marker_output_path" format="txt" />
-        <data name="plot_output_path" format="png" />
+        <data name="marker_output_path" format="txt" label="${tool.name} on ${on_string}: Garnett std_output"/>
+        <data name="plot_output_path" format="png" label="${tool.name} on ${on_string}: Garnett Plot"/>
     </outputs>
     <tests>
         <test>

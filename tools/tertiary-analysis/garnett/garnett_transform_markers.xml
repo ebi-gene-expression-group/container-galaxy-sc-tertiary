@@ -28,13 +28,13 @@
         <param type="text" name="gene_names" value="names" label="gene names" help="Column containing gene names in marker file" />
     </inputs>
     <outputs>
-        <data name="garnett_marker_file" format="txt" />
-        <data name="marker_list" format="rdata" />
+        <data name="garnett_marker_file" format="txt" label="${tool.name} on ${on_string}: Garnett Marker list"/>
+        <data name="marker_list" format="rdata" label="${tool.name} on ${on_string}: Garnett Marker list in R"/>
     </outputs>
     <tests>
         <test>
             <param name="input_marker_file" value="ref_marker_genes.txt" />
-            <param name="marker_list" value="marker_list.rds" />
+            <output name="marker_list" value="marker_list.rds" />
             <output name="garnett_marker_file" file="markers_transformed.txt" compare="sim_size"/>
         </test>
     </tests>
