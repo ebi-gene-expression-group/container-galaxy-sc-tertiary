@@ -51,6 +51,13 @@ import anndata
 from numpy import all
 import logging
 
+def make_column_values_unique(df, field, new_field=None, suffix = '-duplicate-'):
+  if new_field is None:
+    new_field = f"{field}_u"
+  appendents = (suffix + df.groupby(field).cumcount().astype(str).replace('0','')).replace(suffix, '')
+  df[new_field] = df[field].astype(str) + appendents.astype(str)
+  return df
+
 adata = sc.read('input.h5')
 
 #if $copy_adata_to_raw:
@@ -61,14 +68,22 @@ gene_name = '${gene_symbols_field}'
 qc_vars = list()
 
 #for $i, $s in enumerate($modifications)
+#if $s.make_unique
+adata.obs = make_column_values_unique(adata.obs, field='${s.from_obs}', new_field='${s.to_obs}', suffix = "_d")
+#else
 adata.obs['${s.to_obs}'] = adata.obs['${s.from_obs}']
+#end if
 #if not $s.keep_original:
 del adata.obs['${s.from_obs}']
 #end if
 #end for
 
 #for $i, $s in enumerate($var_modifications)
+#if $s.make_unique
+adata.var = make_column_values_unique(adata.var, field='${s.from_var}', new_field='${s.to_var}', suffix = "_d")
+#else
 adata.var['${s.to_var}'] = adata.var['${s.from_var}']
+#end if
 #if not $s.keep_original:
 del adata.var['${s.from_var}']
 #end if
@@ -86,18 +101,13 @@ else:
 #end for
 
 #if $field_unique:
-def rn(df, field, suffix = '-duplicate-'):
-  appendents = (suffix + df.groupby(field).cumcount().astype(str).replace('0','')).replace(suffix, '')
-  df[f"{field}_u"] = df[field].astype(str) + appendents.astype(str)
-  return df
-
 field_unique = '${field_unique}'
 made_unique = 0
 if field_unique in adata.var_keys(): 	    
-  adata.var = rn(adata.var, field_unique, suffix = "_d")
+  adata.var = make_column_values_unique(adata.var, field_unique, suffix = "_d")
   made_unique += 1
 if field_unique in adata.obs_keys():
-  adata.obs = rn(adata.obs, field_unique, suffix = "_d")
+  adata.obs = make_column_values_unique(adata.obs, field_unique, suffix = "_d")
   made_unique += 1
 	 
 if made_unique == 0:
@@ -252,6 +262,7 @@ adata.write('output.h5', compression='gzip')
       </param>
       <param name="to_obs" type="text" label="New name" help="New name in observations that you want to change to"/>
       <param name="keep_original" type="boolean" label="Keep original" help="If activated, it will also keep the original column" checked="false"/>
+      <param name="make_unique" type="boolean" label="Make values in the field unique" help="If activated, it will make the values in the column unique by appending '_dnum' on each repeated value." checked="false"/>
     </repeat>
     <repeat name="var_modifications" title="Change field names in AnnData var" min="0">
       <param name="from_var" type="text" label="Original name" help="Name in var that you want to change">
@@ -261,6 +272,7 @@ adata.write('output.h5', compression='gzip')
       </param>
       <param name="to_var" type="text" label="New name" help="New name in var that you want to change"/>
       <param name="keep_original" type="boolean" label="Keep original" help="If activated, it will also keep the original column" checked="false"/>
+      <param name="make_unique" type="boolean" label="Make values in the field unique" help="If activated, it will make the values in the column unique by appending '_dnum' on each repeated value." checked="false"/>
     </repeat>
     <param name="gene_symbols_field" value='index' type="text" label="Gene symbols field in AnnData" help="Field inside var.params where the gene symbols are, normally 'index' or 'gene_symbols'"/>
     <repeat name="gene_flags" title="Flag genes that start with these names">
@@ -351,9 +363,20 @@ adata.write('output.h5', compression='gzip')
     </test>
     <test>
       <param name="input_obj_file" value="anndata_ops.h5"/>
+      <param name="from_var" value = "gene_symbols" />
+      <param name="to_var" value = "gene_symbols_unique" />
+      <param name="make_unique" value = "True" />
+      <output name="output_h5ad" ftype="h5ad">
+        <assert_contents>
+          <has_h5_keys keys="var/gene_symbols_unique" />
+        </assert_contents>
+      </output>
+    </test>
+    <test>
+      <param name="input_obj_file" value="anndata_ops.h5"/>
       <param name="field_unique" value = "gene_symbols" />
       <output name="output_h5ad" ftype="h5ad">
-	<assert_contents>
+        <assert_contents>
           <has_h5_keys keys="var/gene_symbols_u" />
         </assert_contents>
       </output>
@@ -367,7 +390,7 @@ adata.write('output.h5', compression='gzip')
       <output name="output_h5ad" file="anndata_ops_raw.h5" ftype="h5ad" compare="sim_size">
         <assert_contents>
           <has_h5_keys keys="raw/X" />
-	</assert_contents>
+        </assert_contents>
       </output>
     </test>
     <test>
@@ -375,14 +398,14 @@ adata.write('output.h5', compression='gzip')
       <conditional name="copy_x">
         <param name="default" value="true"/>
         <repeat name="xlayers">
-	  <param name="x_source" value='filter_genes.h5'/>
-	  <param name="dest" value='filtered'/>
-	</repeat>
+          <param name="x_source" value='filter_genes.h5'/>
+          <param name="dest" value='filtered'/>
+        </repeat>
       </conditional>
       <output name="output_h5ad" file="anndata_ops_xlayer.h5" ftype="h5ad" compare="sim_size">
         <assert_contents>
           <has_h5_keys keys="layers/filtered" />
-	</assert_contents>
+        </assert_contents>
       </output>
     </test>
     <test>
@@ -390,14 +413,14 @@ adata.write('output.h5', compression='gzip')
       <conditional name="copy_l">
         <param name="default" value="true"/>
         <repeat name="layers">
-	  <param name="contains" value='filtered'/>
-	</repeat>
-	<param name="layer_sources" value='anndata_ops_xlayer.h5'/>
+          <param name="contains" value='filtered'/>
+        </repeat>
+        <param name="layer_sources" value='anndata_ops_xlayer.h5'/>
       </conditional>
       <output name="output_h5ad" file="anndata_ops_layer.h5" ftype="h5ad" compare="sim_size">
         <assert_contents>
           <has_h5_keys keys="layers/filtered" />
-	</assert_contents>
+        </assert_contents>
       </output>
     </test>
   </tests>
