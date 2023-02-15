@@ -110,7 +110,7 @@ PYTHONIOENCODING=utf-8 scanpy-find-markers
     <test>
       <param name="input_obj_file" value="louvain_1.0"/>
       <param name="input_format" value="anndata"/>
-      <param name="output_format" value="anndata"/>
+      <param name="output_format" value="no_matrix_output"/>
       <param name="n_genes" value="50"/>
       <param name="output_markers" value="true"/>
       <param name="default" value="false"/>
@@ -118,7 +118,6 @@ PYTHONIOENCODING=utf-8 scanpy-find-markers
       <param name="key_added" value="GROUPBY_marker"/>
       <param name="method" value="t-test_overestim_var"/>
       <param name="rankby_abs" value="false"/>
-      <output name="output_h5" file="find_markers.h5" ftype="h5" compare="sim_size"/>
       <output name="output_tsv" file="diffexp.tsv" ftype="tabular" compare="sim_size"/>
     </test>
   </tests>
