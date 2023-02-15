@@ -68,7 +68,7 @@ gene_name = '${gene_symbols_field}'
 qc_vars = list()
 
 #for $i, $s in enumerate($modifications)
-#if $s.make_unique
+#if $s.make_unique:
 adata.obs = make_column_values_unique(adata.obs, field='${s.from_obs}', new_field='${s.to_obs}', suffix = "_d")
 #else
 adata.obs['${s.to_obs}'] = adata.obs['${s.from_obs}']
@@ -79,7 +79,7 @@ del adata.obs['${s.from_obs}']
 #end for
 
 #for $i, $s in enumerate($var_modifications)
-#if $s.make_unique
+#if $s.make_unique:
 adata.var = make_column_values_unique(adata.var, field='${s.from_var}', new_field='${s.to_var}', suffix = "_d")
 #else
 adata.var['${s.to_var}'] = adata.var['${s.from_var}']
@@ -363,9 +363,11 @@ adata.write('output.h5', compression='gzip')
     </test>
     <test>
       <param name="input_obj_file" value="anndata_ops.h5"/>
-      <param name="from_var" value = "gene_symbols" />
-      <param name="to_var" value = "gene_symbols_unique" />
-      <param name="make_unique" value = "True" />
+      <repeat name="var_modifications" >
+        <param name="from_var" value = "gene_symbols" />
+        <param name="to_var" value = "gene_symbols_unique" />
+        <param name="make_unique" value = "True" />
+      </repeat>
       <output name="output_h5ad" ftype="h5ad">
         <assert_contents>
           <has_h5_keys keys="var/gene_symbols_unique" />
