@@ -1,4 +1,4 @@
-<tool id="scanpy_parameter_iterator" name="Scanpy ParameterIterator" version="0.0.1+galaxy10">
+<tool id="scanpy_parameter_iterator" name="Scanpy ParameterIterator" version="0.0.1+galaxy9">
     <description>produce an iteration over a defined parameter</description>
     <macros>
       <import>scanpy_macros.xml</import>

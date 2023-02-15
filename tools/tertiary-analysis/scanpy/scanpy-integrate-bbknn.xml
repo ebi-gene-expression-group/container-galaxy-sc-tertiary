@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_integrate_bbknn" name="Scanpy BBKNN" version="@TOOL_VERSION@+galaxy10" profile="@PROFILE@">
+<tool id="scanpy_integrate_bbknn" name="Scanpy BBKNN" version="@TOOL_VERSION@+galaxy9" profile="@PROFILE@">
   <description>batch-balanced K-nearest neighbours</description>
   <macros>
     <import>scanpy_macros2.xml</import>
