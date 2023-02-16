@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_run_dpt" name="Scanpy DPT" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scanpy_run_dpt" name="Scanpy DPT" version="@TOOL_VERSION@+galaxy9" profile="@PROFILE@">
   <description>diffusion pseudotime inference</description>
   <macros>
     <import>scanpy_macros2.xml</import>

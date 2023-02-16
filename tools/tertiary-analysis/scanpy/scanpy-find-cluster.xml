@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_find_cluster" name="Scanpy FindCluster" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scanpy_find_cluster" name="Scanpy FindCluster" version="@TOOL_VERSION@+galaxy9" profile="@PROFILE@">
   <description>based on community detection on KNN graph</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -94,7 +94,6 @@ PYTHONIOENCODING=utf-8 scanpy-find-cluster
       <param name="input_obj_file" value="compute_graph.h5"/>
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
-      <param name="output_txt" value="true"/>
       <param name="default" value="false"/>
       <param name="resolution_file" value="resolution.txt"/>
       <param name="random_seed" value="0"/>
@@ -105,7 +104,6 @@ PYTHONIOENCODING=utf-8 scanpy-find-cluster
       <param name="input_obj_file" value="compute_graph.h5"/>
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
-      <param name="output_txt" value="true"/>
       <param name="default" value="false"/>
       <param name="resolution" value="1.0"/>
       <param name="random_seed" value="0"/>
@@ -116,7 +114,6 @@ PYTHONIOENCODING=utf-8 scanpy-find-cluster
       <param name="input_obj_file" value="compute_graph.h5"/>
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
-      <param name="output_txt" value="true"/>
       <param name="default" value="false"/>
       <param name="method" value="louvain"/>
       <param name="resolution" value="1.0"/>

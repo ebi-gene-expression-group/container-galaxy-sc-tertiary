@@ -1,9 +1,11 @@
 <macros>
-  <token name="@TOOL_VERSION@">1.8.1+3</token>
+  <token name="@TOOL_VERSION@">1.8.1</token>
   <token name="@HELP@">More information can be found at https://scanpy.readthedocs.io</token>
   <token name="@PROFILE@">18.01</token>
   <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
+1.8.1+galaxy9: Fixes version label to get versions sorted properly on Galaxy (equivalent to 1.8.1+3+galaxy0). In addition, adds ability to make fields unique in AnnData operations,
+adds additional handler on Scrubblet for workflows convenience, enables Scanpy tools to avoid outputing AnnData/matrix files when not required.
 
 1.8.1+3+galaxy0: Upate to scanpy-scripts 1.1.3 (running scanpy ==1.8.1), including a fix to MTX output and a bugfix for the Scrublet wrapper.
 
@@ -99,18 +101,20 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
   </xml>
 
   <xml name="output_object_params">
-    <param name="output_format" argument="--output-format" type="select" label="Format of output object">
+    <param name="output_format" argument="--output-format" type="select" label="Format of output object" help="AnnData or Loom. Legacy 'h5' datatypes are useful for interacting with older tools. Choosing 'No packaged matrix output' is useful for cases where auxiliary files are generated (like in marker genes). Do not use when there are no other output files, as the tool will generate no output in Galaxy then.">
       <option value="anndata_h5ad" selected="true">AnnData format</option>
       <option value="anndata">AnnData format (h5 for older versions)</option>
       <option value="loom">Loom format</option>
       <option value="loom_legacy">Loom format (h5 for older versions)</option>
+      <option value="no_matrix_output">No packaged matrix output</option>
     </param>
   </xml>
 
   <xml name="output_object_params_no_loom">
-    <param name="output_format" argument="--output-format" type="select" label="Format of output object">
+    <param name="output_format" argument="--output-format" type="select" label="Format of output object" help="Legacy 'h5' datatypes are useful for interacting with older tools. Choosing 'No packaged matrix output' is useful for cases where auxiliary files are generated (like in marker genes). Do not use when there are no other output files, as the tool will generate no output in Galaxy then.">
       <option value="anndata_h5ad" selected="true">AnnData format</option>
       <option value="anndata">AnnData format (h5 for older versions)</option>
+      <option value="no_matrix_output">No packaged matrix output (useful for cases where auxiliary files are generated)</option>
     </param>
   </xml>
 
@@ -118,7 +122,7 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
     <data name="output_h5ad" format="h5ad" from_work_dir="output.h5" label="${tool.name} on ${on_string}: @DESCRIPTION@ AnnData">
       <filter>output_format == 'anndata_h5ad'</filter>
     </data>
-    <data name="output_h5" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string}: @DESCRIPTION@ AnnData">
+    <data name="output_h5" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string}: @DESCRIPTION@ AnnData (h5)">
       <filter>output_format == 'anndata'</filter>
     </data>
   </xml>
@@ -127,13 +131,13 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
     <data name="output_h5ad" format="h5ad" from_work_dir="output.h5" label="${tool.name} on ${on_string}: @DESCRIPTION@ AnnData">
       <filter>output_format == 'anndata_h5ad'</filter>
     </data>
-    <data name="output_h5" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string}: @DESCRIPTION@ AnnData">
+    <data name="output_h5" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string}: @DESCRIPTION@ AnnData (h5)">
       <filter>output_format == 'anndata'</filter>
     </data>
     <data name="output_loom_legacy" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string}: @DESCRIPTION@ Loom">
       <filter>output_format == 'loom_legacy'</filter>
     </data>
-    <data name="output_loom" format="loom" from_work_dir="output.h5" label="${tool.name} on ${on_string}: @DESCRIPTION@ Loom">
+    <data name="output_loom" format="loom" from_work_dir="output.h5" label="${tool.name} on ${on_string}: @DESCRIPTION@ Loom (h5)">
       <filter>output_format == 'loom'</filter>
     </data>
   </xml>
