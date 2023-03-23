@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="anndata_ops" name="AnnData Operations" version="@TOOL_VERSION@+galaxy9" profile="@PROFILE@">
+<tool id="anndata_ops" name="AnnData Operations" version="@TOOL_VERSION@+galaxy91" profile="@PROFILE@">
   <description>modifies metadata and flags genes</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -41,6 +41,10 @@ ln -s '${copy_r.r_source}' r_source.h5 &&
   ln -s '${us}' uns_source_${i}.h5 &&
 #end for
 #end if
+
+#if $add_cell_metadata.default:
+  ln -s ${add_cell_metadata.file} cell_metadata.tsv &&
+#end if
 python $operations
 ]]></command>
   <configfiles>
@@ -57,8 +61,17 @@ def make_column_values_unique(df, field, new_field=None, suffix = '-duplicate-')
   appendents = (suffix + df.groupby(field).cumcount().astype(str).replace('0','')).replace(suffix, '')
   df[new_field] = df[field].astype(str) + appendents.astype(str)
   return df
+	    
+def add_cell_metadata(adata, metadata_file="cell_metadata.tsv"):
+  metadata_df = pd.read_csv(metadata_file, sep='\t', index_col=0)
+  return pd.merge(left=adata.obs, right=metadata_df, left_index=True, right_index=True, how='left')
+
 
 adata = sc.read('input.h5')
+	    
+#if $add_cell_metadata.default:
+adata.obs = add_cell_metadata(adata)
+#end if
 
 #if $copy_adata_to_raw:
 adata.raw = adata
@@ -253,6 +266,13 @@ adata.write('output.h5', compression='gzip')
   <inputs>
     <param name="input_obj_file" argument="input-object-file" type="data" format="h5,h5ad" label="Input object in hdf5 AnnData format"/>
     <expand macro="output_object_params_no_loom"/>
+    <conditional name="add_cell_metadata">
+      <param name="default" type="boolean" checked="false" label="Add cell metadata"/>
+      <when value="true">
+        <param name="file" type="data" label="Cell metadata with headers" help="A tabular file with headers, where the first column contains cell barcodes. Will be merged via a left join, so not all cells in the obs need to be in the metadata." format="tsv,tabular"/>
+      </when>
+      <when value="false"/>
+    </conditional>
     <param name="copy_adata_to_raw" type="boolean" label="Copy AnnData to .raw" help="If activated, it will do 'adata.raw = adata'" checked="false"/>
     <repeat name="modifications" title="Change field names in AnnData observations" min="0">
       <param name="from_obs" type="text" label="Original name" help="Name in observations that you want to change">
