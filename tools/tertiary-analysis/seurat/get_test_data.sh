@@ -28,7 +28,8 @@ IFNB_STIM_INT_LINK='https://drive.google.com/uc?export=download&id=14iKgCJGPk16d
 ## Classify and UMAP mapping
 CLASSIFY_QUERY_LINK='https://drive.google.com/uc?export=download&id=1RFsHa_1EFD_n-19JH_cHGqxwO66QdmXN'
 CLASSIFY_RESULTS_ANCHORS_OBJECT_LINK='https://drive.google.com/uc?export=download&id=1Xtv4K_CxIU1cJ8RjJ7NTvzLQkLvc8a3i'
-UMAP_RESULT_OBJECT_LINK='https://oc.ebi.ac.uk/s/k4MdM07y9DAnurp/download'
+# UMAP_RESULT_OBJECT_LINK='https://oc.ebi.ac.uk/s/k4MdM07y9DAnurp/download'
+UMAP_RESULT_OBJECT_LINK='https://oc.ebi.ac.uk/s/D1z4z2ef1e3dyc3/download'
 
 
 function get_data {
@@ -42,6 +43,7 @@ function get_data {
 }
 
 # get matrix data
+mkdir -p test-data
 pushd test-data
 get_data $MTX_LINK mtx.zip
 unzip mtx.zip
