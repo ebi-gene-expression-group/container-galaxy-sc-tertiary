@@ -62,6 +62,9 @@ jobs:
       run: pip install wheel
     - name: Install Planemo
       run: pip install planemo
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - name: Fake a Planemo run to update cache
       uses: galaxyproject/planemo-ci-action@v1
       id: discover
