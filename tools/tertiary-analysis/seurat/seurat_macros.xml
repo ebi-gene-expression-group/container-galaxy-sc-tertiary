@@ -277,7 +277,7 @@ echo $(R --version | grep version | grep -v GNU)", seurat version" $(R --vanilla
    </token>
 
    <xml name="plot_output_files_format" token_format="png">
-     <data label="Seurat ${plot_type.plot_type_selector} on ${on_string}: ${plot_format} plot" name="plot_out_@FORMAT@" format='@FORMAT@' >
+     <data label="Seurat ${plot_type.plot_type_selector} on ${on_string}: @FORMAT@ plot" name="plot_out_@FORMAT@" format='@FORMAT@' >
        <filter>plot_format == '@FORMAT@'</filter>
      </data>
    </xml>
