@@ -74,9 +74,9 @@
     <tests>
       <!-- MANUAL TESTS -->
       <test>
-        <param name="query.rds_seurat_file" ftype="rdata" value="Classify_query.rds"/>
-        <param name="anchors.rds_seurat_file" ftype="rdata" value="Classify_anchors.rds"/>
-        <param name="reference.rds_seurat_file" ftype="rdata" value="Umap_result_integrated.rds"/>
+        <param name="query.rds_seurat" ftype="rdata" value="Classify_query.rds"/>
+        <param name="anchors.rds_seurat" ftype="rdata" value="Classify_anchors.rds"/>
+        <param name="reference.rds_seurat" ftype="rdata" value="Umap_result_integrated.rds"/>
         <output name="rds_seurat_file" ftype="rdata" >
           <assert_contents>
             <has_size value="103786543" delta="10000000"/>
