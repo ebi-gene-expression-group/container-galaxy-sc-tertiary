@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_multiplet_scrublet" name="Scanpy Scrublet" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scanpy_multiplet_scrublet" name="Scanpy Scrublet" version="@TOOL_VERSION@+galaxy9" profile="@PROFILE@">
   <description>remove multiplets from annData objects with Scrublet</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -13,6 +13,8 @@ PYTHONIOENCODING=utf-8 scanpy-multiplet scrublet
 #end if
 #if $batch_key
   --batch-key '${batch_key}'
+#else if $sample_key
+  --batch-key '${sample_key}'
 #end if  
 $filter
 #if $settings.default == "false"
@@ -39,7 +41,8 @@ $filter
     <param name="threshold" argument="--threshold" type="float" optional="true" label="Doublet score threshold." help="Threshold for calling a transcriptome a doublet. If not set, this is set automatically by looking for the minimum between the two modes of the doublet_scores_sim_ histogram. It is best  practice to check the threshold visually using the doublet_scores_sim_ histogram and/or based on co-localization of predicted doublets in a 2-D embedding."/>
     <param name="filter" argument="--filter" type="boolean" truevalue="--filter" falsevalue="" checked="False"
          label="Remove predicted multiplets?" help="By default, the output object is annotated but not filtered according to the scrublet status."/>
-     <param name="batch_key" type="text" argument="--batch-key" optional="true" label="Where batches are present, the name of the column in adata.obs that differentiates among experiments/batches."/>
+    <param name="batch_key" type="text" argument="--batch-key" optional="true" label="Where batches are present, the name of the column in adata.obs that differentiates among experiments/batches."/>
+    <param name="sample_key" type="text" argument="--batch-key" optional="true" label="The name of the column in adata.obs that differentiates among samples. This is a convenience for workflows, this is overriden if the batch key is set. It is an Scrubblet best practice to operate per samples rather than on the complete dataset (and it should use less memory)."/>
     <conditional name="settings">
       <param name="default" type="boolean" checked="true" label="Use programme defaults"/>
       <when value="true"/>
