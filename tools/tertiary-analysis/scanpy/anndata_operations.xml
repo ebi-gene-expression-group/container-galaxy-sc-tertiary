@@ -104,6 +104,14 @@ adata.obs = add_cell_metadata(adata)
 adata.raw = adata
 #end if
 
+#if $swap_layer_to_x.default:
+#if $swap_layer_to_x.new_name_x:
+adata.layers['${swap_layer_to_x.new_name_x}'] = adata.X
+#end if
+adata.X = adata.layers['${swap_layer_to_x.layer}']
+del adata.layers['${swap_layer_to_x.layer}']
+#end if
+
 gene_name = '${gene_symbols_field}'
 qc_vars = list()
 
