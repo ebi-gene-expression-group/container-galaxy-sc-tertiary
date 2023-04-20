@@ -415,7 +415,7 @@ adata.write('output.h5', compression='gzip')
       </conditional>
       <output name="output_h5ad" ftype="h5ad">
         <assert_contents>
-          <has_h5_keys keys="layer/X_old" />
+          <has_h5_keys keys="layers/X_old" />
         </assert_contents>
       </output>
     </test>
