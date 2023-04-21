@@ -26,7 +26,6 @@ PYTHONIOENCODING=utf-8 scanpy-find-markers
         --key-added '${key_added}'
     #end if
     --method '${settings.method}'
-    ${settings.use_raw}
     ${settings.rankby_abs}
     #if $settings.groups
         --groups '${settings.groups}'
@@ -37,6 +36,9 @@ PYTHONIOENCODING=utf-8 scanpy-find-markers
     #end if
     #if $settings.layer
         --layer '${settings.layer}'
+        --no-raw
+    #else
+        ${settings.use_raw}
     #end if
     $settings.pts $settings.tie_correct
     #end if
@@ -65,7 +67,7 @@ PYTHONIOENCODING=utf-8 scanpy-find-markers
           <option value="logreg">logistic regression</option>
         </param>
         <param name="use_raw" type="boolean" truevalue="--use-raw" falsevalue="--no-raw" checked="true"
-               label="Use raw attribute if present. Make sure to turn off if using the 'layer' option, or to make sure that that layer is present in raw."/>
+               label="Use raw attribute if present. If the layer option is set, this will be ignored (raw will not be used)."/>
         <param name="rankby_abs" argument="--rankby_abs" type="boolean" truevalue="--rankby-abs" falsevalue="" checked="false"
                label="Rank by absolute value of the scores instead of the scores"/>
         <param name="groups" argument="--groups" optional="true" type="text" label="Subset of groups/clusters to which comparisons shell be restricted. Currently it fails if a single group is given, provide at least two."/>
@@ -82,7 +84,7 @@ PYTHONIOENCODING=utf-8 scanpy-find-markers
                    help="Post-test filtering to only keep genes with at least this fold change of expression relative to the reference group."/>
           </when>
         </conditional>
-        <param name="layer" argument="--layer" type="text" optional="true" label="Layer to use marker genes, leave empty of .X . Most likely should not be used with use-raw."/>
+        <param name="layer" argument="--layer" type="text" optional="true" label="Layer to use marker genes, leave empty of .X . It will override the use of raw if set."/>
         <param name="pts" argument="--pts"  type="boolean" checked="false" label="Compute the fraction of cells expressing the genes?" truevalue="--pts" falsevalue="" />
         <param name="tie_correct" argument="--tie-correct"  type="boolean" checked="false" label="Use tie correction for 'wilcoxon' scores. Used only for 'wilcoxon'." truevalue="--tie-correct" falsevalue=""/>
       </when>
@@ -125,9 +127,8 @@ PYTHONIOENCODING=utf-8 scanpy-find-markers
       <output name="output_tsv" file="diffexp.tsv" ftype="tabular" compare="sim_size"/>
     </test>
     <test>
-      <param name="input_obj_file" value="mnn"/>
+      <param name="input_obj_file" value="mnn.h5"/>
       <param name="input_format" value="anndata"/>
-      <param name="output_format" value="no_matrix_output"/>
       <param name="n_genes" value="50"/>
       <param name="output_markers" value="true"/>
       <param name="default" value="false"/>
@@ -135,10 +136,9 @@ PYTHONIOENCODING=utf-8 scanpy-find-markers
       <param name="key_added" value="l_markers"/>
       <param name="method" value="wilcoxon"/>
       <param name="layer" value="mnn"/>
-      <output name="output_tsv" ftype="tabular">
+      <output name="output_h5ad" ftype="h5ad">
         <assert_contents>
-          <has_text text="cluster" />
-          <has_n_lines n="50" />
+          <has_h5_keys keys="uns/l_markers_mnn"/>
         </assert_contents>
       </output>
     </test>
