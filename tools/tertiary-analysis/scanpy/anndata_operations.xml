@@ -50,6 +50,7 @@ python $operations
   <configfiles>
     <configfile name="operations">
 import gc
+from os import makedirs
 import scanpy as sc
 import anndata
 from numpy import all
@@ -294,7 +295,23 @@ if 'n_cells' not in adata.var.columns:
 if 'n_counts' not in adata.var.columns:
     sc.pp.filter_genes(adata, min_counts=0)
 
+#if not $split_on_obs.default or $split_on_obs.output_main:
 adata.write('output.h5', compression='gzip')
+#end if
+
+#if $split_on_obs.default:
+s = 0
+res_dir = "output_split"
+makedirs(res_dir, exist_ok=True)
+for field_value in adata.obs["${split_on_obs.key}"].unique():
+    ad_s = adata[adata.obs.${split_on_obs.key} == field_value]
+    ad_s.write(f"{res_dir}/${split_on_obs.key}_{s}.h5", compression='gzip')
+    if s > 0:
+        gc.collect()
+    s += 1
+#end if
+
+
     </configfile>
 </configfiles>
 
@@ -403,10 +420,27 @@ adata.write('output.h5', compression='gzip')
       </when>
     </conditional>
     <param name="sanitize_varm" type="boolean" checked="false" label="Sanitise any null raw.varm objects if any" help="This might be relevant for interfacing with newer versions of AnnData, that might complain if .raw includes a varm null object."/>
+    <conditional name="split_on_obs">
+      <param name="default" type="boolean" checked="false" label="Split on obs" help="Split the AnnData object into multiple AnnData objects based on the values of a given obs key. This is useful for example to split a dataset based on a cluster annotation."/>
+      <when value="true">
+        <param name="key" type="text" label="Obs key to split on" help="The obs key to split on. For example, if you want to split on cluster annotation, you can use the key 'louvain'."/>
+        <param name="output_main" type="boolean" checked="true" label="Output main AnnData object" help="If checked, the main AnnData object will be outputted as well."/>
+      </when>
+      <when value="false"/>
+    </conditional>
   </inputs>
 
   <outputs>
-    <expand macro="output_data_obj_no_loom" description="metadata changes on"/>
+    <data name="output_h5ad" format="h5ad" from_work_dir="output.h5" label="${tool.name} on ${on_string}: @DESCRIPTION@ AnnData">
+      <filter>output_format == 'anndata_h5ad' and (('output_main' in split_on_obs and split_on_obs['output_main']) or (not split_on_obs['default']))</filter>
+    </data>
+    <data name="output_h5" format="h5" from_work_dir="output.h5" label="${tool.name} on ${on_string}: @DESCRIPTION@ AnnData (h5)">
+      <filter>output_format == 'anndata' and (('output_main' in split_on_obs and split_on_obs['output_main']) or (not split_on_obs['default']))</filter>
+    </data>
+    <collection name="output_h5ad_split" type="list" label="${tool.name} on ${on_string}: @DESCRIPTION@ AnnData split">
+      <discover_datasets pattern="(?P&lt;designation&gt;.+)\.h5" directory="output_split" format="h5ad" visible="true"/>
+      <filter>split_on_obs['default']</filter>
+    </collection>
   </outputs>
 
   <tests>
@@ -512,6 +546,26 @@ adata.write('output.h5', compression='gzip')
           <has_h5_keys keys="layers/filtered" />
         </assert_contents>
       </output>
+    </test>
+    <test>
+      <param name="input_obj_file" value="find_cluster.h5"/>
+      <conditional name="split_on_obs">
+        <param name="default" value="true"/>
+        <param name="key" value="louvain"/>
+        <param name="output_main" value="true"/>
+      </conditional>
+      <output name="output_h5ad" ftype="h5ad">
+        <assert_contents>
+          <has_h5_keys keys="obs/louvain" />
+        </assert_contents>
+      </output>
+      <output_collection name="output_h5ad_split" type="list" count="5">
+        <element name="louvain_0" ftype="h5ad">
+          <assert_contents>
+            <has_h5_keys keys="obs/louvain" />
+          </assert_contents>
+        </element>
+      </output_collection>
     </test>
   </tests>
 
