@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool id="anndata_merge" name="AnnData merge" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+  <description>concatenates AnnData objects with different cells</description>
+  <macros>
+    <import>scanpy_macros2.xml</import>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code"><![CDATA[
+  #for $i, $d in enumerate($datasets):
+    ln -s '${d}' 'input_${i}.h5ad' &&
+  #end for
+
+  python $merge_anndatas input_*.h5ad --join '${merge_type}' --output '${merged_ad}'
+    ]]></command>
+    <configfiles>
+        <configfile name="merge_anndatas">
+import anndata
+import argparse
+
+def merge_anndata_files(files, join_type):
+    adata_list = []
+    merged_ad = None
+    for file in files:
+        if merged_ad is None:
+            merged_ad = anndata.read_h5ad(file)
+            continue
+        adata = anndata.read_h5ad(file)
+        if join_type in ['inner', 'outer']:
+            merged_ad = adata.concatenate(merged_ad, join=join_type)
+        else:
+            raise ValueError("Join type must be 'inner' or 'outer'")
+        return merged_ad
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Merge multiple AnnData files')
+    parser.add_argument('files', nargs='+', help='Paths to the AnnData files to merge')
+    parser.add_argument('--join', choices=['inner', 'outer'], default='inner', help='Type of join to use (inner or outer)')
+    parser.add_argument('--output', help='Path to save the merged AnnData file')
+    args = parser.parse_args()
+    adata = merge_anndata_files(args.files, args.join)
+    
+    adata.write(args.output, compression='gzip')
+        </configfile>
+    </configfiles>
+    <inputs>
+        <param name="datasets" type="data" label="AnnData objects to merge" help="A set of AnnData files to merge completely" format="h5,h5ad" multiple="true"/>
+        <param name="merge_type" type="select" label="Merge type" help="Type of merge to perform inner will only keep metadata that is common to both datasets (they are merged in order). Outer will keep metadata that at least appears in one of them.">
+            <option value="inner">Inner</option>
+            <option value="outer">Outer</option>   
+        </param>
+    </inputs>
+    <outputs>
+        <data name="merged_ad" format="h5ad" label="Merged AnnData object" from_work_dir=""/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="datasets" value="mnn.h5,anndata_ops.h5"/>
+            <param name="merge_type" value="outer"/>
+            <output name="merged_ad" ftype="h5ad">
+                <assert_contents>
+                    <has_h5_keys keys="obs/louvain" />
+                    <has_h5_keys keys="obs/batch" />
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <expand macro="citations"/>
+</tool>
