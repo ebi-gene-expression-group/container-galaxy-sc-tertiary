@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="sceasy_convert" name="SCEasy convert" version="@TOOL_VERSION@+galaxy1">
+<tool id="sceasy_convert" name="SCEasy convert" version="@TOOL_VERSION@+galaxy0">
   <description>a data object between formats</description>
   <macros>
     <import>sceasy_macros.xml</import>
