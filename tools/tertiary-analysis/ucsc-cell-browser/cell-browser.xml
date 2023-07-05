@@ -5,6 +5,7 @@
   </requirements>
 <stdio>
 <exit_code range="1:" />
+<regex source="both" match="Killed" level="fatal_oom" description="Killed, most likely due to OOM" />
 </stdio>
 <command><![CDATA[
 #if $input_type.expression_source == "native-cell-browser":
