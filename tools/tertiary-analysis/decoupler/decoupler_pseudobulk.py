@@ -91,6 +91,13 @@ def plot_pseudobulk_samples(
 def plot_filter_by_expr(
     pseudobulk_data, group, min_count=None, min_total_count=None, save_path=None
 ):
+    """
+    >>> import scanpy as sc
+    >>> adata = sc.datasets.pbmc68k_reduced()
+    >>> adata.X = abs(adata.X).astype(int)
+    >>> pseudobulk = get_pseudobulk(adata, "bulk_labels", "louvain")
+    >>> plot_filter_by_expr(pseudobulk, group="bulk_labels", min_count=10, min_total_count=200)
+    """
     fig = decoupler.plot_filter_by_expr(
         pseudobulk_data,
         group=group,
