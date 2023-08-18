@@ -63,7 +63,7 @@ def write_DESeq2_inputs(pdata, layer=None, output_dir=""):
         df = pd.DataFrame(
             pdata.layers[layer].T, index=pdata.var.index, columns=obs_for_deseq.index
         )
-    df.to_csv(f"{output_dir}counts_matrix.csv", sep=",")
+    df.to_csv(f"{output_dir}counts_matrix.csv", sep=",", index_label="")
 
 
 def plot_pseudobulk_samples(
@@ -84,6 +84,22 @@ def plot_pseudobulk_samples(
     )
     if save_path:
         fig.savefig(f"{save_path}/pseudobulk_samples.png")
+    else:
+        fig.show()
+
+
+def plot_filter_by_expr(
+    pseudobulk_data, group, min_count=None, min_total_count=None, save_path=None
+):
+    fig = decoupler.plot_filter_by_expr(
+        pseudobulk_data,
+        group=group,
+        min_count=min_count,
+        min_total_count=min_total_count,
+        return_fig=True,
+    )
+    if save_path:
+        fig.savefig(f"{save_path}/filter_by_expr.png")
     else:
         fig.show()
 
@@ -141,6 +157,14 @@ def main(args):
 
     # Filter by expression if enabled
     if args.filter_expr:
+        plot_filter_by_expr(
+            pseudobulk_data,
+            group=args.groupby,
+            min_count=args.min_counts,
+            min_total_count=args.min_total_counts,
+            save_path=args.save_path,
+        )
+
         filtered_adata = filter_by_expr(
             pseudobulk_data,
             min_count=args.min_counts,
