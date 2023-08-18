@@ -1,0 +1,50 @@
+<tool id="decoupler_tool" name="Decoupler Tool" version="1.0">
+    <description>Perform pseudobulk analysis and filtering using Decoupler-py.</description>
+    <command>
+        <![CDATA[
+        python '$__tool_directory__/decoupler_pseudobulk.py' $input_file 
+            --groupby $groupby 
+        #if $condition_key != '':
+            --condition_key $condition_key 
+        #endif
+        #if $conditions != '':
+            --conditions $conditions 
+        #endif 
+        --save_path plot_output.pdf 
+        --min_count $min_count 
+        --min_total_count $min_total_count
+        #if $anndata_output:
+            --anndata_output_path anddata_output.h5ad
+        #endif 
+        
+        ]]>
+    </command>
+    <inputs>
+        <param type="data" name="input_file" format="data" label="Input AnnData file" />
+        <param type="text" name="groupby" label="Groupby column" />
+        <param type="text" name="condition_key" label="Condition key column (optional)" />
+        <param type="text" name="conditions" label="Conditions (optional)" />
+        <param type="integer" name="min_count" default="10" label="Minimum count threshold for filtering" />
+        <param type="integer" name="min_total_count" default="1000" label="Minimum total count threshold for filtering" />
+        <param type="boolean" name="filter_expr" label="Enable filtering by expression" />
+    </inputs>
+    <outputs>
+        <data name="plot_output" format="pdf" label="Pseudobulk plot" />
+        <data name="filtered_output" format="h5ad" label="Filtered AnnData" />
+    </outputs>
+    <help>
+        <![CDATA[
+        This tool performs pseudobulk analysis and filtering using Decoupler-py. Provide the input AnnData file and specify the necessary parameters.
+
+        - Input AnnData file: The input AnnData file to be processed.
+        - Groupby column: The column in adata.obs that defines the groups.
+        - Condition key column (optional): The column in adata.obs that defines the conditions (optional).
+        - Conditions (optional): The specific conditions to include (optional).
+        - Minimum count threshold for filtering: The minimum count threshold for filtering by expression.
+        - Minimum total count threshold for filtering: The minimum total count threshold for filtering by expression.
+        - Enable filtering by expression: Check this box to enable filtering by expression.
+
+        The tool will output the pseudobulk plot as a PDF file and the filtered AnnData as an h5ad file.
+        ]]>
+    </help>
+</tool>
