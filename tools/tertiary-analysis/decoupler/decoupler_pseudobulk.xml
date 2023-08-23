@@ -1,50 +1,129 @@
 <tool id="decoupler_tool" name="Decoupler Tool" version="1.0">
     <description>Perform pseudobulk analysis and filtering using Decoupler-py.</description>
-    <command>
-        <![CDATA[
-        python '$__tool_directory__/decoupler_pseudobulk.py' $input_file 
-            --groupby $groupby 
-        #if $condition_key != '':
-            --condition_key $condition_key 
-        #endif
-        #if $conditions != '':
-            --conditions $conditions 
-        #endif 
-        --save_path plot_output.pdf 
-        --min_count $min_count 
-        --min_total_count $min_total_count
-        #if $anndata_output:
-            --anndata_output_path anddata_output.h5ad
-        #endif 
-        
-        ]]>
-    </command>
+    <requirements>
+        <requirement type="package" version="1.4.0">decoupler</requirement>
+    </requirements>
+    <command><![CDATA[
+mkdir deseq_output_dir
+mkdir plots_output_dir
+python ./script.py $input_file
+    #if $adata_obs_fields_to_merge:
+    --adata_obs_fields_to_merge $adata_obs_fields_to_merge
+    #end if
+    --groupby $groupby
+    --sample_key $sample_key
+    #if $layer:
+    --layer $layer
+    #end if
+    --mode $mode
+    #if $use_raw:
+    --use_raw
+    #end if
+    #if $min_cells:
+    --min_cells $min_cells
+    #end if
+    #if $produce_plots:
+    --save_path plots_output_dir
+    #if $min_counts:
+    --min_counts $min_counts
+    #end if
+    #if $min_total_counts:
+    --min_total_counts $min_total_counts
+    #end if
+    #if $produce_anndata:
+    --anndata_output_path $pbulk_anndata
+    #end if
+    #if $filter_expr:
+    --filter_expr
+    #end if
+    --deseq2_output_path deseq_output_dir
+    --plot_samples_figsize '$plot_samples_figsize'
+    --plot_filtering_figsize '$plot_filtering_figsize'
+]]></command>
     <inputs>
         <param type="data" name="input_file" format="data" label="Input AnnData file" />
+        <param type="text" name="adata_obs_fields_to_merge" label="Obs Fields to Merge" optional="true" />
         <param type="text" name="groupby" label="Groupby column" />
-        <param type="text" name="condition_key" label="Condition key column (optional)" />
-        <param type="text" name="conditions" label="Conditions (optional)" />
-        <param type="integer" name="min_count" default="10" label="Minimum count threshold for filtering" />
-        <param type="integer" name="min_total_count" default="1000" label="Minimum total count threshold for filtering" />
-        <param type="boolean" name="filter_expr" label="Enable filtering by expression" />
+        <param type="text" name="sample_key" label="Sample Key column" />
+        <param type="text" name="layer" label="Layer" optional="true" />
+        <param type="select" name="mode" label="Mode" optional="true">
+            <option value="sum">sum</option>
+            <option value="mean">mean</option>
+            <option value="median">median</option>
+        </param>
+        <param type="boolean" name="use_raw" label="Use Raw" optional="true" />
+        <param type="integer" name="min_cells" label="Minimum Cells" optional="true" />
+        <param type="boolean" name="produce_plots" label="Produce plots"/>
+        <param type="boolean" name="produce_anndata" label="Produce AnnData with Pseudo-bulk"/>
+        <param type="integer" name="min_counts" label="Minimum Counts" optional="true" />
+        <param type="integer" name="min_total_counts" label="Minimum Total Counts" optional="true" />
+        <param type="boolean" name="filter_expr" label="Enable Filtering by Expression" />
+        <param type="text" name="plot_samples_figsize" label="Plot Samples Figsize" value="(10, 10)" />
+        <param type="text" name="plot_filtering_figsize" label="Plot Filtering Figsize" value="(10, 10)" />
     </inputs>
     <outputs>
-        <data name="plot_output" format="pdf" label="Pseudobulk plot" />
-        <data name="filtered_output" format="h5ad" label="Filtered AnnData" />
+        <data name="pbulk_anndata" format="h5ad" label="Pseudo-bulk AnnData">
+            <filter>produce_anndata</filter>
+        </data>
+        <data name="count_matrix" format="csv" label="Count Matrix (DESeq2 format)" from_work_dir="deseq_output_dir/counts_matrix.csv" />
+        <data name="samples_metadata" format="csv" label="Samples Metadata (DESeq2 format)" from_work_dir="deseq_output_dir/col_metadata.csv" />
+        <data name="genes_metadata" format="csv" label="Genes Metadata (DESeq2 format)" from_work_dir="deseq_output_dir/gene_metadata.csv" />
+        <data name="plot_output" format="pdf" label="Pseudobulk plot" from_work_dir="plots_output_dir/pseudobulk_samples.png">
+            <filter>produce_plots</filter>
+        </data>
+        <data name="filter_by_expr_plot" format="pdf" label="Filter by Expression plot">
+            <filter>produce_plots</filter>
+        </data>
     </outputs>
+    <tests>
+        <test>
+            <param name="input_file" file="mito_counted_anndata.h5ad" />
+            <param name="adata_obs_fields_to_merge" value="batch,sex" />
+            <param name="groupby" value="batch_sex" />
+            <param name="sample_key" value="genotype" />
+            <param name="mode" value="sum" />
+            <param name="min_cells" value="10" />
+            <param name="produce_plots" value="true" />
+            <param name="produce_anndata" value="true" />
+            <param name="min_counts" value="10" />
+            <param name="min_total_counts" value="1000" />
+            <param name="filter_expr" value="true" />
+            <param name="plot_samples_figsize" value="(10, 10)" />
+            <param name="plot_filtering_figsize" value="(10, 10)" />
+            <output name="pbulk_anndata" ftype="h5ad">
+                <assert_contents>
+                    <has_h5_keys keys="obs/psbulk_n_cells" />
+                </assert_contents>
+            </output>
+            <output name="count_matrix" ftype="csv">
+                <assert_contents>
+                    <has_n_lines lines="3620" />
+                </assert_contents>
+            <output name="samples_metadata" file="col_metadata.csv" />
+            <output name="genes_metadata" file="gene_metadata.csv" />
+            <output name="plot_output" file="pseudobulk_samples.png" />
+            <output name="filter_by_expr_plot" file="filter_by_expr.png" />
+        </test>
     <help>
         <![CDATA[
         This tool performs pseudobulk analysis and filtering using Decoupler-py. Provide the input AnnData file and specify the necessary parameters.
 
         - Input AnnData file: The input AnnData file to be processed.
+        - Obs Fields to Merge: Fields in adata.obs to merge, comma separated (optional).
         - Groupby column: The column in adata.obs that defines the groups.
-        - Condition key column (optional): The column in adata.obs that defines the conditions (optional).
-        - Conditions (optional): The specific conditions to include (optional).
-        - Minimum count threshold for filtering: The minimum count threshold for filtering by expression.
-        - Minimum total count threshold for filtering: The minimum total count threshold for filtering by expression.
-        - Enable filtering by expression: Check this box to enable filtering by expression.
+        - Sample Key column: The column in adata.obs that defines the samples.
+        - Layer (optional): The name of the layer of the AnnData object to use.
+        - Mode: The mode for Decoupler pseudobulk analysis (sum, mean, median).
+        - Use Raw: Whether to use the raw part of the AnnData object.
+        - Minimum Cells: Minimum number of cells for pseudobulk analysis (optional).
+        - Save Path (optional): Path to save the plot as a PDF file (optional).
+        - Minimum Counts: Minimum count threshold for filtering by expression (optional).
+        - Minimum Total Counts: Minimum total count threshold for filtering by expression (optional).
+        - Enable Filtering by Expression: Check this box to enable filtering by expression.
+        - Plot Samples Figsize: Size of the samples plot as a tuple (two arguments).
+        - Plot Filtering Figsize: Size of the filtering plot as a tuple (two arguments).
 
-        The tool will output the pseudobulk plot as a PDF file and the filtered AnnData as an h5ad file.
+        The tool will output the filtered AnnData, count matrix, samples metadata, genes metadata (in DESeq2 format), and the pseudobulk plot and filter by expression plot (if enabled).
         ]]>
     </help>
 </tool>
