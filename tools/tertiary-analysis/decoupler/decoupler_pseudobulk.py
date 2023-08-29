@@ -309,13 +309,13 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--plot_samples_figsize",
-        type=tuple,
-        default=(10, 10),
+        type=int,
+        default=[10, 10],
         nargs=2,
         help="Size of the samples plot as a tuple (two arguments)",
     )
     parser.add_argument(
-        "--plot_filtering_figsize", type=tuple, default=(10, 10), nargs=2
+        "--plot_filtering_figsize", type=int, default=[10, 10], nargs=2
     )
 
     # Parse the command line arguments
