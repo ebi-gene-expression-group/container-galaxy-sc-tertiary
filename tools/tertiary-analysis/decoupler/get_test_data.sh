@@ -4,7 +4,7 @@ BASENAME_FILE='mito_counted_anndata.h5ad'
 
 MTX_LINK='https://zenodo.org/record/7053673/files/Mito-counted_AnnData'
 
-
+# convenience for getting data
 function get_data {
   local link=$1
   local fname=$2
