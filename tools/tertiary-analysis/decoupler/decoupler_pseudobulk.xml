@@ -3,6 +3,9 @@
     <requirements>
         <requirement type="package" version="1.4.0">decoupler</requirement>
     </requirements>
+    <environment_variables>
+        <environment_variable name="NUMBA_CACHE_DIR">\$_GALAXY_JOB_TMP_DIR</environment_variable>
+    </environment_variables>
     <command><![CDATA[
 mkdir deseq_output_dir &&
 mkdir plots_output_dir &&
