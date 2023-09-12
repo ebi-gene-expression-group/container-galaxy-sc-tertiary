@@ -5,8 +5,9 @@
     </requirements>
     <environment_variables>
         <environment_variable name="NUMBA_CACHE_DIR">\$_GALAXY_JOB_TMP_DIR</environment_variable>
+        <environment_variable name="MPLCONFIGDIR">\$_GALAXY_JOB_TMP_DIR</environment_variable>
     </environment_variables>
-    <command><![CDATA[
+    <command detect_errors="exit_code"><![CDATA[
 mkdir deseq_output_dir &&
 mkdir plots_output_dir &&
 python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
