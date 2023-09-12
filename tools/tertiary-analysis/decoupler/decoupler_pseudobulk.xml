@@ -1,5 +1,5 @@
-<tool id="decoupler_tool" name="Decoupler Tool" version="1.0">
-    <description>Perform pseudobulk analysis and filtering using Decoupler-py.</description>
+<tool id="decoupler_pseudobulk" name="Decoupler pseudo-bulk" version="1.0">
+    <description>aggregates single cell RNA-seq data for running bulk RNA-seq methods</description>
     <requirements>
         <requirement type="package" version="1.4.0">decoupler</requirement>
     </requirements>
