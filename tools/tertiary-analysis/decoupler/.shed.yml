@@ -1,0 +1,12 @@
+categories: [Transcriptomics]
+description: "decoupler python"
+long_description: |
+    decoupler is a package containing different statistical methods to extract biological
+    activities from omics data within a unified framework. It allows to flexibly test any
+    method with any prior knowledge resource and incorporates methods that take into account
+    the sign and weight. It can be used with any omic, as long as its features can be linked
+    to a biological process based on prior knowledge. 
+name: decoupler
+owner: ebi-gxa
+homepage_url: https://decoupler-py.readthedocs.io/en/latest/
+remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/tools/tertiary-analysis/decoupler
