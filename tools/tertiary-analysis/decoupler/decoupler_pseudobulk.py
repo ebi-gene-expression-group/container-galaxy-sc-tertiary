@@ -35,7 +35,7 @@ def get_pseudobulk(
 
 
 # write results for loading into DESeq2
-def write_DESeq2_inputs(pdata, layer=None, output_dir=""):
+def write_DESeq2_inputs(pdata, layer=None, output_dir="", factor_fields=None):
     """
     >>> import scanpy as sc
     >>> adata = sc.datasets.pbmc68k_reduced()
@@ -51,8 +51,13 @@ def write_DESeq2_inputs(pdata, layer=None, output_dir=""):
     # avoid dash that is read as point on R colnames.
     obs_for_deseq.index = obs_for_deseq.index.str.replace("-", "_")
     obs_for_deseq.index = obs_for_deseq.index.str.replace(" ", "_")
+    col_metadata_file = f"{output_dir}col_metadata.csv"
     # write obs to a col_metadata file
-    obs_for_deseq.to_csv(f"{output_dir}col_metadata.csv", sep=",", index=True)
+    if factor_fields:
+        # only output the index plus the columns in factor_fields in that order
+        obs_for_deseq[factor_fields].to_csv(col_metadata_file, sep=",", index=True)
+    else:
+        obs_for_deseq.to_csv(col_metadata_file, sep=",", index=True)
     # write var to a gene_metadata file
     pdata.var.to_csv(f"{output_dir}gene_metadata.csv", sep=",", index=True)
     # write the counts matrix of a specified layer to file
@@ -141,6 +146,10 @@ def main(args):
     if args.sample_key and args.sample_key not in adata.obs.columns:
         raise ValueError(f"The '{args.sample_key}' column is not present in adata.obs.")
 
+    factor_fields = None
+    if args.factor_fields:
+        factor_fields = args.factor_fields.split(",")
+
     print(f"Using mode: {args.mode}")
     # Perform pseudobulk analysis
     pseudobulk_data = get_pseudobulk(
@@ -184,7 +193,7 @@ def main(args):
     if args.anndata_output_path:
         pseudobulk_data.write_h5ad(args.anndata_output_path)
 
-    write_DESeq2_inputs(pseudobulk_data, output_dir=args.deseq2_output_path)
+    write_DESeq2_inputs(pseudobulk_data, output_dir=args.deseq2_output_path, factor_fields=factor_fields)
 
 
 def merge_adata_obs_fields(obs_fields_to_merge, adata):
@@ -300,6 +309,9 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--filter_expr", action="store_true", help="Enable filtering by expression"
+    )
+    parser.add_argument(
+        "--factor_fields", type=str, help="Comma separated list of fields for the factors"
     )
     parser.add_argument(
         "--deseq2_output_path",

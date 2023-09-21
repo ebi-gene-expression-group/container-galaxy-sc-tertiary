@@ -41,21 +41,25 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
     #if $filter_expr:
     --filter_expr
     #end if
+    #if $factor_fields:
+    --factor_fields '$factor_fields'
+    #end if
     --deseq2_output_path deseq_output_dir
     --plot_samples_figsize $plot_samples_figsize
     --plot_filtering_figsize $plot_filtering_figsize
 ]]></command>
     <inputs>
         <param type="data" name="input_file" format="data" label="Input AnnData file"/>
-        <param type="text" name="adata_obs_fields_to_merge" label="Obs Fields to Merge" optional="true"/>
-        <param type="text" name="groupby" label="Groupby column"/>
-        <param type="text" name="sample_key" label="Sample Key column"/>
-        <param type="text" name="layer" label="Layer" optional="true"/>
-        <param type="select" name="mode" label="Mode" optional="true">
+        <param type="text" name="adata_obs_fields_to_merge" label="Obs Fields to Merge" optional="true" help="Fields in adata.obs to merge, comma separated (optional). They will be available as field1_field2_field3 in the AnnData Obs dataframe."/>
+        <param type="text" name="groupby" label="Groupby column" help="The column in adata.obs that defines the groups. Merged columns in the above field are available here."/>
+        <param type="text" name="sample_key" label="Sample Key column" help="The column in adata.obs that defines the samples. Merged columns in the above field are available here."/>
+        <param type="text" name="layer" label="Layer" optional="true" help="The name of the layer of the AnnData object to use. It needs to be present in the AnnData object."/>
+        <param type="select" name="mode" value="sum" label="Decoupler pseudobulk Mode" optional="true" help="The mode for Decoupler pseudobulk analysis (sum, mean, median)">
             <option value="sum">sum</option>
             <option value="mean">mean</option>
             <option value="median">median</option>
         </param>
+        <param type="text" name="factor_fields" label="Factor Fields" optional="true" help="Fields in adata.obs to use as factors, comma separated (optional). For EdgeR make sure that the first field is the main contrast field desired and the rest of the fields are the covariates desired."/>
         <param type="boolean" name="use_raw" label="Use Raw" optional="true"/>
         <param type="integer" name="min_cells" label="Minimum Cells" optional="true"/>
         <param type="boolean" name="produce_plots" label="Produce plots"/>
@@ -81,11 +85,12 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
         </data>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="6">
             <param name="input_file" value="mito_counted_anndata.h5ad"/>
             <param name="adata_obs_fields_to_merge" value="batch,sex"/>
             <param name="groupby" value="batch_sex"/>
             <param name="sample_key" value="genotype"/>
+            <param name="factor_fields" value="genotype,batch_sex"/>
             <param name="mode" value="sum"/>
             <param name="min_cells" value="10"/>
             <param name="produce_plots" value="true"/>
@@ -136,7 +141,8 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
         - Groupby column: The column in adata.obs that defines the groups.
         - Sample Key column: The column in adata.obs that defines the samples.
         - Layer (optional): The name of the layer of the AnnData object to use.
-        - Mode: The mode for Decoupler pseudobulk analysis (sum, mean, median).
+        - Mode: The mode for Decoupler pseudobulk analysis (sum, mean, median). Sum by default.
+        - Factor Fields (optional): Fields in adata.obs to use as factors, comma separated (optional). For EdgeR make sure that the first field is the main contrast field desired and the rest of the fields are the covariates desired.
         - Use Raw: Whether to use the raw part of the AnnData object.
         - Minimum Cells: Minimum number of cells for pseudobulk analysis (optional).
         - Save Path (optional): Path to save the plot as a PDF file (optional).
