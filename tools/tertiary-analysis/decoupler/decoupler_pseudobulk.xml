@@ -153,6 +153,7 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
         - Plot Filtering Figsize: Size of the filtering plot as a tuple (two arguments).
 
         The tool will output the filtered AnnData, count matrix, samples metadata, genes metadata (in DESeq2 format), and the pseudobulk plot and filter by expression plot (if enabled).
+        
         ]]>
     </help>
     <citations>

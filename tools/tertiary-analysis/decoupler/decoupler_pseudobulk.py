@@ -34,6 +34,12 @@ def get_pseudobulk(
     )
 
 
+def prepend_c_to_index(index_value):
+    if index_value and index_value[0].isdigit():
+        return "C" + index_value
+    return index_value
+
+
 # write results for loading into DESeq2
 def write_DESeq2_inputs(pdata, layer=None, output_dir="", factor_fields=None):
     """
@@ -47,7 +53,8 @@ def write_DESeq2_inputs(pdata, layer=None, output_dir="", factor_fields=None):
     if output_dir != "" and not output_dir.endswith("/"):
         output_dir = output_dir + "/"
     obs_for_deseq = pdata.obs.copy()
-    obs_for_deseq.index = "C" + obs_for_deseq.index
+    # replace any index starting with digits to start with C instead.
+    obs_for_deseq.rename(index=prepend_c_to_index, inplace=True)
     # avoid dash that is read as point on R colnames.
     obs_for_deseq.index = obs_for_deseq.index.str.replace("-", "_")
     obs_for_deseq.index = obs_for_deseq.index.str.replace(" ", "_")
@@ -130,25 +137,41 @@ def filter_by_expr(pdata, min_count=None, min_total_count=None):
     return pdata[:, genes].copy()
 
 
+def check_fields(fields, adata, obs=True):
+    """
+    >>> import scanpy as sc
+    >>> adata = sc.datasets.pbmc68k_reduced()
+    >>> check_fields(["bulk_labels", "louvain"], adata, obs=True)
+    """
+
+    if obs:
+        if not set(fields).issubset(set(adata.obs.columns)):
+            raise ValueError(
+                f"The following fields are not present in adata.obs: {fields}. Possible fields are: {list(set(adata.obs.columns))}"
+            )
+    else:
+        if not set(fields).issubset(set(adata.var.columns)):
+            raise ValueError(
+                f"The following fields are not present in adata.var: {fields}. Possible fields are: {list(set(adata.var.columns))}"
+            )
+
+
 def main(args):
     # Load AnnData object from file
     adata = anndata.read_h5ad(args.adata_file)
 
     # Merge adata.obs fields specified in args.adata_obs_fields_to_merge
     if args.adata_obs_fields_to_merge:
-        adata = merge_adata_obs_fields(args.adata_obs_fields_to_merge, adata)
+        fields = args.adata_obs_fields_to_merge.split(",")
+        check_fields(fields, adata)
+        adata = merge_adata_obs_fields(fields, adata)
 
-    # Check if groupby column is present
-    if args.groupby not in adata.obs.columns:
-        raise ValueError(f"The '{args.groupby}' column is not present in adata.obs.")
-
-    # Check if sample_key column is present (if provided)
-    if args.sample_key and args.sample_key not in adata.obs.columns:
-        raise ValueError(f"The '{args.sample_key}' column is not present in adata.obs.")
+    check_fields([args.groupby, args.sample_key], adata)
 
     factor_fields = None
     if args.factor_fields:
         factor_fields = args.factor_fields.split(",")
+        check_fields(factor_fields, adata)
 
     print(f"Using mode: {args.mode}")
     # Perform pseudobulk analysis
@@ -193,7 +216,9 @@ def main(args):
     if args.anndata_output_path:
         pseudobulk_data.write_h5ad(args.anndata_output_path)
 
-    write_DESeq2_inputs(pseudobulk_data, output_dir=args.deseq2_output_path, factor_fields=factor_fields)
+    write_DESeq2_inputs(
+        pseudobulk_data, output_dir=args.deseq2_output_path, factor_fields=factor_fields
+    )
 
 
 def merge_adata_obs_fields(obs_fields_to_merge, adata):
@@ -215,14 +240,14 @@ def merge_adata_obs_fields(obs_fields_to_merge, adata):
     docstring tests:
     >>> import scanpy as sc
     >>> ad = sc.datasets.pbmc68k_reduced()
-    >>> ad = merge_adata_obs_fields("bulk_labels,louvain", ad)
+    >>> ad = merge_adata_obs_fields(["bulk_labels","louvain"], ad)
     >>> ad.obs.columns
     Index(['bulk_labels', 'n_genes', 'percent_mito', 'n_counts', 'S_score',
            'G2M_score', 'phase', 'louvain', 'bulk_labels_louvain'],
           dtype='object')
     """
-    field_name = "_".join(obs_fields_to_merge.split(","))
-    for field in obs_fields_to_merge.split(","):
+    field_name = "_".join(obs_fields_to_merge)
+    for field in obs_fields_to_merge:
         if field not in adata.obs.columns:
             raise ValueError(f"The '{field}' column is not present in adata.obs.")
         if field_name not in adata.obs.columns:
@@ -311,7 +336,9 @@ if __name__ == "__main__":
         "--filter_expr", action="store_true", help="Enable filtering by expression"
     )
     parser.add_argument(
-        "--factor_fields", type=str, help="Comma separated list of fields for the factors"
+        "--factor_fields",
+        type=str,
+        help="Comma separated list of fields for the factors",
     )
     parser.add_argument(
         "--deseq2_output_path",
@@ -326,9 +353,7 @@ if __name__ == "__main__":
         nargs=2,
         help="Size of the samples plot as a tuple (two arguments)",
     )
-    parser.add_argument(
-        "--plot_filtering_figsize", type=int, default=[10, 10], nargs=2
-    )
+    parser.add_argument("--plot_filtering_figsize", type=int, default=[10, 10], nargs=2)
 
     # Parse the command line arguments
     args = parser.parse_args()
