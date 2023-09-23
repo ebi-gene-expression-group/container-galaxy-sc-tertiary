@@ -197,16 +197,16 @@ def main(args):
         figsize=args.plot_samples_figsize,
     )
 
+    plot_filter_by_expr(
+        pseudobulk_data,
+        group=args.groupby,
+        min_count=args.min_counts,
+        min_total_count=args.min_total_counts,
+        save_path=args.save_path,
+    )
+
     # Filter by expression if enabled
     if args.filter_expr:
-        plot_filter_by_expr(
-            pseudobulk_data,
-            group=args.groupby,
-            min_count=args.min_counts,
-            min_total_count=args.min_total_counts,
-            save_path=args.save_path,
-        )
-
         filtered_adata = filter_by_expr(
             pseudobulk_data,
             min_count=args.min_counts,
@@ -217,7 +217,7 @@ def main(args):
 
     # Save the pseudobulk data
     if args.anndata_output_path:
-        pseudobulk_data.write_h5ad(args.anndata_output_path)
+        pseudobulk_data.write_h5ad(args.anndata_output_path, compression="gzip")
 
     write_DESeq2_inputs(
         pseudobulk_data, output_dir=args.deseq2_output_path, factor_fields=factor_fields
