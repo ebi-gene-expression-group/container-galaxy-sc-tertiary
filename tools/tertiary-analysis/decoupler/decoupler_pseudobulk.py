@@ -137,22 +137,25 @@ def filter_by_expr(pdata, min_count=None, min_total_count=None):
     return pdata[:, genes].copy()
 
 
-def check_fields(fields, adata, obs=True):
+def check_fields(fields, adata, obs=True, context=None):
     """
     >>> import scanpy as sc
     >>> adata = sc.datasets.pbmc68k_reduced()
     >>> check_fields(["bulk_labels", "louvain"], adata, obs=True)
     """
 
+    legend = ""
+    if context:
+        legend = f", passed in {context},"
     if obs:
         if not set(fields).issubset(set(adata.obs.columns)):
             raise ValueError(
-                f"The following fields are not present in adata.obs: {fields}. Possible fields are: {list(set(adata.obs.columns))}"
+                f"Some of the following fields {legend} are not present in adata.obs: {fields}. Possible fields are: {list(set(adata.obs.columns))}"
             )
     else:
         if not set(fields).issubset(set(adata.var.columns)):
             raise ValueError(
-                f"The following fields are not present in adata.var: {fields}. Possible fields are: {list(set(adata.var.columns))}"
+                f"Some of the following fields {legend} are not present in adata.var: {fields}. Possible fields are: {list(set(adata.var.columns))}"
             )
 
 

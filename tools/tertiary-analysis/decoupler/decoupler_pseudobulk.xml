@@ -1,12 +1,8 @@
-<tool id="decoupler_pseudobulk" name="Decoupler pseudo-bulk" version="1.0">
+<tool id="decoupler_pseudobulk" name="Decoupler pseudo-bulk" version="1.4.0+galaxy0" profile="20.05">
     <description>aggregates single cell RNA-seq data for running bulk RNA-seq methods</description>
     <requirements>
         <requirement type="package" version="1.4.0">decoupler</requirement>
     </requirements>
-    <environment_variables>
-        <environment_variable name="NUMBA_CACHE_DIR">\$_GALAXY_JOB_TMP_DIR</environment_variable>
-        <environment_variable name="MPLCONFIGDIR">\$_GALAXY_JOB_TMP_DIR</environment_variable>
-    </environment_variables>
     <command detect_errors="exit_code"><![CDATA[
 mkdir deseq_output_dir &&
 mkdir plots_output_dir &&
@@ -48,18 +44,22 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
     --plot_samples_figsize $plot_samples_figsize
     --plot_filtering_figsize $plot_filtering_figsize
 ]]></command>
+    <environment_variables>
+        <environment_variable name="NUMBA_CACHE_DIR">\$_GALAXY_JOB_TMP_DIR</environment_variable>
+        <environment_variable name="MPLCONFIGDIR">\$_GALAXY_JOB_TMP_DIR</environment_variable>
+    </environment_variables>
     <inputs>
         <param type="data" name="input_file" format="data" label="Input AnnData file"/>
         <param type="text" name="adata_obs_fields_to_merge" label="Obs Fields to Merge" optional="true" help="Fields in adata.obs to merge, comma separated (optional). They will be available as field1_field2_field3 in the AnnData Obs dataframe."/>
         <param type="text" name="groupby" label="Groupby column" help="The column in adata.obs that defines the groups. Merged columns in the above field are available here."/>
         <param type="text" name="sample_key" label="Sample Key column" help="The column in adata.obs that defines the samples. Merged columns in the above field are available here."/>
         <param type="text" name="layer" label="Layer" optional="true" help="The name of the layer of the AnnData object to use. It needs to be present in the AnnData object."/>
-        <param type="select" name="mode" value="sum" label="Decoupler pseudobulk Mode" optional="true" help="The mode for Decoupler pseudobulk analysis (sum, mean, median)">
-            <option value="sum">sum</option>
+        <param type="select" name="mode" label="Decoupler pseudobulk Mode" optional="true" help="Determines how counts are aggregated across cells with the specificied groups: sum, mean or median.">
+            <option value="sum" selected="true">sum</option>
             <option value="mean">mean</option>
             <option value="median">median</option>
         </param>
-        <param type="text" name="factor_fields" label="Factor Fields" optional="true" help="Fields in adata.obs to use as factors, comma separated (optional). For EdgeR make sure that the first field is the main contrast field desired and the rest of the fields are the covariates desired."/>
+        <param type="text" name="factor_fields" label="Factor Fields" optional="true" help="Fields in adata.obs to use as factors, comma separated (optional). For EdgeR make sure that the first field is the main contrast field desired and the rest of the fields are the covariates desired. Decoupler produces two fields in the intermediate AnnData (which can be added here if desired for covariates): psbulk_n_cells and psbulk_counts."/>
         <param type="boolean" name="use_raw" label="Use Raw" optional="true"/>
         <param type="integer" name="min_cells" label="Minimum Cells" optional="true"/>
         <param type="boolean" name="produce_plots" label="Produce plots"/>
@@ -71,16 +71,16 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
         <param type="text" name="plot_filtering_figsize" label="Plot Filtering Figsize" value="10 10" help="X and Y sizes in points separated by a space"/>
     </inputs>
     <outputs>
-        <data name="pbulk_anndata" format="h5ad" label="Pseudo-bulk AnnData">
+        <data name="pbulk_anndata" format="h5ad" label="${tool.name} on ${on_string}: Pseudo-bulk AnnData">
             <filter>produce_anndata</filter>
         </data>
-        <data name="count_matrix" format="csv" label="Count Matrix (DESeq2 format)" from_work_dir="deseq_output_dir/counts_matrix.csv"/>
-        <data name="samples_metadata" format="csv" label="Samples Metadata (DESeq2 format)" from_work_dir="deseq_output_dir/col_metadata.csv"/>
-        <data name="genes_metadata" format="csv" label="Genes Metadata (DESeq2 format)" from_work_dir="deseq_output_dir/gene_metadata.csv"/>
-        <data name="plot_output" format="png" label="Pseudobulk plot" from_work_dir="plots_output_dir/pseudobulk_samples.png">
+        <data name="count_matrix" format="csv" label="${tool.name} on ${on_string}: Count Matrix" from_work_dir="deseq_output_dir/counts_matrix.csv"/>
+        <data name="samples_metadata" format="csv" label="${tool.name} on ${on_string}: Samples Metadata (factors file)" from_work_dir="deseq_output_dir/col_metadata.csv"/>
+        <data name="genes_metadata" format="csv" label="${tool.name} on ${on_string}: Genes Metadata" from_work_dir="deseq_output_dir/gene_metadata.csv"/>
+        <data name="plot_output" format="png" label="${tool.name} on ${on_string}: Pseudobulk plot" from_work_dir="plots_output_dir/pseudobulk_samples.png">
             <filter>produce_plots</filter>
         </data>
-        <data name="filter_by_expr_plot" format="png" label="Filter by Expression plot" from_work_dir="plots_output_dir/filter_by_expr.png">
+        <data name="filter_by_expr_plot" format="png" label="${tool.name} on ${on_string}: Filter by Expression plot" from_work_dir="plots_output_dir/filter_by_expr.png">
             <filter>produce_plots</filter>
         </data>
     </outputs>
@@ -145,7 +145,6 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
         - Factor Fields (optional): Fields in adata.obs to use as factors, comma separated (optional). For EdgeR make sure that the first field is the main contrast field desired and the rest of the fields are the covariates desired.
         - Use Raw: Whether to use the raw part of the AnnData object.
         - Minimum Cells: Minimum number of cells for pseudobulk analysis (optional).
-        - Save Path (optional): Path to save the plot as a PDF file (optional).
         - Minimum Counts: Minimum count threshold for filtering by expression (optional).
         - Minimum Total Counts: Minimum total count threshold for filtering by expression (optional).
         - Enable Filtering by Expression: Check this box to enable filtering by expression.
@@ -153,7 +152,7 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
         - Plot Filtering Figsize: Size of the filtering plot as a tuple (two arguments).
 
         The tool will output the filtered AnnData, count matrix, samples metadata, genes metadata (in DESeq2 format), and the pseudobulk plot and filter by expression plot (if enabled).
-        
+
         ]]>
     </help>
     <citations>
