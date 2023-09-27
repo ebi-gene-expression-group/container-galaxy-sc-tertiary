@@ -1,4 +1,4 @@
-<tool id="decoupler_pseudobulk" name="Decoupler pseudo-bulk" version="1.4.0+galaxy0" profile="20.05">
+<tool id="decoupler_pseudobulk" name="Decoupler pseudo-bulk" version="1.4.0+galaxy1" profile="20.05">
     <description>aggregates single cell RNA-seq data for running bulk RNA-seq methods</description>
     <requirements>
         <requirement type="package" version="1.4.0">decoupler</requirement>
@@ -74,9 +74,9 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
         <data name="pbulk_anndata" format="h5ad" label="${tool.name} on ${on_string}: Pseudo-bulk AnnData">
             <filter>produce_anndata</filter>
         </data>
-        <data name="count_matrix" format="csv" label="${tool.name} on ${on_string}: Count Matrix" from_work_dir="deseq_output_dir/counts_matrix.csv"/>
-        <data name="samples_metadata" format="csv" label="${tool.name} on ${on_string}: Samples Metadata (factors file)" from_work_dir="deseq_output_dir/col_metadata.csv"/>
-        <data name="genes_metadata" format="csv" label="${tool.name} on ${on_string}: Genes Metadata" from_work_dir="deseq_output_dir/gene_metadata.csv"/>
+        <data name="count_matrix" format="tabular" label="${tool.name} on ${on_string}: Count Matrix" from_work_dir="deseq_output_dir/counts_matrix.tsv"/>
+        <data name="samples_metadata" format="tabular" label="${tool.name} on ${on_string}: Samples Metadata (factors file)" from_work_dir="deseq_output_dir/col_metadata.tsv"/>
+        <data name="genes_metadata" format="tabular" label="${tool.name} on ${on_string}: Genes Metadata" from_work_dir="deseq_output_dir/gene_metadata.tsv"/>
         <data name="plot_output" format="png" label="${tool.name} on ${on_string}: Pseudobulk plot" from_work_dir="plots_output_dir/pseudobulk_samples.png">
             <filter>produce_plots</filter>
         </data>
@@ -105,17 +105,17 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
                     <has_h5_keys keys="obs/psbulk_n_cells"/>
                 </assert_contents>
             </output>
-            <output name="count_matrix" ftype="csv">
+            <output name="count_matrix" ftype="tabular">
                 <assert_contents>
                     <has_n_lines n="3620"/>
                 </assert_contents>
             </output>
-            <output name="samples_metadata" ftype="csv">
+            <output name="samples_metadata" ftype="tabular">
                 <assert_contents>
                     <has_n_lines n="8"/>
                 </assert_contents>
             </output>
-            <output name="genes_metadata" ftype="csv">
+            <output name="genes_metadata" ftype="tabular">
                 <assert_contents>
                     <has_n_lines n="3620"/>
                 </assert_contents>
@@ -153,9 +153,11 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
 
         The tool will output the filtered AnnData, count matrix, samples metadata, genes metadata (in DESeq2 format), and the pseudobulk plot and filter by expression plot (if enabled).
 
+        You can obtain more information about Decoupler pseudobulk at the developers documentation `here <https://decoupler-py.readthedocs.io/en/latest/notebooks/pseudobulk.html>`_ .
+
         ]]>
     </help>
     <citations>
-        <citation type="doi">doi.org/10.1093/bioadv/vbac016</citation>
+        <citation type="doi">10.1093/bioadv/vbac016</citation>
     </citations>
 </tool>
