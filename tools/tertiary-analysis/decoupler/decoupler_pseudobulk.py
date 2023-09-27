@@ -66,7 +66,7 @@ def write_DESeq2_inputs(pdata, layer=None, output_dir="", factor_fields=None):
     else:
         obs_for_deseq.to_csv(col_metadata_file, sep="\t", index=True)
     # write var to a gene_metadata file
-    pdata.var.to_csv(f"{output_dir}gene_metadata.tsv", sep=",", index=True)
+    pdata.var.to_csv(f"{output_dir}gene_metadata.tsv", sep="\t", index=True)
     # write the counts matrix of a specified layer to file
     if layer is None:
         # write the X numpy matrix transposed to file
