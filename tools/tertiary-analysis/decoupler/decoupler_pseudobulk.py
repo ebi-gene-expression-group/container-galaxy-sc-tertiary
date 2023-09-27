@@ -58,15 +58,15 @@ def write_DESeq2_inputs(pdata, layer=None, output_dir="", factor_fields=None):
     # avoid dash that is read as point on R colnames.
     obs_for_deseq.index = obs_for_deseq.index.str.replace("-", "_")
     obs_for_deseq.index = obs_for_deseq.index.str.replace(" ", "_")
-    col_metadata_file = f"{output_dir}col_metadata.csv"
+    col_metadata_file = f"{output_dir}col_metadata.tsv"
     # write obs to a col_metadata file
     if factor_fields:
         # only output the index plus the columns in factor_fields in that order
-        obs_for_deseq[factor_fields].to_csv(col_metadata_file, sep=",", index=True)
+        obs_for_deseq[factor_fields].to_csv(col_metadata_file, sep="\t", index=True)
     else:
-        obs_for_deseq.to_csv(col_metadata_file, sep=",", index=True)
+        obs_for_deseq.to_csv(col_metadata_file, sep="\t", index=True)
     # write var to a gene_metadata file
-    pdata.var.to_csv(f"{output_dir}gene_metadata.csv", sep=",", index=True)
+    pdata.var.to_csv(f"{output_dir}gene_metadata.tsv", sep="\t", index=True)
     # write the counts matrix of a specified layer to file
     if layer is None:
         # write the X numpy matrix transposed to file
@@ -75,7 +75,7 @@ def write_DESeq2_inputs(pdata, layer=None, output_dir="", factor_fields=None):
         df = pd.DataFrame(
             pdata.layers[layer].T, index=pdata.var.index, columns=obs_for_deseq.index
         )
-    df.to_csv(f"{output_dir}counts_matrix.csv", sep=",", index_label="")
+    df.to_csv(f"{output_dir}counts_matrix.tsv", sep="\t", index_label="")
 
 
 def plot_pseudobulk_samples(
