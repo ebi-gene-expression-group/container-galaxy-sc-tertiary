@@ -64,7 +64,7 @@ done
         <param name="input_tsv" type="data" argument="--external-clustering-tsv" format="tsv" label="Cluster table for assessment in tsv format"/>
       </when>
       <when value="false">
-        <param name="obj_attr" type="text" argument="--slot-for-existing-clustering" value="louvain" label="Attribute in input object that contains cluster information" help="If you are not using an external clustering, then you must specify the slot/index in the AnnData or Loom file where the clustering to be used for assessment (and potentially optimisation starting point) is saved."/>
+        <param name="obj_attr" type="text" argument="--slot-for-existing-clustering" value="louvain" label="Attribute in input object that contains cluster information" help="If you are not using an external clustering, then you must specify the slot/index in the AnnData or Loom file where the clustering to be used for assessment (and potentially optimisation starting point) is saved. You will mostly likely need to use the format 'louvain_#whateveryoucalledoverclustered#', i.e., 'louvain_overclustered'"/>
       </when>
     </conditional>
 
@@ -88,7 +88,7 @@ done
             <param name="accuracy" type="float" value="0.90" argument="--accuracy" label="Accuracy for convergence of the optimisation process" help="The SCCAF optimisation process will converge once this accuracy is achieved."/>
           </when>
           <when value="min_resolution_clustering">
-            <param name="min_resolution_clustering_slot" type="text" argument="--undercluster-boundary" label="Underclustering boundary to use in the optimisation." help="The slot inside the ann data object with the desired underclustering (low resolution) to be used as exit condition."/>
+            <param name="min_resolution_clustering_slot" type="text" argument="--undercluster-boundary" label="Underclustering boundary to use in the optimisation." help="The slot inside the ann data object with the desired underclustering (low resolution) to be used as exit condition. You will mostly likely need to use the format 'louvain_#whateveryoucalledunderclustered#', i.e., 'louvain_underclustered'"/>
           </when>
         </conditional>
         <param name="skip_init_assessment" type="boolean" argument="--skip-assessment" checked="false" label="Run only the optimisation and skip the initial assessment" help="If you are running the optimisation, you can choose skip the initial assessment to save time."/>
