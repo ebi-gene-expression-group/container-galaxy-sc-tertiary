@@ -30,6 +30,10 @@
             -e 'srt <- readRDS("input.rds")'
             -e 'sceasy::convertFormat(srt, outFile="output.h5ad", from="seurat", to="anndata", assay="${conversion.assay}", main_layer="${conversion.dtype}")'
             -e 'print(srt)'
+#else if $conversion.direction == "anndata2seurat"
+            -e 'srt <- sceasy::convertFormat("input.h5ad", from="anndata", to="seurat", main_layer="${conversion.assay}")'
+            -e 'saveRDS(srt, "output.rds")'
+            -e 'print(srt)'
 #end if
 ]]></command>
 
@@ -74,6 +78,14 @@
           <option value="scale.data">scale.data</option>
         </param>
       </when>
+      <when value="anndata2seurat">
+        <param name="input_object_file" type="data" format="h5ad" label="Input object in AnnData format"/>
+        <param name="assay" type="text" value="RNA" label="Name of assay in Seurat object to store expression values" help="Please make sure the assay exists"/>
+          <option value="counts" selected="true">counts</option>
+          <option value="logcounts">logcounts</option>
+          <option value="cpm">cpm</option>
+        </param>
+      </when>
     </conditional>
   </inputs>
 
@@ -86,6 +98,9 @@
     </data>
     <data name="output_anndata" format="h5" from_work_dir="output.h5ad" label="${tool.name} on ${on_string}: AnnData">
       <filter>conversion['direction'].endswith('anndata')</filter>
+    </data>
+    <data name="output_seurat" format="rdata" from_work_dir="output.rds" label="${tool.name} on ${on_string}: Seurat">
+      <filter>conversion['direction'].endswith('seurat')</filter>
     </data>
   </outputs>
 
@@ -105,7 +120,7 @@ Convert scRNA data object between formats `sceasy::convertFormat()`
 Support the following conversion:
  * Loom <-> SingleCellExperiment (full)
  * SingleCellExperiment -> AnnData (matrix, metadata, reducedDim)
- * Seurat -> AnnData (matrix, metadata, reducedDim)
+ * Seurat <-> AnnData (matrix, metadata, reducedDim)
 
 @HELP@
 
