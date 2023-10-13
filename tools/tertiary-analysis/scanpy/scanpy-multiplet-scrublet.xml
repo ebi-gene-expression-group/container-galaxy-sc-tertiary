@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_multiplet_scrublet" name="Scanpy Scrublet" version="@TOOL_VERSION@+galaxy9" profile="@PROFILE@">
+<tool id="scanpy_multiplet_scrublet" name="Scanpy Scrublet" version="@TOOL_VERSION@+galaxy93" profile="@PROFILE@">
   <description>remove multiplets from annData objects with Scrublet</description>
   <macros>
     <import>scanpy_macros2.xml</import>
