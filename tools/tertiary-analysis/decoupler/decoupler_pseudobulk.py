@@ -165,8 +165,8 @@ def main(args):
 
     # Merge adata.obs fields specified in args.adata_obs_fields_to_merge
     if args.adata_obs_fields_to_merge:
-        # first split potential groups by ";" and iterate over them
-        for group in args.adata_obs_fields_to_merge.split(";"):
+        # first split potential groups by ":" and iterate over them
+        for group in args.adata_obs_fields_to_merge.split(":"):
             fields = group.split(",")
             check_fields(fields, adata)
             adata = merge_adata_obs_fields(fields, adata)
