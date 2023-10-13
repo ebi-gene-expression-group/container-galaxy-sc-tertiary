@@ -165,9 +165,11 @@ def main(args):
 
     # Merge adata.obs fields specified in args.adata_obs_fields_to_merge
     if args.adata_obs_fields_to_merge:
-        fields = args.adata_obs_fields_to_merge.split(",")
-        check_fields(fields, adata)
-        adata = merge_adata_obs_fields(fields, adata)
+        # first split potential groups by ":" and iterate over them
+        for group in args.adata_obs_fields_to_merge.split(":"):
+            fields = group.split(",")
+            check_fields(fields, adata)
+            adata = merge_adata_obs_fields(fields, adata)
 
     check_fields([args.groupby, args.sample_key], adata)
 
@@ -274,7 +276,7 @@ if __name__ == "__main__":
         "-m",
         "--adata_obs_fields_to_merge",
         type=str,
-        help="Fields in adata.obs to merge, comma separated",
+        help="Fields in adata.obs to merge, comma separated. You can have more than one set of fields, separated by semi-colon ;",
     )
     parser.add_argument(
         "--groupby",

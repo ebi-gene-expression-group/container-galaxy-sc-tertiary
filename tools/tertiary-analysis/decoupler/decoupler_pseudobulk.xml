@@ -1,4 +1,4 @@
-<tool id="decoupler_pseudobulk" name="Decoupler pseudo-bulk" version="1.4.0+galaxy1" profile="20.05">
+<tool id="decoupler_pseudobulk" name="Decoupler pseudo-bulk" version="1.4.0+galaxy2" profile="20.05">
     <description>aggregates single cell RNA-seq data for running bulk RNA-seq methods</description>
     <requirements>
         <requirement type="package" version="1.4.0">decoupler</requirement>
@@ -8,14 +8,14 @@ mkdir deseq_output_dir &&
 mkdir plots_output_dir &&
 python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
     #if $adata_obs_fields_to_merge:
-    --adata_obs_fields_to_merge $adata_obs_fields_to_merge
+    --adata_obs_fields_to_merge '$adata_obs_fields_to_merge'
     #end if
-    --groupby $groupby
-    --sample_key $sample_key
+    --groupby '$groupby'
+    --sample_key '$sample_key'
     #if $layer:
-    --layer $layer
+    --layer '$layer'
     #end if
-    --mode $mode
+    --mode '$mode'
     #if $use_raw:
     --use_raw
     #end if
@@ -32,7 +32,7 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
     --min_total_counts $min_total_counts
     #end if
     #if $produce_anndata:
-    --anndata_output_path $pbulk_anndata
+    --anndata_output_path '$pbulk_anndata'
     #end if
     #if $filter_expr:
     --filter_expr
@@ -50,7 +50,7 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
     </environment_variables>
     <inputs>
         <param type="data" name="input_file" format="data" label="Input AnnData file"/>
-        <param type="text" name="adata_obs_fields_to_merge" label="Obs Fields to Merge" optional="true" help="Fields in adata.obs to merge, comma separated (optional). They will be available as field1_field2_field3 in the AnnData Obs dataframe."/>
+        <param type="text" name="adata_obs_fields_to_merge" label="Obs Fields to Merge" optional="true" help="Fields in adata.obs to merge, comma separated (optional). They will be available as field1_field2_field3 in the AnnData Obs dataframe. You can have multiple groups to merge, separated by colon (:)."/>
         <param type="text" name="groupby" label="Groupby column" help="The column in adata.obs that defines the groups. Merged columns in the above field are available here."/>
         <param type="text" name="sample_key" label="Sample Key column" help="The column in adata.obs that defines the samples. Merged columns in the above field are available here."/>
         <param type="text" name="layer" label="Layer" optional="true" help="The name of the layer of the AnnData object to use. It needs to be present in the AnnData object."/>
@@ -87,7 +87,7 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
     <tests>
         <test expect_num_outputs="6">
             <param name="input_file" value="mito_counted_anndata.h5ad"/>
-            <param name="adata_obs_fields_to_merge" value="batch,sex"/>
+            <param name="adata_obs_fields_to_merge" value="batch,sex:batch,genotype"/>
             <param name="groupby" value="batch_sex"/>
             <param name="sample_key" value="genotype"/>
             <param name="factor_fields" value="genotype,batch_sex"/>
