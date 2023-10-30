@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<tool id="score_genes_aucell" name="Decoupler AUCell" version="1.4.0+galaxy0">
+    <description>
+        scores genes using the AUCell method.
+    </description>
+    <requirements>
+        <requirement type="package" version="1.4.0">decoupler</requirement>
+    </requirements>
+    <command>
+        python '$__tool_directory__/score_genes_aucell.py'
+            --input_file '$input_file'
+            #if $gmt_file and $gene_sets_to_score:
+            --gmt_file '$gmt_file'
+            --gene_sets_to_score '$gene_sets_to_score'
+            #elif $gene_lists_to_score and $score_names:
+            --gene_lists_to_score '$gene_lists_to_score'
+            --score_names '$score_names'
+            #endif
+            --gene_symbols_field '$gene_symbols_field'
+            #if $use_raw:
+            --use_raw '$use_raw'
+            #endif
+            #if $write_anndata:
+            --write_anndata '$write_anndata'
+            --output_file anndata_aucell.h5ad
+            #else:
+            --output_file anndata_aucell_per_cell.tsv
+            #endif
+    </command>
+    <inputs>
+        <param name="input_file" type="data" format="h5ad" label="Input AnnData file" />
+        <conditional name="gene_lists_source">
+            <param name="source" type="select" label="Source of gene lists to score" help="Choose between using a GMT file and specified gene sets or enumerated genes and gene set names.">
+                <option value="gmt">Gene sets from GMT file</option>
+                <option value="enumerated">Gene sets enumerated manually</option>
+            </param>
+            <when value="gmt">
+                <param name="gmt_file" type="data" format="txt" label="GMT file with gene sets" />
+                <param name="gene_sets_to_score" type="text" label="Gene sets to score within the GMT file" />
+            </when>
+            <when value="enumerated">
+                <param name="gene_lists_to_score" type="text" label="Genes to score" />
+                <param name="score_names" type="text" label="Score names" />
+            </when>
+        </conditional>
+        <param name="gene_symbols_field" type="text" label="Gene symbols field" />
+        <param name="use_raw" type="boolean" truevalue="--use_raw" falsevalue="" label="Use raw data" />
+        <param name="write_anndata" type="boolean" truevalue="--write_anndata" falsevalue="" label="Write the modified AnnData object" />
+    </inputs>
+    <outputs>
+        <data name="output_ad" format="h5ad" from_work_dir="anndata_aucell.h5ad" label="Output AnnData file">
+            <filter>write_anndata</filter>
+        </data>
+        <data name="output_table" format="tabular" from_work_dir="anndata_aucell_per_cell.tsv" label="Output AUCell table">
+            <filter>not write_anndata</filter>
+        </data>
+    </outputs>
+    <tests>
+        <test>
+        </test>
+    </tests>
+</tool>
