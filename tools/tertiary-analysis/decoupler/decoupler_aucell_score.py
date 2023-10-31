@@ -1,8 +1,55 @@
 import argparse
+import os
+import tempfile
 
 import anndata
 import decoupler as dc
 import pandas as pd
+
+
+def read_gmt(gmt_file):
+    """
+    Reads a GMT file into a Pandas DataFrame.
+
+    Parameters
+    ----------
+    gmt_file : str
+        Path to the GMT file.
+
+    Returns
+    -------
+    pd.DataFrame
+        A DataFrame with the gene sets. Each row represents a gene set, and the columns are "gene_set_name", "gene_set_url", and "genes".
+    >>> line = "HALLMARK_NOTCH_SIGNALING\\thttp://www.gsea-msigdb.org/gsea/msigdb/human/geneset/HALLMARK_NOTCH_SIGNALING\\tJAG1\\tNOTCH3\\tNOTCH2\\tAPH1A\\tHES1\\tCCND1\\tFZD1\\tPSEN2\\tFZD7\\tDTX1\\tDLL1\\tFZD5\\tMAML2\\tNOTCH1\\tPSENEN\\tWNT5A\\tCUL1\\tWNT2\\tDTX4\\tSAP30\\tPPARD\\tKAT2A\\tHEYL\\tSKP1\\tRBX1\\tTCF7L2\\tARRB1\\tLFNG\\tPRKCA\\tDTX2\\tST3GAL6\\tFBXW11\\n"
+    >>> line2 = "HALLMARK_APICAL_SURFACE\\thttp://www.gsea-msigdb.org/gsea/msigdb/human/geneset/HALLMARK_APICAL_SURFACE\\tB4GALT1\\tRHCG\\tMAL\\tLYPD3\\tPKHD1\\tATP6V0A4\\tCRYBG1\\tSHROOM2\\tSRPX\\tMDGA1\\tTMEM8B\\tTHY1\\tPCSK9\\tEPHB4\\tDCBLD2\\tGHRL\\tLYN\\tGAS1\\tFLOT2\\tPLAUR\\tAKAP7\\tATP8B1\\tEFNA5\\tSLC34A3\\tAPP\\tGSTM3\\tHSPB1\\tSLC2A4\\tIL2RB\\tRTN4RL1\\tNCOA6\\tSULF2\\tADAM10\\tBRCA1\\tGATA3\\tAFAP1L2\\tIL2RG\\tCD160\\tADIPOR2\\tSLC22A12\\tNTNG1\\tSCUBE1\\tCX3CL1\\tCROCC\\n"
+    >>> temp_dir = tempfile.gettempdir()
+    >>> temp_gmt = os.path.join(temp_dir, "temp_file.gmt")
+    >>> with open(temp_gmt, "w") as f:
+    ...   f.write(line)
+    ...   f.write(line2)
+    288
+    380
+    >>> df = read_gmt(temp_gmt)
+    >>> df.shape[0]
+    2
+    >>> df.columns == ["gene_set_name", "genes"]
+    array([ True,  True])
+    >>> df.loc[df["gene_set_name"] == "HALLMARK_APICAL_SURFACE"].genes.tolist()[0].startswith("B4GALT1")
+    True
+    """
+    # Read the GMT file into a list of lines
+    with open(gmt_file, "r") as f:
+        lines = f.readlines()
+
+    # Create a list of dictionaries, where each dictionary represents a gene set
+    gene_sets = []
+    for line in lines:
+        fields = line.strip().split("\t")
+        gene_set = {"gene_set_name": fields[0], "genes": ",".join(fields[2:])}
+        gene_sets.append(gene_set)
+
+    # Convert the list of dictionaries to a DataFrame
+    return pd.DataFrame(gene_sets)
 
 
 def score_genes_aucell(
@@ -40,14 +87,14 @@ def score_genes_aucell(
     adata.obs[score_name] = adata.obsm["aucell_estimate"][score_name]
 
 
-def run_for_genelist(adata, gene_lists, score_names, use_raw=False):
+def run_for_genelists(adata, gene_lists, score_names, use_raw=False):
     if len(gene_lists) == len(score_names):
         for gene_list, score_names in zip(gene_lists, score_names):
             score_genes_aucell(
                 adata,
                 gene_list.split(","),
                 f"AUCell_{score_names}",
-                args.use_raw,
+                use_raw,
             )
     else:
         raise ValueError(
@@ -97,9 +144,8 @@ if __name__ == "__main__":
 
     if args.gene_sets_to_score is not None and args.gmt_file is not None:
         # Load MSigDB file in GMT format
-        msigdb = pd.read_csv(
-            args.gmt_file, sep="\t", header=None, names=["gene_set_name", "genes"]
-        )
+        msigdb = read_gmt(args.gmt_file)
+
         gene_sets_to_score = args.gene_sets_to_score.split(",")
         # Score genes by their ensembl ids using the score_genes_aucell function
         for _, row in msigdb.iterrows():
@@ -116,7 +162,7 @@ if __name__ == "__main__":
     elif args.gene_lists_to_score is not None and args.score_names is not None:
         gene_lists = args.gene_lists_to_score.split(":")
         score_names = args.score_names.split(":")
-        run_for_genelist(adata, gene_lists, score_names, args.use_raw)
+        run_for_genelists(adata, gene_lists, score_names, args.use_raw)
 
     # Save the modified AnnData object or generate a file with cells as rows and the new score_names columns
     if args.write_anndata:
