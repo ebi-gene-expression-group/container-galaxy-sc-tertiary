@@ -9,29 +9,29 @@
     <command>
         python '$__tool_directory__/score_genes_aucell.py'
             --input_file '$input_file'
-            #if $gmt_file and $gene_sets_to_score:
+            #if $source == "gmt"
             --gmt_file '$gmt_file'
             --gene_sets_to_score '$gene_sets_to_score'
-            #elif $gene_lists_to_score and $score_names:
+            #else:
             --gene_lists_to_score '$gene_lists_to_score'
             --score_names '$score_names'
-            #endif
+            #end if
             --gene_symbols_field '$gene_symbols_field'
             #if $use_raw:
             --use_raw '$use_raw'
-            #endif
+            #end if
             #if $write_anndata:
             --write_anndata '$write_anndata'
             --output_file anndata_aucell.h5ad
             #else:
             --output_file anndata_aucell_per_cell.tsv
-            #endif
+            #end if
     </command>
     <inputs>
         <param name="input_file" type="data" format="h5ad" label="Input AnnData file" />
         <conditional name="gene_lists_source">
             <param name="source" type="select" label="Source of gene lists to score" help="Choose between using a GMT file and specified gene sets or enumerated genes and gene set names.">
-                <option value="gmt">Gene sets from GMT file</option>
+                <option value="gmt" selected="true">Gene sets from GMT file</option>
                 <option value="enumerated">Gene sets enumerated manually</option>
             </param>
             <when value="gmt">
@@ -57,11 +57,12 @@
     </outputs>
     <tests>
         <test expect_num_outputs="1">
-            <param name="input_file" value="test-data/mito_counted_anndata.h5ad"/>
+            <param name="input_file" value="mito_counted_anndata.h5ad"/>
             <param name="gene_sets_to_score" value="HALLMARK_NOTCH_SIGNALING,HALLMARK_APICAL_SURFACE"/>
-            <param name="gmt_file" value="test-data/mouse_hallmark_ss.gmt"/>
+            <param name="gmt_file" value="mouse_hallmark_ss.gmt"/>
             <param name="gene_symbols_field" value="Symbol"/>
-            <param name="write_anndata" value="True"/>
+            <param name="write_anndata" value="true"/>
+            <param name="source" value="gmt"/>
             <output name="output_ad">
                 <assert_contents>
                     <has_h5_keys keys="obs/AUCell_HALLMARK_NOTCH_SIGNALING"/>
@@ -70,11 +71,12 @@
             </output>
         </test>
         <test expect_num_outputs="1">
-            <param name="input_file" value="test-data/mito_counted_anndata.h5ad"/>
+            <param name="input_file" value="mito_counted_anndata.h5ad"/>
             <param name="gene_lists_to_score" value="Jag1,Notch1,Notch2,Notch3,Ccnd1,Tcf7l2,Wnt5a,Lfng,Psenen,Psen2,Heyl,Fzd1,Rbx1,Hes1:Arrb1,Ppard,Prkca,Wnt2,Fzd5,Dtx1,Sap30,Dtx2,Kat2a,Dll1,Fzd7,St3gal6,Fbxw11,Cul1,Aph1a,Dtx4,Skp1"/>
             <param name="score_names" value="Notch1,Notch2"/>
             <param name="gene_symbols_field" value="Symbol"/>
             <param name="use_raw" value="true"/>
+            <param name="source" value="enumerated"/>
             <output name="output_ad">
                 <assert_contents>
                     <has_h5_keys keys="obs/AUCell_Notch1"/>
@@ -83,11 +85,12 @@
             </output>
         </test>
         <test expect_num_outputs="1">
-            <param name="input_file" value="test-data/mito_counted_anndata.h5ad"/>
+            <param name="input_file" value="mito_counted_anndata.h5ad"/>
             <param name="gene_sets_to_score" value="HALLMARK_NOTCH_SIGNALING,HALLMARK_APICAL_SURFACE"/>
-            <param name="gmt_file" value="test-data/mouse_hallmark_ss.gmt"/>
+            <param name="gmt_file" value="mouse_hallmark_ss.gmt"/>
             <param name="gene_symbols_field" value="Symbol"/>
             <param name="write_anndata" value="False"/>
+            <param name="source" value="gmt"/>
             <output name="output_table">
                 <assert_contents>
                     <has_n_columns n="3"/>
