@@ -7,7 +7,7 @@
         <requirement type="package" version="1.4.0">decoupler</requirement>
     </requirements>
     <command>
-        python '$__tool_directory__/score_genes_aucell.py'
+        python '$__tool_directory__/decoupler_aucell_score.py'
             --input_file '$input_file'
             #if $source == "gmt"
             --gmt_file '$gmt_file'
@@ -21,7 +21,7 @@
             --use_raw '$use_raw'
             #end if
             #if $write_anndata:
-            --write_anndata '$write_anndata'
+            --write_anndata
             --output_file anndata_aucell.h5ad
             #else:
             --output_file anndata_aucell_per_cell.tsv

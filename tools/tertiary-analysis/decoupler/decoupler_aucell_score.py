@@ -105,29 +105,32 @@ def run_for_genelists(adata, gene_lists, score_names, use_raw=False):
 if __name__ == "__main__":
     # Create command-line arguments parser
     parser = argparse.ArgumentParser(description="Score genes using Aucell")
-    parser.add_argument("input_file", type=str, help="Path to input AnnData file")
-    parser.add_argument("output_file", type=str, help="Path to output file")
-    parser.add_argument("gmt_file", type=str, help="Path to GMT file")
+    parser.add_argument("--input_file", type=str, help="Path to input AnnData file")
+    parser.add_argument("--output_file", type=str, help="Path to output file")
+    parser.add_argument("--gmt_file", type=str, help="Path to GMT file", required=False)
     # add argument for gene sets to score
     parser.add_argument(
-        "gene_sets_to_score",
+        "--gene_sets_to_score",
         type=str,
+        required=False,
         help="Comma separated list of gene sets to score (the need to be in the gmt file)",
     )
     # add argument for gene list (comma separated) to score
     parser.add_argument(
-        "gene_lists_to_score",
+        "--gene_lists_to_score",
         type=str,
+        required=False,
         help="Comma separated list of genes to score. You can have more than one set of genes, separated by colon :",
     )
     # argument for the score name when using the gene list
     parser.add_argument(
-        "score_names",
+        "--score_names",
         type=str,
+        required=False,
         help="Name of the score column when using the gene list. You can have more than one set of score names, separated by colon :. It should be the same length as the number of gene lists.",
     )
     parser.add_argument(
-        "gene_symbols_field",
+        "--gene_symbols_field",
         type=str,
         help="Name of the gene symbols field in the AnnData object",
     )
