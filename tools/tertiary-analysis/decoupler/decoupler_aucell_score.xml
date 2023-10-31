@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<tool id="score_genes_aucell" name="Decoupler AUCell" version="1.4.0+galaxy0">
+<tool id="score_genes_aucell" name="Decoupler AUCell" version="1.4.0+galaxy0" profile="20.05">
     <description>
-        scores genes using the AUCell method.
+        scores cells using the AUCell method for gene sets.
     </description>
     <requirements>
         <requirement type="package" version="1.4.0">decoupler</requirement>
@@ -43,20 +43,88 @@
                 <param name="score_names" type="text" label="Score names" />
             </when>
         </conditional>
-        <param name="gene_symbols_field" type="text" label="Gene symbols field" />
-        <param name="use_raw" type="boolean" truevalue="--use_raw" falsevalue="" label="Use raw data" />
-        <param name="write_anndata" type="boolean" truevalue="--write_anndata" falsevalue="" label="Write the modified AnnData object" />
+        <param name="gene_symbols_field" type="text" label="Gene symbols field" help="The field in the AnnData var table where gene symbols are stored."/>
+        <param name="use_raw" type="boolean" truevalue="--use_raw" falsevalue="" label="Use raw data" help="Use RAW data in the AnnData instead of the X matrix."/>
+        <param name="write_anndata" type="boolean" truevalue="--write_anndata" falsevalue="" label="Write the modified AnnData object" help="Whether to write or not the same AnnData file again with the signatures on it. If unselected, a text files of cells in rows and signatures in columns (as in Obs) is produced."/>
     </inputs>
     <outputs>
-        <data name="output_ad" format="h5ad" from_work_dir="anndata_aucell.h5ad" label="Output AnnData file">
+        <data name="output_ad" format="h5ad" from_work_dir="anndata_aucell.h5ad" label="${tool.name} on ${on_string}: Output AnnData file">
             <filter>write_anndata</filter>
         </data>
-        <data name="output_table" format="tabular" from_work_dir="anndata_aucell_per_cell.tsv" label="Output AUCell table">
+        <data name="output_table" format="tabular" from_work_dir="anndata_aucell_per_cell.tsv" label="${tool.name} on ${on_string}: Output AUCell table">
             <filter>not write_anndata</filter>
         </data>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="1">
+            <param name="input_file" value="test-data/mito_counted_anndata.h5ad"/>
+            <param name="gene_sets_to_score" value="HALLMARK_NOTCH_SIGNALING,HALLMARK_APICAL_SURFACE"/>
+            <param name="gmt_file" value="test-data/mouse_hallmark_ss.gmt"/>
+            <param name="gene_symbols_field" value="Symbol"/>
+            <param name="write_anndata" value="True"/>
+            <output name="output_ad">
+                <assert_contents>
+                    <has_h5_keys keys="obs/AUCell_HALLMARK_NOTCH_SIGNALING"/>
+                    <has_h5_keys keys="obs/AUCell_HALLMARK_APICAL_SURFACE"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="1">
+            <param name="input_file" value="test-data/mito_counted_anndata.h5ad"/>
+            <param name="gene_lists_to_score" value="Jag1,Notch1,Notch2,Notch3,Ccnd1,Tcf7l2,Wnt5a,Lfng,Psenen,Psen2,Heyl,Fzd1,Rbx1,Hes1:Arrb1,Ppard,Prkca,Wnt2,Fzd5,Dtx1,Sap30,Dtx2,Kat2a,Dll1,Fzd7,St3gal6,Fbxw11,Cul1,Aph1a,Dtx4,Skp1"/>
+            <param name="score_names" value="Notch1,Notch2"/>
+            <param name="gene_symbols_field" value="Symbol"/>
+            <param name="use_raw" value="true"/>
+            <output name="output_ad">
+                <assert_contents>
+                    <has_h5_keys keys="obs/AUCell_Notch1"/>
+                    <has_h5_keys keys="obs/AUCell_Notch2"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="1">
+            <param name="input_file" value="test-data/mito_counted_anndata.h5ad"/>
+            <param name="gene_sets_to_score" value="HALLMARK_NOTCH_SIGNALING,HALLMARK_APICAL_SURFACE"/>
+            <param name="gmt_file" value="test-data/mouse_hallmark_ss.gmt"/>
+            <param name="gene_symbols_field" value="Symbol"/>
+            <param name="write_anndata" value="False"/>
+            <output name="output_table">
+                <assert_contents>
+                    <has_n_columns n="3"/>
+                    <has_text_matching expression="AUCell_HALLMARK_NOTCH_SIGNALING"/>
+                </assert_contents>
+            </output>
         </test>
     </tests>
+    <help>
+**Description**
+
+This tool scores cells using the AUCell method for gene sets.
+
+**Input**
+
+The input file should be an AnnData object in H5AD format. The tool accepts an H5AD file containing raw or normalized data.
+
+The tool takes one of two input formats for specifying the gene sets to score:
+
+1. A GMT file containing gene sets. You can specify which gene sets to use within the GMT file using the "gene_sets_to_score" parameter.
+2. A list of genes and their associated score names. You can specify the genes to score using the "gene_lists_to_score" parameter, and their associated score names using the "score_names" parameter.
+
+In both cases, you must specify the name of the field in the AnnData object that contains the gene symbols using the "gene_symbols_field" parameter.
+
+You can also specify whether to use the raw data in the AnnData object instead of the X matrix using the "use_raw" parameter.
+
+**Output**
+
+The tool outputs an AnnData object containing the scores in the "obs" field, or a tab-separated text file containing the scores for each cell.
+
+If the "write_anndata" parameter is set to "true", the tool will write the modified AnnData object to an H5AD file. Otherwise, it will output a tab-separated text file containing the scores for each cell.
+
+**Example**
+
+
+    </help>
+    <citations>
+        <citation type="doi">10.1093/bioadv/vbac016</citation>
+    </citations>
 </tool>

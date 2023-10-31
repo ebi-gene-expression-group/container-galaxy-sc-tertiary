@@ -161,7 +161,7 @@ if __name__ == "__main__":
                 )
     elif args.gene_lists_to_score is not None and args.score_names is not None:
         gene_lists = args.gene_lists_to_score.split(":")
-        score_names = args.score_names.split(":")
+        score_names = args.score_names.split(",")
         run_for_genelists(adata, gene_lists, score_names, args.use_raw)
 
     # Save the modified AnnData object or generate a file with cells as rows and the new score_names columns
