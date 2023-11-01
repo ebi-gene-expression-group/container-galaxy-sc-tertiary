@@ -9,7 +9,7 @@
     <command>
         python '$__tool_directory__/decoupler_aucell_score.py'
             --input_file '$input_file'
-            #if $source == "gmt"
+            #if $gene_lists_source.source == "gmt"
             --gmt_file '$gmt_file'
             --gene_sets_to_score '$gene_sets_to_score'
             #else:
@@ -60,7 +60,9 @@
             <param name="gmt_file" value="mouse_hallmark_ss.gmt"/>
             <param name="gene_symbols_field" value="Symbol"/>
             <param name="write_anndata" value="true"/>
-            <param name="source" value="gmt"/>
+            <conditional name="gene_lists_source">
+                <param name="source" value="gmt"/>
+            </conditional>
             <output name="output_ad">
                 <assert_contents>
                     <has_h5_keys keys="obs/AUCell_HALLMARK_NOTCH_SIGNALING"/>
@@ -73,7 +75,9 @@
             <param name="gene_lists_to_score" value="Cd8b1,Cd8b2,Cd8a,Cd4,Nrp1,Cd80:Il1a,Il1b,Il6,Nos2,Tlr2,Tlr4,Cd80"/>
             <param name="score_names" value="TCell,Macro"/>
             <param name="gene_symbols_field" value="Symbol"/>
-            <param name="source" value="enumerated"/>
+            <conditional name="gene_lists_source">
+                <param name="source" value="enumerated"/>
+            </conditional>
             <output name="output_ad">
                 <assert_contents>
                     <has_h5_keys keys="obs/AUCell_TCell"/>
@@ -87,7 +91,9 @@
             <param name="gmt_file" value="mouse_hallmark_ss.gmt"/>
             <param name="gene_symbols_field" value="Symbol"/>
             <param name="write_anndata" value="False"/>
-            <param name="source" value="gmt"/>
+            <conditional name="gene_lists_source">
+                <param name="source" value="gmt"/>
+            </conditional>
             <output name="output_table">
                 <assert_contents>
                     <has_n_columns n="3"/>
