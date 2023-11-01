@@ -70,7 +70,7 @@
         </test>
         <test expect_num_outputs="1">
             <param name="input_file" value="mito_counted_anndata.h5ad"/>
-            <param name="gene_lists_to_score" value="Cd8b1,Cd8a,Cd4:Il1a,Il1b,Il6,Nos2,Tlr2,Tlr4,Cd80"/>
+            <param name="gene_lists_to_score" value="Cd8b1,Cd8b2,Cd8a,Cd4,Nrp1,Cd80:Il1a,Il1b,Il6,Nos2,Tlr2,Tlr4,Cd80"/>
             <param name="score_names" value="TCell,Macro"/>
             <param name="gene_symbols_field" value="Symbol"/>
             <param name="source" value="enumerated"/>
