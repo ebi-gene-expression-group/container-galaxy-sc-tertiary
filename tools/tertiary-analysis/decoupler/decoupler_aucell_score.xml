@@ -75,7 +75,6 @@
             <param name="gene_lists_to_score" value="Jag1,Notch1,Notch2,Notch3,Ccnd1,Tcf7l2,Wnt5a,Lfng,Psenen,Psen2,Heyl,Fzd1,Rbx1,Hes1:Arrb1,Ppard,Prkca,Wnt2,Fzd5,Dtx1,Sap30,Dtx2,Kat2a,Dll1,Fzd7,St3gal6,Fbxw11,Cul1,Aph1a,Dtx4,Skp1"/>
             <param name="score_names" value="Notch1,Notch2"/>
             <param name="gene_symbols_field" value="Symbol"/>
-            <param name="use_raw" value="true"/>
             <param name="source" value="enumerated"/>
             <output name="output_ad">
                 <assert_contents>
