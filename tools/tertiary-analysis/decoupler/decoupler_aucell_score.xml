@@ -17,9 +17,7 @@
             --score_names '$score_names'
             #end if
             --gene_symbols_field '$gene_symbols_field'
-            #if $use_raw:
-            --use_raw '$use_raw'
-            #end if
+            $use_raw
             #if $write_anndata:
             --write_anndata
             --output_file anndata_aucell.h5ad
@@ -44,8 +42,8 @@
             </when>
         </conditional>
         <param name="gene_symbols_field" type="text" label="Gene symbols field" help="The field in the AnnData var table where gene symbols are stored."/>
-        <param name="use_raw" type="boolean" truevalue="--use_raw" falsevalue="" label="Use raw data" help="Use RAW data in the AnnData instead of the X matrix."/>
-        <param name="write_anndata" type="boolean" truevalue="--write_anndata" falsevalue="" label="Write the modified AnnData object" help="Whether to write or not the same AnnData file again with the signatures on it. If unselected, a text files of cells in rows and signatures in columns (as in Obs) is produced."/>
+        <param name="use_raw" type="boolean" value="false" truevalue="--use_raw" falsevalue="" label="Use raw data" help="Use RAW data in the AnnData instead of the X matrix."/>
+        <param name="write_anndata" type="boolean" value="false" truevalue="--write_anndata" falsevalue="" label="Write the modified AnnData object" help="Whether to write or not the same AnnData file again with the signatures on it. If unselected, a text files of cells in rows and signatures in columns (as in Obs) is produced."/>
     </inputs>
     <outputs>
         <data name="output_ad" format="h5ad" from_work_dir="anndata_aucell.h5ad" label="${tool.name} on ${on_string}: Output AnnData file">
@@ -72,14 +70,14 @@
         </test>
         <test expect_num_outputs="1">
             <param name="input_file" value="mito_counted_anndata.h5ad"/>
-            <param name="gene_lists_to_score" value="Jag1,Notch1,Notch2,Notch3,Ccnd1,Tcf7l2,Wnt5a,Lfng,Psenen,Psen2,Heyl,Fzd1,Rbx1,Hes1:Arrb1,Ppard,Prkca,Wnt2,Fzd5,Dtx1,Sap30,Dtx2,Kat2a,Dll1,Fzd7,St3gal6,Fbxw11,Cul1,Aph1a,Dtx4,Skp1"/>
-            <param name="score_names" value="Notch1,Notch2"/>
+            <param name="gene_lists_to_score" value="Cd8b1,Cd8a,Cd4:Il1a,Il1b,Il6,Nos2,Tlr2,Tlr4,Cd80"/>
+            <param name="score_names" value="TCell,Macro"/>
             <param name="gene_symbols_field" value="Symbol"/>
             <param name="source" value="enumerated"/>
             <output name="output_ad">
                 <assert_contents>
-                    <has_h5_keys keys="obs/AUCell_Notch1"/>
-                    <has_h5_keys keys="obs/AUCell_Notch2"/>
+                    <has_h5_keys keys="obs/AUCell_TCell"/>
+                    <has_h5_keys keys="obs/AUCell_Macro"/>
                 </assert_contents>
             </output>
         </test>
