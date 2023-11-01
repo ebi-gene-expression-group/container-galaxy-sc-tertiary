@@ -87,12 +87,16 @@ def score_genes_aucell(
     adata.obs[score_name] = adata.obsm["aucell_estimate"][score_name]
 
 
-def run_for_genelists(adata, gene_lists, score_names, use_raw=False):
+def run_for_genelists(
+    adata, gene_lists, score_names, use_raw=False, gene_symbols_field="gene_symbols"
+):
     if len(gene_lists) == len(score_names):
         for gene_list, score_names in zip(gene_lists, score_names):
+            genes = gene_list.split(",")
+            ens_gene_ids = adata.var[adata.var[gene_symbols_field].isin(genes)].index
             score_genes_aucell(
                 adata,
-                gene_list.split(","),
+                ens_gene_ids,
                 f"AUCell_{score_names}",
                 use_raw,
             )
@@ -165,7 +169,9 @@ if __name__ == "__main__":
     elif args.gene_lists_to_score is not None and args.score_names is not None:
         gene_lists = args.gene_lists_to_score.split(":")
         score_names = args.score_names.split(",")
-        run_for_genelists(adata, gene_lists, score_names, args.use_raw)
+        run_for_genelists(
+            adata, gene_lists, score_names, args.use_raw, args.gene_symbols_field
+        )
 
     # Save the modified AnnData object or generate a file with cells as rows and the new score_names columns
     if args.write_anndata:
