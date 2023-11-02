@@ -23,7 +23,7 @@ jobs:
       chunk-list: ${{ steps.discover.outputs.chunk-list }}
     strategy:
       matrix:
-        python-version: ['3.8']
+        python-version: ['3.7']
     steps:
     - name: Print github context properties
       run: |
@@ -41,13 +41,13 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Cache .cache/pip
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: cache-pip
       with:
         path: ~/.cache/pip
         key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ steps.get-galaxy-sha.outputs.galaxy-head-sha }}-${{ secrets.CACHE_VERSION }}
     - name: Cache .planemo
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: cache-planemo
       with:
         path: ~/.planemo
@@ -58,7 +58,7 @@ jobs:
       run: pip install wheel
     - name: Install jq
       run: sudo apt-get install -yq jq libjq1
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 0
     - name: Fake a Planemo run to update cache and determine commit range, repositories, and chunks
@@ -93,14 +93,14 @@ jobs:
     steps:
     # checkout the repository
     # and use it as the current working directory
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 1
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
     - name: Cache .cache/pip
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: cache-pip
       with:
         path: ~/.cache/pip
@@ -127,7 +127,7 @@ jobs:
       fail-fast: false
       matrix:
         chunk: ${{ fromJson(needs.setup.outputs.chunk-list) }}
-        python-version: ['3.8']
+        python-version: ['3.7']
     services:
       postgres:
         image: postgres:11
@@ -140,20 +140,20 @@ jobs:
     steps:
     # checkout the repository
     # and use it as the current working directory
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 1
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
     - name: Cache .cache/pip
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: cache-pip
       with:
         path: ~/.cache/pip
         key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy-head-sha }}-${{ secrets.CACHE_VERSION }}
     - name: Cache .planemo
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: cache-planemo
       with:
         path: ~/.planemo
@@ -182,7 +182,7 @@ jobs:
         chunk: ${{ matrix.chunk }}
         chunk-count: ${{ needs.setup.outputs.chunk-count }}
         html-report: true
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: 'Tool test output ${{ matrix.chunk }}'
         path: upload
@@ -197,18 +197,18 @@ jobs:
     needs: [setup, test]
     strategy:
       matrix:
-        python-version: ['3.8']
+        python-version: ['3.7']
     # This job runs on Linux
     runs-on: self-hosted
     steps:
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v3
       with:
         path: artifacts
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
     - name: Cache .cache/pip
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: cache-pip
       with:
         path: ~/.cache/pip
@@ -219,7 +219,7 @@ jobs:
       with:
         mode: combine
         html-report: true
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: 'All tool test results'
         path: upload

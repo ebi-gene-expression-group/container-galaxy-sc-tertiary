@@ -27,7 +27,7 @@ jobs:
       galaxy_head_sha: ${{ steps.get-galaxy-sha.outputs.galaxy_head_sha }}
     strategy:
       matrix:
-        python-version: [3.8]
+        python-version: ['3.7']
     steps:
     - name: Print github context properties
       run: |
@@ -38,20 +38,20 @@ jobs:
         echo 'base_ref: ${{ github.base_ref }}'
         echo 'event.before: ${{ github.event.before }}'
         echo 'event.after: ${{ github.event.after }}'
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
     - name: Determine latest commit in the Galaxy repo
       id: get-galaxy-sha
       run: echo "::set-output name=galaxy_head_sha::$(git ls-remote https://github.com/${{ env.GALAXY_FORK }}/galaxy refs/heads/${{ env.GALAXY_BRANCH }} | cut -f1)"
     - name: Cache .cache/pip
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: cache-pip
       with:
         path: ~/.cache/pip
         key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ steps.get-galaxy-sha.outputs.galaxy_head_sha }}
     - name: Cache .planemo
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: cache-planemo
       with:
         path: ~/.planemo
@@ -62,7 +62,7 @@ jobs:
       run: pip install wheel
     - name: Install Planemo
       run: pip install planemo
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 0
     - name: Fake a Planemo run to update cache
@@ -82,13 +82,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.8]
+        python-version: ['3.7']
     outputs:
       commit_range: ${{ steps.get-commit-range.outputs.commit_range }}
       nchunks: ${{ steps.get-chunks.outputs.nchunks }}
       chunk_list: ${{ steps.get-chunks.outputs.chunk_list }}
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 0
     # The range of commits to check for changes is:
@@ -103,7 +103,7 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Cache .cache/pip
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: cache-pip
       with:
         path: ~/.cache/pip
@@ -114,7 +114,7 @@ jobs:
       run: planemo ci_find_repos --changed_in_commit_range $COMMIT_RANGE --exclude packages --exclude deprecated --output changed_repositories.list
     - name: Show repo list
       run: cat changed_repositories.list
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: Workflow artifacts
         path: changed_repositories.list
@@ -147,14 +147,14 @@ jobs:
     needs: [setup, find_changed]
     strategy:
       matrix:
-        python-version: [3.8]
+        python-version: ['3.7']
     runs-on: self-hosted
     if: github.ref == 'refs/heads/develop' && github.repository_owner == 'ebi-gene-expression-group'
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 1
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
     - uses: actions/download-artifact@v2
@@ -162,7 +162,7 @@ jobs:
         name: Workflow artifacts
         path: ../workflow_artifacts/
     - name: Cache .cache/pip
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: cache-pip
       with:
         path: ~/.cache/pip
