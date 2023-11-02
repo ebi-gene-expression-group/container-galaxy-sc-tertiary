@@ -89,7 +89,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.8']
+        python-version: ['3.7']
     steps:
     # checkout the repository
     # and use it as the current working directory
