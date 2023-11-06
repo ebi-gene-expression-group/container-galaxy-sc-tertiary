@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<tool id="scRNAseq_qc_tool" name="scRNAseq Quality Control Tool" version="1.0.0" engine="python" hidden="false">
+    <description>Generate quality control metrics for single-cell RNA-seq data.</description>
+    <requirements>
+        <requirement type="package" version="1.1.3">scanpy-scripts</requirement>
+    </requirements>
+    <command detect_errors="exit_code">
+        <![CDATA[
+        #!/bin/bash
+        python $__tool_directory__/scripts/sc_qc_metrics.py "$adata_file" "$sample_field" \
+            --output_format "$output_format" \
+            --plot_size "$plot_size" \
+            --percent_mito_field "$percent_mito_field" \
+            --percent_ribo_field "$percent_ribo_field" \
+            --ribo_field "$ribo_field" \
+            --mito_field "$mito_field" \
+            --doublet_score_field "$doublet_score_field"
+        ]]>
+    </command>
+    <inputs>
+        <param type="data" format="txt" name="adata_file" label="AnnData object file" />
+        <param type="text" name="sample_field" label="Sample Field" />
+        <param type="select" name="output_format" label="Output Format">
+            <option value="pdf">PDF</option>
+            <option value="png">PNG</option>
+        </param>
+        <param type="text" name="plot_size" label="Plot Size (Width Height)" />
+        <param type="text" name="percent_mito_field" label="Mitochondrial Gene Field" />
+        <param type="text" name="percent_ribo_field" label="Ribosomal Gene Field" />
+        <param type="text" name="ribo_field" label="Ribo Field" />
+        <param type="text" name="mito_field" label="Mito Field" />
+        <param type="text" name="doublet_score_field" label="Doublet Score Field" />
+    </inputs>
+    <outputs>
+        <data name="general_qc_plots" format="pdf" label="General QC Plots" />
+        <!-- Add more output parameters as needed -->
+    </outputs>
+
+    <tests>
+        <!-- Test Case 1: Basic Test -->
+        <test>
+            <param name="adata_file" value="test-data/adata.h5ad" />
+            <param name="sample_field" value="sample_id" />
+            <param name="output_format" value="pdf" />
+            <output name="general_qc_plots" file="expected_output/general_qc_plots.pdf" />
+        </test>
+        <!-- Add more test cases as needed -->
+    </tests>
+    <!-- ... (help section as provided in the previous response) ... -->
+
+    <help>
+        <![CDATA[
+        This tool generates quality control metrics for single-cell RNA-seq data using the provided Python script.
+        Input parameters:
+        - AnnData object file: Path to the AnnData object file.
+        - Sample Field: Field in the obs for the sample identifier.
+        - Output Format: Output format of the plots (PDF or PNG).
+        - Plot Size: Size of the plots (optional, provide as "width height").
+        - Mitochondrial Gene Field: Field in the obs for the percentage of mitochondrial genes.
+        - Ribosomal Gene Field: Field in the obs for the percentage of ribosomal genes.
+        - Ribo Field: Field in the var for marking ribosomal genes.
+        - Mito Field: Field in the var for marking mitochondrial genes.
+        - Doublet Score Field: Field in the obs for the doublet score.
+        Output:
+        - General QC Plots: PDF file containing general quality control plots.
+        ]]>
+    </help>
+</tool>
+
