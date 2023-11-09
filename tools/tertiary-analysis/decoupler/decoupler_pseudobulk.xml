@@ -61,12 +61,12 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
         </param>
         <param type="text" name="factor_fields" label="Factor Fields" optional="true" help="Fields in adata.obs to use as factors, comma separated (optional). For EdgeR make sure that the first field is the main contrast field desired and the rest of the fields are the covariates desired. Decoupler produces two fields in the intermediate AnnData (which can be added here if desired for covariates): psbulk_n_cells and psbulk_counts."/>
         <param type="boolean" name="use_raw" label="Use Raw" optional="true"/>
-        <param type="integer" name="min_cells" label="Minimum Cells" optional="true"/>
+        <param type="integer" name="min_cells" label="Minimum Cells" value="0" help="Filter to remove samples by a minimum number of cells in a sample-group pair" optional="true"/>
         <param type="boolean" name="produce_plots" label="Produce plots"/>
         <param type="boolean" name="produce_anndata" label="Produce AnnData with Pseudo-bulk"/>
-        <param type="integer" name="min_counts" label="Minimum Counts" optional="true"/>
-        <param type="integer" name="min_total_counts" label="Minimum Total Counts" optional="true"/>
+        <param type="integer" name="min_counts" label="Minimum Counts" value="0" help="Filter to remove samples by a minimum number of summed counts in a sample-group pair." optional="true"/>
         <param type="boolean" name="filter_expr" label="Enable Filtering by Expression"/>
+        <param type="integer" name="min_total_counts" label="Minimum Total Counts" value="100" help="Minimum total count required per gene across all samples. Used during filtering." optional="true"/>
         <param type="text" name="plot_samples_figsize" label="Plot Samples Figsize" value="10 10" help="X and Y sizes in points separated by a space"/>
         <param type="text" name="plot_filtering_figsize" label="Plot Filtering Figsize" value="10 10" help="X and Y sizes in points separated by a space"/>
     </inputs>
