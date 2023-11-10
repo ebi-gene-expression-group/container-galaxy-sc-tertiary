@@ -13,7 +13,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-i", "--input_anndata", help="AnnData input file", required=True)
 
 # add network input file option
-parser.add_argument("-n", "--input_network", help="Network input file", required=True)
+parser.add_argument("--species", help="Species name to download network. Default: Human", default="human")
 
 # output file prefix
 parser.add_argument(
@@ -40,19 +40,19 @@ parser.add_argument(
     "-a", "--activities_path", help="Path to save Activities AnnData file", default=None
 )
 
-# path to save Activities AnnData file
+# Column name in net with source nodes
 parser.add_argument(
-    "-s", "--source", help="Path to save Activities AnnData file", default="source"
+    "-s", "--source", help="Column name in net with source nodes.", default="source"
 )
 
-# path to save Activities AnnData file
+# Column name in net with target nodes
 parser.add_argument(
-    "-t", "--target", help="Path to save Activities AnnData file", default="target"
+    "-t", "--target", help="Column name in net with target nodes.", default="target"
 )
 
-# path to save Activities AnnData file
+# Column name in net with weights.
 parser.add_argument(
-    "-w", "--weight", help="Path to save Activities AnnData file", default="weight"
+    "-w", "--weight", help="Column name in net with weights.", default="weight"
 )
 
 
@@ -65,8 +65,8 @@ if args.output is None:
 # read in the AnnData input file
 adata = ad.read_h5ad(args.input_anndata)
 
-# read in the input file network input file
-network = pd.read_csv(args.input_network, sep='\t')
+# Downloads the network file from prpgeny
+network =  dc.get_progeny(organism=args.species, top=500)
 
 if (
     args.source not in network.columns
