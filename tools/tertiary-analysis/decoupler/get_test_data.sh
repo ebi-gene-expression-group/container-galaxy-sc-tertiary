@@ -19,3 +19,11 @@ function get_data {
 mkdir -p test-data
 pushd test-data
 get_data $MTX_LINK $BASENAME_FILE
+
+# get sample data from scanpy package
+python -c "
+import scanpy as sc
+import hdf5plugin
+adata = sc.datasets.pbmc3k_processed()
+adata.write_h5ad('pbmc3k_processed.h5ad', compression=hdf5plugin.FILTERS['zstd'], compression_opts=hdf5plugin.Zstd(clevel=5).filter_options)
+"
