@@ -10,10 +10,14 @@ import hdf5plugin
 parser = argparse.ArgumentParser()
 
 # add AnnData input file option
-parser.add_argument("-i", "--input_anndata", help="AnnData input file", required=True)
+parser.add_argument(
+    "-i", "--input_anndata", help="AnnData input file", required=True
+)
 
 # add network input file option
-parser.add_argument("-n", "--input_network", help="Network input file", required=True)
+parser.add_argument(
+    "-n", "--input_network", help="Network input file", required=True
+)
 
 # output file prefix
 parser.add_argument(
@@ -33,7 +37,9 @@ parser.add_argument(
 )
 
 # figure size option
-parser.add_argument("-f", "--figure_size", help="figure size", default="10,10")
+parser.add_argument(
+    "-f", "--figure_size", help="figure size", default="10,10"
+)
 
 # path to save Activities AnnData file
 parser.add_argument(
@@ -55,7 +61,15 @@ parser.add_argument(
     "-w", "--weight", help="Column name in net with weights.", default="weight"
 )
 
+# add boolean argument for use_raw
+parser.add_argument(
+    "--use_raw", action="store_true", default=False, help="Whether to use the raw part of the AnnData object"
+)
 
+# add argument for min_cells
+parser.add_argument(
+    "--min_n", help="Minimum of targets per source. If less, sources are removed.", default=5
+)
 args = parser.parse_args()
 
 # check that either -o or --output is specified
@@ -85,7 +99,9 @@ dc.run_mlm(
     source=args.source,
     target=args.target,
     weight=args.weight,
-    verbose=True
+    verbose=True,
+    min_n=args.min_n,
+    # use_raw=False Failing at the moment
 )
 
 mlm_key = "mlm_estimate"
