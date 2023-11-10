@@ -13,7 +13,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-i", "--input_anndata", help="AnnData input file", required=True)
 
 # add network input file option
-parser.add_argument("--species", help="Species name to download network. Default: Human", default="human")
+parser.add_argument("-n", "--input_network", help="Network input file", required=True)
 
 # output file prefix
 parser.add_argument(
@@ -65,8 +65,8 @@ if args.output is None:
 # read in the AnnData input file
 adata = ad.read_h5ad(args.input_anndata)
 
-# Downloads the network file from prpgeny
-network =  dc.get_progeny(organism=args.species, top=500)
+# read in the input file network input file
+network = pd.read_csv(args.input_network, sep='\t')
 
 if (
     args.source not in network.columns
