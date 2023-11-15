@@ -109,15 +109,20 @@ def run_for_genelists(
 if __name__ == "__main__":
     # Create command-line arguments parser
     parser = argparse.ArgumentParser(description="Score genes using Aucell")
-    parser.add_argument("--input_file", type=str, help="Path to input AnnData file")
-    parser.add_argument("--output_file", type=str, help="Path to output file")
+    parser.add_argument(
+        "--input_file", type=str, help="Path to input AnnData file", required=True
+    )
+    parser.add_argument(
+        "--output_file", type=str, help="Path to output file", required=True
+    )
     parser.add_argument("--gmt_file", type=str, help="Path to GMT file", required=False)
     # add argument for gene sets to score
     parser.add_argument(
         "--gene_sets_to_score",
         type=str,
+        default="",
         required=False,
-        help="Comma separated list of gene sets to score (the need to be in the gmt file)",
+        help="Optional comma separated list of gene sets to score (the need to be in the gmt file)",
     )
     # add argument for gene list (comma separated) to score
     parser.add_argument(
@@ -137,6 +142,7 @@ if __name__ == "__main__":
         "--gene_symbols_field",
         type=str,
         help="Name of the gene symbols field in the AnnData object",
+        required=True,
     )
     parser.add_argument("--use_raw", action="store_true", help="Use raw data")
     parser.add_argument(
@@ -149,7 +155,7 @@ if __name__ == "__main__":
     # Load input AnnData object
     adata = anndata.read_h5ad(args.input_file)
 
-    if args.gene_sets_to_score is not None and args.gmt_file is not None:
+    if args.gmt_file is not None:
         # Load MSigDB file in GMT format
         msigdb = read_gmt(args.gmt_file)
 
@@ -157,7 +163,7 @@ if __name__ == "__main__":
         # Score genes by their ensembl ids using the score_genes_aucell function
         for _, row in msigdb.iterrows():
             gene_set_name = row["gene_set_name"]
-            if gene_set_name in gene_sets_to_score:
+            if gene_set_name in gene_sets_to_score or not gene_sets_to_score:
                 genes = row["genes"].split(",")
                 # Convert gene symbols to ensembl ids by using the columns gene_symbols and index in adata.var specific to the gene set
                 ens_gene_ids = adata.var[
