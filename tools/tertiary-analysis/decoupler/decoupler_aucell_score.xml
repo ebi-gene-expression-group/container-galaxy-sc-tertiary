@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<tool id="score_genes_aucell" name="Decoupler AUCell" version="1.4.0+galaxy0" profile="20.05">
+<tool id="score_genes_aucell" name="Decoupler AUCell" version="1.4.0+galaxy1" profile="20.05">
     <description>
         scores cells using the AUCell method for gene sets.
     </description>
@@ -10,11 +10,13 @@
         python '$__tool_directory__/decoupler_aucell_score.py'
             --input_file '$input_file'
             #if $gene_lists_source.source == "gmt"
-            --gmt_file '$gmt_file'
-            --gene_sets_to_score '$gene_sets_to_score'
+            --gmt_file '$gene_lists_source.gmt_file'
+            #if $gene_lists_source.gene_sets_to_score
+            --gene_sets_to_score '$gene_lists_source.gene_sets_to_score'
+            #end if
             #else:
-            --gene_lists_to_score '$gene_lists_to_score'
-            --score_names '$score_names'
+            --gene_lists_to_score '$gene_lists_source.gene_lists_to_score'
+            --score_names '$gene_lists_source.score_names'
             #end if
             --gene_symbols_field '$gene_symbols_field'
             $use_raw
@@ -34,7 +36,7 @@
             </param>
             <when value="gmt">
                 <param name="gmt_file" type="data" format="txt" label="GMT file with gene sets" />
-                <param name="gene_sets_to_score" type="text" label="Gene sets to score within the GMT file" />
+                <param name="gene_sets_to_score" type="text" optional="true" label="Gene sets to score within the GMT file" />
             </when>
             <when value="enumerated">
                 <param name="gene_lists_to_score" type="text" label="Genes to score" />
@@ -56,11 +58,11 @@
     <tests>
         <test expect_num_outputs="1">
             <param name="input_file" value="mito_counted_anndata.h5ad"/>
-            <param name="gene_sets_to_score" value="HALLMARK_NOTCH_SIGNALING,HALLMARK_APICAL_SURFACE"/>
-            <param name="gmt_file" value="mouse_hallmark_ss.gmt"/>
             <param name="gene_symbols_field" value="Symbol"/>
             <param name="write_anndata" value="true"/>
             <conditional name="gene_lists_source">
+                <param name="gene_sets_to_score" value="HALLMARK_NOTCH_SIGNALING,HALLMARK_APICAL_SURFACE"/>
+                <param name="gmt_file" value="mouse_hallmark_ss.gmt"/>
                 <param name="source" value="gmt"/>
             </conditional>
             <output name="output_ad">
@@ -72,12 +74,27 @@
         </test>
         <test expect_num_outputs="1">
             <param name="input_file" value="mito_counted_anndata.h5ad"/>
-            <param name="gene_lists_to_score" value="Cd8b1,Cd8b2,Cd8a,Cd4,Nrp1,Cd80:Il1a,Il1b,Il6,Nos2,Tlr2,Tlr4,Cd80"/>
-            <param name="score_names" value="TCell,Macro"/>
+            <param name="gene_symbols_field" value="Symbol"/>
+            <param name="write_anndata" value="true"/>
+            <conditional name="gene_lists_source">
+                <param name="source" value="gmt"/>
+                <param name="gmt_file" value="mouse_hallmark_ss.gmt"/>
+            </conditional>
+            <output name="output_ad">
+                <assert_contents>
+                    <has_h5_keys keys="obs/AUCell_HALLMARK_NOTCH_SIGNALING"/>
+                    <has_h5_keys keys="obs/AUCell_HALLMARK_APICAL_SURFACE"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="1">
+            <param name="input_file" value="mito_counted_anndata.h5ad"/>
             <param name="gene_symbols_field" value="Symbol"/>
             <param name="write_anndata" value="true"/>
             <conditional name="gene_lists_source">
                 <param name="source" value="enumerated"/>
+                <param name="gene_lists_to_score" value="Cd8b1,Cd8b2,Cd8a,Cd4,Nrp1,Cd80:Il1a,Il1b,Il6,Nos2,Tlr2,Tlr4,Cd80"/>
+                <param name="score_names" value="TCell,Macro"/>
             </conditional>
             <output name="output_ad">
                 <assert_contents>
@@ -88,12 +105,12 @@
         </test>
         <test expect_num_outputs="1">
             <param name="input_file" value="mito_counted_anndata.h5ad"/>
-            <param name="gene_sets_to_score" value="HALLMARK_NOTCH_SIGNALING,HALLMARK_APICAL_SURFACE"/>
-            <param name="gmt_file" value="mouse_hallmark_ss.gmt"/>
             <param name="gene_symbols_field" value="Symbol"/>
             <param name="write_anndata" value="False"/>
             <conditional name="gene_lists_source">
                 <param name="source" value="gmt"/>
+                <param name="gene_sets_to_score" value="HALLMARK_NOTCH_SIGNALING,HALLMARK_APICAL_SURFACE"/>
+                <param name="gmt_file" value="mouse_hallmark_ss.gmt"/>
             </conditional>
             <output name="output_table">
                 <assert_contents>
