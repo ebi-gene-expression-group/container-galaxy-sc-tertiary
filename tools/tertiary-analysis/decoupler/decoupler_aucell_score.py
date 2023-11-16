@@ -120,7 +120,6 @@ if __name__ == "__main__":
     parser.add_argument(
         "--gene_sets_to_score",
         type=str,
-        default="",
         required=False,
         help="Optional comma separated list of gene sets to score (the need to be in the gmt file)",
     )
@@ -159,11 +158,11 @@ if __name__ == "__main__":
         # Load MSigDB file in GMT format
         msigdb = read_gmt(args.gmt_file)
 
-        gene_sets_to_score = args.gene_sets_to_score.split(",")
+        gene_sets_to_score = args.gene_sets_to_score.split(",") if args.gene_sets_to_score else []
         # Score genes by their ensembl ids using the score_genes_aucell function
         for _, row in msigdb.iterrows():
             gene_set_name = row["gene_set_name"]
-            if gene_set_name in gene_sets_to_score or not gene_sets_to_score:
+            if not gene_sets_to_score or gene_set_name in gene_sets_to_score:
                 genes = row["genes"].split(",")
                 # Convert gene symbols to ensembl ids by using the columns gene_symbols and index in adata.var specific to the gene set
                 ens_gene_ids = adata.var[
