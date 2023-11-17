@@ -26,16 +26,6 @@ parser.add_argument(
     default=None,
 )
 
-# optional obsm key to store mlm estimate
-parser.add_argument(
-    "-m", "--mlm_key", help="key to store mlm estimate", default="new_mlm_estimate"
-)
-
-# optional obsm key to store mlm p-values
-parser.add_argument(
-    "-p", "--mlm_p_key", help="key to store mlm p-values", default="new_mlm_p_values"
-)
-
 # figure size option
 parser.add_argument(
     "-f", "--figure_size", help="figure size", default="10,10"
@@ -103,20 +93,6 @@ dc.run_mlm(
     min_n=args.min_n,
     # use_raw=False Failing at the moment
 )
-
-mlm_key = "mlm_estimate"
-if args.mlm_key is not None and args.mlm_p_key is not mlm_key:
-    adata.obsm[args.mlm_key] = adata.obsm[mlm_key].copy()
-    # delete adata.obsm[mlm_key]
-    del adata.obsm[mlm_key]
-    mlm_key = args.mlm_key
-
-mlm_pvals_key = "mlm_pvals"
-if args.mlm_p_key is not None and args.mlm_p_key is not mlm_pvals_key:
-    adata.obsm[args.mlm_p_key] = adata.obsm[mlm_pvals_key].copy()
-    # delete adata.obsm[mlm_pvals_key]
-    del adata.obsm[mlm_pvals_key]
-    mlm_pvals_key = args.mlm_p_key
 
 if args.output is not None:
     # write adata.obsm[ulm_key] and adata.obsm[ulm_pvals_key] to the output network files
