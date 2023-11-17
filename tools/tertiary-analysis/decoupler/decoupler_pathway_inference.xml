@@ -1,0 +1,104 @@
+<tool id="decoupler_pathway_inference" name="Decoupler Pathway Inference" version="1.4.0+galaxy0" profile="20.05" license="MIT">
+    <description>
+        Pathway inference using the Decoupler.
+    </description>
+    <requirements>
+        <requirement type="package" version="1.4.0">decoupler</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        ## TODO: Fill in command using Cheetah templates
+        ## Hint: Use [ctrl+alt+c] after defining the inputs/outputs to auto-generate some Cheetah boilerplate code for you.
+        python '$__tool_directory__/decoupler_pathway_inference.py'
+            --input_file '$input_file'
+            --input_network '$input_network_file'
+            --min_n '$min_n'
+            #if $use_raw:
+            --use_raw
+            #end if
+            #if $write_inference:
+            --output inference
+            #end if
+            #if $write_activities_path:
+            --activities_path anndata_activities_path.h5ad
+            #end if
+    ]]></command>
+    <inputs>
+        <param name="input_anndata" type="data" format="h5ad" label="Input AnnData file" />
+        <param name="input_network_file" type="data" format="tabular" label="Input Network file" />
+        <param name="min_n" type="integer" min="0" value="5" label="Minimum of targets per source. If less, sources are removed" />
+        <param name="use_raw" type="boolean" truevalue="--use_raw" falsevalue="" checked="false" label="Whether to use the raw part of the AnnData object" />
+        <param name="write_inference" type="boolean" truevalue="--write_inference" falsevalue="" checked="true" label="Write the inference TSV files"  />
+        <param name="write_activities_path" type="boolean" truevalue="--write_activities_path" falsevalue="" checked="true" label="Write the modified AnnData object" />
+    </inputs>
+    <outputs>
+        <data name="output_ad" format="h5ad" from_work_dir="anndata_activities_path.h5ad" label="${tool.name} on ${on_string}: Output AnnData file" />
+        <data name="output_table_mlm_estimate" format="tabular" from_work_dir="inference_mlm_estimate.tsv" label="${tool.name} on ${on_string}: Output MLM estimate table" />
+        <data name="output_table_mlm_pvalue" format="tabular" from_work_dir="inference_mlm_pvals.tsv" label="${tool.name} on ${on_string}: Output MLM p-values table" />
+    </outputs>
+    <tests>
+        <!-- Hint: You can use [ctrl+alt+t] after defining the inputs/outputs to auto-scaffold some basic test cases. -->
+
+    <test expect_num_outputs="3">
+        <!--TODO: auto-generated test case. Please fill in the required values-->
+        <param name="input_anndata" value="pbmc3k_processed.h5ad"/>
+        <param name="input_network_file" value="progeny_test.tsv"/>
+        <param name="min_n" value="5"/>
+        <param name="use_raw" value="false"/>
+        <param name="write_inference" value="true"/>
+        <param name="write_activities_path" value="true"/>
+        <output name="output_ad">
+            <assert_contents>
+                <has_h5_keys keys="obs/mlm_estimate"/>
+            </assert_contents>
+        </output>
+        <output name="output_table_mlm_estimate">
+            <assert_contents>
+                <has_n_columns n="5"/>
+            </assert_contents>
+        </output>
+        <output name="output_table_mlm_pvalue">
+            <assert_contents>
+                <has_n_columns n="5"/>
+            </assert_contents>
+        </output>
+    </test>
+    </tests>
+    <help><![CDATA[
+
+.. class:: infomark
+
+**What it does**
+
+TODO: Fill in help in reStructuredText format (https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html)
+
+Usage
+.....
+
+
+**Description**
+
+This tool scores cells using the AUCell method for gene sets.
+
+**Input**
+
+The input file should be an AnnData object in H5AD format. The tool accepts an H5AD file containing raw or normalized data.
+
+The tool also takes network file containing a collection of pathways and their target genes, with weights for each interaction
+
+You can also specify whether to use the raw data in the AnnData object instead of the X matrix using the "use_raw" parameter and Minimum of targets per source using "min_n".
+
+
+**Output**
+
+The tool outputs an AnnData object containing the scores in the "obs" field, and tab-separated text files containing the scores for each cell.
+
+If the "write_activities_path" parameter is set to "true", the tool will write the modified AnnData object to an H5AD file. 
+If the "write_inference" parameter is set to "true", the tool will output a tab-separated text file containing the scores for each cell.
+
+
+
+    ]]></help>
+    <citations>
+        <citation type="doi">10.1093/bioadv/vbac016 </citation>
+    </citations>
+</tool>
