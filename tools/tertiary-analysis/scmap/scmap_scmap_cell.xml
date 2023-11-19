@@ -9,6 +9,8 @@
             -i '$index_single_cell_experiment' 
             -p '$project_single_cell_experiment' 
             --number-nearest-neighbours '$n_nearest_neighbours' 
+            --nearest-neighbours-threshold '$nearest_neighbours_threshold'
+            --threshold '$threshold'
             --cluster-col '${cluster_projection.cluster_col}' 
             --output-object-file '$output_single_cell_experiment' 
             --closest-cells-text-file '$closest_cells_text_file' 
@@ -21,6 +23,8 @@
       <param type="data" name="index_single_cell_experiment" label="Index SingleCellExperiment object" format="rdata" help="File with serialized SingleCellExperiment object as produced by 'scmap select features' and 'scmap index clusters', onto which another dataset will be projected." />
       <param type="data" name="project_single_cell_experiment" label="SingleCellExperiment object to project" format="rdata" help="File with serialized SingleCellExperiment object to project onto the index'" />
       <param name="n_nearest_neighbours" type="integer" label="Number of nearest neighbours" value='5' help="A positive integer specifying the number of nearest neighbours to find" />
+      <param name="nearest_neighbours_threshold" type="integer" label="Nearest neighbour threshold" value='3' help="A positive integer specifying the number of matching nearest neighbours required to label a cell." />
+      <param name="threshold" type="integer" label="Similarity threshold" value='0.7' help="Threshold on similarity (or probability for SVM and RF)." />
      <conditional name="cluster_projection">
         <param name="do_cluster_projection" type="boolean" checked="false" label="Annotate cells of the projection dataset using labels of the reference?" help="If cell cluster annotation is available for the reference datasets, in addition to finding top 10 nearest neighbours scmap-cell also allows to annotate cells of the projection dataset using labels of the reference."/>
         <when value="true" >
