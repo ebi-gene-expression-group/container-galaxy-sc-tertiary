@@ -1,30 +1,41 @@
 <?xml version="1.0"?>
-<tool id="scRNAseq_qc_tool" name="scRNAseq Quality Control Tool" version="1.0.0" engine="python" hidden="false">
+<tool id="scRNAseq_qc_tool" name="scRNAseq Quality Control Tool" version="1.0.0" hidden="false">
     <description>Generate quality control metrics for single-cell RNA-seq data.</description>
-    <requirements>
-        <requirement type="package" version="1.1.3">scanpy-scripts</requirement>
-    </requirements>
+    <macros>
+        <import>scanpy_macros2.xml</import>
+      </macros>
+      <expand macro="requirements"/>
     <command detect_errors="exit_code">
         <![CDATA[
         #!/bin/bash
-        python $__tool_directory__/scripts/sc_qc_metrics.py "$adata_file" "$sample_field" \
-            --output_format "$output_format" \
-            --plot_size "$plot_size" \
-            --percent_mito_field "$percent_mito_field" \
-            --percent_ribo_field "$percent_ribo_field" \
-            --ribo_field "$ribo_field" \
-            --mito_field "$mito_field" \
-            --doublet_score_field "$doublet_score_field"
+        python $__tool_directory__/scripts/sc_qc_metrics.py "$adata_file" "$sample_field" 
+            --output_format "$output_format" 
+            --plot_size "$plot_size" 
+            #if $percent_mito_field:
+                --percent_mito_field '$percent_mito_field'
+            #end if 
+            #if $percent_ribo_field:
+                --percent_ribo_field '$percent_ribo_field'
+            #end if 
+            #if $ribo_field:
+                --ribo_field '$ribo_field'
+            #end if 
+            #if $mito_field:
+                --mito_field '$mito_field'
+            #end if 
+            #if $doublet_score_field:
+                --doublet_score_field '$doublet_score_field'
+            #end if 
         ]]>
     </command>
     <inputs>
-        <param type="data" format="txt" name="adata_file" label="AnnData object file" />
+        <param type="data" format="h5ad,h5" name="adata_file" label="AnnData object file" />
         <param type="text" name="sample_field" label="Sample Field" />
         <param type="select" name="output_format" label="Output Format">
             <option value="pdf">PDF</option>
             <option value="png">PNG</option>
         </param>
-        <param type="text" name="plot_size" label="Plot Size (Width Height)" />
+        <param type="text" name="plot_size" label="Plot Size (Width Height)" value="10,10"/>
         <param type="text" name="percent_mito_field" label="Mitochondrial Gene Field" />
         <param type="text" name="percent_ribo_field" label="Ribosomal Gene Field" />
         <param type="text" name="ribo_field" label="Ribo Field" />
@@ -39,10 +50,14 @@
     <tests>
         <!-- Test Case 1: Basic Test -->
         <test>
-            <param name="adata_file" value="test-data/adata.h5ad" />
-            <param name="sample_field" value="sample_id" />
+            <param name="adata_file" value="anndata_ops_raw.h5ad" />
+            <param name="sample_field" value="louvain" />
             <param name="output_format" value="pdf" />
-            <output name="general_qc_plots" file="expected_output/general_qc_plots.pdf" />
+            <output name="general_qc_plots" >
+                <assert_contents>
+                    <has_size value="100000" delta="1000"/>
+                </assert_contents>
+            </output>
         </test>
         <!-- Add more test cases as needed -->
     </tests>
@@ -65,5 +80,7 @@
         - General QC Plots: PDF file containing general quality control plots.
         ]]>
     </help>
+    <expand macro="citations"/>
+
 </tool>
 
