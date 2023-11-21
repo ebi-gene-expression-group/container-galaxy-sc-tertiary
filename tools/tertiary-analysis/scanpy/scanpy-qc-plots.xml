@@ -50,7 +50,7 @@
     <tests>
         <!-- Test Case 1: Basic Test -->
         <test>
-            <param name="adata_file" value="anndata_ops_raw.h5ad" />
+            <param name="adata_file" value="anndata_ops_raw.h5" />
             <param name="sample_field" value="louvain" />
             <param name="output_format" value="pdf" />
             <output name="general_qc_plots" >
