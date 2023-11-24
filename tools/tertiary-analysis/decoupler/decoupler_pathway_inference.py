@@ -96,8 +96,8 @@ dc.run_mlm(
 
 if args.output is not None:
     # write adata.obsm[ulm_key] and adata.obsm[ulm_pvals_key] to the output network files
-    adata.obsm[mlm_key].to_csv(args.output + "_mlm.tsv", sep="\t")
-    adata.obsm[mlm_pvals_key].to_csv(args.output + "_mlm_pvals.tsv", sep="\t")
+    adata.obsm["mlm_estimate"].to_csv(args.output + "_mlm.tsv", sep="\t")
+    adata.obsm["mlm_pvals"].to_csv(args.output + "_mlm_pvals.tsv", sep="\t")
 
 # if args.activities_path is specified, generate the activities AnnData and save the AnnData object to the specified path
 if args.activities_path is not None:
