@@ -7,9 +7,9 @@
     </requirements>
     <command>
         python '$__tool_directory__/decoupler_pathway_inference.py'
-            --input_anndata '$input_anndata'
-            --input_network '$input_network_file'
-            --min_n '$min_n'
+            -i '$input_anndata'
+            -n '$input_network_file'
+            --min_n "$min_n"
             '$use_raw'
             --output "inference"
             --activities_path anndata_activities_path.h5ad
