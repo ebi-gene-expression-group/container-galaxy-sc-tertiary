@@ -58,7 +58,7 @@ parser.add_argument(
 
 # add argument for min_cells
 parser.add_argument(
-    "--min_n", help="Minimum of targets per source. If less, sources are removed.", default=5
+    "--min_n", help="Minimum of targets per source. If less, sources are removed.", default=5, type=int
 )
 args = parser.parse_args()
 
@@ -82,7 +82,7 @@ if (
     )
 
 
-
+print(type(args.min_n))
 dc.run_mlm(
     mat=adata,
     net=network,
@@ -91,7 +91,7 @@ dc.run_mlm(
     weight=args.weight,
     verbose=True,
     min_n=args.min_n,
-    # use_raw=False Failing at the moment
+    use_raw=args.use_raw #Failing at the moment
 )
 
 if args.output is not None:
