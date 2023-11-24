@@ -5,23 +5,15 @@
     <requirements>
         <requirement type="package" version="1.4.0">decoupler</requirement>
     </requirements>
-    <command detect_errors="exit_code"><![CDATA[
-        ## TODO: Fill in command using Cheetah templates
-        ## Hint: Use [ctrl+alt+c] after defining the inputs/outputs to auto-generate some Cheetah boilerplate code for you.
+    <command>
         python '$__tool_directory__/decoupler_pathway_inference.py'
             --input_file '$input_file'
             --input_network '$input_network_file'
             --min_n '$min_n'
-            #if $use_raw:
-            --use_raw
-            #end if
-            #if $write_inference:
-            --output inference
-            #end if
-            #if $write_activities_path:
+            '$use_raw'
+            --output "inference"
             --activities_path anndata_activities_path.h5ad
-            #end if
-    ]]></command>
+    </command>
     <inputs>
         <param name="input_anndata" type="data" format="h5ad" label="Input AnnData file" />
         <param name="input_network_file" type="data" format="tabular" label="Input Network file" />
@@ -32,14 +24,13 @@
     </inputs>
     <outputs>
         <data name="output_ad" format="h5ad" from_work_dir="anndata_activities_path.h5ad" label="${tool.name} on ${on_string}: Output AnnData file" />
-        <data name="output_table_mlm_estimate" format="tabular" from_work_dir="inference_mlm_estimate.tsv" label="${tool.name} on ${on_string}: Output MLM estimate table" />
+        <data name="output_table_mlm_estimate" format="tabular" from_work_dir="inference_mlm.tsv" label="${tool.name} on ${on_string}: Output MLM estimate table" />
         <data name="output_table_mlm_pvalue" format="tabular" from_work_dir="inference_mlm_pvals.tsv" label="${tool.name} on ${on_string}: Output MLM p-values table" />
     </outputs>
     <tests>
         <!-- Hint: You can use [ctrl+alt+t] after defining the inputs/outputs to auto-scaffold some basic test cases. -->
 
     <test expect_num_outputs="3">
-        <!--TODO: auto-generated test case. Please fill in the required values-->
         <param name="input_anndata" value="pbmc3k_processed.h5ad"/>
         <param name="input_network_file" value="progeny_test.tsv"/>
         <param name="min_n" value="5"/>
@@ -63,13 +54,8 @@
         </output>
     </test>
     </tests>
-    <help><![CDATA[
-
-.. class:: infomark
-
+    <help>
 **What it does**
-
-TODO: Fill in help in reStructuredText format (https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html)
 
 Usage
 .....
@@ -97,7 +83,7 @@ If the "write_inference" parameter is set to "true", the tool will output a tab-
 
 
 
-    ]]></help>
+    </help>
     <citations>
         <citation type="doi">10.1093/bioadv/vbac016 </citation>
     </citations>
