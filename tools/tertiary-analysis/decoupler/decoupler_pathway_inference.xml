@@ -7,7 +7,7 @@
     </requirements>
     <command>
         python '$__tool_directory__/decoupler_pathway_inference.py'
-            --input_file '$input_anndata'
+            --input_anndata '$input_anndata'
             --input_network '$input_network_file'
             --min_n '$min_n'
             '$use_raw'
