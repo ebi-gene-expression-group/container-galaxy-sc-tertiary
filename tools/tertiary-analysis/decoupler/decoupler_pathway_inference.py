@@ -4,7 +4,6 @@ import argparse
 import anndata as ad
 import decoupler as dc
 import pandas as pd
-import hdf5plugin
 
 # define arguments for the script
 parser = argparse.ArgumentParser()
