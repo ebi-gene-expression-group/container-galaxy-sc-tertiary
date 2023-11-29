@@ -20,7 +20,7 @@ parser.add_argument(
 
 # output file prefix
 parser.add_argument(
-    "--output",
+    "-o", "--output",
     help="output files prefix",
     default=None,
 )

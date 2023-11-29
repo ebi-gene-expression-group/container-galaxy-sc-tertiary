@@ -10,7 +10,7 @@
             -i '$input_anndata'
             -n '$input_network_file'
             --min_n "$min_n"
-            '$use_raw'
+            $use_raw
             --output "inference"
             --activities_path anndata_activities_path.h5ad
     </command>
