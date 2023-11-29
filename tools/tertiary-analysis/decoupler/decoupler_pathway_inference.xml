@@ -33,7 +33,7 @@
     <test expect_num_outputs="3">
         <param name="input_anndata" value="pbmc3k_processed.h5ad"/>
         <param name="input_network_file" value="progeny_test.tsv"/>
-        <param name="min_n" value="5"/>
+        <param name="min_n" value="0"/>
         <param name="use_raw" value="false"/>
         <param name="write_inference" value="true"/>
         <param name="write_activities_path" value="true"/>
