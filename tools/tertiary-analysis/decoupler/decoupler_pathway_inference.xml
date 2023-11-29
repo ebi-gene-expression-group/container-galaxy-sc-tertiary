@@ -39,17 +39,17 @@
         <param name="write_activities_path" value="true"/>
         <output name="output_ad">
             <assert_contents>
-                <has_h5_keys keys="obs/mlm_estimate"/>
+                <has_h5_keys keys="obsm/mlm_estimate"/>
             </assert_contents>
         </output>
         <output name="output_table_mlm_estimate">
             <assert_contents>
-                <has_n_columns n="5"/>
+                <has_n_columns n="3"/>
             </assert_contents>
         </output>
         <output name="output_table_mlm_pvalue">
             <assert_contents>
-                <has_n_columns n="5"/>
+                <has_n_columns n="3"/>
             </assert_contents>
         </output>
     </test>
