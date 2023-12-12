@@ -19,7 +19,6 @@
         <param name="input_network_file" type="data" format="tabular" label="Input Network file" />
         <param name="min_n" type="integer" min="0" value="5" label="Minimum of targets per source. If less, sources are removed" />
         <param name="use_raw" type="boolean" truevalue="--use_raw" falsevalue="" checked="false" label="Whether to use the raw part of the AnnData object" />
-        <param name="write_inference" type="boolean" truevalue="--write_inference" falsevalue="" checked="true" label="Write the inference TSV files"  />
         <param name="write_activities_path" type="boolean" truevalue="--activities_path anndata_activities_path.h5ad" falsevalue="" checked="true" label="Write the modified AnnData object" />
     </inputs>
     <outputs>
@@ -37,7 +36,6 @@
         <param name="input_network_file" value="progeny_test.tsv"/>
         <param name="min_n" value="0"/>
         <param name="use_raw" value="false"/>
-        <param name="write_inference" value="true"/>
         <param name="write_activities_path" value="true"/>
         <output name="output_ad">
             <assert_contents>
