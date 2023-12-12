@@ -101,4 +101,4 @@ if args.output is not None:
 # if args.activities_path is specified, generate the activities AnnData and save the AnnData object to the specified path
 if args.activities_path is not None:
     acts = dc.get_acts(adata, obsm_key="mlm_estimate")
-    adata.write_h5ad(args.activities_path)
+    acts.write_h5ad(args.activities_path)
