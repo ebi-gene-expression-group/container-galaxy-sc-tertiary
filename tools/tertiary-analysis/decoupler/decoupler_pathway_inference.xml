@@ -12,7 +12,7 @@
             --min_n "$min_n"
             $use_raw
             --output "inference"
-            --activities_path anndata_activities_path.h5ad
+            $write_activities_path
     </command>
     <inputs>
         <param name="input_anndata" type="data" format="h5ad" label="Input AnnData file" />
@@ -20,7 +20,7 @@
         <param name="min_n" type="integer" min="0" value="5" label="Minimum of targets per source. If less, sources are removed" />
         <param name="use_raw" type="boolean" truevalue="--use_raw" falsevalue="" checked="false" label="Whether to use the raw part of the AnnData object" />
         <param name="write_inference" type="boolean" truevalue="--write_inference" falsevalue="" checked="true" label="Write the inference TSV files"  />
-        <param name="write_activities_path" type="boolean" truevalue="--write_activities_path" falsevalue="" checked="true" label="Write the modified AnnData object" />
+        <param name="write_activities_path" type="boolean" truevalue="--activities_path anndata_activities_path.h5ad" falsevalue="" checked="true" label="Write the modified AnnData object" />
     </inputs>
     <outputs>
         <data name="output_ad" format="h5ad" from_work_dir="anndata_activities_path.h5ad" label="${tool.name} on ${on_string}: Output AnnData file" />
