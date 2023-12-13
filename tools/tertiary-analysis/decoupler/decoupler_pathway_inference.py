@@ -95,7 +95,10 @@ dc.run_mlm(
 
 if args.output is not None:
     # write adata.obsm[mlm_key] and adata.obsm[mlm_pvals_key] to the output network files
-    adata.obsm["mlm_estimate", "mlm_pvals"].to_csv(args.output + "_mlm.tsv", sep="\t")
+    combined_df = pd.concat([adata.obsm["mlm_estimate"], adata.obsm["mlm_pvals"]], axis=1)
+
+    # Save the combined dataframe to a file
+    combined_df.to_csv(args.output + "_mlm.tsv", sep="\t")
 
 # if args.activities_path is specified, generate the activities AnnData and save the AnnData object to the specified path
 if args.activities_path is not None:
