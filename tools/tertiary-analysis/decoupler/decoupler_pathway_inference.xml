@@ -30,7 +30,7 @@
     <tests>
         <!-- Hint: You can use [ctrl+alt+t] after defining the inputs/outputs to auto-scaffold some basic test cases. -->
 
-    <test expect_num_outputs="3">
+    <test expect_num_outputs="2">
         <param name="input_anndata" value="pbmc3k_processed.h5ad"/>
         <param name="input_network_file" value="progeny_test.tsv"/>
         <param name="min_n" value="0"/>
