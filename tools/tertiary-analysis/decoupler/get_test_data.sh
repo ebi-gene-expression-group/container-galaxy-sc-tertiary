@@ -21,8 +21,17 @@ pushd test-data
 get_data $MTX_LINK $BASENAME_FILE
 
 
+# Download input anndata for decoupler-pathway_inference
 BASENAME_FILE='pbmc3k_processed.h5ad'
 
 MTX_LINK='https://zenodo.org/records/3752813/files/pbmc3k_processed.h5ad'
 
 get_data $MTX_LINK $BASENAME_FILE
+
+# Download output anndata for decoupler-pathway_inference
+BASENAME_FILE='test.h5ad'
+
+MTX_LINK='https://zenodo.org/records/10401958/files/test.h5ad'
+
+get_data $MTX_LINK $BASENAME_FILE
+
