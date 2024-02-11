@@ -446,7 +446,7 @@ for field_value in adata.obs["${split_on_obs.key}"].unique():
   <tests>
     <test>
       <param name="input_obj_file" value="find_cluster.h5"/>
-      <output name="output_h5ad" file="anndata_ops.h5" ftype="h5ad" compare="sim_size"/>
+      <output name="output_h5ad" file="anndata_ops.h5" ftype="h5ad" compare="sim_size" delta_frac="0.1"/>
     </test>
     <test>
       <param name="input_obj_file" value="mnn.h5"/>
@@ -511,7 +511,7 @@ for field_value in adata.obs["${split_on_obs.key}"].unique():
         <param name="default" value="true"/>
         <param name="r_source" value="read_10x.h5"/>
       </conditional>
-      <output name="output_h5ad" file="anndata_ops_raw.h5" ftype="h5ad" compare="sim_size">
+      <output name="output_h5ad" file="anndata_ops_raw.h5" ftype="h5ad" compare="sim_size" delta_frac="0.1">
         <assert_contents>
           <has_h5_keys keys="raw/X" />
         </assert_contents>
@@ -526,7 +526,7 @@ for field_value in adata.obs["${split_on_obs.key}"].unique():
           <param name="dest" value='filtered'/>
         </repeat>
       </conditional>
-      <output name="output_h5ad" file="anndata_ops_xlayer.h5" ftype="h5ad" compare="sim_size">
+      <output name="output_h5ad" file="anndata_ops_xlayer.h5" ftype="h5ad" compare="sim_size" delta_frac="0.1">
         <assert_contents>
           <has_h5_keys keys="layers/filtered" />
         </assert_contents>
@@ -541,7 +541,7 @@ for field_value in adata.obs["${split_on_obs.key}"].unique():
         </repeat>
         <param name="layer_sources" value='anndata_ops_xlayer.h5'/>
       </conditional>
-      <output name="output_h5ad" file="anndata_ops_layer.h5" ftype="h5ad" compare="sim_size">
+      <output name="output_h5ad" file="anndata_ops_layer.h5" ftype="h5ad" compare="sim_size" delta_frac="0.1">
         <assert_contents>
           <has_h5_keys keys="layers/filtered" />
         </assert_contents>

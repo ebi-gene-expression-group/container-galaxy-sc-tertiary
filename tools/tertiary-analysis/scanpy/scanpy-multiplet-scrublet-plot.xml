@@ -54,7 +54,7 @@ PYTHONIOENCODING=utf-8 scanpy-cli plot scrublet
       <param name="input_format" value="anndata"/>
       <param name="scale_hist_obs" value="linear"/>
       <param name="scale_hist_sim" value="linear"/>
-      <output name="output_png" file="plot_scrublet.png" ftype="png" compare="sim_size"/>
+      <output name="output_png" file="plot_scrublet.png" ftype="png" compare="sim_size" delta_frac="0.1"/>
     </test>
   </tests>
 

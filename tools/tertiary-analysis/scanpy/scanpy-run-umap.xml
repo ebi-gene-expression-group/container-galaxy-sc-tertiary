@@ -91,8 +91,8 @@ PYTHONIOENCODING=utf-8 scanpy-run-umap
       <param name="default" value="false"/>
       <param name="embeddings" value="true"/>
       <param name="random_seed" value="0"/>
-      <output name="output_h5" file="run_umap.h5" ftype="h5" compare="sim_size"/>
-      <output name="output_embed" file="run_umap.embeddings.tsv" ftype="tabular" compare="sim_size">
+      <output name="output_h5" file="run_umap.h5" ftype="h5" compare="sim_size" delta_frac="0.1"/>
+      <output name="output_embed" file="run_umap.embeddings.tsv" ftype="tabular" compare="sim_size" delta_frac="0.1">
         <assert_contents>
           <has_n_columns n="3"/>
         </assert_contents>

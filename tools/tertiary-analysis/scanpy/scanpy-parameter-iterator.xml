@@ -51,9 +51,9 @@
           <param name="input_values" value="1, 5, 10"/>
         </conditional>
         <output_collection name="parameter_iteration" count="3">
-          <element name="perplexity_1" file="perplexity_1.txt" ftype="txt" compare="sim_size"/>
-          <element name="perplexity_5" file="perplexity_5.txt" ftype="txt" compare="sim_size"/>
-          <element name="perplexity_10" file="perplexity_10.txt" ftype="txt" compare="sim_size"/>
+          <element name="perplexity_1" file="perplexity_1.txt" ftype="txt" compare="sim_size" delta_frac="0.1"/>
+          <element name="perplexity_5" file="perplexity_5.txt" ftype="txt" compare="sim_size" delta_frac="0.1"/>
+          <element name="perplexity_10" file="perplexity_10.txt" ftype="txt" compare="sim_size" delta_frac="0.1"/>
         </output_collection>
       </test>
     </tests>

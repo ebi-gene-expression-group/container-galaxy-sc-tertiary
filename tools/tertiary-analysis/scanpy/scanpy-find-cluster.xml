@@ -97,7 +97,7 @@ PYTHONIOENCODING=utf-8 scanpy-find-cluster
       <param name="default" value="false"/>
       <param name="resolution_file" value="resolution.txt"/>
       <param name="random_seed" value="0"/>
-      <output name="output_h5" file="find_cluster.h5" ftype="h5" compare="sim_size"/>
+      <output name="output_h5" file="find_cluster.h5" ftype="h5" compare="sim_size" delta_frac="0.1"/>
       <output name="output_txt" file="find_cluster.tsv" ftype="tsv"/>
     </test>
     <test>
@@ -107,7 +107,7 @@ PYTHONIOENCODING=utf-8 scanpy-find-cluster
       <param name="default" value="false"/>
       <param name="resolution" value="1.0"/>
       <param name="random_seed" value="0"/>
-      <output name="output_h5" file="find_cluster.h5" ftype="h5" compare="sim_size"/>
+      <output name="output_h5" file="find_cluster.h5" ftype="h5" compare="sim_size" delta_frac="0.1"/>
       <output name="output_txt" file="find_cluster.tsv" ftype="tsv"/>
     </test>
     <test>
@@ -119,7 +119,7 @@ PYTHONIOENCODING=utf-8 scanpy-find-cluster
       <param name="resolution" value="1.0"/>
       <param name="key_added" value="METHOD_RESOLUTION"/>
       <param name="random_seed" value="0"/>
-      <output name="output_h5" file="louvain_1.0" ftype="h5" compare="sim_size"/>
+      <output name="output_h5" file="louvain_1.0" ftype="h5" compare="sim_size" delta_frac="0.1"/>
       <output name="output_txt" file="louvain_1.0.tsv" ftype="tsv"/>
     </test>
   </tests>

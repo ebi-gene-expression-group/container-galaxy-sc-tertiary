@@ -82,7 +82,7 @@ $force_recalc
         <param name="min" value="0"/>
         <param name="max" value="1e9"/>
       </repeat>
-      <output name="output_h5" file="filter_genes.h5" ftype="h5" compare="sim_size"/>
+      <output name="output_h5" file="filter_genes.h5" ftype="h5" compare="sim_size" delta_frac="0.1"/>
     </test>
   </tests>
 

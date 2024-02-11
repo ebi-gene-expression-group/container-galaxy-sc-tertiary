@@ -109,7 +109,7 @@ PYTHONIOENCODING=utf-8 scanpy-neighbors
       <param name="knn" value="true"/>
       <param name="random_seed" value="0"/>
       <param name="method" value="umap"/>
-      <output name="output_h5" file="compute_graph.h5" ftype="h5" compare="sim_size"/>
+      <output name="output_h5" file="compute_graph.h5" ftype="h5" compare="sim_size" delta_frac="0.1"/>
     </test>
     <test>
       <param name="input_obj_file" value="run_pca.h5"/>
@@ -121,7 +121,7 @@ PYTHONIOENCODING=utf-8 scanpy-neighbors
       <param name="knn" value="true"/>
       <param name="random_seed" value="0"/>
       <param name="method" value="umap"/>
-      <output name="output_h5" file="compute_graph.h5" ftype="h5" compare="sim_size"/>
+      <output name="output_h5" file="compute_graph.h5" ftype="h5" compare="sim_size" delta_frac="0.1"/>
     </test>
   </tests>
 
