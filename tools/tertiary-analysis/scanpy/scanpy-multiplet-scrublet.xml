@@ -7,7 +7,7 @@
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_obj_file}' input.h5 &&
-PYTHONIOENCODING=utf-8 scanpy-multiplet scrublet 
+PYTHONIOENCODING=utf-8 scanpy-cli multiplet scrublet 
 #if $threshold
     --threshold '${threshold}'
 #end if

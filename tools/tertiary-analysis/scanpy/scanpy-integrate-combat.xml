@@ -8,7 +8,7 @@
   <command detect_errors="exit_code"><![CDATA[
 #if $batch_key
   ln -s '${input_obj_file}' input.h5 &&
-  PYTHONIOENCODING=utf-8 scanpy-integrate combat 
+  PYTHONIOENCODING=utf-8 scanpy-cli integrate combat 
   --batch-key '${batch_key}'
   #if $batch_layer
     --batch-layer '${batch_layer}'

@@ -1,7 +1,7 @@
 <macros>
-  <token name="@TOOL_VERSION@">1.8.1</token>
+  <token name="@TOOL_VERSION@">1.9.3</token>
   <token name="@HELP@">More information can be found at https://scanpy.readthedocs.io</token>
-  <token name="@PROFILE@">18.01</token>
+  <token name="@PROFILE@">20.09</token>
   <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
 1.8.1+galaxy9: Fixes version label to get versions sorted properly on Galaxy (equivalent to 1.8.1+3+galaxy0). In addition, adds ability to make fields unique in AnnData operations,
@@ -69,8 +69,12 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
 
   <xml name="requirements">
     <requirements>
-      <requirement type="package" version="1.1.6">scanpy-scripts</requirement>
+      <!--
+        <requirement type="package" version="1.1.6">scanpy-scripts</requirement>
       <yield/>
+      This is provisional for testing and should be switched back to the package.
+      -->
+      <container type="docker">quay.io/biocontainers/scanpy-scripts:1.9.0--pyhdfd78af_0</container>
     </requirements>
   </xml>
 
