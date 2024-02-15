@@ -84,7 +84,7 @@ $force_recalc
       </repeat>
       <output name="output_h5" ftype="h5">
         <assert_contents>
-          <has_h5_keys keys="obs/n_genes_by_counts"/>
+          <has_h5_keys keys="obs/n_genes_by_counts" />
         </assert_contents>
       </output>
     </test>
