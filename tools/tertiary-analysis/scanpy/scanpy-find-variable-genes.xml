@@ -71,7 +71,11 @@ PYTHONIOENCODING=utf-8 scanpy-find-variable-genes
       <param name="max_mean" value="3"/>
       <param name="min_disp" value="0.5"/>
       <param name="max_disp" value="1e9"/>
-      <output name="output_h5" file="find_variable_genes.h5" ftype="h5" compare="sim_size" delta_frac="0.1"/>
+      <output name="output_h5" ftype="h5">
+         <assert_contents>
+           <has_h5_keys keys="uns/hvg"/>
+         </assert_contents>
+      </output>
     </test>
   </tests>
 
