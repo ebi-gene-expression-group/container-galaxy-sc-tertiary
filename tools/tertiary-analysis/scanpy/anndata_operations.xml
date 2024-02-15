@@ -446,7 +446,7 @@ for field_value in adata.obs["${split_on_obs.key}"].unique():
   <tests>
     <test>
       <param name="input_obj_file" value="find_cluster.h5"/>
-      <output name="output_h5ad" ftype="h5ad"/>
+      <output name="output_h5ad" file="anndata_ops.h5" ftype="h5ad" compare="sim_size" delta_frac="0.1"/>
     </test>
     <test>
       <param name="input_obj_file" value="mnn.h5"/>
