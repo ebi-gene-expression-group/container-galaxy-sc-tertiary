@@ -113,7 +113,11 @@ PYTHONIOENCODING=utf-8 scanpy-find-markers
       <param name="key_added" value="GROUPBY_marker"/>
       <param name="method" value="t-test_overestim_var"/>
       <param name="rankby_abs" value="false"/>
-      <output name="output_h5" file="find_markers.h5" ftype="h5" compare="sim_size" delta_frac="0.1"/>
+      <output name="output_h5" ftype="h5">
+        <assert_contents>
+          <has_h5_keys keys="uns/louvain_1.0_marker"/>
+        </assert_contents>
+      </output>
       <output name="output_tsv" file="diffexp.tsv" ftype="tabular" compare="sim_size" delta_frac="0.1"/>
     </test>
     <test>
