@@ -48,7 +48,11 @@ PYTHONIOENCODING=utf-8 scanpy-cli embed diffmap
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
       <param name="use_graph" value="neighbors"/>
-      <output name="output_h5" file="diffmap.h5" ftype="h5" compare="sim_size" delta_frac="0.1"/>
+      <output name="output_h5" ftype="h5">
+        <assert_contents>
+          <has_h5_keys keys="obs/n_genes_by_counts"/>
+        </assert_contents>
+      </output>
     </test>
   </tests>
 

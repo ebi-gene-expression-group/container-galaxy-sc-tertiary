@@ -62,7 +62,11 @@ PYTHONIOENCODING=utf-8 scanpy-cli dpt
       <param name="root_attr" value="louvain"/>
       <param name="root_value" value="1"/>
       <param name="use_graph" value="neighbors"/>
-      <output name="output_h5" file="dpt.h5" ftype="h5" compare="sim_size" delta_frac="0.1"/>
+      <output name="output_h5" ftype="h5">
+        <assert_contents>
+          <has_h5_keys keys="obs/dpt_pseudotime"/>
+        </assert_contents>
+      </output>
     </test>
   </tests>
 

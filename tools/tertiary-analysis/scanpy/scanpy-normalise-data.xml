@@ -75,7 +75,6 @@ PYTHONIOENCODING=utf-8 scanpy-normalise-data
       <param name="output_format" value="anndata"/>
       <param name="scale_factor" value="1e4"/>
       <param name="save_raw" value="false"/>
-      <output name="output_h5" file="normalise_data.h5" ftype="h5" compare="sim_size" delta_frac="0.1"/>
       <output name="output_h5" ftype="h5">
         <assert_contents>
           <has_h5_keys keys="var/n_cells_by_counts"/>

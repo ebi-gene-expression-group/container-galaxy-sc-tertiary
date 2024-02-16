@@ -47,7 +47,11 @@ PYTHONIOENCODING=utf-8 scanpy-read-10x
       <param name="barcodes" value="barcodes.tsv"/>
       <!-- <param name="cell_meta" value=""/> -->
       <param name="output_format" value="anndata"/>
-      <output name="output_h5ad" file="read_10x.h5" ftype="h5" compare="sim_size" delta_frac="0.1"/>
+      <output name="output_h5ad" ftype="h5">
+        <assert_contents>
+          <has_h5_keys keys="var/gene_symbols"/>
+        </assert_contents>
+      </output>
     </test>
   </tests>
 

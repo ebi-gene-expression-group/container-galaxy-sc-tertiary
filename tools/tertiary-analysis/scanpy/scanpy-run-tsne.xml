@@ -100,7 +100,11 @@ PYTHONIOENCODING=utf-8 scanpy-run-tsne
       <param name="perplexity_file" value="perplexity.txt"/>
       <param name="embeddings" value="true"/>
       <param name="random_seed" value="0"/>
-      <output name="output_h5" file="run_tsne.h5" ftype="h5" compare="sim_size" delta_frac="0.1"/>
+      <output name="output_h5" ftype="h5">
+        <assert_contents>
+          <has_h5_keys keys="obsm/X_tsne"/>
+        </assert_contents>
+      </output>
       <output name="output_embed" file="run_tsne.embeddings.tsv" ftype="tabular" compare="sim_size" delta_frac="0.1">
         <assert_contents>
           <has_n_columns n="3"/>
@@ -115,7 +119,11 @@ PYTHONIOENCODING=utf-8 scanpy-run-tsne
       <param name="perplexity" value="30"/>
       <param name="embeddings" value="true"/>
       <param name="random_seed" value="0"/>
-      <output name="output_h5" file="run_tsne.h5" ftype="h5" compare="sim_size" delta_frac="0.1"/>
+      <output name="output_h5" ftype="h5">
+        <assert_contents>
+          <has_h5_keys keys="obsm/X_tsne"/>
+        </assert_contents>
+      </output>
       <output name="output_embed" file="run_tsne.embeddings.tsv" ftype="tabular" compare="sim_size" delta_frac="0.1">
         <assert_contents>
           <has_n_columns n="3"/>
