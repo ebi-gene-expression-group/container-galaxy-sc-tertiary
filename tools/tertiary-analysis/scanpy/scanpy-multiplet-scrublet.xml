@@ -114,7 +114,7 @@ $filter
 
     Predict cell doublets using a nearest-neighbor classifier of observed transcriptomes and simulated doublets. Works best if the input is a raw (unnormalized) counts matrix from a single sample or a collection of similar samples from the same experiment. This function is a wrapper around functions that pre-process using Scanpy and directly call functions of Scrublet(). 
 
-    This is a wrapper around the Scanpy wrapper for Scrublet- see https://scanpy.readthedocs.io/en/docsearch/external/scanpy.external.pp.scrublet.html.
+    This is a wrapper around the Scanpy wrapper for Scrublet- see https://scanpy.readthedocs.io/en/stable/generated/scanpy.external.pp.scrublet.html.
 
     **Note**
 
