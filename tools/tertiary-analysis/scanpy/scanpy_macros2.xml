@@ -69,12 +69,11 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
 
   <xml name="requirements">
     <requirements>
-      <!--
-        <requirement type="package" version="1.1.6">scanpy-scripts</requirement>
+        <requirement type="package" version="1.9.301">scanpy-scripts</requirement>
       <yield/>
-      This is provisional for testing and should be switched back to the package.
+      <!-- use this format when you want to test against provisional conda artifacts
+        <container type="docker">quay.io/biocontainers/scanpy-scripts:1.9.301  pyhdfd78af_0</container> 
       -->
-      <container type="docker">quay.io/biocontainers/scanpy-scripts:1.9.0--pyhdfd78af_0</container>
     </requirements>
   </xml>
 
