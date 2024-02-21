@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_normalise_data" name="Scanpy NormaliseData" version="@TOOL_VERSION@+galaxy93" profile="@PROFILE@">
+<tool id="scanpy_normalise_data" name="Scanpy NormaliseData" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>to make all cells having the same total expression</description>
   <macros>
     <import>scanpy_macros2.xml</import>

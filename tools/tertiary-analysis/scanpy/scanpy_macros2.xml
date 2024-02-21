@@ -4,6 +4,8 @@
   <token name="@PROFILE@">20.09</token>
   <token name="@VERSION_HISTORY@"><![CDATA[
 **Version history**
+1.9.301+galaxy0: Moves to Scanpy 1.9.3
+
 1.8.1+galaxy9: Fixes version label to get versions sorted properly on Galaxy (equivalent to 1.8.1+3+galaxy0). In addition, adds ability to make fields unique in AnnData operations,
 adds additional handler on Scrubblet for workflows convenience, enables Scanpy tools to avoid outputing AnnData/matrix files when not required.
 
@@ -80,6 +82,7 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
   <xml name="citations">
     <citations>
       <yield />
+      <citation type="doi">10.1038/s41592-021-01102-w</citation>
       <citation type="doi">10.1186/s13059-017-1382-0</citation>
       <citation type="bibtex">
 	@misc{githubscanpy-scripts,
@@ -91,7 +94,6 @@ EMBL-EBI https://www.ebi.ac.uk/ and Teichmann Lab at Wellcome Sanger Institute.
 	url = {https://github.com/ebi-gene-expression-group/scanpy-scripts},
       }</citation>
       <citation type="doi">10.1101/2020.04.08.032698</citation>
-      <citation type="doi">10.1038/s41592-021-01102-w</citation>
     </citations>
   </xml>
 

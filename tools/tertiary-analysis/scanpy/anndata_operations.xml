@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="anndata_ops" name="AnnData Operations" version="@TOOL_VERSION@+galaxy93" profile="@PROFILE@">
-  <description>modifies metadata and flags genes</description>
+<tool id="anndata_ops" name="AnnData Operations" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+  <description>is a Swiss army knife for AnnData files</description>
   <macros>
     <import>scanpy_macros2.xml</import>
   </macros>
