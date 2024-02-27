@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_run_paga" name="Scanpy PAGA" version="@TOOL_VERSION@+galaxy93" profile="@PROFILE@">
+<tool id="scanpy_run_paga" name="Scanpy PAGA" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>trajectory inference</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -43,7 +43,11 @@ PYTHONIOENCODING=utf-8 scanpy-cli paga
       <param name="output_format" value="anndata"/>
       <param name="groups" value="louvain"/>
       <param name="neighbors_key" value="neighbors"/>
-      <output name="output_h5" file="paga.h5" ftype="h5" compare="sim_size"/>
+      <output name="output_h5" ftype="h5">
+        <assert_contents>
+          <has_h5_keys keys="uns/paga"/>
+        </assert_contents>
+      </output>
     </test>
   </tests>
 

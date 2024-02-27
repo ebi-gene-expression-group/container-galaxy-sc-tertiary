@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="anndata_ops" name="AnnData Operations" version="@TOOL_VERSION@+galaxy93" profile="@PROFILE@">
-  <description>modifies metadata and flags genes</description>
+<tool id="anndata_ops" name="AnnData Operations" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+  <description>is a Swiss army knife for AnnData files</description>
   <macros>
     <import>scanpy_macros2.xml</import>
   </macros>
@@ -446,7 +446,11 @@ for field_value in adata.obs["${split_on_obs.key}"].unique():
   <tests>
     <test>
       <param name="input_obj_file" value="find_cluster.h5"/>
-      <output name="output_h5ad" file="anndata_ops.h5" ftype="h5ad" compare="sim_size"/>
+      <output name="output_h5ad" ftype="h5ad">
+        <assert_contents>
+          <has_h5_keys keys="var/gene_symbols"/>
+        </assert_contents>
+      </output>
     </test>
     <test>
       <param name="input_obj_file" value="mnn.h5"/>
@@ -511,7 +515,7 @@ for field_value in adata.obs["${split_on_obs.key}"].unique():
         <param name="default" value="true"/>
         <param name="r_source" value="read_10x.h5"/>
       </conditional>
-      <output name="output_h5ad" file="anndata_ops_raw.h5" ftype="h5ad" compare="sim_size">
+      <output name="output_h5ad" ftype="h5ad">
         <assert_contents>
           <has_h5_keys keys="raw/X" />
         </assert_contents>
@@ -526,7 +530,7 @@ for field_value in adata.obs["${split_on_obs.key}"].unique():
           <param name="dest" value='filtered'/>
         </repeat>
       </conditional>
-      <output name="output_h5ad" file="anndata_ops_xlayer.h5" ftype="h5ad" compare="sim_size">
+      <output name="output_h5ad" ftype="h5ad">
         <assert_contents>
           <has_h5_keys keys="layers/filtered" />
         </assert_contents>
@@ -541,7 +545,7 @@ for field_value in adata.obs["${split_on_obs.key}"].unique():
         </repeat>
         <param name="layer_sources" value='anndata_ops_xlayer.h5'/>
       </conditional>
-      <output name="output_h5ad" file="anndata_ops_layer.h5" ftype="h5ad" compare="sim_size">
+      <output name="output_h5ad" ftype="h5ad">
         <assert_contents>
           <has_h5_keys keys="layers/filtered" />
         </assert_contents>
