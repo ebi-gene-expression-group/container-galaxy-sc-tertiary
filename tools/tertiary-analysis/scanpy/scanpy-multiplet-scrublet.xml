@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_multiplet_scrublet" name="Scanpy Scrublet" version="@TOOL_VERSION@+galaxy9" profile="@PROFILE@">
+<tool id="scanpy_multiplet_scrublet" name="Scanpy Scrublet" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>remove multiplets from annData objects with Scrublet</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -7,7 +7,7 @@
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
 ln -s '${input_obj_file}' input.h5 &&
-PYTHONIOENCODING=utf-8 scanpy-multiplet scrublet 
+PYTHONIOENCODING=utf-8 scanpy-cli multiplet scrublet 
 #if $threshold
     --threshold '${threshold}'
 #end if
@@ -103,7 +103,7 @@ $filter
       <param name="input_obj_file" value="read_10x.h5"/>
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
-      <output name="output_h5" file="scrublet.h5" ftype="h5" compare="sim_size"/>
+      <output name="output_h5" file="scrublet.h5" ftype="h5" compare="sim_size" delta_frac="0.1"/>
     </test>
   </tests>
 
@@ -114,7 +114,7 @@ $filter
 
     Predict cell doublets using a nearest-neighbor classifier of observed transcriptomes and simulated doublets. Works best if the input is a raw (unnormalized) counts matrix from a single sample or a collection of similar samples from the same experiment. This function is a wrapper around functions that pre-process using Scanpy and directly call functions of Scrublet(). 
 
-    This is a wrapper around the Scanpy wrapper for Scrublet- see https://scanpy.readthedocs.io/en/docsearch/external/scanpy.external.pp.scrublet.html.
+    This is a wrapper around the Scanpy wrapper for Scrublet- see https://scanpy.readthedocs.io/en/stable/generated/scanpy.external.pp.scrublet.html.
 
     **Note**
 

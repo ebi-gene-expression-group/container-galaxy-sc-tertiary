@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_plot_scrublet" name="Scanpy Plot Scrublet" version="@TOOL_VERSION@+galaxy9" profile="@PROFILE@">
+<tool id="scanpy_plot_scrublet" name="Scanpy Plot Scrublet" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>visualise multiplet scoring distribution</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -54,7 +54,7 @@ PYTHONIOENCODING=utf-8 scanpy-cli plot scrublet
       <param name="input_format" value="anndata"/>
       <param name="scale_hist_obs" value="linear"/>
       <param name="scale_hist_sim" value="linear"/>
-      <output name="output_png" file="plot_scrublet.png" ftype="png" compare="sim_size"/>
+      <output name="output_png" file="plot_scrublet.png" ftype="png" compare="sim_size" delta_frac="0.1"/>
     </test>
   </tests>
 

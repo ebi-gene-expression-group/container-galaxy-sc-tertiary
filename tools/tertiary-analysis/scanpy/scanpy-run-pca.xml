@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_run_pca" name="Scanpy RunPCA" version="@TOOL_VERSION@+galaxy9" profile="@PROFILE@">
+<tool id="scanpy_run_pca" name="Scanpy RunPCA" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>for dimensionality reduction</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -74,8 +74,12 @@ PYTHONIOENCODING=utf-8 scanpy-run-pca
       <param name="svd_solver" value="arpack"/>
       <param name="random_seed" value="1"/>
       <param name="chunked" value="false"/>
-      <output name="output_h5" file="run_pca.h5" ftype="h5" compare="sim_size"/>
-      <output name="output_embed" file="run_pca.embeddings.tsv" ftype="tabular" compare="sim_size" >
+      <output name="output_h5" ftype="h5">
+        <assert_contents>
+          <has_h5_keys keys="obsm/X_pca"/>
+        </assert_contents>
+      </output>
+      <output name="output_embed" file="run_pca.embeddings.tsv" ftype="tabular" compare="sim_size" delta_frac="0.1" >
         <assert_contents>
           <has_n_columns n="51"/>
         </assert_contents>

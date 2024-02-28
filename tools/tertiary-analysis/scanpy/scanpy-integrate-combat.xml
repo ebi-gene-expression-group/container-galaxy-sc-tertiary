@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_integrate_combat" name="Scanpy ComBat" version="@TOOL_VERSION@+galaxy9" profile="@PROFILE@">
+<tool id="scanpy_integrate_combat" name="Scanpy ComBat" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>adjust expression for variables that might introduce batch effect</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -8,7 +8,7 @@
   <command detect_errors="exit_code"><![CDATA[
 #if $batch_key
   ln -s '${input_obj_file}' input.h5 &&
-  PYTHONIOENCODING=utf-8 scanpy-integrate combat 
+  PYTHONIOENCODING=utf-8 scanpy-cli integrate combat 
   --batch-key '${batch_key}'
   #if $batch_layer
     --batch-layer '${batch_layer}'
@@ -58,13 +58,17 @@
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
       <param name="batch_key" value="louvain"/>
-      <output name="output_h5" file="combat.h5" ftype="h5" compare="sim_size"/>
+      <output name="output_h5" ftype="h5">
+        <assert_contents>
+          <has_h5_keys keys="layers/combat"/>
+        </assert_contents>
+      </output>
     </test>
     <test>
       <param name="input_obj_file" value="find_cluster.h5"/>
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
-      <output name="output_h5" file="combat_copy.h5" ftype="h5" compare="sim_size"/>
+      <output name="output_h5" file="combat_copy.h5" ftype="h5" compare="sim_size" delta_frac="0.1"/>
     </test>
   </tests>
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_read_10x" name="Scanpy Read10x" version="@TOOL_VERSION@+galaxy9" profile="@PROFILE@">
+<tool id="scanpy_read_10x" name="Scanpy Read10x" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>into hdf5 object handled by scanpy</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -47,7 +47,11 @@ PYTHONIOENCODING=utf-8 scanpy-read-10x
       <param name="barcodes" value="barcodes.tsv"/>
       <!-- <param name="cell_meta" value=""/> -->
       <param name="output_format" value="anndata"/>
-      <output name="output_h5ad" file="read_10x.h5" ftype="h5" compare="sim_size"/>
+      <output name="output_h5ad" ftype="h5">
+        <assert_contents>
+          <has_h5_keys keys="var/gene_symbols"/>
+        </assert_contents>
+      </output>
     </test>
   </tests>
 

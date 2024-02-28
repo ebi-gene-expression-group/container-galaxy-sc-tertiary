@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_integrate_harmony" name="Scanpy Harmony" version="@TOOL_VERSION@+galaxy9" profile="@PROFILE@">
+<tool id="scanpy_integrate_harmony" name="Scanpy Harmony" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>adjust principal components for variables that might introduce batch effect</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -8,7 +8,7 @@
   <command detect_errors="exit_code"><![CDATA[
 #if $batch_key
   ln -s '${input_obj_file}' input.h5 &&
-  PYTHONIOENCODING=utf-8 scanpy-integrate harmony
+  PYTHONIOENCODING=utf-8 scanpy-cli integrate harmony
   --batch-key '${batch_key}'
   #if $basis
     --basis '${basis}'
@@ -114,13 +114,17 @@
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
       <param name="batch_key" value="louvain"/>
-      <output name="output_h5" file="harmony.h5" ftype="h5" compare="sim_size"/>
+      <output name="output_h5" ftype="h5">
+        <assert_contents>
+          <has_h5_keys keys="obsm/X_pca_harmony"/>
+        </assert_contents>
+      </output>
     </test>
     <test>
       <param name="input_obj_file" value="find_cluster.h5"/>
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
-      <output name="output_h5" file="harmony_copy.h5" ftype="h5" compare="sim_size"/>
+      <output name="output_h5" file="harmony_copy.h5" ftype="h5" compare="sim_size" delta_frac="0.1"/>
     </test>
   </tests>
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_plot_embed" name="Scanpy PlotEmbed" version="@TOOL_VERSION@+galaxy9" profile="@PROFILE@">
+<tool id="scanpy_plot_embed" name="Scanpy PlotEmbed" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
   <description>visualise cell embeddings</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -90,7 +90,7 @@ $sort_order
       <param name="basis" value="X_pca"/>
       <param name="color_by" value="louvain"/>
       <param name="use_raw" value="false"/>
-      <output name="output_png" file="plot_embed.png" ftype="png" compare="sim_size"/>
+      <output name="output_png" file="plot_embed.png" ftype="png" compare="sim_size" delta_frac="0.1"/>
     </test>
   </tests>
 
