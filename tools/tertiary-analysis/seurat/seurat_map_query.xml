@@ -81,7 +81,7 @@
           <param name="rds_seurat_file" ftype="rdata" value="Classify_anchors.rds"/>
         </conditional>
         <conditional name="reference">
-          <param name="rds_seurat_file" ftype="rdata" value="Classify_reference.rds"/>
+          <param name="rds_seurat_file" ftype="rdata" value="UMAP_result_integrated.rds"/>
         </conditional>
 
         <output name="rds_seurat_file" ftype="rdata" >
