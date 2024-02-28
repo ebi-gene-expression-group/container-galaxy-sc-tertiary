@@ -80,11 +80,15 @@ def score_genes_aucell(
         }
     )
     # run decoupler's run_aucell
-    dc.run_aucell(
-        adata, net=geneset_df, source="geneset", target="gene_id", use_raw=use_raw
-    )
-    # copy .obsm['aucell_estimate'] matrix columns to adata.obs using the column names
-    adata.obs[score_name] = adata.obsm["aucell_estimate"][score_name]
+    # catch the value error
+    try:
+        dc.run_aucell(
+            adata, net=geneset_df, source="geneset", target="gene_id", use_raw=use_raw
+        )
+        # copy .obsm['aucell_estimate'] matrix columns to adata.obs using the column names
+        adata.obs[score_name] = adata.obsm["aucell_estimate"][score_name]
+    except ValueError as ve:
+        print(f"Gene list {score_name} failed, skipping: {str(ve)}")
 
 
 def run_for_genelists(
@@ -158,7 +162,9 @@ if __name__ == "__main__":
         # Load MSigDB file in GMT format
         msigdb = read_gmt(args.gmt_file)
 
-        gene_sets_to_score = args.gene_sets_to_score.split(",") if args.gene_sets_to_score else []
+        gene_sets_to_score = (
+            args.gene_sets_to_score.split(",") if args.gene_sets_to_score else []
+        )
         # Score genes by their ensembl ids using the score_genes_aucell function
         for _, row in msigdb.iterrows():
             gene_set_name = row["gene_set_name"]
