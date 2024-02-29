@@ -6,7 +6,7 @@
     <expand macro="requirements" />
     <expand macro="version" />
     <command detect_errors="exit_code"><![CDATA[
-seurat-scale-data.R
+Rscript '$__tool_directory__/scripts/'seurat-scale-data.R
 
 @INPUT_OBJECT@
 #if $vars:
