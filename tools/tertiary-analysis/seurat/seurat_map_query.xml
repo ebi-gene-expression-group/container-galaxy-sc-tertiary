@@ -16,7 +16,7 @@
     @QUERY_OBJECT@
 
     #if $refdata_field_or_assay
-    --refdata-field-or-assay '$refdata_field_or_assay'
+    --refdata-field-or-assay 'list($refdata_field_or_assay = "$refdata_field_or_assay")'
     #end if
 
 
@@ -83,6 +83,7 @@
         <conditional name="reference">
           <param name="rds_seurat_file" ftype="rdata" value="UMAP_result_integrated.rds"/>
         </conditional>
+        <param name="refdata_field_or_assay" value="celltype"/>
 
         <output name="rds_seurat_file" ftype="rdata" >
           <assert_contents>
