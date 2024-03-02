@@ -87,7 +87,7 @@
 
         <output name="rds_seurat_file" ftype="rdata" >
           <assert_contents>
-            <has_size value="103786543" delta="10000000"/>
+            <has_size value="48941879" delta_frac="0.1" />
           </assert_contents>
         </output>
       </test>
