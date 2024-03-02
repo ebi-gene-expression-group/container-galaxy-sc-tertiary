@@ -15,7 +15,22 @@ MARKERS_LINK='https://drive.google.com/uc?export=download&id=18OmWNc7mF-4pzH6DQk
 
 LOOM_LINK='https://drive.google.com/uc?export=download&id=1qNk5cg8hJG3Nv1ljTKmUEnxTOf11EEZX'
 H5AD_LINK='https://drive.google.com/uc?export=download&id=1YpE0H_t_dkh17P-WBhPijKvRiGP0BlBz'
+
+H5AD_SC182_LINK='https://drive.google.com/uc?export=download&id=16PUJ2KAkXT8F1UkfqU-9LWoOJUkUG1rp'
 SCE_LINK='https://drive.google.com/uc?export=download&id=1UKdyf3M01uAt7oBg93JfmRvNVB_jlUKe'
+
+# Seurat v4 exclusives
+IFNB_BASE_FILE='ifnb_'
+
+IFNB_CTRL_INT_LINK='https://drive.google.com/uc?export=download&id=15E_MLz-UclJYInNaA7YKLhLo5W-qlykL'
+IFNB_STIM_INT_LINK='https://drive.google.com/uc?export=download&id=14iKgCJGPk16dEmpJJF-Gp_lBDcOdo-54'
+
+## Classify and UMAP mapping
+CLASSIFY_QUERY_LINK='https://oc.ebi.ac.uk/s/MlEDILFYRrvkS6E/download'
+CLASSIFY_RESULTS_ANCHORS_OBJECT_LINK='https://drive.google.com/uc?export=download&id=1Xtv4K_CxIU1cJ8RjJ7NTvzLQkLvc8a3i'
+# UMAP_RESULT_OBJECT_LINK='https://oc.ebi.ac.uk/s/k4MdM07y9DAnurp/download'
+UMAP_RESULT_OBJECT_LINK='https://oc.ebi.ac.uk/s/D1z4z2ef1e3dyc3/download'
+
 
 function get_data {
   local link=$1
@@ -28,6 +43,7 @@ function get_data {
 }
 
 # get matrix data
+mkdir -p test-data
 pushd test-data
 get_data $MTX_LINK mtx.zip
 unzip mtx.zip
@@ -49,3 +65,13 @@ rm -f $BASENAME_FILE"-markers.csv.zip"
 get_data $LOOM_LINK $BASENAME_FILE"_loom.h5"
 get_data $SCE_LINK $BASENAME_FILE"_sce.rds"
 get_data $H5AD_LINK $BASENAME_FILE".h5ad"
+
+get_data $H5AD_SC182_LINK $BASENAME_FILE"_sc182.h5ad"
+
+get_data $IFNB_CTRL_INT_LINK $IFNB_BASE_FILE"ctrl_norm_fvg.rds"
+get_data $IFNB_STIM_INT_LINK $IFNB_BASE_FILE"stim_norm_fvg.rds"
+
+get_data $CLASSIFY_QUERY_LINK "Classify_query.rds"
+get_data $CLASSIFY_RESULTS_ANCHORS_OBJECT_LINK "Classify_anchors.rds"
+get_data $UMAP_RESULT_OBJECT_LINK "UMAP_result_integrated.rds"
+

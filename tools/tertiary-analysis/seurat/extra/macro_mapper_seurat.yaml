@@ -1,0 +1,90 @@
+---
+- option_group:
+    - input-object-file
+    - input-format
+  pre_command_macros:
+    - INPUT_OBJ_PREAMBLE
+  post_command_macros:
+    - INPUT_OBJECT
+  input_declaration_macros:
+    - input_object_params
+- option_group:
+    - output-object-file
+    - output-format
+  post_command_macros:
+    - OUTPUT_OBJECT
+  input_declaration_macros:
+    - output_object_params
+  output_declaration_macros:
+    - output_files
+- option_group:
+    - input-object-files
+    - input-format
+  pre_command_macros:
+    - INPUT_OBJS_PREAMBLE
+  post_command_macros:
+    - INPUT_OBJECTS
+  input_declaration_macros:
+    - input_object_params:
+        multiple: true
+- option_group:
+    - reference-object-files
+    - reference-format
+  pre_command_macros:
+    - REFERENCE_OBJS_PREAMBLE
+  post_command_macros:
+    - REFERENCE_OBJECTS
+  input_declaration_macros:
+    - input_object_params:
+        varname: reference
+        multiple: true
+        optional: true
+- option_group:
+    - reference-object-file
+    - reference-format
+  pre_command_macros:
+    - REFERENCE_OBJ_PREAMBLE
+  post_command_macros:
+    - REFERENCE_OBJECT
+  input_declaration_macros:
+    - input_object_params:
+        varname: reference
+- option_group:
+    - anchors-object-file
+    - anchors-format
+  pre_command_macros:
+    - ANCHORS_OBJ_PREAMBLE
+  post_command_macros:
+    - ANCHORS_OBJECT
+  input_declaration_macros:
+    - input_object_params:
+        varname: anchors
+- option_group:
+    - query-object-file
+    - query-format
+  pre_command_macros:
+    - QUERY_OBJ_PREAMBLE
+  post_command_macros:
+    - QUERY_OBJECT
+  input_declaration_macros:
+    - input_object_params:
+        varname: query
+- option_group:
+    - plot-out
+  post_command_macros:
+    - OUTPUT_PLOT
+  output_declaration_macros:
+    - plot_output_files_format:
+        format: png
+    - plot_output_files_format:
+        format: pdf
+    - plot_output_files_format:
+        format: eps
+    - plot_output_files_format:
+        format: jpg
+    - plot_output_files_format:
+        format: ps
+    - plot_output_files_format:
+        format: tiff
+    - plot_output_files_format:
+        format: svg

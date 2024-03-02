@@ -1,0 +1,130 @@
+<tool id="seurat_map_query" name="Seurat map query" profile="18.01" version="@SEURAT_VERSION@+galaxy0">
+    <description>maps against a UMAP layout</description>
+    <macros>
+        <import>seurat_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <expand macro="version" />
+    <command detect_errors="exit_code"><![CDATA[
+    @REFERENCE_OBJ_PREAMBLE@
+    @ANCHORS_OBJ_PREAMBLE@
+    @QUERY_OBJ_PREAMBLE@
+    seurat-map-query.R
+    @OUTPUT_OBJECT@
+    @REFERENCE_OBJECT@
+    @ANCHORS_OBJECT@
+    @QUERY_OBJECT@
+
+    #if $refdata_field_or_assay
+    --refdata-field-or-assay 'list($refdata_field_or_assay = "$refdata_field_or_assay")'
+    #end if
+
+
+    #if $new_reduction_name
+    --new-reduction-name '$new_reduction_name'
+    #end if
+
+
+    #if $reference_reduction
+    --reference-reduction '$reference_reduction'
+    #end if
+
+
+    #if $reduction_model
+    --reduction-model '$reduction_model'
+    #end if
+
+
+    ## #if $transferdata_args
+    ## --transferdata-args '$transferdata_args'
+    ## #end if
+
+
+    ## #if $integrated_embedding_args
+    ## --integrated-embedding-args '$integrated_embedding_args'
+    ## #end if
+
+
+    ## #if $project_umap_args
+    ## --project-umap-args '$project_umap_args'
+    ## #end if
+
+
+    ]]></command>
+    <inputs>
+        <expand macro="output_object_params" />
+        <expand macro="input_object_params" varname="reference"  />
+        <expand macro="input_object_params" varname="anchors"  />
+        <expand macro="input_object_params" varname="query"  />
+        <param label="Refdata-field-or-assay" optional='true' name="refdata_field_or_assay" argument="--refdata-field-or-assay" type="text"   help="The name of the metadata field or assay from the reference object provided. This requires the reference parameter to be specified.">
+          <validator type="regex" message="Value may only include R variable allowed characters: alphanumeric, underscores and period.">^[A-Za-z0-9_\.]+$</validator>
+        </param>
+        <param label="New-reduction-name" optional='true' name="new_reduction_name" argument="--new-reduction-name" type="text"   help="Name for new integrated dimensional reduction."/>
+        <param label="Reference-reduction" optional='true' name="reference_reduction" argument="--reference-reduction" type="text"   help="Name of reduction to use from the reference for neighbor finding"/>
+        <param label="Reduction-model" optional='true' name="reduction_model" argument="--reduction-model" type="text"   help="DimReduc object name that contains the umap model"/>
+        <!-- these params could pose an injection danger and their handling should be improved before being enabled 
+          <param label="Transferdata-args" optional='true' name="transferdata_args" argument="transferdata-args" type="text"   help="A named list of additional arguments to TransferData, written in R syntax .ie list( argument = 'value' )"/>
+          <param label="Integrated-embedding-args" optional='true' name="integrated_embedding_args" argument="integrated-embedding-args" type="text"   help="A named list of additional arguments to IntegrateEmbeddings, written in R syntax .ie list( argument = 'value' )"/>
+          <param label="Project-umap-args" optional='true' name="project_umap_args" argument="project-umap-args" type="text"   help="A named list of additional arguments to ProjectUMAP, written in R syntax .ie list( argument = 'value' )"/>
+        -->
+    </inputs>
+    <outputs>
+        <expand macro="output_files"/>
+    </outputs>
+    <tests>
+      <!-- MANUAL TESTS -->
+      <test>
+        <conditional name="query">
+          <param name="rds_seurat_file" ftype="rdata" value="Classify_query.rds"/>
+        </conditional>
+        <conditional name="anchors">
+          <param name="rds_seurat_file" ftype="rdata" value="Classify_anchors.rds"/>
+        </conditional>
+        <conditional name="reference">
+          <param name="rds_seurat_file" ftype="rdata" value="UMAP_result_integrated.rds"/>
+        </conditional>
+        <param name="refdata_field_or_assay" value="celltype"/>
+
+        <output name="rds_seurat_file" ftype="rdata" >
+          <assert_contents>
+            <has_size value="48941879" delta_frac="0.1" />
+          </assert_contents>
+        </output>
+      </test>
+      <!-- END MANUAL TESTS -->
+    </tests>
+<help>
+<!-- MANUAL HELP -->
+<![CDATA[
+.. class:: infomark
+
+**What it does**
+
+This tool aims to facilitate the mapping steps to UMAP of the Seurat 4.0.4 https://satijalab.org/seurat/articles/integration_mapping.html#unimodal-umap-projection
+tutorial.
+
+It will run the MapQuery method using the query,
+anchors object and reference used to calculate the anchors. All
+options are documented in-line.
+
+-----
+
+**Inputs**
+
+* Query object (can be specified in different formats)
+* Anchors object (can be specified in different formats)
+* Reference object (can be specified in different formats)
+
+All the rest of the parameters are optional.
+
+-----
+
+**Outputs**
+
+* A Seurat (or other format depending on selection) with the mapped object.
+
+]]>
+<!-- END MANUAL HELP -->
+</help>
+    <expand macro="citations" />
+</tool>

@@ -1,0 +1,202 @@
+<tool id="seurat_run_umap" name="Seurat UMAP" profile="18.01" version="@SEURAT_VERSION@+galaxy0">
+    <description>dimensionality reduction</description>
+    <macros>
+        <import>seurat_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <expand macro="version" />
+
+            <command detect_errors="exit_code"><![CDATA[
+                @INPUT_OBJ_PREAMBLE@
+
+                seurat-run-umap.R
+                @INPUT_OBJECT@
+                @OUTPUT_OBJECT@
+
+#if $dims
+--dims '$dims'
+#end if
+
+#if $reduction
+--reduction '$reduction'
+#end if
+
+#if $adv.graph
+--graph '$adv.graph'
+#end if
+
+#if $assay
+--assay '$assay'
+#end if
+
+#if $adv.nn_name
+--nn.name '$adv.nn_name'
+#end if
+
+#if $adv.slot
+--slot '$adv.slot'
+#end if
+
+#if $adv.umap_method
+--umap.method '$adv.umap_method'
+#end if
+
+#if $adv.reduction_model
+--reduction.model '$adv.reduction_model'
+#end if
+$adv.return_model
+
+#if $n_neighbors
+--n.neighbors '$n_neighbors'
+#end if
+
+#if $n_components
+--n.components '$n_components'
+#end if
+
+#if $adv.metric
+--metric '$adv.metric'
+#end if
+
+#if $adv.n_epochs
+--n.epochs '$adv.n_epochs'
+#end if
+
+#if $adv.learning_rate
+--learning.rate '$adv.learning_rate'
+#end if
+
+#if $adv.min_dist
+--min.dist '$adv.min_dist'
+#end if
+
+#if $adv.spread
+--spread '$adv.spread'
+#end if
+
+#if $local_connectivity
+--local.connectivity '$local_connectivity'
+#end if
+
+#if $adv.repulsion_strength
+--repulsion.strength '$adv.repulsion_strength'
+#end if
+
+#if $adv.negative_sample_rate
+--negative.sample.rate '$adv.negative_sample_rate'
+#end if
+
+#if $adv.a
+--a '$adv.a'
+#end if
+
+#if $adv.b
+--b '$adv.b'
+#end if
+$adv.uwot_sgd
+
+#if $seed_use
+--seed.use '$seed_use'
+#end if
+
+##if $adv.metric_kwds
+## --metric.kwds '$adv.metric_kwds'
+##end if
+$adv.angular_rp_forest
+$adv.verbose
+
+#if $reduction_name
+--reduction.name '$reduction_name'
+#end if
+
+#if $reduction_key
+--reduction.key '$reduction_key'
+#end if
+
+            ]]></command>
+
+
+<inputs>
+    <expand macro="input_object_params"/>
+    <expand macro="output_object_params"/>
+    <param label="Dims" optional='true' name="dims" argument="--dims" type="text"   help="Which dimensions to use as input features, used only if list('features')  is NULL">
+      <validator type="regex" message="Value may only include numbers, colon, 'c', commas and parenthesis, to do things such as 1:10 or c(1,2,3).">^[c0-9:,)(]+$</validator>
+    </param>
+    <param label="Reduction" optional='true' value='pca' name="reduction" argument="--reduction" type="text"   help="Which dimensional reduction (PCA or ICA) to use for the UMAP input. Default is PCA"/>
+    <param label="Assay" optional='true' name="assay" argument="--assay" type="text"   help="Assay to pull data for when using  list('features') , or assay used to construct Graph if running UMAP on a Graph"/>
+    <param label="N neighbors" optional='true' value='30' name="n_neighbors" argument="--n.neighbors" type="integer"   help="This determines the number of neighboring points used in local approximations of manifold structure. Larger values will result in more global structure being preserved at the loss of detailed local structure. In general this parameter should often be in the range 5 to 50."/>
+    <param label="N components" optional='true' value='2' name="n_components" argument="--n.components" type="integer"   help="The dimension of the space to embed into."/>
+    <param label="Local connectivity" optional='true' value='1' name="local_connectivity" argument="--local.connectivity" type="integer"   help="The local connectivity required - i.e. the number of nearest neighbors that should be assumed to be connected at a local level. The higher this value the more connected the manifold becomes locally. In practice this should be not more than the local intrinsic dimension of the manifold."/>
+    <param label="Seed use" optional='true' value='42' name="seed_use" argument="--seed.use" type="integer"   help="Set a random seed. By default, sets the seed to 42. Setting NULL will not set a seed"/>
+    <param label="Reduction name" optional='true' value='umap' name="reduction_name" argument="--reduction.name" type="text"   help="Name to store dimensional reduction under in the Seurat object"/>
+    <param label="Reduction key" optional='true' value='UMAP' name="reduction_key" argument="--reduction.key" type="text"   help="dimensional reduction key, specifies the string before the number for the dimension names. UMAP by default"/>
+    <section name="adv" title="Advanced options">
+        <param label="Graph" optional='true' name="graph" argument="--graph" type="text"   help="Name of graph on which to run UMAP"/>
+        <param label="Nn name" optional='true' name="nn_name" argument="--nn.name" type="text"   help="Name of knn output on which to run UMAP"/>
+        <param label="Slot" optional='true' value='data' name="slot" argument="--slot" type="text"   help="The slot used to pull data for when using  list('features') . data slot is by default."/>
+        <param label="Umap method" optional='true' value='uwot' name="umap_method" argument="--umap.method" type="text"   help="UMAP implementation to run. Can be list uwot, uwot-learn, umap-learn (rquires python umap-learn package)."/>
+        <param label="Reduction model" optional='true' name="reduction_model" argument="--reduction.model" type="text"   help="list('DimReduc')  object that contains the umap model"/>
+        <param label="Return model" optional='true' value='false' name="return_model" argument="--return.model" type="boolean"  truevalue='--return.model' falsevalue='' checked='false' help="whether UMAP will return the uwot model"/>
+        <param label="Metric" optional='true' value='cosine' name="metric" argument="--metric" type="text"   help="metric: This determines the choice of metric used to measure distance in the input space. A wide variety of metrics are already coded, and a user defined function can be passed as long as it has been JITd by numba."/>
+        <param label="N epochs" optional='true' name="n_epochs" argument="--n.epochs" type="integer"   help="The number of training epochs to be used in optimizing the low dimensional embedding. Larger values result in more accurate embeddings. If NULL is specified, a value will be selected based on the size of the input dataset (200 for large datasets, 500 for small)."/>
+        <param label="Learning rate" optional='true' value='1' name="learning_rate" argument="--learning.rate" type="integer"   help="The initial learning rate for the embedding optimization."/>
+        <param label="Min dist" optional='true' value='0' name="min_dist" argument="--min.dist" type="integer"   help="This controls how tightly the embedding is allowed compress points together. Larger values ensure embedded points are moreevenly distributed, while smaller values allow the algorithm to optimise more accurately with regard to local structure. Sensible values are in the range 0.001 to 0.5."/>
+        <param label="Spread" optional='true' value='1' name="spread" argument="--spread" type="integer"   help="The effective scale of embedded points. In combination with min.dist this determines how clustered/clumped the embedded points are."/>
+        <param label="Repulsion strength" optional='true' value='1' name="repulsion_strength" argument="--repulsion.strength" type="integer"   help="Weighting applied to negative samples in low dimensional embedding optimization. Values higher than one will result in greater weight being given to negative samples."/>
+        <param label="Negative sample rate" optional='true' value='5' name="negative_sample_rate" argument="--negative.sample.rate" type="integer"   help="The number of negative samples to select per positive sample in the optimization process. Increasing this value will result in greater repulsive force being applied, greater optimization cost, but slightly more accuracy."/>
+        <param label="A" optional='true' name="a" argument="--a" type="text"   help="More specific parameters controlling the embedding. If NULL, these values are set automatically as determined by min. dist and spread. Parameter of differentiable approximation of right adjoint functor."/>
+        <param label="B" optional='true' name="b" argument="--b" type="text"   help="More specific parameters controlling the embedding. If NULL, these values are set automatically as determined by min. dist and spread. Parameter of differentiable approximation of right adjoint functor."/>
+        <param label="Uwot sgd" optional='true' value='false' name="uwot_sgd" argument="--uwot.sgd" type="boolean"  truevalue='--uwot.sgd' falsevalue='' checked='false' help="Set list('uwot::umap(fast_sgd = TRUE)') ; see  list('umap')  for more details"/>
+        <!-- Potential injection concern, needs to be handled better before being enabled.
+          <param label="Metric kwds" optional='true' name="metric_kwds" argument="metric.kwds" type="text"   help="A dictionary of arguments to pass on to the metric, such as the p value for Minkowski distance. If NULL then no arguments are passed on."/> 
+        -->
+        <param label="Angular rp forest" optional='true' value='false' name="angular_rp_forest" argument="--angular.rp.forest" type="boolean"  truevalue='--angular.rp.forest' falsevalue='' checked='false' help="Whether to use an angular random projection forest to initialise the approximate nearest neighbor search. This can be faster, but is mostly on useful for metric that use an angular style distance such as cosine, correlation etc. In the case of those metrics angular forests will be chosen automatically."/>
+        <param label="Verbose" optional='true' value='true' name="verbose" argument="--do-not-verbose" type="boolean"  truevalue='' falsevalue='--do-not-verbose' checked='true' help="Controls verbosity"/>
+    </section>
+</inputs>
+
+<outputs>
+    <expand macro="output_files"/>
+</outputs>
+
+
+
+<tests>
+  <!-- MANUAL TESTS -->
+  <test>
+      <param name="rds_seurat_file" ftype="rdata" value="E-MTAB-6077-3k_features_90_cells-clusters.rds"/>
+      <param name="dims" value="1:10"/>
+      <output name="rds_seurat_file" ftype="rdata" >
+        <assert_contents>
+          <has_size value="5067150" delta="200000"/>
+        </assert_contents>
+      </output>
+  </test>
+  <test>
+    <param name="rds_seurat_file" ftype="rdata" value="E-MTAB-6077-3k_features_90_cells-clusters.rds"/>
+    <param name="dims" value="c(1,2,3,4,5,6,7,8,9,10)"/>
+    <output name="rds_seurat_file" ftype="rdata" >
+      <assert_contents>
+        <has_size value="5067150" delta="200000"/>
+      </assert_contents>
+    </output>
+</test>
+  <!-- END MANUAL TESTS -->
+</tests>
+<help>
+  <!-- MANUAL HELP -->
+  <![CDATA[
+  .. class:: infomark
+
+  **What it does**
+
+  @SEURAT_INTRO@
+
+  For more details on this method, please see the individual in-line documentation or the same method's Seurat 4 documentation.
+
+  @VERSION_HISTORY@
+  ]]>
+  <!-- END MANUAL HELP -->
+</help>
+<expand macro="citations" />
+</tool>
