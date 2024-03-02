@@ -130,7 +130,7 @@ if (! is.null(opt$genes_use)){
 }
 
 # break up opt$vars_to_regress into a list if it has commas
-opt$vars_to_regress <- strsplit(opt$vars_to_regress, ",")
+opt$vars_to_regress <- unlist(strsplit(opt$vars_to_regress, ","))
 
 # Now we're hapy with the arguments, load Seurat and do the work
 
