@@ -26,7 +26,7 @@ IFNB_CTRL_INT_LINK='https://drive.google.com/uc?export=download&id=15E_MLz-UclJY
 IFNB_STIM_INT_LINK='https://drive.google.com/uc?export=download&id=14iKgCJGPk16dEmpJJF-Gp_lBDcOdo-54'
 
 ## Classify and UMAP mapping
-CLASSIFY_QUERY_LINK='https://drive.google.com/uc?export=download&id=1RFsHa_1EFD_n-19JH_cHGqxwO66QdmXN'
+CLASSIFY_QUERY_LINK='https://oc.ebi.ac.uk/s/MlEDILFYRrvkS6E/download'
 CLASSIFY_RESULTS_ANCHORS_OBJECT_LINK='https://drive.google.com/uc?export=download&id=1Xtv4K_CxIU1cJ8RjJ7NTvzLQkLvc8a3i'
 # UMAP_RESULT_OBJECT_LINK='https://oc.ebi.ac.uk/s/k4MdM07y9DAnurp/download'
 UMAP_RESULT_OBJECT_LINK='https://oc.ebi.ac.uk/s/D1z4z2ef1e3dyc3/download'
