@@ -59,6 +59,11 @@ parser.add_argument(
 parser.add_argument(
     "--min_n", help="Minimum of targets per source. If less, sources are removed.", default=5, type=int
 )
+
+# add activity inference method option
+parser.add_argument(
+    "-m", "--method", help="Activity inference method", default="mlm", required=True
+)
 args = parser.parse_args()
 
 # check that either -o or --output is specified
@@ -82,25 +87,51 @@ if (
 
 
 print(type(args.min_n))
-dc.run_mlm(
-    mat=adata,
-    net=network,
-    source=args.source,
-    target=args.target,
-    weight=args.weight,
-    verbose=True,
-    min_n=args.min_n,
-    use_raw=args.use_raw #Failing at the moment
-)
 
-if args.output is not None:
-    # write adata.obsm[mlm_key] and adata.obsm[mlm_pvals_key] to the output network files
-    combined_df = pd.concat([adata.obsm["mlm_estimate"], adata.obsm["mlm_pvals"]], axis=1)
+if args.method == "mlm":
+    dc.run_mlm(
+        mat=adata,
+        net=network,
+        source=args.source,
+        target=args.target,
+        weight=args.weight,
+        verbose=True,
+        min_n=args.min_n,
+        use_raw=args.use_raw #Failing at the moment
+    )
 
-    # Save the combined dataframe to a file
-    combined_df.to_csv(args.output + "_mlm.tsv", sep="\t")
+    if args.output is not None:
+        # write adata.obsm[mlm_key] and adata.obsm[mlm_pvals_key] to the output network files
+        combined_df = pd.concat([adata.obsm["mlm_estimate"], adata.obsm["mlm_pvals"]], axis=1)
 
-# if args.activities_path is specified, generate the activities AnnData and save the AnnData object to the specified path
-if args.activities_path is not None:
-    acts = dc.get_acts(adata, obsm_key="mlm_estimate")
-    acts.write_h5ad(args.activities_path)
+        # Save the combined dataframe to a file
+        combined_df.to_csv(args.output + ".tsv", sep="\t")
+
+    # if args.activities_path is specified, generate the activities AnnData and save the AnnData object to the specified path
+    if args.activities_path is not None:
+        acts = dc.get_acts(adata, obsm_key="mlm_estimate")
+        acts.write_h5ad(args.activities_path)
+
+elif args.method == "ulm":
+    dc.run_ulm(
+        mat=adata,
+        net=network,
+        source=args.source,
+        target=args.target,
+        weight=args.weight,
+        verbose=True,
+        min_n=args.min_n,
+        use_raw=args.use_raw #Failing at the moment
+    )
+
+    if args.output is not None:
+        # write adata.obsm[mlm_key] and adata.obsm[mlm_pvals_key] to the output network files
+        combined_df = pd.concat([adata.obsm["ulm_estimate"], adata.obsm["ulm_pvals"]], axis=1)
+
+        # Save the combined dataframe to a file
+        combined_df.to_csv(args.output + ".tsv", sep="\t")
+
+    # if args.activities_path is specified, generate the activities AnnData and save the AnnData object to the specified path
+    if args.activities_path is not None:
+        acts = dc.get_acts(adata, obsm_key="ulm_estimate")
+        acts.write_h5ad(args.activities_path)

@@ -10,6 +10,7 @@
             -i '$input_anndata'
             -n '$input_network_file'
             --min_n "$min_n"
+            --method '$method'
             $use_raw
             --output "inference"
             $write_activities_path
@@ -18,6 +19,10 @@
         <param name="input_anndata" type="data" format="h5ad" label="Input AnnData file" />
         <param name="input_network_file" type="data" format="tabular" label="Input Network file" help="Network file is tabular file with Source, Target and Weight. Source is a transcription factor(s) with specific regulation to target genes, either positive or negative." />
         <param name="min_n" type="integer" min="0" value="5" label="Minimum of targets per source." help="If targets are less than minimum, sources are removed" />
+        <param name="method" type="select" label="Activity inference method">
+            <option value="mlm" selected="true">MLM</option>
+            <option value="ulm">ULM</option>
+        </param>
         <param name="use_raw" type="boolean" truevalue="--use_raw" falsevalue="" checked="false" label="Use the raw part of the AnnData object" />
         <param name="write_activities_path" type="boolean" truevalue="--activities_path anndata_activities_path.h5ad" falsevalue="" checked="true" label="Write the modified AnnData object" />
     </inputs>
@@ -25,7 +30,7 @@
         <data name="output_ad" format="h5ad" from_work_dir="anndata_activities_path.h5ad" label="${tool.name} on ${on_string}: Output AnnData file">
             <filter>write_activities_path</filter>
         </data>
-        <data name="output_table_mlm" format="tabular" from_work_dir="inference_mlm.tsv" label="${tool.name} on ${on_string}: Output MLM estimate table" />
+        <data name="output_table" format="tabular" from_work_dir="inference.tsv" label="${tool.name} on ${on_string}: Output estimate table" />
     </outputs>
     <tests>
         <!-- Hint: You can use [ctrl+alt+t] after defining the inputs/outputs to auto-scaffold some basic test cases. -->
@@ -34,6 +39,7 @@
         <param name="input_anndata" value="pbmc3k_processed.h5ad"/>
         <param name="input_network_file" value="progeny_test.tsv"/>
         <param name="min_n" value="0"/>
+        <param name="method" value="mlm"/>
         <param name="use_raw" value="false"/>
         <param name="write_activities_path" value="true"/>
         <output name="output_ad">
@@ -41,7 +47,25 @@
                 <has_h5_keys keys="obsm/mlm_estimate"/>
             </assert_contents>
         </output>
-        <output name="output_table_mlm">
+        <output name="output_table">
+            <assert_contents>
+                <has_n_columns n="5"/>
+            </assert_contents>
+        </output>
+    </test>
+    <test>
+        <param name="input_anndata" value="pbmc3k_processed.h5ad"/>
+        <param name="input_network_file" value="progeny_test.tsv"/>
+        <param name="min_n" value="0"/>
+        <param name="method" value="ulm"/>
+        <param name="use_raw" value="false"/>
+        <param name="write_activities_path" value="true"/>
+        <output name="output_ad">
+            <assert_contents>
+                <has_h5_keys keys="obsm/ulm_estimate"/>
+            </assert_contents>
+        </output>
+        <output name="output_table">
             <assert_contents>
                 <has_n_columns n="5"/>
             </assert_contents>
@@ -66,7 +90,7 @@ The input file should be an AnnData object in H5AD format. The tool accepts an H
 The tool also takes network file containing a collection of pathways and their target genes, with weights for each interaction.
         Example:
         ```
-        	    source    target    weight
+                source    target    weight
             0    T1    G01    1.0
             1    T1    G02    1.0
             2    T1    G03    0.7
