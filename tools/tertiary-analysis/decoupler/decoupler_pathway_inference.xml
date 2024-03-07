@@ -16,8 +16,8 @@
     </command>
     <inputs>
         <param name="input_anndata" type="data" format="h5ad" label="Input AnnData file" />
-        <param name="input_network_file" type="data" format="tabular" label="Input Network file" />
-        <param name="min_n" type="integer" min="0" value="5" label="Minimum of targets per source. If less, sources are removed" />
+        <param name="input_network_file" type="data" format="tabular" label="Input Network file" help="Network file is tabular file with Source, Target and Weight. Source is a transcription factor(s) with specific regulation to target genes, either positive or negative." />
+        <param name="min_n" type="integer" min="0" value="5" label="Minimum of targets per source." help="If targets are less than minimum, sources are removed" />
         <param name="use_raw" type="boolean" truevalue="--use_raw" falsevalue="" checked="false" label="Use the raw part of the AnnData object" />
         <param name="write_activities_path" type="boolean" truevalue="--activities_path anndata_activities_path.h5ad" falsevalue="" checked="true" label="Write the modified AnnData object" />
     </inputs>
@@ -57,13 +57,22 @@ Usage
 
 **Description**
 
-This tool scores cells using the AUCell method for gene sets.
+This tool extracts pathway activity inference using decoupler.
 
 **Input**
 
 The input file should be an AnnData object in H5AD format. The tool accepts an H5AD file containing raw or normalized data.
 
-The tool also takes network file containing a collection of pathways and their target genes, with weights for each interaction
+The tool also takes network file containing a collection of pathways and their target genes, with weights for each interaction.
+        Example:
+        ```
+        	    source    target    weight
+            0    T1    G01    1.0
+            1    T1    G02    1.0
+            2    T1    G03    0.7
+            3    T2    G04    1.0
+            4    T2    G06    -0.5
+        ```
 
 You can also specify whether to use the raw data in the AnnData object instead of the X matrix using the "use_raw" parameter and Minimum of targets per source using "min_n".
 
