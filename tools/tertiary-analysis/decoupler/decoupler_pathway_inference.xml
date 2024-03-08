@@ -98,6 +98,17 @@ The tool also takes network file containing a collection of pathways and their t
             4    T2    G06    -0.5
         ```
 
+        or 
+
+        ```
+            source    target    weight
+            T1    G01    1.0
+            T1    G02    1.0
+            T1    G03    0.7
+            T2    G04    1.0
+            T2    G06    -0.5
+        ```
+
 You can also specify whether to use the raw data in the AnnData object instead of the X matrix using the "use_raw" parameter and Minimum of targets per source using "min_n".
 
 
