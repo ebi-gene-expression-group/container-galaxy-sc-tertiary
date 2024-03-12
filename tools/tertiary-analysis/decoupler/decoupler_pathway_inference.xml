@@ -17,7 +17,7 @@
     </command>
     <inputs>
         <param name="input_anndata" type="data" format="h5ad" label="Input AnnData file" />
-        <param name="input_network_file" type="data" format="tabular" label="Input Network file" help="Network file is tabular file with Source, Target and Weight. Source is a transcription factor(s) with specific regulation to target genes, either positive or negative." />
+        <param name="input_network_file" type="data" format="tabular" label="Input Network file" help="Tabular file with columns Source, Target and Weight. A source gene/pathway regulates/contains a target gene, weights can be either positive or negative. The source element needs to be part of the network, the target is a gene in the network and in the dataset" />
         <param name="min_n" type="integer" min="0" value="5" label="Minimum targets per source." help="If targets are less than minimum, sources are removed" />
         <param name="method" type="select" label="Activity inference method">
             <option value="mlm" selected="true">Multivariate linear model (MLM)</option>
