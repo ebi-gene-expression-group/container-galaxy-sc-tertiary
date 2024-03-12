@@ -24,7 +24,7 @@
             <option value="ulm">ULM</option>
         </param>
         <param name="use_raw" type="boolean" truevalue="--use_raw" falsevalue="" checked="false" label="Use the raw part of the AnnData object" />
-        <param name="write_activities_path" type="boolean" truevalue="--activities_path anndata_activities_path.h5ad" falsevalue="" checked="true" label="Write the modified AnnData object" />
+        <param name="write_activities_path" type="boolean" truevalue="--activities_path anndata_activities_path.h5ad" falsevalue="" checked="true" label="Write the activities AnnData object (contains the MLM/ULM activity results for each pathway and each cell in the main matrix, it is not a replacement of the original AnnData provided as input)." />
     </inputs>
     <outputs>
         <data name="output_ad" format="h5ad" from_work_dir="anndata_activities_path.h5ad" label="${tool.name} on ${on_string}: Regulators/Pathways activity AnnData file">
