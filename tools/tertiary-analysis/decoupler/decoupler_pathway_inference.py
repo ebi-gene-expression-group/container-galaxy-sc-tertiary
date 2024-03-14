@@ -25,11 +25,6 @@ parser.add_argument(
     default=None,
 )
 
-# figure size option
-parser.add_argument(
-    "-f", "--figure_size", help="figure size", default="10,10"
-)
-
 # path to save Activities AnnData file
 parser.add_argument(
     "-a", "--activities_path", help="Path to save Activities AnnData file", default=None
@@ -97,7 +92,7 @@ if args.method == "mlm":
         weight=args.weight,
         verbose=True,
         min_n=args.min_n,
-        use_raw=args.use_raw #Failing at the moment
+        use_raw=args.use_raw 
     )
 
     if args.output is not None:
@@ -121,7 +116,7 @@ elif args.method == "ulm":
         weight=args.weight,
         verbose=True,
         min_n=args.min_n,
-        use_raw=args.use_raw #Failing at the moment
+        use_raw=args.use_raw 
     )
 
     if args.output is not None:
