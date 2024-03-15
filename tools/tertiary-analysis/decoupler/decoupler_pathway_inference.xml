@@ -95,7 +95,7 @@ Usage
 
 This tool extracts pathway activity inference using decoupler.
 
-**Input**
+**Input** 
 
 The input file should be an AnnData object in H5AD format. The tool accepts an H5AD file containing raw or normalized data.
 
