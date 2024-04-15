@@ -124,6 +124,23 @@
                 </assert_contents>
             </output>
         </test>
+        <test expect_num_outputs="1">
+            <param name="input_file" value="mito_counted_anndata.h5ad"/>
+            <param name="gene_symbols_field" value="Symbol"/>
+            <param name="write_anndata" value="False"/>
+            <param name="min_n_genes" value="33"/>
+            <conditional name="gene_lists_source">
+                <param name="source" value="gmt"/>
+                <param name="gene_sets_to_score" value="HALLMARK_NOTCH_SIGNALING,HALLMARK_APICAL_SURFACE"/>
+                <param name="gmt_file" value="mouse_hallmark_ss.gmt"/>
+            </conditional>
+            <output name="output_table">
+                <assert_contents>
+                    <has_n_columns n="3"/>
+                    <has_text_matching expression="AUCell_HALLMARK_APICAL_SURFACE"/>
+                </assert_contents>
+            </output>
+        </test>
     </tests>
     <help>
 **Description**
