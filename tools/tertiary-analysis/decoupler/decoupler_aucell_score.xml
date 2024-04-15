@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<tool id="score_genes_aucell" name="Decoupler AUCell" version="1.4.0+galaxy1" profile="20.05">
+<tool id="score_genes_aucell" name="Decoupler AUCell" version="1.4.0+galaxy2" profile="20.05">
     <description>
         scores cells using the AUCell method for gene sets.
     </description>
@@ -20,6 +20,9 @@
             #end if
             --gene_symbols_field '$gene_symbols_field'
             $use_raw
+            #if $min_n_genes:
+            --min_n '$min_n_genes'
+            #end if
             #if $write_anndata:
             --write_anndata
             --output_file anndata_aucell.h5ad
@@ -43,6 +46,7 @@
                 <param name="score_names" type="text" label="Score names" />
             </when>
         </conditional>
+        <param name="min_n_genes" type="integer" label="Minimum number of genes" help="Minimum number of genes to match in each gene set" optional="true" value="5"/>
         <param name="gene_symbols_field" type="text" label="Gene symbols field" help="The field in the AnnData var table where gene symbols are stored."/>
         <param name="use_raw" type="boolean" value="false" truevalue="--use_raw" falsevalue="" label="Use raw data" help="Use RAW data in the AnnData instead of the X matrix."/>
         <param name="write_anndata" type="boolean" value="false" truevalue="--write_anndata" falsevalue="" label="Write the modified AnnData object" help="Whether to write or not the same AnnData file again with the signatures on it. If unselected, a text files of cells in rows and signatures in columns (as in Obs) is produced."/>

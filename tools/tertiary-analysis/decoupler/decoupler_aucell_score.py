@@ -53,7 +53,7 @@ def read_gmt(gmt_file):
 
 
 def score_genes_aucell(
-    adata: anndata.AnnData, gene_list: list, score_name: str, use_raw=False
+    adata: anndata.AnnData, gene_list: list, score_name: str, use_raw=False, min_n_genes=5
 ):
     """Score genes using Aucell.
 
@@ -80,15 +80,19 @@ def score_genes_aucell(
         }
     )
     # run decoupler's run_aucell
-    dc.run_aucell(
-        adata, net=geneset_df, source="geneset", target="gene_id", use_raw=use_raw
-    )
-    # copy .obsm['aucell_estimate'] matrix columns to adata.obs using the column names
-    adata.obs[score_name] = adata.obsm["aucell_estimate"][score_name]
+    # catch the value error
+    try:
+        dc.run_aucell(
+            adata, net=geneset_df, source="geneset", target="gene_id", use_raw=use_raw
+        )
+        # copy .obsm['aucell_estimate'] matrix columns to adata.obs using the column names
+        adata.obs[score_name] = adata.obsm["aucell_estimate"][score_name]
+    except ValueError as ve:
+        print(f"Gene list {score_name} failed, skipping: {str(ve)}")
 
 
 def run_for_genelists(
-    adata, gene_lists, score_names, use_raw=False, gene_symbols_field="gene_symbols"
+    adata, gene_lists, score_names, use_raw=False, gene_symbols_field="gene_symbols", min_n_genes=5
 ):
     if len(gene_lists) == len(score_names):
         for gene_list, score_names in zip(gene_lists, score_names):
@@ -99,6 +103,7 @@ def run_for_genelists(
                 ens_gene_ids,
                 f"AUCell_{score_names}",
                 use_raw,
+                min_n_genes
             )
     else:
         raise ValueError(
@@ -143,6 +148,14 @@ if __name__ == "__main__":
         help="Name of the gene symbols field in the AnnData object",
         required=True,
     )
+    # argument for min_n Minimum of targets per source. If less, sources are removed.
+    parser.add_argument(
+        "--min_n",
+        type=int,
+        required=False,
+        default=5,
+        help="Minimum of targets per source. If less, sources are removed.",
+    )
     parser.add_argument("--use_raw", action="store_true", help="Use raw data")
     parser.add_argument(
         "--write_anndata", action="store_true", help="Write the modified AnnData object"
@@ -158,7 +171,9 @@ if __name__ == "__main__":
         # Load MSigDB file in GMT format
         msigdb = read_gmt(args.gmt_file)
 
-        gene_sets_to_score = args.gene_sets_to_score.split(",") if args.gene_sets_to_score else []
+        gene_sets_to_score = (
+            args.gene_sets_to_score.split(",") if args.gene_sets_to_score else []
+        )
         # Score genes by their ensembl ids using the score_genes_aucell function
         for _, row in msigdb.iterrows():
             gene_set_name = row["gene_set_name"]
@@ -169,13 +184,13 @@ if __name__ == "__main__":
                     adata.var[args.gene_symbols_field].isin(genes)
                 ].index
                 score_genes_aucell(
-                    adata, ens_gene_ids, f"AUCell_{gene_set_name}", args.use_raw
+                    adata, ens_gene_ids, f"AUCell_{gene_set_name}", args.use_raw, args.min_n
                 )
     elif args.gene_lists_to_score is not None and args.score_names is not None:
         gene_lists = args.gene_lists_to_score.split(":")
         score_names = args.score_names.split(",")
         run_for_genelists(
-            adata, gene_lists, score_names, args.use_raw, args.gene_symbols_field
+            adata, gene_lists, score_names, args.use_raw, args.gene_symbols_field, args.min_n
         )
 
     # Save the modified AnnData object or generate a file with cells as rows and the new score_names columns
