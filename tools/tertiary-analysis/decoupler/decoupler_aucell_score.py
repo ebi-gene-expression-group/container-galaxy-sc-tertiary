@@ -95,7 +95,8 @@ def score_genes_aucell_mt(adata: anndata.AnnData, gene_set_gene: pd.DataFrame, u
             adata, net=gene_set_gene, source="gene_set", target="gene", use_raw=use_raw, min_n=min_n_genes
         )
     for gs in gene_set_gene.gene_set.unique():
-        adata.obs[f"AUCell_{gs}"] = adata.obsm["aucell_estimate"][gs]
+        if gs in adata.obsm['aucell_estimate'].keys():
+            adata.obs[f"AUCell_{gs}"] = adata.obsm["aucell_estimate"][gs]
 
 
 def run_for_genelists(
