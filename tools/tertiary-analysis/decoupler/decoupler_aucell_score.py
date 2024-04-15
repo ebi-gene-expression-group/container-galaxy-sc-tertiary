@@ -192,7 +192,7 @@ if __name__ == "__main__":
         )
         if gene_sets_to_score:
             # we limit the GMT file read to the genesets specified in the gene_sets_to_score argument
-            msigdb = msigdb[msigdb["gene_set_name"].isin(gene_sets_to_score)]
+            msigdb = msigdb[msigdb["gene_set"].isin(gene_sets_to_score)]
         
         score_genes_aucell_mt(adata, msigdb, args.use_raw, args.min_n, var_gene_symbols_field=args.gene_symbols_field)
     elif args.gene_lists_to_score is not None and args.score_names is not None:
