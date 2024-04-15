@@ -22,6 +22,7 @@
             $use_raw
             #if $min_n_genes:
             --min_n '$min_n_genes'
+            #end if
             #if $write_anndata:
             --write_anndata
             --output_file anndata_aucell.h5ad
