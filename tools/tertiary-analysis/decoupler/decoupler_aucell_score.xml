@@ -136,7 +136,7 @@
             </conditional>
             <output name="output_table">
                 <assert_contents>
-                    <has_n_columns n="3"/>
+                    <has_n_columns n="2"/>
                     <has_text_matching expression="AUCell_HALLMARK_APICAL_SURFACE"/>
                 </assert_contents>
             </output>
