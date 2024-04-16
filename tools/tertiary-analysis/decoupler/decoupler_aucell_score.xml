@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<tool id="score_genes_aucell" name="Decoupler AUCell" version="1.4.0+galaxy2" profile="20.05">
+<tool id="score_genes_aucell" name="Decoupler AUCell" version="1.4.0+galaxy3" profile="20.05">
     <description>
         scores cells using the AUCell method for gene sets.
     </description>
@@ -29,6 +29,7 @@
             #else:
             --output_file anndata_aucell_per_cell.tsv
             #end if
+            --max_threads "\${GALAXY_SLOTS:-4}"
     </command>
     <inputs>
         <param name="input_file" type="data" format="h5ad" label="Input AnnData file" />
@@ -120,6 +121,23 @@
                 <assert_contents>
                     <has_n_columns n="3"/>
                     <has_text_matching expression="AUCell_HALLMARK_NOTCH_SIGNALING"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="1">
+            <param name="input_file" value="mito_counted_anndata.h5ad"/>
+            <param name="gene_symbols_field" value="Symbol"/>
+            <param name="write_anndata" value="False"/>
+            <param name="min_n_genes" value="33"/>
+            <conditional name="gene_lists_source">
+                <param name="source" value="gmt"/>
+                <param name="gene_sets_to_score" value="HALLMARK_NOTCH_SIGNALING,HALLMARK_APICAL_SURFACE"/>
+                <param name="gmt_file" value="mouse_hallmark_ss.gmt"/>
+            </conditional>
+            <output name="output_table">
+                <assert_contents>
+                    <has_n_columns n="2"/>
+                    <has_text_matching expression="AUCell_HALLMARK_APICAL_SURFACE"/>
                 </assert_contents>
             </output>
         </test>
