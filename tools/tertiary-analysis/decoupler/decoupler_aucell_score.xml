@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<tool id="score_genes_aucell" name="Decoupler AUCell" version="1.4.0+galaxy3" profile="20.05">
+<tool id="score_genes_aucell" name="Decoupler AUCell" version="1.6.0+galaxy0" profile="20.05">
     <description>
         scores cells using the AUCell method for gene sets.
     </description>
     <requirements>
-        <requirement type="package" version="1.4.0">decoupler</requirement>
+        <requirement type="package" version="1.6.0">decoupler-py</requirement>
     </requirements>
     <command>
         python '$__tool_directory__/decoupler_aucell_score.py'
@@ -156,7 +156,7 @@ The tool takes one of two input formats for specifying the gene sets to score:
 1. A GMT file containing gene sets. You can specify which gene sets to use within the GMT file using the "gene_sets_to_score" parameter.
 2. A list of genes and their associated score names. You can specify the genes to score using the "gene_lists_to_score" parameter, and their associated score names using the "score_names" parameter.
 
-In both cases, you must specify the name of the field in the AnnData object that contains the gene symbols using the "gene_symbols_field" parameter.
+In both cases, you must specify the name of the field in the AnnData object that contains the gene symbols using the "gene_symbols_field" parameter, unless that the AnnData var is indexed in the same way that the given GMTs or gene sets.
 
 You can also specify whether to use the raw data in the AnnData object instead of the X matrix using the "use_raw" parameter.
 
