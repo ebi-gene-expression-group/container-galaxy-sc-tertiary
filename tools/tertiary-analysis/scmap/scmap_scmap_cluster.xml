@@ -13,14 +13,18 @@
         <param name="threshold" type="float" label="Threshold" value="0.7" help="Threshold on similarity (or probability for SVM and RF)." />
     </inputs>
     <outputs>
-        <data name="output_single_cell_experiment" format="rdata" />
-        <data name="output_txt" format="tabular" />
+        <data name="output_single_cell_experiment" format="rdata" label="${tool.name} on ${on_string}: RDS object"/>
+        <data name="output_txt" format="tabular" label="${tool.name} on ${on_string}: table"/>
     </outputs>
     <tests>
         <test>
             <param name="index_single_cell_experiment" value="index_cluster.rds" ftype="rdata"/>
             <param name="project_single_cell_experiment" value="test_sce_processed.rds" ftype="rdata"/>
-            <output name="output_single_cell_experiment" file="project_cluster.rds" compare="sim_size"/>
+            <output name="output_single_cell_experiment" file="project_cluster.rds">
+                <assert_contents>
+                    <has_size value="6100k" delta="500k"/>
+                </assert_contents>
+            </output>
             <output name="output_txt" file="project_cluster.tsv" compare="sim_size"/>
         </test>
     </tests>

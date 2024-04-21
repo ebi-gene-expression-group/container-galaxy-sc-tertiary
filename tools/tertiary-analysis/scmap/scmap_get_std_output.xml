@@ -5,7 +5,12 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        scmap_get_std_output.R --predictions-file "${input_predictions_file}" --output-table "${output_predictions_file}" --include-scores "${include_scores}"  --tool '${tool}' --sim-col-name "${sim_col_name}"
+        scmap_get_std_output.R
+        --predictions-file "${input_predictions_file}"
+        --output-table "${output_predictions_file}"
+        --include-scores "${include_scores}"
+        --tool '${tool}'
+        --sim-col-name "${sim_col_name}"
         #if $index
           --index "${index}"
         #end if   
@@ -27,7 +32,13 @@
         <test>
             <param name="input_predictions_file" value="closest_cells_clusters.tsv" />
             <param name="include_scores" value="TRUE" />
-            <output name="output_predictions_file" value="scmap_output_tbl.txt" compare="sim_size" />
+            <output name="output_predictions_file" value="scmap_output_tbl.txt">
+                <assert_contents>
+                    <has_n_lines n="93"/>
+                    <has_text text="predicted_label"/>
+                    <has_text text="Zygote..3.RPKM."/>
+                </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[
