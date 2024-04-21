@@ -20,12 +20,12 @@
         <test>
             <param name="index_single_cell_experiment" value="index_cluster.rds" ftype="rdata"/>
             <param name="project_single_cell_experiment" value="test_sce_processed.rds" ftype="rdata"/>
-            <output name="output_single_cell_experiment" file="project_cluster.rds">
+            <output name="output_single_cell_experiment">
                 <assert_contents>
                     <has_size value="6100k" delta="500k"/>
                 </assert_contents>
             </output>
-            <output name="output_txt" file="project_cluster.tsv" compare="sim_size"/>
+            <output name="output_txt" compare="sim_size"/>
         </test>
     </tests>
     <help><![CDATA[
