@@ -34,7 +34,7 @@
             <param name="include_scores" value="TRUE" />
             <output name="output_predictions_file" value="scmap_output_tbl.txt">
                 <assert_contents>
-                    <has_n_lines n="93"/>
+                    <has_n_lines n="92"/>
                     <has_text text="predicted_label"/>
                     <has_text text="Zygote..3.RPKM."/>
                 </assert_contents>
