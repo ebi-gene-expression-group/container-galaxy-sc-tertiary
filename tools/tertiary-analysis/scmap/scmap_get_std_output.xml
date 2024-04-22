@@ -26,13 +26,13 @@
         <param type="text" name="sim_col_name" value="scmap_cluster_siml" label="Column name of similarity scores" help="Name of column that contains distances between clusters/cells" />
     </inputs>
     <outputs>
-        <data name="output_predictions_file" format="txt" />
+        <data name="output_predictions_file" format="tabular" />
     </outputs>
     <tests>
         <test>
             <param name="input_predictions_file" value="closest_cells_clusters.tsv" />
             <param name="include_scores" value="TRUE" />
-            <output name="output_predictions_file" value="scmap_output_tbl.txt">
+            <output name="output_predictions_file">
                 <assert_contents>
                     <has_n_lines n="92"/>
                     <has_text text="predicted_label"/>
