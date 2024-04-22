@@ -25,7 +25,12 @@
                     <has_size value="6100k" delta="500k"/>
                 </assert_contents>
             </output>
-            <output name="output_txt" compare="sim_size"/>
+            <output name="output_txt">
+                <assert_contents>
+                    <has_n_lines n="91"/>
+                    <has_text text="zygote"/>
+                </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[
