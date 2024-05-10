@@ -43,9 +43,21 @@
         <param type="text" name="doublet_score_field" label="Doublet Score Field" />
     </inputs>
     <outputs>
-        <data name="general_qc_plots" format="pdf" label="General QC Plots" />
-        <!-- Add more output parameters as needed -->
+        <data name="general_qc_plots" format="pdf" label="General QC Plots" from_work_dir="general_qc_plots.pdf" />
+        <data name="scatter_umi_vs_genes_detected_colored_by_mito" format="pdf" label="Scatter UMI vs Genes Detected (Colored by Mito)" from_work_dir="scatter_umi_vs_genes_detected_colored_by_mito.pdf" />
+        <data name="scatter_umi_vs_genes_detected" format="pdf" label="Scatter UMI vs Genes Detected" from_work_dir="scatter_umi_vs_genes_detected.pdf" />
+        <data name="doublet_ratio_plot" format="pdf" label="Doublet Ratio Plot" from_work_dir="doublet_ratio_plot.pdf" />
+        <data name="highest_expr_genes" format="pdf" label="Highest Expression Genes Plot" from_work_dir="highest_expr_genes.pdf" />
+        <data name="n_counts_per_cell" format="pdf" label="Counts per Cell Plot" from_work_dir="n_counts_per_cell.pdf" />
+        <data name="n_counts_per_cell_by_sample" format="pdf" label="Counts per Cell by Sample Plot" from_work_dir="n_counts_per_cell_by_sample.pdf" />
+        <data name="n_genes_per_cell" format="pdf" label="Genes per Cell Plot" from_work_dir="n_genes_per_cell.pdf" />
+        <data name="percent_mito_per_cell" format="pdf" label="Percent Mitochondrial per Cell Plot" from_work_dir="percent_mito_per_cell.pdf" />        
+        <collection name="highest_expr_genes_per_sample" type="data" label="highest_expr_genes_${sample}.pdf">
+            <discover_datasets pattern="(?P&lt;name&gt;.+)\.tsv$" format="pdf" directory="output_dir" visible="false"/>
+        </collection>
+        </data>
     </outputs>
+
 
     <tests>
         <!-- Test Case 1: Basic Test -->
