@@ -9,7 +9,6 @@ on:
     branches:
       - main
       - master
-      - develop
     paths-ignore:
       - 'deprecated/**'
       - 'docs/**'
@@ -22,7 +21,7 @@ env:
 concurrency:
   # Group runs by PR, but keep runs on the default branch separate
   # because we do not want to cancel ToolShed uploads
-  group: pr-${{ github.ref == 'refs/heads/develop' && github.run_number || github.ref }}
+  group: pr-${{ github.ref == 'refs/heads/main' && github.run_number || github.ref }}
   cancel-in-progress: true
 jobs:
   # the setup job does two things:
@@ -374,7 +373,7 @@ jobs:
   deploy:
     name: Deploy
     needs: [setup, lint, combine_outputs]
-    if: ${{ github.ref == 'refs/heads/develop' && github.repository_owner == 'ebi-gene-expression-group' }}
+    if: ${{ github.ref == 'refs/heads/main' && github.repository_owner == 'ebi-gene-expression-group' }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -403,7 +402,7 @@ jobs:
   deploy-report:
     name: Report deploy status
     needs: [deploy]
-    if: ${{ always() && needs.deploy.result != 'success' && github.ref == 'refs/heads/develop' && github.repository_owner == 'ebi-gene-expression-group' }}
+    if: ${{ always() && needs.deploy.result != 'success' && github.ref == 'refs/heads/main' && github.repository_owner == 'ebi-gene-expression-group' }}
     runs-on: ubuntu-latest
     steps:
     # report to the PR if deployment failed
@@ -425,7 +424,7 @@ jobs:
   determine-success:
     name: Check workflow success
     needs: [setup, lint, flake8, lintr, file_sizes, combine_outputs]
-    if: ${{ always() && github.ref != 'refs/heads/develop' }}
+    if: ${{ always() && github.ref != 'refs/heads/main' }}
     runs-on: ubuntu-latest
     steps:
     - name: Check tool lint status
