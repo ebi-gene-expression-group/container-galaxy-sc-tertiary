@@ -391,6 +391,18 @@ jobs:
       with:
         path: ~/.cache/pip
         key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy-head-sha }}
+    - name: Delete large test files
+      run: |
+        echo "${{ needs.setup.outputs.repository-list }}" > changed_repositories.list
+        while read -r DIR; do
+            if [ -d "$DIR/test-data" ]; then
+                max_test_file_size=$(du $DIR/test-data/$(ls -S $DIR/test-data | head -n 1) | awk '{print $1}')
+                if [ $max_test_file_size -gt 10000 ]; then
+                    echo "Deleting test files, found one > 10Mb" 1>&2
+                    rm -rf $DIR/test-data
+                fi
+            fi
+        done < changed_repositories.list
     - name: Deploy on toolshed
       uses: galaxyproject/planemo-ci-action@v1
       with:
