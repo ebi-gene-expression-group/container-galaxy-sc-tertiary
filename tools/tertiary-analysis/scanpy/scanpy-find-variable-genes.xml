@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_find_variable_genes" name="Scanpy FindVariableGenes" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scanpy_find_variable_genes" name="Scanpy FindVariableGenes" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
   <description>based on normalised dispersion of expression</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -25,6 +25,12 @@ PYTHONIOENCODING=utf-8 scanpy-find-variable-genes
     ${filter}
 #if $batch_key
     --batch-key ${batch_key}
+#end if
+#if $never_hvg
+    --never-hv-genes-file '${never_hvg}'
+#end if
+#if $always_hvg
+    --always-hv-genes-file '${always_hvg}'
 #end if
     @INPUT_OPTS@
     @OUTPUT_OPTS@
@@ -54,6 +60,8 @@ PYTHONIOENCODING=utf-8 scanpy-find-variable-genes
     <param name="filter" argument="--subset" type="boolean" truevalue="--subset" falsevalue="" checked="false"
            label="Remove genes not marked as highly variable" help="When set, inplace subset to highly-variable genes, otherwise only flag highly-variable genes."/>
     <param name="batch_key" argument="--batch-key" type="text" label="Batch key" optional="true" help="If specified, highly-variable genes are selected within each batch separately and merged. This simple process avoids the selection of batch-specific genes and acts as a lightweight batch correction method. For all flavors, genes are first sorted by how many batches they are a HVG. For dispersion-based flavors ties are broken by normalized dispersion. If flavor = 'seurat_v3', ties are broken by the median (across batches) rank based on within-batch normalized variance."/>
+    <param name="never_hvg" argument="--never-hv-genes-file" optional="true" type="data" label="Genes that should never be HVGs" help="Provide a file, one gene identifier per line, with genes that should never be active as HVGs. This simply makes sure that the boolean value for HVGs is false for all these genes after computing HVGs"/>
+    <param name="always_hvg" argument="--always-hv-genes-file" optional="true" type="data" label="Genes that should never be HVGs" help="Provide a file, one gene identifier per line, with genes that should always be active as HVGs. This simply makes sure that the boolean value for HVGs is true for all these genes after computing HVGs"/>
   </inputs>
 
   <outputs>
@@ -63,6 +71,41 @@ PYTHONIOENCODING=utf-8 scanpy-find-variable-genes
   <tests>
     <test>
       <param name="input_obj_file" value="normalise_data.h5"/>
+      <param name="input_format" value="anndata"/>
+      <param name="output_format" value="anndata"/>
+      <param name="flavor" value="seurat"/>
+      <param name="n_bin" value="20"/>
+      <param name="min_mean" value="0.0125"/>
+      <param name="max_mean" value="3"/>
+      <param name="min_disp" value="0.5"/>
+      <param name="max_disp" value="1e9"/>
+      <output name="output_h5" ftype="h5">
+         <assert_contents>
+           <has_h5_keys keys="uns/hvg"/>
+         </assert_contents>
+      </output>
+    </test>
+    <test>
+      <param name="input_obj_file" value="normalise_data.h5"/>
+      <param name="never_hvg" value="never_hvg.txt"/>
+      <param name="always_hvg" value="always_hvg.txt"/>
+      <param name="input_format" value="anndata"/>
+      <param name="output_format" value="anndata"/>
+      <param name="flavor" value="seurat"/>
+      <param name="n_bin" value="20"/>
+      <param name="min_mean" value="0.0125"/>
+      <param name="max_mean" value="3"/>
+      <param name="min_disp" value="0.5"/>
+      <param name="max_disp" value="1e9"/>
+      <output name="output_h5" ftype="h5">
+         <assert_contents>
+           <has_h5_keys keys="uns/hvg"/>
+         </assert_contents>
+      </output>
+    </test>
+    <test>
+      <param name="input_obj_file" value="normalise_data.h5"/>
+      <param name="never_hvg" value="never_hvg.txt"/>
       <param name="input_format" value="anndata"/>
       <param name="output_format" value="anndata"/>
       <param name="flavor" value="seurat"/>
