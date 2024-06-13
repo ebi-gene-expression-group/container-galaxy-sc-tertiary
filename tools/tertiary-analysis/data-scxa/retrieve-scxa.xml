@@ -1,61 +1,179 @@
-<?xml version="1.0" encoding="utf-8"?>
-<tool id="retrieve_scxa" name="EBI SCXA Data Retrieval" version="v0.0.2+galaxy2">
-  <description>Retrieves expression matrixes and metadata from EBI Single Cell Expression Atlas (SCXA)</description>
-  <requirements>
-    <requirement type="package" version="1.20.1">wget</requirement>
-  </requirements>
-  <command detect_errors="exit_code"><![CDATA[
+<?xml version='1.0' encoding='utf-8'?>
+<tool id='retrieve_scxa' name='Atlas import: get experiment data' version='@TOOL_VERSION@+galaxy0'  profile='@PROFILE@'>
+    <description>Retrieve expression matrices and metadata from EBI Single Cell Expression Atlas (SCXA)</description>
+    <macros>
+         <import>atlas-retrieve-macros.xml</import>
+    </macros>
+    <expand macro='requirements' />
+    <command detect_errors='exit_code'><![CDATA[
+        #if $expression_data_params.get_expression_data
+          get_experiment_data.R --accession-code '${accession_code}' --get-expression-data '${expression_data_params.get_expression_data}' --matrix-type '${expression_data_params.matrix_type}' --get-marker-genes 'TRUE' --markers-cell-grouping '${expression_data_params.markers_cell_grouping}' &&
 
-#if str($matrix_type) == "tpm":
+          mv '${accession_code}_${expression_data_params.matrix_type}/10x_data/matrix.mtx' ${expr_mtx} &&
+          mv '${accession_code}_${expression_data_params.matrix_type}/10x_data/genes.tsv' ${genes} &&
+          mv '${accession_code}_${expression_data_params.matrix_type}/10x_data/barcodes.tsv' ${barcodes} &&
+          mv '${accession_code}_${expression_data_params.matrix_type}/marker_genes_${expression_data_params.markers_cell_grouping}.tsv' ${marker_genes} &&
+        #end if 
 
-wget -O exp_quant.zip
-    'https://www.ebi.ac.uk/gxa/sc/experiment/${accession}/download/zip?fileType=quantification-filtered&accessKey=' &&
-unzip exp_quant.zip;
-mv '${accession}'.expression_tpm.mtx ${matrix_mtx} &&
-awk '{OFS="\t"; print \$2,\$2}' '${accession}'.expression_tpm.mtx_rows > ${genes_tsv} &&
-cut -f2 '${accession}'.expression_tpm.mtx_cols > ${barcode_tsv};
+        #if $metadata_params.get_metadata
+          get_experiment_data.R --accession-code '${accession_code}' --get-expression-data 'FALSE' --matrix-type '${metadata_params.matrix_type}' --get-sdrf 'TRUE' --get-condensed-sdrf 'TRUE' --get-idf 'TRUE' --get-exp-design 'TRUE' &&
 
-#else if str($matrix_type) == "raw":
+          mv '${accession_code}_${metadata_params.matrix_type}/sdrf.txt' ${sdrf} &&
+          mv '${accession_code}_${metadata_params.matrix_type}/condensed-sdrf.tsv' ${condensed_sdrf} &&
+          mv '${accession_code}_${metadata_params.matrix_type}/idf.txt' ${idf} &&
+          mv '${accession_code}_${metadata_params.matrix_type}/exp_design.tsv' ${exp_design} &&
+        #end if
 
-wget -O ${matrix_mtx} 'ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/sc_experiments/${accession}/${accession}.aggregated_filtered_counts.mtx';
-wget -qO - 'ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/sc_experiments/${accession}/${accession}.aggregated_filtered_counts.mtx_cols' | cut -f2 > ${barcode_tsv};
-wget -qO - 'ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/sc_experiments/${accession}/${accession}.aggregated_filtered_counts.decorated.mtx_rows' |
-  awk -F'\t' '{ if (length($2) == 0) { print $1"\t"$1 } else { print $0 } }' > ${genes_tsv};
+        #if $classifier_params.get_classifiers
+          import_classification_data.R --tool '${classifier_params.tool}' --species '${classifier_params.species}'  --get-sdrf --condensed-sdrf --get-tool-perf-table
 
-#end if
-
-wget -O exp_design.tsv
-    'https://www.ebi.ac.uk/gxa/sc/experiment/${accession}/download?fileType=experiment-design&accessKey=';
-
-]]></command>
-
-  <inputs>
-    <param name="accession" type="text" value="E-GEOD-100058" label="SC-Atlas experiment accession" help="EBI Single Cell Atlas accession for the experiment that you want to retrieve."/>
-    <param name="matrix_type" type="select" label="Choose the type of matrix to download" help="Raw filtered counts or (non-filtered) TPMs">
-      <option value="raw" selected="true">Raw filtered counts</option>
-      <option value="tpm">TPMs</option>
-    </param>
-  </inputs>
-
-  <outputs>
-    <data name="matrix_mtx" format="txt" label="${tool.name} on ${on_string} ${accession} matrix.mtx (${matrix_type.value_label})"/>
-    <data name="genes_tsv" format="tsv" label="${tool.name} on ${on_string} ${accession} genes.tsv (${matrix_type.value_label})"/>
-    <data name="barcode_tsv" format="tsv" label="${tool.name} on ${on_string} ${accession} barcodes.tsv (${matrix_type.value_label})"/>
-    <data name="design_tsv" format="tsv" from_work_dir="exp_design.tsv" label="${tool.name} on ${on_string} ${accession} exp_design.tsv"/>
-  </outputs>
-
-  <tests>
-    <test>
-      <param name="accession" value="E-GEOD-100058"/>
-      <param name="matrix_type" value="tpm"/>
-      <output name="matrix_mtx" file="E-GEOD-100058.expression_tpm.mtx" ftype="txt"/>
-      <output name="genes_tsv" file="E-GEOD-100058.genes.tsv" ftype="tsv"/>
-      <output name="barcode_tsv" file="E-GEOD-100058.barcodes.tsv" ftype="tsv"/>
-      <output name="design_tsv" file="E-GEOD-100058.exp_design.tsv" ftype="tsv"/>
-    </test>
-  </tests>
-
-  <help><![CDATA[
+          #if $classifier_params.classifier_accession_code
+            --accession-code '${classifier_params.classifier_accession_code}'
+          #end if
+          ;
+        #end if
+        echo 'DONE'
+    ]]></command>
+    <inputs>
+      <param type='text' name='accession_code' label='SC-Atlas experiment accession' help='EBI Single Cell Atlas accession for the experiment that you want to retrieve.' />
+      <conditional name='expression_data_params'>
+        <param name='get_expression_data' type='boolean' checked='false' label='Get Expression Data' help='If specified, expression data will be imported'/>
+        <when value='true'>
+          <param type='select' name='matrix_type' label='Choose the type of matrix to download' help='Type of matrix to be imported'>
+              <option value='RAW'>Raw Counts</option>
+              <option value='FILTERED'>Filtered Counts</option>
+              <option value='TPM'>TPM-normalised</option>
+              <option value='CPM'>CPM-normalised</option>
+          </param>
+          <param type='text' name='markers_cell_grouping' label='Markers Cell Grouping' value='inferred_cell_type_-_ontology_labels' help='What cell grouping should be used for marker genes? By default, marker genes for inferred cell types (ontology labels) are imported. When providing an integer value, marker genes for a corresponding number of clusters will be imported.' />
+        </when>
+      </conditional>
+      <conditional name='metadata_params'>
+        <param name='get_metadata' type='boolean' checked='false' label='Get Metadata' help='If specified, metadata for given experiment will be imported'/>
+        <when value='true'>
+          <param name='matrix_type' type='hidden' value='CPM' />
+        </when>
+      </conditional>
+      <conditional name='classifier_params'>
+        <param name='get_classifiers' type='boolean' checked='false' label='Import Classifiers' help='If specified, classifiers for a range of datasets will be imported alongside corresponding SDRF files and a tool performance table.' /> 
+        <when value='true'>
+          <param type='text' name='tool' label='Tool' help='For which tool should the classifiers be imported?' />
+          <param type='select' name='species' label='Choose species' help='Choose species for which to download classifiers'>
+              <option value='homo_sapiens'>Homo Sapiens</option>
+              <option value='mus_musculus'>Mus Musculus</option>
+          </param>
+          <param type='text' name='classifier_accession_code' label='SC-Atlas Classifier Accession(s)' optional='true' help='EBI Single Cell Atlas accession (or comma-separated string) for the experiment(s) which classifiers you want to retrieve. By default, all classifiers are imported.' />
+        </when>
+      </conditional>
+    </inputs>
+    <outputs>
+        <data name='expr_mtx' format='txt' label='${tool.name} on ${on_string} ${accession_code} matrix.mtx (${expression_data_params.matrix_type.value_label})'>
+          <filter>expression_data_params['get_expression_data']</filter>
+        </data>
+        <data name='barcodes' format='txt' label='${tool.name} on ${on_string} ${accession_code} barcodes.tsv (${expression_data_params.matrix_type.value_label})'>
+          <filter>expression_data_params['get_expression_data']</filter>
+        </data>
+        <data name='genes' format='txt' label='${tool.name} on ${on_string} ${accession_code} genes.tsv (${expression_data_params.matrix_type.value_label})'>
+          <filter>expression_data_params['get_expression_data']</filter>
+        </data>
+        <data name='marker_genes' format='tsv' label='${tool.name} on ${on_string} ${accession_code} ${accession_code}.marker_genes_${expression_data_params.markers_cell_grouping}.tsv'>
+          <filter>expression_data_params['get_expression_data']</filter>
+        </data>
+        <data name='sdrf' format='txt' label='${tool.name} on ${on_string} ${accession_code} sdrf.txt' >
+            <filter>metadata_params['get_metadata']</filter>
+        </data>
+        <data name='condensed_sdrf' format='txt' label='${tool.name} on ${on_string} ${accession_code} condensed-sdrf.tsv' >
+            <filter>metadata_params['get_metadata']</filter>
+        </data>
+        <data name='idf' format='txt' label='${tool.name} on ${on_string} ${accession_code} idf.txt'>
+            <filter>metadata_params['get_metadata']</filter>
+        </data>
+        <data name='exp_design' format='txt' label='${tool.name} on ${on_string} ${accession_code} experiment_design.tsv'>
+            <filter>metadata_params['get_metadata']</filter>
+        </data>
+        <collection name='imported_classifiers' type='list' format="rdata" label='Collection of imported classifiers'>
+            <discover_datasets pattern='__name__' directory='imported_classifiers' />
+            <filter>classifier_params['get_classifiers']</filter>
+        </collection>
+        <collection name='imported_sdrfs' type='list' label='Collection of imported SDRF files'>
+            <discover_datasets pattern='__name_and_ext__' directory='imported_SDRFs' />
+            <filter>classifier_params['get_classifiers']</filter>
+          </collection>
+          <data name='tool_perf_table' from_work_dir="tool_perf_pvals.tsv" format='tsv' label='Tool performance table'>
+            <filter>classifier_params['get_classifiers']</filter>
+        </data>
+    </outputs>
+    <tests>
+      <test>
+        <param name="expression_data_params|get_expression_data" value="true" />
+        <param name="metadata_params|get_metadata" value="true" />
+        <param name="classifier_params|get_classifiers" value="true" />
+        <param name="accession_code" value="E-MTAB-7249" />
+        <param name="expression_data_params|matrix_type" value="CPM" />
+        <param name="classifier_params|tool" value="scpred" />
+        <param name="classifier_params|classifier_accession_code" value="E-MTAB-7249" />
+        <output name="expr_mtx">
+          <assert_contents>
+            <has_line_matching expression="%%MatrixMarket.*" />
+         </assert_contents>
+        </output>
+        <output name="barcodes">
+          <assert_contents>
+             <has_line_matching expression="ERR.*" />
+          </assert_contents>
+        </output>
+        <output name="genes">
+          <assert_contents>
+            <has_line_matching expression="ENSG000000.*" />
+          </assert_contents>
+        </output>
+        <output name="marker_genes">
+          <assert_contents>
+            <has_text text="pvals_adj" />
+          </assert_contents>
+        </output>
+        <output name="sdrf">
+          <assert_contents>
+            <has_text text="Characteristics[organism]" />
+          </assert_contents>
+        </output>
+        <output name="condensed_sdrf">
+          <assert_contents>
+            <has_text text="characteristic" />
+          </assert_contents>
+        </output>
+        <output name="idf">
+          <assert_contents>
+            <has_text text="Comment[Submitted Name]" />
+          </assert_contents>
+        </output>
+        <output name="exp_design">
+          <assert_contents>
+            <has_text text="Sample Characteristic[organism]" />
+          </assert_contents>
+        </output>
+        <output name="tool_perf_table">
+          <assert_contents>
+            <has_text text="Tool" />
+          </assert_contents>
+        </output>
+        <output_collection name="imported_classifiers" type="list">
+          <element name="E-MTAB-7249_scpred.rds">
+            <assert_contents>
+              <has_size value="976000" delta="500000" />
+            </assert_contents>
+          </element>
+        </output_collection>
+        <output_collection name="imported_sdrfs" type="list">
+          <element name="E-MTAB-7249.condensed-sdrf.tsv">
+            <assert_contents>
+              <has_text text="characteristic" />
+            </assert_contents>
+          </element>
+        </output_collection>
+      </test>
+    </tests>
+    <help><![CDATA[
 =================================================================================
 Gene expression analysis in single cells across species and biological conditions
 =================================================================================
@@ -63,7 +181,7 @@ Gene expression analysis in single cells across species and biological condition
 Single Cell Expression Atlas supports research in single cell transcriptomics.
 The Atlas annotates publicly available single cell RNA-Seq experiments with
 ontology identifiers and re-analyses them using standardised pipelines available
-through iRAP, our RNA-Seq analysis toolkit. The browser enables visualisation of
+throrugh iRAP, our RNA-Seq analysis toolkit. The browser enables visualisation of
 clusters of cells, their annotations and supports searches for gene expression
 within and across studies.
 
@@ -78,7 +196,10 @@ and metadata for any public experiment available at EBI Single Cell Expression A
 To use it, simply set the accession for the desired experiment and choose the type of
 matrix that you want to download:
 
-:Raw filtered counts:
+:Raw counts:
+  Un-normalised, unfiltered version of the expression data. 
+
+:Filtered counts:
   This should be the default choice for running clustering and another analysis
   methods where you will introduce scaling and normalization of the data. The filtering
   is based on the quality control applied by iRAP prior to pseudo-alignment and quantification.
@@ -89,6 +210,9 @@ matrix that you want to download:
   on methods that will try to normalise data as part of their procedure. Due to technical
   particularities in the current Atlas SC pipeline, TPMs available here are not filtered.
   **Note: droplet databases won't have TPM data**
+
+:CPMS:
+  CPM normalisation stands for Counts Per Kilobase Million. As TPMs, these matrices are already normalised/scaled. You should keep this in mind when using this data on methods that will try to normalise data as part of their procedure.   
 
 Outputs will be:
 
@@ -106,14 +230,30 @@ Outputs will be:
   Identifiers for the cells, samples or runs of the data matrix. The file is ordered
   to match the columns of the matrix.
 
+Optional outputs: 
+
 :Experiment Design file (tsv):
   Contains metadata for the different cells/samples/runs of the experiment.
   Please note that this file is generated before the filtering step, and while not
   often, it might be the case that it contains more cells/samples/runs than the matrix.
 
-]]></help>
-  <citations>
-    <citation type="doi">10.1093/nar/gkv1045</citation>
-    <citation type="doi">10.1101/2020.04.08.032698</citation>
-  </citations>
+:SDRF file (txt):
+  Similar to Experiment Design file, contains information on individual cells/sequencing runs. Might contain information on technical duplicates. 
+
+:IDF file (txt): 
+  IDF file holds general information about the sequencing experiment and interpretation of the fields in SDRF/metadata files. 
+  
+:Marker gene file (txt):
+  File containing information on marker genes that differentiate cell types present in the sequencing experiment. 
+
+:Classifiers (collection): 
+  Collection of pre-trained classifiers for specified tool/dataset combination. 
+
+:SDRF files for classifiers (collection):
+  Collection of SDRF files for imported classifiers (convenient outptut for donwstream processes)
+
+@HELP@
+@VERSION_HISTORY@
+    ]]></help>
+    <expand macro='citations' />
 </tool>
