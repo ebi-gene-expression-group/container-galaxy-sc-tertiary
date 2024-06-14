@@ -18,7 +18,7 @@
     --metadata-files "${add_metadata.metadata_files}"
     --cell-id-column "${add_metadata.cell_id_column}" 
     #end if
-
+    
 ]]></command>
 
   <inputs>
