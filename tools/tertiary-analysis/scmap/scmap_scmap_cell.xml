@@ -54,7 +54,7 @@
             <output name="output_single_cell_experiment" file="closest_cells_clusters.rds" compare="sim_size"/>
             <output name="closest_cells_clusters_csv" file="closest_cells_clusters.tsv" compare="sim_size" />
             <output name="closest_cells_text_file" file="closest_cells.tsv" compare="sim_size"/>
-            <output name="closest_cells_similarities_text_file" file="closest_cells_similarities.tsv" compare="sim_size"/>
+            <output name="closest_cells_similarities_text_file" file="closest_cells_similarities.csv" compare="sim_size"/>
         </test>
         <test>
             <param name="index_single_cell_experiment" value="index_cell.rds" ftype="rdata"/>
@@ -68,7 +68,7 @@
             <output name="output_single_cell_experiment" file="closest_cells_clusters_copy.rds" compare="sim_size"/>
             <output name="closest_cells_clusters_csv" file="closest_cells_clusters_copy.tsv" compare="sim_size" />
             <output name="closest_cells_text_file" file="closest_cells_copy.tsv" compare="sim_size"/>
-            <output name="closest_cells_similarities_text_file" file="closest_cells_similarities_copy.tsv" compare="sim_size"/>
+            <output name="closest_cells_similarities_text_file" file="closest_cells_similarities_copy.csv" compare="sim_size"/>
         </test>
     </tests>
     <help><![CDATA[
