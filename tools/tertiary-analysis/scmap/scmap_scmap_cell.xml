@@ -5,19 +5,19 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        scmap-scmap-cell.R 
-            -i '$index_single_cell_experiment' 
-            -p '$project_single_cell_experiment' 
-            --number-nearest-neighbours '$n_nearest_neighbours' 
+        scmap-scmap-cell.R
+            -i '$index_single_cell_experiment'
+            -p '$project_single_cell_experiment'
+            --number-nearest-neighbours '$n_nearest_neighbours'
             --nearest-neighbours-threshold '$nearest_neighbours_threshold'
             --threshold '$threshold'
-            --cluster-col '${cluster_projection.cluster_col}' 
-            --output-object-file '$output_single_cell_experiment' 
-            --closest-cells-text-file '$closest_cells_text_file' 
-            --closest-cells-similarities-text-file '$closest_cells_similarities_text_file'  
+            --cluster-col '${cluster_projection.cluster_col}'
+            --output-object-file '$output_single_cell_experiment'
+            --closest-cells-text-file '$closest_cells_text_file'
+            --closest-cells-similarities-text-file '$closest_cells_similarities_text_file'
             #if $cluster_projection
-            --output-clusters-text-file '$closest_cells_clusters_csv' 
-            #end if      
+            --output-clusters-text-file '$clusters_text_file'
+            #end if
       ]]></command>
     <inputs>
       <param type="data" name="index_single_cell_experiment" label="Index SingleCellExperiment object" format="rdata" help="File with serialized SingleCellExperiment object as produced by 'scmap select features' and 'scmap index clusters', onto which another dataset will be projected." />
@@ -39,7 +39,7 @@
       <data name="output_single_cell_experiment" format="rdata" />
       <data name="closest_cells_text_file" format="tabular" />
       <data name="closest_cells_similarities_text_file" format="tabular" />
-      <data name="closest_cells_clusters_csv" format="tabular">
+      <data name="clusters_text_file" format="tabular">
         <filter>cluster_projection['do_cluster_projection']</filter>
       </data>
     </outputs>
@@ -52,9 +52,29 @@
                 <param name="cluster_col" value="cell_type1" />
             </conditional>
             <output name="output_single_cell_experiment" file="closest_cells_clusters.rds" compare="sim_size"/>
-            <output name="closest_cells_clusters_csv" file="closest_cells_clusters.tsv" compare="sim_size" />
-            <output name="closest_cells_text_file" file="closest_cells.tsv" compare="sim_size"/>
-            <output name="closest_cells_similarities_text_file" file="closest_cells_similarities.csv" compare="sim_size"/>
+            <output name="clusters_text_file">
+                <assert_contents>
+                    <has_n_lines n="91" delta="1"/>
+                    <has_text_matching expression="Oocyte..1.RPKM.\tzygote\t0\.974.*\tzygote"/>
+                    <has_text_matching expression="Zygote..3.RPKM.\tunassigned\tNA\tunassigned"/>
+                    <has_text_matching expression="X2.cell.embryo.1..Cell.1.RPKM.\t2cell\t0\.976.*\t2cell"/>
+                    <has_text_matching expression="X4.cell.embryo.3..Cell.4.RPKM.\t4cell\t0\.979.*\t4cell"/>
+                    <has_text_matching expression="X8.cell.embryo.3..Cell.8.RPKM.\t8cell\t0\.973.*\t8cell"/>
+                    <has_text_matching expression="Morulae..2..Cell.8.RPKM.\t16cell\t0\.967.*\t16cell"/>
+                    <has_text_matching expression="Late.blastocyst..3..Cell.8.RPKM.\tblast\t0\.938.*\tblast"/>
+                </assert_contents>
+            </output>
+            <output name="closest_cells_text_file" file="closest_cells.csv"/>
+            <output name="closest_cells_similarities_text_file">
+                <assert_contents>
+                    <has_n_lines n="6"/>
+                    <has_text_matching expression="1\t0\.974.*\t0\.974.*\t0\.726.*\t0\.922.*\t0\.909.*"/>
+                    <has_text_matching expression="2\t0\.974.*\t0\.973.*\t0\.726.*\t0\.922.*\t0\.938.*"/>
+                    <has_text_matching expression="3\t0\.974.*\t0\.973.*\t0\.724.*\t0\.911.*\t0\.903.*"/>
+                    <has_text_matching expression="4\t0\.969.*\t0\.968.*\t0\.768.*\t0\.947.*\t0\.919.*"/>
+                    <has_text_matching expression="5\t0\.969.*\t0\.968.*\t0\.769.*\t0\.925.*\t0\.917.*"/>
+                </assert_contents>
+            </output>
         </test>
         <test>
             <param name="index_single_cell_experiment" value="index_cell.rds" ftype="rdata"/>
@@ -63,17 +83,37 @@
                 <param name="do_cluster_projection" value="true" />
                 <param name="cluster_col" value="cell_type1" />
             </conditional>
-            <param name="nearest_neighbours_threshold" value="3" />
-            <param name="threshold" value="0.5" />
-            <output name="output_single_cell_experiment" file="closest_cells_clusters_copy.rds" compare="sim_size"/>
-            <output name="closest_cells_clusters_csv" file="closest_cells_clusters_copy.tsv" compare="sim_size" />
-            <output name="closest_cells_text_file" file="closest_cells_copy.tsv" compare="sim_size"/>
-            <output name="closest_cells_similarities_text_file" file="closest_cells_similarities_copy.csv" compare="sim_size"/>
+            <param name="nearest_neighbours_threshold" value="1" />
+            <param name="threshold" value="0.2" />
+            <output name="output_single_cell_experiment" file="closest_cells_clusters.rds" compare="sim_size"/>
+            <output name="clusters_text_file">
+                <assert_contents>
+                    <has_n_lines n="91" delta="1"/>
+                    <has_text_matching expression="Oocyte..1.RPKM.\tzygote\t0\.974.*\tzygote"/>
+                    <has_text_matching expression="Zygote..3.RPKM.\tzygote\t0\.980.*\tzygote"/>
+                    <has_text_matching expression="X2.cell.embryo.1..Cell.1.RPKM.\t2cell\t0\.976.*\t2cell"/>
+                    <has_text_matching expression="X4.cell.embryo.3..Cell.4.RPKM.\t4cell\t0\.979.*\t4cell"/>
+                    <has_text_matching expression="X8.cell.embryo.3..Cell.8.RPKM.\t8cell\t0\.973.*\t8cell"/>
+                    <has_text_matching expression="Morulae..2..Cell.8.RPKM.\t16cell\t0\.967.*\t16cell"/>
+                    <has_text_matching expression="Late.blastocyst..3..Cell.8.RPKM.\tblast\t0\.938.*\tblast"/>
+                </assert_contents>
+            </output>
+            <output name="closest_cells_text_file" file="closest_cells.csv"/>
+            <output name="closest_cells_similarities_text_file">
+                <assert_contents>
+                    <has_n_lines n="6"/>
+                    <has_text_matching expression="1\t0\.974.*\t0\.974.*\t0\.726.*\t0\.922.*\t0\.909.*"/>
+                    <has_text_matching expression="2\t0\.974.*\t0\.973.*\t0\.726.*\t0\.922.*\t0\.938.*"/>
+                    <has_text_matching expression="3\t0\.974.*\t0\.973.*\t0\.724.*\t0\.911.*\t0\.903.*"/>
+                    <has_text_matching expression="4\t0\.969.*\t0\.968.*\t0\.768.*\t0\.947.*\t0\.919.*"/>
+                    <has_text_matching expression="5\t0\.969.*\t0\.968.*\t0\.769.*\t0\.925.*\t0\.917.*"/>
+                </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[
     @HELP@
-    
+
     @VERSION_HISTORY@
     ]]></help>
     <expand macro="citations" />
