@@ -397,8 +397,8 @@ jobs:
         while read -r DIR; do
             if [ -d "$DIR/test-data" ]; then
                 max_test_file_size=$(du $DIR/test-data/$(ls -S $DIR/test-data | head -n 1) | awk '{print $1}')
-                if [ $max_test_file_size -gt 10000 ]; then
-                    echo "Deleting test files, found one > 10Mb" 1>&2
+                if [ $max_test_file_size -gt 1000 ]; then
+                    echo "Deleting test files, found one > 1Mb" 1>&2
                     rm -rf $DIR/test-data
                 fi
             fi
