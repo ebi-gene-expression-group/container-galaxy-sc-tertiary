@@ -69,7 +69,7 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
         <param type="boolean" name="produce_anndata" label="Produce AnnData with Pseudo-bulk"/>
         <param type="integer" name="min_counts" label="Minimum Counts" optional="true"/>
         <param type="integer" name="min_total_counts" label="Minimum Total Counts" optional="true"/>
-        <param type="integer" name="min_counts_per_sample" label="Minimum counts per sample" help="Used signal genes that should be excluded per contrast field after DE, to avoid very lowly expressed genes in specific contrasts"/>
+        <param type="integer" name="min_counts_per_sample" value="20" label="Minimum counts per sample" help="Used to signal genes that should be excluded per contrast field after DE, to avoid very lowly expressed genes in specific contrasts. Genes are not excluded from the result, but a separate file tagging them is produced."/>
         <param type="boolean" name="filter_expr" label="Enable Filtering by Expression"/>
         <param type="text" name="plot_samples_figsize" label="Plot Samples Figsize" value="10 10" help="X and Y sizes in points separated by a space"/>
         <param type="text" name="plot_filtering_figsize" label="Plot Filtering Figsize" value="10 10" help="X and Y sizes in points separated by a space"/>
