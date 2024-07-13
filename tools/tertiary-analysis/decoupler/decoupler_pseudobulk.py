@@ -185,7 +185,7 @@ def write_DESeq2_inputs(
 
     if factor_fields:
         df_genes_ignore = genes_to_ignore_per_contrast_field(
-            df=df,
+            count_matrix_df=df,
             samples_metadata=obs_for_deseq,
             sample_metadata_col_contrasts=factor_fields[0],
             min_counts_per_sample=min_counts_per_sample_marking,

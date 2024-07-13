@@ -92,7 +92,7 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
         </data>
     </outputs>
     <tests>
-        <test expect_num_outputs="6">
+        <test expect_num_outputs="7">
             <param name="input_file" value="mito_counted_anndata.h5ad"/>
             <param name="adata_obs_fields_to_merge" value="batch,sex:batch,genotype"/>
             <param name="groupby" value="batch_sex"/>
