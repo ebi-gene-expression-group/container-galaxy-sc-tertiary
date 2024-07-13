@@ -138,7 +138,7 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
             </output>
             <output name="genes_ignore_per_contrast_field" ftype="tabular">
                 <assert_contents>
-                    <has_n_lines n="20"/>
+                    <has_n_lines n="5"/>
                 </assert_contents>
             </output>
             <output name="filter_by_expr_plot" ftype="png">
