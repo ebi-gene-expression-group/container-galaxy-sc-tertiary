@@ -20,24 +20,34 @@ parser.add_argument(
 
 # output file prefix
 parser.add_argument(
-    "-o", "--output",
+    "-o",
+    "--output",
     help="output files prefix",
     default=None,
 )
 
 # path to save Activities AnnData file
 parser.add_argument(
-    "-a", "--activities_path", help="Path to save Activities AnnData file", default=None
+    "-a",
+    "--activities_path",
+    help="Path to save Activities AnnData file",
+    default=None,
 )
 
 # Column name in net with source nodes
 parser.add_argument(
-    "-s", "--source", help="Column name in net with source nodes.", default="source"
+    "-s",
+    "--source",
+    help="Column name in net with source nodes.",
+    default="source",
 )
 
 # Column name in net with target nodes
 parser.add_argument(
-    "-t", "--target", help="Column name in net with target nodes.", default="target"
+    "-t",
+    "--target",
+    help="Column name in net with target nodes.",
+    default="target",
 )
 
 # Column name in net with weights.
@@ -47,17 +57,27 @@ parser.add_argument(
 
 # add boolean argument for use_raw
 parser.add_argument(
-    "--use_raw", action="store_true", default=False, help="Whether to use the raw part of the AnnData object"
+    "--use_raw",
+    action="store_true",
+    default=False,
+    help="Whether to use the raw part of the AnnData object",
 )
 
 # add argument for min_cells
 parser.add_argument(
-    "--min_n", help="Minimum of targets per source. If less, sources are removed.", default=5, type=int
+    "--min_n",
+    help="Minimum of targets per source. If less, sources are removed.",
+    default=5,
+    type=int,
 )
 
 # add activity inference method option
 parser.add_argument(
-    "-m", "--method", help="Activity inference method", default="mlm", required=True
+    "-m",
+    "--method",
+    help="Activity inference method",
+    default="mlm",
+    required=True,
 )
 args = parser.parse_args()
 
@@ -69,7 +89,7 @@ if args.output is None:
 adata = ad.read_h5ad(args.input_anndata)
 
 # read in the input file network input file
-network = pd.read_csv(args.input_network, sep='\t')
+network = pd.read_csv(args.input_network, sep="\t")
 
 if (
     args.source not in network.columns
@@ -92,17 +112,21 @@ if args.method == "mlm":
         weight=args.weight,
         verbose=True,
         min_n=args.min_n,
-        use_raw=args.use_raw 
+        use_raw=args.use_raw,
     )
 
     if args.output is not None:
-        # write adata.obsm[mlm_key] and adata.obsm[mlm_pvals_key] to the output network files
-        combined_df = pd.concat([adata.obsm["mlm_estimate"], adata.obsm["mlm_pvals"]], axis=1)
+        # write adata.obsm[mlm_key] and adata.obsm[mlm_pvals_key] to the
+        # output network files
+        combined_df = pd.concat(
+            [adata.obsm["mlm_estimate"], adata.obsm["mlm_pvals"]], axis=1
+        )
 
         # Save the combined dataframe to a file
         combined_df.to_csv(args.output + ".tsv", sep="\t")
 
-    # if args.activities_path is specified, generate the activities AnnData and save the AnnData object to the specified path
+    # if args.activities_path is specified, generate the activities AnnData
+    # and save the AnnData object to the specified path
     if args.activities_path is not None:
         acts = dc.get_acts(adata, obsm_key="mlm_estimate")
         acts.write_h5ad(args.activities_path)
@@ -116,17 +140,21 @@ elif args.method == "ulm":
         weight=args.weight,
         verbose=True,
         min_n=args.min_n,
-        use_raw=args.use_raw 
+        use_raw=args.use_raw,
     )
 
     if args.output is not None:
-        # write adata.obsm[mlm_key] and adata.obsm[mlm_pvals_key] to the output network files
-        combined_df = pd.concat([adata.obsm["ulm_estimate"], adata.obsm["ulm_pvals"]], axis=1)
+        # write adata.obsm[mlm_key] and adata.obsm[mlm_pvals_key] to the
+        # output network files
+        combined_df = pd.concat(
+            [adata.obsm["ulm_estimate"], adata.obsm["ulm_pvals"]], axis=1
+        )
 
         # Save the combined dataframe to a file
         combined_df.to_csv(args.output + ".tsv", sep="\t")
 
-    # if args.activities_path is specified, generate the activities AnnData and save the AnnData object to the specified path
+    # if args.activities_path is specified, generate the activities AnnData
+    # and save the AnnData object to the specified path
     if args.activities_path is not None:
         acts = dc.get_acts(adata, obsm_key="ulm_estimate")
         acts.write_h5ad(args.activities_path)
