@@ -7,7 +7,7 @@ import pandas as pd
 
 
 def read_gmt_long(gmt_file):
-    """
+    r"""
     Reads a GMT file and produce a Pandas DataFrame in long format, ready to
     be passed to the AUCell method.
 
@@ -21,25 +21,27 @@ def read_gmt_long(gmt_file):
     pd.DataFrame
         A DataFrame with the gene sets. Each row represents a gene set to gene
         assignment, and the columns are "gene_set_name" and "genes".
+    >>> import os
+    >>> import tempfile
     >>> line = "HALLMARK_NOTCH_SIGNALING\
-    ...            \\thttp://www.gsea-msigdb.org/\
-    ...            gsea/msigdb/human/geneset/HALLMARK_NOTCH_SIGNALING\
-    ...            \\tJAG1\\tNOTCH3\\tNOTCH2\\tAPH1A\\tHES1\\tCCND1\
-    ...            \\tFZD1\\tPSEN2\\tFZD7\\tDTX1\\tDLL1\\tFZD5\\tMAML2\
-    ...            \\tNOTCH1\\tPSENEN\\tWNT5A\\tCUL1\\tWNT2\\tDTX4\
-    ...            \\tSAP30\\tPPARD\\tKAT2A\\tHEYL\\tSKP1\\tRBX1\\tTCF7L2\
-    ...            \\tARRB1\\tLFNG\\tPRKCA\\tDTX2\\tST3GAL6\\tFBXW11"
+    ... \thttp://www.gsea-msigdb.org/\
+    ... gsea/msigdb/human/geneset/HALLMARK_NOTCH_SIGNALING\
+    ... \tJAG1\tNOTCH3\tNOTCH2\tAPH1A\tHES1\tCCND1\
+    ... \tFZD1\tPSEN2\tFZD7\tDTX1\tDLL1\tFZD5\tMAML2\
+    ... \tNOTCH1\tPSENEN\tWNT5A\tCUL1\tWNT2\tDTX4\
+    ... \tSAP30\tPPARD\tKAT2A\tHEYL\tSKP1\tRBX1\tTCF7L2\
+    ... \tARRB1\tLFNG\tPRKCA\tDTX2\tST3GAL6\tFBXW11\n"
     >>> line2 = "HALLMARK_APICAL_SURFACE\
-    ...            \\thttp://www.gsea-msigdb.org/\
-    ...            gsea/msigdb/human/geneset/HALLMARK_APICAL_SURFACE\
-    ...            \\tB4GALT1\\tRHCG\\tMAL\\tLYPD3\\tPKHD1\\tATP6V0A4\
-    ...            \\tCRYBG1\\tSHROOM2\\tSRPX\\tMDGA1\\tTMEM8B\\tTHY1\
-    ...            \\tPCSK9\\tEPHB4\\tDCBLD2\\tGHRL\\tLYN\\tGAS1\\tFLOT2\
-    ...            \\tPLAUR\\tAKAP7\\tATP8B1\\tEFNA5\\tSLC34A3\\tAPP\
-    ...            \\tGSTM3\\tHSPB1\\tSLC2A4\\tIL2RB\\tRTN4RL1\\tNCOA6\
-    ...            \\tSULF2\\tADAM10\\tBRCA1\\tGATA3\\tAFAP1L2\\tIL2RG\
-    ...            \\tCD160\\tADIPOR2\\tSLC22A12\\tNTNG1\\tSCUBE1\\tCX3CL1\
-    ...            \\tCROCC\\n"
+    ... \thttp://www.gsea-msigdb.org/\
+    ... gsea/msigdb/human/geneset/HALLMARK_APICAL_SURFACE\
+    ... \tB4GALT1\tRHCG\tMAL\tLYPD3\tPKHD1\tATP6V0A4\
+    ... \tCRYBG1\tSHROOM2\tSRPX\tMDGA1\tTMEM8B\tTHY1\
+    ... \tPCSK9\tEPHB4\tDCBLD2\tGHRL\tLYN\tGAS1\tFLOT2\
+    ... \tPLAUR\tAKAP7\tATP8B1\tEFNA5\tSLC34A3\tAPP\
+    ... \tGSTM3\tHSPB1\tSLC2A4\tIL2RB\tRTN4RL1\tNCOA6\
+    ... \tSULF2\tADAM10\tBRCA1\tGATA3\tAFAP1L2\tIL2RG\
+    ... \tCD160\tADIPOR2\tSLC22A12\tNTNG1\tSCUBE1\tCX3CL1\
+    ... \tCROCC\n"
     >>> temp_dir = tempfile.gettempdir()
     >>> temp_gmt = os.path.join(temp_dir, "temp_file.gmt")
     >>> with open(temp_gmt, "w") as f:
