@@ -72,7 +72,7 @@ def genes_to_ignore_per_contrast_field(
     ...                        'S5': [3, 40, 40, 40, 2],
     ...                        'S6': [0, 50, 50, 50, 1]})
     >>> count_matrix_df.index = ['Gene1', 'Gene2', 'Gene3', 'Gene4', 'Gene5']
-    >>> df = compute_genes_to_ignore_per_contrast_field(count_matrix_df,
+    >>> df = genes_to_ignore_per_contrast_field(count_matrix_df,
     ...             samples_metadata, min_counts_per_sample=5,
     ...             sample_metadata_col_contrasts='contrast_field')
     >>> df[df['contrast_field'] == 'A'].genes_to_ignore.tolist()[0]
