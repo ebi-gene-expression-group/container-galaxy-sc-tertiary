@@ -1,4 +1,4 @@
-<tool id="pyscenic_ctx" name="pyscenic ctx" profile="21.09" version="1.0.0">
+<tool id="pyscenic_ctx" name="PySCENIC CTX" profile="21.09" version="0.12.1+galaxy0">
     <description>
         computes active regulons based on a gene regulatory network
     </description>
