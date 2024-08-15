@@ -6,8 +6,8 @@
         </container>
     </requirements>
     <command><![CDATA[
-        ln -s "${expression_mtx_fname}" expr_mat.loom &&
-        ln -s "${signatures_fname}" regulons.tsv &&
+        ln -s '${expression_mtx_fname}' expr_mat.loom &&
+        ln -s '${signatures_fname}' regulons.tsv &&
 
         pyscenic aucell expr_mat.loom regulons.tsv
            -o aucell.tsv
@@ -19,44 +19,42 @@
         #end if
        --num_workers \${GALAXY_SLOTS:-1}
         #if $seed
-           --seed "${seed}"
+           --seed '${seed}'
         #end if
         #if str($rank_threshold):
-           --rank_threshold "${rank_threshold}"
+           --rank_threshold '${rank_threshold}'
         #end if
         #if $auc_threshold
-           --auc_threshold "${auc_threshold}"
+           --auc_threshold '${auc_threshold}'
         #end if
         #if $nes_threshold
-           --nes_threshold "${nes_threshold}"
+           --nes_threshold '${nes_threshold}'
         #end if
         #if $cell_id_attribute
-           --cell_id_attribute "${cell_id_attribute}"
+           --cell_id_attribute '${cell_id_attribute}'
         #end if
         #if $gene_attribute
-           --gene_attribute "${gene_attribute}"
+           --gene_attribute '${gene_attribute}'
         #end if
         $sparse
 
-        && mv aucell.tsv "${output}"
+        && mv aucell.tsv '${output}'
     ]]></command>
-  
     <inputs>
-      <param name="expression_mtx_fname" format="loom" type="data" label="Expression Matrix File" help="The file that contains the expression matrix for the single-cell experiment. Supported formats: csv (rows=cells x columns=genes) or loom (rows=genes x columns=cells)." />
-      <param name="signatures_fname" type="data" format="csv,tabular" label="Gene Signatures/Regulons File" help="The file that contains the gene signatures (usually the precomputed regulons). Currently only csv/tsv supported, could be extended." />
-      <param name="transpose" type="boolean" label="Transpose Expression Matrix" help="Transpose the expression matrix if supplied as csv (rows=genes x columns=cells)." optional="true" />
-      <param name="weights" type="boolean" label="Use Weights for Recovery Analysis" help="Use weights associated with genes in recovery analysis. Relevant when gene signatures are supplied as json format." optional="true" />
-      <param name="seed" type="integer" label="Seed for Ranking" help="Seed for the expression matrix ranking step. The default is to use a random seed." optional="true" />
-      <param name="rank_threshold" type="integer" label="Rank Threshold" help="The rank threshold used for deriving the target genes of an enriched motif (default: 5000)." optional="true" />
-      <param name="auc_threshold" type="float" label="AUC Threshold" help="The threshold used for calculating the AUC of a feature as fraction of ranked genes (default: 0.05)." optional="true" />
-      <param name="nes_threshold" type="float" label="NES Threshold" help="The Normalized Enrichment Score (NES) threshold for finding enriched features (default: 3.0)." optional="true" />
-      <param name="cell_id_attribute" type="text" label="Cell ID Attribute" help="The name of the column attribute that specifies the identifiers of the cells in the loom file." optional="true" />
-      <param name="gene_attribute" type="text" label="Gene Attribute" help="The name of the row attribute that specifies the gene symbols in the loom file." optional="true" />
-      <param name="sparse" type="boolean" label="Sparse Matrix" truevalue="--sparse" falsevalue="" help="If set, load the expression data as a sparse matrix. Currently applies to the grn inference step only." optional="true" />
+        <param name="expression_mtx_fname" format="loom" type="data" label="Expression Matrix File" help="The file that contains the expression matrix for the single-cell experiment. Supported formats: csv (rows=cells x columns=genes) or loom (rows=genes x columns=cells)."/>
+        <param name="signatures_fname" type="data" format="csv,tabular" label="Gene Signatures/Regulons File" help="The file that contains the gene signatures (usually the precomputed regulons). Currently only csv/tsv supported, could be extended."/>
+        <param name="transpose" type="boolean" label="Transpose Expression Matrix" help="Transpose the expression matrix if supplied as csv (rows=genes x columns=cells)." optional="true"/>
+        <param name="weights" type="boolean" label="Use Weights for Recovery Analysis" help="Use weights associated with genes in recovery analysis. Relevant when gene signatures are supplied as json format." optional="true"/>
+        <param name="seed" type="integer" label="Seed for Ranking" help="Seed for the expression matrix ranking step. The default is to use a random seed." optional="true"/>
+        <param name="rank_threshold" type="integer" label="Rank Threshold" help="The rank threshold used for deriving the target genes of an enriched motif (default: 5000)." optional="true"/>
+        <param name="auc_threshold" type="float" label="AUC Threshold" help="The threshold used for calculating the AUC of a feature as fraction of ranked genes (default: 0.05)." optional="true"/>
+        <param name="nes_threshold" type="float" label="NES Threshold" help="The Normalized Enrichment Score (NES) threshold for finding enriched features (default: 3.0)." optional="true"/>
+        <param name="cell_id_attribute" type="text" label="Cell ID Attribute" help="The name of the column attribute that specifies the identifiers of the cells in the loom file." optional="true"/>
+        <param name="gene_attribute" type="text" label="Gene Attribute" help="The name of the row attribute that specifies the gene symbols in the loom file." optional="true"/>
+        <param name="sparse" type="boolean" label="Sparse Matrix" truevalue="--sparse" falsevalue="" help="If set, load the expression data as a sparse matrix. Currently applies to the grn inference step only." optional="true"/>
     </inputs>
-  
     <outputs>
-      <data name="output" format="tsv" label="${tool.name} on ${on_string}: AUCell scores for regulons or gene sets." />
+        <data name="output" format="tsv" label="${tool.name} on ${on_string}: AUCell scores for regulons or gene sets."/>
     </outputs>
     <tests>
         <test expect_num_outputs="1">
@@ -105,4 +103,4 @@
     <citations>
         <citation type="doi">10.1038/nmeth.4463</citation>
     </citations>
-  </tool>
+</tool>
