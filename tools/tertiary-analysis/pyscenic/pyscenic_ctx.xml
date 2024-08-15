@@ -1,0 +1,124 @@
+<tool id="pyscenic_ctx" name="pyscenic ctx" profile="21.09" version="1.0.0">
+    <description>
+        computes active regulons based on a gene regulatory network
+    </description>
+    <requirements>
+        <container type="docker">
+            aertslab/pyscenic:0.12.1
+        </container>
+    </requirements>
+    <command><![CDATA[
+    PySCENIC_DB=db.genes_vs_motifs.rankings.feather &&
+    ln -s "${module_fname}" tf2targets.tsv &&
+    ln -s "${expression_mtx}" expr_mat.loom &&
+    ln -s "${database_fname}" \${PySCENIC_DB} &&
+
+    pyscenic ctx tf2targets.tsv \${PySCENIC_DB} 
+        --expression_mtx_fname expr_mat.loom
+    --output regulons.tsv
+#if $no_pruning
+    --no_pruning
+#end if
+#if $chunk_size
+    --chunk_size "${chunk_size}"
+#end if
+    --mode custom_multiprocessing
+    --num_workers \${GALAXY_SLOTS:-1}
+#if $all_modules
+    --all_modules
+#end if
+#if $transpose
+    --transpose
+#end if
+#if $rank_threshold
+    --rank_threshold "${rank_threshold}"
+#end if
+#if $auc_threshold
+    --auc_threshold "${auc_threshold}"
+#end if
+#if $nes_threshold
+    --nes_threshold "${nes_threshold}"
+#end if
+#if $min_orthologous_identity
+    --min_orthologous_identity "${min_orthologous_identity}"
+#end if
+#if $max_similarity_fdr
+    --max_similarity_fdr "${max_similarity_fdr}"
+#end if
+#if $annotations_fname
+    --annotations_fname "${annotations_fname}"
+#end if
+#if $thresholds
+    --thresholds "${thresholds}"
+#end if
+#if $top_n_targets
+    --top_n_targets "${top_n_targets}"
+#end if
+#if $top_n_regulators
+    --top_n_regulators "${top_n_regulators}"
+#end if
+#if $min_genes
+    --min_genes "${min_genes}"
+#end if
+#if $mask_dropouts
+    --mask_dropouts
+#end if
+#if $cell_id_attribute
+    --cell_id_attribute "${cell_id_attribute}"
+#end if
+#if $gene_attribute
+    --gene_attribute "${gene_attribute}"
+#end if
+#if $sparse
+    --sparse
+#end if
+&&
+
+mv regulons.tsv "${output}"
+]]></command>
+    <inputs>
+        <param type="data" name="module_fname" format="tabular" label="Module File" help="Signatures or the co-expression modules. Usually the output from pyscenic grn." />
+        <param type="data" name="database_fname" label="Database File" help="Regulatory feature databases. Supported formats: feather" />
+        <param type="data" name="annotations_fname" format="tabular" label="Annotations File" help="File that contains the motif annotations to use." />
+        <param type="data" name="expression_mtx" format="loom" label="Expression Matrix" help="The expression matrix for the single cell experiment." />
+        <param type="boolean" name="no_pruning" label="No Pruning" optional="true" help="Do not perform pruning, i.e. find enriched motifs." />
+        <param type="integer" name="chunk_size" label="Chunk Size" optional="true" help="The size of the module chunks assigned to a node in the dask graph (default: 100)." />
+        <param type="boolean" name="all_modules" label="All Modules" optional="true" help="Include positive and negative regulons in the analysis (default: no, i.e. only positive)." />
+        <param type="boolean" name="transpose" label="Transpose" optional="true" help="Transpose the expression matrix (rows=genes x columns=cells)." />
+        <param type="float" name="rank_threshold" label="Rank Threshold" optional="true" help="The rank threshold used for deriving the target genes of an enriched motif." />
+        <param type="float" name="auc_threshold" label="AUC Threshold" optional="true" help="The threshold used for calculating the AUC of a feature as fraction of ranked genes." />
+        <param type="float" name="nes_threshold" label="NES Threshold" optional="true" help="The Normalized Enrichment Score (NES) threshold for finding enriched features." />
+        <param type="float" name="min_orthologous_identity" label="Minimum Orthologous Identity" optional="true" help="Minimum orthologous identity to use when annotating enriched motifs." />
+        <param type="float" name="max_similarity_fdr" label="Maximum Similarity FDR" optional="true" help="Maximum FDR in motif similarity to use when annotating enriched motifs." />
+        <param type="text" name="thresholds" label="Thresholds" optional="true" help="Thresholds to use for selecting the features (e.g., motifs)." />
+        <param type="integer" name="top_n_targets" label="Top N Targets" optional="true" help="The number of top targets to retain for each feature." />
+        <param type="integer" name="top_n_regulators" label="Top N Regulators" optional="true" help="The number of top regulators to retain for each feature." />
+        <param type="integer" name="min_genes" label="Minimum Genes" optional="true" help="The minimum number of genes a module needs to have to be considered for regulatory network analysis." />
+        <param type="boolean" name="mask_dropouts" label="Mask Dropouts" optional="true" help="Mask dropouts in the expression matrix." />
+        <param type="text" name="cell_id_attribute" label="Cell ID Attribute" optional="true" help="The name of the attribute in the loom expression matrix that contains cell IDs." />
+        <param type="text" name="gene_attribute" label="Gene Attribute" optional="true" help="The name of the attribute in the loom expression matrix that contains gene names." />
+        <param type="boolean" name="sparse" label="Sparse" optional="true" help="Use a sparse matrix for the gene regulatory network inference step." />
+    </inputs>
+    <outputs>
+        <data name="output" format="tabular" label="${tool.name} on ${on_string}: table of enriched motifs and target genes"/>
+        <!-- Define other output formats as needed -->
+    </outputs>
+    <tests>
+        <test expect_num_outputs="1">
+            <param name="module_fname" value="tf2targets.tsv"/>
+            <param name="expression_mtx" value="expr_mat.loom"/>
+            <param name="database_fname" value="genome-ranking_v2.feather"/>
+            <param name="annotations_fname" value="motifs.tbl"/>
+            <output name="output" file="regulons.tsv" compare="sim_size" delta_frac="0.2"/>
+        </test>
+    </tests>
+    <help>
+        <![CDATA[
+            <p>This tool runs pyscenic ctx with the specified options.</p>
+            <!-- Add detailed help information for each parameter -->
+        ]]>
+    </help>
+    <citations>
+        <citation type="doi">10.1038/nmeth.4463</citation>
+    </citations>
+</tool>
