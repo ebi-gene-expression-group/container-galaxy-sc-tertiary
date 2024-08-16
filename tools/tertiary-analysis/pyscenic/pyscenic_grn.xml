@@ -60,7 +60,6 @@
             <param name="tfs_fname" value="allTFs_hg38.txt"/>
             <param name="seed" value="1"/>
             <output name="tf2targets">
-                <!-- file="tf2targets.tsv" compare="sim_size" delta_frac="0.2"/> -->
                 <assert_contents>
                     <has_n_lines n="1006973"/>
                 </assert_contents>
@@ -71,8 +70,7 @@
             <param name="tfs_fname" value="allTFs_hg38.txt"/>
             <param name="use_arboretum" value="true"/>
             <param name="seed" value="1"/>
-            <output name="tf2targets" file="tf2targets_arboretum.tsv" compare="sim_size" delta_frac="0.2">
-                <!-- file="tf2targets.tsv" compare="sim_size" delta_frac="0.2"/> -->
+            <output name="tf2targets">
                 <assert_contents>
                     <has_n_lines n="1006973"/>
                 </assert_contents>

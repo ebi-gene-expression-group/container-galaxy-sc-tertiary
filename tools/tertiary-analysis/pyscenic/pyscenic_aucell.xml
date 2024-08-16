@@ -60,7 +60,12 @@
         <test expect_num_outputs="1">
             <param name="expression_mtx_fname" value="expr_mat.loom"/>
             <param name="signatures_fname" value="regulons.tsv"/>
-            <output name="output" file="aucell_regulons.tsv" compare="sim_size" delta_frac="0.2"/>
+            <output name="output">
+                <assert_contents>
+                    <has_n_lines n="101"/>
+                    <has_text text="CEBPB"/>
+                </assert_contents>
+            </output>
         </test>
     </tests>
     <help>
