@@ -51,7 +51,7 @@
         <param name="nes_threshold" type="float" label="NES Threshold" help="The Normalized Enrichment Score (NES) threshold for finding enriched features (default: 3.0)." optional="true"/>
         <param name="cell_id_attribute" type="text" label="Cell ID Attribute" help="The name of the column attribute that specifies the identifiers of the cells in the loom file." optional="true"/>
         <param name="gene_attribute" type="text" label="Gene Attribute" help="The name of the row attribute that specifies the gene symbols in the loom file." optional="true"/>
-        <param name="sparse" type="boolean" label="Sparse Matrix" truevalue="--sparse" falsevalue="" help="If set, load the expression data as a sparse matrix. Currently applies to the grn inference step only." optional="true"/>
+        <param name="sparse" type="boolean" label="Sparse Matrix" truevalue="--sparse" falsevalue="" help="If set, load the expression data as a sparse matrix. Currently applies to the grn inference step only."/>
     </inputs>
     <outputs>
         <data name="output" format="tsv" label="${tool.name} on ${on_string}: AUCell scores for regulons or gene sets."/>

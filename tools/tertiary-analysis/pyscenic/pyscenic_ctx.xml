@@ -69,9 +69,8 @@
 #if $gene_attribute
     --gene_attribute '${gene_attribute}'
 #end if
-#if $sparse
-    --sparse
-#end if
+$sparse
+
 &&
 
 mv regulons.tsv '${output}'
@@ -97,7 +96,7 @@ mv regulons.tsv '${output}'
         <param type="boolean" name="mask_dropouts" label="Mask Dropouts" optional="true" help="Mask dropouts in the expression matrix."/>
         <param type="text" name="cell_id_attribute" label="Cell ID Attribute" optional="true" help="The name of the attribute in the loom expression matrix that contains cell IDs."/>
         <param type="text" name="gene_attribute" label="Gene Attribute" optional="true" help="The name of the attribute in the loom expression matrix that contains gene names."/>
-        <param type="boolean" name="sparse" label="Sparse" optional="true" help="Use a sparse matrix for the gene regulatory network inference step."/>
+        <param name="sparse" type="boolean" label="Sparse Matrix" truevalue="--sparse" falsevalue="" help="If set, load the expression data as a sparse matrix. Currently applies to the grn inference step only."/>
     </inputs>
     <outputs>
         <data name="output" format="tabular" label="${tool.name} on ${on_string}: table of enriched motifs and target genes"/>
