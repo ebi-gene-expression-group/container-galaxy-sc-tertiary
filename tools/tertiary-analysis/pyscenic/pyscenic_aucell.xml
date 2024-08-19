@@ -1,10 +1,9 @@
 <tool id="pyscenic_aucell" name="PySCENIC AUCell" profile="21.09" version="0.12.1+galaxy0">
     <description>calculates AUCell to find relevant regulons/gene sets</description>
-    <requirements>
-        <container type="docker">
-            aertslab/pyscenic:0.12.1
-        </container>
-    </requirements>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <expand macro="requirements"/>
     <command><![CDATA[
         ln -s '${expression_mtx_fname}' expr_mat.loom &&
         ln -s '${signatures_fname}' regulons.tsv &&
@@ -105,7 +104,5 @@
           - **--sparse**: If set, load the expression data as a sparse matrix. Currently applies to the grn inference step only.
         ]]>
       </help>
-    <citations>
-        <citation type="doi">10.1038/nmeth.4463</citation>
-    </citations>
+    <expand macro="citations"/>
 </tool>

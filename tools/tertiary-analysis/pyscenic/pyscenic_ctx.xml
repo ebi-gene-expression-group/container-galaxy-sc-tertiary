@@ -2,11 +2,10 @@
     <description>
         computes active regulons based on a gene regulatory network
     </description>
-    <requirements>
-        <container type="docker">
-            aertslab/pyscenic:0.12.1
-        </container>
-    </requirements>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <expand macro="requirements"/>
     <command><![CDATA[
     PySCENIC_DB=db.genes_vs_motifs.rankings.feather &&
     ln -s '${module_fname}' tf2targets.tsv &&
@@ -147,7 +146,5 @@ mv regulons.tsv '${output}'
         - **Gene Attribute**: The name of the row attribute that specifies the gene symbols in the loom file.
         - **Sparse**: If set, load the expression data as a sparse matrix. Currently applies to the GRN inference step only.
         ]]></help>
-    <citations>
-        <citation type="doi">10.1038/nmeth.4463</citation>
-    </citations>
+    <expand macro="citations"/>
 </tool>
