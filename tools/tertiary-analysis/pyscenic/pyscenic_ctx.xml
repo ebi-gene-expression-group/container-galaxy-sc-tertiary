@@ -111,12 +111,42 @@ mv regulons.tsv '${output}'
             <output name="output" file="regulons.tsv" compare="sim_size" delta_frac="0.2"/>
         </test>
     </tests>
-    <help>
-        <![CDATA[
-            <p>This tool runs pyscenic ctx with the specified options.</p>
-            <!-- Add detailed help information for each parameter -->
-        ]]>
-    </help>
+    <help><![CDATA[
+        .. class:: infomark
+           :name: warning
+        
+           **pySCENIC ctx: Contextualize GRN**
+        
+        This tool refines gene regulatory networks (GRNs) by pruning targets that do not have an enrichment for a corresponding motif of the transcription factor (TF). This process effectively separates direct from indirect targets based on the presence of cis-regulatory footprints.
+        
+        **Inputs:**
+        
+        - **Module File**: A file containing the signature or co-expression modules. Supported formats include CSV, TSV (adjacencies), YAML, GMT, and DAT (modules).
+        - **Database Files**: One or more regulatory feature databases. Supported formats include feather or db (legacy).
+        - **Annotations File**: A file containing the motif annotations to use.
+        
+        **Optional Parameters:**
+        
+        - **No Pruning**: Do not perform pruning, i.e., find enriched motifs.
+        - **Chunk Size**: The size of the module chunks assigned to a node in the dask graph (default: 100).
+        - **Mode**: The mode to be used for computing (default: custom_multiprocessing).
+        - **All Modules**: Include positive and negative regulons in the analysis (default: only positive).
+        - **Transpose**: Transpose the expression matrix (rows=genes x columns=cells).
+        - **Rank Threshold**: The rank threshold used for deriving the target genes of an enriched motif (default: 5000).
+        - **AUC Threshold**: The threshold used for calculating the AUC of a feature as a fraction of ranked genes (default: 0.05).
+        - **NES Threshold**: The Normalized Enrichment Score (NES) threshold for finding enriched features (default: 3.0).
+        - **Min Orthologous Identity**: Minimum orthologous identity to use when annotating enriched motifs (default: 0.0).
+        - **Max Similarity FDR**: Maximum FDR in motif similarity to use when annotating enriched motifs (default: 0.001).
+        - **Thresholds**: The first method to create the TF-modules based on the best targets for each transcription factor (default: 0.75 0.90).
+        - **Top N Targets**: The second method is to select the top targets for a given TF (default: 50).
+        - **Top N Regulators**: The alternative way to create the TF-modules is to select the best regulators for each gene (default: 5 10 50).
+        - **Min Genes**: The minimum number of genes in a module (default: 20).
+        - **Expression Matrix File**: The name of the file that contains the expression matrix for the single-cell experiment. Supported formats include csv (rows=cells x columns=genes) or loom (rows=genes x columns=cells). Required if modules need to be generated.
+        - **Mask Dropouts**: Controls whether cell dropouts (cells in which expression of either TF or target gene is 0) are masked when calculating the correlation between a TF-target pair.
+        - **Cell ID Attribute**: The name of the column attribute that specifies the identifiers of the cells in the loom file.
+        - **Gene Attribute**: The name of the row attribute that specifies the gene symbols in the loom file.
+        - **Sparse**: If set, load the expression data as a sparse matrix. Currently applies to the GRN inference step only.
+        ]]></help>
     <citations>
         <citation type="doi">10.1038/nmeth.4463</citation>
     </citations>
