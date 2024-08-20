@@ -51,7 +51,7 @@
         <param name="sparse" type="boolean" label="Sparse Matrix" truevalue="--sparse" falsevalue="" help="If set, load the expression data as a sparse matrix. Currently applies to the grn inference step only."/>
     </inputs>
     <outputs>
-        <data name="output" format="tsv" label="${tool.name} on ${on_string}: AUCell scores for regulons or gene sets."/>
+        <data name="output" format="tabular" label="${tool.name} on ${on_string}: AUCell scores for regulons or gene sets."/>
     </outputs>
     <tests>
         <test expect_num_outputs="1">

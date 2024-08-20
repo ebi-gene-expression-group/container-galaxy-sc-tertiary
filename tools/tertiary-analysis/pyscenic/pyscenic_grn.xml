@@ -49,7 +49,7 @@
         <param name="seed" type="integer" optional="true" label="Seed"/>
     </inputs>
     <outputs>
-        <data name="tf2targets" format="tsv" label="${tool.name} on ${on_string}: gene regulatory network"/>
+        <data name="tf2targets" format="tabular" label="${tool.name} on ${on_string}: gene regulatory network"/>
     </outputs>
     <tests>
         <test expect_num_outputs="1">
@@ -67,7 +67,7 @@
             <param name="tfs_fname" value="allTFs_hg38.txt"/>
             <param name="use_arboretum" value="true"/>
             <param name="seed" value="1"/>
-            <output name="tf2targets">
+            <output name="tf2targets" ftype="tabular">
                 <assert_contents>
                     <has_n_lines n="1006973"/>
                 </assert_contents>
