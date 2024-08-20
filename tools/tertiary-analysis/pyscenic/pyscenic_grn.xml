@@ -14,9 +14,7 @@
                 pyscenic grn 
             #end if
             -o tf2targets.tsv
-            #if $transpose
-            -t
-            #end if
+            $transpose
             #if $method
             -m '${method}'
             #end if
@@ -40,7 +38,7 @@
         <param name="expression_mtx" type="data" format="loom" label="Expression Matrix Loom File" help="In format rows=genes x columns=cells"/>
         <param name="tfs_fname" type="data" format="txt" label="Transcription Factors File" help="Simple text file, one transcription factor symbol per line"/>
         <param name="use_arboretum" type="boolean" label="Use arboretum" checked="false" help="Uses the arboretum approach instead of pyscenic grn call, which can be better for multi processing"/>
-        <param name="transpose" type="boolean" default_value="false" label="Transpose Expression Matrix" help="Use this if the matrix is cell x genes instead of genes x cells as expected"/>
+        <param name="transpose" type="boolean" truevalue="-t" falsevalue="" label="Transpose Expression Matrix" help="Use this if the matrix is cell x genes instead of genes x cells as expected"/>
         <param name="method" type="select" label="Method">
             <option value="genie3">GENIE3</option>
             <option value="grnboost2" selected="true">GRNBoost2</option>
