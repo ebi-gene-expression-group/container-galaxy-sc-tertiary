@@ -11,9 +11,7 @@
         pyscenic aucell expr_mat.loom regulons.tsv
            -o aucell.tsv
         $transpose
-        #if $weights
-           -w
-        #end if
+        $weights
        --num_workers \${GALAXY_SLOTS:-1}
         #if $seed
            --seed '${seed}'
@@ -41,7 +39,7 @@
         <param name="expression_mtx_fname" format="loom" type="data" label="Expression Matrix File" help="The file that contains the expression matrix for the single-cell experiment. Supported formats: csv (rows=cells x columns=genes) or loom (rows=genes x columns=cells)."/>
         <param name="signatures_fname" type="data" format="csv,tabular" label="Gene Signatures/Regulons File" help="The file that contains the gene signatures (usually the precomputed regulons). Currently only csv/tsv supported, could be extended."/>
         <param type="boolean" name="transpose" label="Transpose Expression Matrix" truevalue="-t" falsevalue="" help="Use this if the matrix is cell x genes instead of genes x cells as expected"/>
-        <param name="weights" type="boolean" label="Use Weights for Recovery Analysis" help="Use weights associated with genes in recovery analysis. Relevant when gene signatures are supplied as json format." optional="true"/>
+        <param name="weights" type="boolean" label="Use Weights for Recovery Analysis" truevalue="-w" falsevalue="" help="Use weights associated with genes in recovery analysis. Relevant when gene signatures are supplied as json format."/>
         <param name="seed" type="integer" label="Seed for Ranking" help="Seed for the expression matrix ranking step. The default is to use a random seed." optional="true"/>
         <param name="rank_threshold" type="integer" label="Rank Threshold" help="The rank threshold used for deriving the target genes of an enriched motif (default: 5000)." optional="true"/>
         <param name="auc_threshold" type="float" label="AUC Threshold" help="The threshold used for calculating the AUC of a feature as fraction of ranked genes (default: 0.05)." optional="true"/>
