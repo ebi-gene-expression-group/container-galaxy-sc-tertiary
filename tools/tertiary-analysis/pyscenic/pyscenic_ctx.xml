@@ -7,7 +7,7 @@
     </macros>
     <expand macro="requirements"/>
     <command><![CDATA[
-    #set PySCENIC_DB = db.genes_vs_motifs.rankings.feather
+    #set PySCENIC_DB = "db.genes_vs_motifs.rankings.feather"
     ln -s '${module_fname}' tf2targets.tsv &&
     ln -s '${expression_mtx}' expr_mat.loom &&
     ln -s '${database_fname}' ${PySCENIC_DB} &&
