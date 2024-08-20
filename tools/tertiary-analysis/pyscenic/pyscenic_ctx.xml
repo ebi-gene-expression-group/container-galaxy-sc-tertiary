@@ -1,0 +1,139 @@
+<tool id="pyscenic_ctx" name="PySCENIC CTX" profile="21.09" version="@TOOL_VERSION@+galaxy0">
+    <description>
+        computes active regulons based on a gene regulatory network
+    </description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <expand macro="requirements"/>
+    <command><![CDATA[
+    #set PySCENIC_DB = "db.genes_vs_motifs.rankings.feather"
+    ln -s '${module_fname}' tf2targets.tsv &&
+    ln -s '${expression_mtx}' expr_mat.loom &&
+    ln -s '${database_fname}' ${PySCENIC_DB} &&
+
+    pyscenic ctx tf2targets.tsv ${PySCENIC_DB} 
+        --expression_mtx_fname expr_mat.loom
+    --output regulons.tsv
+$no_pruning
+#if $chunk_size
+    --chunk_size '${chunk_size}'
+#end if
+    --mode custom_multiprocessing
+    --num_workers \${GALAXY_SLOTS:-1}
+$all_modules
+$transpose
+#if $rank_threshold
+    --rank_threshold '${rank_threshold}'
+#end if
+#if $auc_threshold
+    --auc_threshold '${auc_threshold}'
+#end if
+#if $nes_threshold
+    --nes_threshold '${nes_threshold}'
+#end if
+#if $min_orthologous_identity
+    --min_orthologous_identity '${min_orthologous_identity}'
+#end if
+#if $max_similarity_fdr
+    --max_similarity_fdr '${max_similarity_fdr}'
+#end if
+#if $annotations_fname
+    --annotations_fname '${annotations_fname}'
+#end if
+#if $thresholds
+    --thresholds '${thresholds}'
+#end if
+#if $top_n_targets
+    --top_n_targets '${top_n_targets}'
+#end if
+#if $top_n_regulators
+    --top_n_regulators '${top_n_regulators}'
+#end if
+#if $min_genes
+    --min_genes '${min_genes}'
+#end if
+$mask_dropouts
+#if $cell_id_attribute
+    --cell_id_attribute '${cell_id_attribute}'
+#end if
+#if $gene_attribute
+    --gene_attribute '${gene_attribute}'
+#end if
+$sparse
+
+]]></command>
+    <inputs>
+        <param type="data" name="module_fname" format="tabular" label="Module File" help="Signatures or the co-expression modules. Usually the output from pyscenic grn."/>
+        <param type="data" name="database_fname" label="Database File" help="Regulatory feature databases. Supported formats: feather"/>
+        <param type="data" name="annotations_fname" format="tabular" label="Annotations File" help="File that contains the motif annotations to use."/>
+        <param type="data" name="expression_mtx" format="loom" label="Expression Matrix" help="The expression matrix for the single cell experiment."/>
+        <param type="boolean" name="no_pruning" label="No Pruning" truevalue="--no_pruning" falsevalue="" help="Do not perform pruning, i.e. find enriched motifs."/>
+        <param type="integer" name="chunk_size" label="Chunk Size" optional="true" help="The size of the module chunks assigned to a node in the dask graph (default: 100)."/>
+        <param type="boolean" name="all_modules" label="All Modules" truevalue="--all_modules" falsevalue="" help="Include positive and negative regulons in the analysis (default: no, i.e. only positive)."/>
+        <param type="boolean" name="transpose" label="Transpose Expression Matrix" truevalue="-t" falsevalue="" help="Use this if the matrix is cell x genes instead of genes x cells as expected"/>
+        <param type="float" name="rank_threshold" label="Rank Threshold" optional="true" help="The rank threshold used for deriving the target genes of an enriched motif."/>
+        <param type="float" name="auc_threshold" label="AUC Threshold" optional="true" help="The threshold used for calculating the AUC of a feature as fraction of ranked genes."/>
+        <param type="float" name="nes_threshold" label="NES Threshold" optional="true" help="The Normalized Enrichment Score (NES) threshold for finding enriched features."/>
+        <param type="float" name="min_orthologous_identity" label="Minimum Orthologous Identity" optional="true" help="Minimum orthologous identity to use when annotating enriched motifs."/>
+        <param type="float" name="max_similarity_fdr" label="Maximum Similarity FDR" optional="true" help="Maximum FDR in motif similarity to use when annotating enriched motifs."/>
+        <param type="text" name="thresholds" label="Thresholds" optional="true" help="Thresholds to use for selecting the features (e.g., motifs)."/>
+        <param type="integer" name="top_n_targets" label="Top N Targets" optional="true" help="The number of top targets to retain for each feature."/>
+        <param type="integer" name="top_n_regulators" label="Top N Regulators" optional="true" help="The number of top regulators to retain for each feature."/>
+        <param type="integer" name="min_genes" label="Minimum Genes" optional="true" help="The minimum number of genes a module needs to have to be considered for regulatory network analysis."/>
+        <param type="boolean" name="mask_dropouts" label="Mask Dropouts" truevalue="--mask_dropouts" falsevalue="" help="Mask dropouts in the expression matrix."/>
+        <param type="text" name="cell_id_attribute" label="Cell ID Attribute" optional="true" help="The name of the attribute in the loom expression matrix that contains cell IDs."/>
+        <param type="text" name="gene_attribute" label="Gene Attribute" optional="true" help="The name of the attribute in the loom expression matrix that contains gene names."/>
+        <param name="sparse" type="boolean" label="Sparse Matrix" truevalue="--sparse" falsevalue="" help="If set, load the expression data as a sparse matrix. Currently applies to the grn inference step only."/>
+    </inputs>
+    <outputs>
+        <data name="output" format="tabular" from_work_dir="regulons.tsv" label="${tool.name} on ${on_string}: table of enriched motifs and target genes"/>
+        <!-- Define other output formats as needed -->
+    </outputs>
+    <tests>
+        <test expect_num_outputs="1">
+            <param name="module_fname" value="tf2targets.tsv"/>
+            <param name="expression_mtx" value="expr_mat.loom"/>
+            <param name="database_fname" value="genome-ranking_v2.feather"/>
+            <param name="annotations_fname" value="motifs.tbl"/>
+            <output name="output" file="regulons.tsv" compare="sim_size" delta_frac="0.2"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+        .. class:: infomark
+           :name: warning
+        
+           **pySCENIC ctx: Contextualize GRN**
+        
+        This tool refines gene regulatory networks (GRNs) by pruning targets that do not have an enrichment for a corresponding motif of the transcription factor (TF). This process effectively separates direct from indirect targets based on the presence of cis-regulatory footprints.
+        
+        **Inputs:**
+        
+        - **Module File**: A file containing the signature or co-expression modules. Supported formats include CSV, TSV (adjacencies), YAML, GMT, and DAT (modules).
+        - **Database Files**: One or more regulatory feature databases. Supported formats include feather or db (legacy).
+        - **Annotations File**: A file containing the motif annotations to use.
+        
+        **Optional Parameters:**
+        
+        - **No Pruning**: Do not perform pruning, i.e., find enriched motifs.
+        - **Chunk Size**: The size of the module chunks assigned to a node in the dask graph (default: 100).
+        - **Mode**: The mode to be used for computing (default: custom_multiprocessing).
+        - **All Modules**: Include positive and negative regulons in the analysis (default: only positive).
+        - **Transpose**: Transpose the expression matrix (rows=genes x columns=cells).
+        - **Rank Threshold**: The rank threshold used for deriving the target genes of an enriched motif (default: 5000).
+        - **AUC Threshold**: The threshold used for calculating the AUC of a feature as a fraction of ranked genes (default: 0.05).
+        - **NES Threshold**: The Normalized Enrichment Score (NES) threshold for finding enriched features (default: 3.0).
+        - **Min Orthologous Identity**: Minimum orthologous identity to use when annotating enriched motifs (default: 0.0).
+        - **Max Similarity FDR**: Maximum FDR in motif similarity to use when annotating enriched motifs (default: 0.001).
+        - **Thresholds**: The first method to create the TF-modules based on the best targets for each transcription factor (default: 0.75 0.90).
+        - **Top N Targets**: The second method is to select the top targets for a given TF (default: 50).
+        - **Top N Regulators**: The alternative way to create the TF-modules is to select the best regulators for each gene (default: 5 10 50).
+        - **Min Genes**: The minimum number of genes in a module (default: 20).
+        - **Expression Matrix File**: The name of the file that contains the expression matrix for the single-cell experiment. Supported formats include csv (rows=cells x columns=genes) or loom (rows=genes x columns=cells). Required if modules need to be generated.
+        - **Mask Dropouts**: Controls whether cell dropouts (cells in which expression of either TF or target gene is 0) are masked when calculating the correlation between a TF-target pair.
+        - **Cell ID Attribute**: The name of the column attribute that specifies the identifiers of the cells in the loom file.
+        - **Gene Attribute**: The name of the row attribute that specifies the gene symbols in the loom file.
+        - **Sparse**: If set, load the expression data as a sparse matrix. Currently applies to the GRN inference step only.
+        ]]></help>
+    <expand macro="citations"/>
+</tool>

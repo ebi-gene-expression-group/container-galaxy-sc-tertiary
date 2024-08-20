@@ -1,0 +1,104 @@
+<tool id="pyscenic_aucell" name="PySCENIC AUCell" profile="21.09" version="@TOOL_VERSION@+galaxy0">
+    <description>calculates AUCell to find relevant regulons/gene sets</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <expand macro="requirements"/>
+    <command><![CDATA[
+        ln -s '${expression_mtx_fname}' expr_mat.loom &&
+        ln -s '${signatures_fname}' regulons.tsv &&
+
+        pyscenic aucell expr_mat.loom regulons.tsv
+           -o aucell.tsv
+        $transpose
+        $weights
+       --num_workers \${GALAXY_SLOTS:-1}
+        #if $seed
+           --seed '${seed}'
+        #end if
+        #if str($rank_threshold):
+           --rank_threshold '${rank_threshold}'
+        #end if
+        #if $auc_threshold
+           --auc_threshold '${auc_threshold}'
+        #end if
+        #if $nes_threshold
+           --nes_threshold '${nes_threshold}'
+        #end if
+        #if $cell_id_attribute
+           --cell_id_attribute '${cell_id_attribute}'
+        #end if
+        #if $gene_attribute
+           --gene_attribute '${gene_attribute}'
+        #end if
+        $sparse
+
+        && mv aucell.tsv '${output}'
+    ]]></command>
+    <inputs>
+        <param name="expression_mtx_fname" format="loom" type="data" label="Expression Matrix File" help="The file that contains the expression matrix for the single-cell experiment. Supported formats: csv (rows=cells x columns=genes) or loom (rows=genes x columns=cells)."/>
+        <param name="signatures_fname" type="data" format="csv,tabular" label="Gene Signatures/Regulons File" help="The file that contains the gene signatures (usually the precomputed regulons). Currently only csv/tsv supported, could be extended."/>
+        <param type="boolean" name="transpose" label="Transpose Expression Matrix" truevalue="-t" falsevalue="" help="Use this if the matrix is cell x genes instead of genes x cells as expected"/>
+        <param name="weights" type="boolean" label="Use Weights for Recovery Analysis" truevalue="-w" falsevalue="" help="Use weights associated with genes in recovery analysis. Relevant when gene signatures are supplied as json format."/>
+        <param name="seed" type="integer" label="Seed for Ranking" help="Seed for the expression matrix ranking step. The default is to use a random seed." optional="true"/>
+        <param name="rank_threshold" type="integer" label="Rank Threshold" help="The rank threshold used for deriving the target genes of an enriched motif (default: 5000)." optional="true"/>
+        <param name="auc_threshold" type="float" label="AUC Threshold" help="The threshold used for calculating the AUC of a feature as fraction of ranked genes (default: 0.05)." optional="true"/>
+        <param name="nes_threshold" type="float" label="NES Threshold" help="The Normalized Enrichment Score (NES) threshold for finding enriched features (default: 3.0)." optional="true"/>
+        <param name="cell_id_attribute" type="text" label="Cell ID Attribute" help="The name of the column attribute that specifies the identifiers of the cells in the loom file." optional="true"/>
+        <param name="gene_attribute" type="text" label="Gene Attribute" help="The name of the row attribute that specifies the gene symbols in the loom file." optional="true"/>
+        <param name="sparse" type="boolean" label="Sparse Matrix" truevalue="--sparse" falsevalue="" help="If set, load the expression data as a sparse matrix. Currently applies to the grn inference step only."/>
+    </inputs>
+    <outputs>
+        <data name="output" format="tabular" label="${tool.name} on ${on_string}: AUCell scores for regulons or gene sets."/>
+    </outputs>
+    <tests>
+        <test expect_num_outputs="1">
+            <param name="expression_mtx_fname" value="expr_mat.loom"/>
+            <param name="signatures_fname" value="regulons.tsv"/>
+            <output name="output">
+                <assert_contents>
+                    <has_n_lines n="101"/>
+                    <has_text text="CEBPB"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help>
+        <![CDATA[
+          Run PySCENIC aucell command to analyze single-cell gene expression data.
+    
+          **Input Parameters:**
+    
+          - **expression_mtx_fname**: The name of the file that contains the expression matrix for the single cell experiment. Two file formats are supported: csv (rows=cells x columns=genes) or loom (rows=genes x columns=cells).
+    
+          - **signatures_fname**: The name of the file that contains the gene signatures. Three file formats are supported: gmt, yaml, or dat (pickle).
+    
+          **Options:**
+    
+          - **-o, --output**: Output file/stream, a matrix of AUC values. Two file formats are supported: csv or loom. If loom file is specified, it will contain the original expression matrix and the calculated AUC values as extra column attributes.
+    
+          - **-t, --transpose**: Transpose the expression matrix if supplied as csv (rows=genes x columns=cells).
+    
+          - **-w, --weights**: Use weights associated with genes in recovery analysis. Is only relevant when gene signatures are supplied as json format.
+    
+          - **--seed**: Seed for the expression matrix ranking step. The default is to use a random seed.
+    
+          **Motif Enrichment Arguments:**
+    
+          - **--rank_threshold**: The rank threshold used for deriving the target genes of an enriched motif (default: 5000).
+    
+          - **--auc_threshold**: The threshold used for calculating the AUC of a feature as fraction of ranked genes (default: 0.05).
+    
+          - **--nes_threshold**: The Normalized Enrichment Score (NES) threshold for finding enriched features (default: 3.0).
+    
+          **Loom File Arguments:**
+    
+          - **--cell_id_attribute**: The name of the column attribute that specifies the identifiers of the cells in the loom file.
+    
+          - **--gene_attribute**: The name of the row attribute that specifies the gene symbols in the loom file.
+    
+          - **--sparse**: If set, load the expression data as a sparse matrix. Currently applies to the grn inference step only.
+        ]]>
+      </help>
+    <expand macro="citations"/>
+</tool>
