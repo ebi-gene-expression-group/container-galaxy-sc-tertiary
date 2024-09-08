@@ -320,11 +320,15 @@ def main(args):
         min_counts=args.min_counts,
     )
 
-    print(f"Created pseudo-bulk AnnData, checking if fields still make sense.")
-    print(f"If this fails this check, it might mean that you asked for factors that are not compatible with you sample identifiers (ie. asked for phase in the factors, but each sample contains more than one phase, try joining fields)")
+    print("Created pseudo-bulk AnnData, checking if fields still make sense.")
+    print("If this fails this check, it might mean that you asked for factors " +
+          "that are not compatible with you sample identifiers (ie. asked for " + 
+          "phase in the factors, but each sample contains more than one phase, " + 
+          "try joining fields)")
     if factor_fields:
-        check_fields(factor_fields, pseudobulk_adata, context=" after creation of pseudo-bulk AnnData")
-    priny(f"Factors requested are adequate for the pseudo-bulked AnnData!")
+        check_fields(factor_fields, pseudobulk_data, 
+                     context=" after creation of pseudo-bulk AnnData")
+    print("Factors requested are adequate for the pseudo-bulked AnnData!")
 
     # Plot pseudobulk samples
     plot_pseudobulk_samples(
