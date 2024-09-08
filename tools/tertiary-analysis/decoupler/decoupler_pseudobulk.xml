@@ -28,6 +28,9 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
     #if $min_counts:
     --min_counts $min_counts
     #end if
+    #if $min_counts_per_sample:
+    --min_counts_per_sample_marking $min_counts_per_sample
+    #end if
     #if $min_total_counts:
     --min_total_counts $min_total_counts
     #end if
@@ -66,6 +69,7 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
         <param type="boolean" name="produce_anndata" label="Produce AnnData with Pseudo-bulk"/>
         <param type="integer" name="min_counts" label="Minimum Counts" optional="true"/>
         <param type="integer" name="min_total_counts" label="Minimum Total Counts" optional="true"/>
+        <param type="integer" name="min_counts_per_sample" value="20" label="Minimum counts per gene per contrast field" help="Used to signal genes that should be excluded per contrast field after DE, to avoid very lowly expressed genes in specific contrasts. Genes are not excluded from the result, but a separate file tagging them is produced."/>
         <param type="boolean" name="filter_expr" label="Enable Filtering by Expression"/>
         <param type="text" name="plot_samples_figsize" label="Plot Samples Figsize" value="10 10" help="X and Y sizes in points separated by a space"/>
         <param type="text" name="plot_filtering_figsize" label="Plot Filtering Figsize" value="10 10" help="X and Y sizes in points separated by a space"/>
@@ -83,9 +87,12 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
         <data name="filter_by_expr_plot" format="png" label="${tool.name} on ${on_string}: Filter by Expression plot" from_work_dir="plots_output_dir/filter_by_expr.png">
             <filter>produce_plots</filter>
         </data>
+        <data name="genes_ignore_per_contrast_field" format="tabular" label="{tool.name} on ${on_string}: Genes to ignore by contrast field" from_work_dir="deseq_output_dir/genes_to_ignore_per_contrast_field.tsv">
+            <filter>factor_fields</filter>
+        </data>
     </outputs>
     <tests>
-        <test expect_num_outputs="6">
+        <test expect_num_outputs="7">
             <param name="input_file" value="mito_counted_anndata.h5ad"/>
             <param name="adata_obs_fields_to_merge" value="batch,sex:batch,genotype"/>
             <param name="groupby" value="batch_sex"/>
@@ -96,6 +103,7 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
             <param name="produce_plots" value="true"/>
             <param name="produce_anndata" value="true"/>
             <param name="min_counts" value="10"/>
+            <param name="min_counts_per_sample" value="50"/>
             <param name="min_total_counts" value="1000"/>
             <param name="filter_expr" value="true"/>
             <param name="plot_samples_figsize" value="10 10"/>
@@ -126,6 +134,11 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
             <output name="plot_output" ftype="png">
                 <assert_contents>
                     <has_size value="31853" delta="3000"/>
+                </assert_contents>
+            </output>
+            <output name="genes_ignore_per_contrast_field" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="5"/>
                 </assert_contents>
             </output>
             <output name="filter_by_expr_plot" ftype="png">

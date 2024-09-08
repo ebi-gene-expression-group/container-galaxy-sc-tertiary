@@ -1,0 +1,15 @@
+<macros>
+    <token name="@TOOL_VERSION@">0.12.1</token>
+    <xml name="requirements">
+        <requirements>
+            <container type="docker">
+            aertslab/pyscenic:@TOOL_VERSION@
+        </container>
+        </requirements>
+    </xml>
+    <xml name="citations">
+        <citations>
+            <citation type="doi">10.1038/nmeth.4463</citation>
+        </citations>
+    </xml>
+</macros>
