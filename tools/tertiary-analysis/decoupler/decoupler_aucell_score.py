@@ -136,14 +136,17 @@ def score_genes_aucell_mt(
         gene_set_gene["gene"] = gene_set_gene["gene_id"]
 
     # run decoupler's run_aucell
-    dc.run_aucell(
-        adata,
-        net=gene_set_gene,
-        source="gene_set",
-        target="gene",
-        use_raw=use_raw,
-        min_n=min_n_genes,
-    )
+    try:
+        dc.run_aucell(
+            adata,
+            net=gene_set_gene,
+            source="gene_set",
+            target="gene",
+            use_raw=use_raw,
+            min_n=min_n_genes,
+        )
+    except ValueError as ve:
+        print(f"Gene list {score_name} failed, skipping: {str(ve)}")
     for gs in gene_set_gene.gene_set.unique():
         if gs in adata.obsm["aucell_estimate"].keys():
             adata.obs[f"AUCell_{gs}"] = adata.obsm["aucell_estimate"][gs]
