@@ -322,10 +322,10 @@ def main(args):
 
     print("Created pseudo-bulk AnnData, checking if fields still make sense.")
     print(
-        "If this fails this check, it might mean that you asked for factors "
-        + "that are not compatible with you sample identifiers (ie. asked for "
-        + "phase in the factors, but each sample contains more than one phase, "
-        + "try joining fields)"
+        "If this fails this check, it might mean that you asked for factors \
+        that are not compatible with you sample identifiers (ie. asked for \
+        phase in the factors, but each sample contains more than one phase,\
+        try joining fields)."
     )
     if factor_fields:
         check_fields(
@@ -374,6 +374,14 @@ def main(args):
         min_counts_per_sample_marking=args.min_counts_per_sample_marking,
     )
 
+    # if contrasts file is provided, produce a file with genes that should be
+    # filtered for each contrasts
+    if args.contrasts_file:
+        identify_genes_to_filter_per_contrast(
+            contrast_file=args.contrasts_file,
+            min_perc_cells_expression=args.min_gene_exp_perc_per_cell,
+        )
+
 
 def merge_adata_obs_fields(obs_fields_to_merge, adata):
     """
@@ -412,7 +420,105 @@ def merge_adata_obs_fields(obs_fields_to_merge, adata):
             adata.obs[field_name] = (
                 adata.obs[field_name] + "_" + adata.obs[field].astype(str)
             )
-    return adata
+
+
+def identify_genes_to_filter_per_contrast(
+    contrast_file, min_perc_cells_expression, adata, obs_field
+):
+    """
+    Identify genes to filter per contrast based on expression percentage.
+
+    Parameters
+    ----------
+    contrast_file : str
+        Path to the contrasts file.
+    min_perc_cells_expression : float
+        Minimum percentage of cells that should express a gene.
+    adata: adata
+        Original AnnData file
+    obs_field: str
+        Field in the AnnData observations where the contrasts are defined.
+
+    Returns
+    -------
+    None
+    """
+    import re
+
+    # Implement the logic to identify genes to filter per contrast
+    # This is a placeholder implementation
+    print(
+        f"Identifying genes to filter using {contrast_file} "
+        f"with min expression {min_perc_cells_expression}%"
+    )
+    sides_regex = re.compile(r"[\+\-\*\/\(\)\^]+")
+
+    contrasts = pd.read_csv(contrast_file, sep="\t")
+    # Iterate over each line in the contrast file
+    genes_filter_for_contrast = dict()
+    for contrast in contrasts.iloc[:, 0]:
+        sides = contrast.split("-")
+        if len(sides) != 2:
+            print(f"Error: contrast {contrast} doesn't have two sides.")
+            exit(1)
+        conditions_genes_below = dict()
+        # check each side of the contrast and calculate
+        # the percentage of cells, keep genes that are
+        # below the threshold
+        for side in sides:
+            conditions = sides_regex.split(side)
+            for condition in conditions:
+                # remove any starting or trailing whitespaces from condition
+                condition = condition.strip()
+                # check the percentage of cells that express each gene
+                # Filter the AnnData object based on the obs_field value
+                adata_filtered = adata[adata.obs[obs_field] == condition]
+                # Calculate the percentage of cells expressing each gene
+                gene_expression = (adata_filtered.X > 0).mean(axis=0) * 100
+                genes_to_filter = gene_expression[
+                    gene_expression < min_perc_cells_expression
+                ].index.tolist()
+                conditions_genes_below[condition] = genes_to_filter
+
+        # we want to find the genes that are below in all conditions of the
+        # contrast
+        for side in sides:
+            intersected_genes = None
+            conditions = sides_regex.split(side)
+            for condition in conditions:
+                if intersected_genes is None:
+                    intersected_genes = set(conditions_genes_below[condition])
+                else:
+                    intersected_genes.intersection_update(
+                        set(conditions_genes_below[condition])
+                    )
+            if intersected_genes is None:
+                genes_filter_for_contrast[contrast] = set(intersected_genes)
+            else:
+                genes_filter_for_contrast[contrast].intersection_update(
+                    intersected_genes
+                )
+    # write the genes_filter_for_contrast to pandas dataframe of two columns:
+    # contrast and gene
+
+    # Initialize an empty list to store the expanded pairs
+    expanded_pairs = []
+
+    # Iterate over the dictionary
+    for contrast, genes in genes_filter_for_contrast.items():
+        for gene in genes:
+            expanded_pairs.append((contrast, gene))
+
+    # Create the DataFrame
+    contrast_genes_df = pd.DataFrame(
+        expanded_pairs, columns=["contrast", "gene"]
+    )
+
+    contrast_genes_df.to_csv(
+        "genes_to_filter_by_contrast.tsv",
+        sep="\t",
+        index=False,
+    )
 
 
 if __name__ == "__main__":
@@ -474,6 +580,25 @@ if __name__ == "__main__":
         default=10,
         help="Minimum number of cells for pseudobulk analysis",
     )
+    # add argument for min percentage of cells that should express a gene
+    parser.add_argument(
+        "--min_gene_exp_perc_per_cell",
+        type=float,
+        default=50,
+        help="If all the conditions of one side of a contrast express a \
+            gene in less than this percentage of cells, then the genes \
+            will be added to a list of genes to ignore for that contrast.\
+            Requires the contrast file to be provided.",
+    )
+    parser.add_argument(
+        "--contrasts_file",
+        type=str,
+        required=False,
+        help="Contrasts file, a one column tsv with a header, each line \
+            represents a contrast as a combination of conditions at each \
+            side of a substraction.",
+    )
+
     parser.add_argument(
         "--save_path", type=str, help="Path to save the plot (optional)"
     )
