@@ -298,7 +298,7 @@ def main(args):
         for group in args.adata_obs_fields_to_merge.split(":"):
             fields = group.split(",")
             check_fields(fields, adata)
-            adata = merge_adata_obs_fields(fields, adata)
+            merge_adata_obs_fields(fields, adata)
 
     check_fields([args.groupby, args.sample_key], adata)
 
@@ -384,7 +384,7 @@ def main(args):
             obs_field=args.groupby
         )
         contrast_genes_df.to_csv(
-            "genes_to_filter_by_contrast.tsv",
+            f"{args.save_path}/genes_to_filter_by_contrast.tsv",
             sep="\t",
             index=False,
         )
@@ -508,10 +508,9 @@ condition2{os.linesep}")
             adata_filtered = adata[adata.obs[obs_field] == condition]
             # Calculate the percentage of cells expressing each gene
             gene_expression = (adata_filtered.X > 0).mean(axis=0) * 100
-            genes_to_filter = set(adata.var[
-                gene_expression < min_perc_cells_expression
+            genes_to_filter = set(adata_filtered.var[
+                gene_expression.transpose() < min_perc_cells_expression
             ].index.tolist())
-            print(f"Genes to filter {genes_to_filter}")
             # Update the genes_filter_for_contrast dictionary
             if contrast in genes_filter_for_contrast.keys():
                 genes_filter_for_contrast[contrast].intersection_update(
