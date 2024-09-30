@@ -377,9 +377,16 @@ def main(args):
     # if contrasts file is provided, produce a file with genes that should be
     # filtered for each contrasts
     if args.contrasts_file:
-        identify_genes_to_filter_per_contrast(
+        contrast_genes_df = identify_genes_to_filter_per_contrast(
             contrast_file=args.contrasts_file,
             min_perc_cells_expression=args.min_gene_exp_perc_per_cell,
+            adata=adata,
+            obs_field=args.groupby
+        )
+        contrast_genes_df.to_csv(
+            "genes_to_filter_by_contrast.tsv",
+            sep="\t",
+            index=False,
         )
 
 
@@ -402,7 +409,7 @@ def merge_adata_obs_fields(obs_fields_to_merge, adata):
     docstring tests:
     >>> import scanpy as sc
     >>> ad = sc.datasets.pbmc68k_reduced()
-    >>> ad = merge_adata_obs_fields(["bulk_labels","louvain"], ad)
+    >>> merge_adata_obs_fields(["bulk_labels","louvain"], ad)
     >>> ad.obs.columns
     Index(['bulk_labels', 'n_genes', 'percent_mito', 'n_counts', 'S_score',
            'G2M_score', 'phase', 'louvain', 'bulk_labels_louvain'],
@@ -427,6 +434,10 @@ def identify_genes_to_filter_per_contrast(
 ):
     """
     Identify genes to filter per contrast based on expression percentage.
+    We need those genes to be under the threshold for all conditions
+    in a contrast to be identified for further filtering. If
+    one condition has the gene expressed above the threshold, the gene
+    becomes of interest (it can be highly up or down regulated).
 
     Parameters
     ----------
@@ -442,6 +453,32 @@ def identify_genes_to_filter_per_contrast(
     Returns
     -------
     None
+
+    Examples
+    --------
+    >>> import anndata
+    >>> import pandas as pd
+    >>> import numpy as np
+    >>> import os
+    >>> from io import StringIO
+    >>> contrast_file = StringIO(f"contrast{os.linesep}condition1-\
+condition2{os.linesep}")
+    >>> min_perc_cells_expression = 30.0
+    >>> data = {
+    ...     'obs': pd.DataFrame({'condition': ['condition1', 'condition1',
+    ...                          'condition2', 'condition2']}),
+    ...     'X': np.array([[1, 0, 0, 0, 0], [0, 0, 2, 2, 0],
+    ...     [0, 0, 1, 1, 0], [0, 0, 0, 2, 0]]),
+    ... }
+    >>> adata = anndata.AnnData(X=data['X'], obs=data['obs'])
+    >>> df = identify_genes_to_filter_per_contrast(
+    ...     contrast_file, min_perc_cells_expression, adata, 'condition'
+    ... ) # doctest:+ELLIPSIS
+    Identifying genes to filter using ...
+    >>> df.head() # doctest:+ELLIPSIS
+                    contrast gene
+    0  condition1-condition2    ...
+    1  condition1-condition2    ...
     """
     import re
 
@@ -457,47 +494,32 @@ def identify_genes_to_filter_per_contrast(
     # Iterate over each line in the contrast file
     genes_filter_for_contrast = dict()
     for contrast in contrasts.iloc[:, 0]:
-        sides = contrast.split("-")
-        if len(sides) != 2:
-            print(f"Error: contrast {contrast} doesn't have two sides.")
-            exit(1)
-        conditions_genes_below = dict()
-        # check each side of the contrast and calculate
-        # the percentage of cells, keep genes that are
-        # below the threshold
-        for side in sides:
-            conditions = sides_regex.split(side)
-            for condition in conditions:
-                # remove any starting or trailing whitespaces from condition
-                condition = condition.strip()
-                # check the percentage of cells that express each gene
-                # Filter the AnnData object based on the obs_field value
-                adata_filtered = adata[adata.obs[obs_field] == condition]
-                # Calculate the percentage of cells expressing each gene
-                gene_expression = (adata_filtered.X > 0).mean(axis=0) * 100
-                genes_to_filter = gene_expression[
-                    gene_expression < min_perc_cells_expression
-                ].index.tolist()
-                conditions_genes_below[condition] = genes_to_filter
-
-        # we want to find the genes that are below in all conditions of the
-        # contrast
-        for side in sides:
-            intersected_genes = None
-            conditions = sides_regex.split(side)
-            for condition in conditions:
-                if intersected_genes is None:
-                    intersected_genes = set(conditions_genes_below[condition])
-                else:
-                    intersected_genes.intersection_update(
-                        set(conditions_genes_below[condition])
-                    )
-            if intersected_genes is None:
-                genes_filter_for_contrast[contrast] = set(intersected_genes)
-            else:
+        conditions = set(sides_regex.split(contrast))
+        # we want to find the genes that are below the threshold
+        # of % of cells expressed for ALL the conditions in the
+        # contrast. It is enough for one of the conditions
+        # of the contrast to have the genes expressed above
+        # the threshold of % of cells to be of interest.
+        for condition in conditions:
+            # remove any starting or trailing whitespaces from condition
+            condition = condition.strip()
+            # check the percentage of cells that express each gene
+            # Filter the AnnData object based on the obs_field value
+            adata_filtered = adata[adata.obs[obs_field] == condition]
+            # Calculate the percentage of cells expressing each gene
+            gene_expression = (adata_filtered.X > 0).mean(axis=0) * 100
+            genes_to_filter = set(adata.var[
+                gene_expression < min_perc_cells_expression
+            ].index.tolist())
+            print(f"Genes to filter {genes_to_filter}")
+            # Update the genes_filter_for_contrast dictionary
+            if contrast in genes_filter_for_contrast.keys():
                 genes_filter_for_contrast[contrast].intersection_update(
-                    intersected_genes
+                    genes_to_filter
                 )
+            else:
+                genes_filter_for_contrast[contrast] = genes_to_filter
+
     # write the genes_filter_for_contrast to pandas dataframe of two columns:
     # contrast and gene
 
@@ -514,11 +536,7 @@ def identify_genes_to_filter_per_contrast(
         expanded_pairs, columns=["contrast", "gene"]
     )
 
-    contrast_genes_df.to_csv(
-        "genes_to_filter_by_contrast.tsv",
-        sep="\t",
-        index=False,
-    )
+    return contrast_genes_df
 
 
 if __name__ == "__main__":
