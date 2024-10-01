@@ -1,4 +1,4 @@
-<tool id="decoupler_pseudobulk" name="Decoupler pseudo-bulk" version="1.4.0+galaxy4" profile="20.05">
+<tool id="decoupler_pseudobulk" name="Decoupler pseudo-bulk" version="1.4.0+galaxy5" profile="20.05">
     <description>aggregates single cell RNA-seq data for running bulk RNA-seq methods</description>
     <requirements>
         <requirement type="package" version="1.4.0">decoupler</requirement>
@@ -251,7 +251,7 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
         - Plot Samples Figsize: Size of the samples plot as a tuple (two arguments).
         - Plot Filtering Figsize: Size of the filtering plot as a tuple (two arguments).
 
-        The tool will output the filtered AnnData, count matrix, samples metadata, genes metadata (in DESeq2 format), and the pseudobulk plot and filter by expression plot (if enabled).
+        The tool will output the filtered AnnData, count matrix, samples metadata, genes metadata (in DESeq2 format), and the pseudobulk plot and filter by expression plot (if enabled). Files for filtering genes later on are also generated (to ignore after the DE model).
 
         You can obtain more information about Decoupler pseudobulk at the developers documentation `here <https://decoupler-py.readthedocs.io/en/latest/notebooks/pseudobulk.html>`_ .
 
