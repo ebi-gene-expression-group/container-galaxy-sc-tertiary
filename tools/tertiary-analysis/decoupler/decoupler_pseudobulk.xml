@@ -1,4 +1,4 @@
-<tool id="decoupler_pseudobulk" name="Decoupler pseudo-bulk" version="1.4.0+galaxy4" profile="20.05">
+<tool id="decoupler_pseudobulk" name="Decoupler pseudo-bulk" version="1.4.0+galaxy5" profile="20.05">
     <description>aggregates single cell RNA-seq data for running bulk RNA-seq methods</description>
     <requirements>
         <requirement type="package" version="1.4.0">decoupler</requirement>
@@ -43,6 +43,10 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
     #if $factor_fields:
     --factor_fields '$factor_fields'
     #end if
+    #if $filter_per_contrast.filter == 'yes':
+    --contrasts_file '$filter_per_contrast.contrasts_file'
+    --min_gene_exp_perc_per_cell '$filter_per_contrast.min_cells_perc_per_contrast_cond'
+    #end if
     --deseq2_output_path deseq_output_dir
     --plot_samples_figsize $plot_samples_figsize
     --plot_filtering_figsize $plot_filtering_figsize
@@ -53,6 +57,18 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
     </environment_variables>
     <inputs>
         <param type="data" name="input_file" format="data" label="Input AnnData file"/>
+        <conditional name="filter_per_contrast">
+            <param name="filter" type="select" label="Produce a list of genes to filter out per contrast?" help="TODO">
+                <option value="yes">Yes</option>
+                <option value="no" selected="true">No</option>
+            </param>
+            <when value="yes">
+                <param type="data" name="contrasts_file" format="txt,tabular" label="Contrasts file" help="A file with header and arithmetic operations between existing values in the Groupby column in the AnnData file."/>
+                <param type="float" name="min_cells_perc_per_contrast_cond" value="20" label="Min. percentage of cells that need to be expressing a gene in any of the conditions of a contrast" help="Genes whose expression across all conditions of a contrast are below this threshold are tagged for removal from the contrast on a separate file"/>
+            </when>
+            <when value="no">
+            </when>
+        </conditional>
         <param type="text" name="adata_obs_fields_to_merge" label="Obs Fields to Merge" optional="true" help="Fields in adata.obs to merge, comma separated (optional). They will be available as field1_field2_field3 in the AnnData Obs dataframe. You can have multiple groups to merge, separated by colon (:)."/>
         <param type="text" name="groupby" label="Groupby column" help="The column in adata.obs that defines the groups. Merged columns in the above field are available here."/>
         <param type="text" name="sample_key" label="Sample Key column" help="The column in adata.obs that defines the samples. Merged columns in the above field are available here."/>
@@ -89,6 +105,9 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
         </data>
         <data name="genes_ignore_per_contrast_field" format="tabular" label="{tool.name} on ${on_string}: Genes to ignore by contrast field" from_work_dir="deseq_output_dir/genes_to_ignore_per_contrast_field.tsv">
             <filter>factor_fields</filter>
+        </data>
+        <data name="genes_ignore_per_contrast" format="tabular" label="{tool.name} on ${on_string}: Genes to ignore by contrast" from_work_dir="plots_output_dir/genes_to_filter_by_contrast.tsv">
+            <filter>filter_per_contrast['filter'] == 'yes'</filter>
         </data>
     </outputs>
     <tests>
@@ -147,12 +166,77 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
                 </assert_contents>
             </output>
         </test>
+        <test expect_num_outputs="8">
+            <param name="input_file" value="mito_counted_anndata.h5ad"/>
+            <param name="filter" value="yes"/>
+            <param name="contrasts_file" value="test_contrasts.txt" ftype="txt"/>
+            <param name="min_cells_perc_per_contrast_cond" value="25"/>
+            <param name="adata_obs_fields_to_merge" value="batch,sex:batch,genotype"/>
+            <param name="groupby" value="batch_sex"/>
+            <param name="sample_key" value="genotype"/>
+            <param name="factor_fields" value="genotype,batch_sex"/>
+            <param name="mode" value="sum"/>
+            <param name="min_cells" value="10"/>
+            <param name="produce_plots" value="true"/>
+            <param name="produce_anndata" value="true"/>
+            <param name="min_counts" value="10"/>
+            <param name="min_counts_per_sample" value="50"/>
+            <param name="min_total_counts" value="1000"/>
+            <param name="filter_expr" value="true"/>
+            <param name="plot_samples_figsize" value="10 10"/>
+            <param name="plot_filtering_figsize" value="10 10"/>
+            <output name="pbulk_anndata" ftype="h5ad">
+                <assert_contents>
+                    <has_h5_keys keys="obs/psbulk_n_cells"/>
+                </assert_contents>
+            </output>
+            <output name="count_matrix" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="3620"/>
+                    <has_n_columns n="8"/>
+                </assert_contents>
+            </output>
+            <output name="samples_metadata" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="8"/>
+                    <has_n_columns n="3"/>
+                </assert_contents>
+            </output>
+            <output name="genes_metadata" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="3620"/>
+                    <has_n_columns n="13"/>
+                </assert_contents>
+            </output>
+            <output name="plot_output" ftype="png">
+                <assert_contents>
+                    <has_size value="31853" delta="3000"/>
+                </assert_contents>
+            </output>
+            <output name="genes_ignore_per_contrast_field" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="5"/>
+                </assert_contents>
+            </output>
+            <output name="filter_by_expr_plot" ftype="png">
+                <assert_contents>
+                    <has_size value="21656" delta="2000"/>
+                </assert_contents>
+            </output>
+            <output name="genes_ignore_per_contrast" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="35478"/>
+                </assert_contents>
+            </output>
+        </test>
     </tests>
     <help>
         <![CDATA[
-        This tool performs pseudobulk analysis and filtering using Decoupler-py. Provide the input AnnData file and specify the necessary parameters.
+        This tool generates a count matrix for pseudo-bulk analysis (to be done with a separate tool like EdgeR or DESeq2) and filtering using Decoupler-py. Provide the input AnnData file and specify the necessary parameters.
 
         - Input AnnData file: The input AnnData file to be processed.
+        - Contrasts file: optional file with a header and a single column, with arithmetic operations (contrasts definitions) as expected by EdgeR or DESeq2 based on the existing groups in the AnnData. This is optional and only required if you want to get a list of genes to filter out later on based on the percetage of cells that express those genes per contrast's conditions.
+        - Min % expression per contrast (in at least one condition of the contrast): Percentage of cells (within at least one condition of a contrast) that need to express a gene for that genes not to be marked for later filtering. This requires the contrast file to be provided.
         - Obs Fields to Merge: Fields in adata.obs to merge, comma separated (optional).
         - Groupby column: The column in adata.obs that defines the groups.
         - Sample Key column: The column in adata.obs that defines the samples.
@@ -167,7 +251,7 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
         - Plot Samples Figsize: Size of the samples plot as a tuple (two arguments).
         - Plot Filtering Figsize: Size of the filtering plot as a tuple (two arguments).
 
-        The tool will output the filtered AnnData, count matrix, samples metadata, genes metadata (in DESeq2 format), and the pseudobulk plot and filter by expression plot (if enabled).
+        The tool will output the filtered AnnData, count matrix, samples metadata, genes metadata (in DESeq2 format), and the pseudobulk plot and filter by expression plot (if enabled). Files for filtering genes later on are also generated (to ignore after the DE model).
 
         You can obtain more information about Decoupler pseudobulk at the developers documentation `here <https://decoupler-py.readthedocs.io/en/latest/notebooks/pseudobulk.html>`_ .
 
