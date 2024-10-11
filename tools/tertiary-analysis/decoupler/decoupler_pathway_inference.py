@@ -112,9 +112,9 @@ if (
 print(type(args.min_n))
 
 if args.var_gene_symbols_field and args.var_gene_symbols_field in adata.var.columns:
-        # Storing index in a column called 'index_bak'
-        adata.var['index_bak'] = adata.var.index
-        adata.var.set_index(args.var_gene_symbols_field, inplace=True)
+    # Storing index in a column called 'index_bak'
+    adata.var['index_bak'] = adata.var.index
+    adata.var.set_index(args.var_gene_symbols_field, inplace=True)
 
 
 if args.method == "mlm":
