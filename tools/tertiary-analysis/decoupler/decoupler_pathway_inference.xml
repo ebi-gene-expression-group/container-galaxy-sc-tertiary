@@ -16,7 +16,7 @@
             --target $target
             --weight $weight
             #if $gene_symbols_field:
-                --gene_symbols_field '$gene_symbols_field'
+                --var_gene_symbols_field '$gene_symbols_field'
             #end if
             --output "inference"
             $write_activities_path
