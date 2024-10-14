@@ -138,8 +138,8 @@ def main():
         # marked as true
         print(f"Creating {args.ribo_field} column")
         adata.var[args.ribo_field] = adata.var[args.gene_symbols_field].str.contains(
-                "^RP[SL]"
-            )
+            "^RP[SL]"
+        )
         print(f"Number of ribosomal genes: {adata.var[args.ribo_field].sum()}")
     if args.percent_ribo_field not in adata.obs.columns:
         qc_vars.append(args.ribo_field)
@@ -159,14 +159,18 @@ def main():
         adata.var["n_cells"] = adata.var["n_cells_by_counts"]
 
     # Define thresholds
-    high_umi_threshold = adata.obs['n_counts'].quantile(0.95)  # Top 5% most UMI counts
-    low_umi_threshold = adata.obs['n_counts'].quantile(0.05)   # Bottom 5% least UMI counts
-    high_mito_threshold = adata.obs[args.percent_mito_field].quantile(0.90) # Top 10% pct mitochondrial genes
+    # Top 5% most UMI counts
+    high_umi_threshold = adata.obs['n_counts'].quantile(0.95)
+    # Bottom 5% least UMI counts
+    low_umi_threshold = adata.obs['n_counts'].quantile(0.05)
+    # Top 10% pct mitochondrial genes
+    high_mito_threshold = adata.obs[args.percent_mito_field].quantile(0.90)
 
     from sklearn.linear_model import LinearRegression
     from sklearn.preprocessing import PolynomialFeatures
 
-    # Polynomial regression to account for curvature in the n_counts vs. n_genes relationship
+    # Polynomial regression to account for curvature
+    # in the n_counts vs. n_genes relationship
     poly = PolynomialFeatures(degree=2)
     X_poly = poly.fit_transform(adata.obs[['n_counts']])
     model = LinearRegression()
@@ -184,13 +188,14 @@ def main():
     outliers = residuals.abs() > outlier_threshold
     adata.obs.loc[outliers, 'auto_diagnosis'] = 'Outlier'
 
-
     # Identify stressed/dying/apoptotic cells
-    stressed_cells = (adata.obs['n_counts'] > high_umi_threshold) & (adata.obs[args.percent_mito_field] > high_mito_threshold)
+    stressed_cells = (adata.obs['n_counts'] > high_umi_threshold) & \
+        (adata.obs[args.percent_mito_field] > high_mito_threshold)
     adata.obs.loc[stressed_cells, 'auto_diagnosis'] = 'Stressed/Dying/Apoptotic'
 
     # Identify poor-quality cells
-    poor_quality_cells = (adata.obs['n_counts'] < low_umi_threshold) & (adata.obs[args.percent_mito_field] > high_mito_threshold)
+    poor_quality_cells = (adata.obs['n_counts'] < low_umi_threshold) & \
+        (adata.obs[args.percent_mito_field] > high_mito_threshold)
     adata.obs.loc[poor_quality_cells, 'auto_diagnosis'] = 'Poor-Quality'
 
     # Print diagnosis summary
@@ -209,7 +214,7 @@ def main():
         multi_panel=True,
         show=False,
     )
-    # ax.set_title("General QC")
+    ax.set_title("General QC")
     plt.savefig(f"general.{args.output_format}", bbox_inches="tight")
     plt.close()
 
@@ -254,13 +259,8 @@ def main():
                      groups_field=args.sample_field,
                      props_field='auto_diagnosis',
                      figure_path='diagnosis_barplot.pdf',
-                     topic_for_title=f"(Total Healthy/Unhealthy cells: {healthy_count}/{adata.n_obs - healthy_count})")
-    # generate_scatter_by_sample(
-    #     adata,
-    #     sample_field=args.sample_field,
-    #     format=args.output_format,
-    #     percent_mito_field=args.percent_mito_field,
-    # )
+                     topic_for_title=f"(Total Healthy/Unhealthy cells: \
+                        {healthy_count}/{adata.n_obs - healthy_count})")
 
 
 def generate_barplot(
@@ -273,15 +273,17 @@ def generate_barplot(
     adata (AnnData): The input AnnData object containing the data to plot.
     groups_field (str): The column in adata.obs to group the data by.
     props_field (str): The column in adata.obs to plot as proportions.
-    figure_path (str, optional): The path to save the generated figure. If not provided, the figure is not saved.
-    topic_for_title (str, optional): The topic to be used in the figure title, goes after {props_field} proportion of {topic_for_title} per {groups_field}.
+    figure_path (str, optional): The path to save the generated figure.
+        If not provided, the figure is not saved.
+    topic_for_title (str, optional): The topic to be used in the figure
+        title, goes after {props_field} proportion of {topic_for_title}
+        per {groups_field}.
 
     Returns:
     matplotlib.figure.Figure: The generated bar plot.
     """
     props_plot_data = adata.obs[[groups_field, props_field]]
-    # props_plot_data[groups_field] = props_plot_data[groups_field].cat.reorder_categories(['control', '2 days', '7 days', '10 days', '14 days'])
-    # make a 100% stacked bar plot of props_plot_data, plotting phase counts grouped by cell_line_persister
+    # make a 100% stacked bar plot of props_plot_data
 
     grouped = props_plot_data.groupby([groups_field, props_field]).size().unstack()
     # proportions = grouped.div(grouped.sum(axis=1), axis=0)
@@ -303,11 +305,10 @@ def generate_barplot(
 
 
 def generate_embedding_plot(
-            adata,
-            fields,
-            embedding,
-            format="pdf"
-        ):
+        adata,
+        fields,
+        embedding,
+        format="pdf"):
     # Embedding plot
     plt.figure()
     sc.pl.embedding(
@@ -457,8 +458,7 @@ def generate_scatter_plot(
         color='auto_diagnosis',
         title="UMIs vs Genes Detected (by Mitochondrial Gene Ratio)",
         save=f"_umi_vs_{y}_detected_colored_by_auto_diagnosis",
-        show=False
-        )
+        show=False)
     plt.close()
 
 
