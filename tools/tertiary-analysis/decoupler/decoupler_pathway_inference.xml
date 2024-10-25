@@ -87,6 +87,28 @@
             </assert_contents>
         </output>
     </test>
+    <test>
+        <param name="input_anndata" value="mito_counted_anndata.h5ad"/>
+        <param name="input_network_file" value="mouse_progeny.tsv"/>
+        <param name="min_n" value="0"/>
+        <param name="method" value="ulm"/>
+        <param name="use_raw" value="false"/>
+        <param name="write_activities_path" value="true"/>
+        <param name="source" value="source"/>
+        <param name="target" value="target"/>
+        <param name="weight" value="weight"/>
+        <param name="gene_symbols_field" value="Symbol"/>
+        <output name="output_ad">
+            <assert_contents>
+                <has_h5_keys keys="obsm/ulm_estimate"/>
+            </assert_contents>
+        </output>
+        <output name="output_table">
+            <assert_contents>
+                <has_n_columns n="5"/>
+            </assert_contents>
+        </output>
+    </test>
     </tests>
     <help>
 **What it does**
