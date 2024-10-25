@@ -503,6 +503,14 @@ condition2{os.linesep}")
         for condition in conditions:
             # remove any starting or trailing whitespaces from condition
             condition = condition.strip()
+            if condition not in adata.obs[obs_field].unique():
+                raise ValueError(
+                    f"Condition '{condition}' from contrast {contrast}"
+                    f" is not present in the "
+                    f"obs_field '{obs_field}' from the AnnData object."
+                    f"Possible values are: "
+                    f"{', '.join(adata.obs[obs_field].unique())}."
+                )
             # check the percentage of cells that express each gene
             # Filter the AnnData object based on the obs_field value
             adata_filtered = adata[adata.obs[obs_field] == condition]
