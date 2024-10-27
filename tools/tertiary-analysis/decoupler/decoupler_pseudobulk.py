@@ -515,13 +515,12 @@ condition2{os.linesep}")
 
         if len(failed_conditions) > 0:
             raise ValueError(
-                    f"Condition(s) '{failed_conditions}' "
-                    f"from contrast {contrast} "
-                    f"is/are not present in the "
-                    f"obs_field '{obs_field}' from the AnnData object."
-                    f"Possible values are: "
-                    f"{', '.join(adata.obs[obs_field].unique())}."
-                )
+                f"Condition(s) '{failed_conditions}' "
+                f"from contrast {contrast} "
+                f"is/are not present in the "
+                f"obs_field '{obs_field}' from the AnnData object."
+                f"Possible values are: "
+                f"{', '.join(adata.obs[obs_field].unique())}.")
         # we want to find the genes that are below the threshold
         # of % of cells expressed for ALL the conditions in the
         # contrast. It is enough for one of the conditions
