@@ -462,7 +462,8 @@ def identify_genes_to_filter_per_contrast(
     >>> import os
     >>> from io import StringIO
     >>> contrast_file = StringIO(f"contrast{os.linesep}condition1-\
-condition2{os.linesep}")
+condition2{os.linesep}\
+2*(condition1)-condition2{os.linesep}")
     >>> min_perc_cells_expression = 30.0
     >>> data = {
     ...     'obs': pd.DataFrame({'condition': ['condition1', 'condition1',
@@ -476,9 +477,11 @@ condition2{os.linesep}")
     ... ) # doctest:+ELLIPSIS
     Identifying genes to filter using ...
     >>> df.head() # doctest:+ELLIPSIS
-                    contrast gene
-    0  condition1-condition2    ...
-    1  condition1-condition2    ...
+                        contrast gene
+    0      condition1-condition2...
+    1      condition1-condition2...
+    2  2*(condition1)-condition2...
+    3  2*(condition1)-condition2...
     """
     import re
 
