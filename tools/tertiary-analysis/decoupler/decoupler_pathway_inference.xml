@@ -30,9 +30,9 @@
             <option value="ulm">Univariate linear model (ULM)</option>
         </param>
         <param name="use_raw" type="boolean" truevalue="--use_raw" falsevalue="" checked="false" label="Use the raw part of the AnnData object" />
-        <param name="write_activities_path" type="boolean" truevalue="--activities_path anndata_activities_path.h5ad" falsevalue="" checked="true" label="Write the activities AnnData object (contains the MLM/ULM activity results for each pathway and each cell in the main matrix, it is not a replacement of the original AnnData provided as input)." />
-        <param name="source" type="text" value='source' label="Column name in network with source nodes." help="If empty then default is 'source' is used." />
-        <param name="target" type="text" value='target' label="Column name in network with target nodes." help="If empty then default is 'target' is used." />
+        <param name="write_activities_path" type="boolean" truevalue="--activities_path anndata_activities_path.h5ad" falsevalue="" checked="true" label="Write the activities AnnData object." help="Contains the MLM/ULM activity results for each pathway and each cell in the main matrix, it is not a replacement of the original AnnData provided as input."/>
+        <param name="source" type="text" value='source' label="Column name in network with source nodes." help="Usually the regulators. If empty then default is 'source' is used." />
+        <param name="target" type="text" value='target' label="Column name in network with target nodes." help="Usually the regulated genes. If empty then default is 'target' is used." />
         <param name="weight" type="text" value='weight' label="Column name in network with weight." help="If empty then default is 'weight' is used." />
         <param name="gene_symbols_field" type="text" optional="true" label="Gene symbols field" help="The field in the AnnData var table where gene symbols are stored."/>
     </inputs>
@@ -105,7 +105,7 @@
         </output>
         <output name="output_table">
             <assert_contents>
-                <has_n_columns n="5"/>
+                <has_n_columns n="29"/>
             </assert_contents>
         </output>
     </test>
