@@ -495,22 +495,39 @@ condition2{os.linesep}")
     genes_filter_for_contrast = dict()
     for contrast in contrasts.iloc[:, 0]:
         conditions = set(sides_regex.split(contrast))
+
+        selected_conditions = []
+        failed_conditions = []
+        for condition in conditions:
+            # remove any starting or trailing whitespaces from condition
+            condition = condition.strip()
+            if len(condition) == 0:
+                continue
+            # check if the condition is simply a number, then skip it
+            if condition.isnumeric():
+                continue
+            if condition not in adata.obs[obs_field].unique():
+                # add condition to failed_conditions
+                failed_conditions.append(condition)
+                continue
+            # append to selected_conditions
+            selected_conditions.append(condition)
+
+        if len(failed_conditions) > 0:
+            raise ValueError(
+                    f"Condition(s) '{failed_conditions}' "
+                    f"from contrast {contrast} "
+                    f"is/are not present in the "
+                    f"obs_field '{obs_field}' from the AnnData object."
+                    f"Possible values are: "
+                    f"{', '.join(adata.obs[obs_field].unique())}."
+                )
         # we want to find the genes that are below the threshold
         # of % of cells expressed for ALL the conditions in the
         # contrast. It is enough for one of the conditions
         # of the contrast to have the genes expressed above
         # the threshold of % of cells to be of interest.
-        for condition in conditions:
-            # remove any starting or trailing whitespaces from condition
-            condition = condition.strip()
-            if condition not in adata.obs[obs_field].unique():
-                raise ValueError(
-                    f"Condition '{condition}' from contrast {contrast}"
-                    f" is not present in the "
-                    f"obs_field '{obs_field}' from the AnnData object."
-                    f"Possible values are: "
-                    f"{', '.join(adata.obs[obs_field].unique())}."
-                )
+        for condition in selected_conditions:
             # check the percentage of cells that express each gene
             # Filter the AnnData object based on the obs_field value
             adata_filtered = adata[adata.obs[obs_field] == condition]
