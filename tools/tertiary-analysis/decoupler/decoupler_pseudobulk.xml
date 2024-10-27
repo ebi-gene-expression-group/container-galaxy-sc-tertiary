@@ -1,4 +1,4 @@
-<tool id="decoupler_pseudobulk" name="Decoupler pseudo-bulk" version="1.4.0+galaxy5" profile="20.05">
+<tool id="decoupler_pseudobulk" name="Decoupler pseudo-bulk" version="1.4.0+galaxy7" profile="20.05">
     <description>aggregates single cell RNA-seq data for running bulk RNA-seq methods</description>
     <requirements>
         <requirement type="package" version="1.4.0">decoupler</requirement>
@@ -103,10 +103,10 @@ python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
         <data name="filter_by_expr_plot" format="png" label="${tool.name} on ${on_string}: Filter by Expression plot" from_work_dir="plots_output_dir/filter_by_expr.png">
             <filter>produce_plots</filter>
         </data>
-        <data name="genes_ignore_per_contrast_field" format="tabular" label="{tool.name} on ${on_string}: Genes to ignore by contrast field" from_work_dir="deseq_output_dir/genes_to_ignore_per_contrast_field.tsv">
+        <data name="genes_ignore_per_contrast_field" format="tabular" label="${tool.name} on ${on_string}: Genes to ignore by contrast field" from_work_dir="deseq_output_dir/genes_to_ignore_per_contrast_field.tsv">
             <filter>factor_fields</filter>
         </data>
-        <data name="genes_ignore_per_contrast" format="tabular" label="{tool.name} on ${on_string}: Genes to ignore by contrast" from_work_dir="plots_output_dir/genes_to_filter_by_contrast.tsv">
+        <data name="genes_ignore_per_contrast" format="tabular" label="${tool.name} on ${on_string}: Genes to ignore by contrast" from_work_dir="plots_output_dir/genes_to_filter_by_contrast.tsv">
             <filter>filter_per_contrast['filter'] == 'yes'</filter>
         </data>
     </outputs>
