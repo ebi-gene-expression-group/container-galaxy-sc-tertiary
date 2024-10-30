@@ -15,7 +15,8 @@ homepage_url: https://github.com/sccaf/sccaf
 remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/tools/tertiary-analysis/sccaf
 type: unrestricted
 categories:
-- Transcriptomics
+ - Single Cell
+ - Transcriptomics
 auto_tool_repositories:
     name_template: "{{ tool_id }}"
     description_template: "Wrapper for the SCCAF tool: {{ tool_name }}"
