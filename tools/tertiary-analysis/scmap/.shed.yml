@@ -1,4 +1,5 @@
 categories:
+ - Single Cell
  - Transcriptomics
  - RNA
  - Statistics
@@ -17,4 +18,4 @@ suite:
   name: "suite_scmap"
   description: "De-composed scmap functionality tools, based on https://github.com/ebi-gene-expression-group/scmap-cli and scmap 1.6.0."
   long_description: |
-    scmap: A tool for unsupervised projection of single cell RNA-seq data  
+    scmap: A tool for unsupervised projection of single cell RNA-seq data

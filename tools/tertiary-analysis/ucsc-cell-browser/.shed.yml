@@ -1,4 +1,6 @@
-categories: [Transcriptomics]
+categories:
+ - Single Cell
+ - Transcriptomics
 description: Python pipeline and Javascript scatter plot library for single-cell datasets
 homepage_url: https://cells.ucsc.edu/
 long_description: The UCSC Cell Browser is a viewer for single cell data. You can

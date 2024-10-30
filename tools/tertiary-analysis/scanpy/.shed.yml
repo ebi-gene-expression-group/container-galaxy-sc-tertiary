@@ -10,9 +10,11 @@ homepage_url: https://scanpy.readthedocs.io
 remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/tools/tertiary-analysis/scanpy
 type: unrestricted
 categories:
-- Transcriptomics
-- Sequence Analysis
-- RNA
+  - Single Cell
+  - Spatial Omics
+  - Transcriptomics
+  - Sequence Analysis
+  - RNA
 auto_tool_repositories:
     name_template: "{{ tool_id }}"
     description_template: "Wrapper for the scanpy-scripts tool suite: {{ tool_name }}"

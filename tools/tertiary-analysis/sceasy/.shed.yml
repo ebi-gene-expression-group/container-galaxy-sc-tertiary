@@ -1,4 +1,5 @@
 categories:
+ - Single Cell
  - Transcriptomics
 description: "Convert scRNA data object between popular formats"
 long_description: |
