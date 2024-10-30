@@ -79,6 +79,14 @@ parser.add_argument(
     default="mlm",
     required=True,
 )
+
+# add activity inference method option
+parser.add_argument(
+    "-g",
+    "--var_gene_symbols_field",
+    help="Gene symbols field",
+    default=None,
+)
 args = parser.parse_args()
 
 # check that either -o or --output is specified
@@ -102,6 +110,12 @@ if (
 
 
 print(type(args.min_n))
+
+if args.var_gene_symbols_field and args.var_gene_symbols_field in adata.var.columns:
+    # Storing index in a column called 'index_bak'
+    adata.var['index_bak'] = adata.var.index
+    adata.var.set_index(args.var_gene_symbols_field, inplace=True)
+
 
 if args.method == "mlm":
     dc.run_mlm(
