@@ -1,4 +1,4 @@
-<tool id="decoupler_pseudobulk" name="Decoupler pseudo-bulk" version="1.4.0+galaxy7" profile="20.05">
+<tool id="decoupler_pseudobulk" name="Decoupler pseudo-bulk" version="1.4.0+galaxy8" profile="20.05">
     <description>aggregates single cell RNA-seq data for running bulk RNA-seq methods</description>
     <requirements>
         <requirement type="package" version="1.4.0">decoupler</requirement>
@@ -6,7 +6,7 @@
     <command detect_errors="exit_code"><![CDATA[
 mkdir deseq_output_dir &&
 mkdir plots_output_dir &&
-python '$__tool_directory__/decoupler_pseudobulk.py' $input_file
+python '$__tool_directory__/decoupler_pseudobulk.py' '$input_file'
     #if $adata_obs_fields_to_merge:
     --adata_obs_fields_to_merge '$adata_obs_fields_to_merge'
     #end if

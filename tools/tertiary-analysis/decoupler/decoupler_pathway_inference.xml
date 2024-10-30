@@ -1,4 +1,4 @@
-<tool id="decoupler_pathway_inference" name="Decoupler Pathway Inference" version="1.4.0+galaxy1" profile="20.05" license="MIT">
+<tool id="decoupler_pathway_inference" name="Decoupler Pathway Inference" version="1.4.0+galaxy2" profile="20.05" license="MIT">
     <description>
         of functional genesets/pathways for scRNA-seq data.
     </description>
@@ -12,9 +12,9 @@
             --min_n "$min_n"
             --method '$method'
             $use_raw
-            --source $source
-            --target $target
-            --weight $weight
+            --source '$source'
+            --target '$target'
+            --weight '$weight'
             #if $gene_symbols_field:
                 --var_gene_symbols_field '$gene_symbols_field'
             #end if
