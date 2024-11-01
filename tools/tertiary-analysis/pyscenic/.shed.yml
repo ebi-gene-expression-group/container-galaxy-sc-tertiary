@@ -2,6 +2,7 @@ categories:
  - Transcriptomics
  - RNA
  - Sequence Analysis
+ - Single Cell
 description: "PySCENIC scripts based on usage at https://pyscenic.readthedocs.io/"
 long_description: |
         pySCENIC is a lightning-fast python implementation of the SCENIC pipeline (Single-Cell rEgulatory Network Inference and Clustering) 
