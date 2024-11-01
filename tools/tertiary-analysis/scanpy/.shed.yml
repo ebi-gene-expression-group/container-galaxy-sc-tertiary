@@ -13,6 +13,8 @@ categories:
 - Transcriptomics
 - Sequence Analysis
 - RNA
+- Single Cell
+- Spatial Omics
 auto_tool_repositories:
     name_template: "{{ tool_id }}"
     description_template: "Wrapper for the scanpy-scripts tool suite: {{ tool_name }}"
