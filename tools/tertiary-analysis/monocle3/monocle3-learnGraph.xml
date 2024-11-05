@@ -5,6 +5,7 @@
     <import>monocle3-macros.xml</import>
   </macros>
   <expand macro="requirements"/>
+  <expand macro="xrefs"/>
   <command detect_errors="exit_code"><![CDATA[
 LANG=en_US.UTF-8 monocle3 learnGraph
 #if $no_partition
