@@ -4,6 +4,7 @@
         <import>scmap_macros.xml</import>
     </macros>
     <expand macro="requirements" />
+    <expand macro="xrefs"/>
     <command detect_errors="exit_code"><![CDATA[
         scmap-scmap-cell.R
             -i '$index_single_cell_experiment'
