@@ -1,5 +1,8 @@
 <tool id="decoupler_pseudobulk" name="Decoupler pseudo-bulk" version="1.4.0+galaxy8" profile="20.05">
     <description>aggregates single cell RNA-seq data for running bulk RNA-seq methods</description>
+    <xrefs>
+      <xref type="bio.tools">decoupler</xref>
+    </xrefs>
     <requirements>
         <requirement type="package" version="1.4.0">decoupler</requirement>
     </requirements>
