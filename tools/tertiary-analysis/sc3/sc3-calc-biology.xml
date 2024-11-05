@@ -5,6 +5,7 @@
     <import>sc3-macros.xml</import>
   </macros>
   <expand macro="requirements" />
+  <expand macro="xrefs"/>
   <command detect_errors="exit_code"><![CDATA[
 sc3-sc3-calc-biology.R -i '${sc3_consensus}' -o '${sc3_biology_markers}' -t '${sc3_biology_markers_tsv}' -k '${ks}' -r '${regime}'
   ]]></command>
