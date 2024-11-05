@@ -4,6 +4,7 @@
         <import>scmap_macros.xml</import>
     </macros>
     <expand macro="requirements" />
+    <expand macro="xrefs"/>
     <command detect_errors="exit_code"><![CDATA[
         scmap-preprocess-sce.R --input-object "${input_single_cell_experiment}" --output-sce-object sce_object_preprocessed.rds && scmap-index-cluster.R --input-object-file sce_object_preprocessed.rds --cluster-col '$cluster_col' --output-object-file '$output_single_cell_experiment' --output-plot-file '$plot'
         --remove-mat '${remove_mat}'
