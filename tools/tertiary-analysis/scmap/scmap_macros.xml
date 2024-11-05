@@ -21,9 +21,11 @@
 1.6.1+galaxy0: Update scmap-cli to 0.0.9.
 1.6.0+galaxy0: Initial contribution. Jonathan Manning, Expression Atlas team https://www.ebi.ac.uk/gxa/home at EMBL-EBI https://www.ebi.ac.uk/.
     ]]></token>
-    <xrefs>
-        <xref type="bio.tools">scmap</xref>
-    </xrefs>
+    <xml name="bio_tools">
+        <xrefs>
+            <xref type="bio.tools">scmap</xref>
+        </xrefs>
+      </xml>
     <xml name="citations">
       <citations>
         <citation type="bibtex">
