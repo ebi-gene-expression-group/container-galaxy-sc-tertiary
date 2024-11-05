@@ -4,7 +4,6 @@
          <import>scpred_macros.xml</import>
     </macros>
     <expand macro='requirements' />
-    <expand macro="xrefs"/>
     <command detect_errors='exit_code'><![CDATA[
         scpred_get_feature_space.R  --input-object '${input_object}'  --prediction-column '${prediction_column}'   --output-path '${output_obj_path}' 
      
