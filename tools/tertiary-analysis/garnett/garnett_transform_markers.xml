@@ -4,6 +4,7 @@
         <import>garnett_macros.xml</import>
     </macros>
     <expand macro="requirements" />
+    <expand macro="xrefs"/>
     <command detect_errors="exit_code"><![CDATA[
         transform_marker_file.R --input-marker-file '${input_marker_file}' --marker-list '${marker_list}'  --garnett-marker-file '${garnett_marker_file}'
 
@@ -45,4 +46,3 @@
     ]]></help>
     <expand macro="citations" />
 </tool>
-

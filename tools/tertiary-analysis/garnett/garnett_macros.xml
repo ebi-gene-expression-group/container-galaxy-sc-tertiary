@@ -8,6 +8,11 @@
             <yield/>
         </requirements>
     </xml>
+    <xml name="xrefs">
+      <xrefs>
+          <xref type="bio.tools">Garnett</xref>
+      </xrefs>
+    </xml>
     <xml name="version">
         <version_command><![CDATA[
         echo $(R --version | grep version | grep -v GNU)", garnett version" $(R --vanilla --slave -e "library(garnett); cat(sessionInfo()\$otherPkgs\$garnett\$Version)" 2> /dev/null | grep -v -i "WARNING: ")
