@@ -5,6 +5,7 @@
     <import>sceasy_macros.xml</import>
   </macros>
   <expand macro="requirements"/>
+  <expand macro="xrefs"/>
   <command detect_errors="exit_code"><![CDATA[
 #if str($conversion['direction']).startswith("loom")
     ln -s ${conversion.input_object_file} input.loom &&
