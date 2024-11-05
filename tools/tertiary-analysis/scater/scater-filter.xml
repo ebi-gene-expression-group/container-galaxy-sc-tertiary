@@ -3,8 +3,8 @@
   <macros>
     <import>scater_macros.xml</import>
   </macros>
-  <expand macro="requirements" />
   <expand macro="xrefs"/>
+  <expand macro="requirements" />
   <command detect_errors="exit_code"><![CDATA[
 scater-filter.R -i '${R_scater_qc}' -o '$R_scater_filtered'
 #if $cell_parameters

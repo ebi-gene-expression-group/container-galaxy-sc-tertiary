@@ -3,16 +3,16 @@
     <macros>
         <import>macros.xml</import>
     </macros>
-    <expand macro="requirements"/>
     <expand macro="xrefs"/>
+    <expand macro="requirements"/>
     <command detect_errors="exit_code">
         <![CDATA[
-            ln -s '${expression_mtx}' expr_mat.loom && 
+            ln -s '${expression_mtx}' expr_mat.loom &&
             ln -s '${tfs_fname}' tfs.txt &&
             #if $use_arboretum
                 arboreto_with_multiprocessing.py
             #else
-                pyscenic grn 
+                pyscenic grn
             #end if
             -o tf2targets.tsv
             $transpose
@@ -30,7 +30,7 @@
             --gene_attribute '${gene_attribute}'
             #end if
             $sparse
-            
+
             expr_mat.loom tfs.txt &&
             mv tf2targets.tsv '${tf2targets}'
         ]]>
@@ -82,7 +82,7 @@
 
         - Expression Matrix File: Loom file containing the expression matrix, (rows=genes x columns=cells)
         - Transcription Factors File: TXT file with a list of transcription factors.
-        
+
         **Options:**
 
         - Output File: Path to the output file (CSV format).

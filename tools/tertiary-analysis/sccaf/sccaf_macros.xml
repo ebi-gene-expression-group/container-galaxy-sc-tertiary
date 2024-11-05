@@ -1,4 +1,9 @@
 <macros>
+  <xml name="xrefs">
+    <xrefs>
+      <xref type="bio.tools">sccaf</xref>
+    </xrefs>
+  </xml>
   <xml name="requirements">
     <requirements>
       <requirement type="package" version="@TOOL_VERSION@">sccaf</requirement>

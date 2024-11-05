@@ -3,6 +3,7 @@
     <macros>
          <import>ct_macros.xml</import>
     </macros>
+    <expand macro="xrefs"/>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p input_dir;
@@ -10,7 +11,7 @@
           cp '$input_file' input_dir/;
         #end for
 
-        get_tool_performance_table.R --input-dir input_dir --ref-file "${ref_file}" --parallel "TRUE" --num-cores \${GALAXY_SLOTS:-1} --lab-cl-mapping "${lab_cl_mapping}" --output-path "${output_path}" --tmpdir ./  
+        get_tool_performance_table.R --input-dir input_dir --ref-file "${ref_file}" --parallel "TRUE" --num-cores \${GALAXY_SLOTS:-1} --lab-cl-mapping "${lab_cl_mapping}" --output-path "${output_path}" --tmpdir ./
 
         #if $exclusions
         --exclusions "${exclusions}"
@@ -28,13 +29,13 @@
         --barcode-col-pred "${barcode_col_pred}"
         #end if
         #if $label_col_ref
-        --label-column-ref "${label_col_ref}" 
+        --label-column-ref "${label_col_ref}"
         #end if
         #if $label_col_pred
-        --label-column-pred "${label_col_pred}" 
+        --label-column-pred "${label_col_pred}"
         #end if
         #if $sem_siml_metric
-        --semantic-sim-metric "${sem_siml_metric}" 
+        --semantic-sim-metric "${sem_siml_metric}"
         #end if
 
          ]]></command>
@@ -77,8 +78,8 @@
     </tests>
     <help><![CDATA[
     @HELP@
-    
+
     @VERSION_HISTORY@
     ]]></help>
     <expand macro="citations" />
-</tool> 
+</tool>

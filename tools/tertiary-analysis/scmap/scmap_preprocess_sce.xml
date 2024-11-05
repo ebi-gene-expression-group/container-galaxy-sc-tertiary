@@ -3,8 +3,8 @@
     <macros>
         <import>scmap_macros.xml</import>
     </macros>
-    <expand macro="requirements" />
     <expand macro="xrefs"/>
+    <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         scmap-preprocess-sce.R --input-object "${input_single_cell_experiment}" --output-sce-object "${output_single_cell_experiment}"
         ]]></command>
@@ -16,7 +16,7 @@
     </outputs>
     <help><![CDATA[
     @HELP@
-    
+
     @VERSION_HISTORY@
     ]]></help>
     <expand macro="citations" />

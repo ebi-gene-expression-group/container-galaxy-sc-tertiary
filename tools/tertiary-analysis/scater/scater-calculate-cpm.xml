@@ -3,8 +3,8 @@
   <macros>
     <import>scater_macros.xml</import>
   </macros>
-  <expand macro="requirements" />
   <expand macro="xrefs"/>
+  <expand macro="requirements" />
   <command detect_errors="exit_code"><![CDATA[
 scater-calculate-cpm.R -i '${R_scater_serialized}'
     -s '$size_factors'

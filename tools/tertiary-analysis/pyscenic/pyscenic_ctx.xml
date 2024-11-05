@@ -5,15 +5,15 @@
     <macros>
         <import>macros.xml</import>
     </macros>
-    <expand macro="requirements"/>
     <expand macro="xrefs"/>
+    <expand macro="requirements"/>
     <command><![CDATA[
     #set PySCENIC_DB = "db.genes_vs_motifs.rankings.feather"
     ln -s '${module_fname}' tf2targets.tsv &&
     ln -s '${expression_mtx}' expr_mat.loom &&
     ln -s '${database_fname}' ${PySCENIC_DB} &&
 
-    pyscenic ctx tf2targets.tsv ${PySCENIC_DB} 
+    pyscenic ctx tf2targets.tsv ${PySCENIC_DB}
         --expression_mtx_fname expr_mat.loom
     --output regulons.tsv
 $no_pruning
@@ -103,19 +103,19 @@ $sparse
     <help><![CDATA[
         .. class:: infomark
            :name: warning
-        
+
            **pySCENIC ctx: Contextualize GRN**
-        
+
         This tool refines gene regulatory networks (GRNs) by pruning targets that do not have an enrichment for a corresponding motif of the transcription factor (TF). This process effectively separates direct from indirect targets based on the presence of cis-regulatory footprints.
-        
+
         **Inputs:**
-        
+
         - **Module File**: A file containing the signature or co-expression modules. Supported formats include CSV, TSV (adjacencies), YAML, GMT, and DAT (modules).
         - **Database Files**: One or more regulatory feature databases. Supported formats include feather or db (legacy).
         - **Annotations File**: A file containing the motif annotations to use.
-        
+
         **Optional Parameters:**
-        
+
         - **No Pruning**: Do not perform pruning, i.e., find enriched motifs.
         - **Chunk Size**: The size of the module chunks assigned to a node in the dask graph (default: 100).
         - **Mode**: The mode to be used for computing (default: custom_multiprocessing).

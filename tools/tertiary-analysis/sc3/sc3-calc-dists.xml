@@ -4,8 +4,8 @@
   <macros>
     <import>sc3-macros.xml</import>
   </macros>
-  <expand macro="requirements" />
   <expand macro="xrefs"/>
+  <expand macro="requirements" />
   <command detect_errors="exit_code"><![CDATA[
 sc3-sc3-calc-dists.R -i '${sc3_prepared}' -o '${sc3_distances}'
   ]]></command>

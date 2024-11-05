@@ -3,13 +3,13 @@
     <macros>
         <import>scmap_macros.xml</import>
     </macros>
-    <expand macro="requirements" />
     <expand macro="xrefs"/>
+    <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        scmap-preprocess-sce.R 
+        scmap-preprocess-sce.R
          --input-object "${input_single_cell_experiment}"
-         --output-sce-object "result.preprocessed" && 
-        scmap-select-features.R 
+         --output-sce-object "result.preprocessed" &&
+        scmap-select-features.R
          --input-object-file "result.preprocessed"
          --n-features '$n_features'
          --output-object-file '$output_single_cell_experiment'
@@ -32,7 +32,7 @@
     </tests>
     <help><![CDATA[
     @HELP@
-    
+
     @VERSION_HISTORY@
     ]]></help>
     <expand macro="citations" />

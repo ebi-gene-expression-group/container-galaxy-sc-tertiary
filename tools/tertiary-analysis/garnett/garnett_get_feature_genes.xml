@@ -3,8 +3,8 @@
     <macros>
         <import>garnett_macros.xml</import>
     </macros>
-    <expand macro="requirements" />
     <expand macro="xrefs"/>
+    <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         garnett_get_feature_genes.R --classifier-object '${classifier_object}'  --database '${database}' --output-path '${output_path}'
 

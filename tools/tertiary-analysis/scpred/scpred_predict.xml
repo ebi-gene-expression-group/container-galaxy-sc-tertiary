@@ -3,10 +3,10 @@
      <macros>
         <import>scpred_macros.xml</import>
     </macros>
-    <expand macro="requirements" />
     <expand macro="xrefs"/>
+    <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        scpred_predict.R --input-object "${input_object}" --pred-data "${pred_data}" --normalise-data "${normalise_data}"       --recompute-alignment "${recompute_alignment}" --reference-scaling "${reference_scaling}" --output-path "${output_path}"  
+        scpred_predict.R --input-object "${input_object}" --pred-data "${pred_data}" --normalise-data "${normalise_data}"       --recompute-alignment "${recompute_alignment}" --reference-scaling "${reference_scaling}" --output-path "${output_path}"
 
         #if $normalisation_method
         --normalisation-method "${normalisation_method}"
@@ -48,8 +48,8 @@
     </tests>
      <help><![CDATA[
     @HELP@
-    
+
     @VERSION_HISTORY@
     ]]></help>
     <expand macro="citations" />
-</tool> 
+</tool>

@@ -3,8 +3,8 @@
     <macros>
         <import>macros.xml</import>
     </macros>
-    <expand macro="requirements"/>
     <expand macro="xrefs"/>
+    <expand macro="requirements"/>
     <command><![CDATA[
         ln -s '${expression_mtx_fname}' expr_mat.loom &&
         ln -s '${signatures_fname}' regulons.tsv &&
@@ -67,37 +67,37 @@
     <help>
         <![CDATA[
           Run PySCENIC aucell command to analyze single-cell gene expression data.
-    
+
           **Input Parameters:**
-    
+
           - **expression_mtx_fname**: The name of the file that contains the expression matrix for the single cell experiment. Two file formats are supported: csv (rows=cells x columns=genes) or loom (rows=genes x columns=cells).
-    
+
           - **signatures_fname**: The name of the file that contains the gene signatures. Three file formats are supported: gmt, yaml, or dat (pickle).
-    
+
           **Options:**
-    
+
           - **-o, --output**: Output file/stream, a matrix of AUC values. Two file formats are supported: csv or loom. If loom file is specified, it will contain the original expression matrix and the calculated AUC values as extra column attributes.
-    
+
           - **-t, --transpose**: Transpose the expression matrix if supplied as csv (rows=genes x columns=cells).
-    
+
           - **-w, --weights**: Use weights associated with genes in recovery analysis. Is only relevant when gene signatures are supplied as json format.
-    
+
           - **--seed**: Seed for the expression matrix ranking step. The default is to use a random seed.
-    
+
           **Motif Enrichment Arguments:**
-    
+
           - **--rank_threshold**: The rank threshold used for deriving the target genes of an enriched motif (default: 5000).
-    
+
           - **--auc_threshold**: The threshold used for calculating the AUC of a feature as fraction of ranked genes (default: 0.05).
-    
+
           - **--nes_threshold**: The Normalized Enrichment Score (NES) threshold for finding enriched features (default: 3.0).
-    
+
           **Loom File Arguments:**
-    
+
           - **--cell_id_attribute**: The name of the column attribute that specifies the identifiers of the cells in the loom file.
-    
+
           - **--gene_attribute**: The name of the row attribute that specifies the gene symbols in the loom file.
-    
+
           - **--sparse**: If set, load the expression data as a sparse matrix. Currently applies to the grn inference step only.
         ]]>
       </help>

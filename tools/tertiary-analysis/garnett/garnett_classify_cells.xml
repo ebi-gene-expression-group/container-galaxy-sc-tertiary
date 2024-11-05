@@ -3,8 +3,8 @@
     <macros>
         <import>garnett_macros.xml</import>
     </macros>
-    <expand macro="requirements" />
     <expand macro="xrefs"/>
+    <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         garnett_classify_cells.R --cds-object '${cds_object}' --classifier-object '${classifier_object}' --database '${database}' --cds-output-obj '${cds_output_obj}'
 

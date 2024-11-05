@@ -3,13 +3,14 @@
     <macros>
         <import>ct_macros.xml</import>
     </macros>
+    <expand macro="xrefs"/>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p input_dir;
         #for $table in $input_tables:
           cp '$table' input_dir/;
         #end for
-        
+
         get_consensus_output.R --input-dir input_dir --parallel "TRUE" --num-cores \${GALAXY_SLOTS:-1} --cl-dictionary "${lab_cl_mapping}"   --summary-table-output-path "${summary_table_output_path}" --raw-table-output-path "${raw_table_output_path}" --tmpdir ./
         #if $tool_table
         --tool-table "${tool_table}"
@@ -27,10 +28,10 @@
         --exclusions "${exclusions}"
         #end if
         #if $sem_siml_metric
-        --semantic-sim-metric "${sem_siml_metric}" 
+        --semantic-sim-metric "${sem_siml_metric}"
         #end if
         #if $true_labels
-        --true-labels "${true_labels}" 
+        --true-labels "${true_labels}"
         #end if
          ]]></command>
     <inputs>
@@ -60,7 +61,7 @@
     </tests>
     <help><![CDATA[
     @HELP@
-    
+
     @VERSION_HISTORY@
     ]]></help>
     <expand macro="citations" />

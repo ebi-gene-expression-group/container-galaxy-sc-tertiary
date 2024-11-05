@@ -4,8 +4,8 @@
   <macros>
     <import>monocle3-macros.xml</import>
   </macros>
-  <expand macro="requirements"/>
   <expand macro="xrefs"/>
+  <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
 LANG=en_US.UTF-8 monocle3 diffExp
     --neighbor-graph '$(neighbor_graph)'

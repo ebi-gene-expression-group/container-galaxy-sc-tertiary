@@ -3,8 +3,8 @@
    <macros>
         <import>garnett_macros.xml</import>
     </macros>
-    <expand macro="requirements" />
     <expand macro="xrefs"/>
+    <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         update_marker_file.R --marker-list-obj '${marker_list_obj}' --marker-check-file '${marker_check_file}'    --updated-marker-file '${updated_marker_file}'
 

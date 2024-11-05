@@ -3,8 +3,8 @@
     <macros>
         <import>macros.xml</import>
     </macros>
-    <expand macro="requirements"/>
     <expand macro="xrefs"/>
+    <expand macro="requirements"/>
     <command detect_errors="exit_code">
         <![CDATA[
         ln -s $input_file aucell.tsv &&
@@ -51,7 +51,7 @@
         <![CDATA[
         **What it does**
 
-        This tool binarizes an AUC matrix using the `binarize` function from the `pySCENIC` package. 
+        This tool binarizes an AUC matrix using the `binarize` function from the `pySCENIC` package.
         It produces a classification of the cell per given AUCell into passing or not passing an
         automatically defined threshold, through binarization (when possible) of the AUCell distribution.
         See the SCENIC paper or the PySCENIC notebooks for more details.

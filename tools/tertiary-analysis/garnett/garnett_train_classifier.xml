@@ -3,8 +3,8 @@
     <macros>
         <import>garnett_macros.xml</import>
     </macros>
-    <expand macro="requirements" />
     <expand macro="xrefs"/>
+    <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         garnett_train_classifier.R --cds-object '${cds_object}' --marker-file-path '${marker_file_path}' --database '${database}' --cores \${GALAXY_SLOTS:-1} --output-path '${output_classifier_path}'
         #if $train_id

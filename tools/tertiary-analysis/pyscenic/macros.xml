@@ -2,7 +2,7 @@
     <token name="@TOOL_VERSION@">0.12.1</token>
     <xml name="xrefs">
         <xrefs>
-            <xref type="bio.tools">maaslin2</xref>
+            <xref type="bio.tools">scenic</xref>
         </xrefs>
     </xml>
     <xml name="requirements">

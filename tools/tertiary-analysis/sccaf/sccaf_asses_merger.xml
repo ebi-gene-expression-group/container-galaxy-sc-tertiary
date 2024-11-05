@@ -4,6 +4,7 @@
   <macros>
     <import>sccaf_macros.xml</import>
   </macros>
+  <expand macro="xrefs"/>
   <expand macro="requirements"/>
   <command detect_errors="exit_code"><![CDATA[
 
@@ -49,7 +50,7 @@ provided by the optimisation process.
 
 To produce the required Round files collection, RUN SCCAF needs to be run in
 optimisation mode and enable the `Produce parameter walk for asessment distribution`
-option. 
+option.
 ]]></help>
   <!-- <expand macro="citations"/> -->
 </tool>

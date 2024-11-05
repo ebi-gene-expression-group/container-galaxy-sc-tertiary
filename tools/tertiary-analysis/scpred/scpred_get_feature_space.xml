@@ -3,20 +3,20 @@
     <macros>
          <import>scpred_macros.xml</import>
     </macros>
-    <expand macro='requirements' />
     <expand macro="xrefs"/>
+    <expand macro='requirements' />
     <command detect_errors='exit_code'><![CDATA[
-        scpred_get_feature_space.R  --input-object '${input_object}'  --prediction-column '${prediction_column}'   --output-path '${output_obj_path}' 
-     
+        scpred_get_feature_space.R  --input-object '${input_object}'  --prediction-column '${prediction_column}'   --output-path '${output_obj_path}'
+
         #if $correction_method
-        --correction-method '${correction_method}' 
+        --correction-method '${correction_method}'
         #end if
         #if $significance_threshold
         --significance-threshold '${significance_threshold}'
-        #end if 
+        #end if
         #if $reduction_parameter
         --reduction-parameter '${reduction_parameter}'
-        #end if 
+        #end if
 
 
         ]]></command>
@@ -26,7 +26,7 @@
         <param type='text' name='correction_method' label='Correction Method' optional='true' value="fdr" help='Method for mulpiple testing correction' />
         <param type='float' name='significance_threshold' label='Significance Threshold' optional='true' value="1.0" help='Significance threshold for principal components explaining class identity' />
         <param type='text' name='reduction_parameter' label='Reduction Parameter' optional='true' value="pca" help='Name of reduction in Seurat objet to be used to determine the feature space. Default: "pca"' />
-        
+
     </inputs>
     <outputs>
         <data name='output_obj_path' format='rdata' />
@@ -39,7 +39,7 @@
     </tests>
     <help><![CDATA[
     @HELP@
-    
+
     @VERSION_HISTORY@
     ]]></help>
     <expand macro='citations' />

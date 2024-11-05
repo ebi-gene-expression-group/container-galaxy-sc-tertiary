@@ -3,8 +3,8 @@
     <macros>
          <import>scmap_macros.xml</import>
     </macros>
-    <expand macro="requirements" />
     <expand macro="xrefs"/>
+    <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         scmap_get_std_output.R
         --predictions-file "${input_predictions_file}"
@@ -14,7 +14,7 @@
         --sim-col-name "${sim_col_name}"
         #if $index
           --index "${index}"
-        #end if   
+        #end if
     ]]></command>
     <inputs>
         <param type="data" name="input_predictions_file" label="Scmap predictions file in text format" format="txt" help="Path to the predictions file in text format" />
@@ -43,16 +43,14 @@
         </test>
     </tests>
     <help><![CDATA[
-    Generate output tables in tab-separated format compatible with input specified in cell-types-analysis package: https://github.com/ebi-gene-expression-group/cell-types-analysis. 
-    See the example snippet below: 
+    Generate output tables in tab-separated format compatible with input specified in cell-types-analysis package: https://github.com/ebi-gene-expression-group/cell-types-analysis.
+    See the example snippet below:
     ________________________________________
     |  cell_id   | predicted_label | score |
     | ERR2632411 | memory B cell   |  0.8  |
     ...
-    
+
     @VERSION_HISTORY@
     ]]></help>
     <expand macro="citations" />
 </tool>
-
-

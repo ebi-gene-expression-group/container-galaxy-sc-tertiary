@@ -3,10 +3,10 @@
     <macros>
         <import>scpred_macros.xml</import>
     </macros>
-    <expand macro="requirements" />
     <expand macro="xrefs"/>
-    <command detect_errors="exit_code"><![CDATA[ 
-        scpred_get_std_output.R --predictions-object "${predictions_object}" --get-scores "${get_scores}" --classifier '${classifier}' --output-table "${output_table}" 
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        scpred_get_std_output.R --predictions-object "${predictions_object}" --get-scores "${get_scores}" --classifier '${classifier}' --output-table "${output_table}"
         ]]></command>
     <inputs>
         <param type="data" name="predictions_object" label="Predictions Object" format="rdata" help="Path to the predictions file in text format" />
@@ -26,7 +26,7 @@
     </tests>
     <help><![CDATA[
     @HELP@
-    
+
     @VERSION_HISTORY@
     ]]></help>
     <expand macro="citations" />

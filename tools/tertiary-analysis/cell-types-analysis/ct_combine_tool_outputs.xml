@@ -3,6 +3,7 @@
     <macros>
         <import>ct_macros.xml</import>
     </macros>
+    <expand macro="xrefs"/>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p input_dir;
@@ -10,7 +11,7 @@
           cp '$table' input_dir/;
         #end for
 
-        combine_tool_outputs.R --input-dir input_dir --top-labels-num "${top_labels_num}" --scores "${scores}" --output-table "${output_table}" 
+        combine_tool_outputs.R --input-dir input_dir --top-labels-num "${top_labels_num}" --scores "${scores}" --output-table "${output_table}"
 
         #if $exclusions
         --exclusions "${exclusions}"
@@ -35,7 +36,7 @@
     </tests>
     <help><![CDATA[
     @HELP@
-    
+
     @VERSION_HISTORY@
     ]]></help>
     <expand macro="citations" />

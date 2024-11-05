@@ -3,6 +3,7 @@
     <macros>
         <import>ct_macros.xml</import>
     </macros>
+    <expand macro="xrefs"/>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         get_tool_pvals.R --input-table "${input_table}" --emp-dist-list "${emp_dist_list}" --output-table "${output_table}" ]]></command>
@@ -22,7 +23,7 @@
     </tests>
     <help><![CDATA[
     @HELP@
-    
+
     @VERSION_HISTORY@
     ]]></help>
     <expand macro="citations" />

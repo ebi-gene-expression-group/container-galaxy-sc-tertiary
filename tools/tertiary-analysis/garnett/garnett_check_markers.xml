@@ -3,8 +3,8 @@
     <macros>
         <import>garnett_macros.xml</import>
     </macros>
-    <expand macro="requirements" />
     <expand macro="xrefs"/>
+    <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         garnett_check_markers.R --cds-object '${cds_object}' --marker-file-path '${marker_file_path}' --database '${database}' --marker-output-path '${marker_output_path}'
 
