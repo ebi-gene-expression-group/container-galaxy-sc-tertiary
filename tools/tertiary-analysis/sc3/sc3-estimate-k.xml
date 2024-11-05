@@ -5,6 +5,7 @@
     <import>sc3-macros.xml</import>
   </macros>
   <expand macro="requirements" />
+  <expand macro="xrefs"/>
   <command detect_errors="exit_code"><![CDATA[
 sc3-sc3-estimate-k.R -i '${sc3_prepared}' -t '${sc3_estimated_k}' -o sc3_estimated.rds &&
 
