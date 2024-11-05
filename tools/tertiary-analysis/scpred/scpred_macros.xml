@@ -19,6 +19,9 @@
         1.0.1+galaxy0: Update output format from csv to tsv
         1.0.0+galaxy0: Initilal contribution. Andrey Solovyev, Expression Atlas team https://www.ebi.ac.uk/gxa/home at EMBL-EBI https://www.ebi.ac.uk/.
         ]]></token>
+    <xrefs>
+        <xref type="bio.tools">scPred</xref>
+    </xrefs>
     <xml name="citations">
         <citations>
             <citation type="bibtex">
