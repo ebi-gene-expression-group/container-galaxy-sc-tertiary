@@ -13,6 +13,11 @@
       <yield/>
     </requirements>
   </xml>
+  <xml name="xrefs">
+    <xrefs>
+      <xref type="bio.tools">sceasy</xref>
+    </xrefs>
+  </xml>
 
   <xml name="citations">
     <citations>
