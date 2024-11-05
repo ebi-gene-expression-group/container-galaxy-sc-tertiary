@@ -5,6 +5,7 @@
     <import>sc3-macros.xml</import>
   </macros>
   <expand macro="requirements" />
+  <expand macro="xrefs"/>
   <command detect_errors="exit_code"><![CDATA[
 sc3-sc3-prepare.R -i '${scater_log}' -o '${sc3_prepared}' -t 1
 
