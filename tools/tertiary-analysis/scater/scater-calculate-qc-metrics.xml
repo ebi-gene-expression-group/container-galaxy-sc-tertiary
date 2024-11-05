@@ -4,6 +4,7 @@
     <import>scater_macros.xml</import>
   </macros>
   <expand macro="requirements" />
+  <expand macro="xrefs"/>
   <command detect_errors="exit_code"><![CDATA[
 scater-calculate-qc-metrics.R -i '$R_scater_serialized'
 #if $exprs_values:
