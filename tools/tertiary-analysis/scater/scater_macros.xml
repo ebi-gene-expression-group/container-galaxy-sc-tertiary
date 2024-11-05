@@ -1,17 +1,17 @@
 <macros>
   <token name="@TOOL_VERSION@">1.10.0</token>
   <token name="@HELP@">More information can be found at https://bioconductor.org/packages/release/bioc/html/scater.html</token>
-  <xml name="requirements">
-    <requirements>
-      <requirement type="package" version="0.0.5">scater-scripts</requirement>
-      <yield/>
-    </requirements>
   </xml>
   <xml name="xrefs">
     <xrefs>
       <xref type="bio.tools">scater</xref>
     </xrefs>
   </xml>
+  <xml name="requirements">
+    <requirements>
+      <requirement type="package" version="0.0.5">scater-scripts</requirement>
+      <yield/>
+    </requirements>
   <xml name="version">
     <version_command><![CDATA[
     echo $(R --version | grep version | grep -v GNU)", scater version" $(R --vanilla --slave -e "library(scater); cat(sessionInfo()\$otherPkgs\$scater\$Version)" 2> /dev/null | grep -v -i "WARNING: ")

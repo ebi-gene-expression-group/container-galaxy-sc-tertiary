@@ -7,16 +7,17 @@
 0.0.1+galaxy0: Initial version based on sceasy 0.0.5 by Ni Huang, WTSI.
     ]]></token>
 
+  <xml name="xrefs">
+    <xrefs>
+      <xref type="bio.tools">sceasy</xref>
+    </xrefs>
+  </xml>
+
   <xml name="requirements">
     <requirements>
       <requirement type="package" version="0.0.5">r-sceasy</requirement>
       <yield/>
     </requirements>
-  </xml>
-  <xml name="xrefs">
-    <xrefs>
-      <xref type="bio.tools">sceasy</xref>
-    </xrefs>
   </xml>
 
   <xml name="citations">

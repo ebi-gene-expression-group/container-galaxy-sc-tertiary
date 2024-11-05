@@ -29,17 +29,17 @@
 #end if
   </token>
 
+  <xml name="xrefs">
+    <xrefs>
+      <xref type="bio.tools">monocle</xref>
+    </xrefs>
+  </xml>
+
   <xml name="requirements">
     <requirements>
       <requirement type="package" version="0.0.7">monocle3-cli</requirement>
       <yield/>
     </requirements>
-  </xml>
-
-  <xml name="xrefs">
-    <xrefs>
-      <xref type="bio.tools">monocle</xref>
-    </xrefs>
   </xml>
 
   <xml name="citations">

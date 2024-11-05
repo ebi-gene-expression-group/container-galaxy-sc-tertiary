@@ -2,16 +2,16 @@
     <token name="@TOOL_VERSION@">0.2.8</token>
     <token name="@HELP@">More information can be found at https://cole-trapnell-lab.github.io/garnett/docs/</token>
     <token name="@PROFILE@">18.01</token>
+    <xml name="xrefs">
+      <xrefs>
+          <xref type="bio.tools">Garnett</xref>
+      </xrefs>
+    </xml>
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="0.0.5">garnett-cli</requirement>
             <yield/>
         </requirements>
-    </xml>
-    <xml name="xrefs">
-      <xrefs>
-          <xref type="bio.tools">Garnett</xref>
-      </xrefs>
     </xml>
     <xml name="version">
         <version_command><![CDATA[
