@@ -4,6 +4,7 @@
         <import>scpred_macros.xml</import>
     </macros>
     <expand macro="requirements" />
+    <expand macro="xrefs"/>
     <command detect_errors="exit_code"><![CDATA[
         scpred_train_model.R --input-object "${input_object}" --model "${model}" --output-path "${output_obj_path}" --iter-num "${iter_num}" --num-cores \${GALAXY_SLOTS:-1} --tune-length "${tune_length}" --metric "${metric}" --preprocess "${preprocess}" --return-data "${return_data}" --save-predictions "${save_predictions}" 
         
