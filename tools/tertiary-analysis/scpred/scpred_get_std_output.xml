@@ -4,6 +4,7 @@
         <import>scpred_macros.xml</import>
     </macros>
     <expand macro="requirements" />
+    <expand macro="xrefs"/>
     <command detect_errors="exit_code"><![CDATA[ 
         scpred_get_std_output.R --predictions-object "${predictions_object}" --get-scores "${get_scores}" --classifier '${classifier}' --output-table "${output_table}" 
         ]]></command>
