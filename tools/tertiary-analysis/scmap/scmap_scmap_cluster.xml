@@ -4,6 +4,7 @@
         <import>scmap_macros.xml</import>
     </macros>
     <expand macro="requirements" />
+    <expand macro="xrefs"/>
     <command detect_errors="exit_code"><![CDATA[
         scmap-scmap-cluster.R --index-object-file '$index_single_cell_experiment' --projection-object-file '$project_single_cell_experiment' --threshold '$threshold' --output-object-file '$output_single_cell_experiment' --output-text-file '$output_txt'
     ]]></command>
