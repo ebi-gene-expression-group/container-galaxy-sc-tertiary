@@ -36,6 +36,12 @@
     </requirements>
   </xml>
 
+  <xml name="xrefs">
+    <xrefs>
+      <xref type="bio.tools">monocle</xref>
+    </xrefs>
+  </xml>
+
   <xml name="citations">
     <citations>
       <yield />
