@@ -2,6 +2,11 @@
     <token name="@TOOL_VERSION@">1.6.4</token>
     <token name="@HELP@">More information can be found at https://bioconductor.org/packages/release/bioc/html/scmap.html</token>
     <token name="@PROFILE@">18.01</token>
+    <xml name="xrefs">
+        <xrefs>
+            <xref type="bio.tools">scmap</xref>
+        </xrefs>
+    </xml>
     <xml name="requirements">
       <requirements>
         <requirement type="package" version="0.1.0">scmap-cli</requirement>

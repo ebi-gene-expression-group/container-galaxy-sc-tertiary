@@ -4,6 +4,7 @@
   <macros>
     <import>sc3-macros.xml</import>
   </macros>
+  <expand macro="xrefs"/>
   <expand macro="requirements" />
   <command detect_errors="exit_code"><![CDATA[
 sc3-sc3-calc-transfs.R -i '${sc3_distances}' -o '${sc3_transformed}'

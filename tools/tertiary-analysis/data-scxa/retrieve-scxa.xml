@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tool id="retrieve_scxa" name="EBI SCXA Data Retrieval" version="v0.0.2+galaxy2">
   <description>Retrieves expression matrixes and metadata from EBI Single Cell Expression Atlas (SCXA)</description>
+  <xrefs>
+      <xref type="bio.tools">ebi_scxa_data_retrieval</xref>
+  </xrefs>
   <requirements>
     <requirement type="package" version="1.20.1">wget</requirement>
   </requirements>

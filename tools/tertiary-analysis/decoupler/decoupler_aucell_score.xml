@@ -3,6 +3,9 @@
     <description>
         scores cells using the AUCell method for gene sets.
     </description>
+    <xrefs>
+      <xref type="bio.tools">decoupler</xref>
+    </xrefs>
     <requirements>
         <requirement type="package" version="1.4.0">decoupler</requirement>
     </requirements>

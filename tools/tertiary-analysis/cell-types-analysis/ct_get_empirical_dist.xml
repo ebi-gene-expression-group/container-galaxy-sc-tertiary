@@ -3,14 +3,15 @@
     <macros>
         <import>ct_macros.xml</import>
     </macros>
+    <expand macro="xrefs"/>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
 
-        get_empirical_dist.R --input-ref-file "${input_ref_file}" --label-column-ref "${label_col_ref}" --lab-cl-mapping "${lab_cl_mapping}" --num-iterations "${num_iter}"  --parallel "TRUE" --num-cores \${GALAXY_SLOTS:-1} --tmpdir ./  --output-path "${output_list_path}" 
+        get_empirical_dist.R --input-ref-file "${input_ref_file}" --label-column-ref "${label_col_ref}" --lab-cl-mapping "${lab_cl_mapping}" --num-iterations "${num_iter}"  --parallel "TRUE" --num-cores \${GALAXY_SLOTS:-1} --tmpdir ./  --output-path "${output_list_path}"
 
         #if $ontology_graph
         --ontology-graph "${ontology_graph}"
-        #end if 
+        #end if
         #if $sample_labs
         --sample-labs "${sample_labs}"
         #end if

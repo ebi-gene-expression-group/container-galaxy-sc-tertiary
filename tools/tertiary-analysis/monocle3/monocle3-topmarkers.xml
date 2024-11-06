@@ -4,6 +4,7 @@
   <macros>
     <import>monocle3-macros.xml</import>
   </macros>
+  <expand macro="xrefs"/>
   <requirements>
     <requirement type="package" version="0.0.8">monocle3-cli</requirement>
   </requirements>

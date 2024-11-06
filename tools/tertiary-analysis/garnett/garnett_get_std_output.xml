@@ -3,6 +3,7 @@
     <macros>
         <import>garnett_macros.xml</import>
     </macros>
+    <expand macro="xrefs"/>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         garnett_get_std_output.R --input-object '${input_object}' --classifier '${classifier}' --output-file-path '${output_file_path}'

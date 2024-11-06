@@ -3,6 +3,7 @@
     <macros>
         <import>ct_macros.xml</import>
     </macros>
+    <expand macro="xrefs"/>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p input_dir;
@@ -12,7 +13,7 @@
 
         build_cell_ontology_dict.R --input-dir input_dir  --output-dict-path "${output_dict_path}" --output-text-path "${output_txt_path}"
         #if $condensed_sdrf
-        --condensed-sdrf "${condensed_sdrf}" 
+        --condensed-sdrf "${condensed_sdrf}"
         #end if
         #if $barcode_col_name
         --barcode-col-name "${barcode_col_name}"
@@ -21,7 +22,7 @@
         --cell-label-col-name "${cell_label_col_name}"
         #end if
         #if $cell_ontology_col_name
-        --cell-ontology-col-name "${cell_ontology_col_name}" 
+        --cell-ontology-col-name "${cell_ontology_col_name}"
         #end if
          ]]></command>
     <inputs>
@@ -50,7 +51,7 @@
     </tests>
     <help><![CDATA[
     @HELP@
-    
+
     @VERSION_HISTORY@
     ]]></help>
     <expand macro="citations" />

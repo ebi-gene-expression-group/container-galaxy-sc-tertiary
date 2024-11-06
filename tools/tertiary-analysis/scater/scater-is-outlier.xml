@@ -3,6 +3,7 @@
   <macros>
     <import>scater_macros.xml</import>
   </macros>
+  <expand macro="xrefs"/>
   <expand macro="requirements" />
   <command detect_errors="exit_code"><![CDATA[
 scater-extract-qc-metric.R -i '${R_scater_qc}' -m '$metrics' -o metrics.csv &&
