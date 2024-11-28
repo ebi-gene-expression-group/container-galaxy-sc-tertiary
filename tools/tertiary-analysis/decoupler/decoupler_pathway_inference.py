@@ -144,7 +144,7 @@ print(type(args.min_n))
 
 if input_type == "AnnData":
     # read in the AnnData input file
-    adata = ad.read_h5ad(args.input_anndata)
+    adata = ad.read_h5ad(args.input)
 
     if args.var_gene_symbols_field and args.var_gene_symbols_field in adata.var.columns:
         # Storing index in a column called 'index_bak'
@@ -165,7 +165,7 @@ else:
     adata = adata[[args.stat]].T
 
 if args.method == "mlm":
-    tf_est, tf_pvals = dc.run_mlm(
+    res = dc.run_mlm(
         mat=adata,
         net=network,
         source=args.source,
@@ -177,7 +177,7 @@ if args.method == "mlm":
     )
 
 elif args.method == "ulm":
-    tf_est, tf_pvals = dc.run_ulm(
+    res = dc.run_ulm(
         mat=adata,
         net=network,
         source=args.source,
@@ -188,7 +188,7 @@ elif args.method == "ulm":
         use_raw=args.use_raw,
     )
 elif args.method == "consensus":
-    tf_est, tf_pvals = dc.run_consensus(
+    res = dc.run_consensus(
         mat=adata,
         net=network,
         source=args.source,
@@ -208,6 +208,7 @@ if args.output is not None:
              adata.obsm[f"{args.method}_pvals"]], axis=1
         )
     else:
+        tf_est, tf_pvals = res
         combined_df = pd.DataFrame(
             {
                 "set": tf_est.columns,
