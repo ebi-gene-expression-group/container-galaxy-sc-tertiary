@@ -193,7 +193,8 @@ The tool accepts two types of input files:
 
 2. A tabular file with differential expression data:
 
-    - The file should have genes in rows.
+    - The file should have genes in rows (and the first column by the gene symbols).
+    - The file needs a header, that is, columns names for every column.
     - Columns must include at least fields similar to log2FC and a p-value or FDR field.
     - If this file is provided, the tool will score each source in the network file according to the differential expression of the provided genes.
 
