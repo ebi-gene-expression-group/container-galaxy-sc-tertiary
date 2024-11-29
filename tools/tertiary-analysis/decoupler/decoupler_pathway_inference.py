@@ -217,8 +217,8 @@ if args.output is not None:
                 f"{args.method}_pvals": tf_pvals.iloc[0],
             }
         )
-    # sort ascending on the p-values
-    combined_df.sort_values(by=f"{args.method}_pvals", inplace=True)
+        # sort ascending on the p-values
+        combined_df.sort_values(by=f"{args.method}_pvals", inplace=True)
 
     # Save the combined dataframe to a file
     combined_df.to_csv(args.output + ".tsv", sep="\t")
