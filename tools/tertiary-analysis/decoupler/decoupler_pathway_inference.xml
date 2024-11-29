@@ -1,4 +1,4 @@
-<tool id="decoupler_pathway_inference" name="Decoupler Pathway Inference" version="1.4.0+galaxy2" profile="20.05" license="MIT">
+<tool id="decoupler_pathway_inference" name="Decoupler Pathway Inference" version="1.4.0+galaxy3" profile="20.05" license="MIT">
     <description>
         of functional genesets/pathways for scRNA-seq data.
     </description>
@@ -6,109 +6,165 @@
         <requirement type="package" version="1.4.0">decoupler</requirement>
     </requirements>
     <command>
+        #if $inp.format == 'h5ad':
+            #set $input_fname = "input.h5ad"
+        #else:
+            #set $input_fname = "input.tsv"
+        #end if
+        ln -s '$input' '$input_fname';
+
         python '$__tool_directory__/decoupler_pathway_inference.py'
-            -i '$input_anndata'
+            -i '$input_fname'
             -n '$input_network_file'
             --min_n "$min_n"
             --method '$method'
-            $use_raw
+            
             --source '$source'
             --target '$target'
             --weight '$weight'
-            #if $gene_symbols_field:
-                --var_gene_symbols_field '$gene_symbols_field'
+            #if str($inp.format) == "tabular":
+                #if $inp.stat_field:
+                    --stat "${inp.stat_field}"
+                #end if
+                #if $inp.p_value_column:
+                    --p_value_column "${inp.p_value_column}"
+                    --p_value_threshold "${inp.p_value_threshold}"
+                #end if
+            #else:
+                #if $inp.gene_symbols_field:
+                    --var_gene_symbols_field "${inp.gene_symbols_field}"
+                #end if
+                #if $inp.use_raw:
+                    ${inp.use_raw}
+                #end if
+                #if $inp.write_activities_path:
+                    ${inp.write_activities_path}
+                #end if
             #end if
             --output "inference"
-            $write_activities_path
+            
     </command>
     <inputs>
-        <param name="input_anndata" type="data" format="h5ad" label="Input AnnData file" />
-        <param name="input_network_file" type="data" format="tabular" label="Input Network file" help="Tabular file with columns Source, Target and Weight. A source gene/pathway regulates/contains a target gene, weights can be either positive or negative. The source element needs to be part of the network, the target is a gene in the network and in the dataset" />
-        <param name="min_n" type="integer" min="0" value="5" label="Minimum targets per source." help="If targets are less than minimum, sources are removed" />
+        <param name="input" type="data" format="h5ad,tabular" label="Input AnnData/Expression file"/>
+        <param name="input_network_file" type="data" format="tabular" label="Input Network file" help="Tabular file with columns Source, Target and Weight. A source gene/pathway regulates/contains a target gene, weights can be either positive or negative. The source element needs to be part of the network, the target is a gene in the network and in the dataset"/>
+        <param name="min_n" type="integer" min="0" value="5" label="Minimum targets per source." help="If targets are less than minimum, sources are removed"/>
+        <conditional name="inp">
+            <param name="format" type="select" label="Input Format" help="Whether the provided file is AnnData or a Table of differential expression results (usually from bulk).">
+                <option value="h5ad">AnnData</option>
+                <option value="tabular">Differential Expression Table</option>
+            </param>
+            <when value="h5ad">
+                <param name="use_raw" type="boolean" truevalue="--use_raw" falsevalue="" checked="false" label="Use the raw part of the AnnData object"/>
+                <param name="write_activities_path" type="boolean" truevalue="--activities_path anndata_activities_path.h5ad" falsevalue="" checked="true" label="Write the activities AnnData object." help="Contains the MLM/ULM/Consensus activity results for each pathway and each cell in the main matrix, it is not a replacement of the original AnnData provided as input."/>
+                <param name="gene_symbols_field" type="text" optional="true" label="Gene symbols field" help="The field in the AnnData var table where gene symbols are stored."/>
+            </when>
+            <when value="tabular">
+                <param name="stat_field" type="text" label="Statistic column name" optional="false" help="Defines which column will be passed to the decoupler method, usually you want something like the log2FC or the t-stat (this must be a column in your table)"/>
+                <param argument="--p_value_column" type="text" label="P-value/FDR column name" help="Defines which column will be passed to the decoupler method as p-value, usually you want something like the log2FC or the t-stat (this must be a column in your table)"/>
+                <param argument="--p_value_threshold" value="0.05" type="float" label="P-value/FDR thresholds" help="Will filter out any rows in the file that are above the value (in the set P-value/FDR column)"/>
+            </when>
+        </conditional>
         <param name="method" type="select" label="Activity inference method">
             <option value="mlm" selected="true">Multivariate linear model (MLM)</option>
             <option value="ulm">Univariate linear model (ULM)</option>
+            <option value="consensus">Consensus (use for TFs with CollecTri)</option>
         </param>
-        <param name="use_raw" type="boolean" truevalue="--use_raw" falsevalue="" checked="false" label="Use the raw part of the AnnData object" />
-        <param name="write_activities_path" type="boolean" truevalue="--activities_path anndata_activities_path.h5ad" falsevalue="" checked="true" label="Write the activities AnnData object." help="Contains the MLM/ULM activity results for each pathway and each cell in the main matrix, it is not a replacement of the original AnnData provided as input."/>
-        <param name="source" type="text" value='source' label="Column name in network with source nodes." help="Usually the regulators. If empty then default is 'source' is used." />
-        <param name="target" type="text" value='target' label="Column name in network with target nodes." help="Usually the regulated genes. If empty then default is 'target' is used." />
-        <param name="weight" type="text" value='weight' label="Column name in network with weight." help="If empty then default is 'weight' is used." />
-        <param name="gene_symbols_field" type="text" optional="true" label="Gene symbols field" help="The field in the AnnData var table where gene symbols are stored."/>
+        <param name="source" type="text" value="source" label="Column name in network with source nodes." help="Usually the regulators. If empty then default is 'source' is used."/>
+        <param name="target" type="text" value="target" label="Column name in network with target nodes." help="Usually the regulated genes. If empty then default is 'target' is used."/>
+        <param name="weight" type="text" value="weight" label="Column name in network with weight." help="If empty then default is 'weight' is used."/>
     </inputs>
     <outputs>
         <data name="output_ad" format="h5ad" from_work_dir="anndata_activities_path.h5ad" label="${tool.name} on ${on_string}: Regulators/Pathways activity AnnData file">
-            <filter>write_activities_path</filter>
+            <filter>inp['format'] == "h5ad" and inp['write_activities_path'] is True</filter>
         </data>
-        <data name="output_table" format="tabular" from_work_dir="inference.tsv" label="${tool.name} on ${on_string}: Output estimate table" />
+        <data name="output_table" format="tabular" from_work_dir="inference.tsv" label="${tool.name} on ${on_string}: Output estimate table"/>
     </outputs>
     <tests>
         <!-- Hint: You can use [ctrl+alt+t] after defining the inputs/outputs to auto-scaffold some basic test cases. -->
-
-    <test expect_num_outputs="2">
-        <param name="input_anndata" value="pbmc3k_processed.h5ad"/>
-        <param name="input_network_file" value="progeny_test.tsv"/>
-        <param name="min_n" value="0"/>
-        <param name="method" value="mlm"/>
-        <param name="use_raw" value="false"/>
-        <param name="write_activities_path" value="true"/>
-        <param name="source" value="source"/>
-        <param name="target" value="target"/>
-        <param name="weight" value="weight"/>
-        <output name="output_ad">
-            <assert_contents>
-                <has_h5_keys keys="obsm/mlm_estimate"/>
-            </assert_contents>
-        </output>
-        <output name="output_table">
-            <assert_contents>
-                <has_n_columns n="5"/>
-            </assert_contents>
-        </output>
-    </test>
-    <test>
-        <param name="input_anndata" value="pbmc3k_processed.h5ad"/>
-        <param name="input_network_file" value="progeny_test_2.tsv"/>
-        <param name="min_n" value="0"/>
-        <param name="method" value="ulm"/>
-        <param name="use_raw" value="false"/>
-        <param name="write_activities_path" value="true"/>
-        <param name="source" value="source"/>
-        <param name="target" value="target"/>
-        <param name="weight" value="weight"/>
-        <output name="output_ad">
-            <assert_contents>
-                <has_h5_keys keys="obsm/ulm_estimate"/>
-            </assert_contents>
-        </output>
-        <output name="output_table">
-            <assert_contents>
-                <has_n_columns n="5"/>
-            </assert_contents>
-        </output>
-    </test>
-    <test>
-        <param name="input_anndata" value="mito_counted_anndata.h5ad"/>
-        <param name="input_network_file" value="mouse_progeny.tsv"/>
-        <param name="min_n" value="0"/>
-        <param name="method" value="ulm"/>
-        <param name="use_raw" value="false"/>
-        <param name="write_activities_path" value="true"/>
-        <param name="source" value="source"/>
-        <param name="target" value="target"/>
-        <param name="weight" value="weight"/>
-        <param name="gene_symbols_field" value="Symbol"/>
-        <output name="output_ad">
-            <assert_contents>
-                <has_h5_keys keys="obsm/ulm_estimate"/>
-            </assert_contents>
-        </output>
-        <output name="output_table">
-            <assert_contents>
-                <has_n_columns n="29"/>
-            </assert_contents>
-        </output>
-    </test>
+        <test expect_num_outputs="2">
+            <param name="input" value="pbmc3k_processed.h5ad"/>
+            <param name="inp|format" value="h5ad"/>
+            <param name="input_network_file" value="progeny_test.tsv"/>
+            <param name="min_n" value="0"/>
+            <param name="method" value="mlm"/>
+            <param name="inp|use_raw" value="false"/>
+            <param name="inp|write_activities_path" value="true"/>
+            <param name="source" value="source"/>
+            <param name="target" value="target"/>
+            <param name="weight" value="weight"/>
+            <output name="output_ad">
+                <assert_contents>
+                    <has_h5_keys keys="obsm/mlm_estimate"/>
+                </assert_contents>
+            </output>
+            <output name="output_table">
+                <assert_contents>
+                    <has_n_columns n="5"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="2">
+            <param name="input" value="pbmc3k_processed.h5ad"/>
+            <param name="inp|format" value="h5ad"/>
+            <param name="input_network_file" value="progeny_test_2.tsv"/>
+            <param name="min_n" value="0"/>
+            <param name="method" value="ulm"/>
+            <param name="inp|use_raw" value="false"/>
+            <param name="inp|write_activities_path" value="true"/>
+            <param name="source" value="source"/>
+            <param name="target" value="target"/>
+            <param name="weight" value="weight"/>
+            <output name="output_ad">
+                <assert_contents>
+                    <has_h5_keys keys="obsm/ulm_estimate"/>
+                </assert_contents>
+            </output>
+            <output name="output_table">
+                <assert_contents>
+                    <has_n_columns n="5"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="2">
+            <param name="input" value="mito_counted_anndata.h5ad"/>
+            <param name="inp|format" value="h5ad"/>
+            <param name="input_network_file" value="mouse_progeny.tsv"/>
+            <param name="min_n" value="0"/>
+            <param name="method" value="ulm"/>
+            <param name="inp|use_raw" value="false"/>
+            <param name="inp|write_activities_path" value="true"/>
+            <param name="source" value="source"/>
+            <param name="target" value="target"/>
+            <param name="weight" value="weight"/>
+            <param name="inp|gene_symbols_field" value="Symbol"/>
+            <output name="output_ad">
+                <assert_contents>
+                    <has_h5_keys keys="obsm/ulm_estimate"/>
+                </assert_contents>
+            </output>
+            <output name="output_table">
+                <assert_contents>
+                    <has_n_columns n="29"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="1">
+            <param name="input" value="diff_exp_result.tab"/>
+            <param name="inp|format" value="tabular"/>
+            <param name="input_network_file" value="progeny_test.tsv"/>
+            <param name="min_n" value="0"/>
+            <param name="method" value="mlm"/>
+            <param name="inp|stat_field" value="log2FoldChange"/>
+            <param name="inp|write_activities_path" value="false"/>
+            <param name="source" value="source"/>
+            <param name="target" value="target"/>
+            <param name="weight" value="weight"/>
+            <output name="output_table">
+                <assert_contents>
+                    <has_n_columns n="3"/>
+                </assert_contents>
+            </output>
+        </test>
     </tests>
     <help>
 **What it does**
@@ -119,34 +175,62 @@ Usage
 
 **Description**
 
-This tool extracts pathway activity inference using decoupler.
+This tool extracts pathway activity inference using decoupler. For more information on the underlying algorithms, 
+the `decoupler documentation`_ , in particular the Pathway Activity
+and Transcription factor activity inference sections.
 
-**Input** 
+.. _`decoupler documentation`: https://decoupler-py.readthedocs.io/en/latest/
 
-The input file should be an AnnData object in H5AD format. The tool accepts an H5AD file containing raw or normalized data.
+**Input**  
 
-The tool also takes network file containing a collection of pathways and their target genes, with weights for each interaction.
-        Example:
-        ```
-                source    target    weight
-            0    T1    G01    1.0
-            1    T1    G02    1.0
-            2    T1    G03    0.7
-            3    T2    G04    1.0
-            4    T2    G06    -0.5
-        ```
+The tool accepts two types of input files:
 
-You can also specify whether to use the raw data in the AnnData object instead of the X matrix using the "use_raw" parameter and Minimum of targets per source using "min_n".
+1. An AnnData object in H5AD format:
+
+    - The H5AD file can contain raw or normalized data.
+    - You can specify whether to use the raw data in the AnnData object instead of the X matrix using the "use_raw" parameter.
+    - Minimum of targets per source can be specified using "min_n".
+
+2. A tabular file with differential expression data:
+
+    - The file should have genes in rows (and the first column by the gene symbols).
+    - The file needs a header, that is, columns names for every column.
+    - Columns must include at least fields similar to log2FC and a p-value or FDR field.
+    - If this file is provided, the tool will score each source in the network file according to the differential expression of the provided genes.
+
+The tool also requires a network file containing a collection of pathways and their target genes, with weights for each interaction.
+
+Example of a network file:
+
++---------+--------+--------+
+| source  | target | weight |
++=========+========+========+
+| T1      | G01    | 1.0    |
++---------+--------+--------+
+| T1      | G02    | 1.0    |
++---------+--------+--------+
+| T1      | G03    | 0.7    |
++---------+--------+--------+
+| T2      | G04    | 1.0    |
++---------+--------+--------+
+| T2      | G06    | -0.5   |
++---------+--------+--------+
 
 
 **Output**
 
-The tool outputs an AnnData object containing the scores in the "obs" field, and tab-separated text files containing the scores for each cell.
+Depending on the input file type, the tool outputs:
 
-If the "write_activities_path" parameter is set to "true", the tool will write the modified AnnData object to an H5AD file. 
-If the "write_inference" parameter is set to "true", the tool will output a tab-separated text file containing the scores for each cell.
+- If an AnnData file is used:
 
+    - An AnnData object containing the scores in the "obs" field.
+    - Tab-separated text files containing the scores for each cell.
+    - If the "write_activities_path" parameter is set to "true", the tool will write the modified AnnData object to an H5AD file.  
+    - If the "write_inference" parameter is set to "true", the tool will output a tab-separated text file containing the scores for each cell.
 
+- If a tabular differential expression file is used:
+
+    - A tab-separated text file where each source in the network file is scored according to the differential expression of the provided genes.
 
     </help>
     <citations>

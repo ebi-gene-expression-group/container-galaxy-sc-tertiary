@@ -10,9 +10,13 @@ parser = argparse.ArgumentParser()
 
 # add AnnData input file option
 parser.add_argument(
-    "-i", "--input_anndata", help="AnnData input file", required=True
+    "-i", "--input",
+    help=(
+        "AnnData or table input file. Table input is meant for a single "
+        "comparison, not gene x cells"
+    ),
+    required=True
 )
-
 # add network input file option
 parser.add_argument(
     "-n", "--input_network", help="Network input file", required=True
@@ -32,6 +36,28 @@ parser.add_argument(
     "--activities_path",
     help="Path to save Activities AnnData file",
     default=None,
+)
+
+# Column for stat to use when providing a table
+parser.add_argument(
+    "--stat",
+    help="Stat to use when providing a table. Default is 'log2FC'.",
+    default="log2FC",
+)
+# Optional column for p-value or FDR in the table
+parser.add_argument(
+    "--p_value_column",
+    required=False,
+    help="Column name in the table with p-values or FDRs.",
+    default=None,
+)
+# Optional column for FDR threshold when given a table
+parser.add_argument(
+    "--p_value_threshold",
+    required=False,
+    type=float,
+    help="Column name in the table with FDRs.",
+    default=0.05
 )
 
 # Column name in net with source nodes
@@ -93,8 +119,15 @@ args = parser.parse_args()
 if args.output is None:
     raise ValueError("Please specify either -o or --output")
 
-# read in the AnnData input file
-adata = ad.read_h5ad(args.input_anndata)
+# detect based on input file extension if the input file is AnnData or matrix
+if args.input.endswith(".h5ad"):
+    input_type = "AnnData"
+elif args.input.endswith(".tsv") or args.input.endswith(".csv"):
+    input_type = "matrix"
+else:
+    raise ValueError(
+        "Invalid input file. Please provide a valid AnnData or matrix file."
+    )
 
 # read in the input file network input file
 network = pd.read_csv(args.input_network, sep="\t")
@@ -108,17 +141,32 @@ if (
         "Source, target, and weight columns are not present in the network"
     )
 
-
 print(type(args.min_n))
 
-if args.var_gene_symbols_field and args.var_gene_symbols_field in adata.var.columns:
-    # Storing index in a column called 'index_bak'
-    adata.var['index_bak'] = adata.var.index
-    adata.var.set_index(args.var_gene_symbols_field, inplace=True)
+if input_type == "AnnData":
+    # read in the AnnData input file
+    adata = ad.read_h5ad(args.input)
 
+    if args.var_gene_symbols_field and args.var_gene_symbols_field in adata.var.columns:
+        # Storing index in a column called 'index_bak'
+        adata.var['index_bak'] = adata.var.index
+        adata.var.set_index(args.var_gene_symbols_field, inplace=True)
+else:
+    # read in the matrix input file, genes in rows and columns for stats
+    adata = pd.read_csv(args.input, sep="\t", index_col=0)
+    if args.stat not in adata.columns:
+        raise ValueError(f"Stat column {args.stat} not found in input table header.")
+    if args.p_value_column and args.p_value_column not in adata.columns:
+        raise ValueError(
+            f"P-value column {args.p_value_column} not found in input table header."
+        )
+    if args.p_value_column and args.p_value_threshold is not None:
+        adata = adata[adata[args.p_value_column] <= args.p_value_threshold]
+
+    adata = adata[[args.stat]].T
 
 if args.method == "mlm":
-    dc.run_mlm(
+    res = dc.run_mlm(
         mat=adata,
         net=network,
         source=args.source,
@@ -128,25 +176,20 @@ if args.method == "mlm":
         min_n=args.min_n,
         use_raw=args.use_raw,
     )
-
-    if args.output is not None:
-        # write adata.obsm[mlm_key] and adata.obsm[mlm_pvals_key] to the
-        # output network files
-        combined_df = pd.concat(
-            [adata.obsm["mlm_estimate"], adata.obsm["mlm_pvals"]], axis=1
-        )
-
-        # Save the combined dataframe to a file
-        combined_df.to_csv(args.output + ".tsv", sep="\t")
-
-    # if args.activities_path is specified, generate the activities AnnData
-    # and save the AnnData object to the specified path
-    if args.activities_path is not None:
-        acts = dc.get_acts(adata, obsm_key="mlm_estimate")
-        acts.write_h5ad(args.activities_path)
 
 elif args.method == "ulm":
-    dc.run_ulm(
+    res = dc.run_ulm(
+        mat=adata,
+        net=network,
+        source=args.source,
+        target=args.target,
+        weight=args.weight,
+        verbose=True,
+        min_n=args.min_n,
+        use_raw=args.use_raw,
+    )
+elif args.method == "consensus":
+    res = dc.run_consensus(
         mat=adata,
         net=network,
         source=args.source,
@@ -157,18 +200,31 @@ elif args.method == "ulm":
         use_raw=args.use_raw,
     )
 
-    if args.output is not None:
-        # write adata.obsm[mlm_key] and adata.obsm[mlm_pvals_key] to the
-        # output network files
+if args.output is not None:
+    # write adata.obsm[mlm_key] and adata.obsm[mlm_pvals_key] to the
+    # output network files
+    if input_type == "AnnData":
         combined_df = pd.concat(
-            [adata.obsm["ulm_estimate"], adata.obsm["ulm_pvals"]], axis=1
+            [adata.obsm[f"{args.method}_estimate"],
+             adata.obsm[f"{args.method}_pvals"]], axis=1
         )
+    else:
+        tf_est, tf_pvals = res
+        combined_df = pd.DataFrame(
+            {
+                # index is written, so no need for the set names
+                f"{args.method}_estimate": tf_est.iloc[0],
+                f"{args.method}_pvals": tf_pvals.iloc[0],
+            }
+        )
+        # sort ascending on the p-values
+        combined_df.sort_values(by=f"{args.method}_pvals", inplace=True)
 
-        # Save the combined dataframe to a file
-        combined_df.to_csv(args.output + ".tsv", sep="\t")
+    # Save the combined dataframe to a file
+    combined_df.to_csv(args.output + ".tsv", sep="\t")
 
-    # if args.activities_path is specified, generate the activities AnnData
-    # and save the AnnData object to the specified path
-    if args.activities_path is not None:
-        acts = dc.get_acts(adata, obsm_key="ulm_estimate")
-        acts.write_h5ad(args.activities_path)
+# if args.activities_path is specified, generate the activities AnnData
+# and save the AnnData object to the specified path
+if args.activities_path is not None and input_type == "AnnData":
+    acts = dc.get_acts(adata, obsm_key=f"{args.method}_estimate")
+    acts.write_h5ad(args.activities_path)
