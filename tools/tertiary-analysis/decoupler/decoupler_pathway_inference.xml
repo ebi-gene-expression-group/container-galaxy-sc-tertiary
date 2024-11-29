@@ -45,13 +45,13 @@
             
     </command>
     <inputs>
-        <param name="input" type="data" format="h5ad,tabular" label="Input AnnData file"/>
+        <param name="input" type="data" format="h5ad,tabular" label="Input AnnData/Expression file"/>
         <param name="input_network_file" type="data" format="tabular" label="Input Network file" help="Tabular file with columns Source, Target and Weight. A source gene/pathway regulates/contains a target gene, weights can be either positive or negative. The source element needs to be part of the network, the target is a gene in the network and in the dataset"/>
         <param name="min_n" type="integer" min="0" value="5" label="Minimum targets per source." help="If targets are less than minimum, sources are removed"/>
         <conditional name="inp">
-            <param name="format" type="select" label="" help="TODO">
+            <param name="format" type="select" label="Input Format" help="Whether the provided file is AnnData or a Table of differential expression results (usually from bulk).">
                 <option value="h5ad">AnnData</option>
-                <option value="tabular">Table</option>
+                <option value="tabular">Differential Expression Table</option>
             </param>
             <when value="h5ad">
                 <param name="use_raw" type="boolean" truevalue="--use_raw" falsevalue="" checked="false" label="Use the raw part of the AnnData object"/>
@@ -59,7 +59,7 @@
                 <param name="gene_symbols_field" type="text" optional="true" label="Gene symbols field" help="The field in the AnnData var table where gene symbols are stored."/>
             </when>
             <when value="tabular">
-                <param name="stat_field" type="text" label="Statistic column name" optional="true" help="Defines which column will be passed to the decoupler method, usually you want something like the log2FC or the t-stat (this must be a column in your table)"/>
+                <param name="stat_field" type="text" label="Statistic column name" optional="false" help="Defines which column will be passed to the decoupler method, usually you want something like the log2FC or the t-stat (this must be a column in your table)"/>
                 <param argument="--p_value_column" type="text" label="P-value/FDR column name" help="Defines which column will be passed to the decoupler method as p-value, usually you want something like the log2FC or the t-stat (this must be a column in your table)"/>
                 <param argument="--p_value_threshold" value="0.05" type="float" label="P-value/FDR thresholds" help="Will filter out any rows in the file that are above the value (in the set P-value/FDR column)"/>
             </when>
@@ -161,7 +161,7 @@
             <param name="weight" value="weight"/>
             <output name="output_table">
                 <assert_contents>
-                    <has_n_columns n="4"/>
+                    <has_n_columns n="3"/>
                 </assert_contents>
             </output>
         </test>
@@ -175,7 +175,11 @@ Usage
 
 **Description**
 
-This tool extracts pathway activity inference using decoupler.
+This tool extracts pathway activity inference using decoupler. For more information on the underlying algorithms, 
+the `decoupler documentation`_ , in particular the Pathway Activity
+and Transcription factor activity inference sections.
+
+.. _`decoupler documentation`: https://decoupler-py.readthedocs.io/en/latest/
 
 **Input**  
 

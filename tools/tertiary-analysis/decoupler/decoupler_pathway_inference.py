@@ -55,6 +55,7 @@ parser.add_argument(
 parser.add_argument(
     "--p_value_threshold",
     required=False,
+    type=float,
     help="Column name in the table with FDRs.",
     default=0.05
 )
@@ -211,11 +212,13 @@ if args.output is not None:
         tf_est, tf_pvals = res
         combined_df = pd.DataFrame(
             {
-                "set": tf_est.columns,
+                # index is written, so no need for the set names
                 f"{args.method}_estimate": tf_est.iloc[0],
                 f"{args.method}_pvals": tf_pvals.iloc[0],
             }
         )
+    # sort ascending on the p-values
+    combined_df.sort_values(by=f"{args.method}_pvals", inplace=True)
 
     # Save the combined dataframe to a file
     combined_df.to_csv(args.output + ".tsv", sep="\t")
