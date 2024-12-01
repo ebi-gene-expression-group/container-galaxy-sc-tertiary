@@ -1,0 +1,178 @@
+<tool id="celltypist_predict" name="CellTypist: Predict Cell Types" version="1.6.3+galaxy0" profile="20.05" license="MIT">
+    <description>Predict cell types using an existing CellTypist model.</description>
+    <requirements>
+        <requirement type="package" version="1.6.3">celltypist</requirement>
+    </requirements>
+    <command detect_errors="exit_code">
+    <![CDATA[
+    python $__tool_directory__/celltypist.py --action predict \
+      --output_path "$output_predictions" \
+      --model "$model_file" \
+      #if str($inp.format) == 'h5ad'
+        --input_path "$inp.data" \
+      #else:
+        --input_path "$inp.data" \
+        --gene_file "$inp.gene_file" \
+        --cell_file "$inp.cell_file" \
+      #end if
+      #if $raw_counts_layer:
+        --raw_counts_layer "$raw_counts_layer" \
+      #end if
+      #if $gene_symbols_field:
+        --gene_symbols_field "$gene_symbols_field" \
+      #end if
+      ${normalize} \
+      ${transpose_input} \
+      --mode "$mode" \
+      --p_thres "$p_thres" \
+      ${majority_voting} \
+      #if $over_clustering:
+        --over_clustering "$over_clustering"
+      #end if
+    ]]>
+  </command>
+    <inputs>
+        <conditional name="inp" label="Input format">
+            <param name="format" type="select" label="Input format" help="Format for the input files, either AnnData or Matrix market format (10x)">
+                <option value="h5ad">AnnData</option>
+                <option value="mtx">Matrix market</option>
+            </param>
+            <when value="h5ad">
+                <param format="h5ad" type="data" name="data" label="Input data (AnnData)" help="The input data for prediction."/>
+            </when>
+            <when value="mtx">
+                <param format="mtx,txt" type="data" name="data" label="Input matrix (mtx file)" help="The input data for prediction."/>
+                <param format="txt,tabular" type="data" name="gene_file" label="Gene file" help="The file containing one gene per line corresponding to the genes in the input data (required for .mtx data)."/>
+                <param format="txt,tabular" type="data" name="cell_file" label="Cell file" help="The file containing one cell per line corresponding to the cells in the input data (required for .mtx data)."/>
+            </when>
+        </conditional>
+        <param format="data" type="data" name="model_file" optional="false" label="Model file" help="The existing CellTypist model file in .pkl format."/>
+        <param type="text" name="raw_counts_layer" label="Raw counts layer" help="The name of the layer that stores the raw counts. Uses default matrix if not present."/>
+        <param type="text" name="gene_symbols_field" label="Gene symbols field" help="The field in AnnData where the gene symbols are stored, if not in index."/>
+        <param type="boolean" argument="--normalize" label="Normalize" truevalue="--normalize" falsevalue="" help="If raw counts are provided in the AnnData object, they need to be normalized."/>
+        <param type="boolean" argument="--transpose_input" label="Transpose input" truevalue="--transpose_input" falsevalue="" help="If the provided matrix is in the gene-by-cell format, please transpose the input to cell-by-gene format."/>
+        <param type="select" name="mode" label="Mode" help="Mode for the prediction (e.g., best match, majority vote).">
+            <option value="best_match" selected="true">Best match</option>
+            <option value="prob_match">Probability match</option>
+        </param>
+        <param type="float" name="p_thres" value="0.5" label="Probability threshold" help="Probability threshold for assigning a cell type in a multiclass problem. Ignored if Mode set to Best match."/>
+        <param type="boolean" argument="--majority_voting" label="Majority voting" truevalue="--majority_voting" falsevalue="" help="Refine the predicted labels by running the majority voting classifier after over-clustering."/>
+        <param type="text" name="over_clustering" label="Over-clustering" help="If majority voting is set to True, specify the type of over-clustering that is to be performed. This can be specified in the AnnData or an input file specifying the over-clustering per cell. If not present, then the default heuristic over-clustering based on input data will be used."/>
+    </inputs>
+    <outputs>
+        <data format="tabular" name="output_predictions" label="Output predictions"/>
+    </outputs>
+    <tests>
+        <test expect_num_outputs="">
+            <!--TODO: auto-generated test case. Please fill in the required values-->
+            <param name="model_file" value=""/>
+            <param name="raw_counts_layer" value=""/>
+            <param name="gene_symbols_field" value=""/>
+            <param name="normalize" value="true"/>
+            <param name="transpose_input" value="true"/>
+            <param name="mode" value="best_match"/>
+            <param name="p_thres" value="0.5"/>
+            <param name="majority_voting" value="true"/>
+            <param name="over_clustering" value=""/>
+            <conditional name="inp">
+                <param name="format" value="h5ad"/>
+                <param name="data" value=""/>
+            </conditional>
+            <output name="output_predictions">
+                <assert_contents>
+                    <has_text text=""/>
+                    <has_line line=""/>
+                    <has_line_matching expression=""/>
+                    <has_n_columns n=""/>
+                    <has_size value="" delta=""/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="">
+            <!--TODO: auto-generated test case. Please fill in the required values-->
+            <param name="model_file" value=""/>
+            <param name="raw_counts_layer" value=""/>
+            <param name="gene_symbols_field" value=""/>
+            <param name="normalize" value="true"/>
+            <param name="transpose_input" value="true"/>
+            <param name="mode" value="best_match"/>
+            <param name="p_thres" value="0.5"/>
+            <param name="majority_voting" value="true"/>
+            <param name="over_clustering" value=""/>
+            <conditional name="inp">
+                <param name="format" value="mtx"/>
+                <param name="data" value=""/>
+                <param name="gene_file" value=""/>
+                <param name="cell_file" value=""/>
+            </conditional>
+            <output name="output_predictions">
+                <assert_contents>
+                    <has_text text=""/>
+                    <has_line line=""/>
+                    <has_line_matching expression=""/>
+                    <has_n_columns n=""/>
+                    <has_size value="" delta=""/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+.. _celltypist_predict_tool:
+
+CellTypist: Predict Cell Types
+------------------------------
+
+CellTypist is a tool for automatic cell type annotation using single-cell RNA sequencing data. This Galaxy tool wrapper executes the CellTypist script in "predict" mode, allowing you to predict cell types using an existing CellTypist model.
+
+Input
+^^^^^
+
+- **Input format**: Choose the format for the input files, either AnnData or Matrix market format (10x).
+
+  - If AnnData is selected, provide the input data (AnnData file).
+  - If Matrix market is selected, provide the input matrix (mtx file), gene file, and cell file.
+
+- **Input data**: The input data for prediction.
+
+- **Gene file**: The file containing one gene per line corresponding to the genes in the input data (required for .mtx data).
+
+- **Cell file**: The file containing one cell per line corresponding to the cells in the input data (required for .mtx data).
+
+- **Model file**: The existing CellTypist model file in .pkl format.
+
+- **Raw counts layer**: The name of the layer that stores the raw counts. Uses the default matrix if not provided.
+
+- **Gene symbols field**: The field in AnnData where the gene symbols are stored, if not in index.
+
+- **Normalize**: If raw counts are provided in the AnnData object, they need to be normalized.
+
+- **Transpose input**: If the provided matrix is in the gene-by-cell format, transpose the input to cell-by-gene format.
+
+- **Mode**: Mode for the prediction (e.g., best match, majority vote).
+
+- **Probability threshold**: Probability threshold for assigning a cell type in a multiclass problem. Ignored if Mode set to Best match.
+
+- **Majority voting**: Refine the predicted labels by running the majority voting classifier after over-clustering.
+
+- **Over-clustering**: If majority voting is set to True, specify the type of over-clustering that is to be performed. This can be specified in the AnnData or an input file specifying the over-clustering per cell. If not provided, the default heuristic over-clustering based on input data will be used.
+
+Output
+^^^^^^
+
+- **Output predictions**: The predicted cell types for the input data.
+
+Citation
+^^^^^^^^
+
+- `CellTypist: a tool for automatic cell type annotation using single-cell RNA sequencing data <https://www.science.org/doi/10.1126/science.abl5197>`_.
+
+History
+^^^^^^^
+
+Version 1.6.3+galaxy0: Initial wrapper. CLI written Alex Proutski.
+        ]]>
+    </help>
+    <citations>
+        <citation type="doi">10.1126/science.abl5197</citation>
+    </citations>
+</tool>
