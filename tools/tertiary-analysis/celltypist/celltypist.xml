@@ -174,6 +174,18 @@ Version 1.6.3+galaxy0: Initial wrapper, Pablo Moreno. CLI written by Alex Prouts
         ]]>
     </help>
     <citations>
-        <citation type="doi">10.1126/science.abl5197</citation>
+        <citation type="bibtex">@article{dominguez_conde2022,
+            title={Cross-tissue immune cell analysis reveals tissue-specific features in humans},
+            author={Domínguez Conde, C and Xu, C and Jarvis, LB and Rainbow, DB and Wells, SB and Gomes, T and Howlett, SK and Suchanek, O and Polanski, K and King, HW and Mamanova, L and Huang, N and Szabo, PA and Richardson, L and Bolt, L and Fasouli, ES and Mahbubani, KT and Prete, M and Tuck, L and Richoz, N and Tuong, ZK and Campos, L and Mousa, HS and Needham, EJ and Pritchard, S and Li, T and Elmentaite, R and Park, J and Rahmani, E and Chen, D and Menon, DK and Bayraktar, OA and James, LK and Meyer, KB and Yosef, N and Clatworthy, MR and Sims, PA and Farber, DL and Saeb-Parsy, K and Jones, JL and Teichmann, SA},
+            journal={Science},
+            volume={376},
+            number={6594},
+            pages={eabl5197},
+            year={2022},
+            publisher={American Association for the Advancement of Science},
+            doi={10.1126/science.abl5197},
+            pmid={35549406},
+            pmcid={PMC7612735}
+          }</citation>
     </citations>
 </tool>
