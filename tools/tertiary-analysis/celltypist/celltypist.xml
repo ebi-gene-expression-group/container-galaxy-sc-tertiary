@@ -182,9 +182,7 @@ Version 1.6.3+galaxy0: Initial wrapper, Pablo Moreno. CLI written by Alex Prouts
             number={6594},
             pages={eabl5197},
             year={2022},
-            publisher={American Association for the Advancement of Science},
-            pmid={35549406},
-            pmcid={PMC7612735}
+            publisher={American Association for the Advancement of Science}
           }</citation>
     </citations>
 </tool>
