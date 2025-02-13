@@ -130,10 +130,6 @@ def predict(
     else:
         print("Detected .mtx file as input.")
         data = input_path
-    # check if model is a path to a model file and simply load if it is
-    #if model.endswith(".pkl") and os.path.exists(model):
-    #    with open(model, "rb") as pickle_load:
-    #        model = pickle.load(pickle_load)
     if input_path.endswith(".mtx") and gene_file is None:
         raise ValueError("Missing a gene file for the provided .mtx data.")
     if input_path.endswith(".mtx") and cell_file is None:
