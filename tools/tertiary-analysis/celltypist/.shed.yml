@@ -1,0 +1,24 @@
+categories:
+ - Transcriptomics
+description: "celltypist - Automated cell type annotation"
+long_description: |
+    CellTypist is a tool for automated cell type annotation using pre-trained models.
+    It allows users to predict cell types from single-cell RNA sequencing data with high
+    accuracy and speed. The tool supports various input formats and provides options for
+    normalization, majority voting, and GPU acceleration.
+name: suite_celltypist
+owner: ebi-gxa
+remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/
+homepage_url: https://celltypist.readthedocs.io/en/latest/
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for the celltypist tool suite: {{ tool_name }}"
+suite:
+  name: "suite_celltypist"
+  description: "celltypist - Automated cell type annotation"
+  long_description: |
+    CellTypist is a tool for automated cell type annotation using pre-trained models.
+    It allows users to predict cell types from single-cell RNA sequencing data with high
+    accuracy and speed. The tool supports various input formats and provides options for
+    normalization, majority voting, and GPU acceleration.
