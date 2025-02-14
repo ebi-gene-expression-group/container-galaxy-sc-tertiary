@@ -347,7 +347,7 @@ def main():
             "--p_thres",
             type=float,
             help="Probability threshold for assigning a cell \
-                                  type in a multiclass problem, defualts \
+                                  type in a multiclass problem, defaults \
                                   to 0.5.",
             default=0.5,
             required=False,
@@ -366,8 +366,8 @@ def main():
             "--over_clustering",
             type=str,
             help="If majority voting is set to True, specify \
-                                  the type of over clustring that is to be \
-                                  perfomend. This can be specified in the \
+                                  the type of over clustering that is to be \
+                                  performend. This can be specified in the \
                                   AnnData or an input file specifying the \
                                   over-clustering per cell. If not present, \
                                   then the default heuristic over-clustring \
