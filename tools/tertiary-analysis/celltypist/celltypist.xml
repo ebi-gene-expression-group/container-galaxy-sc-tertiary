@@ -165,7 +165,7 @@ Output
 Citation
 ^^^^^^^^
 
-- `CellTypist: a tool for automatic cell type annotation using single-cell RNA sequencing data <https://www.science.org/doi/10.1126/science.abl5197>`_.
+- `CellTypist: a tool for automatic cell type annotation using single-cell RNA sequencing data doi/10.1126/science.abl5197`_.
 
 History
 ^^^^^^^
@@ -182,7 +182,9 @@ Version 1.6.3+galaxy0: Initial wrapper, Pablo Moreno. CLI written by Alex Prouts
             number={6594},
             pages={eabl5197},
             year={2022},
-            publisher={American Association for the Advancement of Science}
+            publisher={American Association for the Advancement of Science},
+            pmid={35549406},
+            pmcid={PMC7612735}
           }</citation>
     </citations>
 </tool>
