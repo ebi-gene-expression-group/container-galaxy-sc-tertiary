@@ -40,9 +40,11 @@ def train(
     if input_path.endswith(".h5ad"):
         print("Detected an AnnData object as input.")
         data = sc.read_h5ad(input_path)
-    else:
+    elif input_path.endswith(".mtx"):
         print("Detected .mtx file as input.")
         data = input_path
+    else:
+        raise ValueError("Invalid input file type detected.")
     if input_path.endswith(".mtx") and genes is None:
         raise ValueError("Missing a gene file for the provided data.")
     if (
@@ -127,9 +129,11 @@ def predict(
     if input_path.endswith(".h5ad"):
         print("Detected an AnnData object as input.")
         data = sc.read_h5ad(input_path)
-    else:
+    elif input_path.endswith(".mtx"):
         print("Detected .mtx file as input.")
         data = input_path
+    else:
+        raise ValueError("Invalid input file type detected.")
     if input_path.endswith(".mtx") and gene_file is None:
         raise ValueError("Missing a gene file for the provided .mtx data.")
     if input_path.endswith(".mtx") and cell_file is None:
