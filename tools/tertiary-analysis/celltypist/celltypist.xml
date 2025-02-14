@@ -7,6 +7,8 @@
     <![CDATA[
     #if $inp.format == 'h5ad':
         ln -s "$inp.data" input.h5ad &&
+    #else:
+        ln -s "$inp.data" input.mtx &&
     #end if
     ln -s "$model_file" model.pkl &&
     python $__tool_directory__/celltypist_CLI.py --action predict
@@ -21,7 +23,7 @@
           --gene_symbols_field "$inp.gene_symbols_field"
         #end if
       #else:
-        --input_path "$inp.data"
+        --input_path input.mtx
         --gene_file "$inp.gene_file"
         --cell_file "$inp.cell_file"
       #end if
@@ -88,34 +90,6 @@
                 </assert_contents>
             </output>
         </test>
-        <!-- 
-        <test expect_num_outputs="1">
-            <param name="model_file" value=""/>
-            <param name="raw_counts_layer" value=""/>
-            <param name="gene_symbols_field" value=""/>
-            <param name="normalize" value="true"/>
-            <param name="transpose_input" value="true"/>
-            <param name="mode" value="best_match"/>
-            <param name="p_thres" value="0.5"/>
-            <param name="majority_voting" value="true"/>
-            <param name="over_clustering" value=""/>
-            <conditional name="inp">
-                <param name="format" value="mtx"/>
-                <param name="data" value=""/>
-                <param name="gene_file" value=""/>
-                <param name="cell_file" value=""/>
-            </conditional>
-            <output name="output_predictions">
-                <assert_contents>
-                    <has_text text=""/>
-                    <has_line line=""/>
-                    <has_line_matching expression=""/>
-                    <has_n_columns n=""/>
-                    <has_size value="" delta=""/>
-                </assert_contents>
-            </output>
-        </test>
-        -->
     </tests>
     <help><![CDATA[
 .. _celltypist_predict_tool:
@@ -165,7 +139,7 @@ Output
 Citation
 ^^^^^^^^
 
-- `CellTypist: a tool for automatic cell type annotation using single-cell RNA sequencing data doi/10.1126/science.abl5197`_.
+- CellTypist: a tool for automatic cell type annotation using single-cell RNA sequencing data doi/10.1126/science.abl5197
 
 History
 ^^^^^^^
