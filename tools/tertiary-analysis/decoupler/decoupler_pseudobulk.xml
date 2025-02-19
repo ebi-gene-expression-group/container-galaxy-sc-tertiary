@@ -49,6 +49,9 @@ python '$__tool_directory__/decoupler_pseudobulk.py' '$input_file'
     #end if
     #if $num_pseudo_replicates:
     --num_pseudo_replicates $num_pseudo_replicates
+        #if $seed:
+        --seed '$seed'
+        #end if
     #end if
     --deseq2_output_path deseq_output_dir
     --plot_samples_figsize $plot_samples_figsize
@@ -92,7 +95,8 @@ python '$__tool_directory__/decoupler_pseudobulk.py' '$input_file'
         <param type="boolean" name="filter_expr" label="Enable Filtering by Expression"/>
         <param type="text" name="plot_samples_figsize" label="Plot Samples Figsize" value="10 10" help="X and Y sizes in points separated by a space"/>
         <param type="text" name="plot_filtering_figsize" label="Plot Filtering Figsize" value="10 10" help="X and Y sizes in points separated by a space"/>
-        <param type="integer" name="num_pseudo_replicates" label="Number of Pseudo Replicates" optional="true" help="Number of pseudo replicates to create per sample (at least 3)" min="3" max="1000"/>
+        <param type="integer" name="num_pseudo_replicates" label="Number of Pseudo Replicates" optional="true" help="If set, create this number of pseudo replicates to create per sample (at least 3). If not set, there is an expectation that samples and groups are distributed in a way that (pseudo) replicates exists." min="3" max="1000"/>
+        <param type="integer" name="seed" label="Seed" optional="true" help="Seed for the random number generator used for sampling the pseudo replicates (only used if Number of Pseudo replicates set)."/>
     </inputs>
     <outputs>
         <data name="pbulk_anndata" format="h5ad" label="${tool.name} on ${on_string}: Pseudo-bulk AnnData">
@@ -253,6 +257,7 @@ python '$__tool_directory__/decoupler_pseudobulk.py' '$input_file'
             <param name="plot_samples_figsize" value="10 10"/>
             <param name="plot_filtering_figsize" value="10 10"/>
             <param name="num_pseudo_replicates" value="3"/>
+            <param name="seed" value="42"/>
             <output name="pbulk_anndata" ftype="h5ad">
                 <assert_contents>
                     <has_h5_keys keys="obs/psbulk_n_cells"/>
@@ -260,7 +265,7 @@ python '$__tool_directory__/decoupler_pseudobulk.py' '$input_file'
             </output>
             <output name="count_matrix" ftype="tabular">
                 <assert_contents>
-                    <has_n_lines n="3570"/>
+                    <has_n_lines n="3544"/>
                     <has_n_columns n="24"/>
                 </assert_contents>
             </output>
@@ -272,7 +277,7 @@ python '$__tool_directory__/decoupler_pseudobulk.py' '$input_file'
             </output>
             <output name="genes_metadata" ftype="tabular">
                 <assert_contents>
-                    <has_n_lines n="3570"/>
+                    <has_n_lines n="3544"/>
                     <has_n_columns n="13"/>
                 </assert_contents>
             </output>

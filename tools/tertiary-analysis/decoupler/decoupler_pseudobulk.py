@@ -35,7 +35,7 @@ def get_pseudobulk(
     )
 
 
-def create_pseudo_replicates(adata, sample_key, num_replicates):
+def create_pseudo_replicates(adata, sample_key, num_replicates, seed=None):
     """
     Create pseudo replicates for each sample in the sample_key groups.
 
@@ -67,6 +67,9 @@ def create_pseudo_replicates(adata, sample_key, num_replicates):
     >>> adata.obs['sample_pseudo'].tolist()
     ['A_rep1', 'A_rep2', 'B_rep1', 'B_rep2']
     """
+    if seed is not None:
+        np.random.seed(seed)
+
     new_sample_key = f"{sample_key}_pseudo"
     adata.obs[new_sample_key] = adata.obs[sample_key].astype(str)
 
@@ -360,7 +363,7 @@ def main(args):
     # Create pseudo replicates if specified
     if args.num_pseudo_replicates:
         adata = create_pseudo_replicates(
-            adata, args.sample_key, args.num_pseudo_replicates
+            adata, args.sample_key, args.num_pseudo_replicates, seed=args.seed
         )
         args.sample_key = f"{args.sample_key}_pseudo"
 
@@ -726,6 +729,12 @@ if __name__ == "__main__":
         choices=range(3, 1000),
         help="Number of pseudo replicates to create per sample (at least 3)",
         required=False
+    )
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="Random seed for pseudo replicate sampling",
     )
     parser.add_argument(
         "--anndata_output_path",
