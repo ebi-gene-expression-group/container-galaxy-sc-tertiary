@@ -1,4 +1,4 @@
-<tool id="decoupler_pseudobulk" name="Decoupler pseudo-bulk" version="1.4.0+galaxy8" profile="20.05">
+<tool id="decoupler_pseudobulk" name="Decoupler pseudo-bulk" version="1.4.0+galaxy9" profile="20.05">
     <description>aggregates single cell RNA-seq data for running bulk RNA-seq methods</description>
     <requirements>
         <requirement type="package" version="1.4.0">decoupler</requirement>
@@ -47,6 +47,9 @@ python '$__tool_directory__/decoupler_pseudobulk.py' '$input_file'
     --contrasts_file '$filter_per_contrast.contrasts_file'
     --min_gene_exp_perc_per_cell '$filter_per_contrast.min_cells_perc_per_contrast_cond'
     #end if
+    #if $num_pseudo_replicates:
+    --num_pseudo_replicates $num_pseudo_replicates
+    #end if
     --deseq2_output_path deseq_output_dir
     --plot_samples_figsize $plot_samples_figsize
     --plot_filtering_figsize $plot_filtering_figsize
@@ -89,6 +92,7 @@ python '$__tool_directory__/decoupler_pseudobulk.py' '$input_file'
         <param type="boolean" name="filter_expr" label="Enable Filtering by Expression"/>
         <param type="text" name="plot_samples_figsize" label="Plot Samples Figsize" value="10 10" help="X and Y sizes in points separated by a space"/>
         <param type="text" name="plot_filtering_figsize" label="Plot Filtering Figsize" value="10 10" help="X and Y sizes in points separated by a space"/>
+        <param type="integer" name="num_pseudo_replicates" label="Number of Pseudo Replicates" optional="true" help="Number of pseudo replicates to create per sample (at least 3)" min="3" max="1000"/>
     </inputs>
     <outputs>
         <data name="pbulk_anndata" format="h5ad" label="${tool.name} on ${on_string}: Pseudo-bulk AnnData">
@@ -229,6 +233,65 @@ python '$__tool_directory__/decoupler_pseudobulk.py' '$input_file'
                 </assert_contents>
             </output>
         </test>
+        <test expect_num_outputs="8">
+            <param name="input_file" value="mito_counted_anndata.h5ad"/>
+            <param name="filter" value="yes"/>
+            <param name="contrasts_file" value="test_contrasts.txt" ftype="txt"/>
+            <param name="min_cells_perc_per_contrast_cond" value="25"/>
+            <param name="adata_obs_fields_to_merge" value="batch,sex:batch,genotype"/>
+            <param name="groupby" value="batch_sex"/>
+            <param name="sample_key" value="genotype"/>
+            <param name="factor_fields" value="genotype,batch_sex"/>
+            <param name="mode" value="sum"/>
+            <param name="min_cells" value="10"/>
+            <param name="produce_plots" value="true"/>
+            <param name="produce_anndata" value="true"/>
+            <param name="min_counts" value="10"/>
+            <param name="min_counts_per_sample" value="50"/>
+            <param name="min_total_counts" value="1000"/>
+            <param name="filter_expr" value="true"/>
+            <param name="plot_samples_figsize" value="10 10"/>
+            <param name="plot_filtering_figsize" value="10 10"/>
+            <param name="num_pseudo_replicates" value="3"/>
+            <output name="pbulk_anndata" ftype="h5ad">
+                <assert_contents>
+                    <has_h5_keys keys="obs/psbulk_n_cells"/>
+                </assert_contents>
+            </output>
+            <output name="count_matrix" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="3570"/>
+                    <has_n_columns n="24"/>
+                </assert_contents>
+            </output>
+            <output name="samples_metadata" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="57"/>
+                    <has_n_columns n="3"/>
+                </assert_contents>
+            </output>
+            <output name="genes_metadata" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="3570"/>
+                    <has_n_columns n="13"/>
+                </assert_contents>
+            </output>
+            <output name="plot_output" ftype="png">
+                <assert_contents>
+                    <has_size value="42691" delta="3000"/>
+                </assert_contents>
+            </output>
+            <output name="filter_by_expr_plot" ftype="png">
+                <assert_contents>
+                    <has_size value="21656" delta="2000"/>
+                </assert_contents>
+            </output>
+            <output name="genes_ignore_per_contrast" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="35478"/>
+                </assert_contents>
+            </output>
+        </test>
     </tests>
     <help>
         <![CDATA[
@@ -250,6 +313,7 @@ python '$__tool_directory__/decoupler_pseudobulk.py' '$input_file'
         - Enable Filtering by Expression: Check this box to enable filtering by expression.
         - Plot Samples Figsize: Size of the samples plot as a tuple (two arguments).
         - Plot Filtering Figsize: Size of the filtering plot as a tuple (two arguments).
+        - Number of Pseudo Replicates: Number of pseudo replicates to create per sample (at least 3).
 
         The tool will output the filtered AnnData, count matrix, samples metadata, genes metadata (in DESeq2 format), and the pseudobulk plot and filter by expression plot (if enabled). Files for filtering genes later on are also generated (to ignore after the DE model).
 
