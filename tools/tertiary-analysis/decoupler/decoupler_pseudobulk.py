@@ -77,7 +77,7 @@ def create_pseudo_replicates(adata, sample_key, num_replicates, seed=None):
         sample_indices = adata.obs[adata.obs[sample_key] == sample].index
         for i in range(num_replicates):
             replicate_indices = np.random.choice(
-                sample_indices, size=int(len(sample_indices)/num_replicates),
+                sample_indices, size=int(len(sample_indices) / num_replicates),
                 replace=False
             )
             adata.obs.loc[replicate_indices, new_sample_key] = (
