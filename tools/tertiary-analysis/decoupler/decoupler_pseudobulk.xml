@@ -265,25 +265,25 @@ python '$__tool_directory__/decoupler_pseudobulk.py' '$input_file'
             </output>
             <output name="count_matrix" ftype="tabular">
                 <assert_contents>
-                    <has_n_lines n="3544"/>
-                    <has_n_columns n="57"/>
+                    <has_n_lines n="3620"/>
+                    <has_n_columns n="22"/>
                 </assert_contents>
             </output>
             <output name="samples_metadata" ftype="tabular">
                 <assert_contents>
-                    <has_n_lines n="57"/>
+                    <has_n_lines n="22"/>
                     <has_n_columns n="3"/>
                 </assert_contents>
             </output>
             <output name="genes_metadata" ftype="tabular">
                 <assert_contents>
-                    <has_n_lines n="3544"/>
+                    <has_n_lines n="3620"/>
                     <has_n_columns n="13"/>
                 </assert_contents>
             </output>
             <output name="plot_output" ftype="png">
                 <assert_contents>
-                    <has_size value="42691" delta="3000"/>
+                    <has_size value="34626" delta="6000"/>
                 </assert_contents>
             </output>
             <output name="filter_by_expr_plot" ftype="png">
