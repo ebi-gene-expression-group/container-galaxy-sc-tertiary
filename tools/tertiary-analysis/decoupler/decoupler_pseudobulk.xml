@@ -266,7 +266,7 @@ python '$__tool_directory__/decoupler_pseudobulk.py' '$input_file'
             <output name="count_matrix" ftype="tabular">
                 <assert_contents>
                     <has_n_lines n="3544"/>
-                    <has_n_columns n="24"/>
+                    <has_n_columns n="57"/>
                 </assert_contents>
             </output>
             <output name="samples_metadata" ftype="tabular">
