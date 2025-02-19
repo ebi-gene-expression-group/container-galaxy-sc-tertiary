@@ -1,4 +1,4 @@
-<tool id="celltypist_predict" name="CellTypist: Predict Cell Types" version="1.6.3+galaxy0" profile="20.05" license="MIT">
+<tool id="celltypist_predict" name="CellTypist: Predict Cell Types" version="1.6.3+galaxy1" profile="20.05" license="MIT">
     <description>Predict cell types using an existing CellTypist model.</description>
     <requirements>
         <requirement type="package" version="1.6.3">celltypist</requirement>
@@ -55,7 +55,7 @@
                 <param format="txt,tabular" type="data" name="cell_file" label="Cell file" help="The file containing one cell per line corresponding to the cells in the input data (required for .mtx data)."/>
             </when>
         </conditional>
-        <param format="data" type="data" name="model_file" optional="false" label="Model file" help="The existing CellTypist model file in .pkl format."/>
+        <param format="data" type="data" name="model_file" optional="false" label="Model file" help="A CellTypist model file in .pkl format."/>
         <param type="boolean" argument="--normalize" label="Normalize" truevalue="--normalize" falsevalue="" help="If raw counts are provided in the AnnData object, they need to be normalized."/>
         <param type="boolean" argument="--transpose_input" label="Transpose input" truevalue="--transpose_input" falsevalue="" help="If the provided matrix is in the gene-by-cell format, please transpose the input to cell-by-gene format."/>
         <param type="select" name="mode" label="Mode" help="Mode for the prediction (e.g., best match, majority vote).">
@@ -67,7 +67,7 @@
         <param type="text" name="over_clustering" label="Over-clustering" help="If majority voting is set to True, specify the type of over-clustering that is to be performed. This can be specified in the AnnData or an input file specifying the over-clustering per cell. If not present, then the default heuristic over-clustering based on input data will be used."/>
     </inputs>
     <outputs>
-        <data format="csv" name="output_predictions" label="${tool.name} on ${on_string}: cell typing table"/>
+        <data format="tabular" name="output_predictions" label="${tool.name} on ${on_string}: cell typing table"/>
     </outputs>
     <tests>
         <test expect_num_outputs="1">
@@ -84,8 +84,6 @@
                 <assert_contents>
                     <has_text text="MAIT"/>
                     <has_n_lines n="2701"/>
-                    <!-- <has_line line=""/> -->
-                    <!-- <has_line_matching expression=""/> -->
                     <has_n_columns n="2"/>
                 </assert_contents>
             </output>
