@@ -75,7 +75,7 @@ def create_pseudo_replicates(adata, sample_key, num_replicates, seed=None):
 
     for sample in adata.obs[sample_key].unique():
         sample_indices = adata.obs[
-            adata.obs[sample_key] == sample].index.copy()
+            adata.obs[sample_key] == sample].index.to_numpy()
         np.random.shuffle(sample_indices)  # Shuffle the indices to randomize
         replicate_size = int(len(sample_indices) / num_replicates)
         for i in range(num_replicates):
