@@ -74,12 +74,14 @@ def create_pseudo_replicates(adata, sample_key, num_replicates, seed=None):
     adata.obs[new_sample_key] = adata.obs[sample_key].astype(str)
 
     for sample in adata.obs[sample_key].unique():
-        sample_indices = adata.obs[adata.obs[sample_key] == sample].index
+        sample_indices = adata.obs[
+            adata.obs[sample_key] == sample].index.copy()
+        np.random.shuffle(sample_indices)  # Shuffle the indices to randomize
+        replicate_size = int(len(sample_indices) / num_replicates)
         for i in range(num_replicates):
-            replicate_indices = np.random.choice(
-                sample_indices, size=int(len(sample_indices) / num_replicates),
-                replace=False
-            )
+            start_idx = i * replicate_size
+            end_idx = start_idx + replicate_size
+            replicate_indices = sample_indices[start_idx:end_idx]
             adata.obs.loc[replicate_indices, new_sample_key] = (
                 adata.obs.loc[replicate_indices, new_sample_key] + f"_rep{i+1}"
             )
