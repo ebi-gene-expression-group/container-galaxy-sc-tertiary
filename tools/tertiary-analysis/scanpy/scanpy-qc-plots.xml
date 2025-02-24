@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<tool id="scRNAseq_qc_tool" name="scRNAseq Quality Control Tool" version="1.0.0" hidden="false">
+    <description>Generate quality control metrics for single-cell RNA-seq data.</description>
+    <macros>
+        <import>scanpy_macros2.xml</import>
+      </macros>
+      <expand macro="requirements"/>
+    <command detect_errors="exit_code">
+        <![CDATA[
+        #!/bin/bash
+        python $__tool_directory__/scripts/sc_qc_metrics.py "$adata_file" "$sample_field" 
+            --output_format "$output_format" 
+            --plot_size "$plot_size" 
+            #if $percent_mito_field:
+                --percent_mito_field '$percent_mito_field'
+            #end if 
+            #if $percent_ribo_field:
+                --percent_ribo_field '$percent_ribo_field'
+            #end if 
+            #if $ribo_field:
+                --ribo_field '$ribo_field'
+            #end if 
+            #if $mito_field:
+                --mito_field '$mito_field'
+            #end if 
+            #if $doublet_score_field:
+                --doublet_score_field '$doublet_score_field'
+            #end if 
+        ]]>
+    </command>
+    <inputs>
+        <param type="data" format="h5ad,h5" name="adata_file" label="AnnData object file" />
+        <param type="text" name="sample_field" label="Sample Field" />
+        <param type="select" name="output_format" label="Output Format">
+            <option value="pdf">PDF</option>
+            <option value="png">PNG</option>
+        </param>
+        <param type="text" name="plot_size" label="Plot Size (Width Height)" value="10,10"/>
+        <param type="text" name="percent_mito_field" label="Mitochondrial Gene Field" />
+        <param type="text" name="percent_ribo_field" label="Ribosomal Gene Field" />
+        <param type="text" name="ribo_field" label="Ribo Field" />
+        <param type="text" name="mito_field" label="Mito Field" />
+        <param type="text" name="doublet_score_field" label="Doublet Score Field" />
+    </inputs>
+    <outputs>
+        <data name="general_qc_plots" format="pdf" label="General QC Plots" from_work_dir="general_qc_plots.pdf" />
+        <data name="scatter_umi_vs_genes_detected_colored_by_mito" format="pdf" label="Scatter UMI vs Genes Detected (Colored by Mito)" from_work_dir="scatter_umi_vs_genes_detected_colored_by_mito.pdf" />
+        <data name="scatter_umi_vs_genes_detected" format="pdf" label="Scatter UMI vs Genes Detected" from_work_dir="scatter_umi_vs_genes_detected.pdf" />
+        <data name="doublet_ratio_plot" format="pdf" label="Doublet Ratio Plot" from_work_dir="doublet_ratio_plot.pdf" />
+        <data name="highest_expr_genes" format="pdf" label="Highest Expression Genes Plot" from_work_dir="highest_expr_genes.pdf" />
+        <data name="n_counts_per_cell" format="pdf" label="Counts per Cell Plot" from_work_dir="n_counts_per_cell.pdf" />
+        <data name="n_counts_per_cell_by_sample" format="pdf" label="Counts per Cell by Sample Plot" from_work_dir="n_counts_per_cell_by_sample.pdf" />
+        <data name="n_genes_per_cell" format="pdf" label="Genes per Cell Plot" from_work_dir="n_genes_per_cell.pdf" />
+        <data name="percent_mito_per_cell" format="pdf" label="Percent Mitochondrial per Cell Plot" from_work_dir="percent_mito_per_cell.pdf" />        
+        <collection name="highest_expr_genes_per_sample" type="data" label="highest_expr_genes_${sample}.pdf">
+            <discover_datasets pattern="(?P&lt;name&gt;.+)\.tsv$" format="pdf" directory="output_dir" visible="false"/>
+        </collection>
+        </data>
+    </outputs>
+
+
+    <tests>
+        <!-- Test Case 1: Basic Test -->
+        <test>
+            <param name="adata_file" value="anndata_ops_raw.h5" />
+            <param name="sample_field" value="louvain" />
+            <param name="output_format" value="pdf" />
+            <output name="general_qc_plots" >
+                <assert_contents>
+                    <has_size value="100000" delta="1000"/>
+                </assert_contents>
+            </output>
+        </test>
+        <!-- Add more test cases as needed -->
+    </tests>
+    <!-- ... (help section as provided in the previous response) ... -->
+
+    <help>
+        <![CDATA[
+        This tool generates quality control metrics for single-cell RNA-seq data using the provided Python script.
+        Input parameters:
+        - AnnData object file: Path to the AnnData object file.
+        - Sample Field: Field in the obs for the sample identifier.
+        - Output Format: Output format of the plots (PDF or PNG).
+        - Plot Size: Size of the plots (optional, provide as "width height").
+        - Mitochondrial Gene Field: Field in the obs for the percentage of mitochondrial genes.
+        - Ribosomal Gene Field: Field in the obs for the percentage of ribosomal genes.
+        - Ribo Field: Field in the var for marking ribosomal genes.
+        - Mito Field: Field in the var for marking mitochondrial genes.
+        - Doublet Score Field: Field in the obs for the doublet score.
+        Output:
+        - General QC Plots: PDF file containing general quality control plots.
+        ]]>
+    </help>
+    <expand macro="citations"/>
+
+</tool>
+
