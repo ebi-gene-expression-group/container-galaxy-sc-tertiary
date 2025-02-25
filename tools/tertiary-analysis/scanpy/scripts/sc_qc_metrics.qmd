@@ -1,0 +1,319 @@
+---
+title: "Single-cell RNA-seq Quality Control Metrics"
+author: "Your Name"
+date: "2025-02-24"
+execute:
+  echo: false
+format: 
+  html:
+    embed-resources: true
+params:
+  adata_file: "path/to/your/anndata/file.h5ad"
+  sample_field: "Sample_ID"
+  output_format: "html"
+  percent_mito_field: "pct_counts_mito"
+  percent_ribo_field: "pct_counts_ribo"
+---
+
+```{python}
+#| tags: [parameters]
+
+adata_file = "path/to/your/anndata/file.h5ad"
+sample_field = "Sample_ID"
+output_format = "html"
+percent_mito_field = "pct_counts_mito"
+percent_ribo_field = "pct_counts_ribo"
+ribo_field = "ribo"
+mito_field = "mito"
+gene_symbols_field = "gene_name"
+plot_size = None
+label_font_size = None
+```
+
+```{python}
+import scanpy as sc
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
+
+def general_quality_plot(adata, sample_field, percent_mito_field, percent_ribo_field):
+    fields = [
+        "n_genes_by_counts",
+        "total_counts",
+        percent_mito_field,
+    ]
+    if percent_ribo_field is not None:
+        fields.append(percent_ribo_field)
+        
+
+    # General quality for whole dataset
+    #_ = plt.figure()
+    sc.pl.violin(
+        adata,
+        fields,
+        jitter=False,
+        multi_panel=True,
+        show=True,
+        use_raw=False
+    )
+    #plt.show()
+    #plt.close()
+
+def plot_n_counts_per_cell(adata, sample_field):
+    _ = plt.figure()
+    _ = sc.pl.violin(
+        adata,
+        "n_counts",
+        groupby=sample_field,
+        show=False,
+    )
+    plt.suptitle("Number of Counts per Cell (Separated by Sample)")
+    _ = plt.show()
+    _ = plt.close()
+
+def plot_n_genes_per_cell(adata, sample_field):
+    plt.figure()
+    sc.pl.violin(
+        adata,
+        "n_genes",
+        groupby=sample_field,
+        show=False,
+    )
+    plt.suptitle("Number of Genes per Cell (Separated by Sample)")
+    plt.show()
+    plt.close()
+
+def plot_percent_mito_per_cell(adata, sample_field, percent_mito_field):
+    plt.figure()
+    sc.pl.violin(
+        adata,
+        percent_mito_field,
+        groupby=sample_field,
+        show=False,
+    )
+    plt.suptitle("Percentage of Mitochondrial Genes per Cell (Separated by Sample)")
+    plt.show()
+    plt.close()
+
+def plot_percent_ribo_per_cell(adata, sample_field, percent_ribo_field):
+    plt.figure()
+    sc.pl.violin(
+        adata,
+        percent_ribo_field,
+        groupby=sample_field,
+        show=False,
+    )
+    plt.suptitle("Percentage of Ribosomal Genes per Cell (Separated by Sample)")
+    plt.show()
+    plt.close()
+
+def scatter_plot_by_sample(adata, sample_field):
+    plt.figure()
+    sc.pl.scatter(
+        adata,
+        x="n_counts",
+        y="n_genes",
+        color=sample_field,
+        title="UMIs vs Genes Detected (by Sample)",
+        show=False,
+    )
+    plt.show()
+    plt.close()
+
+def scatter_plot_by_mito_ratio(adata, percent_mito_field):
+    plt.figure()
+    sc.pl.scatter(
+        adata,
+        x="n_counts",
+        y="n_genes",
+        color=percent_mito_field,
+        title="UMIs vs Genes Detected (by Mitochondrial Gene Ratio)",
+        show=False,
+    )
+    plt.show()
+    plt.close()
+```
+
+# The AnnData file contents
+
+```{python}
+# Set plot size if provided
+if plot_size:
+    sc.settings.figsize = tuple(args.plot_size)
+
+# set scanpy general plot font size and output format
+if label_font_size:
+    sc.settings.set_figure_params(scanpy=True,
+                                fontsize=label_font_size)
+# disable FutureWarning
+import warnings
+
+warnings.simplefilter(action="ignore", category=FutureWarning)
+# Load AnnData object
+adata = sc.read_h5ad(adata_file)
+adata
+# sc.pp.calculate_qc_metrics(adata, inplace=True)
+run_quality_control = False
+if "n_genes_by_counts" not in adata.obs.columns:
+    run_quality_control = True
+if "n_counts" not in adata.obs.columns:
+    run_quality_control = True
+
+qc_vars = []
+fields = [
+    "n_genes_by_counts",
+    "total_counts",
+    percent_mito_field,
+    percent_ribo_field
+]
+# calculate mitochondrial genes if not provided
+if percent_mito_field not in adata.obs.columns:
+    qc_vars.append(mito_field)
+# calculate ribo metrics if not provided
+if ribo_field not in adata.var.columns:
+    # create a new column with the name args.ribo_field where genes that
+    # have in the gene symbols field the pattern ^RP[SL] are
+    # marked as true
+    print(f"Creating {ribo_field} column")
+    adata.var[ribo_field] = adata.var[gene_symbols_field].str.contains(
+            "^R[Pp][SLsl]"
+        )
+    print(f"Number of ribosomal genes: {adata.var[ribo_field].sum()}")
+if percent_ribo_field not in adata.obs.columns:
+    qc_vars.append(ribo_field)
+
+print(f"Calculating QC metrics for {len(qc_vars)} variables")
+
+if len(qc_vars) > 0 or run_quality_control:
+    sc.pp.calculate_qc_metrics(
+        adata,
+        qc_vars=qc_vars,
+        log1p=True,
+        inplace=True,
+    )
+    adata.obs["n_counts"] = adata.obs["total_counts"]
+    adata.obs["n_genes"] = adata.obs["n_genes_by_counts"]
+    adata.var["n_counts"] = adata.var["total_counts"]
+    adata.var["n_cells"] = adata.var["n_cells_by_counts"]
+
+# Define thresholds
+high_umi_threshold = adata.obs['n_counts'].quantile(0.95)  # Top 5% most UMI counts
+low_umi_threshold = adata.obs['n_counts'].quantile(0.05)   # Bottom 5% least UMI counts
+high_mito_threshold = adata.obs[percent_mito_field].quantile(0.90) # Top 10% pct mitochondrial genes
+
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
+
+# Polynomial regression to account for curvature in the n_counts vs. n_genes relationship
+poly = PolynomialFeatures(degree=2)
+X_poly = poly.fit_transform(adata.obs[['n_counts']])
+model = LinearRegression()
+model.fit(X_poly, adata.obs['n_genes'])
+predicted_counts = model.predict(X_poly)
+
+# Calculate residuals
+residuals = adata.obs['n_genes'] - predicted_counts
+outlier_threshold = residuals.abs().quantile(0.95)  # Top 5% residuals as outliers
+
+# Initialize diagnosis column
+adata.obs['auto_diagnosis'] = 'Healthy'
+
+# Identify outliers
+outliers = residuals.abs() > outlier_threshold
+adata.obs.loc[outliers, 'auto_diagnosis'] = 'Outlier'
+
+
+# Identify stressed/dying/apoptotic cells
+stressed_cells = (adata.obs['n_counts'] > high_umi_threshold) & (adata.obs[percent_mito_field] > high_mito_threshold)
+adata.obs.loc[stressed_cells, 'auto_diagnosis'] = 'Stressed/Dying/Apoptotic'
+
+# Identify poor-quality cells
+poor_quality_cells = (adata.obs['n_counts'] < low_umi_threshold) & (adata.obs[percent_mito_field] > high_mito_threshold)
+adata.obs.loc[poor_quality_cells, 'auto_diagnosis'] = 'Poor-Quality'
+```
+
+# QC Plots
+
+```{python}
+#| label: fig-general
+#| fig-cap: "General quality plots for specified fields"
+general_quality_plot(adata, sample_field, percent_mito_field, percent_ribo_field)
+```
+
+The following figure is
+
+```{python}
+#| label: fig-n-counts
+#| fig-cap: "Number of Counts per Cell (Separated by Sample)"
+plot_n_counts_per_cell(adata, sample_field)
+```
+
+and the next one...
+
+```{python}
+#| label: fig-n-genes
+#| fig-cap: "Number of Genes per Cell (Separated by Sample)"
+plot_n_genes_per_cell(adata, sample_field)
+```
+
+```{python}
+#| label: fig-percent-mito
+#| fig-cap: "Percentage of Mitochondrial Genes per Cell (Separated by Sample)"
+plot_percent_mito_per_cell(adata, sample_field, percent_mito_field)
+```
+
+
+```{python}
+#| label: fig-percent-ribo
+#| eval: !expr percent_ribo_field is None
+#| fig-cap: "Percentage of Ribosomal Genes per Cell (Separated by Sample)"
+plot_percent_ribo_per_cell(adata, sample_field, percent_ribo_field)
+```
+
+```{python}
+#| label: fig-scatter-sample
+#| fig-cap: "UMIs vs Genes Detected (by Sample)"
+scatter_plot_by_sample(adata, sample_field)
+```
+
+```{python}
+#| label: fig-scatter-mito
+#| fig-cap: "UMIs vs Genes Detected (by Mitochondrial Gene Ratio)"
+scatter_plot_by_mito_ratio(adata, percent_mito_field)
+```
+
+```{python}
+#| label: fig-scatter-diagnosis
+#| layout-ncol: 1
+#| fig-cap: "Diagnosis"
+#| fig-subcap:
+#|   - "UMIs vs Genes Detected (by Sample)"
+#|   - "UMIs vs Genes Detected (by Mitochondrial Gene Ratio)"
+#|   - "UMIs vs Genes Detected (by Mitochondrial Gene Ratio)"
+
+y='log1p_n_genes_by_counts'
+sc.pl.scatter(
+        adata,
+        x="n_counts",
+        y=y,
+        color=sample_field,
+        show=True,
+    )
+
+# UMIs vs genes detected scatterplot, colored by mitochondrial gene ratio
+sc.pl.scatter(
+    adata,
+    x="n_counts",
+    y=y,
+    color=percent_mito_field,
+    show=True,
+)
+
+sc.pl.scatter(
+    adata,
+    x='n_counts',
+    y=y,
+    color='auto_diagnosis',
+    show=True
+    )
+```
