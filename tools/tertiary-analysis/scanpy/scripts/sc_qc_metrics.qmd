@@ -47,7 +47,6 @@ def general_quality_plot(adata, sample_field, percent_mito_field, percent_ribo_f
         
 
     # General quality for whole dataset
-    #_ = plt.figure()
     sc.pl.violin(
         adata,
         fields,
@@ -56,23 +55,19 @@ def general_quality_plot(adata, sample_field, percent_mito_field, percent_ribo_f
         show=True,
         use_raw=False
     )
-    #plt.show()
-    #plt.close()
 
 def plot_n_counts_per_cell(adata, sample_field):
-    _ = plt.figure()
-    _ = sc.pl.violin(
+    sc.pl.violin(
         adata,
         "n_counts",
         groupby=sample_field,
         show=False,
     )
     plt.suptitle("Number of Counts per Cell (Separated by Sample)")
-    _ = plt.show()
-    _ = plt.close()
+    plt.show()
+    plt.close()
 
 def plot_n_genes_per_cell(adata, sample_field):
-    plt.figure()
     sc.pl.violin(
         adata,
         "n_genes",
@@ -84,7 +79,6 @@ def plot_n_genes_per_cell(adata, sample_field):
     plt.close()
 
 def plot_percent_mito_per_cell(adata, sample_field, percent_mito_field):
-    plt.figure()
     sc.pl.violin(
         adata,
         percent_mito_field,
@@ -96,7 +90,6 @@ def plot_percent_mito_per_cell(adata, sample_field, percent_mito_field):
     plt.close()
 
 def plot_percent_ribo_per_cell(adata, sample_field, percent_ribo_field):
-    plt.figure()
     sc.pl.violin(
         adata,
         percent_ribo_field,
@@ -108,7 +101,6 @@ def plot_percent_ribo_per_cell(adata, sample_field, percent_ribo_field):
     plt.close()
 
 def scatter_plot_by_sample(adata, sample_field):
-    plt.figure()
     sc.pl.scatter(
         adata,
         x="n_counts",
@@ -121,7 +113,6 @@ def scatter_plot_by_sample(adata, sample_field):
     plt.close()
 
 def scatter_plot_by_mito_ratio(adata, percent_mito_field):
-    plt.figure()
     sc.pl.scatter(
         adata,
         x="n_counts",
@@ -132,6 +123,44 @@ def scatter_plot_by_mito_ratio(adata, percent_mito_field):
     )
     plt.show()
     plt.close()
+
+def generateProportionalBarPlot(
+    adata, groups_field, props_field, topic_for_title=None
+):
+    """
+    Generate a proportional bar plot from an AnnData object.
+
+    Parameters:
+    adata (AnnData): The input AnnData object containing the data to plot.
+    groups_field (str): The column in adata.obs to group the data by.
+    props_field (str): The column in adata.obs to plot as proportions.
+    figure_path (str, optional): The path to save the generated figure. If not provided, the figure is not saved.
+    topic_for_title (str, optional): The topic to be used in the figure title, goes after {props_field} proportion of {topic_for_title} per {groups_field}.
+
+    Returns:
+    matplotlib.figure.Figure: The generated proportional bar plot.
+    """
+    # adata.obs['cell_line_persister'] =  adata.obs['Cell line'].astype(str) + '_' + adata.obs['Persister'].astype(str)
+    # pick columns cell_line_persister and phase from adata.obs into a new data frame
+    # groups_field = 'genotype'
+    # props_field = 'Germinal_center_Chen'
+    cell_cycle_plot = adata.obs[[groups_field, props_field]]
+    # cell_cycle_plot[groups_field] = cell_cycle_plot[groups_field].cat.reorder_categories(['control', '2 days', '7 days', '10 days', '14 days'])
+    # make a 100% stacked bar plot of cell_cycle_plot, plotting phase counts grouped by cell_line_persister
+
+    %matplotlib inline
+
+    grouped = cell_cycle_plot.groupby([groups_field, props_field]).size().unstack()
+    proportions = grouped.div(grouped.sum(axis=1), axis=0)
+    proportions.plot(kind="bar", stacked=True, figsize=(8, 6))
+    if topic_for_title is not None:
+        plt.title(f"{props_field} proportion {topic_for_title}\nper {groups_field}")
+    else:
+        plt.title(f"{props_field} proportion\nper {groups_field}")
+    plt.xlabel(groups_field)
+    plt.ylabel("Proportion of cells")
+
+    plt.show()
 ```
 
 # The AnnData file contents
@@ -316,4 +345,12 @@ sc.pl.scatter(
     color='auto_diagnosis',
     show=True
     )
+```
+
+```{python}
+#| label: fig-barplot-diagnosis
+#| fig-cap: "Diagnosis composition per sample"
+generateProportionalBarPlot(
+    adata, groups_field=sample_field, props_field='auto_diagnosis', topic_for_title=None
+)
 ```
