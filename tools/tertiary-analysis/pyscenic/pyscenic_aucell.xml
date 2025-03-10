@@ -1,4 +1,4 @@
-<tool id="pyscenic_aucell" name="PySCENIC AUCell" profile="21.09" version="@TOOL_VERSION@+galaxy0">
+<tool id="pyscenic_aucell" name="PySCENIC AUCell" profile="21.09" version="@TOOL_VERSION@+galaxy1">
     <description>calculates AUCell to find relevant regulons/gene sets</description>
     <macros>
         <import>macros.xml</import>

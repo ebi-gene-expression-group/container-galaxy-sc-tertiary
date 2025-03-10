@@ -2,9 +2,7 @@
     <token name="@TOOL_VERSION@">0.12.1</token>
     <xml name="requirements">
         <requirements>
-            <container type="docker">
-            aertslab/pyscenic:@TOOL_VERSION@
-        </container>
+            <requirement type="package" version="@TOOL_VERSION@">pyscenic</requirement>
         </requirements>
     </xml>
     <xml name="citations">
