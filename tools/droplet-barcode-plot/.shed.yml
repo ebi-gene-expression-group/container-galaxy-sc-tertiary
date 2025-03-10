@@ -1,7 +1,9 @@
-categories: [Sequence Analysis]
+categories:
+ - Single Cell
+ - Sequence Analysis
 description: Make a cell barcode plot for droplet single-cell RNA-seq QC
-homepage_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary 
+homepage_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary
 long_description: Given a barcode freqeuncy table or an MTX-format matrix from which one can be calculated, produces a barcode rank plot to assess distinctness of droplets with cells over those without.
-name: droplet_barcode_plot 
+name: droplet_barcode_plot
 owner: ebi-gxa
 remote_repository_url: https://github.com/ebi-gene-expression-group/container-galaxy-sc-tertiary/tree/develop/tools/droplet-rank-plot/.shed.yml

@@ -1,10 +1,11 @@
 categories:
+ - Single Cell
  - Transcriptomics
  - RNA
  - Sequence Analysis
 description: "PySCENIC scripts based on usage at https://pyscenic.readthedocs.io/"
 long_description: |
-        pySCENIC is a lightning-fast python implementation of the SCENIC pipeline (Single-Cell rEgulatory Network Inference and Clustering) 
+        pySCENIC is a lightning-fast python implementation of the SCENIC pipeline (Single-Cell rEgulatory Network Inference and Clustering)
         which enables biologists to infer transcription factors, gene regulatory networks and cell types from single-cell RNA-seq data.
 name: suite_pyscenic
 owner: ebi-gxa
@@ -17,5 +18,5 @@ suite:
   name: "suite_pyscenic"
   description: "PySCENIC scripts based on usage at https://pyscenic.readthedocs.io/"
   long_description: |
-    pySCENIC is a lightning-fast python implementation of the SCENIC pipeline (Single-Cell rEgulatory Network Inference and Clustering) 
+    pySCENIC is a lightning-fast python implementation of the SCENIC pipeline (Single-Cell rEgulatory Network Inference and Clustering)
     which enables biologists to infer transcription factors, gene regulatory networks and cell types from single-cell RNA-seq data.
