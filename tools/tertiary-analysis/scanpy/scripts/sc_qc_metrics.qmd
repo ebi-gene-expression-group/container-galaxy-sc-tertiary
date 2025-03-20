@@ -163,7 +163,6 @@ def generateProportionalBarPlot(
     plt.show()
 ```
 
-# The AnnData file contents
 
 ```{python}
 # Set plot size if provided
@@ -259,6 +258,13 @@ adata.obs.loc[stressed_cells, 'auto_diagnosis'] = 'Stressed/Dying/Apoptotic'
 # Identify poor-quality cells
 poor_quality_cells = (adata.obs['n_counts'] < low_umi_threshold) & (adata.obs[percent_mito_field] > high_mito_threshold)
 adata.obs.loc[poor_quality_cells, 'auto_diagnosis'] = 'Poor-Quality'
+```
+
+# The AnnData file contents
+
+```{python}
+#| echo: true
+adata
 ```
 
 # QC Plots
