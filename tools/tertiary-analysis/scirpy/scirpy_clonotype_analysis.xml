@@ -1,0 +1,222 @@
+<tool id="scirpy_clonotype_analysis" name="Scirpy TCR Clonotype Analysis" version="1.0.0" profile="20.01">
+    <description>Analyze T-cell receptor repertoire from single-cell data</description>
+    <requirements>
+        <requirement type="package" version="0.13.0">scirpy</requirement>
+        <requirement type="package" version="1.8.0">scanpy</requirement>
+        <requirement type="package" version="0.1.0">muon</requirement>
+        <requirement type="package" version="0.8.0">anndata</requirement>
+        <requirement type="package" version="3.4.0">matplotlib</requirement>
+        <requirement type="package" version="1.20.0">numpy</requirement>
+        <requirement type="package" version="1.3.0">pandas</requirement>
+        <requirement type="package" version="0.2.0">tcrdist3</requirement>
+        <requirement type="package" version="1.8.0">awkward</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        python '$__tool_directory__/scirpy_clonotype_analysis.py'
+            #if $input_source.source_selection == "combined":
+                --input '$input_source.input'
+            #else:
+                #if $input_source.gex:
+                    --gex '$input_source.gex'
+                #end if
+                #if $input_source.vdj:
+                    --vdj '$input_source.vdj'
+                    --vdj-format '$input_source.vdj_format'
+                    --sample-name '$input_source.sample_name'
+                #end if
+            #end if
+            --output-dir '$output.extra_files_path'
+            --min-cells '$min_cells'
+            $filter_multichain
+            $filter_orphan_chains
+            --tcrdist-cutoff '$tcrdist_cutoff'
+            --plot-format '$plot_format'
+            --plot-dpi '$plot_dpi'
+            #if $metadata_obskey:
+                --metadata-obskey '$metadata_obskey'
+            #end if
+            #if $clustering_obskey:
+                --clustering-obskey '$clustering_obskey'
+            #end if
+            $perform_epitope_analysis
+            $verbose
+            && cp '$output.extra_files_path/tcr_analysis_summary.txt' '$output'
+    ]]></command>
+    <inputs>
+        <conditional name="input_source">
+            <param name="source_selection" type="select" label="Input data source">
+                <option value="combined" selected="true">Combined AnnData/MuData file</option>
+                <option value="separate">Separate GEX and VDJ files</option>
+            </param>
+            <when value="combined">
+                <param type="data" name="input" format="h5ad,h5mu" label="Input AnnData or MuData file" 
+                       help="AnnData (.h5ad) or MuData (.h5mu) file containing single-cell data with TCR information" />
+            </when>
+            <when value="separate">
+                <param type="data" name="gex" format="h5ad,h5,mtx,csv,tsv" optional="true" label="Gene expression data file" 
+                       help="File containing gene expression data (optional)" />
+                <param type="data" name="vdj" format="csv,tsv,h5ad" label="VDJ/TCR data file" 
+                       help="File containing TCR/BCR data" />
+                <param name="vdj_format" type="select" label="VDJ data format">
+                    <option value="10x">10x Genomics VDJ</option>
+                    <option value="tracer">TraCeR</option>
+                    <option value="bracer">BraCeR</option>
+                    <option value="airr">AIRR rearrangement format</option>
+                    <option value="bd_rhapsody">BD Rhapsody</option>
+                    <option value="dandelion">Dandelion</option>
+                </param>
+                <param type="text" name="sample_name" value="sample" label="Sample name" 
+                       help="Name to use for the sample when combining data" />
+            </when>
+        </conditional>
+        
+        <param type="integer" name="min_cells" value="2" min="1" max="100" label="Minimum cells for clonotype visualization" 
+               help="Minimum number of cells for clonotype visualization (default: 2)" />
+        
+        <param type="boolean" name="filter_multichain" truevalue="--filter-multichain" falsevalue="" checked="true" 
+               label="Filter multichain cells" help="Filter out multichain cells which are potential doublets" />
+        
+        <param type="boolean" name="filter_orphan_chains" truevalue="--filter-orphan-chains" falsevalue="" checked="true" 
+               label="Filter orphan chains" help="Filter out cells with orphan chains (incomplete TCRs)" />
+        
+        <param type="integer" name="tcrdist_cutoff" value="15" min="1" max="50" label="TCRdist cutoff" 
+               help="Distance cutoff for TCRdist clustering (default: 15)" />
+        
+        <param type="text" name="metadata_obskey" optional="true" label="Metadata observation key" 
+               help="Column in .obs containing metadata for visualization (e.g., 'sample', 'patient')" />
+        
+        <param type="text" name="clustering_obskey" optional="true" label="Clustering observation key" 
+               help="Column in .obs containing cell type or cluster information" />
+        
+        <param type="select" name="plot_format" label="Plot format">
+            <option value="png" selected="true">PNG</option>
+            <option value="pdf">PDF</option>
+            <option value="svg">SVG</option>
+        </param>
+        
+        <param type="integer" name="plot_dpi" value="120" min="72" max="600" label="Plot DPI" 
+               help="DPI for output plots (default: 120)" />
+        
+        <param type="boolean" name="perform_epitope_analysis" truevalue="--perform-epitope-analysis" falsevalue="" checked="false" 
+               label="Perform epitope analysis" help="Perform epitope analysis using VDJDB (may take longer)" />
+        
+        <param type="boolean" name="verbose" truevalue="--verbose" falsevalue="" checked="false" 
+               label="Verbose output" help="Print verbose information" />
+    </inputs>
+    
+    <outputs>
+        <data name="output" format="txt" label="${tool.name} on ${on_string}: Report">
+            <discover_datasets pattern="__designation__" directory="output_dir" visible="true" />
+        </data>
+    </outputs>
+    
+    <tests>
+        <test>
+            <param name="source_selection" value="combined"/>
+            <param name="input" value="test_data.h5mu"/>
+            <param name="min_cells" value="2"/>
+            <param name="filter_multichain" value="true"/>
+            <param name="filter_orphan_chains" value="true"/>
+            <output name="output" file="tcr_analysis_summary.txt"/>
+        </test>
+    </tests>
+    
+    <help><![CDATA[
+**Scirpy TCR Clonotype Analysis**
+
+This tool performs T-cell receptor (TCR) repertoire analysis on single-cell data using Scirpy.
+
+**What it does**
+
+- Performs quality control on TCR chains
+- Filters multichain cells and orphan chains
+- Defines clonotypes based on nucleotide sequence identity
+- Defines clonotype clusters based on amino acid similarity
+- Analyzes clonal expansion
+- Calculates alpha diversity
+- Generates clonotype networks
+- Creates spectratype plots
+- Analyzes repertoire overlap between samples
+- Optionally performs epitope analysis using VDJDB
+
+**Input**
+
+The tool has two ways of accepting data:
+
+1. **Combined data mode**:
+   - AnnData (.h5ad) files with TCR data in the obsm["airr"] slot
+   - MuData (.h5mu) files with separate modalities for gene expression and TCR data
+
+2. **Separate files mode**:
+   - Gene expression (GEX) data: AnnData (.h5ad), 10X HDF5 (.h5), Matrix Market (.mtx), CSV, or TSV
+   - VDJ/TCR data: From various sources in different formats:
+     - 10x Genomics VDJ (filtered_contig_annotations.csv)
+     - TraCeR output
+     - BraCeR output
+     - AIRR rearrangement format
+     - BD Rhapsody
+     - Dandelion
+
+**Output**
+
+- Summary report of the TCR analysis
+- Processed MuData file with TCR analysis results
+- Various visualizations including:
+  - Chain pairing information
+  - Clonotype networks
+  - Clonal expansion plots
+  - Spectratype plots
+  - Repertoire overlap heatmaps
+  - Epitope analysis results (if selected)
+
+**Parameters**
+
+*Input Options*
+
+- **Input data source**: Choose between combined data file or separate GEX and VDJ files
+- **Combined AnnData/MuData file**: When using combined mode, select your input file
+- **Gene expression data file**: When using separate files mode, select your GEX data file (optional)
+- **VDJ/TCR data file**: When using separate files mode, provide your VDJ/TCR data file
+- **VDJ data format**: Format of your VDJ data (10x, TraCeR, BraCeR, AIRR, BD Rhapsody, or Dandelion)
+- **Sample name**: Name used when combining separate GEX and VDJ data
+
+- **Minimum cells for clonotype visualization**: Minimum number of cells for a clonotype to be included in visualization
+- **Filter multichain cells**: Filter out cells with multiple receptor chains (potential doublets)
+- **Filter orphan chains**: Filter out cells with incomplete TCR chains
+- **TCRdist cutoff**: Distance cutoff for TCRdist clustering of clonotypes
+- **Metadata observation key**: Column in .obs containing metadata for visualization
+- **Clustering observation key**: Column in .obs containing cell type or cluster information
+- **Plot format**: Format for output plots (PNG, PDF, or SVG)
+- **Plot DPI**: Resolution for output plots
+- **Perform epitope analysis**: Whether to perform epitope analysis using VDJDB
+- **Verbose output**: Whether to print verbose information during analysis
+
+**References**
+
+- Sturm, G., Szabo, T., Fotakis, G. et al. Scirpy: a Scanpy extension for analyzing single-cell T-cell receptor sequencing data. Bioinformatics (2020).
+- Dash, P., Fiore-Gartland, A.J., Hertz, T. et al. Quantifiable predictive features define epitope-specific T cell receptor repertoires. Nature 547, 89–93 (2017).
+    ]]></help>
+    
+    <citations>
+        <citation type="bibtex">
+@article{sturm2020scirpy,
+  title={Scirpy: a Scanpy extension for analyzing single-cell T-cell receptor sequencing data},
+  author={Sturm, Gregor and Szabo, Tamas and Fotakis, Georgios and Haider, Meshal and Rieder, Dietmar and Trajanoski, Zlatko and Finotello, Francesca},
+  journal={Bioinformatics},
+  year={2020}
+}
+        </citation>
+        <citation type="bibtex">
+@article{dash2017quantifiable,
+  title={Quantifiable predictive features define epitope-specific T cell receptor repertoires},
+  author={Dash, Pradyot and Fiore-Gartland, Andrew J and Hertz, Tomer and Wang, George C and Sharma, Shalini and Souquette, Aisha and Crawford, Jeremy Chase and Clemens, E Bridie and Nguyen, Thi HO and Kedzierska, Katherine and others},
+  journal={Nature},
+  volume={547},
+  number={7661},
+  pages={89--93},
+  year={2017},
+  publisher={Nature Publishing Group}
+}
+        </citation>
+    </citations>
+</tool>
