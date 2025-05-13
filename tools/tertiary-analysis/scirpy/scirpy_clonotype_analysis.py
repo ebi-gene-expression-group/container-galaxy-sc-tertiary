@@ -53,6 +53,8 @@ def read_input_data(
     Read input data from file(s) and convert to MuData format if necessary.
     Supports reading combined data from a MuData file, separate GEX and VDJ data,
     or VDJ data from various supported formats.
+
+    Get example data from: https://support.10xgenomics.com/single-cell-vdj/datasets/3.0.0/vdj_v1_hs_pbmc2_b?
     
     Parameters
     ----------
@@ -190,7 +192,7 @@ def perform_tcr_analysis(
     tcrdist_cutoff: int = 15,
     plot_format: str = "png",
     plot_dpi: int = 120,
-    metadata_obskey: Optional[str] = None,
+    metadata_obskey: Optional[str] = 'has_ir',
     clustering_obskey: Optional[str] = None,
     perform_epitope_analysis: bool = False,
     verbose: bool = False
@@ -256,7 +258,9 @@ def perform_tcr_analysis(
     # Plot chain pairing information
     logger.info("Plotting chain pairing information...")
     fig = plt.figure(figsize=(6, 4))
-    ir.pl.group_abundance(mdata, groupby="airr:chain_pairing", target_col=metadata_obskey or "gex:source")
+    # print the obs column names
+    logger.info(f"Available obs columns: {mdata.obs.columns.tolist()}")
+    ir.pl.group_abundance(mdata, groupby="airr:chain_pairing", target_col=metadata_obskey)
     plt.tight_layout()
     plt.savefig(os.path.join(output_dir, f"chain_pairing.{plot_format}"), dpi=plot_dpi)
     plt.close()
@@ -264,7 +268,7 @@ def perform_tcr_analysis(
     # Plot receptor subtype information
     logger.info("Plotting receptor subtype information...")
     fig = plt.figure(figsize=(6, 4))
-    ir.pl.group_abundance(mdata, groupby="airr:receptor_subtype", target_col=metadata_obskey or "gex:source")
+    ir.pl.group_abundance(mdata, groupby="airr:receptor_subtype", target_col=metadata_obskey)
     plt.tight_layout()
     plt.savefig(os.path.join(output_dir, f"receptor_subtype.{plot_format}"), dpi=plot_dpi)
     plt.close()
