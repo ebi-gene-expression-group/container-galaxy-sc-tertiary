@@ -29,6 +29,8 @@ from cycler import cycler
 from anndata import AnnData
 from mudata import MuData
 
+import requests
+
 # Set up logging
 logging.basicConfig(
     level=logging.INFO,
@@ -195,6 +197,9 @@ def perform_tcr_analysis(
     metadata_obskey: Optional[str] = 'has_ir',
     clustering_obskey: Optional[str] = None,
     perform_epitope_analysis: bool = False,
+    output_mudata: bool = True,
+    output_adata: bool = False,
+    output_tsv: bool = False,
     verbose: bool = False
 ) -> MuData:
     """
@@ -226,6 +231,12 @@ def perform_tcr_analysis(
         Column in .obs containing cell type or cluster information.
     perform_epitope_analysis : bool, default=False
         Whether to perform epitope analysis using VDJDB.
+    output_mudata : bool, default=True
+        Whether to output MuData file containing RNA and VDJ data.
+    output_adata : bool, default=False
+        Whether to output AnnData file with VDJ annotations in obs.
+    output_tsv : bool, default=False
+        Whether to output TSV file with cell annotations.
     verbose : bool, default=False
         Whether to print verbose information.
 
@@ -386,24 +397,24 @@ def perform_tcr_analysis(
         plt.savefig(os.path.join(output_dir, f"clonotype_abundance.{plot_format}"), dpi=plot_dpi)
         plt.close()
     
-    # Generate spectratype plots
-    logger.info("Generating spectratype plots...")
-    fig = plt.figure(figsize=(8, 6))
-    ir.pl.spectratype(mdata, color=clustering_obskey or "gex:cluster", viztype="bar", fig_kws={"dpi": plot_dpi})
-    plt.savefig(os.path.join(output_dir, f"spectratype_bar.{plot_format}"), dpi=plot_dpi)
-    plt.close()
+        # Generate spectratype plots
+        logger.info("Generating spectratype plots...")
+        fig = plt.figure(figsize=(8, 6))
+        ir.pl.spectratype(mdata, color=clustering_obskey or "gex:cluster", viztype="bar", fig_kws={"dpi": plot_dpi})
+        plt.savefig(os.path.join(output_dir, f"spectratype_bar.{plot_format}"), dpi=plot_dpi)
+        plt.close()
     
-    fig = plt.figure(figsize=(8, 6))
-    ir.pl.spectratype(
-        mdata,
-        color=clustering_obskey or "gex:cluster",
-        viztype="curve",
-        curve_layout="shifted",
-        fig_kws={"dpi": plot_dpi},
-        kde_kws={"kde_norm": False}
-    )
-    plt.savefig(os.path.join(output_dir, f"spectratype_curve.{plot_format}"), dpi=plot_dpi)
-    plt.close()
+        fig = plt.figure(figsize=(8, 6))
+        ir.pl.spectratype(
+            mdata,
+            color=clustering_obskey or "gex:cluster",
+            viztype="curve",
+            curve_layout="shifted",
+            fig_kws={"dpi": plot_dpi},
+            kde_kws={"kde_norm": False}
+        )
+        plt.savefig(os.path.join(output_dir, f"spectratype_curve.{plot_format}"), dpi=plot_dpi)
+        plt.close()
     
     # Calculate repertoire overlap
     if metadata_obskey:
@@ -463,9 +474,44 @@ def perform_tcr_analysis(
         except Exception as e:
             logger.error(f"Error during epitope analysis: {e}")
     
-    # Save the processed data
-    logger.info("Saving processed data...")
-    mdata.write(os.path.join(output_dir, "processed_tcr_data.h5mu"))
+    # List all available obs columns
+    logger.info(f"Available obs columns: {mdata.obs.columns.tolist()}")
+
+    # Save outputs based on user preferences
+    # Identify VDJ-related columns in obs
+    vdj_cols = [col for col in mdata.obs.columns 
+               if any(prefix in col for prefix in 
+                     ['chain', 'clonotype', 'vdj', 'ir', 'tcr', 'bcr'])]
+    
+    # Save the processed data based on user preferences
+    logger.info("Saving output data...")
+    
+    if output_mudata:
+        logger.info("Saving MuData file...")
+        mdata.write(os.path.join(output_dir, "processed_tcr_data.h5mu"))
+    
+    if output_adata:
+        logger.info("Saving AnnData file with VDJ annotations...")
+        # Get RNA modality if available, otherwise use a copy of the MuData object
+        if 'gex' in mdata.mod:
+            adata = mdata.mod['gex'].copy()
+        else:
+            adata = AnnData(X=np.zeros((mdata.n_obs, 1)))
+            adata.obs_names = mdata.obs_names
+        
+        # Copy all VDJ annotation columns to the adata.obs
+        for col in vdj_cols:
+            if col in mdata.obs:
+                adata.obs[col] = mdata.obs[col]
+        
+        adata.write_h5ad(os.path.join(output_dir, "processed_tcr_adata.h5ad"))
+    
+    if output_tsv:
+        logger.info("Saving TSV file with cell annotations...")
+        # Extract VDJ annotations
+        vdj_annotations = mdata.obs[vdj_cols].copy()
+        vdj_annotations.to_csv(os.path.join(output_dir, "tcr_annotations.tsv"), 
+                               sep='\t', index=True)
     
     # Generate summary report
     logger.info("Generating summary report...")
@@ -526,6 +572,16 @@ def main():
     parser.add_argument('--output-dir', '-o', type=str, required=True,
                         help='Directory where output files will be saved')
     
+    # Output file options
+    parser.add_argument('--output-mudata', action='store_true', default=True,
+                        help='Output MuData file containing RNA and VDJ data')
+    parser.add_argument('--no-output-mudata', dest='output_mudata', action='store_false',
+                        help='Do not output MuData file')
+    parser.add_argument('--output-adata', action='store_true',
+                        help='Output AnnData file with VDJ annotations in obs')
+    parser.add_argument('--output-tsv', action='store_true',
+                        help='Output TSV file with cell annotations')
+    
     # Analysis parameters
     parser.add_argument('--min-cells', type=int, default=2,
                         help='Minimum number of cells for clonotype visualization (default: 2)')
@@ -556,6 +612,9 @@ def main():
     
     args = parser.parse_args()
     
+    session = requests.Session()
+    session.verify = False
+
     # Validate arguments
     if args.vdj is not None and args.vdj_format is None:
         parser.error("--vdj-format is required when --vdj is specified")
@@ -593,6 +652,9 @@ def main():
         metadata_obskey=args.metadata_obskey,
         clustering_obskey=args.clustering_obskey,
         perform_epitope_analysis=args.perform_epitope_analysis,
+        output_mudata=args.output_mudata,
+        output_adata=args.output_adata,
+        output_tsv=args.output_tsv,
         verbose=args.verbose
     )
 

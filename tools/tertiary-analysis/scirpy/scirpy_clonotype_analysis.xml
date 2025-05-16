@@ -1,4 +1,4 @@
-<tool id="scirpy_clonotype_analysis" name="Scirpy TCR Clonotype Analysis" version="1.0.0" profile="20.01">
+<tool id="scirpy_clonotype_analysis" name="Scirpy Clonotype Analysis" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@">
     <description>Analyze T-cell receptor repertoire from single-cell data</description>
     <requirements>
         <requirement type="package" version="0.13.0">scirpy</requirement>
@@ -11,37 +11,6 @@
         <requirement type="package" version="0.2.0">tcrdist3</requirement>
         <requirement type="package" version="1.8.0">awkward</requirement>
     </requirements>
-    <command detect_errors="exit_code"><![CDATA[
-        python '$__tool_directory__/scirpy_clonotype_analysis.py'
-            #if $input_source.source_selection == "combined":
-                --input '$input_source.input'
-            #else:
-                #if $input_source.gex:
-                    --gex '$input_source.gex'
-                #end if
-                #if $input_source.vdj:
-                    --vdj '$input_source.vdj'
-                    --vdj-format '$input_source.vdj_format'
-                    --sample-name '$input_source.sample_name'
-                #end if
-            #end if
-            --output-dir '$output.extra_files_path'
-            --min-cells '$min_cells'
-            $filter_multichain
-            $filter_orphan_chains
-            --tcrdist-cutoff '$tcrdist_cutoff'
-            --plot-format '$plot_format'
-            --plot-dpi '$plot_dpi'
-            #if $metadata_obskey:
-                --metadata-obskey '$metadata_obskey'
-            #end if
-            #if $clustering_obskey:
-                --clustering-obskey '$clustering_obskey'
-            #end if
-            $perform_epitope_analysis
-            $verbose
-            && cp '$output.extra_files_path/tcr_analysis_summary.txt' '$output'
-    ]]></command>
     <inputs>
         <conditional name="input_source">
             <param name="source_selection" type="select" label="Input data source">
@@ -53,8 +22,8 @@
                        help="AnnData (.h5ad) or MuData (.h5mu) file containing single-cell data with TCR information" />
             </when>
             <when value="separate">
-                <param type="data" name="gex" format="h5ad,h5,mtx,csv,tsv" optional="true" label="Gene expression data file" 
-                       help="File containing gene expression data (optional)" />
+                <param type="data" name="gex" format="h5ad,h5" label="Gene expression data file" 
+                       help="File containing gene expression data" />
                 <param type="data" name="vdj" format="csv,tsv,h5ad" label="VDJ/TCR data file" 
                        help="File containing TCR/BCR data" />
                 <param name="vdj_format" type="select" label="VDJ data format">
@@ -102,13 +71,69 @@
         
         <param type="boolean" name="verbose" truevalue="--verbose" falsevalue="" checked="false" 
                label="Verbose output" help="Print verbose information" />
+        
+        <param name="output_mudata" type="boolean" checked="true" label="Output MuData file" 
+               help="Output a MuData file containing RNA and VDJ data" />
+        <param name="output_adata" type="boolean" checked="false" label="Output AnnData file" 
+               help="Output an AnnData file with VDJ annotations in obs" />
+        <param name="output_tsv" type="boolean" checked="false" label="Output TSV file" 
+               help="Output a TSV file with cell annotations" />
     </inputs>
     
     <outputs>
+        <data name="mudata_output" format="h5mu" label="${tool.name} on ${on_string}: MuData (RNA+VDJ)">
+            <filter>output_mudata</filter>
+        </data>
+        <data name="adata_output" format="h5ad" label="${tool.name} on ${on_string}: AnnData with VDJ annotations">
+            <filter>output_adata</filter>
+        </data>
+        <data name="tsv_output" format="tabular" label="${tool.name} on ${on_string}: Cell annotations">
+            <filter>output_tsv</filter>
+        </data>
         <data name="output" format="txt" label="${tool.name} on ${on_string}: Report">
             <discover_datasets pattern="__designation__" directory="output_dir" visible="true" />
         </data>
     </outputs>
+    
+    <command><![CDATA[
+    mkdir -p output_dir &&
+    
+    python '$__tool_directory__/scirpy_clonotype_analysis.py'
+        #if $input
+        --input '$input'
+        #else
+        --gex '$gex'
+        --vdj '$vdj'
+        --vdj-format '$vdj_format'
+        #end if
+        --output-dir output_dir
+        #if $output_mudata
+        --output-mudata
+        #else
+        --no-output-mudata
+        #end if
+        #if $output_adata
+        --output-adata
+        #end if
+        #if $output_tsv
+        --output-tsv
+        #end if
+        --min-cells '$min_cells'
+        $filter_multichain
+        $filter_orphan_chains
+        --tcrdist-cutoff '$tcrdist_cutoff'
+        --plot-format '$plot_format'
+        --plot-dpi '$plot_dpi'
+        #if $metadata_obskey:
+            --metadata-obskey '$metadata_obskey'
+        #end if
+        #if $clustering_obskey:
+            --clustering-obskey '$clustering_obskey'
+        #end if
+        $perform_epitope_analysis
+        $verbose
+        && cp '$output.extra_files_path/tcr_analysis_summary.txt' '$output'
+    ]]></command>
     
     <tests>
         <test>
@@ -190,6 +215,9 @@ The tool has two ways of accepting data:
 - **Plot DPI**: Resolution for output plots
 - **Perform epitope analysis**: Whether to perform epitope analysis using VDJDB
 - **Verbose output**: Whether to print verbose information during analysis
+- **Output MuData file**: If checked, outputs a MuData file containing RNA and VDJ data. If unchecked, only outputs an AnnData file with VDJ annotations.
+- **Output AnnData file**: If checked, outputs an AnnData file with VDJ annotations in obs.
+- **Output TSV file**: If checked, outputs a TSV file with cell annotations.
 
 **References**
 
