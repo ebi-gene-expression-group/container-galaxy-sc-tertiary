@@ -337,14 +337,14 @@ def check_fields(fields, adata, obs=True, context=None):
         if not set(fields_to_check).issubset(set(adata.obs.columns)):
             raise ValueError(
                 f"Some of the following fields {legend} are not present \
-                    in adata.obs: {fields}. \
+                    in adata.obs: {fields_to_check}. \
                         Possible fields are: {list(set(adata.obs.columns))}"
             )
     else:
         if not set(fields_to_check).issubset(set(adata.var.columns)):
             raise ValueError(
                 f"Some of the following fields {legend} are not present \
-                    in adata.var: {fields}. \
+                    in adata.var: {fields_to_check}. \
                         Possible fields are: {list(set(adata.var.columns))}"
             )
 
