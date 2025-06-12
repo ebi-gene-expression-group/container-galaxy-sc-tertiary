@@ -324,18 +324,24 @@ def check_fields(fields, adata, obs=True, context=None):
     >>> check_fields(["bulk_labels", "louvain"], adata, obs=True)
     """
 
+    # Fields that will be created during the pseudobulking process
+    pseudobulk_generated_fields = ['psbulk_n_cells', 'psbulk_counts']
+    
+    # Filter out the pseudobulk-generated fields from checking
+    fields_to_check = [field for field in fields if field not in pseudobulk_generated_fields]
+    
     legend = ""
     if context:
         legend = f", passed in {context},"
     if obs:
-        if not set(fields).issubset(set(adata.obs.columns)):
+        if not set(fields_to_check).issubset(set(adata.obs.columns)):
             raise ValueError(
                 f"Some of the following fields {legend} are not present \
                     in adata.obs: {fields}. \
                         Possible fields are: {list(set(adata.obs.columns))}"
             )
     else:
-        if not set(fields).issubset(set(adata.var.columns)):
+        if not set(fields_to_check).issubset(set(adata.var.columns)):
             raise ValueError(
                 f"Some of the following fields {legend} are not present \
                     in adata.var: {fields}. \
