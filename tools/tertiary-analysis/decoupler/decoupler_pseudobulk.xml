@@ -272,7 +272,7 @@ python '$__tool_directory__/decoupler_pseudobulk.py' '$input_file'
             <output name="samples_metadata" ftype="tabular">
                 <assert_contents>
                     <has_n_lines n="22"/>
-                    <has_n_columns n="3"/>
+                    <has_n_columns n="4"/>
                 </assert_contents>
             </output>
             <output name="genes_metadata" ftype="tabular">
