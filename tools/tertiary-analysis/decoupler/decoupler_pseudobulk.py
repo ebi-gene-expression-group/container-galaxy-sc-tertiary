@@ -328,8 +328,8 @@ def check_fields(fields, adata, obs=True, context=None):
     pseudobulk_generated_fields = ['psbulk_n_cells', 'psbulk_counts']
 
     # Filter out the pseudobulk-generated fields from checking
-    fields_to_check = [field for field in fields 
-                      if field not in pseudobulk_generated_fields]
+    fields_to_check = [field for field in fields
+                       if field not in pseudobulk_generated_fields]
 
     legend = ""
     if context:
