@@ -326,10 +326,11 @@ def check_fields(fields, adata, obs=True, context=None):
 
     # Fields that will be created during the pseudobulking process
     pseudobulk_generated_fields = ['psbulk_n_cells', 'psbulk_counts']
-    
+
     # Filter out the pseudobulk-generated fields from checking
-    fields_to_check = [field for field in fields if field not in pseudobulk_generated_fields]
-    
+    fields_to_check = [field for field in fields 
+                      if field not in pseudobulk_generated_fields]
+
     legend = ""
     if context:
         legend = f", passed in {context},"
