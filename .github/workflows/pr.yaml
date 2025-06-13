@@ -123,7 +123,14 @@ jobs:
       with:
         path: ~/.cache/pip
         key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy-head-sha }}
-
+    - name: Set skip version check for push event (i.e. merge to main)
+      if: ${{ github.event_name != 'pull_request' }}
+      run:
+        echo "EXTRA_SKIP=--skip version_bumped" >> "$GITHUB_ENV"
+    - name: Set no skip vor pull_request events
+      if: ${{ github.event_name == 'pull_request' }}
+      run:
+        echo "EXTRA_SKIP=" >> "$GITHUB_ENV"
     - name: Set fail level for pull request
       if: ${{ github.event_name == 'pull_request' }}
       run:
@@ -140,6 +147,7 @@ jobs:
         fail-level: ${{ env.FAIL_LEVEL }}
         repository-list: ${{ needs.setup.outputs.repository-list }}
         tool-list: ${{ needs.setup.outputs.tool-list }}
+        additional-planemo-options: ${{ env.EXTRA_SKIP }}
     - uses: actions/upload-artifact@v4
       if: ${{ failure() }}
       with:
@@ -372,7 +380,7 @@ jobs:
   # deploy the tools to the toolsheds (first TTS for testing)
   deploy:
     name: Deploy
-    needs: [setup, lint, combine_outputs]
+    needs: [setup, combine_outputs]
     if: ${{ github.ref == 'refs/heads/main' && github.repository_owner == 'ebi-gene-expression-group' }}
     runs-on: ubuntu-latest
     strategy:
