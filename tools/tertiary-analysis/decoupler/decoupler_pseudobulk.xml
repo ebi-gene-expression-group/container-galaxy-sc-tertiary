@@ -1,4 +1,4 @@
-<tool id="decoupler_pseudobulk" name="Decoupler pseudo-bulk" version="1.4.0+galaxy9" profile="20.05">
+<tool id="decoupler_pseudobulk" name="Decoupler pseudo-bulk" version="1.4.0+galaxy10" profile="20.05">
     <description>aggregates single cell RNA-seq data for running bulk RNA-seq methods</description>
     <requirements>
         <requirement type="package" version="1.4.0">decoupler</requirement>
@@ -245,7 +245,7 @@ python '$__tool_directory__/decoupler_pseudobulk.py' '$input_file'
             <param name="adata_obs_fields_to_merge" value="batch,sex:batch,genotype"/>
             <param name="groupby" value="batch_sex"/>
             <param name="sample_key" value="genotype"/>
-            <param name="factor_fields" value="genotype,batch_sex"/>
+            <param name="factor_fields" value="genotype,batch_sex,psbulk_n_cells"/>
             <param name="mode" value="sum"/>
             <param name="min_cells" value="10"/>
             <param name="produce_plots" value="true"/>
@@ -272,7 +272,7 @@ python '$__tool_directory__/decoupler_pseudobulk.py' '$input_file'
             <output name="samples_metadata" ftype="tabular">
                 <assert_contents>
                     <has_n_lines n="22"/>
-                    <has_n_columns n="3"/>
+                    <has_n_columns n="4"/>
                 </assert_contents>
             </output>
             <output name="genes_metadata" ftype="tabular">
@@ -323,6 +323,8 @@ python '$__tool_directory__/decoupler_pseudobulk.py' '$input_file'
         The tool will output the filtered AnnData, count matrix, samples metadata, genes metadata (in DESeq2 format), and the pseudobulk plot and filter by expression plot (if enabled). Files for filtering genes later on are also generated (to ignore after the DE model).
 
         You can obtain more information about Decoupler pseudobulk at the developers documentation `here <https://decoupler-py.readthedocs.io/en/latest/notebooks/pseudobulk.html>`_ .
+
+        1.4.0+galaxy10: Fixes ability to pass psbulk metadata fields downstream.
 
         ]]>
     </help>
