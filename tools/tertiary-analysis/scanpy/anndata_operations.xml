@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="anndata_ops" name="AnnData Operations" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="anndata_ops" name="AnnData Operations" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
   <description>is a Swiss army knife for AnnData files</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -42,8 +42,8 @@ ln -s '${copy_r.r_source}' r_source.h5 &&
 #end for
 #end if
 
-#if $add_cell_metadata.default:
-  ln -s ${add_cell_metadata.file} cell_metadata.tsv &&
+#if $cell_metadata:
+  ln -s '${cell_metadata}' cell_metadata.tsv &&
 #end if
 python $operations
 ]]></command>
@@ -65,7 +65,7 @@ def make_column_values_unique(df, field, new_field=None, suffix = '-duplicate-')
 
 adata = sc.read('input.h5')
 	    
-#if $add_cell_metadata.default:
+#if $cell_metadata:
 import pandas as pd
 
 def add_cell_metadata(ad, metadata_file="cell_metadata.tsv", drop_duplicates=True):
@@ -304,8 +304,9 @@ s = 0
 res_dir = "output_split"
 makedirs(res_dir, exist_ok=True)
 for field_value in adata.obs["${split_on_obs.key}"].unique():
-    ad_s = adata[adata.obs.${split_on_obs.key} == field_value]
-    ad_s.write(f"{res_dir}/${split_on_obs.key}_{s}.h5", compression='gzip')
+    ad_s = adata[adata.obs["${split_on_obs.key}"] == field_value]
+    field_value_san = str(field_value).replace(" ", "_").replace("/", "_")
+    ad_s.write(f"{res_dir}/${split_on_obs.key}_{field_value_san}.h5", compression='gzip')
     if s > 0:
         gc.collect()
     s += 1
@@ -326,13 +327,7 @@ for field_value in adata.obs["${split_on_obs.key}"].unique():
       </when>
       <when value="false"/>
     </conditional>
-    <conditional name="add_cell_metadata">
-      <param name="default" type="boolean" checked="false" label="Merge additional cell metadata"/>
-      <when value="true">
-        <param name="file" type="data" label="Cell metadata with headers" help="A tabular file with headers, where the first column contains cell barcodes. Will be merged via a left join, so not all cells in the obs need to be in the metadata. Currently duplicated column headers will be ignored and the originals in the AnnData will be kept." format="tsv,tabular"/>
-      </when>
-      <when value="false"/>
-    </conditional>
+    <param name="cell_metadata" type="data" optional="true" label="Merge additional cell metadata" help="A tabular file with headers, where the first column contains cell barcodes. Will be merged via a left join, so not all cells in the obs need to be in the metadata. Currently duplicated column headers will be ignored and the originals in the AnnData will be kept." format="tsv,tabular"/>
     <param name="copy_adata_to_raw" type="boolean" label="Copy AnnData to .raw" help="If activated, it will do 'adata.raw = adata'" checked="false"/>
     <repeat name="modifications" title="Change field names in AnnData observations" min="0">
       <param name="from_obs" type="text" label="Original name" help="Name in observations that you want to change">
@@ -477,10 +472,7 @@ for field_value in adata.obs["${split_on_obs.key}"].unique():
     </test>
     <test>
       <param name="input_obj_file" value="anndata_ops.h5"/>
-      <conditional name="add_cell_metadata">
-        <param name="default" value="true"/>
-        <param name="file" value="test_incomplete_metadata.tsv"/>
-      </conditional>
+      <param name="cell_metadata" value="test_incomplete_metadata.tsv"/>
       <output name="output_h5ad" ftype="h5ad">
         <assert_contents>
           <has_h5_keys keys="obs/cell_type"/>
@@ -595,6 +587,8 @@ This functionality will probably be added in the future to a larger package.
 
 History
 -------
+1.9.5+galaxy1: Makes cell metadata optional for workflow optional steps.
+
 1.8.1+galaxy10: Adds field to be made unique in obs or var.
 
 1.6.0+galaxy0: Moves to Scanpy Scripts 0.3.0 (Scanpy 1.6.0), versioning switched to track Scanpy as other tools.
