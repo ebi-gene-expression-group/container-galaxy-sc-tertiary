@@ -1,0 +1,278 @@
+<tool id="cite_seq_analysis" name="CITE-Seq Analysis" version="1.0.0" profile="22.01">
+    <description>Analyze pre-QC'ed RNA and raw ADT data from CITE-Seq experiments</description>
+    <requirements>
+        <requirement type="package" version="1.2.0">scanpy</requirement>
+        <requirement type="package" version="0.7.0">muon</requirement>
+        <requirement type="package" version="0.11.0">scvi-tools</requirement>
+        <requirement type="package" version="0.10.1">anndata</requirement>
+        <requirement type="package" version="1.4.4">numpy</requirement>
+        <requirement type="package" version="1.5.3">pandas</requirement>
+        <requirement type="package" version="1.13.0">pytorch</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        python '$__tool_directory__/cite_seq_analysis.py'
+        
+        #if $input_type.input_source == "separate"
+            --rna-input '$input_type.rna_input' 
+            --adt-input '$input_type.adt_input'
+        #else
+            --mudata-input '$input_type.mudata_input'
+        #end if
+        
+        --rna-min-genes $qc.rna_min_genes
+        --rna-min-cells $qc.rna_min_cells
+        --max-mito-pct $qc.max_mito_pct
+        --mito-prefix '$qc.mito_prefix'
+        --adt-min-counts $qc.adt_min_counts
+        
+        --adt-norm-method $normalization.adt_norm_method
+        
+        #if $normalization.adt_norm_method == "dsb" and $normalization.use_isotype_control
+            --use-isotype-control
+            #if $normalization.isotype_controls
+                --isotype-controls 
+                #for control in str($normalization.isotype_controls).split(',')
+                    '${control.strip()}'
+                #end for
+            #end if
+        #end if
+        
+        --rna-target-sum $normalization.rna_target_sum
+        
+        #if $normalization.normalize_rna
+            --normalize-rna
+        #end if
+        
+        --raw-counts-location $normalization.raw_counts_location
+        --raw-counts-layer '$normalization.raw_counts_layer'
+        
+        --hvg-min-mean $rna_processing.hvg_min_mean
+        --hvg-max-mean $rna_processing.hvg_max_mean
+        --hvg-min-disp $rna_processing.hvg_min_disp
+        --scale-max-value $rna_processing.scale_max_value
+        --n-pcs $rna_processing.n_pcs
+        
+        --integration-method $integration.integration_method
+        
+        #if $integration.integration_method == "totalVI"
+            --n-latent $integration.n_latent
+            --max-epochs $integration.max_epochs
+            --gpu-device $integration.gpu_device
+            #if $integration.batch_key
+              --batch-key '$integration.batch_key'
+            #end if
+            #if $integration.continuous_covariates
+              --continuous-covariates
+              #for cov in str($integration.continuous_covariates).strip().split('\n')
+                '${cov.strip()}'
+              #end for
+            #end if
+            #if $integration.categorical_covariates
+              --categorical-covariates
+              #for cov in str($integration.categorical_covariates).strip().split('\n')
+                '${cov.strip()}'
+              #end for
+            #end if
+        #end if
+
+        --integrated-dim-reduction-key '$integration.integrated_dim_reduction_key'
+        
+        --n-neighbors $clustering.n_neighbors
+        --resolution $clustering.resolution
+        --umap-min-dist $clustering.umap_min_dist
+        
+        --output-format $output.output_format
+        --output-file '$output_file'
+    ]]></command>
+    
+    <inputs>
+        <conditional name="input_type">
+            <param name="input_source" type="select" label="Input Source">
+                <option value="separate">Separate RNA and ADT matrices</option>
+                <option value="combined">Combined MuData object</option>
+            </param>
+            <when value="separate">
+                <param name="rna_input" type="data" format="h5ad" label="RNA count matrix (AnnData/h5ad)" />
+                <param name="adt_input" type="data" format="h5ad" label="ADT count matrix (AnnData/h5ad)" />
+            </when>
+            <when value="combined">
+                <param name="mudata_input" type="data" format="h5mu" label="Combined RNA+ADT data (MuData/h5mu)" />
+            </when>
+        </conditional>
+        
+        <section name="qc" title="Quality Control Parameters" expanded="true">
+            <param name="rna_min_genes" type="integer" value="200" min="1" label="Minimum number of genes per cell for RNA" help="Only used for joint QC if needed, assuming RNA is pre-QC'ed" />
+            <param name="rna_min_cells" type="integer" value="3" min="1" label="Minimum number of cells per gene for RNA" help="Only used for joint QC if needed, assuming RNA is pre-QC'ed" />
+            <param name="max_mito_pct" type="float" value="20.0" min="0" max="100" label="Maximum percentage of mitochondrial genes" help="Only used for joint QC if needed, assuming RNA is pre-QC'ed" />
+            <param name="mito_prefix" type="text" value="MT-" label="Prefix for mitochondrial genes" help="Only used for joint QC if needed, e.g., 'MT-' for human, 'mt-' for mouse" />
+            <param name="adt_min_counts" type="integer" value="1" min="0" label="Minimum counts per cell for ADT" />
+        </section>
+        
+        <section name="normalization" title="Normalization Parameters" expanded="true">
+            <param name="adt_norm_method" type="select" label="ADT normalization method">
+                <option value="clr">CLR (Centered Log-Ratio)</option>
+                <option value="dsb">DSB (Denoised and Scaled by Background)</option>
+            </param>
+            <param name="use_isotype_control" type="boolean" truevalue="true" falsevalue="false" checked="false" label="Use isotype controls for DSB" help="Only relevant if DSB is selected" />
+            <param name="isotype_controls" type="text" optional="true" label="Isotype control names (comma-separated)" help="Only relevant if DSB with isotype controls is selected" />
+            <param name="rna_target_sum" type="float" value="10000" min="1" label="Target sum for RNA normalization" />
+            <param name="normalize_rna" type="boolean" truevalue="true" falsevalue="false" checked="false" label="Force RNA normalization" help="Whether to force normalization of RNA data even if it appears to be pre-processed" />
+            <param name="raw_counts_location" type="select" label="Location of raw RNA counts">
+                <option value="X">X (main expression matrix)</option>
+                <option value="raw.X">.raw.X (raw values backup)</option>
+                <option value="layer">In a specific layer</option>
+            </param>
+            <param name="raw_counts_layer" type="text" value="counts" label="Name of layer with raw counts" help="Only used if 'Location of raw RNA counts' is set to 'In a specific layer'" />
+        </section>
+        
+        <section name="rna_processing" title="RNA Processing Parameters" expanded="true">
+            <param name="hvg_min_mean" type="float" value="0.0125" min="0" label="Minimum mean expression for HVG" />
+            <param name="hvg_max_mean" type="float" value="3.0" min="0" label="Maximum mean expression for HVG" />
+            <param name="hvg_min_disp" type="float" value="0.5" min="0" label="Minimum dispersion for HVG" />
+            <param name="scale_max_value" type="float" value="10.0" min="0" label="Maximum value after scaling" />
+            <param name="n_pcs" type="integer" value="50" min="2" label="Number of principal components for RNA" />
+        </section>
+        
+        <section name="integration" title="Integration Parameters" expanded="true">
+            <param name="integration_method" type="select" label="Integration method">
+                <option value="feature-concat">Feature concatenation</option>
+                <option value="totalVI">totalVI (advanced RNA+Protein modeling)</option>
+            </param>
+            <param name="n_latent" type="integer" value="20" min="2" label="Number of latent dimensions for totalVI" help="Only relevant if totalVI is selected" />
+            <param name="max_epochs" type="integer" value="400" min="10" label="Maximum number of training epochs for totalVI" help="Only relevant if totalVI is selected" />
+            <param name="gpu_device" type="integer" value="0" min="0" label="GPU device ID for totalVI" help="If multiple GPUs are available, specify which one to use (0 for first GPU). Only relevant if totalVI is selected." />
+            <param name="batch_key" type="text" optional="true" label="Batch key for totalVI" help="Column name in observation metadata containing batch information (e.g., 'sample_id'). Only relevant if totalVI is selected." />
+            <param name="continuous_covariates" type="text" optional="true" area="true" label="Continuous covariates for totalVI" help="Column names in observation metadata containing continuous covariates (one name per line). Only relevant if totalVI is selected." />
+            <param name="categorical_covariates" type="text" optional="true" area="true" label="Categorical covariates for totalVI" help="Column names in observation metadata containing categorical covariates (one name per line). Only relevant if totalVI is selected." />
+            <param name="integrated_dim_reduction_key" type="text" value="X_integrated" label="Integrated dimension reduction key" help="Key name to use for the integrated dimensionality reduction in obsm. Default is 'X_integrated', but can be changed to avoid conflicts with other reduction methods." />
+        </section>
+        
+        <section name="clustering" title="Clustering Parameters" expanded="true">
+            <param name="n_neighbors" type="integer" value="15" min="2" label="Number of neighbors for neighborhood graph" />
+            <param name="resolution" type="float" value="0.5" min="0.01" label="Resolution for Leiden clustering" help="Higher values generate more clusters" />
+            <param name="umap_min_dist" type="float" value="0.3" min="0.01" max="0.99" label="Minimum distance parameter for UMAP" />
+        </section>
+        
+        <section name="output" title="Output Parameters" expanded="true">
+            <param name="output_format" type="select" label="Output format">
+                <option value="mudata">MuData object (h5mu)</option>
+                <option value="anndata">AnnData object with protein data in obs (h5ad)</option>
+                <option value="tsv">Metadata table (TSV)</option>
+            </param>
+        </section>
+    </inputs>
+    
+    <outputs>
+        <data name="output_file" format="h5mu" label="${tool.name} on ${on_string}">
+            <change_format>
+                <when input="output.output_format" value="anndata" format="h5ad" />
+                <when input="output.output_format" value="tsv" format="tabular" />
+            </change_format>
+        </data>
+    </outputs>
+    
+    <tests>
+        <!-- Test with separate RNA and ADT inputs -->
+        <test>
+            <conditional name="input_type">
+                <param name="input_source" value="separate" />
+                <param name="rna_input" value="sample_rna.h5ad" />
+                <param name="adt_input" value="sample_adt.h5ad" />
+            </conditional>
+            <section name="qc">
+                <param name="rna_min_genes" value="200" />
+                <param name="rna_min_cells" value="3" />
+                <param name="max_mito_pct" value="20.0" />
+            </section>
+            <section name="normalization">
+                <param name="adt_norm_method" value="clr" />
+            </section>
+            <section name="integration">
+                <param name="integration_method" value="feature-concat" />
+            </section>
+            <section name="output">
+                <param name="output_format" value="mudata" />
+            </section>
+            <output name="output_file" file="cite_seq_output.h5mu" compare="sim_size" delta="50000" />
+        </test>
+    </tests>
+    
+    <help><![CDATA[
+**CITE-Seq Analysis Pipeline**
+
+This tool implements a comprehensive CITE-Seq analysis pipeline using the scverse ecosystem, including muon for multimodal data management and optionally scvi-tools for advanced integration.
+
+-----
+
+**Input Data**
+
+The tool accepts either:
+
+* Separate RNA and ADT count matrices (as AnnData/h5ad files)
+* A combined MuData object containing both RNA and ADT modalities
+
+-----
+
+**Pipeline Steps**
+
+1. **Data Loading**: Load RNA and ADT data, creating a multimodal MuData object
+2. **Quality Control**: Assumes RNA data has already been QC'ed, performs QC on ADT modality and aligns cells between modalities
+3. **ADT Normalization**: Apply CLR or DSB normalization to ADT counts
+4. **RNA Processing**: Process RNA data based on preprocessing state, identifying highly variable genes if needed
+5. **Integration**: Combine RNA and ADT data using either feature concatenation or totalVI modeling
+6. **Clustering**: Identify cell populations using graph-based (Leiden) clustering
+7. **Visualization**: Generate UMAP embeddings for visualization
+
+-----
+
+**RNA Data Flexibility**
+
+The tool is designed to work flexibly with RNA data in different preprocessing states:
+
+* **Smart Detection**: Automatically detects if RNA data is pre-processed (has highly variable genes identified)
+* **Normalization Control**: Optionally skip or force normalization of RNA data
+* **Raw Counts for totalVI**: Provide raw counts to totalVI from one of three locations:
+  - X matrix (default, the main expression matrix)
+  - raw.X (raw counts backed up in .raw)
+  - A specific layer (e.g., 'counts')
+
+-----
+
+**totalVI Integration Options**
+
+The totalVI integration method provides powerful joint modeling of RNA and protein data:
+
+* **Batch Correction**: Specify a batch key (column name in metadata) to perform batch correction
+* **Covariates**: Include continuous or categorical covariates in the model to account for known sources of variation
+* **Model Parameters**: Configure the latent space dimensions and training epochs
+* **Integrated Dimension Reduction Key**: Specify the key name for the integrated representation stored in obsm (default: 'X_integrated'). This can be useful to avoid conflicts with other dimensionality reduction methods like Harmony or BBKNN that might use the same key.
+* **Memory-efficient Raw Counts Handling**: totalVI works best with raw RNA counts. The tool will temporarily swap the raw counts from your specified location into the main expression matrix, then restore the normalized data afterward. This approach avoids duplicating the dataset in memory, allowing processing of large datasets.
+
+**GPU Acceleration for totalVI**
+
+When using the totalVI integration method, the tool will automatically check for GPU availability:
+
+* If a GPU is available, the tool will use it to accelerate model training, which can significantly reduce processing time
+* The GPU detection is automatic and requires no user intervention
+* Training parameters are optimized based on available GPU memory
+* GPU and integration information is stored in the output MuData object's metadata
+
+Note: For large datasets, using totalVI without GPU may result in very long processing times.
+
+-----
+
+**Output Options**
+
+* **MuData object (h5mu)**: Complete multimodal object with all analysis results
+* **AnnData object (h5ad)**: RNA-based AnnData with protein data added to cell metadata
+* **Metadata table (TSV)**: Cell metadata including clustering results and protein expression
+
+    ]]></help>
+    
+    <citations>
+        <citation type="doi">10.1038/s41592-021-01346-6</citation> <!-- muon -->
+        <citation type="doi">10.1038/s41592-019-0654-x</citation> <!-- scanpy -->
+        <citation type="doi">10.1038/s41592-020-01050-x</citation> <!-- scvi-tools/totalVI -->
+        <citation type="doi">10.1126/science.aal4222</citation> <!-- CITE-seq original paper -->
+    </citations>
+</tool>
