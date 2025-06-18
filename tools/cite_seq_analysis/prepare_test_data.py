@@ -462,13 +462,16 @@ def process_rna_data(adata, n_hvg=2000):
     logger.info(f"Processing RNA data")
     
     try:
+        # Store original raw counts before any processing in a layer
+        logger.info("Storing original raw counts in 'counts' layer")
+        if scipy.sparse.issparse(adata.X):
+            adata.layers['counts'] = adata.X.copy()
+        else:
+            adata.layers['counts'] = np.array(adata.X)
+        
         # Normalize to 10,000 reads per cell
         logger.info("Normalizing data to 10,000 reads per cell")
         sc.pp.normalize_total(adata, target_sum=1e4)
-        
-        # Store raw counts before log transformation
-        logger.info("Storing raw counts in .raw attribute")
-        adata.raw = adata.copy()
         
         # Log-transform
         logger.info("Performing log1p transformation")
@@ -687,8 +690,9 @@ def main():
         print("\nTest data preparation complete!")
         print(f"RNA data: {rna_adata.shape[0]} cells, {rna_adata.shape[1]} genes")
         print(f"ADT data: {adt_adata.shape[0]} cells, {adt_adata.shape[1]} features")
+        print("\nNote: Raw RNA counts are stored in the 'counts' layer")
         print("\nYou can now use these files with cite_seq_analysis.py as follows:")
-        print(f"\npython cite_seq_analysis.py \\\n    --rna-input {rna_output} \\\n    --adt-input {adt_output} \\\n    [other options]")
+        print(f"\npython cite_seq_analysis.py \\\n    --rna-input {rna_output} \\\n    --adt-input {adt_output} \\\n    --raw-counts-location layer \\\n    --raw-counts-layer counts \\\n    [other options]")
     
     except Exception as e:
         logger.error(f"Unhandled error in main function: {e}")
