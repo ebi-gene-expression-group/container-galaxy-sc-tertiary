@@ -521,7 +521,7 @@ def normalize_adt(
             method = "clr"
         else:
             try:
-                import muon.prot.pp as mpp
+                from muon.prot import pp as mpp
                 logger.info("Performing DSB normalization on ADT data")
                 
                 if use_isotype_control and isotype_controls:
@@ -547,7 +547,7 @@ def normalize_adt(
     
     if method == "clr":
         try:
-            import muon.prot.pp as mpp
+            from muon.prot import pp as mpp
             logger.info("Performing CLR normalization on ADT data")
             mpp.clr(mdata.mod["prot"])
         except ImportError:
