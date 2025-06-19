@@ -829,7 +829,7 @@ def integrate_modalities(
             # Setup anndata with validated parameters
             logger.info("Setting up AnnData for totalVI")
             try:
-                scvi.model.TOTALVI.setup_anndata(
+                scvi.model.TOTALVI.setup_mudata(
                     mdata,
                     protein_expression_obsm_key="protein",
                     batch_key=validated_batch_key,
