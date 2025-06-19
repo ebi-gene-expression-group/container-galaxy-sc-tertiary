@@ -832,17 +832,54 @@ def integrate_modalities(
             # Extract the RNA AnnData to work with
             rna_adata = mdata.mod["rna"].copy()
             
-            # Add protein data to the obsm slot
-            if "prot" in mdata.mod:
-                logger.info("Adding protein data from 'prot' modality to obsm")
-                prot_data = mdata.mod["prot"].X
-                if not isinstance(prot_data, np.ndarray):
-                    prot_data = prot_data.toarray()
+            # Add raw protein data to the obsm slot - totalVI needs RAW COUNTS
+            if "raw_protein" in mdata.obsm:
+                # Great! We have pre-stored raw protein counts
+                logger.info("Using raw protein counts from mdata.obsm['raw_protein']")
+                raw_protein_df = mdata.obsm["raw_protein"]
+                
+                # Add to RNA AnnData obsm
+                rna_adata.obsm["protein"] = raw_protein_df
+                rna_adata.obsm["prot"] = raw_protein_df
+                
+                logger.info(f"Added raw protein counts to obsm with {raw_protein_df.shape[1]} proteins")
+            elif "prot" in mdata.mod:
+                # Try to use raw counts directly from the protein modality
+                # WARNING: If normalized data is in X, this will cause problems with totalVI
+                logger.warning(
+                    "No pre-stored raw protein counts found. Using protein data directly from the modality. " 
+                    "totalVI requires RAW counts - if protein data is normalized, totalVI will fail."
+                )
+                
+                prot_adata = mdata.mod["prot"]
+                
+                # Check if we have raw protein counts available in a layer
+                if "counts" in prot_adata.layers:
+                    # Use raw counts from layers['counts']
+                    logger.info("Using raw protein counts from prot_adata.layers['counts']")
+                    if isinstance(prot_adata.layers["counts"], np.ndarray):
+                        prot_data = prot_adata.layers["counts"].copy()
+                    else:
+                        prot_data = prot_adata.layers["counts"].toarray()
+                # Check for alternate names for raw counts
+                elif "raw" in prot_adata.layers:
+                    logger.info("Using raw protein counts from prot_adata.layers['raw']")
+                    if isinstance(prot_adata.layers["raw"], np.ndarray):
+                        prot_data = prot_adata.layers["raw"].copy()
+                    else:
+                        prot_data = prot_adata.layers["raw"].toarray()
+                else:
+                    # No obvious raw counts, use X and hope it's raw
+                    logger.warning("No raw protein counts layer found, using .X which may be normalized")
+                    if not isinstance(prot_adata.X, np.ndarray):
+                        prot_data = prot_adata.X.toarray()
+                    else:
+                        prot_data = prot_adata.X.copy()
                 
                 protein_df = pd.DataFrame(
                     prot_data,
-                    index=mdata.mod["prot"].obs_names,
-                    columns=mdata.mod["prot"].var_names
+                    index=prot_adata.obs_names,
+                    columns=prot_adata.var_names
                 )
                 
                 # Store in multiple common keys to increase chances of success
@@ -851,16 +888,42 @@ def integrate_modalities(
                 
                 logger.info(f"Added protein data to obsm with {protein_df.shape[1]} proteins")
             else:
-                logger.error("No 'prot' modality found in MuData. Cannot proceed with totalVI.")
+                logger.error("No protein data found in MuData. Cannot proceed with totalVI.")
                 raise ValueError("No protein data found. totalVI integration requires protein data.")
             
             # Try setup_anndata with each possible protein key
+            # IMPORTANT: totalVI expects RAW COUNTS for protein data!
             setup_success = False
             protein_key_used = None
+            
+            # Log numeric stats to help debug
+            for key in ["protein", "prot"]:
+                if key in rna_adata.obsm:
+                    data_sample = rna_adata.obsm[key].values
+                    has_decimals = np.any(np.abs(data_sample - np.round(data_sample)) > 1e-10)
+                    logger.info(f"Protein data stats in obsm['{key}']: " +
+                                f"min={data_sample.min():.2f}, " +
+                                f"max={data_sample.max():.2f}, " +
+                                f"mean={data_sample.mean():.2f}, " +
+                                f"contains_decimals={has_decimals}")
+                    
+                    # If we detect non-integer values, force conversion to integers
+                    # as a last resort for totalVI which requires integer counts
+                    if has_decimals:
+                        logger.warning(f"Non-integer values detected in protein data. " +
+                                      f"Converting to integers for totalVI by rounding.")
+                        # Convert to integers by rounding
+                        rna_adata.obsm[key] = pd.DataFrame(
+                            np.round(data_sample).astype(int),
+                            index=rna_adata.obsm[key].index,
+                            columns=rna_adata.obsm[key].columns
+                        )
+                        logger.info(f"Converted protein data to integers for totalVI compatibility")
             
             for protein_key in ["protein", "prot"]:
                 try:
                     logger.info(f"Setting up AnnData with protein_expression_obsm_key='{protein_key}'")
+                    logger.info("totalVI expects RAW COUNTS (not normalized) for protein data")
                     scvi.model.TOTALVI.setup_anndata(
                         rna_adata,
                         protein_expression_obsm_key=protein_key,
@@ -1181,6 +1244,120 @@ def prepare_data_for_totalvi(mdata: mu.MuData) -> bool:
     return False
 
 
+def store_raw_protein_counts(mdata: mu.MuData) -> mu.MuData:
+    """
+    Store raw protein counts in obsm for totalVI.
+    
+    totalVI requires unnormalized raw count data for proteins.
+    
+    Args:
+        mdata: MuData object with RNA and protein modalities
+        
+    Returns:
+        MuData object with raw protein counts stored in obsm
+    """
+    logger.info("Storing raw protein counts for totalVI")
+    
+    if "prot" in mdata.mod:
+        # Access protein data
+        prot_adata = mdata.mod["prot"]
+        raw_counts = None
+        
+        # First check for raw counts in layers
+        raw_count_sources = [
+            ("layers", "counts"),
+            ("layers", "raw"),
+            ("raw", "X"),
+            ("X", None)
+        ]
+        
+        for source_type, source_name in raw_count_sources:
+            if source_type == "layers" and source_name in prot_adata.layers:
+                logger.info(f"Getting raw protein counts from prot_adata.layers['{source_name}']")
+                if not isinstance(prot_adata.layers[source_name], np.ndarray):
+                    raw_counts = prot_adata.layers[source_name].toarray()
+                else:
+                    raw_counts = prot_adata.layers[source_name].copy()
+                break
+            elif source_type == "raw" and prot_adata.raw is not None:
+                logger.info("Getting raw protein counts from prot_adata.raw.X")
+                if not isinstance(prot_adata.raw.X, np.ndarray):
+                    raw_counts = prot_adata.raw.X.toarray()
+                else:
+                    raw_counts = prot_adata.raw.X.copy()
+                break
+            elif source_type == "X":
+                logger.info("Getting protein counts from prot_adata.X (may not be raw)")
+                if not isinstance(prot_adata.X, np.ndarray):
+                    raw_counts = prot_adata.X.toarray()
+                else:
+                    raw_counts = prot_adata.X.copy()
+                break
+        
+        if raw_counts is None:
+            logger.warning("Could not find raw protein counts in any expected location")
+            return mdata
+        
+        # Check if the data looks like raw counts
+        if is_likely_raw_counts(raw_counts):
+            logger.info("Protein data appears to be raw counts (integer values, non-negative)")
+        else:
+            # The data likely isn't raw counts - make this very clear
+            logger.warning("IMPORTANT: Protein data does NOT appear to be raw counts! "
+                          "totalVI requires raw count data for proteins. Integration may fail.")
+            logger.info(f"Protein data stats: min={raw_counts.min():.4f}, max={raw_counts.max():.4f}, "
+                        f"mean={raw_counts.mean():.4f}")
+            
+            # If we have clear evidence it's not raw counts (decimal values), 
+            # we can't use this data for totalVI
+            if np.any(np.abs(raw_counts - np.round(raw_counts)) > 1e-10):
+                logger.error("Found non-integer values in protein data. This is likely normalized data "
+                            "which will not work with totalVI")
+        
+        # Create DataFrame with protein names
+        raw_protein_df = pd.DataFrame(
+            raw_counts,
+            index=prot_adata.obs_names,
+            columns=prot_adata.var_names
+        )
+        
+        # Store in MuData obsm for later use by totalVI
+        mdata.obsm["raw_protein"] = raw_protein_df
+        
+        logger.info(f"Raw protein counts stored in mdata.obsm['raw_protein'] with {raw_protein_df.shape[1]} proteins")
+    else:
+        logger.warning("No 'prot' modality found. Cannot store raw protein counts.")
+    
+    return mdata
+
+
+def is_likely_raw_counts(data: np.ndarray) -> bool:
+    """
+    Check if data is likely to be raw counts (integer values, non-negative).
+    
+    Args:
+        data: Array to check
+        
+    Returns:
+        bool: True if data resembles raw counts
+    """
+    # Check if data has only integer values (allowing for floating point precision issues)
+    is_integer = np.all(np.abs(data - np.round(data)) < 1e-10)
+    
+    # Check if data is non-negative
+    is_nonnegative = np.all(data >= 0)
+    
+    # Check if data has reasonable range for counts (not normalized)
+    max_value = np.max(data)
+    min_value = np.min(data)
+    reasonable_max = max_value < 10000  # Most counts should be below this threshold
+    
+    # Not too small either - normalized data often has very small values
+    not_too_small = max_value >= 1.0
+    
+    return is_integer and is_nonnegative and reasonable_max and not_too_small
+
+
 def run_cite_seq_pipeline(
     # Input parameters - file paths
     rna_input: Optional[str] = None,
@@ -1271,6 +1448,9 @@ def run_cite_seq_pipeline(
         mito_prefix=mito_prefix,
         adt_min_counts=adt_min_counts
     )
+    
+    # Store raw protein counts for totalVI before normalization
+    mdata = store_raw_protein_counts(mdata)
     
     # 3. Normalize ADT data
     mdata = normalize_adt(
