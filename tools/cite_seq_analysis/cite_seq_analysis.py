@@ -1212,6 +1212,12 @@ def main():
     args_dict['adt_adata'] = None
     args_dict['mdata'] = None
     
+    # Rename parameters to match function signature
+    if 'continuous_covariates' in args_dict:
+        args_dict['continuous_covariate_keys'] = args_dict.pop('continuous_covariates')
+    if 'categorical_covariates' in args_dict:
+        args_dict['categorical_covariate_keys'] = args_dict.pop('categorical_covariates')
+    
     # Run the pipeline
     run_cite_seq_pipeline(**args_dict)
     
