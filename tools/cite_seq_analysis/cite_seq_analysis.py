@@ -453,6 +453,10 @@ def load_data(
 
 def perform_qc(
     mdata: mu.MuData,
+    rna_min_genes: int = 200,
+    rna_min_cells: int = 3,
+    max_mito_pct: float = 20.0,
+    mito_prefix: str = "MT-",
     adt_min_counts: int = 1,
 ) -> mu.MuData:
     """
@@ -1152,7 +1156,7 @@ def run_cite_seq_pipeline(
     # 4. Process RNA data
     mdata = process_rna(
         mdata=mdata,
-        target_sum=rna_target_sum,
+        target_sum=rna_target_sum,  # This is ok - function expects target_sum
         hvg_min_mean=hvg_min_mean,
         hvg_max_mean=hvg_max_mean,
         hvg_min_disp=hvg_min_disp,
@@ -1160,7 +1164,7 @@ def run_cite_seq_pipeline(
         n_pcs=n_pcs,
         normalize_rna=normalize_rna,
         raw_counts_location=raw_counts_location,
-        raw_counts_layer=raw_counts_layer,
+        raw_counts_layer=raw_counts_layer
     )
     
     # 5. Integrate modalities
