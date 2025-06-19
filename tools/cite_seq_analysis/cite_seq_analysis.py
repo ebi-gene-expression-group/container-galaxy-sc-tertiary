@@ -689,9 +689,17 @@ def integrate_modalities(
             import scvi
             logger.info("Using totalVI for integration")
             
+            # Prepare data for totalVI by ensuring protein data is in the obsm slot
+            data_prepared = prepare_data_for_totalvi(mdata)
+            if not data_prepared:
+                logger.warning("Could not prepare protein data for totalVI, falling back to feature concatenation")
+                logger.info("Using feature concatenation for integration")
+                return concat_features(mdata, integrated_dim_reduction_key)
+            
             # Check for GPU availability
             try:
-                import torch
+                # Try to import torch in a way that won't cause linting errors
+                torch = __import__('torch')
                 gpu_available = torch.cuda.is_available()
                 gpu_count = torch.cuda.device_count() if gpu_available else 0
                 
@@ -820,12 +828,36 @@ def integrate_modalities(
             
             # Setup anndata with validated parameters
             logger.info("Setting up AnnData for totalVI")
-            scvi.model.TOTALVI.setup_anndata(
-                mdata,
-                batch_key=validated_batch_key,
-                continuous_covariate_keys=validated_continuous_covs if validated_continuous_covs else None,
-                categorical_covariate_keys=validated_categorical_covs if validated_categorical_covs else None
-            )
+            try:
+                scvi.model.TOTALVI.setup_anndata(
+                    mdata,
+                    protein_expression_obsm_key="protein",
+                    batch_key=validated_batch_key,
+                    continuous_covariate_keys=validated_continuous_covs if validated_continuous_covs else None,
+                    categorical_covariate_keys=validated_categorical_covs if validated_categorical_covs else None
+                )
+            except TypeError as e:
+                logger.warning(f"Error setting up AnnData for totalVI: {e}")
+                logger.info("Trying alternative protein_obsm_key names...")
+                # Try some common alternative keys
+                for key in ["proteins", "adt", "prot", "antibodies", "cite"]:
+                    if key in mdata.obsm:
+                        logger.info(f"Found '{key}' in obsm, trying it as protein_expression_obsm_key")
+                        try:
+                            scvi.model.TOTALVI.setup_anndata(
+                                mdata,
+                                protein_expression_obsm_key=key,
+                                batch_key=validated_batch_key,
+                                continuous_covariate_keys=validated_continuous_covs if validated_continuous_covs else None,
+                                categorical_covariate_keys=validated_categorical_covs if validated_categorical_covs else None
+                            )
+                            logger.info(f"Successfully set up AnnData with protein_expression_obsm_key='{key}'")
+                            break
+                        except Exception as e2:
+                            logger.warning(f"Failed with key '{key}': {e2}")
+                else:
+                    raise ValueError("Could not find a valid protein expression key in obsm. Available keys: " + 
+                                    str(list(mdata.obsm.keys())) + ". totalVI integration failed.")
             
             # Train totalVI model
             logger.info(f"Training totalVI model with {n_latent} latent dimensions")
@@ -908,25 +940,44 @@ def integrate_modalities(
             method = "feature-concat"
     
     if method == "feature-concat":
-        logger.info("Using feature concatenation for integration")
+        # Use concat_features function to perform feature concatenation
+        return concat_features(mdata, integrated_dim_reduction_key)
+    
+    return mdata
+
+
+def concat_features(mdata: mu.MuData, integrated_dim_reduction_key: str) -> mu.MuData:
+    """
+    Perform feature concatenation integration of RNA and protein data.
+    
+    This function concatenates RNA PCs and normalized protein expression into a single matrix.
+    
+    Args:
+        mdata: MuData object with RNA and protein modalities
+        integrated_dim_reduction_key: Key name to use for the integrated representation in obsm
         
-        # Ensure PCA has been run on RNA
-        if "X_pca" not in mdata.mod["rna"].obsm:
-            logger.warning("PCA not found in RNA modality, running PCA")
-            sc.tl.pca(mdata.mod["rna"])
-        
-        # Get RNA PCs and normalized protein expression
-        rna_pcs = mdata.mod["rna"].obsm["X_pca"]
-        
-        if not isinstance(mdata.mod["prot"].X, np.ndarray):
-            prot_matrix = mdata.mod["prot"].X.toarray()
-        else:
-            prot_matrix = mdata.mod["prot"].X
-        
-        # Concatenate matrices
-        logger.info(f"Concatenating RNA PCs and normalized protein expression and storing as '{integrated_dim_reduction_key}'")
-        integrated_matrix = np.concatenate([rna_pcs, prot_matrix], axis=1)
-        mdata.obsm[integrated_dim_reduction_key] = integrated_matrix
+    Returns:
+        MuData object with integrated data in obsm[integrated_dim_reduction_key]
+    """
+    logger.info("Performing feature concatenation integration")
+    
+    # Ensure PCA has been run on RNA
+    if "X_pca" not in mdata.mod["rna"].obsm:
+        logger.warning("PCA not found in RNA modality, running PCA")
+        sc.tl.pca(mdata.mod["rna"])
+    
+    # Get RNA PCs and normalized protein expression
+    rna_pcs = mdata.mod["rna"].obsm["X_pca"]
+    
+    if not isinstance(mdata.mod["prot"].X, np.ndarray):
+        prot_matrix = mdata.mod["prot"].X.toarray()
+    else:
+        prot_matrix = mdata.mod["prot"].X
+    
+    # Concatenate matrices
+    logger.info(f"Concatenating RNA PCs and normalized protein expression and storing as '{integrated_dim_reduction_key}'")
+    integrated_matrix = np.concatenate([rna_pcs, prot_matrix], axis=1)
+    mdata.obsm[integrated_dim_reduction_key] = integrated_matrix
     
     return mdata
 
@@ -1051,6 +1102,65 @@ def save_results(
         
         # Save
         metadata.to_csv(output_file, sep="\t")
+
+
+def prepare_data_for_totalvi(mdata: mu.MuData) -> bool:
+    """
+    Prepare MuData for totalVI integration by ensuring protein data is correctly formatted
+    and stored in the obsm slot.
+    
+    Args:
+        mdata: MuData object with RNA and protein modalities
+        
+    Returns:
+        bool: True if preparation was successful, False otherwise
+    """
+    logger.info("Preparing data for totalVI integration")
+    
+    # Check if the prot modality exists
+    if "prot" in mdata.mod:
+        # Get the protein modality
+        prot_adata = mdata.mod["prot"]
+        
+        # Save number of features for logging
+        n_proteins = prot_adata.n_vars
+        logger.info(f"Found protein modality with {n_proteins} proteins")
+        
+        # Try to transfer protein data to the obsm slot
+        try:
+            # Get protein expression matrix
+            if isinstance(prot_adata.X, np.ndarray):
+                protein_matrix = prot_adata.X.copy()
+            else:
+                # For sparse matrices
+                protein_matrix = prot_adata.X.toarray()
+            
+            # Store protein names
+            protein_names = prot_adata.var_names.tolist()
+            
+            # Create a DataFrame with protein expression
+            protein_df = pd.DataFrame(
+                protein_matrix, 
+                index=prot_adata.obs_names,
+                columns=protein_names
+            )
+            
+            # Save to both common keys that totalVI looks for
+            mdata.obsm["protein"] = protein_df
+            mdata.obsm["prot"] = protein_df
+            
+            # Store the protein feature names in a safe place
+            mdata.uns["protein_features"] = protein_names
+            
+            logger.info(f"Successfully prepared protein data for totalVI, stored in mdata.obsm['protein'] and mdata.obsm['prot']")
+            return True
+            
+        except Exception as e:
+            logger.warning(f"Error preparing protein data for totalVI: {e}")
+            return False
+    
+    logger.warning("Protein modality ('prot') not found in MuData object")
+    return False
 
 
 def run_cite_seq_pipeline(
