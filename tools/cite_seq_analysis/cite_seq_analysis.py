@@ -826,38 +826,58 @@ def integrate_modalities(
                     else:
                         logger.warning(f"Specified categorical covariate '{key}' not found in data. Skipping.")
             
-            # Setup anndata with validated parameters
-            logger.info("Setting up AnnData for totalVI")
-            try:
-                scvi.model.TOTALVI.setup_mudata(
-                    mdata,
-                    protein_expression_obsm_key="protein",
-                    batch_key=validated_batch_key,
-                    continuous_covariate_keys=validated_continuous_covs if validated_continuous_covs else None,
-                    categorical_covariate_keys=validated_categorical_covs if validated_categorical_covs else None
+            # Setup for totalVI - use a simpler and more robust approach
+            logger.info("Setting up data for totalVI")
+            
+            # Extract the RNA AnnData to work with
+            rna_adata = mdata.mod["rna"].copy()
+            
+            # Add protein data to the obsm slot
+            if "prot" in mdata.mod:
+                logger.info("Adding protein data from 'prot' modality to obsm")
+                prot_data = mdata.mod["prot"].X
+                if not isinstance(prot_data, np.ndarray):
+                    prot_data = prot_data.toarray()
+                
+                protein_df = pd.DataFrame(
+                    prot_data,
+                    index=mdata.mod["prot"].obs_names,
+                    columns=mdata.mod["prot"].var_names
                 )
-            except TypeError as e:
-                logger.warning(f"Error setting up AnnData for totalVI: {e}")
-                logger.info("Trying alternative protein_obsm_key names...")
-                # Try some common alternative keys
-                for key in ["proteins", "adt", "prot", "antibodies", "cite"]:
-                    if key in mdata.obsm:
-                        logger.info(f"Found '{key}' in obsm, trying it as protein_expression_obsm_key")
-                        try:
-                            scvi.model.TOTALVI.setup_anndata(
-                                mdata,
-                                protein_expression_obsm_key=key,
-                                batch_key=validated_batch_key,
-                                continuous_covariate_keys=validated_continuous_covs if validated_continuous_covs else None,
-                                categorical_covariate_keys=validated_categorical_covs if validated_categorical_covs else None
-                            )
-                            logger.info(f"Successfully set up AnnData with protein_expression_obsm_key='{key}'")
-                            break
-                        except Exception as e2:
-                            logger.warning(f"Failed with key '{key}': {e2}")
-                else:
-                    raise ValueError("Could not find a valid protein expression key in obsm. Available keys: " + 
-                                    str(list(mdata.obsm.keys())) + ". totalVI integration failed.")
+                
+                # Store in multiple common keys to increase chances of success
+                rna_adata.obsm["protein"] = protein_df
+                rna_adata.obsm["prot"] = protein_df
+                
+                logger.info(f"Added protein data to obsm with {protein_df.shape[1]} proteins")
+            else:
+                logger.error("No 'prot' modality found in MuData. Cannot proceed with totalVI.")
+                raise ValueError("No protein data found. totalVI integration requires protein data.")
+            
+            # Try setup_anndata with each possible protein key
+            setup_success = False
+            protein_key_used = None
+            
+            for protein_key in ["protein", "prot"]:
+                try:
+                    logger.info(f"Setting up AnnData with protein_expression_obsm_key='{protein_key}'")
+                    scvi.model.TOTALVI.setup_anndata(
+                        rna_adata,
+                        protein_expression_obsm_key=protein_key,
+                        batch_key=validated_batch_key,
+                        continuous_covariate_keys=validated_continuous_covs if validated_continuous_covs else None,
+                        categorical_covariate_keys=validated_categorical_covs if validated_categorical_covs else None
+                    )
+                    logger.info(f"Successfully set up AnnData with protein_expression_obsm_key='{protein_key}'")
+                    setup_success = True
+                    protein_key_used = protein_key
+                    break
+                except Exception as e:
+                    logger.warning(f"Failed to setup with protein_key='{protein_key}': {e}")
+            
+            if not setup_success:
+                logger.error("All attempts to set up AnnData for totalVI failed")
+                raise ValueError("Could not setup AnnData for totalVI with any protein key")
             
             # Train totalVI model
             logger.info(f"Training totalVI model with {n_latent} latent dimensions")
@@ -890,23 +910,19 @@ def integrate_modalities(
             else:
                 batch_size = 128
             
-            logger.info("Training totalVI model with raw counts")
-            model = scvi.model.TOTALVI(mdata, n_latent=n_latent)
+            logger.info("Training totalVI model with prepared AnnData")
+            model = scvi.model.TOTALVI(rna_adata, n_latent=n_latent)
             model.train(max_epochs=max_epochs, batch_size=batch_size)
             
             # Get latent representation and add to MuData
             logger.info(f"Extracting latent representation and storing as '{integrated_dim_reduction_key}'")
             latent_representation = model.get_latent_representation()
             
-            # Restore original X if we swapped it
-            if need_to_swap and orig_X is not None:
-                logger.info("Restoring original normalized data to X matrix")
-                rna_adata.X = orig_X
-                # Clear reference to free memory
-                orig_X = None
-            
-            # Transfer latent representation to the MuData object
+            # Since we're working with a copy of the RNA AnnData, we don't need to restore anything
+            # We just transfer the latent representation to the original MuData object
             mdata.obsm[integrated_dim_reduction_key] = latent_representation
+            
+            logger.info(f"totalVI integration complete, latent representation stored in mdata.obsm['{integrated_dim_reduction_key}']")
             
             # Store model for later use
             mdata.uns["totalVI_model"] = model
@@ -926,10 +942,12 @@ def integrate_modalities(
                 "continuous_covariates": validated_continuous_covs,
                 "categorical_covariates": validated_categorical_covs,
                 
-                # Raw counts information
-                "raw_counts_location": raw_counts_location,
-                "raw_counts_layer": raw_counts_layer if raw_counts_location == "layer" else None,
-                "temporary_swap_performed": need_to_swap
+                # Protein data information
+                "protein_key_used": protein_key_used,
+                "n_proteins": protein_df.shape[1] if 'protein_df' in locals() else None,
+                
+                # Setup method
+                "setup_method": "anndata"
             }
             
         except ImportError:
