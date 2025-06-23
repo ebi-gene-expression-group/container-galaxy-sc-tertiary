@@ -1197,8 +1197,14 @@ def save_results(
                 embedding_name = embedding_key.replace("X_", "").lower()
                 embedding_file = os.path.join(output_dir, f"{base_file}.{embedding_name}.npy")
                 
+                # Check if the embedding has at least 2 dimensions
+                if embedding.ndim >= 2:
+                    dim_info = f"{embedding.shape[1]} dimensions"
+                else:
+                    dim_info = "1-dimensional array"
+                
                 # Save the embedding as a numpy array
-                logger.info(f"Saving {embedding_key} embedding ({embedding.shape[1]} dimensions) to {embedding_file}")
+                logger.info(f"Saving {embedding_key} embedding ({dim_info}) to {embedding_file}")
                 np.save(embedding_file, embedding)
                 
                 # Also save the cell names to allow matching with metadata
@@ -1207,7 +1213,7 @@ def save_results(
                     np.save(cell_names_file, np.array(mdata.obs_names))
                 
                 # Special handling for UMAP to add to the main metadata as well for convenience
-                if embedding_key == "X_umap" and embedding.shape[1] >= 2:
+                if embedding_key == "X_umap" and embedding.ndim >= 2 and embedding.shape[1] >= 2:
                     # Update main metadata with just the first two UMAP dimensions
                     metadata_with_umap = metadata.copy()
                     metadata_with_umap["UMAP_1"] = embedding[:, 0]
