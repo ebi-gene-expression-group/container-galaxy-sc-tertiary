@@ -1103,7 +1103,8 @@ def cluster_and_visualize(
 def save_results(
     mdata: mu.MuData, 
     output_file: str, 
-    output_format: str = "mudata"
+    output_format: str = "mudata",
+    integrated_dim_reduction_key: str = "X_integrated"
 ) -> None:
     """
     Save results in the specified format.
@@ -1112,6 +1113,7 @@ def save_results(
         mdata: MuData object with analysis results
         output_file: Path for output file
         output_format: Output format ('mudata', 'anndata', or 'tsv')
+        integrated_dim_reduction_key: Key name of the integrated representation in obsm
     """
     if output_format == "mudata":
         logger.info(f"Saving MuData to {output_file}")
@@ -1147,15 +1149,19 @@ def save_results(
         if "X_umap" in mdata.obsm:
             adata.obsm["X_umap"] = mdata.obsm["X_umap"]
         
-        if "X_integrated" in mdata.obsm:
-            adata.obsm["X_integrated"] = mdata.obsm["X_integrated"]
+        if integrated_dim_reduction_key in mdata.obsm:
+            adata.obsm[integrated_dim_reduction_key] = mdata.obsm[integrated_dim_reduction_key]
         
         # Save
         adata.write(output_file)
     
     elif output_format == "tsv":
+        # Extract base filename and directory for saving multiple files
+        output_dir = os.path.dirname(output_file)
+        base_file = os.path.splitext(os.path.basename(output_file))[0]
+        
         logger.info(f"Saving metadata as TSV to {output_file}")
-        # Create metadata DataFrame
+        # Create metadata DataFrame with cell metadata
         metadata = mdata.obs.copy()
         
         # Add protein expression
@@ -1176,13 +1182,41 @@ def save_results(
         for col in prot_df.columns:
             metadata[f"ADT_{col}"] = prot_df[col]
         
-        # Add UMAP coordinates
-        if "X_umap" in mdata.obsm:
-            metadata["UMAP_1"] = mdata.obsm["X_umap"][:, 0]
-            metadata["UMAP_2"] = mdata.obsm["X_umap"][:, 1]
+        # Add Leiden clusters if they exist
+        if "leiden" in mdata.obs:
+            metadata["leiden"] = mdata.obs["leiden"]
         
-        # Save
+        # Save the main metadata file without embeddings
         metadata.to_csv(output_file, sep="\t")
+        
+        # Save individual embedding files using numpy's binary format
+        for embedding_key in mdata.obsm.keys():
+            embedding = mdata.obsm[embedding_key]
+            if isinstance(embedding, np.ndarray):
+                # Create a clean name for the embedding file
+                embedding_name = embedding_key.replace("X_", "").lower()
+                embedding_file = os.path.join(output_dir, f"{base_file}.{embedding_name}.npy")
+                
+                # Save the embedding as a numpy array
+                logger.info(f"Saving {embedding_key} embedding ({embedding.shape[1]} dimensions) to {embedding_file}")
+                np.save(embedding_file, embedding)
+                
+                # Also save the cell names to allow matching with metadata
+                cell_names_file = os.path.join(output_dir, f"{base_file}.cell_names.npy")
+                if not os.path.exists(cell_names_file):
+                    np.save(cell_names_file, np.array(mdata.obs_names))
+                
+                # Special handling for UMAP to add to the main metadata as well for convenience
+                if embedding_key == "X_umap" and embedding.shape[1] >= 2:
+                    # Update main metadata with just the first two UMAP dimensions
+                    metadata_with_umap = metadata.copy()
+                    metadata_with_umap["UMAP_1"] = embedding[:, 0]
+                    metadata_with_umap["UMAP_2"] = embedding[:, 1]
+                    
+                    # Save version with UMAP coordinates for visualization
+                    umap_metadata_file = os.path.join(output_dir, f"{base_file}.with_umap.tsv")
+                    logger.info(f"Saving metadata with UMAP coordinates to {umap_metadata_file}")
+                    metadata_with_umap.to_csv(umap_metadata_file, sep="\t")
 
 
 def prepare_data_for_totalvi(mdata: mu.MuData) -> bool:
@@ -1504,7 +1538,8 @@ def run_cite_seq_pipeline(
         save_results(
             mdata=mdata,
             output_file=output_file,
-            output_format=output_format
+            output_format=output_format,
+            integrated_dim_reduction_key=integrated_dim_reduction_key
         )
     
     return mdata
