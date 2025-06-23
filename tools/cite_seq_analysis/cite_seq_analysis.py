@@ -1117,12 +1117,43 @@ def save_results(
     """
     if output_format == "mudata":
         logger.info(f"Saving MuData to {output_file}")
+        
+        # Temporarily store non-serializable objects
+        temp_storage = {}
+        
+        # Identify and remove any totalVI model or other non-serializable objects from uns
+        non_serializable_keys = []
+        for key in list(mdata.uns.keys()):  # Use list to avoid dictionary changed during iteration
+            if 'totalVI' in key or 'scvi' in key.lower():
+                non_serializable_keys.append(key)
+                temp_storage[key] = mdata.uns[key]
+                logger.info(f"Temporarily removing non-serializable object '{key}' from uns before saving")
+                del mdata.uns[key]
+        
+        # Save the modified MuData
         mdata.write(output_file)
+        
+        # Restore the removed objects
+        for key in non_serializable_keys:
+            mdata.uns[key] = temp_storage[key]
+            logger.info(f"Restored object '{key}' to uns after saving")
     
     elif output_format == "anndata":
         logger.info(f"Saving as AnnData to {output_file}")
         # Create AnnData with RNA as base and add protein data to obs
         adata = mdata.mod["rna"].copy()
+        
+        # Temporarily store non-serializable objects
+        temp_storage = {}
+        
+        # Identify and remove any totalVI model or other non-serializable objects from uns
+        non_serializable_keys = []
+        for key in list(adata.uns.keys()):  # Use list to avoid dictionary changed during iteration
+            if 'totalVI' in key or 'scvi' in key.lower():
+                non_serializable_keys.append(key)
+                temp_storage[key] = adata.uns[key]
+                logger.info(f"Temporarily removing non-serializable object '{key}' from uns before saving")
+                del adata.uns[key]
         
         # Add protein expression as obs
         if isinstance(mdata.mod["prot"].X, np.ndarray):
@@ -1154,6 +1185,11 @@ def save_results(
         
         # Save
         adata.write(output_file)
+        
+        # Restore the removed objects
+        for key in non_serializable_keys:
+            adata.uns[key] = temp_storage[key]
+            logger.info(f"Restored object '{key}' to AnnData uns after saving")
     
     elif output_format == "tsv":
         # Extract base filename and directory for saving multiple files
