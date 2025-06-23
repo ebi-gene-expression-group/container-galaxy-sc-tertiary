@@ -642,8 +642,13 @@ def process_rna(
     n_hvg = sum(rna_adata.var.highly_variable)
     logger.info(f"Using {n_hvg} highly variable genes")
     
-    # Run PCA if not already computed
-    if "X_pca" not in rna_adata.obsm:
+    # Check if we need to run PCA
+    integration_method = mdata.uns.get("integration_method", "feature-concat")
+    
+    # Skip PCA calculation if using totalVI as it's not needed
+    if integration_method == "totalVI":
+        logger.info("Skipping PCA computation since integration method is totalVI")
+    elif "X_pca" not in rna_adata.obsm:
         logger.info(f"Running PCA with {n_pcs} components")
         sc.tl.pca(rna_adata, n_comps=min(n_pcs, n_hvg))
     else:
@@ -1536,6 +1541,9 @@ def run_cite_seq_pipeline(
         use_isotype_control=use_isotype_control,
         isotype_controls=isotype_controls
     )
+    
+    # Store integration method in MuData for use by other functions
+    mdata.uns["integration_method"] = integration_method
     
     # 4. Process RNA data
     mdata = process_rna(
