@@ -1,4 +1,4 @@
-<tool id="pyscenic_binarize" name="PySCENIC Binarize AUCell" profile="21.09" version="@TOOL_VERSION@+galaxy0">
+<tool id="pyscenic_binarize" name="PySCENIC Binarize AUCell" profile="21.09" version="@TOOL_VERSION@+galaxy1">
     <description>defines AUCell thresholds and tags cells as passing it or not</description>
     <macros>
         <import>macros.xml</import>
