@@ -1,4 +1,5 @@
 categories:
+ - Single Cell
  - Transcriptomics
  - Sequence Analysis
 description: "Tools for interacting with the EMBL-EBI Expression Atlas resource https://www.ebi.ac.uk/gxa/home https://www.ebi.ac.uk/gxa/sc/home"

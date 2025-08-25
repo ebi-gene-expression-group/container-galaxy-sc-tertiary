@@ -1,4 +1,5 @@
 categories:
+ - Single Cell
  - Transcriptomics
  - RNA
  - Statistics
@@ -17,4 +18,4 @@ suite:
   name: "suite_monocle3"
   description: "De-composed monocle3 functionality tools, based on https://github.com/ebi-gene-expression-group/monocle-scripts and monocle3 0.1.2."
   long_description: |
-    monocle3: A tool for trajectory analysis of single cell RNA-seq data  
+    monocle3: A tool for trajectory analysis of single cell RNA-seq data

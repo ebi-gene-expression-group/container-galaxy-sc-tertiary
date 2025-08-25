@@ -1,4 +1,6 @@
 categories:
+ - Single Cell
+ - Spatial Omics
  - Transcriptomics
  - Sequence Analysis
 description: "Tools for interacting with the Human Cell Atlas resource https://prod.data.humancellatlas.org/explore/projects"
