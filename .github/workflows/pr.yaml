@@ -404,11 +404,12 @@ jobs:
         echo "${{ needs.setup.outputs.repository-list }}" > changed_repositories.list
         while read -r DIR; do
             if [ -d "$DIR/test-data" ]; then
-                max_test_file_size=$(du $DIR/test-data/$(ls -S $DIR/test-data | head -n 1) | awk '{print $1}')
-                if [ $max_test_file_size -gt 1000 ]; then
-                    echo "Deleting test files, found one > 1Mb" 1>&2
-                    rm -rf $DIR/test-data
-                fi
+                # Remove the oversized fixtures only. Removing the whole
+                # directory would also strip the small fixtures belonging to
+                # every other tool sharing it, because auto_tool_repositories
+                # splits one source directory across many toolshed
+                # repositories.
+                find "$DIR/test-data" -type f -size +1000k -print -delete 1>&2
             fi
         done < changed_repositories.list
     - name: Deploy on toolshed
