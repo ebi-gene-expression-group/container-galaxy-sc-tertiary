@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool id="scanpy_find_markers" name="Scanpy FindMarkers" version="@TOOL_VERSION@+galaxy0" profile="@PROFILE@">
+<tool id="scanpy_find_markers" name="Scanpy FindMarkers" version="@TOOL_VERSION@+galaxy1" profile="@PROFILE@">
   <description>to find differentially expressed genes between groups</description>
   <macros>
     <import>scanpy_macros2.xml</import>
@@ -11,7 +11,9 @@ PYTHONIOENCODING=utf-8 scanpy-find-markers
 #if $output_markers
     --save diffexp.tsv
 #end if
+#if $n_genes
     --n-genes '${n_genes}'
+#end if
 #if $groupby_file
     #set f = open($groupby_file.__str__)
     #set groupby = f.read().strip()
@@ -50,7 +52,9 @@ PYTHONIOENCODING=utf-8 scanpy-find-markers
     <expand macro="input_object_params"/>
     <expand macro="output_object_params"/>
     <param name="output_markers" type="boolean" checked="true" label="Output markers table in tsv format"/>
-    <param name="n_genes" argument="--n-genes" type="integer" value="50" label="Number of top genes to show per group/cluster"/>
+    <param name="n_genes" argument="--n-genes" type="integer" min="1" optional="true"
+           label="Number of top-ranked genes to keep per group/cluster. If set, only these genes are reported; all other genes are dropped from the results"
+           help="Leave empty to keep statistics for all genes (scanpy's default). If a number is given, only the top N genes of each group/cluster are stored in the AnnData object and written to the marker table; the remaining genes are not available downstream."/>
     <param name="groupby" argument="--groupby" type="text" value="louvain" label="The sample grouping/clustering to use."/>
     <param name="groupby_file" argument="--groupby" type="data" format="txt,tsv" optional="true"
         label="File with groupby. Overrides the groupby setting"/>
@@ -149,6 +153,25 @@ PYTHONIOENCODING=utf-8 scanpy-find-markers
         </assert_contents>
       </output>
     </test>
+    <test expect_num_outputs="2">
+      <!-- n_genes left empty: statistics are kept for all genes (10942 genes x 5 clusters + header) -->
+      <param name="input_obj_file" value="louvain_1.0"/>
+      <param name="input_format" value="anndata"/>
+      <param name="output_format" value="anndata"/>
+      <param name="output_markers" value="true"/>
+      <param name="groupby" value="INPUT_OBJ"/>
+      <output name="output_h5" ftype="h5">
+        <assert_contents>
+          <has_h5_keys keys="uns/rank_genes_groups"/>
+        </assert_contents>
+      </output>
+      <output name="output_tsv" ftype="tabular">
+        <assert_contents>
+          <has_n_columns n="8"/>
+          <has_n_lines n="54711"/>
+        </assert_contents>
+      </output>
+    </test>
   </tests>
 
   <help><![CDATA[
@@ -157,6 +180,13 @@ Rank genes for characterizing groups (`tl.rank_genes_groups`)
 =============================================================
 
 Rank genes for characterizing groups.
+
+**Number of genes reported**
+
+Leave *Number of top-ranked genes to keep per group/cluster* empty to keep statistics for
+all genes (scanpy's default). If a number is given, only the top N genes of each
+group/cluster are stored in the AnnData object and written to the marker table; the
+remaining genes are dropped from the results and are not available downstream.
 
 @HELP@
 
